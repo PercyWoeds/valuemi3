@@ -9,23 +9,23 @@
 <div class="big">
   <strong>Selected package:</strong>
   <br />
-  <%= @package.title %>
+  <%= @package[0].title %>
 </div>
 <br />
 
 <div class="big">
   <strong>Price:</strong>
   <br />
-  $<%= money(@package.price) %>/year
+  $<%= money(@package[0].price) %>/year
 </div>
 <br />
 
 <div>
-  <%= markdown(@package.description).html_safe %>
+  <%= markdown(@package[0].description).html_safe %>
 </div>
 
 <div class="button">
-  <% if(@package.price == 0) %>
+  <% if(@package[0].price == 0) %>
     <%= link_to 'Choose package', '/payment/' + @slug %>
   <% else %>
     <%= link_to 'See payment methods', '/payment/' + @slug %>

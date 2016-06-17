@@ -10,7 +10,15 @@
 
 <%= render "products_categories/list" %>
 
+
 <br />
+
+
+
+  <%= form_tag import_products_categories_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Importar " %>  
+  <% end %>
 
 <div class="button">
   <%= link_to 'New Product Category', "/products_categories/new/#{@company.id}" %>

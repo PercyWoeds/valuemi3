@@ -1,0 +1,142 @@
+<%= form_for(@order) do |f| %>
+<% if @order.errors.any? %>
+<div id="error_explanation">
+<h2><%= pluralize(@order.errors.count, "error") %>
+prohibited this order from being saved:</h2>
+<ul>
+<% @order.errors.full_messages.each do |msg| %>
+<li><%= msg %></li>
+<% end %>
+</ul>
+</div>
+
+<% end %>
+  <table>
+    <td>
+    <tr>      
+       <input type="button" class="button" value="Factura" onclick="calcula1();">        
+    </tr>
+    <tr>     
+      <input type="button" class="button" value="Boleta" onclick="calcula2();">       
+    </tr>
+    <tr>
+      <input type="button" class="button" value="Nota de Despacho" onclick="calcula3();"> 
+    </tr>
+    <tr>
+    </tr>
+    </td>
+  </table>
+
+
+    <div class="field">
+        <%= f.label :ruc  %><br />
+        <%= f.text_field :name, size: 11  %>
+    </div>
+
+    <div class="field">
+        <%= f.label :email %><br />
+        <%= f.email_field :email, size: 40 %>
+    </div>
+
+    <div class="field">
+        <%= f.label :pay_type %><br />
+        <%= f.select :pay_type, Order::PAYMENT_TYPES, prompt: 'Select a payment method' %>
+    </div>
+
+    <div class="field">
+        <%= f.label :subtotal %><br />
+        <%= f.number_field :subtotal, size: 11  %>
+    </div>
+    <div class="field">
+        <%= f.label :tax %><br />
+        <%= f.number_field :tax, size: 11  %>
+    </div>
+         
+    <div class="field" >
+        <%= f.label :total %><br />
+        <%= f.number_field :total , size: 11  %>
+    </div>
+
+
+ <table width="300" border="0" cellspacing="0" cellpadding="10"> 
+<form name="calc"> 
+    <tr> 
+    <td valign=top class="centro grande"><h3> Total a cobrar S/. :  <%= @total_price_cart %> </h3>
+    </td> 
+    </tr>
+
+    <tr> 
+    <td>  
+    Efectivo......... S/.
+    <input  name="val1" type="number" min="0" inputmode="numeric" pattern="[0-9]*" title="Non-negative integral number">
+    </td> 
+    </tr>
+
+    <tr> 
+    <td> 
+    Tarjeta de Credito
+    <input name="val2" type="number" onchange="javascript:suma();"  min="0" inputmode="numeric" pattern="[0-9]*" title="Non-negative integral number"> 
+    </td> 
+    </tr> 
+    
+    <tr> 
+    <td> 
+    Totales Forma Pago  <input type="text" name="result1" size="3" maxlenght="6"  readonly> 
+    </td> 
+    </tr> 
+
+    <tr> 
+    <td align="center"> 
+    <input type="button" class="button" value="Calcular" onclick="calcula();"> 
+    </td> 
+    </tr> 
+
+</form> 
+</table> 
+
+<div class="actions">
+<%= f.submit 'Place Order' %>
+</div>
+
+
+<%= button_to 'Regresar',"/companies/stores/#{@company.id}" , method: :post  %>      
+
+<% end %>
+
+
+
+<script language="JavaScript"> 
+
+function calcula() { 
+var frm = document.calc; 
+var val1 = frm.val1.value; 
+var val2 = frm.val2.value; 
+
+var val3 =  val2* val2; 
+var result1 =  val2*val2; 
+
+if ((frm.val1.value>0 ) && (frm.val2.value>=0 )) { 
+var res = (@total_price_cart - result1); 
+resultado = parseFloat(res).toFixed(2).toString();
+resultado = resultado.split(".");
+var cadena = ""; cont = 1
+for(m=resultado[0].length-1; m>=0; m--){
+  cadena = resultado[0].charAt(m) + cadena
+  cont%3 == 0 && m >0 ? cadena = "." + cadena : cadena = cadena
+  cont== 3 ? cont = 1 :cont++
+}
+frm.result.value = cadena + "," + resultado[1]; 
+} else { 
+frm.res.value = 0; 
+alert ("Debes indicar valores númericos en los campos indicados."); 
+} 
+} 
+
+function suma() { 
+var frm = document.calc; 
+var val1 = frm.val1.value; 
+var val2 = frm.val2.value; 
+frm.result1.value = val1*1 + val2*1; 
+} 
+</script>
+    

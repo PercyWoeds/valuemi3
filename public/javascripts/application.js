@@ -209,8 +209,9 @@ function updateItemTotal() {
 // Add an item to a product kit
 function addItemToInvoice() {
   var item = $("#ac_item").val();
-  
+
   if(item != "") {
+
     var company_id = $("#invoice_company_id").val();
     var item_id = $("#ac_item_id").val();
     
@@ -230,6 +231,7 @@ function addItemToInvoice() {
       var item_line = item_id + "|BRK|" + quantity + "|BRK|" + price + "|BRK|" + discount;
       
       $("#items").val($("#items").val() + "," + item_line);
+
       listItemsInvoice();
       
       $("#ac_item_id").val("");
@@ -238,9 +240,10 @@ function addItemToInvoice() {
       $("#ac_item_price").val("");
       $("#ac_item_discount").val("0");
       updateItemTotal();
+    
     }
   } else {
-    alert("Please find a product to add first.");
+    alert("Por favor busque un product para agregar primero.");
   }
 }
 

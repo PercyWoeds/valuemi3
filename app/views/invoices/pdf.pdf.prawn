@@ -74,7 +74,7 @@ pdf.text "Details", :size => 15, :style => :bold, :spacing => 4
 pdf.text " ", :size => 13, :spacing => 4
 
 for product in @invoice.get_products()
-  pdf.text "#{product.full_name} - Price: $#{money(product.curr_price)} - Quantity: #{product.curr_quantity} - Discount: #{money(product.curr_discount)} - Total: $#{money(product.curr_total)}", :size => 13, :spacing => 4
+  pdf.text "#{product.name} - Price: $#{money(product.price)} - Quantity: #{product.quantity} - Discount: #{money(product.discount)} - Total: $#{money(product.total)}", :size => 13, :spacing => 4
 end
 
 pdf.text " ", :size => 13, :spacing => 4

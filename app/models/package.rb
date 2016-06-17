@@ -7,11 +7,11 @@ class Package < ActiveRecord::Base
     start_date = Time.now
     end_date = Time.now + 1.year
     # Check if we already have a user_package
-    user_package = UsersPackage.find(:first, :conditions => {:user_id => user.id, :package_id => self.id})
+    user_package = UsersPackage.where(user_id:  user, package_id:  self.id)
     
-    if(not user_package)
+    if    (user_package.any?)
       user_package = UsersPackage.new(
-        :user_id => user.id,
+        :user_id => user,
         :package_id => self.id,
         :start_date => start_date,
         :end_date => end_date,

@@ -3,7 +3,7 @@ class CreateKitsProducts < ActiveRecord::Migration
     create_table :kits_products do |t|
       t.integer :product_kit_id
       t.integer :product_id
-
+      t.string :session
       t.timestamps
     end
   end

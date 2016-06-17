@@ -26,15 +26,16 @@ module UsersHelper
     require "digest"
     
     # Delete old sessions if any
-    old_sessions = Session.where(:user_id => user.id)
+    old_sessions = Session.where(:session_id => user[0].id)
     
     for old_session in old_sessions
       old_session.delete
     end
     
-    hash = Digest::MD5.hexdigest(getSalt() + user.id.to_s + user.username + user.password + Time.now.to_s)
-    
-    session = Session.new(:user => user, :session => hash)
+    hash = Digest::MD5.hexdigest(getSalt() + user[0].id.to_s + user[0].username + user[0].password + Time.now.to_s)
+    puts user[0].id 
+
+    session = Session.new(:session_id=> user[0].id, :user => user, :session => hash)  
     session.save
     
     cookies[getAppName() + '_login'] = hash
@@ -48,7 +49,7 @@ module UsersHelper
     hash = getLoginHash()
     
     if hash
-      session = Session.where(:session => hash).first
+      session = Session.where(:session_id  => hash).first
       
       return session
     end
@@ -78,7 +79,7 @@ module UsersHelper
     end
   end
   
-  def getUser()
+  def current_user
     if(@session_user)
       return @session_user
     else
@@ -91,7 +92,7 @@ module UsersHelper
   end
   
   def getUsername()
-    user = getUser()
+    user = current_user
     
     if user
       return user.username
@@ -99,7 +100,7 @@ module UsersHelper
   end
   
   def getUserEmail()
-    user = getUser()
+    user = current_user
     
     if user
       return user.email
@@ -107,7 +108,7 @@ module UsersHelper
   end
   
   def getUserId()
-    user = getUser()
+    user = current_user
     
     if user
       return user.id
@@ -129,7 +130,7 @@ module UsersHelper
     end
   end
   
-  def checkLogin()
+  def authenticate_user!()
     if(!isLogged())
       errLogin
     end
@@ -138,7 +139,7 @@ module UsersHelper
   def checkUserInfo
     @is_admin = isAdmin()
     @is_logged = isLogged()
-    @session_user = getUser()
+    @session_user = current_user
   end
   
   def user_link()

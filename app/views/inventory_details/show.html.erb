@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Product:</strong>
+  <%= @inventory_detail.product_id %>
+</p>
+
+<p>
+  <strong>Cost:</strong>
+  <%= @inventory_detail.cost %>
+</p>
+
+<p>
+  <strong>Logical:</strong>
+  <%= @inventory_detail.logical %>
+</p>
+
+<p>
+  <strong>Phisycal:</strong>
+  <%= @inventory_detail.phisycal %>
+</p>
+
+<p>
+  <strong>Comments:</strong>
+  <%= @inventory_detail.comments %>
+</p>
+
+<%= link_to 'Edit', edit_inventory_detail_path(@inventory_detail) %> |
+<%= link_to 'Back', inventory_details_path %>

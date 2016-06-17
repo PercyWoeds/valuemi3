@@ -29,6 +29,12 @@
 
 <br />
 
+
+  <%= form_tag import_products_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Importar " %>  
+  <% end %>
+  
 <div class="button">
   <%= link_to 'New Product', "/products/new/#{@company.id}" %>
   <%= link_to 'Which Products Need Restocking?', "/companies/products/#{@company.id}?restock=1" %>

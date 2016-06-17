@@ -10,14 +10,24 @@ class Product < ActiveRecord::Base
   has_many :kits_products
   has_many :restocks
   has_many :invoice_products
-  
+  has_many :line_items
+  has_many :orders, through: :line_items
+  before_destroy :ensure_not_referenced_by_any_line_item
+
+
+  def self.import(file)
+          CSV.foreach(file.path, headers: true) do |row|
+          Product.create! row.to_hash 
+     end
+  end 
+
   def add_category(category_txt)
     if(self.category != nil)
       # Add category
-      category = ProductsCategory.find(:first, :conditions => {:company_id => self.company.id, :category => category_txt})
+      category = ProductsCategory.where(company_id: self.company.id, category:  category_txt)
       
       if(not category)
-        category = ProductsCategory.new(:company_id => self.company.id, :category => category_txt)
+        category = ProductsCategory.new(company_id: self.company.id, category: category_txt)
         category.save
       end
     end
@@ -72,4 +82,15 @@ class Product < ActiveRecord::Base
     
     return name
   end
+private
+  # ensure that there are no line items referencing this product
+  def ensure_not_referenced_by_any_line_item
+  if line_items.empty?
+  return true
+  else
+  errors.add(:base, 'Line Items present')
+  return false
+  end
+  end
+
 end

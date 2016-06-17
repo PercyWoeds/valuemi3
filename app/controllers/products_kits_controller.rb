@@ -3,7 +3,7 @@ include ProductsHelper
 include CompaniesHelper
 
 class ProductsKitsController < ApplicationController
-  before_filter :checkLogin, :checkProducts, :checkCompanies
+  before_filter :authenticate_user!, :checkProducts, :checkCompanies
   
   # List items
   def list_items
@@ -34,8 +34,8 @@ class ProductsKitsController < ApplicationController
     @company = Company.find(params[:company_id])
     @pagetitle = "#{@company.name} - Product kits"
     
-    if(@company.can_view(getUser()))
-      @products_kits = ProductsKit.paginate(:page => params[:page], :order => 'name', :conditions => {:company_id => @company.id})
+    if(@company.can_view(current_user))
+      @products_kits = ProductsKit.where(company_id: @company.id).paginate(:page => params[:page])
     else
       errPerms()
     end
@@ -89,7 +89,7 @@ class ProductsKitsController < ApplicationController
     @action = "Create"
     
     @company = Company.find(params[:products_kit][:company_id])
-    @products_kit = ProductsKit.new(params[:products_kit])
+    @products_kit = ProductsKit.new(products_kits_params)
 
     respond_to do |format|
       if @products_kit.save
@@ -147,4 +147,11 @@ class ProductsKitsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  private  
+  def products_kits_params
+    params.require(:products_kit).permit(:name,:description, :company_id)
+  end
+
+
+
 end

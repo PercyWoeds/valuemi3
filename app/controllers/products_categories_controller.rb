@@ -2,15 +2,20 @@ include UsersHelper
 include CompaniesHelper
 
 class ProductsCategoriesController < ApplicationController
-  before_filter :checkLogin, :checkCompanies
+  before_filter :authenticate_user!, :checkCompanies
   
+  def import
+     ProductsCategory.import(params[:file])
+      redirect_to root_url, notice: "categories importadas."
+  end 
+
   # List product categories for a company
   def list_products_categories
     @company = Company.find(params[:company_id])
     @pagetitle = "#{@company.name} - Product categories"
     
-    if(@company.can_view(getUser()))
-      @products_categories = ProductsCategory.paginate(:page => params[:page], :order => 'category', :conditions => {:company_id => @company.id})
+    if(@company.can_view(current_user))
+      @products_categories = ProductsCategory.where(company_id: @company.id).paginate(:page => params[:page])
     else
       errPerms()
     end
@@ -52,7 +57,7 @@ class ProductsCategoriesController < ApplicationController
   # POST /products_categories.xml
   def create
     @pagetitle = "New product category"
-    @products_category = ProductsCategory.new(params[:products_category])
+    @products_category = ProductsCategory.new(products_category_params)
 
     respond_to do |format|
       if @products_category.save
@@ -72,7 +77,7 @@ class ProductsCategoriesController < ApplicationController
     @products_category = ProductsCategory.find(params[:id])
 
     respond_to do |format|
-      if @products_category.update_attributes(params[:products_category])
+      if @products_category.update_attributes(products_category_params)
         format.html { redirect_to(@products_category, :notice => 'Products category was successfully updated.') }
         format.xml  { head :ok }
       else
@@ -94,4 +99,9 @@ class ProductsCategoriesController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  def products_category_params
+    params.require(:products_category).permit(:company_id,:category)
+  
+  end
+  
 end

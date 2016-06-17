@@ -2,15 +2,15 @@ include UsersHelper
 include CompaniesHelper
 
 class LocationsController < ApplicationController
-  before_filter :checkLogin, :checkCompanies
+  before_filter :authenticate_user!, :checkCompanies
   
   # Show locations for a company
   def list_locations
     @company = Company.find(params[:company_id])
     @pagetitle = "#{@company.name} - Locations"
   
-    if(@company.can_view(getUser()))
-      @locations = Location.find(:all, :conditions => {:company_id => @company.id}, :order => "name")
+    if(@company.can_view(current_user))
+      @locations = Location.where(company_id: @company.id).order("name")
     else
       errPerms()
     end
@@ -19,7 +19,7 @@ class LocationsController < ApplicationController
   # GET /locations
   # GET /locations.xml
   def index
-    @companies = Company.find(:all, :conditions => {:user_id => getUserId()}, :order => "name")
+    @companies = Company.all.where(user_id: current_user.id).order("name")
     @path = 'locations'
     @pagetitle = "Locations"
   end
@@ -34,19 +34,20 @@ class LocationsController < ApplicationController
   # GET /locations/new
   # GET /locations/new.xml
   def new
-    @pagetitle = "New location"
+    @pagetitle = "Nuevo Local .."
     @location = Location.new
     @company = Company.find(params[:company_id])
     @location.company_id = @company.id
     @location[:website] = 'http://'
+    puts @company.id
     
     # Check package limits
-    @locations_left_i = getUser().locations_left
-    @locations_left = getUser().print_locations_left
-    @locations_left_class = getUser().locations_left_class
+    @locations_left_i = current_user.locations_left
+    @locations_left = current_user.print_locations_left
+    @locations_left_class = current_user.locations_left_class
     
     # Check if the user can use the company
-    if(not @company.can_view(getUser()))
+    if(not @company.can_view(current_user))
       redirect_to '/err_perms'
     end
   end
@@ -63,13 +64,13 @@ class LocationsController < ApplicationController
   # POST /locations
   # POST /locations.xml
   def create
-    @pagetitle = "New location"
-    @location = Location.new(params[:location])
+    @pagetitle = "Nuevo Local "
+    @location = Location.new(locations_params)
     @company = Company.find(params[:location][:company_id])
     
-    @locations_left_i = getUser().locations_left
-    @locations_left = getUser().print_locations_left
-    @locations_left_class = getUser().locations_left_class
+    @locations_left_i = current_user.locations_left
+    @locations_left = current_user.print_locations_left
+    @locations_left_class = current_user.locations_left_class
     
     # Check package limits
     if(@locations_left_i <= 0 and @locations_left_i > -1000)
@@ -77,7 +78,7 @@ class LocationsController < ApplicationController
       redirect_to("/pricing")
     else
       # Check if the user can use the company
-      if(not @company.can_view(getUser()))
+      if(not @company.can_view(current_user))
         redirect_to '/err_perms'
       else
         respond_to do |format|
@@ -100,7 +101,7 @@ class LocationsController < ApplicationController
     @location = Location.find(params[:id])
 
     respond_to do |format|
-      if @location.update_attributes(params[:location])
+      if @location.update_attributes(locations_params)
         format.html { redirect_to(@location, :notice => 'Location was successfully updated.') }
         format.xml  { head :ok }
       else
@@ -122,4 +123,9 @@ class LocationsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  
+  def locations_params
+    params.require(:location ).permit(:company_id,:name,:address1,:address2,:city,:state,:zip,:country,:website,:phone1,:phone2,:email)  
+  end
+
 end

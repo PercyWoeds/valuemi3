@@ -3,7 +3,7 @@ include UsersHelper
 include CompaniesHelper
 
 class CompaniesController < ApplicationController
-  before_filter :checkLogin
+  before_filter :authenticate_user!
   
   # Export company to CSV
   def export
@@ -29,8 +29,8 @@ class CompaniesController < ApplicationController
   # GET /companies.xml
   def index
     @pagetitle = 'My companies'
-    @companies = getUser().get_companies()
-    @user_package = UsersPackage.find(:first, :conditions => {:user_id => getUserId()})
+    @companies = current_user.get_companies()
+    @user_package = UsersPackage.where(user_id:  current_user.id)
     
     if(not @user_package)
       flash[:error] = 'Please first pick a pricing plan.'
@@ -45,7 +45,7 @@ class CompaniesController < ApplicationController
     set_company(@company)
     
     @pagetitle = @company[:name]
-    @locations = Location.find(:all, :conditions => {:company_id => @company.id})
+    @locations = Location.where(company_id: @company.id)
   end
 
   # GET /companies/new
@@ -56,9 +56,9 @@ class CompaniesController < ApplicationController
     @company[:website] = 'http://'
     
     # Check package limits
-    @companies_left_i = getUser().companies_left
-    @companies_left = getUser().print_companies_left
-    @companies_left_class = getUser().companies_left_class
+    @companies_left_i = current_user.companies_left
+    @companies_left = current_user.print_companies_left
+    @companies_left_class = current_user.companies_left_class
   end
 
   # GET /companies/1/edit
@@ -67,7 +67,7 @@ class CompaniesController < ApplicationController
     @company = Company.find(params[:id])
     @edit = true
     
-    if(not @company.own(getUser()))
+    if(not @company.own(current_user))
       redirect_to '/err_perms'
     end
   end
@@ -76,12 +76,12 @@ class CompaniesController < ApplicationController
   # POST /companies.xml
   def create
     @pagetitle = 'New company'
-    @company = Company.new(params[:company])
-    @company[:user_id] = getUserId()
+    @company = Company.new(company_params)
+    @company[:user_id] = current_user.id
     
-    @companies_left_i = getUser().companies_left
-    @companies_left = getUser().print_companies_left
-    @companies_left_class = getUser().companies_left_class
+    @companies_left_i = current_user.companies_left
+    @companies_left = current_user.print_companies_left
+    @companies_left_class = current_user.companies_left_class
     
     # Check package limits
     if(@companies_left_i <= 0 and @companies_left_i > -1000)
@@ -101,7 +101,7 @@ class CompaniesController < ApplicationController
 
         if @company.save
           # Create company user for the user
-          new_company_user = CompanyUser.new(:company_id => @company.id, :user_id => getUserId())
+          new_company_user = CompanyUser.new(:company_id => @company.id, :user_id => current_user.id)
           new_company_user.save
 
           format.html { redirect_to(@company, :notice => 'Company was successfully created.') }
@@ -146,7 +146,7 @@ class CompaniesController < ApplicationController
   def destroy
     @company = Company.find(params[:id])
     
-    if(not @company.own(getUser()))
+    if(not @company.own(current_user))
       redirect_to '/err_perms'
     else
       @company_users = CompanyUser.find(:all, :conditions => {:company_id => @company.id})
@@ -161,4 +161,12 @@ class CompaniesController < ApplicationController
       redirect_to(companies_url)
     end
   end
+
+  private
+
+  
+  def company_params
+    params.require(:company).permit(:name, :address1, :address2, :city, :state,:zip,:country, :website,:phone1,:phone2, :email,:logo )
+  end
+
 end

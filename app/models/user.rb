@@ -1,7 +1,13 @@
 class User < ActiveRecord::Base
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :trackable, :validatable
   self.per_page = 20
   
-  validates_presence_of :username, :email, :password, :level, :first_name, :last_name
+  attr_accessible :id, :username, :email, :password, :salt, :encrypted_password, :first_name, :last_name, :level 
+
+ # validates_presence_of :username, :email, :password, :level, :first_name, :last_name
   validates_uniqueness_of :username, :email
   validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
   
@@ -22,7 +28,7 @@ class User < ActiveRecord::Base
   end
   
   def get_companies
-    companies = Company.find(:all, :conditions => {:user_id => self.id}, :order => "name")
+    companies = Company.where(user_id: self.id).order("name")
     alr_ids = []
     
     for company in companies
@@ -30,7 +36,7 @@ class User < ActiveRecord::Base
     end
     
     # Check if we gotta add shared companies
-    company_users = CompanyUser.find(:all, :conditions => {:user_id => self.id})
+    company_users = CompanyUser.where(user_id: self.id)
     
     for cu in company_users
       if(not alr_ids.include?(cu.company_id))
@@ -47,7 +53,7 @@ class User < ActiveRecord::Base
     locations = []
     
     for company in companies
-      c_locations = Location.find(:all, :conditions => {:company_id => company.id})
+      c_locations = Location.where(company_id: company.id)
       
       locations.push(c_locations)
     end
@@ -61,7 +67,7 @@ class User < ActiveRecord::Base
     alr_ids = []
     
     for company in companies
-      ccus = CompanyUser.find(:all, :conditions => {:company_id => company.id})
+      ccus = CompanyUser.where(company_id: company.id)
       
       for company_user in ccus
         user = company_user.user
@@ -197,10 +203,10 @@ class User < ActiveRecord::Base
   end
   
   def package
-    user_package = UsersPackage.find(:first, :conditions => {:user_id => self.id})
+    user_package = UsersPackage.where(user_id: self.id)
     
     if user_package
-      return user_package.package
+      return user_package[0].package
     end
   end
 end

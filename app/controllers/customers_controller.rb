@@ -2,14 +2,14 @@ include UsersHelper
 include CompaniesHelper
 
 class CustomersController < ApplicationController
-  before_filter :checkLogin, :checkCompanies
+  before_filter :authenticate_user!, :checkCompanies
   
   # Show customers for a company
   def list_customers
     @company = Company.find(params[:company_id])
     @pagetitle = "#{@company.name} - Customers"
   
-    if(@company.can_view(getUser()))
+    if(@company.can_view(current_user))
       if(params[:q] and params[:q] != "")
         fields = ["email", "name", "account"]
 
@@ -18,9 +18,9 @@ class CustomersController < ApplicationController
 
         query = str_sql_search(q, fields)
 
-        @customers = Customer.paginate(:page => params[:page], :order => 'name', :conditions => ["company_id = ? AND (#{query})", @company.id])
+        @customers = Customer.where(["company_id = ? AND (#{query})", @company.id]).order("name").paginate(:page => params[:page])
       else
-        @customers = Customer.paginate(:page => params[:page], :conditions => {:company_id => @company.id}, :order => "name")
+        @customers = Customer.where(:company_id => @company.id).order("name").paginate(:page => params[:page])
       end
     else
       errPerms()
@@ -30,7 +30,7 @@ class CustomersController < ApplicationController
   # GET /customers
   # GET /customers.xml
   def index
-    @companies = Company.find(:all, :conditions => {:user_id => getUserId()}, :order => "name")
+    @companies = Company.where(user_id: getUserId()).order("name")
     @path = 'customers'
     @pagetitle = "Customers"
   end
@@ -94,7 +94,7 @@ class CustomersController < ApplicationController
   def create
     @pagetitle = "New customer"
     
-    @customer = Customer.new(params[:customer])
+    @customer = Customer.new(customer_params)
     
     @company = Company.find(params[:customer][:company_id])
 
@@ -142,4 +142,11 @@ class CustomersController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  
+    private
+
+    def customer_params
+      params.require(:customer).permit(:company_id,:email,:phone1,:phone2,:address1,:address2,:city,:state,:zip,:country,:comments,:account,:taxable,:name)
+    end
+
 end

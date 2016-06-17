@@ -1,11 +1,12 @@
 include UsersHelper
 
 class CompanyUsersController < ApplicationController
-  before_filter :checkLogin
+  before_filter :authenticate_user!
+
   
   # Autocomplete users
   def ac_users
-    @users = User.find(:all, :conditions => ["username LIKE ? OR email LIKE ?", "%" + params[:q] + "%", "%" + params[:q] + "%"])
+    @users = User.where(["username LIKE ? OR email LIKE ?", "%" + params[:q] + "%", "%" + params[:q] + "%"])
    
     render :layout => false
   end
@@ -15,8 +16,8 @@ class CompanyUsersController < ApplicationController
     @company = Company.find(params[:company_id])
     @pagetitle = "#{@company.name} - Locations"
   
-    if(@company.can_view(getUser()))
-      @company_users = CompanyUser.find(:all, :conditions => {:company_id => @company.id})
+    if(@company.can_view(current_user))
+      @company_users = CompanyUser.where(company_id: @company.id)
     else
       errPerms()
     end
@@ -38,13 +39,16 @@ class CompanyUsersController < ApplicationController
   # GET /company_users/new.xml
   def new
     @company_user = CompanyUser.new
-    @company = Company.find(params[:company_id])
-    @company_user[:company_id] = @company[:id]
+
+    #@company = Company.find(params[:company_id])
+    #@company = Company.find(params[:company_id])
+
+    #@company_user[:company_id] = @company[:id]
     
     # Check package limits
-    @users_left_i = getUser().users_left
-    @users_left = getUser().print_users_left
-    @users_left_class = getUser().users_left_class
+    @users_left_i = current_user.users_left
+    @users_left = current_user.print_users_left
+    @users_left_class = current_user.users_left_class
   end
 
   # GET /company_users/1/edit
@@ -55,12 +59,12 @@ class CompanyUsersController < ApplicationController
   # POST /company_users
   # POST /company_users.xml
   def create
-    @company_user = CompanyUser.new(params[:company_user])
-    @company = Company.find(params[:company_user][:company_id])
+    @company_user = CompanyUser.new(company_user_params)
+    #@company = Company.find(params[:company_user][:company_id])
     
-    @users_left_i = getUser().users_left
-    @users_left = getUser().print_users_left
-    @users_left_class = getUser().users_left_class
+    @users_left_i = current_user.users_left
+    @users_left = current_user.print_users_left
+    @users_left_class = current_user.users_left_class
     
     # Check package limits
     if(@users_left_i <= 0 and @users_left_i > -1000)
@@ -119,4 +123,11 @@ class CompanyUsersController < ApplicationController
     
     redirect_to("/companies/company_users/" + company_id.to_s)
   end
+
+  private  
+  def company_user_params
+    params.require(:company_user).permit(:company_id,:user_id)
+  end
+
+
 end

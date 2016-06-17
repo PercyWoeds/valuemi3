@@ -2,28 +2,36 @@ include UsersHelper
 include CompaniesHelper
 
 class ProductsController < ApplicationController
-  before_filter :checkLogin, :checkCompanies
+  before_filter :authenticate_user!, :checkCompanies
   
+  def import
+     Product.import(params[:file])
+      redirect_to root_url, notice: "categories importadas."
+  end 
+
+
   # Autocomplete for products
   def ac_products
-    @products = Product.find(:all, :conditions => ["company_id = ? AND (code LIKE ? OR name LIKE ?)", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])
+    @products = Product.where(["company_id = ? AND (code LIKE ? OR name LIKE ?)", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])
    
     render :layout => false
   end
   
   # Autocomplete for categories
   def ac_categories
-    @categories = ProductsCategory.find(:all, :conditions => ["company_id = ? AND category LIKE ?", params[:company_id], "%" + params[:q] + "%"])
-    
+    @categories = ProductsCategory.where(["company_id = ? AND category LIKE ?", params[:company_id], "%" + params[:q] + "%"])
+
     render :layout => false
   end
+
+ 
   
   # List products for a company
   def list_products
     @company = Company.find(params[:company_id])
     @pagetitle = "#{@company.name} - Products"
   
-    if(@company.can_view(getUser()))
+    if(@company.can_view(current_user))
       if(params[:restock])
         @products = Product.paginate(:page => params[:page], :order => 'name', :conditions => ["company_id = ? AND quantity <= reorder", @company.id])
         @view_restock = true
@@ -36,9 +44,9 @@ class ProductsController < ApplicationController
         
           query = str_sql_search(q, fields)
         
-          @products = Product.paginate(:page => params[:page], :order => 'name', :conditions => ["company_id = ? AND (#{query})", @company.id])
+          @products = Product.where(["company_id = ? AND (#{query})", @company.id]).paginate(:page => params[:page]) 
         else
-          @products = Product.paginate(:page => params[:page], :order => 'name', :conditions => {:company_id => @company.id})
+          @products = Product.where(company_id: @company.id).paginate(:page => params[:page])
         end
       end
     else
@@ -49,7 +57,7 @@ class ProductsController < ApplicationController
   # GET /products
   # GET /products.xml
   def index
-    @companies = Company.find(:all, :conditions => {:user_id => getUserId()}, :order => "name")
+    @companies = Company.where(user_id: current_user.id).order("name")
     @path = 'products'
     @pagetitle = "Products"
   end
@@ -94,7 +102,7 @@ class ProductsController < ApplicationController
       @product[:tax3] = 0
     end
     
-    if(not @company.can_view(getUser()))
+    if(not @company.can_view(current_user))
       errPerms()
     end
   end
@@ -113,7 +121,7 @@ class ProductsController < ApplicationController
   def create
     @pagetitle = "New product"
     
-    @product = Product.new(params[:product])
+    @product = Product.new(products_params)
     @company = Company.find(params[:product][:company_id])
     @suppliers = @company.get_suppliers()
     
@@ -129,7 +137,7 @@ class ProductsController < ApplicationController
       @product[:tax3] = 0
     end
     
-    if(@company.can_view(getUser()))
+    if(@company.can_view(current_user))
       respond_to do |format|
         if @product.save
           
@@ -157,7 +165,7 @@ class ProductsController < ApplicationController
     @suppliers = @company.get_suppliers()
 
     respond_to do |format|
-      if @product.update_attributes(params[:product])
+      if @product.update_attributes(products_params)
         format.html { redirect_to(@product, :notice => 'Product was successfully updated.') }
         format.xml  { head :ok }
       else
@@ -173,7 +181,7 @@ class ProductsController < ApplicationController
     @product = Product.find(params[:id])
     
     # Erase from product kits
-    kits_products = KitsProduct.find(:all, :conditions => {:product_id => @product[:id]})
+    kits_products = KitsProduct.where(product_id:  @product[:id])
     
     for product in kits_products
       product.destroy
@@ -187,4 +195,18 @@ class ProductsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
+  def who_bought
+  @product = Product.find(params[:id])
+  respond_to do |format|
+  format.atom
+  end
+  end
+  private
+  def products_params
+    params.require(:product).permit(:code, :name, :category, :supplier_id, :cost,:price,:tax1_name, :tax1,:tax2_name,:tax2, :tax3_name,:tax3 ,:quantity,:reorder,:description,:comments,:company_id)
+  end
+  
+
+
 end

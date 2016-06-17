@@ -33,7 +33,7 @@ class ProductsKit < ActiveRecord::Base
   end
   
   def products
-    kits_products = KitsProduct.find(:all, :conditions => {:product_kit_id => self.id})
+    kits_products = KitsProduct.where(product_kit_id: self.id)
     products = []
     
     for kp in kits_products

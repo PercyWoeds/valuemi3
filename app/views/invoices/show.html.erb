@@ -70,22 +70,22 @@
     </tr>
   </thead>
   <tbody>
-    <% for product in @invoice.get_products() %>
+    <% for productItem in @invoice.get_products() %>
       <tr>
         <td class="bordered_bottom bordered_right">
-          <%= link_to product.full_name, product %>
+          <%= link_to productItem.name   %>
         </td>
         <td class="bordered_bottom bordered_right">
-          $<%= money(product.curr_price) %>
+          $<%= money(productItem.price) %>
         </td>
         <td class="bordered_bottom bordered_right">
-          <%= product.curr_quantity %>
+          <%= productItem.quantity %>
         </td>
         <td class="bordered_bottom bordered_right">
-          <%= money(product.curr_discount) %>%
+          <%= money(productItem.discount) %>%
         </td>
         <td class="bordered_bottom bordered_right">
-          $<%= money(product.curr_total) %>
+          $<%= money(productItem.total) %>
         </td>
       </tr>
     <% end %>

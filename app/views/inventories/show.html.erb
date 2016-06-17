@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Category:</strong>
+  <%= @inventory.category_id %>
+</p>
+
+<p>
+  <strong>Tot logical:</strong>
+  <%= @inventory.tot_logical %>
+</p>
+
+<p>
+  <strong>Tot physical:</strong>
+  <%= @inventory.tot_physical %>
+</p>
+
+<p>
+  <strong>Comments:</strong>
+  <%= @inventory.comments %>
+</p>
+
+<%= link_to 'Edit', edit_inventory_path(@inventory) %> |
+<%= link_to 'Back', inventories_path %>

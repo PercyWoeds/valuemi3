@@ -2,15 +2,15 @@ include UsersHelper
 include CompaniesHelper
 
 class DivisionsController < ApplicationController
-  before_filter :checkLogin, :checkCompanies
+  before_filter :authenticate_user!, :checkCompanies
   
   # Show division for a company
   def list_divisions
     @company = Company.find(params[:company_id])
     @pagetitle = "#{@company.name} - Divisions"
   
-    if(@company.can_view(getUser()))
-      @divisions = Division.find(:all, :conditions => {:company_id => @company.id}, :order => "name")
+    if(@company.can_view(current_user))
+      @divisions = Division.where(company_id:  @company.id).order("name")
     else
       errPerms()
     end
@@ -19,7 +19,7 @@ class DivisionsController < ApplicationController
   # GET /divisions
   # GET /divisions.xml
   def index
-    @companies = Company.find(:all, :conditions => {:user_id => getUserId()}, :order => "name")
+    @companies = Company.where(user_id: current_user.id).order("name")
     @path = 'divisions'
     @pagetitle = "Divisions"
   end
@@ -59,7 +59,7 @@ class DivisionsController < ApplicationController
   def create
     @pagetitle = "New division"
     
-    @division = Division.new(params[:division])
+    @division = Division.new(division_params)
     
     @company = Company.find(params[:division][:company_id])
     @division.company_id = @company.id
@@ -89,7 +89,7 @@ class DivisionsController < ApplicationController
     @locations = @company.get_locations()
 
     respond_to do |format|
-      if @division.update_attributes(params[:division])
+      if @division.update_attributes(division_params)
         format.html { redirect_to(@division, :notice => 'Division was successfully updated.') }
         format.xml  { head :ok }
       else
@@ -111,4 +111,9 @@ class DivisionsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  def division_params
+    params.require(:division).permit(:company_id,:location_id,:name,:description)  
+  end
+  
+
 end

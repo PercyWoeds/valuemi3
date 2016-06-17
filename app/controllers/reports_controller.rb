@@ -1,7 +1,7 @@
 include UsersHelper
 
 class ReportsController < ApplicationController
-  before_filter :checkLogin
+  before_filter :authenticate_user!
   
   # Report profits monthly
   def monthly_profits

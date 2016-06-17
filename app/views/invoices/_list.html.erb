@@ -26,7 +26,7 @@
       <% for invoice in @invoices %>
         <tr>
           <td class="bordered_right bordered_bottom">
-            <%= link_to invoice.code, invoice, :title => "Go to invoice" %>
+            <%= link_to invoice.code, invoice, :title => "Ir a factura" %>
           </td>
           <td class="bordered_right bordered_bottom">
             <%= link_to invoice.customer.name, invoice.customer, :title => "Go to customer" %>

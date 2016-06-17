@@ -16,12 +16,13 @@ class UsersController < ApplicationController
     if params[:user]
       params[:user][:level] = "user"
       old_password = params[:user][:password]
-      @user = User.new(params[:user])
+      @user = User.new(user_params)
       
       respond_to do |format|
         if @user.save
           # Hash password
-          @user.password = Digest::MD5.hexdigest(getSalt() + params[:user][:password])
+          #@user.password = Digest::MD5.hexdigest(getSalt() + params[:user][:password])
+          @user.password = params[:user][:password]
           @user.save
           
           if(@next)
@@ -66,8 +67,8 @@ class UsersController < ApplicationController
     end
     
     if params[:user]
-      @user = User.find(:first, :conditions => ["username = ? AND password = ?", params[:user][:username], Digest::MD5.hexdigest(getSalt() + params[:user][:password])])
-      
+       #@user = User.where(username: params[:user][:username], password: Digest::MD5.hexdigest(getSalt() + params[:user][:password]))  
+      @user = User.where(username: params[:user][:username], password:  params[:user][:password])  
       if @user
         doLogin(@user)
         
@@ -176,4 +177,10 @@ class UsersController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
+  private
+  def user_params
+    params.require(:user).permit(:username, :email, :password, :salt, :encrypted_password,:first_name,:last_name, :level  )
+  end
+
 end

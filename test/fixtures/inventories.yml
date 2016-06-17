@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  category_id: 1
+  tot_logical: 1.5
+  tot_physical: 1.5
+  comments: MyText
+
+two:
+  category_id: 1
+  tot_logical: 1.5
+  tot_physical: 1.5
+  comments: MyText

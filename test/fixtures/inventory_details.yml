@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  product_id: 1
+  cost: 1.5
+  logical: 1
+  phisycal: 1
+  comments: MyText
+
+two:
+  product_id: 1
+  cost: 1.5
+  logical: 1
+  phisycal: 1
+  comments: MyText

@@ -15,24 +15,24 @@
 <div class="mid_box bordered_right">
   <%= form_for(@invoice) do |f| %>
     <h3>
-      Invoice Information
+       Informacion Factura 
     </h3>
 
     <div class="field">
-      <label for="ac_customer" class="bold">Customer*</label><br />
+      <label for="ac_customer" class="bold">Cliente*</label><br />
       <input type="text" name="ac_customer" id="ac_customer" value="<% if @ac_customer %><%= @ac_customer %><% end %>" />
       
       <div class="small">
-        <a href="#" onclick="createCustomerInvoice(); return false;">+ Create new customer</a>
+        <a href="#" onclick="createCustomerInvoice(); return false;">+ Crear nuevo cliente</a>
       </div>
 
       <div class="small">
-        Enter a search term to find a customer.
+        Ingrese una termino de busqueda para encontrar un cliente.
       </div>
       <br />
 
       <div class="small">
-        <strong>Selected customer:</strong>
+        <strong>Seleccionar cliente:</strong>
         <span id="selected_customer"><% if @ac_customer %><%= @ac_customer %><% else %><!-- i --><% end %></span>
       </div>
     </div>
@@ -95,16 +95,8 @@
   
     <%= hr() %>
   
-    <div class="field">
-      <%= f.label :description %><br />
-      <%= f.text_area :description %>
-    </div>
   
-    <div class="field">
-      <%= f.label :comments %><br />
-      <%= f.text_area :comments %>
-    </div>
-  
+    
     <%= hr() %>
   
     <div class="actions">
@@ -123,7 +115,7 @@
 
 <div class="mid_box">
   <h3>
-    Add Products to Invoice
+    Agregar Productos  a la factura 
   </h3>
   
   <form method="get" action="/products" onsubmit="addItemToInvoice(); return false;">
@@ -132,28 +124,28 @@
     <strong>Product:</strong><br />
     <input type="text" name="ac_item" id="ac_item" value="" />
     <div class="small">
-      Enter a search term to find a product.
+      Ingrese un termino de busqueda para encontrar un producto.
     </div>
     <br />
     
     <strong>Price:</strong><br />
     <input type="text" name="ac_item_price" id="ac_item_price" value="" class="tf_short" />
     <div class="small">
-      Price of the product to add to the invoice.
+      Precio del  producto para agregar una factura.
     </div>
     <br />
     
     <strong>Quantity:</strong><br />
     <input type="text" name="ac_item_quantity" id="ac_item_quantity" value="1" class="tf_short" />
     <div class="small">
-      Quantity of the product to add to the invoice.
+     Cantidad del producto para agregar una factura.
     </div>
     <br />
     
     <strong>Discount %:</strong><br />
     <input type="text" name="ac_item_discount" id="ac_item_discount" value="0" class="tf_short" />
     <div class="small">
-      Discount % of the product to add to the invoice.
+      Descuento % del producto para agregar una factura.
     </div>
     <br />
     
@@ -163,13 +155,13 @@
     </div>
     
     <br />
-    <input type="submit" value="Add product to invoice" />
+    <input type="submit" value="Agregar item a Factura" />
   </form>
   
   <%= hr() %>
   
   <h3>
-    Add Product Kit to Invoice
+    Agregar Productos Kit a Factura
   </h3>
   
   <form method="get" action="/products_kits" onsubmit="addKitToInvoice(); return false;">
@@ -177,15 +169,15 @@
     
     <strong>Product kit:</strong><br />
     <input type="text" name="ac_kit" id="ac_kit" value="" />
-    <div class="small">
-      Enter a search term to find a product kit.
+    <div class="small">      
+      Ingrese un termino de busqueda para encontrar un producto Kit.
     </div>
     <br />
     
     <strong>Discount %:</strong><br />
     <input type="text" name="ac_kit_discount" id="ac_kit_discount" value="0" class="tf_short" />
     <div class="small">
-      Discount % of the kit to add to the invoice.
+      Descuento % del producto Kit  para agregar una factura.
     </div>
     <br />
     
@@ -257,6 +249,7 @@
     });
     
     <% if @products_lines %>
+    alert 'holas products_lines';
       listItemsInvoice();
     <% end %>
   });

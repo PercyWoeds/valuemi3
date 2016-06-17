@@ -2,14 +2,14 @@ include UsersHelper
 include CompaniesHelper
 
 class SuppliersController < ApplicationController
-  before_filter :checkLogin, :checkCompanies
+  before_filter :authenticate_user!, :checkCompanies
   
   # Show suppliers for a company
   def list_suppliers
     @company = Company.find(params[:company_id])
     @pagetitle = "#{@company.name} - Suppliers"
   
-    if(@company.can_view(getUser()))
+    if(@company.can_view(current_user))
       if(params[:q] and params[:q] != "")
         fields = ["email", "name"]
 
@@ -20,7 +20,7 @@ class SuppliersController < ApplicationController
 
         @suppliers = Supplier.paginate(:page => params[:page], :order => 'name', :conditions => ["company_id = ? AND (#{query})", @company.id])
       else
-        @suppliers = Supplier.paginate(:page => params[:page], :order => "name", :conditions => {:company_id => @company.id})
+        @suppliers = Supplier.where(company_id: @company.id).paginate(:page => params[:page])
       end
     else
       errPerms()
@@ -51,7 +51,7 @@ class SuppliersController < ApplicationController
     if(params[:company_id])
       @company = Company.find(params[:company_id])
     
-      if(@company.can_view(getUser()))
+      if(@company.can_view(current_user))
         @supplier = Supplier.new
         @supplier.company_id = @company.id
       else
@@ -75,7 +75,7 @@ class SuppliersController < ApplicationController
     @pagetitle = "New supplier"
     
     @company = Company.find(params[:supplier][:company_id])
-    @supplier = Supplier.new(params[:supplier])
+    @supplier = Supplier.new(supplier_params)
 
     respond_to do |format|
       if @supplier.save
@@ -127,4 +127,11 @@ class SuppliersController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  def supplier_params
+    params.require(:supplier).permit(:name, :email, :phone1, :phone2, :address1,:address2,:city, :state,:zip,:country,:comments,:company_id )    
+
+  end
+  
+  
+
 end

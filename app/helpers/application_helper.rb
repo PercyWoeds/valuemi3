@@ -1,6 +1,6 @@
 module ApplicationHelper
   def getAppName()
-    return 'mnygo'
+    return 'wds'
   end
   
   def getAppJustUrl()
@@ -12,7 +12,7 @@ module ApplicationHelper
   end
   
   def getAppEmail()
-    return 'info@mnygo.com'
+    return 'info@wds.com'
   end
   
   def getAppVersion()

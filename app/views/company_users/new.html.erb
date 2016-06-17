@@ -1,7 +1,7 @@
 <div class="breadcrumbs">
   <%= link_to "My companies", "/companies" %> &raquo;
-  <%= link_to @company.name, @company %> &raquo;
-  <%= link_to "Company users", "/companies/company_users/#{@company.id}" %>
+  
+  <%= link_to "Company users", "/companies" %>
 </div>
 
 <h1>
@@ -23,5 +23,5 @@
 <%= render 'form' %>
 
 <div class="button">
-  <%= link_to 'Back', "/companies/company_users/#{@company.id}" %>
+  <%= link_to 'Back', "/companies" %>
 </div>

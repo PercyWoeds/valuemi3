@@ -11,7 +11,7 @@
         </div>
         <div class="metadata">
           <%= link_to "View", company %>
-          <% if(company.own(@session_user)) %>
+          <% if(company.own(current_user)) %>
             &#183;
             <%= link_to "Edit", edit_company_path(company) %> &#183;
             <%= link_to "Delete", company, :confirm => 'Are you sure?', :method => :delete %>
@@ -23,10 +23,10 @@
   </div>
 <% else %>
   <p class="error">
-    You have not yet created any companies.  You can <%= link_to "create one", "/companies/new" %> now.
+    You have not yet created any companies.  You can <%= link_to "create one", new_company_path  %> now.
   </p>
 <% end %>
 
 <div class="button">
-  <%= link_to "New company", "/companies/new" %>
+  <%= link_to "New company", new_company_path %>
 </div>

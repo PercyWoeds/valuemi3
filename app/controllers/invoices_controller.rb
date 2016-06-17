@@ -3,7 +3,7 @@ include CustomersHelper
 include ProductsHelper
 
 class InvoicesController < ApplicationController
-  before_filter :checkLogin, :checkProducts
+  before_filter :authenticate_user!, :checkProducts
   
   # Add kit to invoice
   def add_kit
@@ -72,6 +72,8 @@ class InvoicesController < ApplicationController
         discount = parts[3]
         
         product = Product.find(id.to_i)
+        puts product.all
+
         product[:i] = i
         product[:quantity] = quantity.to_i
         product[:price] = price.to_f
@@ -93,28 +95,28 @@ class InvoicesController < ApplicationController
   
   # Autocomplete for product kits
   def ac_kit
-    @kits = ProductsKit.find(:all, :conditions => ["company_id = ? AND (name LIKE ? OR description LIKE ?)", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])
+    @kits = ProductsKit.where(["company_id = ? AND (name LIKE ? OR description LIKE ?)", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])
     
     render :layout => false
   end
   
   # Autocomplete for products
   def ac_products
-    @products = Product.find(:all, :conditions => ["company_id = ? AND (code LIKE ? OR name LIKE ?)", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])
+    @products = Product.where(["company_id = ? AND (code LIKE ? OR name LIKE ?)", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])
    
     render :layout => false
   end
   
   # Autocomplete for users
   def ac_user
-    company_users = CompanyUser.find(:all, :conditions => {:company_id => params[:company_id]})
+    company_users = CompanyUser.where(company_id: params[:company_id])
     user_ids = []
     
     for cu in company_users
       user_ids.push(cu.user_id)
     end
     
-    @users = User.find(:all, :conditions => ["id IN (#{user_ids.join(",")}) AND (email LIKE ? OR username LIKE ?)", "%" + params[:q] + "%", "%" + params[:q] + "%"])
+    @users = User.where(["id IN (#{user_ids.join(",")}) AND (email LIKE ? OR username LIKE ?)", "%" + params[:q] + "%", "%" + params[:q] + "%"])
     alr_ids = []
     
     for user in @users
@@ -122,7 +124,7 @@ class InvoicesController < ApplicationController
     end
     
     if(not alr_ids.include?(getUserId()))
-      @users.push(getUser())
+      @users.push(current_user)
     end
    
     render :layout => false
@@ -130,7 +132,7 @@ class InvoicesController < ApplicationController
   
   # Autocomplete for customers
   def ac_customers
-    @customers = Customer.find(:all, :conditions => ["company_id = ? AND (email LIKE ? OR name LIKE ?)", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])
+    @customers = Customer.where(["company_id = ? AND (email LIKE ? OR name LIKE ?)", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])
    
     render :layout => false
   end
@@ -141,8 +143,8 @@ class InvoicesController < ApplicationController
     @pagetitle = "#{@company.name} - Invoices"
     @filters_display = "block"
     
-    @locations = Location.find(:all, :conditions => {:company_id => @company.id}, :order => "name ASC")
-    @divisions = Division.find(:all, :conditions => {:company_id => @company.id}, :order => "name ASC")
+    @locations = Location.where(company_id: @company.id).order("name ASC")
+    @divisions = Division.where(company_id: @company.id).order("name ASC")
     
     if(params[:location] and params[:location] != "")
       @sel_location = params[:location]
@@ -152,7 +154,7 @@ class InvoicesController < ApplicationController
       @sel_division = params[:division]
     end
   
-    if(@company.can_view(getUser()))
+    if(@company.can_view(current_user))
       if(params[:ac_customer] and params[:ac_customer] != "")
         @customer = Customer.find(:first, :conditions => {:company_id => @company.id, :name => params[:ac_customer].strip})
         
@@ -188,7 +190,7 @@ class InvoicesController < ApplicationController
 
           @invoices = Invoice.paginate(:page => params[:page], :order => 'id DESC', :conditions => ["company_id = ? AND (#{query})", @company.id])
         else
-          @invoices = Invoice.paginate(:page => params[:page], :conditions => {:company_id => @company.id}, :order => "id DESC")
+          @invoices = Invoice.where(company_id:  @company.id).order("id DESC").paginate(:page => params[:page])
           @filters_display = "none"
         end
       end
@@ -200,7 +202,7 @@ class InvoicesController < ApplicationController
   # GET /invoices
   # GET /invoices.xml
   def index
-    @companies = Company.find(:all, :conditions => {:user_id => getUserId()}, :order => "name")
+    @companies = Company.where(user_id: current_user.id).order("name")
     @path = 'invoices'
     @pagetitle = "Invoices"
   end
@@ -214,6 +216,7 @@ class InvoicesController < ApplicationController
 
   # GET /invoices/new
   # GET /invoices/new.xml
+  
   def new
     @pagetitle = "New invoice"
     @action_txt = "Create"
@@ -256,7 +259,7 @@ class InvoicesController < ApplicationController
     
     items = params[:items].split(",")
     
-    @invoice = Invoice.new(params[:invoice])
+    @invoice = Invoice.new(invoice_params)
     
     @company = Company.find(params[:invoice][:company_id])
     
@@ -294,6 +297,7 @@ class InvoicesController < ApplicationController
       end
     end
   end
+  
 
   # PUT /invoices/1
   # PUT /invoices/1.xml
@@ -350,4 +354,9 @@ class InvoicesController < ApplicationController
       format.html { redirect_to("/companies/invoices/" + company_id.to_s) }
     end
   end
+  private
+  def invoice_params
+    params.require(:invoice).permit(:company_id,:location_id,:division_id,:customer_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id)
+  end
+
 end

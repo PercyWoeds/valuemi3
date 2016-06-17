@@ -23,7 +23,7 @@ class Company < ActiveRecord::Base
     if(self.own(user))
       return true
     else
-      company_user = CompanyUser.find(:first, :conditions => {:company_id => self.id, :user_id => user.id})
+      company_user = CompanyUser.where(company_id:  self.id, user_id:  user.id)
       
       if(company_user)
         return true
@@ -32,7 +32,7 @@ class Company < ActiveRecord::Base
   end
   
   def get_suppliers()
-    suppliers = Supplier.find(:all, :conditions => {:company_id => self.id}, :order => "name ASC")
+    suppliers = Supplier.where(company_id: self.id).order("name ASC")
     suppliers = suppliers.map {|s| [s.name, s.id]}
     suppliers_f = [["", nil]]
     suppliers_f += suppliers
@@ -42,7 +42,7 @@ class Company < ActiveRecord::Base
   end
   
   def get_locations()
-    locations = Location.find(:all, :conditions => {:company_id => self.id}, :order => "name ASC")
+    locations = Location.where(company_id: self.id).order("name ASC")
     locations = locations.map {|s| [s.name, s.id]}
     locations_f = [["", nil]]
     locations_f += locations
@@ -52,7 +52,7 @@ class Company < ActiveRecord::Base
   end
   
   def get_divisions()
-    divisions = Division.find(:all, :conditions => {:company_id => self.id}, :order => "name ASC")
+    divisions = Division.where(company_id:  self.id).order("name ASC")
     divisions = divisions.map {|s| [s.name, s.id]}
     divisions_f = [["", nil]]
     divisions_f += divisions
@@ -62,29 +62,29 @@ class Company < ActiveRecord::Base
   end
   
   def get_last_tax_name(tax_number)
-    product = Product.find(:last, :conditions => {:company_id => self.id})
+    product = Product.where(company_id: self.id)
     
-    if(product)
+    if(product.any?)
       if(tax_number == 1)
-        return product.tax1_name
+        return product[0].tax1_name
       elsif(tax_number == 2)
-        return product.tax2_name
+        return product[0].tax2_name
       else
-        return product.tax3_name
+        return product[0].tax3_name
       end
     end
   end
   
   def get_last_tax(tax_number)
-    product = Product.find(:last, :conditions => {:company_id => self.id})
-    
-    if(product)
+    product = Product.where(company_id: self.id)
+
+    if(product.any?)
       if(tax_number == 1)
-        return product.tax1
+        return product[0].tax1
       elsif(tax_number == 2)
-        return product.tax2
+        return product[0].tax2
       else
-        return product.tax3
+        return product[0].tax3
       end
     end
   end
@@ -158,7 +158,7 @@ class Company < ActiveRecord::Base
     year = date_arr[0]
     month = date_arr[1]
     
-    invoices = Invoice.find(:all, :conditions => ["invoices.return = '0' AND company_id = ? AND date_processed >= ? AND date_processed <= ? AND processed = '1'", self.id, "#{date} 00:00:00", "#{year}-#{month}-31 23:59:59"])
+    invoices = Invoice.where(["invoices.return = '0' AND company_id = ? AND date_processed >= ? AND date_processed <= ? AND processed = '1'", self.id, "#{date} 00:00:00", "#{year}-#{month}-31 23:59:59"])
     ret = 0
     
     for invoice in invoices
@@ -176,7 +176,7 @@ class Company < ActiveRecord::Base
   
   # Get subtotal made from invoices in an exact date
   def get_invoices_value_exact_date(date, value)
-    invoices = Invoice.find(:all, :conditions => ["invoices.return = '0' AND company_id = ? AND date_processed >= ? AND date_processed <= ? AND processed = '1'", self.id, "#{date} 00:00:00", "#{date} 23:59:59"])
+    invoices = Invoice.where(["invoices.return = '0' AND company_id = ? AND date_processed >= ? AND date_processed <= ? AND processed = '1'", self.id, "#{date} 00:00:00", "#{date} 23:59:59"])
     ret = 0
     
     for invoice in invoices
@@ -210,7 +210,7 @@ class Company < ActiveRecord::Base
   
   # Return value for user
   def get_invoices_value_user(user, year, value = "total")
-    invoices = Invoice.find(:all, :conditions => ["invoices.return = '0' AND company_id = ? AND user_id = ? AND date_processed >= ? AND date_processed <= ?", self.id, user.id, "#{year}-01-01 00:00:00", "#{year}-12-31 23:59:59"])
+    invoices = Invoice.where(["invoices.return = '0' AND company_id = ? AND user_id = ? AND date_processed >= ? AND date_processed <= ?", self.id, user.id, "#{year}-01-01 00:00:00", "#{year}-12-31 23:59:59"])
     ret = 0
     
     for invoice in invoices
@@ -228,7 +228,7 @@ class Company < ActiveRecord::Base
   
   # Return value for user in specific date
   def get_invoices_value_user_date(user, date, value)
-    invoices = Invoice.find(:all, :conditions => ["invoices.return = '0' AND company_id = ? AND user_id = ? AND date_processed >= ? AND date_processed <= ?", self.id, user.id, "#{date} 00:00:00", "#{date} 23:59:59"])
+    invoices = Invoice.where(["invoices.return = '0' AND company_id = ? AND user_id = ? AND date_processed >= ? AND date_processed <= ?", self.id, user.id, "#{date} 00:00:00", "#{date} 23:59:59"])
     ret = 0
     
     for invoice in invoices
@@ -246,14 +246,14 @@ class Company < ActiveRecord::Base
   
   # Return products for company
   def get_products()
-    products = Product.find(:all, :conditions => {:company_id => self.id})
+    products = Product.where(company_id: self.id)
     
     return products
   end
   
   # Return value for product
   def get_invoices_value_product(product, year, value)
-    invoices = Invoice.find(:all, :conditions => ["invoices.return = '0' AND company_id = ? AND date_processed >= ? AND date_processed <= ?", self.id, "#{year}-01-01 00:00:00", "#{year}-12-31 23:59:59"])
+    invoices = Invoice.where(["invoices.return = '0' AND company_id = ? AND date_processed >= ? AND date_processed <= ?", self.id, "#{year}-01-01 00:00:00", "#{year}-12-31 23:59:59"])
     ids = []
     
     for invoice in invoices
@@ -261,7 +261,7 @@ class Company < ActiveRecord::Base
     end
     
     begin
-      invoice_products = InvoiceProduct.find(:all, :conditions => ["product_id = ? AND invoice_id IN (#{ids.join(",")})", product.id])
+      invoice_products = InvoiceProduct.where(["product_id = ? AND invoice_id IN (#{ids.join(",")})", product.id])
     rescue
       return 0
     end
@@ -281,7 +281,7 @@ class Company < ActiveRecord::Base
   
   # Return value for product for exact date
   def get_invoices_value_product_date(product, date, value)
-    invoices = Invoice.find(:all, :conditions => ["invoices.return = '0' AND company_id = ? AND date_processed >= ? AND date_processed <= ?", self.id, "#{date} 00:00:00", "#{date} 23:59:59"])
+    invoices = Invoice.where(["invoices.return = '0' AND company_id = ? AND date_processed >= ? AND date_processed <= ?", self.id, "#{date} 00:00:00", "#{date} 23:59:59"])
     ids = []
     
     for invoice in invoices
@@ -289,7 +289,7 @@ class Company < ActiveRecord::Base
     end
     
     begin
-      invoice_products = InvoiceProduct.find(:all, :conditions => ["product_id = ? AND invoice_id IN (#{ids.join(",")})", product.id])
+      invoice_products = InvoiceProduct.where(["product_id = ? AND invoice_id IN (#{ids.join(",")})", product.id])
     rescue
       return 0
     end
@@ -309,14 +309,14 @@ class Company < ActiveRecord::Base
   
   # Get customers for Company
   def get_customers()
-    customers = Customer.find(:all, :conditions => {:company_id => self.id})
+    customers = Customer.where(company_id: self.id)
 
     return customers
   end
   
   # Get value for customer in year
   def get_invoices_value_customer(customer, year, value)
-    invoices = Invoice.find(:all, :conditions => ["invoices.return = '0' AND company_id = ? AND customer_id = ? AND date_processed >= ? AND date_processed <= ?", self.id, customer.id, "#{year}-01-01 00:00:00", "#{year}-12-31 23:59:59"])
+    invoices = Invoice.where(["invoices.return = '0' AND company_id = ? AND customer_id = ? AND date_processed >= ? AND date_processed <= ?", self.id, customer.id, "#{year}-01-01 00:00:00", "#{year}-12-31 23:59:59"])
     ret = 0
     
     for invoice in invoices
@@ -334,7 +334,7 @@ class Company < ActiveRecord::Base
 
   # Return value for customer in specific date
   def get_invoices_value_customer_date(customer, date, value)
-    invoices = Invoice.find(:all, :conditions => ["invoices.return = '0' AND company_id = ? AND customer_id = ? AND date_processed >= ? AND date_processed <= ?", self.id, customer.id, "#{date} 00:00:00", "#{date} 23:59:59"])
+    invoices = Invoice.where(["invoices.return = '0' AND company_id = ? AND customer_id = ? AND date_processed >= ? AND date_processed <= ?", self.id, customer.id, "#{date} 00:00:00", "#{date} 23:59:59"])
     ret = 0
     
     for invoice in invoices
@@ -352,14 +352,14 @@ class Company < ActiveRecord::Base
 
   # Get locations for company
   def get_report_locations()
-    locations = Location.find(:all, :conditions => {:company_id => self.id})
+    locations = Location.where(company_id: self.id)
 
     return locations
   end
 
   # Return value for location in year
   def get_invoices_value_location(location, year, value)
-    invoices = Invoice.find(:all, :conditions => ["invoices.return = '0' AND company_id = ? AND location_id = ? AND date_processed >= ? AND date_processed <= ?", self.id, location.id, "#{year}-01-01 00:00:00", "#{year}-12-31 23:59:59"])
+    invoices = Invoice.where(["invoices.return = '0' AND company_id = ? AND location_id = ? AND date_processed >= ? AND date_processed <= ?", self.id, location.id, "#{year}-01-01 00:00:00", "#{year}-12-31 23:59:59"])
     ret = 0
     
     for invoice in invoices
@@ -377,7 +377,7 @@ class Company < ActiveRecord::Base
   
   # Return value for location specific date
   def get_invoices_value_location_date(location, date, value)
-    invoices = Invoice.find(:all, :conditions => ["invoices.return = '0' AND company_id = ? AND location_id = ? AND date_processed >= ? AND date_processed <= ?", self.id, location.id, "#{date} 00:00:00", "#{date} 23:59:59"])
+    invoices = Invoice.where(["invoices.return = '0' AND company_id = ? AND location_id = ? AND date_processed >= ? AND date_processed <= ?", self.id, location.id, "#{date} 00:00:00", "#{date} 23:59:59"])
     ret = 0
     
     for invoice in invoices
@@ -395,14 +395,14 @@ class Company < ActiveRecord::Base
   
   # Returns divisions for company
   def get_report_divisions()
-    divisions = Division.find(:all, :conditions => {:company_id => self.id})
+    divisions = Division.where(company_id:  self.id)
 
     return divisions
   end
   
   # Return value for a division year
   def get_invoices_value_division(division, year, value)
-    invoices = Invoice.find(:all, :conditions => ["invoices.return = '0' AND company_id = ? AND division_id = ? AND date_processed >= ? AND date_processed <= ?", self.id, division.id, "#{year}-01-01 00:00:00", "#{year}-12-31 23:59:59"])
+    invoices = Invoice.where(["invoices.return = '0' AND company_id = ? AND division_id = ? AND date_processed >= ? AND date_processed <= ?", self.id, division.id, "#{year}-01-01 00:00:00", "#{year}-12-31 23:59:59"])
     ret = 0
     
     for invoice in invoices
@@ -420,7 +420,7 @@ class Company < ActiveRecord::Base
   
   # Return value for a division exact date
   def get_invoices_value_division_date(division, date, value)
-    invoices = Invoice.find(:all, :conditions => ["invoices.return = '0' AND company_id = ? AND division_id = ? AND date_processed >= ? AND date_processed <= ?", self.id, division.id, "#{date} 00:00:00", "#{date} 23:59:59"])
+    invoices = Invoice.where(["invoices.return = '0' AND company_id = ? AND division_id = ? AND date_processed >= ? AND date_processed <= ?", self.id, division.id, "#{date} 00:00:00", "#{date} 23:59:59"])
     ret = 0
     
     for invoice in invoices
@@ -442,7 +442,7 @@ class Company < ActiveRecord::Base
     year = date_arr[0]
     month = date_arr[1]
     
-    invoices = Invoice.find(:all, :conditions => ["invoices.return = '0' AND company_id = ? AND date_processed >= ? AND date_processed <= ?", self.id, "#{year}-#{month}-01 00:00:00", "#{year}-#{month}-31 23:59:59"])
+    invoices = Invoice.where(["invoices.return = '0' AND company_id = ? AND date_processed >= ? AND date_processed <= ?", self.id, "#{year}-#{month}-01 00:00:00", "#{year}-#{month}-31 23:59:59"])
     ret = 0
     
     for invoice in invoices
@@ -468,7 +468,7 @@ class Company < ActiveRecord::Base
   
   # Get profit, cost and taxes for a series of invoices in an exact date
   def get_ptc_value_exact_date(date, value)
-    invoices = Invoice.find(:all, :conditions => ["invoices.return = '0' AND company_id = ? AND date_processed >= ? AND date_processed <= ?", self.id, "#{date} 00:00:00", "#{date} 23:59:59"])
+    invoices = Invoice.where(["invoices.return = '0' AND company_id = ? AND date_processed >= ? AND date_processed <= ?", self.id, "#{date} 00:00:00", "#{date} 23:59:59"])
     ret = 0
     
     for invoice in invoices

@@ -2,7 +2,7 @@ include UsersHelper
 include CompaniesHelper
 
 class RestocksController < ApplicationController
-  before_filter :checkLogin, :checkCompanies
+  before_filter :authenticate_user!, :checkCompanies
   
   # Reprocess order
   def do_process
@@ -21,8 +21,8 @@ class RestocksController < ApplicationController
     
     @pagetitle = "#{@company.name} - #{@product.name} - Restock orders"
     
-    if(@company.can_view(getUser()))
-      @restocks = Restock.paginate(:page => params[:page], :order => 'id DESC', :conditions => {:product_id => @product[:id]})
+    if(@company.can_view(current_user))
+      @restocks = Restock.where(product_id: @product[:id]).order('id DESC').paginate(:page => params[:page])
     else
       errPerms()
     end
@@ -80,7 +80,7 @@ class RestocksController < ApplicationController
     
     @company = Company.find(params[:restock][:company_id])
     
-    @restock = Restock.new(params[:restock])
+    @restock = Restock.new(restock_params)
     
     @suppliers = @company.get_suppliers()
 
@@ -133,4 +133,10 @@ class RestocksController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  def restock_params
+    params.require(:restock).permit(:product_id, :supplier_id, :quantity, :when, :received,:comments,:company_id,:code,:already_processed)
+  end
+
+
+
 end

@@ -8,7 +8,7 @@ class PackagesController < ApplicationController
   def payment
     @pagetitle = 'Payment'
     @slug = params[:slug]
-    @package = Package.find(:first, :conditions => {:slug => @slug})
+    @package = Package.where(slug: @slug)
     
     if(not @package)
       flash[:error] = "We couldn't find the package you selected, please try again."
@@ -16,7 +16,7 @@ class PackagesController < ApplicationController
     end
     
     if(@slug == 'free')
-      @package.register(getUser())
+      @package[0].register(current_user.id)
       flash[:notice] = 'Thank you for signing up with ' + getAppName() + '!'
       redirect_to '/dashboard'
     end
@@ -27,8 +27,8 @@ class PackagesController < ApplicationController
     @pagetitle = 'Review plan information'
     @slug = params[:slug]
     
-    if(isLogged())
-      @package = Package.find(:first, :conditions => {:slug => @slug})
+    if user_signed_in?
+      @package = Package.where(slug: @slug)
       
       if(not @package)
         flash[:error] = "We couldn't find the package you selected, please try again."
@@ -43,7 +43,7 @@ class PackagesController < ApplicationController
   # Pricing
   def pricing
     @pagetitle = 'Pricing'
-    @packages = Package.find(:all, :order => 'price ASC')
+    @packages = Package.order('price ASC')
   end
   
   # GET /packages

@@ -83,7 +83,7 @@ class Invoice < ActiveRecord::Base
   end
   
   def delete_products()
-    invoice_products = InvoiceProduct.find(:all, :conditions => {:invoice_id => self.id})
+    invoice_products = InvoiceProduct.where(invoice_id: self.id)
     
     for ip in invoice_products
       ip.destroy
@@ -117,42 +117,33 @@ class Invoice < ActiveRecord::Base
   def identifier
     return "#{self.code} - #{self.customer.name}"
   end
-  
-  def get_products
-    products = []
-    invoice_products = InvoiceProduct.find(:all, :conditions => {:invoice_id => self.id})
-    
-    for ip in invoice_products
-      ip.product[:curr_price] = ip.price
-      ip.product[:curr_quantity] = ip.quantity
-      ip.product[:curr_discount] = ip.discount
-      ip.product[:curr_total] = ip.total
-      
-      products.push(ip.product)
-    end
-    
-    return products
+  def get_products    
+    @itemproducts = InvoiceProduct.find_by_sql(['Select invoice_products.price,invoice_products.quantity,invoice_products.discount,invoice_products.total,products.name  from invoice_products INNER JOIN products ON invoice_products.product_id = products.id where invoice_products.invoice_id = ?', self.id ])
+    puts self.id
+
+    return @itemproducts
   end
   
   def get_invoice_products
-    invoice_products = InvoiceProduct.find(:all, :conditions => {:invoice_id => self.id})
-    
+    invoice_products = InvoiceProduct.where(invoice_id:  self.id)    
     return invoice_products
   end
   
   def products_lines
     products = []
-    invoice_products = InvoiceProduct.find(:all, :conditions => {:invoice_id => self.id})
+    invoice_products = InvoiceProduct.where(invoice_id:  self.id)
     
-    for ip in invoice_products
-      ip.product[:curr_price] = ip.price
-      ip.product[:curr_quantity] = ip.quantity
-      ip.product[:curr_discount] = ip.discount
-      ip.product[:curr_total] = ip.total
-      
-      products.push("#{ip.product.id}|BRK|#{ip.product.curr_quantity}|BRK|#{ip.product.curr_price}|BRK|#{ip.product.curr_discount}")
+    invoice_products.each do | ip |
+
+      ip.product[:price] = ip.price
+      ip.product[:quantity] = ip.quantity
+      ip.product[:discount] = ip.discount
+      ip.product[:total] = ip.total
+      #products.push("#{ip.product.id}|BRK|#{ip.product.curr_quantity}|BRK|#{ip.product.curr_price}|BRK|#{ip.product.curr_discount}")
+      products.push("#{ip.product.id}|BRK|#{ip.product.quantity}|BRK|#{ip.product.price}|BRK|#{ip.product.discount}")
     end
-    
+
+
     return products.join(",")
   end
   
@@ -183,7 +174,7 @@ class Invoice < ActiveRecord::Base
   # Process the invoice
   def process
     if(self.processed == "1" or self.processed == true)
-      invoice_products = InvoiceProduct.find(:all, :conditions => {:invoice_id => self.id})
+      invoice_products = InvoiceProduct.where(invoice_id: self.id)
     
       for ip in invoice_products
         product = ip.product

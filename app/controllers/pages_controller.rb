@@ -6,21 +6,23 @@ class PagesController < ApplicationController
   def dashboard
     @pagetitle = "Dashboard"
     
-    if(not isLogged())
-      flash[:error] = 'You must sign up and log in to view your dashboard.'
-      redirect_to '/login?next=dashboard'
-    else
-      @pagetitle = 'Dashboard'
-      @user_package = UsersPackage.find(:first, :conditions => {:user_id => getUserId()})
-      @companies = getUser().get_companies()
-    
-      if(not @user_package)
-        flash[:error] = 'Please first pick a pricing plan.'
-        redirect_to '/pricing'
-      else
-        @next_package = Package.find(:first, :conditions => ["price > ?", @user_package.package.price])
-      end
-    end
+        @pagetitle = 'Dashboard'
+
+      unless (user_signed_in?)
+         flash[:error] = 'You must sign up and log in to view your dashboard.'
+         redirect_to '/login'
+       else
+
+        @user_package = UsersPackage.where(user_id: current_user.id)
+        @companies = current_user.get_companies()
+      
+        unless  @user_package.any?
+          flash[:error] = 'Please first pick a pricing plan.'
+          redirect_to '/pricing'
+        else
+          @next_package = Package.where( ["price > ?", @user_package[0].package.price])
+        end
+      end 
   end
   
   # Sube imagen rapido (ajax)

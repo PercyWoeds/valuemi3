@@ -1,56 +1,56 @@
 <div class="info">
   <div class="text">
     <h3>
-      Sign up now!
+      Registrate ahora!
     </h3>
 
     <p>
-      <%= link_to "Sign up", "/register" %> and start managing your sales with <strong><%= getAppName() %></strong>.
+      <%= link_to "Registrar", new_user_registration_path  %> y empieza a administrar tus ventas con <strong><%= getAppName() %></strong>.
     </p>
 
     <h3>
-      Questions?
+     Preguntas?
     </h3>
 
     <p>
-      Do you have any questions or comments?  <%= link_to "Contact us", "/contact" %>.
+      Tienes alguna pregunta o comentario ?  <%= link_to "Contact us", "/contact" %>.
     </p>
 
     <h3>
-      Our clients
+      Nuestros clientes
     </h3>
 
     <p>
-      You can read what <%= link_to "our clients", "/clients" %> are saying about us.
+      Tu puedes que dicen  <%= link_to "nuestros clientes ", "/clients" %> acerca de nosotros.
     </p>
   </div>
 </div>
 
 <% if @is_logged %>
   <p class="big">
-    Welcome back <strong><%= @session_user.username %></strong>.  Go to <%= link_to "my dashboard", "/dashboard" %>.
+    Bienvenido <strong><%= @session_user.username %></strong>.  Go to <%= link_to "mi dashboard",dashboard_pages_path %>.
   </p>
 <% end %>
 
 <h3>
-  What is <%= getAppName() %>?
+  Que es <%= getAppName() %>?
 </h3>
 
 <ul>
   <li>
-    It's an easy to use <strong>Point of Sale</strong> Webapp
+    Es una Webapp  <strong>Point of Sale</strong> facil de usar.
   </li>
   <li>
-    A simple way to manage your business' sales, clients, providers, products, services, etc
+    Una sencilla manera de administrar tu negocio ventas, clientes, proveedores, productos, servicios, etc
   </li>
   <li>
-    It provides a clear interface to view sales reports and analytics about your business
+    Proporciona una clara interface para visualizar tus ventas, reportes y analisis acerca de tu negocio
   </li>
   <li>
-    Manage your sales online, wherever you are, on any device
+    Administra tus ventas online, desde cualquier lugar y dispositivo movil.
   </li>
   <li>
-    And <%= link_to "much more", "/features" %>
+    y <%= link_to "mucho mas", "/features" %>
   </li>
 </ul>
 
