@@ -1,24 +1,154 @@
-<p id="notice"><%= notice %></p>
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @inventory.company.name, @inventory.company %> &raquo;
+  <%= link_to "Inventarios", "/companies/inventories/#{@inventory.company.id}" %>
+</div>
+
+<h1>
+  <%= image_tag("invoice_48.png", :class => "vmiddle") %>
+  <%= @inventory.identifier %>
+</h1>
+
+<%= hr() %>
+
+<% if @inventory.location %>
+  <p>
+    <b>Location:</b>
+    <%= link_to @inventory.location.name, @inventory.location %>
+  </p>
+<% end %>
+
+<% if @inventory.division %>
+  <p>
+    <b>Division:</b>
+    <%= link_to @inventory.division.name, @inventory.division %>
+  </p>
+<% end %>
+
+<%= hr() %>
+
+<%= @cantidad =  @inventory.get_products().count  %>
+<% if @cantidad > 0 %>
+<h3>
+  Details
+</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>
+        Product
+      </th>
+      <th>
+        Price
+      </th>
+      <th>
+        Quantity
+      </th>
+      <th>
+        Discount
+      </th>
+      <th>
+        Total
+      </th>
+    </tr>
+  </thead>
+
+   
+  <tbody>
+    <% for productItem in @inventory.get_products() %>
+      <tr>
+        <td class="bordered_bottom bordered_right">
+          <%= link_to productItem.name   %>
+        </td>
+        <td class="bordered_bottom bordered_right">
+          <%= money(productItem.cost) %>%
+        </td>
+        <td class="bordered_bottom bordered_right">
+          $<%= money(productItem.total) %>
+        </td>
+        <td class="bordered_bottom bordered_right">
+          $<%= money(productItem.logicalStock) %>
+        </td>
+        <td class="bordered_bottom bordered_right">
+          <%= productItem.physicalStock %>
+        </td>
+        
+      </tr>
+    <% end %>
+    <tr>
+      <td colspan="5" class="bordered_bottom bordered_right">
+        &nbsp;
+      </td>    
+    </tr>
+
+    
+    <tr>
+      <td colspan="4" class="bordered_bottom bordered_right bold">
+        Subtotal:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        $<%= money(@inventory.logicalStock) %>
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="4" class="bordered_bottom bordered_right bold">
+        Total:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        $<%= money(@inventory.physicalStock) %>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br />
+<% else %>
+    <b> No tiene items asignados </b> 
+<%end%>
+<%= hr() %>
+
+<% if @inventory.description != "" %>
+  <div>
+    <b>Description:</b>
+    <br />
+    <br />
+    <%= format_text(@inventory.description) %>
+  </div>
+  <%= hr() %>
+<% end %>
+
+<% if @inventory.comments != "" %>
+  <div>
+    <b>Comments:</b>
+    <br />
+    <br />
+    <%= format_text(@inventory.comments) %>
+  </div>
+  <%= hr() %>
+<% end %>
+
+<br />
+
+<div>
+  <strong><%= @inventory.get_processed %></strong>
+  <% if @inventory.processed == "1" and @inventory.date_processed %>
+    <%= doDate(@inventory.date_processed) %>
+  <% end %>
+</div>
+
 
 <p>
-  <strong>Category:</strong>
-  <%= @inventory.category_id %>
+  <strong>Creado por :</strong>
+  <%= link_to @inventory.user.username, @inventory.user %>
 </p>
 
-<p>
-  <strong>Tot logical:</strong>
-  <%= @inventory.tot_logical %>
-</p>
+<%= hr() %>
 
-<p>
-  <strong>Tot physical:</strong>
-  <%= @inventory.tot_physical %>
-</p>
-
-<p>
-  <strong>Comments:</strong>
-  <%= @inventory.comments %>
-</p>
-
-<%= link_to 'Edit', edit_inventory_path(@inventory) %> |
-<%= link_to 'Back', inventories_path %>
+<div class="button">
+  <%= link_to 'Export to PDF', "/inventories/pdf/#{@inventory.id}.pdf" %>
+  <%= link_to 'Add items por Categoria', "/inventories/email/#{@inventory.id}" %>
+  <%= link_to 'Process invoice', "/inventories/do_process/#{@inventory.id}" %>
+  <%= link_to 'Edit', "edit_inventories_path(@inventory)" %>
+  <%= link_to 'Back', "/companies/inventories/#{@inventory.company.id}" %>
+</div>

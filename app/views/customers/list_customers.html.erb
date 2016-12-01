@@ -5,7 +5,7 @@
 
 <h1>
   <%= image_tag("clients_48.png", :class => "vmiddle") %>
-  Customers
+  Clientes 
 </h1>
 
 <div class="small">
@@ -22,7 +22,16 @@
 <br />
 
 <div class="button">
-  <%= link_to 'New Customer', "/customers/new/#{@company.id}" %>
+  <%= link_to 'Nuevo Cliente', "/customers/new/#{@company.id}" %>
 </div>
+
+
+<h2>Importar Archivo clientes "*.csv"</h2>
+
+<%= form_tag import_customers_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Importar " %>
+<% end %>
+
 
 <%= will_paginate @customers %>

@@ -1,0 +1,38 @@
+<% if @company.ruc != "" %>
+  <p>
+    <b>RUC:</b>
+    <%= @company.ruc %>
+  </p>
+
+  <p>
+    <b>Razon Social :</b>
+    <%= @company.name %>
+  </p>
+
+<% end %>
+
+  <p>
+    <b>Direccion :</b>
+    <%= @company.address1 %>
+  </p>
+
+  <p>
+    <b>Distrito:</b>
+    <%= @company.address2 %>
+ </p>
+
+
+ <p>
+    <b>Provincia :</b>
+    <%= @company.city %>
+  </p>
+
+  <p>
+    <b>Departamento</b>		
+    <%= @company.state %>
+ </p>
+
+
+
+
+

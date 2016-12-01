@@ -1,0 +1,74 @@
+<% if @supplier.email != "" %>
+  <p>
+    <b>Email:</b>
+    <%= link_to @supplier.email, "mailto:#{@supplier.email}" %>
+  </p>
+<% end %>
+
+
+<% if @supplier.phone1 != "" %>
+  <p>
+    <b>Phone1:</b>
+    <%= @supplier.phone1 %>
+  </p>
+<% end %>
+
+<% if @supplier.phone2 != "" %>
+  <p>
+    <b>Phone2:</b>
+    <%= @supplier.phone2 %>
+  </p>
+<% end %>
+
+<% if @supplier.address1 != "" %>
+  <p>
+    <b>Address1:</b>
+    <%= @supplier.address1 %>
+  </p>
+<% end %>
+
+<% if @supplier.address2 != "" %>
+  <p>
+    <b>Address2:</b>
+    <%= @supplier.address2 %>
+  </p>
+<% end %>
+
+<% if @supplier.city != "" %>
+  <p>
+    <b>City:</b>
+    <%= @supplier.city %>
+  </p>
+<% end %>
+
+<% if @supplier.state != "" %>
+  <p>
+    <b>State:</b>
+    <%= @supplier.state %>
+  </p>
+<% end %>
+
+<% if @supplier.zip != "" %>
+  <p>
+    <b>Zip:</b>
+    <%= @supplier.zip %>
+  </p>
+<% end %>
+
+<% if @supplier.country != "" %>
+  <p>
+    <b>Country:</b>
+    <%= @supplier.country %>
+  </p>
+<% end %>
+
+<% if @supplier.comments != "" %>
+  <p>
+    <b>Comments:</b>
+    <%= @supplier.comments %>
+  </p>
+<% end %>
+
+<p>
+  <strong><%= @supplier.get_taxable %></strong>
+</p>

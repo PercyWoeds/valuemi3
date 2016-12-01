@@ -1,0 +1,62 @@
+<p class="bold big">
+  Detalle Guia :
+</p>
+
+
+  <table>
+    <thead>
+      <tr>
+        <th class="small bordered_bottom bordered_right">
+          Servicio
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          Costo 
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          Cantidad  
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          Unidad
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          Peso
+        </th>
+        
+        <th class="small bordered_bottom bordered_right">
+          Dscto.
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          Total
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for product in @products %>
+        <tr>
+          <td class="small bordered_bottom bordered_right" style="width: 220px;">
+            <a href="#" onclick="removeItemFromdelivery(<%= product.i %>); return false;" title="Remove product from delivery"><%= product.name %></a>
+            [<a href="#" onclick="removeItemFromdelivery(<%= product.i %>); return false;" title="Remove product from delivery">X</a>]
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            $<%= money(product.price) %>
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.quantity %>
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.unidad_id %>
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.peso  %>
+          </td>          
+          
+          <td class="small bordered_bottom bordered_right">
+            <%= money(product.discount) %>%
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            $<%= money(product.currtotal) %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>

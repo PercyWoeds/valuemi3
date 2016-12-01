@@ -103,7 +103,9 @@ class DivisionsController < ApplicationController
   # DELETE /divisions/1.xml
   def destroy
     @division = Division.find(params[:id])
+
     company_id = @location[:company_id]
+    
     @division.destroy
 
     respond_to do |format|

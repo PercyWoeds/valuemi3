@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  invoice2_id: 1
+  service_id: 1
+  price: 1.5
+  quantity: 1
+  discount: 1.5
+  total: 1.5
+
+two:
+  invoice2_id: 1
+  service_id: 1
+  price: 1.5
+  quantity: 1
+  discount: 1.5
+  total: 1.5

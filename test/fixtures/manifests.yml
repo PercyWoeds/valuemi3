@@ -1,0 +1,71 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  customer_id: 1
+  solicitante: MyString
+  fecha1: 2016-11-30 09:10:30
+  telefono1: MyString
+  camionetaqty: 1
+  camionetapeso: 1
+  camionqty: 1
+  camionpeso: 1
+  semiqty: 1
+  semipeso: 1
+  extenqty: 1
+  extenpeso: 1
+  camaqty: 1
+  camapeso: 1
+  modularqty: 1
+  modularpeso: 1
+  punto_id: 1
+  punto2_id: 1
+  fecha2: 2016-11-30 09:10:30
+  contacto1: MyString
+  telefono1: MyString
+  contacto2: MyString
+  telefono2: MyString
+  especificacion: MyText
+  largo: 1.5
+  ancho: 1.5
+  alto: 1.5
+  peso: 1
+  bultos: 1
+  otros: MyString
+  observa: MyText
+  observa2: MyText
+  company_id: 1
+
+two:
+  customer_id: 1
+  solicitante: MyString
+  fecha1: 2016-11-30 09:10:30
+  telefono1: MyString
+  camionetaqty: 1
+  camionetapeso: 1
+  camionqty: 1
+  camionpeso: 1
+  semiqty: 1
+  semipeso: 1
+  extenqty: 1
+  extenpeso: 1
+  camaqty: 1
+  camapeso: 1
+  modularqty: 1
+  modularpeso: 1
+  punto_id: 1
+  punto2_id: 1
+  fecha2: 2016-11-30 09:10:30
+  contacto1: MyString
+  telefono1: MyString
+  contacto2: MyString
+  telefono2: MyString
+  especificacion: MyText
+  largo: 1.5
+  ancho: 1.5
+  alto: 1.5
+  peso: 1
+  bultos: 1
+  otros: MyString
+  observa: MyText
+  observa2: MyText
+  company_id: 1

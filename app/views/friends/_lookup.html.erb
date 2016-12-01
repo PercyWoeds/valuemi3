@@ -1,0 +1,97 @@
+<div id="friend-lookup">
+
+<h3>Buscar guias </h3>
+
+<%= form_tag search_friends_path, remote: true, method: :get, id: 'friend-lookup-form' do %>
+
+<div class="form-group row no-padding text-center col-md-12">
+
+	<div class="col-md-10">
+
+		<%= text_field_tag :search_param,
+		params[:search_param],
+		placeholder: 'code',
+		autofocus: true,
+
+		class: 'form-control search-box input-lg' %>
+
+	</div>
+
+	<div class="col-md-2">
+
+		<%= button_tag(type: :submit, class: 'btn btn-lg btn-success') do %>
+		<i class='fa fa-search'></i> Buscar una guia
+	    <% end %>
+
+	</div>
+
+</div>
+
+<% end %>
+
+
+<%= hr() %>
+
+
+<% if @deliveries %>
+
+<% if @deliveries.size > 0 %>
+
+<h3>Resultados busqueda </h3>
+
+<div id="friend-lookup-results" class="well results-block col-md-10">
+
+<table class="search-results-table col-md-12">
+
+<tbody>
+
+<% @deliveries.each do |delivery| %>
+
+<tr>
+
+<td><strong>Numero :</strong> <%= delivery.code %></td>
+<td><strong>Descripcion :</strong> <%= delivery.description %></td>
+
+<% if delivery.not_friends_with?(delivery.id) %>
+
+<%= link_to "Agregar guia a manifiesto ", add_friend_path(declaration_delivery: @deliveries),
+
+class: 'btn btn-xs btn-success', method: :post %>
+
+<% else %>
+
+<span class='label label-primary'>
+
+Ya esta registrada
+
+</span>
+
+<% end %>
+
+</td>
+
+</tr>
+
+<% end %>
+
+</tbody>
+
+</table>
+
+</div>
+
+<% else %>
+
+<p class="lead col-md-12">
+
+No existen datos con ese criterio
+
+</p>
+
+<% end %>
+
+<% end %>
+
+<div id="friend-lookup-errors"></div>
+
+</div>

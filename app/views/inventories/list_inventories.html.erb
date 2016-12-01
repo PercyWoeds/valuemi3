@@ -27,7 +27,7 @@
   </div>
 
   <div>
-    <form method="get" action="/companies/inventories/<%= @company.id %>">
+    <form method="get" action="/companies/invoices/<%= @company.id %>">
       <div class="small">
         <strong>Location:</strong>
         <select name="location" class="small">
@@ -51,7 +51,7 @@
   </div>
   
   <div>
-    <form method="get" action="/companies/inventories/<%= @company.id %>">
+    <form method="get" action="/companies/invoices/<%= @company.id %>">
       <div class="small">
         <strong>Customer:</strong>
         <input type="text" name="ac_customer" id="ac_customer" value="<% if @customer %><%= @customer.name %><% end %>" class="small" style="width: 235px;" />
@@ -61,7 +61,7 @@
   </div>
   
   <div class="button">
-    <a href="/companies/inventories/<%= @company.id %>" class="small_btn">Clear filters</a>
+    <a href="/companies/invoices/<%= @company.id %>" class="small_btn">Clear filters</a>
   </div>
 </div>
 
@@ -71,7 +71,7 @@
 <br />
 
 <div class="button">
-  <%= link_to 'Nuevo inventario', "/inventories/new/#{@company.id}" %>
+  <%= link_to 'New Invoice', "/inventories/new/#{@company.id}" %>
 </div>
 
 <%= will_paginate @invoices %>
@@ -80,7 +80,7 @@
 
 <script type="text/javascript">
   $(document).ready(function() {
-    $("#ac_customer").autocomplete("/inventories/ac_customers/<%= @company.id %>", {
+    $("#ac_customer").autocomplete("/invoices/ac_customers/<%= @company.id %>", {
 			matchSubset: 1,
 			matchContains: 1,
       selectFirst: false

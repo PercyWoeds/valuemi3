@@ -20,6 +20,7 @@ end
         <% end %>
       </div>
     <% end %>
+    
     <% if(session_company = get_session_company()) %>
       <%= link_to (session_company.name + ' <img src="/images/arrow_down_8.png" alt="" />').html_safe, session_company, :class => "dropdown", :id => "dropdown_company" %> &#183;
       <div id="menu_company" class="dropdown_menu">

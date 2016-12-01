@@ -1,3 +1,11 @@
+<% if @customer.ruc != "" %>
+  <p>
+    <b>RUC:</b>
+    <%= @customer.ruc %>
+  </p>
+<% end %>
+
+
 <% if @customer.email != "" %>
   <p>
     <b>Email:</b>

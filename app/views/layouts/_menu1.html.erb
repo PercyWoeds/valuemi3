@@ -1,0 +1,189 @@
+<div class="mid_box bordered_right">
+
+  <h3>
+    <%= image_tag("products_32.png", :class => "vmiddle") %>
+
+  </h3>
+  <p>
+    Agregar, editar or eliminar las compras de combustibles que tu negocio ofrece.
+  </p>
+
+  <%= hr() %>
+
+  
+  <h3>
+    <%= image_tag("products_32.png", :class => "vmiddle") %>
+    <%= link_to "Productos", "/companies/products/#{@company.id}" %>
+  </h3>
+
+  <p>
+    Agregar, editar or eliminar los productos o servicios  que tu negocio ofrece.
+  </p>
+
+  <%= hr() %>
+
+  <h3>
+    <%= image_tag("product_kit_32.png", :class => "vmiddle") %>
+    <%= link_to "Productos kits", "/companies/products_kits/#{@company.id}" %>
+  </h3>
+
+  <p>
+   Agregar, editar or eliminar kits de productos (grupos of productos).
+  </p>
+
+  <%= hr() %>
+
+  <h3>
+    <%= image_tag("product_category_32.png", :class => "vmiddle") %>
+    <%= link_to "Categorias", "/companies/products_categories/#{@company.id}" %>
+  </h3>
+
+  <p>
+     Agregar, editar or eliminar las categorias para tus productos.
+  </p>
+
+
+  <%= hr() %>
+
+  <h3>
+    <%= image_tag("invoice_32.png", :class => "vmiddle") %>
+    <%= link_to "Inventarios", "/companies/inventories/#{@company.id}" %>
+  </h3>
+
+  <p>
+     Agregar, editar or eliminar facturas para tu negocio.
+  </p>
+
+
+  <%= hr() %>
+
+  <h3>
+    <%= image_tag("invoice_32.png", :class => "vmiddle") %>
+    <%= link_to "Facturas", "/companies/invoices/#{@company.id}" %>
+  </h3>
+
+  <p>
+     Agregar, editar or eliminar facturas para tu negocio.
+  </p>
+  
+  <%= hr() %>
+
+  
+  <h3>
+    <%= image_tag("employees_32.png", :class => "vmiddle") %>
+    <%= link_to "Usuarios", "/companies/company_users/#{@company.id}" %>
+  </h3>
+
+  <p>
+     Agregar, editar or eliminar usuarios que tienen acceso a tu negocio.
+  </p>
+</div>
+
+<div class="mid_box">
+  <h3>
+        <div>
+          <%= image_tag("clients_32.png", :class => "vmiddle") %>
+          <%= link_to "Punto de Venta ", "/companies/stores/#{@company.id}" %>
+        </div>
+  </h3>
+  <p>
+     Agregar, editar or eliminar ordenes de venta 
+  </p>
+
+<%= hr() %>
+  <h3>
+        <div>
+          <%= image_tag("clients_32.png", :class => "vmiddle") %>
+          <%= link_to "Orders ", orders_path %>
+        </div>
+  </h3>
+  <p>
+     Agregar, editar or eliminar ordenes de venta 
+  </p>
+
+<%= hr() %>
+
+  <h3>
+    <%= image_tag("clients_32.png", :class => "vmiddle") %>
+    <%= link_to "Clientes", "/companies/customers/#{@company.id}" %>
+  </h3>
+
+  <p>
+     Agregar, editar or eliminar clientes para tu negocio.
+  </p>
+
+  <%= hr() %>
+
+  <h3>
+    <%= image_tag("supplier_32.png", :class => "vmiddle") %>
+    <%= link_to "Proveedores", "/companies/suppliers/#{@company.id}" %>
+  </h3>
+
+  <p>
+     Agregar, editar or eliminar proveedores para tu negocio.
+  </p>
+  <%= hr() %>
+
+  <h3>
+    <%= image_tag("products_button_tank.png", :class => "vmiddle") %>
+    <%= link_to "Tanques", "/companies/tanks/#{@company.id}" %>
+  </h3>
+
+  <p>
+     Agregar, editar or eliminar proveedores para tu negocio.
+  </p>
+  <%= hr() %>
+
+  <h3>
+    <%= image_tag("products_button_fuelpumps.png", :class => "vmiddle") %>
+    <%= link_to "Surtidores", "/companies/pumps/#{@company.id}" %>
+  </h3>
+
+  <p>
+     Agregar, editar or eliminar proveedores para tu negocio.
+  </p>
+
+  <%= hr() %>
+
+  <h3>
+    <%= image_tag("supplier_32.png", :class => "vmiddle") %>
+    <%= link_to "Empleados", "/companies/employees/#{@company.id}" %>
+  </h3>
+
+  <p>
+     Agregar, editar or eliminar proveedores para tu negocio.
+  </p>
+
+
+  <%= hr() %>
+
+  <h3>
+    <%= image_tag("locations_32.png", :class => "vmiddle") %>
+    <%= link_to "Ubicaciones", "/companies/locations/#{@company.id}" %>
+  </h3>
+
+  <p>
+     Agregar, editar or eliminar ubicaciones,sucursales, oficinas or subsidiarias.
+  </p>
+
+  <%= hr() %>
+
+  <h3>
+    <%= image_tag("divisions_32.png", :class => "vmiddle") %>
+    <%= link_to "Divisiones", "/companies/divisions/#{@company.id}" %>
+  </h3>
+
+  <p>
+     Agregar, editar or eliminar divisiones de tu negocio(tablas, secciones, etc).
+  </p>
+  
+  <%= hr() %>
+  
+  <h3>
+    <%= image_tag("reports_32.png", :class => "vmiddle") %>
+    <%= link_to "Reportes", "/companies/reports/#{@company.id}" %>
+  </h3>
+
+  <p>
+    Reportes de tu negocio.
+  </p>

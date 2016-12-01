@@ -57,7 +57,7 @@ function hideLoading() {
 	$("#loading").fadeOut("fast");
 }
 
-// Shows or hides a div
+// Shows or hides aa div
 function toggle(id) {
   if($("#" + id).css("display") == "none") {
     $("#" + id).css("display", "block");
@@ -206,13 +206,80 @@ function updateItemTotal() {
   }
 }
 
+
 // Add an item to a product kit
 function addItemToInvoice() {
   var item = $("#ac_item").val();
-
+  
   if(item != "") {
-
     var company_id = $("#invoice_company_id").val();
+    var item_id = $("#ac_item_id").val();
+    
+    var quantity = $("#ac_item_quantity").val();
+    var price = $("#ac_item_price").val();
+    var discount = $("#ac_item_discount").val();    
+    var items_arr = $("#items").val().split(",");
+
+    if(quantity == "" || !isNumeric(quantity)) {
+      alert("Please enter a valid quantity");
+    } else if(price == "" || !isNumeric(price)) {
+      alert("Please enter a valid price");
+    } else if(discount == "" || !isNumeric(discount)) {
+      alert("Please enter a valid discount");
+    } else {
+      var item_line = item_id + "|BRK|" + quantity + "|BRK|" + price + "|BRK|" + discount;
+      
+      $("#items").val($("#items").val() + "," + item_line);
+      listItemsInvoice();
+      
+      $("#ac_item_id").val("");
+      $("#ac_item").val("");
+      $("#ac_item_quantity").val("1");
+      $("#ac_item_price").val("");
+      $("#ac_item_discount").val("0");
+      updateItemTotal();
+    }
+  } else {
+    alert("Please find a product to add first.");
+  }
+}
+
+// List items in a kit
+function listItemsInvoice() {
+  var items = $("#items").val();
+  var company_id = $("#invoice_company_id").val();
+  
+  $.get('/invoices/list_items/' + company_id, {
+    items: items
+  },
+  function(data) {
+    $("#list_items").html(data);
+    documentReady();
+  });
+}
+
+// Update price total for invoice
+function updateItemTotal2() {
+  var quantity = $("#ac_item_quantity").val();
+  var price = $("#ac_item_price").val();
+  var discount = $("#ac_item_discount").val();
+  
+  if(isNumeric(quantity) && isNumeric(price) && isNumeric(discount)) {
+    var total = quantity * price;
+    total -= total * (discount / 100);
+
+    $("#ac_item_total").html("$" + total);
+  } else {
+    $("#ac_item_total").html("$0.00");
+  }
+}
+
+// Add an item to a product kit
+function addItemToInvoice2() {
+  var item = $("#ac_item").val();
+  
+  if(item != "") {
+    var company_id = $("#factura_company_id").val();
     var item_id = $("#ac_item_id").val();
     
     var quantity = $("#ac_item_quantity").val();
@@ -231,28 +298,105 @@ function addItemToInvoice() {
       var item_line = item_id + "|BRK|" + quantity + "|BRK|" + price + "|BRK|" + discount;
       
       $("#items").val($("#items").val() + "," + item_line);
-
-      listItemsInvoice();
+      listItemsInvoice2();
       
       $("#ac_item_id").val("");
       $("#ac_item").val("");
       $("#ac_item_quantity").val("1");
       $("#ac_item_price").val("");
       $("#ac_item_discount").val("0");
-      updateItemTotal();
-    
+      updateItemTotal2();
     }
   } else {
-    alert("Por favor busque un product para agregar primero.");
+    alert("Please find a product to add first.");
   }
 }
 
 // List items in a kit
-function listItemsInvoice() {
+function listItemsInvoice2() {
   var items = $("#items").val();
-  var company_id = $("#invoice_company_id").val();
+  var company_id = $("#factura_company_id").val();
   
-  $.get('/invoices/list_items/' + company_id, {
+  $.get('/facturas/list_items/' + company_id, {
+    items: items
+  },
+  function(data) {
+    $("#list_items").html(data);
+    documentReady();
+  });
+}
+
+
+// Update price total for invoice
+function updateItemdelivery() {
+  var quantity = $("#ac_item_quantity").val();
+  var price = $("#ac_item_price").val();
+  var discount = $("#ac_item_discount").val();
+  
+  if(isNumeric(quantity) && isNumeric(price) && isNumeric(discount)) {
+    var total = quantity * price;
+    total -= total * (discount / 100);
+
+    $("#ac_item_total").html(total);
+  } else {
+    $("#ac_item_total").html("$0.00");
+  }
+}
+
+// Add an item to a product kit
+function addItemTodelivery() {
+  var item = $("#ac_item").val();
+  
+ if(item != "") {
+    var company_id = $("#delivery_company_id").val();
+    var item_id = $("#ac_item_id").val();
+        
+    var quantity = $("#ac_item_quantity").val();
+    var price    = $("#ac_item_price").val();    
+    var discount = $("#ac_item_discount").val();
+    var unidad   = $("#ac_item_unidad").val();
+    var peso     = $("#ac_item_peso").val();
+
+    var items_arr = $("#items").val().split(",");
+
+    if(quantity == "" || !isNumeric(quantity)) {
+      alert("Please enter a valid quantity");
+    } else if(price == "" || !isNumeric(price)) {
+      alert("Please enter a valid price");
+    } else if(discount == "" || !isNumeric(discount)) {
+      alert("Please enter a valid discount");
+    } else if(peso == "" || !isNumeric(peso)) {
+      alert("Please enter a valid discount");
+    } else {
+
+  var item_line = item_id + "|BRK|" + quantity + "|BRK|" + unidad+"|BRK|" + peso+"|BRK|" + price + "|BRK|" + discount;
+      
+      $("#items").val($("#items").val() + "," + item_line);
+
+      listItemsdelivery();
+      
+
+      $("#ac_item_id").val("");
+      $("#ac_item").val("");
+      $("#ac_item_quantity").val("1");
+      $("#ac_item_price").val("");
+      $("#ac_item_discount").val("0");
+      $("#ac_item2").val("");
+      $("#ac_item_peso").val("0");
+      updateItemdelivery();
+      
+    }
+  } else {
+    alert("Please find a product to add first.");
+  }
+}
+
+// List items in a kit
+function listItemsdelivery() {
+  var items = $("#items").val();
+  var company_id = $("#delivery_company_id").val();
+  
+  $.get('/deliveries/list_items/' + company_id, {
     items: items
   },
   function(data) {
@@ -295,6 +439,40 @@ function removeItemFromInvoice(id) {
   
   $("#items").val(items_final.join(","));
   listItemsInvoice();
+}
+// Removes an item from an invoice
+function removeItemFromInvoice2(id) {
+  var items = $("#items").val();
+  var items_arr = items.split(",");
+  var items_final = Array();
+  var i = 0;
+  
+  while(i < items_arr.length) {
+    if(i != id) {
+      items_final[i] = items_arr[i];
+    }
+    i++;
+  }
+  
+  $("#items").val(items_final.join(","));
+  listItemsInvoice2();
+}
+// Removes an item from an invoice
+function removeItemFromdelivery(id) {
+  var items = $("#items").val();
+  var items_arr = items.split(",");
+  var items_final = Array();
+  var i = 0;
+  
+  while(i < items_arr.length) {
+    if(i != id) {
+      items_final[i] = items_arr[i];
+    }
+    i++;
+  }
+  
+  $("#items").val(items_final.join(","));
+  listItemsdelivery();
 }
 
 // Shortcut to create new customer form

@@ -9,22 +9,17 @@ class ProductsController < ApplicationController
       redirect_to root_url, notice: "categories importadas."
   end 
 
-
   # Autocomplete for products
   def ac_products
     @products = Product.where(["company_id = ? AND (code LIKE ? OR name LIKE ?)", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])
-   
     render :layout => false
   end
   
   # Autocomplete for categories
   def ac_categories
     @categories = ProductsCategory.where(["company_id = ? AND category LIKE ?", params[:company_id], "%" + params[:q] + "%"])
-
     render :layout => false
-  end
-
- 
+  end 
   
   # List products for a company
   def list_products
@@ -33,7 +28,7 @@ class ProductsController < ApplicationController
   
     if(@company.can_view(current_user))
       if(params[:restock])
-        @products = Product.paginate(:page => params[:page], :order => 'name', :conditions => ["company_id = ? AND quantity <= reorder", @company.id])
+        @products = Product.where(["company_id = ? AND quantity <= reorder", @company.id]).paginate(:page => params[:page])
         @view_restock = true
       else
         if(params[:q] and params[:q] != "")
@@ -204,7 +199,7 @@ class ProductsController < ApplicationController
   end
   private
   def products_params
-    params.require(:product).permit(:code, :name, :category, :supplier_id, :cost,:price,:tax1_name, :tax1,:tax2_name,:tax2, :tax3_name,:tax3 ,:quantity,:reorder,:description,:comments,:company_id)
+    params.require(:product).permit(:code, :name, :category, :supplier_id, :cost,:price,:price2,:tax1_name, :tax1,:tax2_name,:tax2, :tax3_name,:tax3 ,:quantity,:reorder,:description,:comments,:company_id)
   end
   
 

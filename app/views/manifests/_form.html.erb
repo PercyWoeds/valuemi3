@@ -1,0 +1,237 @@
+<%= simple_form_for(@manifest) do |f| %>
+  <%= f.error_notification %>
+
+
+  
+    <div class="field">  
+        <%= f.label :customer_id , "Cliente*", :class => "bold" %><br />
+        <%= f.select :customer_id,options_from_collection_for_select(@customers,'id','name') %>
+    </div>  
+    
+    <div class="field">  
+    <%= f.input :fecha1 %>
+    </div>
+
+    <div class="field">  
+        <%= f.label :solicitante, "Solicitante. *", :class => "bold" %><br />
+        <%= f.text_field :solicitante %>        
+    </div>
+
+    <div class="field">  
+
+        <%= f.label :telefono1, "Teléfono *", :class => "bold" %><br />
+        <%= f.text_field :telefono1 %>
+        
+    </div>
+
+    <%= hr() %>
+
+    <h3>
+       Carga
+    </h3>
+  
+    <h4>
+       Unidades a utilizar:
+    </h4>
+
+<table>
+    <thead>
+      <tr>
+        <th class="small bordered_bottom bordered_right">
+          Unidades
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          Cantidad
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          Capacidad
+        </th>        
+      </tr>
+    </thead>
+    <tbody>
+      
+     
+        <tr>
+          <td class="small bordered_bottom bordered_right">        
+            <p> Camioneta  </p>
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= f.text_field :camionqty %>        
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= f.text_field :camionpeso %>
+          </td>          
+        </tr>
+
+        <tr>
+          <td class="small bordered_bottom bordered_right">        
+            <p> Semitrayler  </p>
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= f.text_field :semiqty %>        
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= f.text_field :semipeso %>
+          </td>          
+        </tr>
+        <tr>
+          <td class="small bordered_bottom bordered_right">        
+            <p> Extensible  </p>
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= f.text_field :extenqty %>        
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= f.text_field :extenpeso %>
+          </td>          
+        </tr>
+
+        <tr>
+          <td class="small bordered_bottom bordered_right">        
+            <p> Cama baja  </p>
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= f.text_field :camaqty %>        
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= f.text_field :camapeso %>
+          </td>          
+        </tr>
+         <tr>
+          <td class="small bordered_bottom bordered_right">        
+            <p> Modular  </p>
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= f.text_field :modularqty %>        
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= f.text_field :modularpeso %>
+          </td>          
+        </tr>
+      
+    </tbody>
+  </table>
+
+      <%= hr() %>
+
+  <h3>
+       Del Transporte:
+  </h3>
+
+    <div class="field">  
+        <%= f.label :punto_id, "Punto de Partida *", :class => "bold" %><br />
+        <%= f.select :punto_id,options_from_collection_for_select(@puntos,'id','name') %>
+    </div>
+  
+    <div class="field">  
+        <%= f.label :punto2_id, "Punto de llegada *", :class => "bold" %><br />
+        <%= f.select :punto2_id,options_from_collection_for_select(@puntos,'id','name') %>
+    </div>
+    <div class="field">  
+    <%= f.input :fecha2 %>
+    </div>
+
+    <div class="field">  
+
+        <%= f.label :contacto1, "Contacto1 *", :class => "bold" %><br />
+        <%= f.text_field :contacto1 %>        
+    </div>
+
+    <div class="field">  
+
+        <%= f.label :telefono1, "Telefono 1 *", :class => "bold" %><br />
+        <%= f.text_field :telefono1 %>        
+    </div>
+
+    
+    <div class="field">  
+        <%= f.label :contacto2, "Contacto 2 *", :class => "bold" %><br />
+        <%= f.text_field :contacto2 %>
+    </div>    
+
+    <div class="field">  
+        <%= f.label :telefono2, "Telefono 2 *", :class => "bold" %><br />
+        <%= f.text_field :telefono2 %>        
+    
+    </div>
+
+    <%= hr() %>
+    <h3>
+    Carga suelta y Otros:
+    </h3>
+
+
+    <div class="field">  
+        <%= f.label :especificacion, "Especificacion*", :class => "bold" %><br />
+        <%= f.text_field :especificacion %>
+
+    </div>
+
+    <div class="field">  
+    
+<table>
+    <thead>
+      <tr>
+        <th class="small bordered_bottom bordered_right">
+          Carga
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          
+        </th>        
+      </tr>
+    </thead>
+    <tbody>
+      
+     
+        <tr>
+          <td class="small bordered_bottom bordered_right">
+                <%= f.input :largo %>
+          </td>
+          <td class="small bordered_bottom bordered_right">
+                <%= f.input :ancho %>
+          </td>          
+          <td class="small bordered_bottom bordered_right">
+               <%= f.input :alto %>
+          </td>          
+        </tr>
+
+
+        <tr>
+          <td class="small bordered_bottom bordered_right">        
+            <%= f.input :peso %>        
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= f.input :bultos %>        
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= f.input :otros  %>
+          </td>          
+        </tr>
+        
+      
+    </tbody>
+  </table>
+
+    <div class="field">  
+        <%= f.label :observa, "Observaciones", :class => "bold" %><br />
+        <%= f.text_field :observa %>
+
+    </div>
+    <%= hr() %>
+
+    <div class="field">  
+        <%= f.label :observa2, "Observaciones ", :class => "bold" %><br />
+        <%= f.text_field :observa2 %>
+
+    </div>
+
+  
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+
+<% end %>

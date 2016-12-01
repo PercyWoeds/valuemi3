@@ -12,6 +12,7 @@ class InventoryDetailsController < ApplicationController
   def show
   end
 
+  
   # GET /inventory_details/new
   def new
     @inventory_detail = InventoryDetail.new
@@ -69,6 +70,6 @@ class InventoryDetailsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def inventory_detail_params
-      params.require(:inventory_detail).permit(:product_id, :cost, :logical, :phisycal, :comments)
+      params.require(:inventory_detail).permit(:inventory_id, :product_id, :logicalStock, :physicalStock, :cost, :price, :totallogical, :totalphysical)
     end
 end

@@ -4,38 +4,6 @@
 
 <%= hr() %>
 
-<h2>
-  Mi plan actual 
-</h2>
-
-<p>
-  <strong>Plan:</strong>
-  <%= @user_package[0].package.title %>
-  <% if @user_package[0].package.slug != 'free' %>
-    <br />
-    <strong>Start date:</strong>
-    <%= doDate(@user_package[0].start_date, 3) %>
-    <br />
-    <strong>End date:</strong>
-    <%= doDate(@user_package[0].end_date, 3) %>
-  <% end %>
-</p>
-
-<% if @next_package %>
-  <h3>
-    Actualiza tu plan!
-  </h3>
-  
-  <p>
-    <%= link_to "Actualiza tu plan ahora ", "/pricing" %> y  toma accede a todas las ventajas de todos los beneficios de nuestras mejores ofertas.
-  </p>
-  
-  <div class="button">
-    <%= link_to "Actualizar plan", "/pricing" %>
-  </div>
-<% end %>
-
-<%= hr() %>
 
 <h2>
   <%= image_tag("company_48.png", :class => "vmiddle") %>

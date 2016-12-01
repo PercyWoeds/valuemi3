@@ -1,1 +1,1 @@
-json.extract! @inventory, :id, :category_id, :tot_logical, :tot_physical, :comments, :created_at, :updated_at
+json.extract! @inventory, :id, :company_id, :location_id, :division, :description, :comments, :category_id, :logicalStock, :physicalStock, :cost, :total, :processed, :date_processed, :user_id, :created_at, :updated_at

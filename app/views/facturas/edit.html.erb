@@ -1,0 +1,24 @@
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %> &raquo;
+  <%= link_to "Facturas", "/companies/facturas/#{@company.id}" %> &raquo;
+  <%= link_to @invoice.identifier, @invoice %>
+</div>
+
+<h1>
+  <%= image_tag("invoice_48.png", :class => "vmiddle") %>
+  Editar Factura
+</h1>
+
+<p>
+  Para modificar factura, por favor llene el siguiente formulario. Los campos marcadaos con  <strong>*</strong> son requeridos.
+</p>
+
+<%= render 'form' %>
+
+<%= hr() %>
+
+<div class="button">
+  <%= link_to 'Show', @invoice %>
+  <%= link_to 'Back', "/companies/facturas/#{@company.id}" %>
+</div>

@@ -1,0 +1,66 @@
+<% if @inventory_details.count > 0 %>
+  <table>
+    <thead>
+      <tr>
+        <th class="bordered_right bordered_bottom" style="width: 100px;">
+          Inventory
+        </th>
+        <th class="bordered_right bordered_bottom" style="width: 350px;">
+          Producto
+        </th>
+        <th class="bordered_right bordered_bottom">
+          Stock Logico
+        </th>
+        <th class="bordered_right bordered_bottom">
+          Stock Fisico
+        </th>
+        <th class="bordered_right bordered_bottom">
+          Costo
+        </th>
+        <th class="bordered_right bordered_bottom">
+          Precio
+        </th>
+        
+        <th class="bordered_right bordered_bottom" colspan="3">
+          Options
+        </th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <% for inventory  in @inventories_details %>
+        <tr>
+          <td class="bordered_right bordered_bottom">
+            <%= link_to inventory_details.id, inventory_details, :title => "Ir a inventario" %>
+          </td>
+          <td class="bordered_right bordered_bottom">
+            <%= link_to inventory_details.product_id.name , :title => "Ir a Producto" %>
+          </td>
+          <td class="bordered_right bordered_bottom right">
+            $<%= money(inventory_details.logicalStock) %>
+          </td>
+          <td class="bordered_right bordered_bottom">
+            <%= doDate(inventory_details.physicalStock) %>
+          </td>
+          <td class="bordered_right bordered_bottom <%= invoice.processed_color %>">
+            <%= inventory_details.cost %>
+          </td>
+
+          <td class="bordered_right bordered_bottom">
+            <%= link_to "View", inventory_details %>
+          </td>
+          <td class="bordered_right bordered_bottom">
+            <%= link_to "Edit", edit_inventory_path(inventory_details) %>
+          </td>
+          <td class="bordered_right bordered_bottom">
+            <%= link_to 'Delete', inventory_details, :confirm => 'Esta seguro de eliminar?', :method => :delete %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p class="error">
+    no podemos encontrar ningun  inventario.
+  </p>
+<% end %>

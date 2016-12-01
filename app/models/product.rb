@@ -1,6 +1,7 @@
 class Product < ActiveRecord::Base
   self.per_page = 20
   
+  
   validates_presence_of :name, :cost, :price, :company_id
   validates_numericality_of :cost, :price, :tax1, :tax2, :tax3
   
@@ -10,9 +11,15 @@ class Product < ActiveRecord::Base
   has_many :kits_products
   has_many :restocks
   has_many :invoice_products
+  has_many :purchase_details
   has_many :line_items
   has_many :orders, through: :line_items
   before_destroy :ensure_not_referenced_by_any_line_item
+
+def self.search(query)
+# where(:title, query) -> This would return an exact match of the query
+where("name  like ?", "%#{query}%")
+end
 
 
   def self.import(file)

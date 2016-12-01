@@ -5,6 +5,14 @@ class CustomersController < ApplicationController
   before_filter :authenticate_user!, :checkCompanies
   
   # Show customers for a company
+
+   def import
+ 
+      Customer.import(params[:file])
+       redirect_to root_url, notice: "Clientes importadas."
+  end 
+  
+
   def list_customers
     @company = Company.find(params[:company_id])
     @pagetitle = "#{@company.name} - Customers"
@@ -120,7 +128,7 @@ class CustomersController < ApplicationController
     @company = Company.find(@customer[:company_id])
 
     respond_to do |format|
-      if @customer.update_attributes(params[:customer])
+      if @customer.update_attributes(customer_params)
         format.html { redirect_to(@customer, :notice => 'Customer was successfully updated.') }
         format.xml  { head :ok }
       else
@@ -146,7 +154,7 @@ class CustomersController < ApplicationController
     private
 
     def customer_params
-      params.require(:customer).permit(:company_id,:email,:phone1,:phone2,:address1,:address2,:city,:state,:zip,:country,:comments,:account,:taxable,:name)
+      params.require(:customer).permit(:company_id,:email,:phone1,:phone2,:address1,:address2,:city,:state,:zip,:country,:comments,:account,:taxable,:name,:ruc)
     end
 
 end

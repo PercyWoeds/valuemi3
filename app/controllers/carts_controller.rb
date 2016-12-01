@@ -9,7 +9,7 @@ class CartsController < ApplicationController
     
     @carts = Cart.all
         
-
+        
   end
 
   # GET /carts/1
@@ -33,6 +33,10 @@ class CartsController < ApplicationController
 
   # GET /carts/new
   def new
+
+    @company = Company.find(params[:company_id])
+
+
     @cart = Cart.new
   end
 
@@ -76,8 +80,10 @@ class CartsController < ApplicationController
     @cart = current_cart
     @cart.destroy
     session[:cart_id] = nil
+
     respond_to do |format|
-    format.html { redirect_to invoices_path }
+    format.html { redirect_to store_url,
+      notice: 'Your cart is currently empty' }
     format.json { head :no_content }
     end
   end

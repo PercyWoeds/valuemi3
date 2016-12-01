@@ -1,8 +1,23 @@
 <p id="notice"><%= notice %></p>
 
 <p>
+  <strong>Inventory:</strong>
+  <%= @inventory_detail.inventory_id %>
+</p>
+
+<p>
   <strong>Product:</strong>
   <%= @inventory_detail.product_id %>
+</p>
+
+<p>
+  <strong>Logicalstock:</strong>
+  <%= @inventory_detail.logicalStock %>
+</p>
+
+<p>
+  <strong>Physicalstock:</strong>
+  <%= @inventory_detail.physicalStock %>
 </p>
 
 <p>
@@ -11,18 +26,18 @@
 </p>
 
 <p>
-  <strong>Logical:</strong>
-  <%= @inventory_detail.logical %>
+  <strong>Price:</strong>
+  <%= @inventory_detail.price %>
 </p>
 
 <p>
-  <strong>Phisycal:</strong>
-  <%= @inventory_detail.phisycal %>
+  <strong>Totallogical:</strong>
+  <%= @inventory_detail.totallogical %>
 </p>
 
 <p>
-  <strong>Comments:</strong>
-  <%= @inventory_detail.comments %>
+  <strong>Totalphysical:</strong>
+  <%= @inventory_detail.totalphysical %>
 </p>
 
 <%= link_to 'Edit', edit_inventory_detail_path(@inventory_detail) %> |

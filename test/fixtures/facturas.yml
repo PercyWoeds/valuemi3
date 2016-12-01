@@ -1,0 +1,33 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  company_id: 1
+  location_id: 1
+  division_id: 1
+  customer_id: 1
+  description: MyText
+  comments: MyText
+  code: MyString
+  subtotal: 1.5
+  tax: 1.5
+  total: 1.5
+  processed: MyString
+  return: MyString
+  date_processed: 2016-11-24 10:59:36
+  user_id: 1
+
+two:
+  company_id: 1
+  location_id: 1
+  division_id: 1
+  customer_id: 1
+  description: MyText
+  comments: MyText
+  code: MyString
+  subtotal: 1.5
+  tax: 1.5
+  total: 1.5
+  processed: MyString
+  return: MyString
+  date_processed: 2016-11-24 10:59:36
+  user_id: 1

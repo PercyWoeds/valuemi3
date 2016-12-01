@@ -1,33 +1,119 @@
-<%= form_for(@inventory) do |f| %>
-  <% if @inventory.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@inventory.errors.count, "error") %> prohibited this inventory from being saved:</h2>
+<% if @inventory.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@inventory.errors.count, "error") %> prohibited this invoice from being saved:</h2>
 
-      <ul>
-      <% @inventory.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :category_id %><br>
-    <%= f.number_field :category_id %>
-  </div>
-  <div class="field">
-    <%= f.label :tot_logical %><br>
-    <%= f.text_field :tot_logical %>
-  </div>
-  <div class="field">
-    <%= f.label :tot_physical %><br>
-    <%= f.text_field :tot_physical %>
-  </div>
-  <div class="field">
-    <%= f.label :comments %><br>
-    <%= f.text_area :comments %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+    <ul>
+    <% @inventory.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
   </div>
 <% end %>
+
+<%= hr() %>
+
+<div class="mid_box bordered_right">
+  <%= form_for(@inventory) do |f| %>
+    <h3>
+       Informacion Inventario 
+    </h3>
+
+    
+    <div class="field">
+     <%= f.label :date1, "Fecha*", :class => "bold" %><br />
+      <%= f.datetime_select :date1 %>
+    </div>        
+  
+    <div class="field">
+      <%= f.label :location_id %><br />
+      <%= f.select :location_id, @locations %>
+    </div>
+  
+    <div class="field">
+      <%= f.label :division_id %><br />
+      <%= f.select :division_id, @divisions %>
+    </div>
+  
+    <%= hr() %>
+    
+    
+    <div class="field">
+      <%= f.check_box :processed %>
+      <%= f.label :processed, "Process invoice", :class => "bold" %>
+      <div class="small">
+        Marks wether or not this invoice has been payed and we can deduct the product quantities and count it towards the month's total.
+      </div>
+    </div>
+
+  
+    
+    <%= hr() %>
+    
+    <div class="field">
+      
+      <%= f.label :processed, "Description", :class => "bold" %><br />
+      <%= f.text_field :description  %>      
+      <div class="small">
+        Ingrese descripcion 
+      </div>
+      <br />
+
+    </div>
+  
+    <div class="field">
+    
+       <%= f.label :processed, "Comentarios ", :class => "bold" %><br />
+       <%= f.text_area :comments  %>
+       <div class="small">
+        Ingrese comentarios 
+        </div><br />
+    </div>
+  
+    <div class="field">
+      <%= f.label :user_id %><br />
+      <%= f.select :user_id, @users %>
+    </div>
+  
+    
+    <%= hr() %>
+  
+    <div class="actions">
+      <%= f.hidden_field :user_id, :id => "ac_user_id" %>    
+      <%= f.hidden_field :company_id %>
+      <%= f.submit %>
+    </div>
+    
+    <div class="small">
+      Once you're done adding products, don't forget to <strong><%= @action_txt %></strong> your invoice.
+    </div>
+  <% end %>
+</div>
+
+<div class="mid_box">
+  
+</div>
+<%= br() %>
+<br />
+
+<%= render 'layouts/autocomplete' %>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    
+    $("#ac_item").autocomplete("/inventories/ac_categories/<%= @company.id %>", {
+      matchSubset: 1,
+      matchContains: 1,
+      selectFirst: false
+    });
+    
+    $("#ac_item").result(function(event, data, formatted) {
+      $("#ac_item_id").val(data[2]);
+      $("#selected_item").html(data[0]);
+    });
+    
+    
+    <% if @inventories_lines %>
+      listItemsCategories();
+    <% end %>
+  });
+</script>

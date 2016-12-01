@@ -1,0 +1,73 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  tank_id: MyString
+  integer: MyString
+  document_type_id: 1
+  document: MyString
+  date1: 2016-07-15 11:14:55
+  date2: 2016-07-15 11:14:55
+  exchange: 1.5
+  product_id: 1
+  unit_id: 1
+  price_with_tax: 1.5
+  price_without_tax: 1.5
+  price_public: 1.5
+  quantity: 1.5
+  other: 1
+  money_type: MyString
+  discount: 1.5
+  tax1: 1.5
+  payable_amount: 1.5
+  tax_amount: 1.5
+  total_amount: 1.5
+  status: MyString
+  pricestatus: MyString
+  charge: 1.5
+  payment: 
+  balance: 1.5
+  tax2: 1.5
+  supplier_id: 1
+  order1: MyString
+  plate_id: 1
+  user_id: 1
+  company_id: 1
+  location_id: 1
+  division: 
+  comments: MyText
+
+two:
+  tank_id: MyString
+  integer: MyString
+  document_type_id: 1
+  document: MyString
+  date1: 2016-07-15 11:14:55
+  date2: 2016-07-15 11:14:55
+  exchange: 1.5
+  product_id: 1
+  unit_id: 1
+  price_with_tax: 1.5
+  price_without_tax: 1.5
+  price_public: 1.5
+  quantity: 1.5
+  other: 1
+  money_type: MyString
+  discount: 1.5
+  tax1: 1.5
+  payable_amount: 1.5
+  tax_amount: 1.5
+  total_amount: 1.5
+  status: MyString
+  pricestatus: MyString
+  charge: 1.5
+  payment: 
+  balance: 1.5
+  tax2: 1.5
+  supplier_id: 1
+  order1: MyString
+  plate_id: 1
+  user_id: 1
+  company_id: 1
+  location_id: 1
+  division: 
+  comments: MyText

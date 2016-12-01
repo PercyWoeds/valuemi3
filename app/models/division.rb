@@ -5,4 +5,5 @@ class Division < ActiveRecord::Base
   belongs_to :location
   
   has_many :invoices
+  has_many :purchases
 end

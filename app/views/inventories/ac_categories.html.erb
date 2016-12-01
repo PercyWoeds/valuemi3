@@ -1,0 +1,5 @@
+<% if @categories %>
+  <% for category in @categories %>
+    <%= category.category %>|BRK|<%= category.id %>
+  <% end %>
+<% end %>

@@ -1,0 +1,33 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  code: MyString
+  placa: MyString
+  clase: MyString
+  marca_id: 1
+  modelo_id: 1
+  certificado: MyString
+  ejes: 1
+  licencia: MyString
+  neumatico: MyString
+  config: MyString
+  carroceria: MyString
+  anio: 1
+  estado: MyString
+  propio: MyString
+
+two:
+  code: MyString
+  placa: MyString
+  clase: MyString
+  marca_id: 1
+  modelo_id: 1
+  certificado: MyString
+  ejes: 1
+  licencia: MyString
+  neumatico: MyString
+  config: MyString
+  carroceria: MyString
+  anio: 1
+  estado: MyString
+  propio: MyString

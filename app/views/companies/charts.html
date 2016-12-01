@@ -1,0 +1,82 @@
+<div class="mid_box bordered_right">
+  
+  <h3>
+    <%= image_tag("products_32.png", :class => "vmiddle") %>
+    <%= link_to "Cotizacion", "/companies/products/#{@company.id}" %>
+  </h3>
+
+  <p>
+    Agregar, editar or eliminar los productos o servicios  que tu negocio ofrece.
+  </p>
+
+  <%= hr() %>
+
+  <h3>
+    <%= image_tag("product_kit_32.png", :class => "vmiddle") %>
+    <%= link_to "Solicitud Transporte",manifests_path  %>
+  </h3>
+
+  <p>
+   Agregar, editar or eliminar kits de productos (grupos of productos).
+  </p>
+
+  <%= hr() %>
+
+  <h3>
+    <%= image_tag("product_category_32.png", :class => "vmiddle") %>
+    <%= link_to "Manifiesto", my_declarations_path %>
+  </h3>
+
+  <p>
+     Agregar, editar or eliminar las categorias para tus productos.
+  </p>
+
+
+  <%= hr() %>
+
+  <h3>
+    <%= image_tag("invoice_32.png", :class => "vmiddle") %>
+    <%= link_to "Guias", "/companies/deliveries/#{@company.id}" %>
+  </h3>
+
+  <p>
+     Agregar, editar or eliminar facturas para tu negocio.
+  </p>
+
+
+  
+</div>
+
+<div class="mid_box">
+  <h3>
+        <div>
+          <%= image_tag("clients_32.png", :class => "vmiddle") %>
+          <%= link_to "Vehiculos", "/companies/trucks/#{@company.id}" %>
+        </div>
+  </h3>
+  <p>
+     Agregar, editar or eliminar ordenes de venta 
+  </p>
+
+<%= hr() %>
+  <h3>
+        <div>
+          <%= image_tag("clients_32.png", :class => "vmiddle") %>
+          <%= link_to "Emp.Subcontratada ", "/companies/subcontrats/#{@company.id}"%>
+        </div>
+  </h3>
+  <p>
+     Agregar, editar or eliminar ordenes de venta 
+  </p>
+
+<%= hr() %>
+  
+  <h3>
+    <%= image_tag("reports_32.png", :class => "vmiddle") %>
+    <%= link_to "Reportes", "/companies/reports/#{@company.id}" %>
+  </h3>
+
+  <p>
+    Reportes de tu negocio.
+  </p>
+<%= hr() %>

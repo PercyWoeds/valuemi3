@@ -8,8 +8,6 @@ gem 'rails', '4.2.5.1'
 #gem 'mysql2'
 #gem 'activerecord-mysql2-adapter'
 
-
-
 # Added
 gem 'bluecloth'
 
@@ -32,7 +30,8 @@ gem 'coffee-rails', '~> 4.1.0'
 # gem 'therubyracer', platforms: :ruby
 
 # Use jquery as the JavaScript library
-gem 'jquery-rails'
+gem 'jquery-rails', '~> 4.2', '>= 4.2.1'
+gem 'jquery-ui-rails', '~> 5.0', '>= 5.0.5'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -41,6 +40,8 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'rmagick', '~> 2.15', '>= 2.15.4'
+
+gem 'simple_form', '~> 3.3', '>= 3.3.1'
 
 
 gem 'rails_autolink', '~> 1.1', '>= 1.1.6'

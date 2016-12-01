@@ -5,11 +5,14 @@
 <table>
   <thead>
     <tr>
+      <th>Inventory</th>
       <th>Product</th>
+      <th>Logicalstock</th>
+      <th>Physicalstock</th>
       <th>Cost</th>
-      <th>Logical</th>
-      <th>Phisycal</th>
-      <th>Comments</th>
+      <th>Price</th>
+      <th>Totallogical</th>
+      <th>Totalphysical</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -17,11 +20,14 @@
   <tbody>
     <% @inventory_details.each do |inventory_detail| %>
       <tr>
+        <td><%= inventory_detail.inventory_id %></td>
         <td><%= inventory_detail.product_id %></td>
+        <td><%= inventory_detail.logicalStock %></td>
+        <td><%= inventory_detail.physicalStock %></td>
         <td><%= inventory_detail.cost %></td>
-        <td><%= inventory_detail.logical %></td>
-        <td><%= inventory_detail.phisycal %></td>
-        <td><%= inventory_detail.comments %></td>
+        <td><%= inventory_detail.price %></td>
+        <td><%= inventory_detail.totallogical %></td>
+        <td><%= inventory_detail.totalphysical %></td>
         <td><%= link_to 'Show', inventory_detail %></td>
         <td><%= link_to 'Edit', edit_inventory_detail_path(inventory_detail) %></td>
         <td><%= link_to 'Destroy', inventory_detail, method: :delete, data: { confirm: 'Are you sure?' } %></td>

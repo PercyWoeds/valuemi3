@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  code: MyString
+  employee_id: 1
+  punto_id: 1
+  punto2_id: 1
+  truck_id: 1
+  truck2_id: 1
+  fecha1: 2016-11-30 11:08:28
+  fecha2: 2016-11-30 11:08:28
+  observacion: MyText
+
+two:
+  code: MyString
+  employee_id: 1
+  punto_id: 1
+  punto2_id: 1
+  truck_id: 1
+  truck2_id: 1
+  fecha1: 2016-11-30 11:08:28
+  fecha2: 2016-11-30 11:08:28
+  observacion: MyText

@@ -71,7 +71,7 @@
 <br />
 
 <div class="button">
-  <%= link_to 'New Invoice', "/store/index/#{@company.id}" %>
+  <%= link_to 'New Invoice', "/invoices/new/#{@company.id}" %>
 </div>
 
 <%= will_paginate @invoices %>

@@ -1,19 +1,44 @@
-Mnygo::Application.routes.draw do
+  Mnygo::Application.routes.draw do
 
+  resources :puntos
+  resources :manifests
+  resources :trucks
+  resources :marcas
+  resources :modelos
+  resources :subcontrats
+  resources :unidads
+  resources :payments
+
+  
+  resources :tanks
+  resources :employees
+  resources :pumps
+  resources :purchases
   resources :inventory_details
   resources :inventories
   resources :payment_methods
+  resources :deliveryships
+
+  resources :declarations 
+  
 
   resources :orders do 
     collection { post :payment  }
     collection { post :imprimir }        
     collection { post :pagar }        
+    collection { post :create }        
   end 
 
+  resources :facturas do
+    collection { post :export  }
+  end 
   resources :stores  do 
     collection { post :search }    
   end 
 
+  resources :inventories  do 
+    collection { get :addCategory  }    
+  end 
 
   resources :carts
   get 'store/index'
@@ -45,6 +70,15 @@ Mnygo::Application.routes.draw do
   resources :products_categories   do
     collection { post :import }
   end 
+
+  resources :customers do
+    resources :addresses
+    collection { post :import }
+  end 
+  #Manifiesto busqueda de guias
+  get 'my_declarations', to: 'declarations#my_deliveries'
+  get 'search_friends', to: 'deliveries#search'
+  post 'add_friend', to: 'deliveries#add_friend'
 
   # Reports
   match 'companies/reports/monthly_profits/:company_id' => 'reports#monthly_profits', via: [:get, :post]
@@ -92,6 +126,57 @@ Mnygo::Application.routes.draw do
   match 'companies/invoices/:company_id' => 'invoices#list_invoices', via: [:get, :post]
   resources :invoices
 
+  # Facturas Ventas
+  
+  match 'facturas/list_items/:company_id' => 'facturas#list_items', via: [:get, :post]
+  match 'facturas/ac_services/:company_id' => 'facturas#ac_services', via: [:get, :post]
+  match 'facturas/ac_user/:company_id' => 'facturas#ac_user', via: [:get, :post]
+  match 'facturas/ac_customers/:company_id' => 'facturas#ac_customers', via: [:get, :post]
+  match 'facturas/new/:company_id' => 'facturas#new', via: [:get, :post]
+  
+
+  match 'facturas/do_email/:id' => 'facturas#do_email', via: [:get, :post]
+  match 'facturas/do_process/:id' => 'facturas#do_process', via: [:get, :post]
+  match 'facturas/email/:id' => 'facturas#email', via: [:get, :post]
+  match 'facturas/pdf/:id' => 'facturas#pdf', via: [:get, :post]
+  match 'companies/facturas/:company_id' => 'facturas#list_invoices', via: [:get, :post]
+  resources :facturas
+
+# Guias
+  
+  match 'deliveries/list_items/:company_id' => 'deliveries#list_items', via: [:get, :post]
+  match 'deliveries/ac_services/:company_id' => 'deliveries#ac_services', via: [:get, :post]
+  match 'deliveries/ac_unidads/:company_id' => 'deliveries#ac_unidads', via: [:get, :post]
+  match 'deliveries/ac_user/:company_id' => 'deliveries#ac_user', via: [:get, :post]
+  match 'deliveries/ac_customers/:company_id' => 'deliveries#ac_customers', via: [:get, :post]
+  match 'deliveries/new/:company_id' => 'deliveries#new', via: [:get, :post]
+  
+  match 'deliveries/do_email/:id' => 'deliveries#do_email', via: [:get, :post]
+  match 'deliveries/do_process/:id' => 'deliveries#do_process', via: [:get, :post]
+  match 'deliveries/email/:id' => 'deliveries#email', via: [:get, :post]
+  match 'deliveries/pdf/:id' => 'deliveries#pdf', via: [:get, :post]
+  match 'companies/deliveries/:company_id' => 'deliveries#list_deliveries', via: [:get, :post]
+  resources :deliveries
+
+  # Purchases
+  
+  match 'purchases/list_items/:company_id' => 'purchases#list_items', via: [:get, :post]  
+  match 'purchases/ac_products/:company_id' => 'purchases#ac_products', via: [:get, :post]
+  match 'purchases/ac_user/:company_id' => 'purchases#ac_user', via: [:get, :post]
+  match 'purchases/ac_suppliers/:company_id' => 'purchases#ac_suppliers', via: [:get, :post]
+  match 'purchases/new/:company_id' => 'purchases#new', via: [:get, :post]  
+
+  match 'purchases/do_email/:id' => 'purchases#do_email', via: [:get, :post]
+  match 'purchases/do_process/:id' => 'purchases#do_process', via: [:get, :post]
+  match 'purchases/email/:id' => 'purchases#email', via: [:get, :post]
+  match 'purchases/pdf/:id' => 'purchases#pdf', via: [:get, :post]
+  match 'companies/purchases/:company_id' => 'purchases#list_purchases', via: [:get, :post]
+  resources :purchases
+
+
+  match 'inventories_detaisl/additems/:company_id' => 'additems#list', via: [:get, :post]  
+  resources :inventory_details
+  
   # Customers
   match 'customers/create_ajax/:company_id' => 'customers#create_ajax', via: [:get, :post]
   match 'customers/new/:company_id' => 'customers#new', via: [:get, :post]
@@ -102,6 +187,18 @@ Mnygo::Application.routes.draw do
   match 'divisions/new/:company_id' => 'divisions#new', via: [:get, :post]
   match 'companies/divisions/:company_id' => 'divisions#list_divisions', via: [:get, :post]
   resources :divisions
+
+  match 'trucks/new/:company_id' => 'trucks#new', via: [:get, :post]
+  match 'companies/trucks/:company_id' => 'trucks#index', via: [:get, :post]
+  resources :trucks
+
+  match 'empsubs/new/:company_id' => 'empsubs#new', via: [:get, :post]
+  match 'companies/empsubs/:company_id' => 'empsubs#index', via: [:get, :post]
+  resources :empsubs
+  
+  match 'subcontrats/new/:company_id' => 'subcontrats#new', via: [:get, :post]
+  match 'companies/subcontrats/:company_id' => 'subcontrats#index', via: [:get, :post]
+  resources :subcontrats
 
   # Restocks
   match 'restocks/process/:id' => 'restocks#do_process', via: [:get, :post]
@@ -116,18 +213,47 @@ Mnygo::Application.routes.draw do
   resources :products_kits
 
   # Products Categories
-
+  match 'products_categories/ac_categories/:company_id' => 'products_categories#ac_categories', via: [:get, :post]
   match 'products_categories/new/:company_id' => 'products_categories#new', via: [:get, :post]
   match 'companies/products_categories/:company_id' => 'products_categories#list_products_categories', via: [:get, :post]
   resources :products_categories
 
   # Products
   match 'products/ac_products/:company_id' => 'products#ac_products', via: [:get, :post]
-  match 'products/ac_categories/:company_id' => 'products#ac_categories', via: [:get, :post]
+  #match 'products/ac_categories/:company_id' => 'products#ac_categories', via: [:get, :post]
   match 'products/new/:company_id' => 'products#new', via: [:get, :post]
-   match 'companies/products/:company_id' => 'products#list_products', via: [:get, :post]
+  match 'companies/products/:company_id' => 'products#list_products', via: [:get, :post]
   resources :products
 
+
+  match 'services/ac_services/:company_id' => 'services#ac_services', via: [:get, :post]
+  match 'services/new/:company_id' => 'services#new', via: [:get, :post]
+  match 'companies/services/:company_id' => 'services#index', via: [:get, :post]
+  resources :services
+
+  match 'companies/marcas/:company_id' => 'marcas#index', via: [:get, :post]
+  resources :marcas
+
+  match 'companies/modelos/:company_id' => 'modelos#index', via: [:get, :post]
+  resources :modelos
+
+  match 'companies/unidads/:company_id' => 'unidads#index', via: [:get, :post]
+  resources :unidads
+
+
+  match 'companies/payments/:company_id' => 'payments#index', via: [:get, :post]
+  resources :payments
+
+  # Tanques
+  match 'companies/tanks/:company_id' => 'tanks#index', via: [:get, :post]
+  resources :tanks  
+
+  match 'companies/pumps/:company_id' => 'pumps#index', via: [:get, :post]
+  resources :pumps  
+
+  match 'companies/employees/:company_id' => 'employees#index', via: [:get, :post]
+  resources :employees  
+  
   # Suppliers
   match 'suppliers/new/:company_id' => 'suppliers#new', via: [:get, :post]
   match 'companies/suppliers/:company_id' => 'suppliers#list_suppliers', via: [:get, :post]
@@ -142,6 +268,10 @@ Mnygo::Application.routes.draw do
   match 'companies/export/:id' => 'companies#export', via: [:get, :post]
   match 'new_company', to: 'companies#new', via: [:get]
   #match "register" => 'devise/registrations/' , via: [:get, :post]
+  match 'companies/start/:id' => 'companies#start', via: [:get, :post]
+  match 'companies/faqs/:id' => 'companies#faqs', via: [:get, :post]
+  match 'companies/charts/:id' => 'companies#charts', via: [:get, :post]
+  match 'companies/license/:id' => 'companies#license', via: [:get, :post]
   resources :companies
 
   # Users packages
@@ -168,17 +298,26 @@ Mnygo::Application.routes.draw do
   resources :users
   
   #Orders
-  #match 'store/index/:company_id' => 'store#index', via: [:get, :post]
+  
   match 'companies/stores/:company_id' => 'stores#index', via: [:get, :post]
   resources :stores
 
   match 'orders/pdf/:id' => 'orders#pdf', via: [:get, :post]  
-  match 'orders/new/:company_id' => 'orders#new', via: [:get, :post]
+  match 'orders/new' => 'orders#new', via: [:get, :post]
+  
   match "pagar" => "orders#new" , via: [:get]
   resources :orders
 
+  
+  match 'inventories/ac_categories/:company_id' => 'inventories#ac_categories', via: [:get, :post]
+  match 'inventories/new/:company_id' => 'inventories#new', via: [:get, :post]  
+  match 'inventories/do_email/:id' => 'inventories#do_email', via: [:get, :post]
+  match 'inventories/do_process/:id' => 'inventories#do_process', via: [:get, :post]
+  match 'inventories/email/:id' => 'inventories#email', via: [:get, :post]
+  match 'inventories/pdf/:id' => 'inventories#pdf', via: [:get, :post]
   match 'companies/inventories/:company_id' => 'inventories#list_inventories', via: [:get, :post]
-  resources :invoices
+  match 'inventories/addAll/:company_id' => 'inventories#addAll', via: [:get, :post]
+  resources :inventories
 
 
   # Sessions

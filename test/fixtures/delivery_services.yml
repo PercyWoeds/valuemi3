@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  service_id: 1
+  price: 1
+  quantity: 1
+  unidad_id: 1
+  peso: 1
+  discount: 
+  total: 1.5
+  delivery_id: 1
+
+two:
+  service_id: 1
+  price: 1
+  quantity: 1
+  unidad_id: 1
+  peso: 1
+  discount: 
+  total: 1.5
+  delivery_id: 1

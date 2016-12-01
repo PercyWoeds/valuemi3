@@ -5,4 +5,5 @@ class Location < ActiveRecord::Base
   
   has_many :divisions
   has_many :invoices
+  has_many :purchases
 end

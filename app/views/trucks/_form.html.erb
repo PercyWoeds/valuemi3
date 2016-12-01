@@ -1,0 +1,75 @@
+<%= form_for(@truck) do |f| %>
+  <% if @truck.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@truck.errors.count, "error") %> prohibited this truck from being saved:</h2>
+
+      <ul>
+      <% @truck.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :code %><br>
+    <%= f.text_field :code %>
+  </div>
+  <div class="field">
+    <%= f.label :placa %><br>
+    <%= f.text_field :placa %>
+  </div>
+  <div class="field">
+    <%= f.label :clase %><br>
+    <%= f.text_field :clase %>
+  </div>
+
+  <div class="field">
+    <%= f.label :marca_id %><br />
+    <%= f.select :marca_id, options_from_collection_for_select(@marcas,'id','descrip') %>
+  </div>
+
+  <div class="field">
+    <%= f.label :modelo_id %><br />
+    <%= f.select :modelo_id, options_from_collection_for_select(@modelos,'id','descrip') %>
+  </div>
+  <div class="field">
+    <%= f.label :certificado %><br>
+    <%= f.text_field :certificado %>
+  </div>
+  <div class="field">
+    <%= f.label :ejes %><br>
+    <%= f.number_field :ejes %>
+  </div>
+  <div class="field">
+    <%= f.label :licencia %><br>
+    <%= f.text_field :licencia %>
+  </div>
+  <div class="field">
+    <%= f.label :neumatico %><br>
+    <%= f.text_field :neumatico %>
+  </div>
+  <div class="field">
+    <%= f.label :config %><br>
+    <%= f.text_field :config %>
+  </div>
+  <div class="field">
+    <%= f.label :carroceria %><br>
+    <%= f.text_field :carroceria %>
+  </div>
+  <div class="field">
+    <%= f.label :anio %><br>
+    <%= f.number_field :anio %>
+  </div>
+  <div class="field">
+    <%= f.label :estado %><br>
+    <%= f.text_field :estado %>
+  </div>
+  <div class="field">
+    <%= f.label :propio %><br>
+    <%= f.text_field :propio %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

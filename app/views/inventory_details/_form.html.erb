@@ -12,24 +12,36 @@
   <% end %>
 
   <div class="field">
+    <%= f.label :inventory_id %><br>
+    <%= f.number_field :inventory_id %>
+  </div>
+  <div class="field">
     <%= f.label :product_id %><br>
     <%= f.number_field :product_id %>
+  </div>
+  <div class="field">
+    <%= f.label :logicalStock %><br>
+    <%= f.text_field :logicalStock %>
+  </div>
+  <div class="field">
+    <%= f.label :physicalStock %><br>
+    <%= f.text_field :physicalStock %>
   </div>
   <div class="field">
     <%= f.label :cost %><br>
     <%= f.text_field :cost %>
   </div>
   <div class="field">
-    <%= f.label :logical %><br>
-    <%= f.number_field :logical %>
+    <%= f.label :price %><br>
+    <%= f.text_field :price %>
   </div>
   <div class="field">
-    <%= f.label :phisycal %><br>
-    <%= f.number_field :phisycal %>
+    <%= f.label :totallogical %><br>
+    <%= f.text_field :totallogical %>
   </div>
   <div class="field">
-    <%= f.label :comments %><br>
-    <%= f.text_area :comments %>
+    <%= f.label :totalphysical %><br>
+    <%= f.text_field :totalphysical %>
   </div>
   <div class="actions">
     <%= f.submit %>

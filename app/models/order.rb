@@ -1,11 +1,22 @@
 class Order < ActiveRecord::Base
 	
 	attr_accessible :name, :address, :email,:pay_type,:subtotal,:tax,:total,:user_id
+
+ 	self.per_page = 20
+	  
+	  belongs_to :company
+	  belongs_to :location
+	  belongs_to :division
+	  belongs_to :customer
+	  belongs_to :user
+	  
+	  has_many :invoice_products
+
   
-	PAYMENT_TYPES = [ "Check", "Credit card", "Purchase order" ]
+	PAYMENT_TYPES = [ "Efectivo", "Credito Visa", "Credito Mastercard" ]
 
 	#validates :name, :address, :email, presence: true
-
+	
 	validates :pay_type, inclusion: PAYMENT_TYPES
 	has_many :line_items, dependent: :destroy
 	

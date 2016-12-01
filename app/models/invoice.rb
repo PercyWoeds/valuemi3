@@ -8,6 +8,7 @@ class Invoice < ActiveRecord::Base
   belongs_to :division
   belongs_to :customer
   belongs_to :user
+  belongs_to :payment 
   
   has_many :invoice_products
   
@@ -108,7 +109,9 @@ class Invoice < ActiveRecord::Base
           
           new_invoice_product = InvoiceProduct.new(:invoice_id => self.id, :product_id => product.id, :price => price.to_f, :quantity => quantity.to_i, :discount => discount.to_f, :total => total.to_f)
           new_invoice_product.save
+
         rescue
+          
         end
       end
     end
@@ -173,6 +176,7 @@ class Invoice < ActiveRecord::Base
   
   # Process the invoice
   def process
+
     if(self.processed == "1" or self.processed == true)
       invoice_products = InvoiceProduct.where(invoice_id: self.id)
     

@@ -1,5 +1,23 @@
-<h1>New Inventory</h1>
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %> &raquo;
+  <%= link_to "Inventario ", "/companies/inventories/#{@company.id}" %>
+</div>
+
+<h1>
+  <%= image_tag("invoice_48.png", :class => "vmiddle") %>
+  Nuevo inventario
+</h1>
+
+<p>
+  Para crear una nueva factura, por favor llenar el siguiente formulario. Los campos marcados con <strong>*</strong> son obligatorios
+  
+</p>
 
 <%= render 'form' %>
 
-<%= link_to 'Back', inventories_path %>
+<%= hr() %>
+
+<div class="button">
+  <%= link_to 'Back', "/companies/inventories/#{@company.id}" %>
+</div>

@@ -1,0 +1,74 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Firstname:</strong>
+  <%= @employee.firstname %>
+</p>
+
+<p>
+  <strong>Lastname:</strong>
+  <%= @employee.lastname %>
+</p>
+
+<p>
+  <strong>Address1:</strong>
+  <%= @employee.address1 %>
+</p>
+
+<p>
+  <strong>Address2:</strong>
+  <%= @employee.address2 %>
+</p>
+
+<p>
+  <strong>City:</strong>
+  <%= @employee.city %>
+</p>
+
+<p>
+  <strong>State:</strong>
+  <%= @employee.state %>
+</p>
+
+<p>
+  <strong>Zip:</strong>
+  <%= @employee.zip %>
+</p>
+
+<p>
+  <strong>Country:</strong>
+  <%= @employee.country %>
+</p>
+
+<p>
+  <strong>Licencia:</strong>
+  <%= @employee.licencia %>
+</p>
+
+<p>
+  <strong>Phone1:</strong>
+  <%= @employee.phone1 %>
+</p>
+
+<p>
+  <strong>Phone2:</strong>
+  <%= @employee.phone2 %>
+</p>
+
+<p>
+  <strong>Email1:</strong>
+  <%= @employee.email1 %>
+</p>
+
+<p>
+  <strong>Email2:</strong>
+  <%= @employee.email2 %>
+</p>
+
+<p>
+  <strong>Company:</strong>
+  <%= @employee.company_id %>
+</p>
+
+<%= link_to 'Edit', edit_employee_path(@employee) %> |
+<%= link_to 'Back', employees_path %>

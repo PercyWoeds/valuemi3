@@ -1,0 +1,45 @@
+<%= form_for(@subcontrat) do |f| %>
+  <% if @subcontrat.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@subcontrat.errors.count, "error") %> prohibited this subcontrat from being saved:</h2>
+
+      <ul>
+      <% @subcontrat.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :ruc %><br>
+    <%= f.text_field :ruc %>
+  </div>
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :address1 %><br>
+    <%= f.text_field :address1 %>
+  </div>
+  <div class="field">
+    <%= f.label :distrito %><br>
+    <%= f.text_field :distrito %>
+  </div>
+  <div class="field">
+    <%= f.label :provincia %><br>
+    <%= f.text_field :provincia %>
+  </div>
+  <div class="field">
+    <%= f.label :dpto %><br>
+    <%= f.text_field :dpto %>
+  </div>
+  <div class="field">
+    <%= f.label :pais %><br>
+    <%= f.text_field :pais %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

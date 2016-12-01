@@ -11,6 +11,7 @@ class Company < ActiveRecord::Base
   has_many :divisions
   has_many :customers
   has_many :invoices
+  has_many :inventories
   has_many :company_users
   
   def own(user)
@@ -42,23 +43,55 @@ class Company < ActiveRecord::Base
   end
   
   def get_locations()
+
+
     locations = Location.where(company_id: self.id).order("name ASC")
-    locations = locations.map {|s| [s.name, s.id]}
-    locations_f = [["", nil]]
-    locations_f += locations
-    locations = locations_f
     
     return locations
   end
   
   def get_divisions()
     divisions = Division.where(company_id:  self.id).order("name ASC")
-    divisions = divisions.map {|s| [s.name, s.id]}
-    divisions_f = [["", nil]]
-    divisions_f += divisions
-    divisions = divisions_f
     
     return divisions
+  end
+  def get_payments()
+    payments = Payment.order("descrip ASC")
+    payments = payments.map {|s| [s.descrip, s.id]}
+    payments_f = [["", nil]]
+    payments_f += payments
+    payments = payments_f
+    
+    return payments
+  end
+  def get_addresses()
+     addresses = Address.find_by_sql(['Select id, (address || " " || address2 || " " || state || " " || city  ) as address   from addresses' ]) 
+     return addresses
+  end
+  
+  def get_trucks()
+     trucks = Truck.all 
+     return trucks
+  end
+  
+  def get_employees()
+     employees =  Employee.find_by_sql(['Select id,licencia,full_name   from employees' ])
+     return employees
+  end
+      
+  def get_empsubs()
+     empsubs = Subcontrat.all 
+     return empsubs
+  end 
+
+  def get_unidads()
+     unidads = Unidad.all 
+     return unidads
+  end 
+  
+  def get_puntos()
+    puntos = Punto.all 
+    return puntos
   end
   
   def get_last_tax_name(tax_number)
@@ -197,14 +230,18 @@ class Company < ActiveRecord::Base
     users = []
     users.push(owner)
     
-    company_users = CompanyUser.find(:all, :conditions => {:company_id => self.id})
+    #company_users = CompanyUser.where(:company_id => self.id)
     
-    for cu in company_users
-      if(not users.include?(cu.user))
-        users.push(cu.user)
-      end
-    end
-    
+    users1 = CompanyUser.find_by(company_id:  self.id)
+
+    @user_id =users1.user_id
+    users =User.where(:id => @user_id)
+
+    users = users.map {|s| [s.username, s.id]}
+    users_f = [["", nil]]
+    users_f += users
+    users = users_f    
+
     return users
   end
   

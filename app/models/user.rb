@@ -16,6 +16,8 @@ class User < ActiveRecord::Base
   has_many :companies
   has_many :company_users
   has_many :invoices
+  has_many :inventories
+
   
   def print
     return '<a href="/users/' + self.id.to_s + '">' + self.username + '</a>'

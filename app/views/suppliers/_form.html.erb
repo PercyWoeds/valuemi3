@@ -10,11 +10,17 @@
       </ul>
     </div>
   <% end %>
-
+  
+  <div class="field">
+    <%= f.label :ruc, "Ruc*", :class => "bold" %><br />
+    <%= f.text_field :ruc %>
+  </div>
+  
   <div class="field">
     <%= f.label :name, "Name*", :class => "bold" %><br />
     <%= f.text_field :name %>
   </div>
+
   <div class="field">
     <%= f.label :email %><br />
     <%= f.text_field :email %>
@@ -60,3 +66,4 @@
     <%= f.submit %>
   </div>
 <% end %>
+

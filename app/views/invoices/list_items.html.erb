@@ -2,7 +2,7 @@
   Products:
 </p>
 
-<% if items  %>
+
   <table>
     <thead>
       <tr>
@@ -40,10 +40,9 @@
             <%= money(product.discount) %>%
           </td>
           <td class="small bordered_bottom bordered_right">
-            $<%= money(product.curr_total) %>
+            $<%= money(product.CurrTotal) %>
           </td>
         </tr>
       <% end %>
     </tbody>
   </table>
-<% end %>

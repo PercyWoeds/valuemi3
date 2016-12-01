@@ -30,6 +30,7 @@ class InvoicesController < ApplicationController
   def do_process
     @invoice = Invoice.find(params[:id])
     @invoice[:processed] = true
+    
     @invoice.process
     
     flash[:notice] = "The invoice order has been processed."
@@ -55,13 +56,14 @@ class InvoicesController < ApplicationController
   
   # List items
   def list_items
+    
     @company = Company.find(params[:company_id])
     items = params[:items]
     items = items.split(",")
     items_arr = []
     @products = []
     i = 0
-    
+
     for item in items
       if item != ""
         parts = item.split("|BRK|")
@@ -72,8 +74,6 @@ class InvoicesController < ApplicationController
         discount = parts[3]
         
         product = Product.find(id.to_i)
-        puts product.all
-
         product[:i] = i
         product[:quantity] = quantity.to_i
         product[:price] = price.to_f
@@ -82,13 +82,13 @@ class InvoicesController < ApplicationController
         total = product[:price] * product[:quantity]
         total -= total * (product[:discount] / 100)
         
-        product[:curr_total] = total
+        product[:CurrTotal] = total
         
         @products.push(product)
       end
       
       i += 1
-    end
+   end
     
     render :layout => false
   end
@@ -230,6 +230,7 @@ class InvoicesController < ApplicationController
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
+    
     
     @ac_user = getUsername()
     @invoice[:user_id] = getUserId()

@@ -22,29 +22,42 @@
         </th>
       </tr>
     </thead>
+    
     <tbody>
+    
       <% for inventory in @inventories %>
         <tr>
           <td class="bordered_right bordered_bottom">
             <%= link_to inventory.id, inventory, :title => "Ir a factura" %>
+          </td
+
+          <td class="bordered_right bordered_bottom right">
+            $<%= money(inventory.logicalStock) %>
           </td>
-          <td class="bordered_right bordered_bottom">
-            <%= link_to inventory.category.name, inventory.category, :title => "Go to category" %>
+
+          <td class="bordered_right bordered_bottom right">
+            $<%= money(inventory.physicalStock) %>
+          </td>
+
+          <td class="bordered_right bordered_bottom right">
+            $<%= money(inventory.cost) %>
           </td>
           <td class="bordered_right bordered_bottom right">
-            $<%= money(inventory.tot_logical) %>
+            $<%= money(inventory.total) %>
           </td>
+          
           <td class="bordered_right bordered_bottom">
             <%= doDate(inventory.created_at) %>
           </td>
-          <td class="bordered_right bordered_bottom <%= invoice.processed_color %>">
-            <%= inventory.get_processed_short %>
-          </td>
+
           <td class="bordered_right bordered_bottom">
             <%= link_to "View", inventory %>
           </td>
           <td class="bordered_right bordered_bottom">
-            <%= link_to 'Delete', invoice, :confirm => 'Are you sure?', :method => :delete %>
+            <%= link_to "Edit", edit_inventory_path(inventory) %>
+          </td>
+          <td class="bordered_right bordered_bottom">
+            <%= link_to 'Delete', inventory, :confirm => 'Are you sure?', :method => :delete %>
           </td>
         </tr>
       <% end %>

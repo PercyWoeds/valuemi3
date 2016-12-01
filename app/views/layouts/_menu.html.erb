@@ -1,10 +1,12 @@
 <div id="menu_cont">
   <div id="menu">
     <%= link_to 'Inicio', '/' %>
-    <%= link_to 'Dashboard', '/dashboard' %>
-    <% if(@is_logged) %>
+   <% if user_signed_in? %>
+    <%= link_to 'Dashboard.', '/dashboard' %>
+    
       <%= link_to 'Mis empresas', '/companies' %>
     <% end %>
     <%= link_to 'Paquetes', '/pricing' %>
+
   </div>
 </div>

@@ -1,0 +1,2 @@
+      invoke  active_record
+      create    db/migrate/20160824151230_add_ruc_to_supplier.rb

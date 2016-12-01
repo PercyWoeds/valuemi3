@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  fuel: MyString
+  pump01: MyString
+  tank_id: 1
+  product_id: 1
+  price_buy: 1.5
+  price_sell: 1.5
+  le_an_gln: 1.5
+  le_ac_gln: 1.5
+  gln: 1.5
+  date1: 2016-08-26 16:07:04
+  employee_id: 1
+  turno: MyString
+
+two:
+  fuel: MyString
+  pump01: MyString
+  tank_id: 1
+  product_id: 1
+  price_buy: 1.5
+  price_sell: 1.5
+  le_an_gln: 1.5
+  le_ac_gln: 1.5
+  gln: 1.5
+  date1: 2016-08-26 16:07:04
+  employee_id: 1
+  turno: MyString

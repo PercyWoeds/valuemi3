@@ -1,12 +1,11 @@
 class OrdersController < ApplicationController
-  before_action :set_order, only: [:show, :edit, :update, :destroy]
+  before_action :set_order, only: [:show, :edit, :update, :destroy], :except=> [:index]
 
   # GET /orders
   # GET /orders.json
   def index
-    @companies = Company.where(user_id: current_user.id).order("name")
-    @company = Company.find(params[:company_id])
     @orders = Order.all
+
   end
 
   # GET /orders/1
@@ -16,19 +15,20 @@ class OrdersController < ApplicationController
 
   # GET /orders/new
   def new
-    @company = Company.find(params[:company_id])
-    @company_id = @company.id
-    
+
+    @company = Company.find(1)
+
     @locations = 1
     @divisions = 1
     
 
      @cart = current_cart
     if @cart.line_items.empty?
-      redirect_to  "companies/order/1", notice: "Your cart is empty"
+      redirect_to  store_url, notice: "Your cart is empty"
       return
     end
       @order = Order.new
+      @order.company_id =@company.id 
       respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @order }
@@ -52,9 +52,9 @@ class OrdersController < ApplicationController
     if @order.save
       Cart.destroy(session[:cart_id])
       session[:cart_id] = nil
-      format.html { redirect_to "/companies/stores/1", notice:        
-      'Thank you for your order.' }
-    
+      format.html { redirect_to("/orders/pdf/#{@order.id}.pdf") }
+      format.pdf { render :layout => false }
+  
       format.json { render json: @order, status: :created,
       location: @order }
 
@@ -68,6 +68,7 @@ class OrdersController < ApplicationController
 
   end
   end
+
 
 
   # PATCH/PUT /orders/1
@@ -120,7 +121,7 @@ class OrdersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def order_params
-      params.require(:order).permit(:name, :address, :email, :pay_type,:subtotal,:tax,:total,:user_id )
+      params.require(:order).permit(:name, :address, :email, :pay_type,:subtotal,:tax,:total,:user_id,:ruc )
     end
       
 

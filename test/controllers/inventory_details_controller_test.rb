@@ -18,7 +18,7 @@ class InventoryDetailsControllerTest < ActionController::TestCase
 
   test "should create inventory_detail" do
     assert_difference('InventoryDetail.count') do
-      post :create, inventory_detail: { comments: @inventory_detail.comments, cost: @inventory_detail.cost, logical: @inventory_detail.logical, phisycal: @inventory_detail.phisycal, product_id: @inventory_detail.product_id }
+      post :create, inventory_detail: { cost: @inventory_detail.cost, inventory_id: @inventory_detail.inventory_id, logicalStock: @inventory_detail.logicalStock, physicalStock: @inventory_detail.physicalStock, price: @inventory_detail.price, product_id: @inventory_detail.product_id, totallogical: @inventory_detail.totallogical, totalphysical: @inventory_detail.totalphysical }
     end
 
     assert_redirected_to inventory_detail_path(assigns(:inventory_detail))
@@ -35,7 +35,7 @@ class InventoryDetailsControllerTest < ActionController::TestCase
   end
 
   test "should update inventory_detail" do
-    patch :update, id: @inventory_detail, inventory_detail: { comments: @inventory_detail.comments, cost: @inventory_detail.cost, logical: @inventory_detail.logical, phisycal: @inventory_detail.phisycal, product_id: @inventory_detail.product_id }
+    patch :update, id: @inventory_detail, inventory_detail: { cost: @inventory_detail.cost, inventory_id: @inventory_detail.inventory_id, logicalStock: @inventory_detail.logicalStock, physicalStock: @inventory_detail.physicalStock, price: @inventory_detail.price, product_id: @inventory_detail.product_id, totallogical: @inventory_detail.totallogical, totalphysical: @inventory_detail.totalphysical }
     assert_redirected_to inventory_detail_path(assigns(:inventory_detail))
   end
 

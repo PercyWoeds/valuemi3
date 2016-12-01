@@ -24,7 +24,7 @@ class ProductsCategoriesController < ApplicationController
   # GET /products_categories
   # GET /products_categories.xml
   def index
-    @companies = Company.find(:all, :conditions => {:user_id => getUserId()}, :order => "name")
+    @companies = Company.where(user_id: current_user.id).order("name")
     @path = 'products_categories'
     @pagetitle = "Product categories"
   end

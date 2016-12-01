@@ -1,0 +1,24 @@
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %> &raquo;
+  <%= link_to "deliveries", "/companies/deliveries/#{@company.id}" %> &raquo;
+  <%= link_to @delivery.identifier, @delivery %>
+</div>
+
+<h1>
+  <%= image_tag("supplier_48.png", :class => "vmiddle") %>
+  Editing delivery
+</h1>
+
+<p>
+  To modify the delivery, please fill out the following form.  Fields marked with <strong>*</strong> are required.
+</p>
+
+<%= render 'form' %>
+
+<%= hr() %>
+
+<div class="button">
+  <%= link_to 'Show', @delivery %>
+  <%= link_to 'Back', "/companies/deliveries/#{@company.id}" %>
+</div>

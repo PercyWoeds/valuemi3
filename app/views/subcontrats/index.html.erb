@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Empresa Subcontratada</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Ruc</th>
+      <th>Name</th>
+      <th>Address1</th>
+      <th>Distrito</th>
+      <th>Provincia</th>
+      <th>Dpto</th>
+      <th>Pais</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @subcontrats.each do |subcontrat| %>
+      <tr>
+        <td><%= subcontrat.ruc %></td>
+        <td><%= subcontrat.name %></td>
+        <td><%= subcontrat.address1 %></td>
+        <td><%= subcontrat.distrito %></td>
+        <td><%= subcontrat.provincia %></td>
+        <td><%= subcontrat.dpto %></td>
+        <td><%= subcontrat.pais %></td>
+        <td><%= link_to 'Show', subcontrat %></td>
+        <td><%= link_to 'Edit', edit_subcontrat_path(subcontrat) %></td>
+        <td><%= link_to 'Destroy', subcontrat, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Subcontrat', new_subcontrat_path %>

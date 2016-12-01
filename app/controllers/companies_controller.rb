@@ -47,6 +47,37 @@ class CompaniesController < ApplicationController
     @pagetitle = @company[:name]
     @locations = Location.where(company_id: @company.id)
   end
+  def start
+    @company = Company.find(params[:id])
+    set_company(@company)
+    
+    @pagetitle = @company[:name]
+    @locations = Location.where(company_id: @company.id)
+  end 
+
+
+  def faqs
+    @company = Company.find(params[:id])
+    set_company(@company)
+    
+    @pagetitle = @company[:name]
+    @locations = Location.where(company_id: @company.id)
+  end 
+  def charts
+    @company = Company.find(params[:id])
+    set_company(@company)
+    
+    @pagetitle = @company[:name]
+    @locations = Location.where(company_id: @company.id)
+  end 
+
+  def license 
+    @company = Company.find(params[:id])
+    set_company(@company)
+    
+    @pagetitle = @company[:name]
+    @locations = Location.where(company_id: @company.id)
+  end 
 
   # GET /companies/new
   # GET /companies/new.xml
@@ -131,7 +162,7 @@ class CompaniesController < ApplicationController
         end
       end
       
-      if @company.update_attributes(params[:company])
+      if @company.update_attributes(company_params)
         format.html { redirect_to(@company, :notice => 'Company was successfully updated.') }
         format.xml  { head :ok }
       else
@@ -166,7 +197,7 @@ class CompaniesController < ApplicationController
 
   
   def company_params
-    params.require(:company).permit(:name, :address1, :address2, :city, :state,:zip,:country, :website,:phone1,:phone2, :email,:logo )
+    params.require(:company).permit(:name, :address1, :address2, :city, :state,:zip,:country, :website,:phone1,:phone2, :email,:logo,:ruc )
   end
 
 end

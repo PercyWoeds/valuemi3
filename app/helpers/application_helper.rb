@@ -143,6 +143,21 @@ module ApplicationHelper
     hash = hash[0..5].upcase
     return hash
   end
+
+  def generate_guid2
+    @voidedlast = Voided.find(1)
+
+    correlative_number =@voidedlast.serie + "-"+@voidedlast.numero.to_s
+
+    return correlative_number
+  end
+  def generate_guid3
+    @voidedlast = Voided.find(2)
+
+    correlative_number =@voidedlast.serie + "-"+@voidedlast.numero.to_s
+
+    return correlative_number
+  end
   
   # Regresa extensiones para imagenes
   def imgTypes()

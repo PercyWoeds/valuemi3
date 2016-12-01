@@ -1,0 +1,25 @@
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %> &raquo;
+  <%= link_to "Invoices", "/companies/invoices/#{@company.id}" %> &raquo;
+  <%= link_to @purchase.identifier, @purchase %>
+</div>
+
+<h1>
+  <%= image_tag("invoice_48.png", :class => "vmiddle") %>
+  Editando documento
+</h1>
+
+<p>
+  Para modificar la factura, por favor llene el siguiente formulario. Los campos marcados con 
+  <strong>*</strong> son requeridos
+</p>
+
+<%= render 'form' %>
+
+<%= hr() %>
+
+<div class="button">
+  <%= link_to 'Show', @purchase %>
+  <%= link_to 'Back', "/companies/purchase/#{@company.id}" %>
+</div>

@@ -1,0 +1,65 @@
+<%= form_for(@pump) do |f| %>
+  <% if @pump.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@pump.errors.count, "error") %> prohibited this pump from being saved:</h2>
+
+      <ul>
+      <% @pump.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :fuel %><br>
+    <%= f.text_field :fuel %>
+  </div>
+  <div class="field">
+    <%= f.label :pump01 %><br>
+    <%= f.text_field :pump01 %>
+  </div>
+  <div class="field">
+    <%= f.label :tank_id %><br>
+    <%= f.number_field :tank_id %>
+  </div>
+  <div class="field">
+    <%= f.label :product_id %><br>
+    <%= f.number_field :product_id %>
+  </div>
+  <div class="field">
+    <%= f.label :price_buy %><br>
+    <%= f.text_field :price_buy %>
+  </div>
+  <div class="field">
+    <%= f.label :price_sell %><br>
+    <%= f.text_field :price_sell %>
+  </div>
+  <div class="field">
+    <%= f.label :le_an_gln %><br>
+    <%= f.text_field :le_an_gln %>
+  </div>
+  <div class="field">
+    <%= f.label :le_ac_gln %><br>
+    <%= f.text_field :le_ac_gln %>
+  </div>
+  <div class="field">
+    <%= f.label :gln %><br>
+    <%= f.text_field :gln %>
+  </div>
+  <div class="field">
+    <%= f.label :date1 %><br>
+    <%= f.datetime_select :date1 %>
+  </div>
+  <div class="field">
+    <%= f.label :employee_id %><br>
+    <%= f.number_field :employee_id %>
+  </div>
+  <div class="field">
+    <%= f.label :turno %><br>
+    <%= f.text_field :turno %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

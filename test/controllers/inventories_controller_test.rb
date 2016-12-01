@@ -18,7 +18,7 @@ class InventoriesControllerTest < ActionController::TestCase
 
   test "should create inventory" do
     assert_difference('Inventory.count') do
-      post :create, inventory: { category_id: @inventory.category_id, comments: @inventory.comments, tot_logical: @inventory.tot_logical, tot_physical: @inventory.tot_physical }
+      post :create, inventory: { category_id: @inventory.category_id, comments: @inventory.comments, company_id: @inventory.company_id, cost: @inventory.cost, date_processed: @inventory.date_processed, description: @inventory.description, division: @inventory.division, location_id: @inventory.location_id, logicalStock: @inventory.logicalStock, physicalStock: @inventory.physicalStock, processed: @inventory.processed, total: @inventory.total, user_id: @inventory.user_id }
     end
 
     assert_redirected_to inventory_path(assigns(:inventory))
@@ -35,7 +35,7 @@ class InventoriesControllerTest < ActionController::TestCase
   end
 
   test "should update inventory" do
-    patch :update, id: @inventory, inventory: { category_id: @inventory.category_id, comments: @inventory.comments, tot_logical: @inventory.tot_logical, tot_physical: @inventory.tot_physical }
+    patch :update, id: @inventory, inventory: { category_id: @inventory.category_id, comments: @inventory.comments, company_id: @inventory.company_id, cost: @inventory.cost, date_processed: @inventory.date_processed, description: @inventory.description, division: @inventory.division, location_id: @inventory.location_id, logicalStock: @inventory.logicalStock, physicalStock: @inventory.physicalStock, processed: @inventory.processed, total: @inventory.total, user_id: @inventory.user_id }
     assert_redirected_to inventory_path(assigns(:inventory))
   end
 

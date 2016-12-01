@@ -11,6 +11,20 @@
 
 <%= render "customers/show" %>
 
+<div class="row">
+
+	<div class="col-md-12">
+		<div class="addresses">
+			<h3> Direcciones adicionales   </h3>
+			<%= render @customer.addresses %>
+			<div>
+			<%= link_to "Agregar direcciones  ", new_customer_address_path(@customer),class: "button" %>	
+			</div>
+		</div>
+
+	</div>	
+</div>
+
 <div class="button">
   <%= link_to "Invoices for customer", "/companies/invoices/#{@customer.company.id}?customer=#{@customer.id}" %>
   <%= link_to 'Edit', edit_customer_path(@customer) %>

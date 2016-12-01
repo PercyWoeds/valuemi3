@@ -1,0 +1,238 @@
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @delivery.company.name, @delivery.company %> &raquo;
+  <%= link_to "deliveries", "/companies/deliveries/#{@delivery.company.id}" %>
+</div>
+
+<h1>
+  <%= image_tag("supplier_48.png", :class => "vmiddle") %>
+    <%= @delivery.identifier %>
+</h1>
+
+<%= hr() %>
+
+<% if @delivery.location %>
+  <p>
+    <b>Location:</b>
+    <%= link_to @delivery.location.name, @delivery.location %>
+  </p>
+<% end %>
+
+<% if @delivery.division %>
+  <p>
+    <b>Division:</b>
+    <%= link_to @delivery.division.name, @delivery.division %>
+  </p>
+<% end %>
+
+
+
+<p>
+  <b>Code:</b>
+  <%= @delivery.code %>
+</p>
+
+
+<%= hr() %>
+
+<h3>
+  Informacion Cliente 
+</h3>
+
+<p>
+  <b>Nombre:</b>
+  <%= link_to @customer.name, @customer %>
+</p>
+
+<%= render "customers/show" %>
+
+<%= hr() %>
+
+<p>
+  <h4>Direccion de Llegada </h4>
+  <%= @delivery.address.address %>
+</p>
+<p>
+  <%= @delivery.address.address2 %>
+</p>
+<p>
+  <%= @delivery.address.state %>
+</p>
+
+<p>
+  <%= @delivery.address.city %>
+</p>
+
+
+<%= hr() %>
+
+
+<h3>
+  Detalle
+</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>
+        Servicio
+      </th>
+      <th>
+        Precio
+      </th>
+      <th>
+        Cantidad
+      </th>
+      <th>
+        Dscto
+      </th>
+      <th>
+        Total
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <% for productItem in @delivery.get_services() %>
+      <tr>
+        <td class="bordered_bottom bordered_right">
+          <%= link_to productItem.name   %>
+        </td>
+        <td class="bordered_bottom bordered_right">
+          $<%= money(productItem.price) %>
+        </td>
+        <td class="bordered_bottom bordered_right">
+          <%= productItem.quantity %>
+        </td>
+        <td class="bordered_bottom bordered_right">
+          <%= money(productItem.discount) %>%
+        </td>
+        <td class="bordered_bottom bordered_right">
+          $<%= money(productItem.total) %>
+        </td>
+      </tr>
+    <% end %>
+    <tr>
+      <td colspan="5" class="bordered_bottom bordered_right">
+        &nbsp;
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4" class="bordered_bottom bordered_right bold">
+        Subtotal:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        $<%= money(@delivery.subtotal) %>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4" class="bordered_bottom bordered_right bold">
+        Tax:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        $<%= money(@delivery.tax) %>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4" class="bordered_bottom bordered_right bold">
+        Total:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        $<%= money(@delivery.total) %>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br />
+
+<%= hr() %>
+
+<% if @delivery.description != "" %>
+  <div>
+    <b>Description:</b>
+    <br />
+    <br />
+    <%= format_text(@delivery.description) %>
+  </div>
+  <%= hr() %>
+<% end %>
+
+<% if @delivery.comments != "" %>
+  <div>
+    <b>Comments:</b>
+    <br />
+    <br />
+    <%= format_text(@delivery.comments) %>
+  </div>
+  <%= hr() %>
+<% end %>
+
+<br />
+
+<div>
+  <strong><%= @delivery.get_processed %></strong>
+  <% if @delivery.processed == "1" and @delivery.date_processed %>
+    <%= doDate(@delivery.date_processed) %>
+  <% end %>
+</div>
+
+<p>
+  <b>Return:</b>
+  <%= @delivery.get_return %>
+</p>
+ <%= hr() %>
+ 
+<p>
+  <strong>Vehiculo:</strong>
+  <b> Marca del Vehiculo</b>
+  <%= @delivery.truck.marca_id  %>
+</p>
+
+<p>
+  <b> Placa del Vehiculo</b>
+  <%= @delivery.truck.placa  %>
+</p>
+
+<p>
+  <b> Certificado del Vehiculo</b>
+  <%= @delivery.truck.certificado  %>
+</p>
+<p>
+<strong>Chofer : * </strong>
+</p>
+<p>
+  <b> Nombre del Chofer </b>
+  <%= @delivery.employee.full_name %>
+</p>
+
+<p>
+  <b> Placa del Vehiculo 1 : </b>
+  <%= @delivery.truck.placa  %>
+</p>
+
+<p>
+  <b> Placa del Vehiculo 2 : </b>
+  <%= @delivery.get_truck2(@delivery.truck2_id)  %>
+</p>
+ <%= hr() %>
+
+<p>
+  <b> Empresa subcontratada </b>
+  <%= @delivery.subcontrat.ruc %>
+  <%= @delivery.subcontrat.name  %>
+</p>
+
+ <%= hr() %>
+<p>
+  <strong>Seller:</strong>
+  <%= link_to @delivery.user.username, @delivery.user %>
+</p>
+
+<%= hr() %>
+
+<div class="button">
+  <%= link_to 'Exportar to PDF', "/deliveries/pdf/#{@delivery.id}.pdf" %>
+  <%= link_to 'Enviar via email', "/deliveries/email/#{@delivery.id}" %>
+  <%= link_to 'Procesar guia', "/deliveries/do_process/#{@delivery.id}" %>
+  <%= link_to 'Editar', edit_delivery_path(@delivery) %>
+  <%= link_to 'Regresar', "/companies/deliveries/#{@delivery.company.id}" %>
+</div>

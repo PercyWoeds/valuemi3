@@ -1,0 +1,1 @@
+json.array! @subcontrats, partial: 'subcontrats/subcontrat', as: :subcontrat
