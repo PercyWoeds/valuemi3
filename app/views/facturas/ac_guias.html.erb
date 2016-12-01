@@ -1,0 +1,5 @@
+<% if @guias %>
+  <% for product in @guias %>
+    <%= product.code %>|BRK|<%= product.id %>|BRK|%>
+  <% end %>
+<% end %>

@@ -50,4 +50,10 @@
 
 <br>
 
-<%= link_to 'New Truck', new_truck_path %>
+<%= link_to 'Nuevo Vehiculo', new_truck_path %>
+
+
+<%= form_tag import_trucks_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Importar " %>
+<% end %>

@@ -132,8 +132,33 @@ class Factura < ActiveRecord::Base
           product = Service.find(id.to_i)
           
           new_invoice_product = InvoiceService.new(:factura_id => self.id, :service_id => product.id, :price => price.to_f, :quantity => quantity.to_i, :discount => discount.to_f, :total => total.to_f)
+
           new_invoice_product.save
 
+        rescue
+          
+        end
+      end
+    end
+  end
+
+  
+  def add_guias(items)
+    for item in items
+      if(item and item != "")
+        parts = item.split("|BRK|")
+        
+        id = parts[0]
+        puts "add guia "
+        puts parts 
+        puts id
+
+        begin
+          guia = Delivery.find(id.to_i)
+          
+          new_invoice_guia = Deliveryship.new(:factura_id => self.id, :delivery_id => guia.id)          
+          new_invoice_guia.save
+           
         rescue
           
         end
@@ -153,6 +178,13 @@ class Factura < ActiveRecord::Base
     return @itemproducts
   end
   
+  def get_guias    
+    @itemguias = Deliveryship.find_by_sql(['Select deliveries.code 
+     from deliveryships INNER JOIN deliveries ON deliveryships.delivery_id = deliveries.id where deliveryships.factura_id = ?', self.id ])
+    return @itemguias
+  end
+  
+
   def get_invoice_prod  ucts
     invoice_products = InvoiceService.where(factura_id:  self.id)    
     return invoice_products
@@ -173,6 +205,17 @@ class Factura < ActiveRecord::Base
       puts  #{ip.service.id}|BRK|#{ip.service.quantity}|BRK|#{ip.service.price}|BRK|#{ip.service.discount
 
     return services.join(",")
+  end
+  
+  def guias_lines
+    guias = []
+    invoice_guias = DeliveryShip.where(factura_id:  self.id)
+    
+    invoice_guias.each do | ip |
+      guias.push("#{ip.delivery.id}|BRK|")
+    end    
+
+    return guias.join(",")
   end
   
   def get_processed

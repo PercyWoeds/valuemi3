@@ -82,6 +82,40 @@ class FacturasController < ApplicationController
     render :layout => false
   end
   
+  def list_items2
+    
+    @company = Company.find(params[:company_id])
+    items = params[:items2]
+    items = items.split(",")
+    items_arr = []
+    @guias = []
+    i = 0
+
+    for item in items
+      if item != ""
+        parts = item.split("|BRK|")
+
+        puts parts
+
+        id = parts[0]      
+        product = Delivery.find(id.to_i)
+        product[:i] = i
+
+        @guias.push(product)
+
+
+      end
+      
+      i += 1
+    end
+
+    render :layout => false
+  end 
+  # Autocomplete for products
+  def ac_guias
+    @guias = Delivery.where(["company_id = ? AND (code LIKE ?)", params[:company_id], "%" + params[:q] + "%"])   
+    render :layout => false
+  end
   
   # Autocomplete for products
   def ac_services
@@ -262,7 +296,9 @@ class FacturasController < ApplicationController
     @action_txt = "Create"
     
     items = params[:items].split(",")
-    
+
+    items2 = params[:items2].split(",")
+
     @invoice = Factura.new(factura_params)
     
     @company = Company.find(params[:factura][:company_id])
@@ -290,6 +326,7 @@ class FacturasController < ApplicationController
       if @invoice.save
         # Create products for kit
         @invoice.add_products(items)
+        @invoice.add_guias(items2)
         @invoice.correlativo
         # Check if we gotta process the invoice
         @invoice.process()

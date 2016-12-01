@@ -69,6 +69,7 @@ end
   def email
     @delivery = Delivery.find(params[:id])
     @company = @delivery.company
+  
   end
   
   # List items
@@ -115,6 +116,7 @@ end
     
     render :layout => false
   end
+    
   
   
   # Autocomplete for products
@@ -332,6 +334,7 @@ end
       if @delivery.save
         # Create products for kit
         @delivery.add_services(items)
+
         
         # Check if we gotta process the delivery
         @delivery.process()

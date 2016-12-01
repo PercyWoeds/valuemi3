@@ -1,6 +1,12 @@
 class TrucksController < ApplicationController
   before_action :set_truck, only: [:show, :edit, :update, :destroy]
 
+
+  def import
+      Truck.import(params[:file])
+       redirect_to root_url, notice: "Vehiculos importadas."
+  end 
+  
   # GET /trucks
   # GET /trucks.json
   def index

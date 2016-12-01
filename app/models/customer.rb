@@ -11,7 +11,7 @@ class Customer < ActiveRecord::Base
   accepts_nested_attributes_for :addresses, :reject_if => lambda { |a| a[:address].blank? }, :allow_destroy => true
 
 
-  def self.import(file)
+    def self.import(file)
           CSV.foreach(file.path, headers: true, encoding:'iso-8859-1:utf-8') do |row|
           Customer.create! row.to_hash 
         end

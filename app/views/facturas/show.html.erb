@@ -59,23 +59,23 @@
 <%= hr() %>
 
 <h3>
-  Details
+  Detalle servicios
 </h3>
 
 <table>
   <thead>
     <tr>
       <th>
-        Product
+        Servicio
       </th>
       <th>
-        Price
+        Precio
       </th>
       <th>
-        Quantity
+        Cantidad
       </th>
       <th>
-        Discount
+        Dscto
       </th>
       <th>
         Total
@@ -135,6 +135,36 @@
 </table>
 <br />
 
+<h3>
+  Detalle guias
+</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>
+        Guias...
+      
+    </tr>
+  </thead>
+  <tbody>
+    <% for productItem in @invoice.get_guias() %>
+      <tr>
+        <td class="bordered_bottom bordered_right">
+          <%= link_to productItem.code   %>
+        </td>
+      </tr>
+    <% end %>
+    <tr>
+      <td colspan="5" class="bordered_bottom bordered_right">
+        &nbsp;
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+<br />
+
 <%= hr() %>
 
 <% if @invoice.description != "" %>
@@ -179,9 +209,9 @@
 <%= hr() %>
 
 <div class="button">
-  <%= link_to 'Export to PDF', "/facturas/pdf/#{@invoice.id}.pdf" %>
+  <%= link_to 'Exportar to PDF', "/facturas/pdf/#{@invoice.id}.pdf" %>
   <%= link_to 'Send invoice via email', "/facturas/email/#{@invoice.id}" %>
-  <%= link_to 'Process invoice', "/facturas/do_process/#{@invoice.id}" %>
-  <%= link_to 'Edit', edit_factura_path(@invoice) %>
-  <%= link_to 'Back', "/companies/facturas/#{@invoice.company.id}" %>
+  <%= link_to 'Procesar factura', "/facturas/do_process/#{@invoice.id}" %>
+  <%= link_to 'Editar', edit_factura_path(@invoice) %>
+  <%= link_to 'Regresar', "/companies/facturas/#{@invoice.company.id}" %>
 </div>

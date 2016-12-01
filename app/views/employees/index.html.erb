@@ -48,4 +48,15 @@
 
 <br>
 
-<%= link_to 'New Employee', new_employee_path %>
+<%= link_to 'Nuevo empleado ', new_employee_path %>
+
+
+<h2>Importar Archivo empleado "*.csv"</h2>
+<%= form_tag import_employees_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Importar " %>
+<% end %>
+
+
+
+

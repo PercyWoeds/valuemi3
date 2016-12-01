@@ -1,6 +1,13 @@
 class EmployeesController < ApplicationController
   before_action :set_employee, only: [:show, :edit, :update, :destroy]
 
+
+
+   def import
+      Employee.import(params[:file])
+       redirect_to root_url, notice: "Empleados importadas."
+  end 
+  
   # GET /employees
   # GET /employees.json
   def index

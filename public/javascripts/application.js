@@ -405,6 +405,43 @@ function listItemsdelivery() {
   });
 }
 
+// Add an item to a product kit
+function addItemTodelivery2() {
+  var item = $("#ac_item3").val();
+  
+ if(item != "") {
+    var company_id = $("#factura_company_id").val();
+    var item_id = $("#ac_item_guia").val();        
+    var items_arr = $("#items2").val().split(",");
+    var item_line = item_id + "|BRK|" ;
+      
+      $("#items2").val($("#items2").val() + "," + item_line );
+
+      listItemsdelivery2();
+      
+      $("#ac_item_guia").val("");
+      $("#ac_item3").val("");      
+    
+  } else {
+    alert("Please find a guia  to add first.");
+  }
+}
+
+
+function listItemsdelivery2() {
+  var items2 = $("#items2").val();
+  var company_id = $("#factura_company_id").val();
+  
+  $.get('/facturas/list_items2/' + company_id, {
+    items2: items2
+  },
+  function(data) {
+    $("#list_items2").html(data);
+    documentReady();
+  });
+}
+
+
 // Removes an item from a kit
 function removeItemFromKit(id) {
   var items = $("#items").val();
@@ -473,6 +510,23 @@ function removeItemFromdelivery(id) {
   
   $("#items").val(items_final.join(","));
   listItemsdelivery();
+}
+// Removes an item from an invoice
+function removeItemFromdelivery2(id) {
+  var items = $("#items2").val();
+  var items_arr = items.split(",");
+  var items_final = Array();
+  var i = 0;
+  
+  while(i < items_arr.length) {
+    if(i != id) {
+      items_final[i] = items_arr[i];
+    }
+    i++;
+  }
+  
+  $("#items2").val(items_final.join(","));
+  listItemsdelivery2();
 }
 
 // Shortcut to create new customer form

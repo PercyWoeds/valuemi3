@@ -5,6 +5,7 @@ class ServicesController < ApplicationController
     @products = Service.where(["company_id = ? AND (code LIKE ? OR name LIKE ?)", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])
     render :layout => false
   end
+  
  # List products for a company
   def list_products
     @company = Company.find(params[:company_id])
