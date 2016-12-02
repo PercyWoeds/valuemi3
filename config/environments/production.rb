@@ -1,4 +1,10 @@
+
 Mnygo::Application.configure do
+
+  require 'jquery/modal/rails'
+  require 'jquery/modal/filters'
+  require 'jquery/modal/helpers'
+
   # Settings specified here will take precedence over those in config/application.rb
 
   # The production environment is meant for finished, "live" apps.
@@ -50,6 +56,6 @@ Mnygo::Application.configure do
   config.active_support.deprecation = :notify
 
   config.assets.version = '1.1'
-  
+
 
 end
