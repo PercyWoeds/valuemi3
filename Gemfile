@@ -44,7 +44,7 @@ gem 'rmagick', '~> 2.15', '>= 2.15.4'
 gem 'simple_form', '~> 3.3', '>= 3.3.1'
 
 
-gem 'rails_autolink', '~> 1.1', '>= 1.1.6'
+	gem 'rails_autolink', '~> 1.1', '>= 1.1.6'
 
 # Use unicorn as the web server
 # gem 'unicorn'
