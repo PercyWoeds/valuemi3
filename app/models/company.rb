@@ -67,7 +67,8 @@ class Company < ActiveRecord::Base
 
 
   def get_addresses()
-     addresses = Address.find_by_sql(['Select id,full_address as address from addresses' ]) 
+     addresses = Address.find_by_sql(['Select id,full_address as address f
+      rom addresses' ]) 
      return addresses
   end
   
