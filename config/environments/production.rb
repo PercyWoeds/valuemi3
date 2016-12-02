@@ -1,10 +1,6 @@
 
 Mnygo::Application.configure do
 
-  require 'jquery/modal/rails'
-  require 'jquery/modal/filters'
-  require 'jquery/modal/helpers'
-
   # Settings specified here will take precedence over those in config/application.rb
 
   # The production environment is meant for finished, "live" apps.
