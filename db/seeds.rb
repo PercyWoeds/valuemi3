@@ -19,3 +19,18 @@
   @free_package.save
 #end
 
+
+@v = Voided.new
+@v.serie ='001'
+@v.numero='1'
+@v.save
+
+@v = Voided.new
+@v.serie ='001'
+@v.numero='1'
+@v.save
+
+@v = Voided.new
+@v.serie ='001'
+@v.numero='1'
+@v.save
