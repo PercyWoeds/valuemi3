@@ -65,7 +65,7 @@ class Company < ActiveRecord::Base
     return payments
   end
   def get_addresses()
-     addresses = Address.find_by_sql(['Select id, (address || " " || address2 || " " || state || " " || city  ) as address   from addresses' ]) 
+     addresses = Address.find_by_sql(['Select id, (address || ''  || address2 || '' || state || '' || city  ) as address   from addresses' ]) 
      return addresses
   end
   
