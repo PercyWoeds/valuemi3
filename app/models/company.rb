@@ -67,7 +67,7 @@ class Company < ActiveRecord::Base
 
 
   def get_addresses()
-     addresses = Address.find_by_sql(['Select id, (address || ' '  || address2 || ' ' || state || ' ' || city  ) as address   from addresses' ]) 
+     addresses = Address.find_by_sql(['Select id,concat(address,' ', address2, ' ',state,' ', city  ) as address   from addresses' ]) 
      return addresses
   end
   
