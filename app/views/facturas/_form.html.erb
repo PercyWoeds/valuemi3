@@ -144,7 +144,8 @@
     <input type="hidden" name="ac_item_id" id="ac_item_id" value="" />
     
     <strong>Servicio:</strong><br />
-    <input type="text" name="ac_item" id="ac_item" value="" />
+
+    <%= select_tag(:ac_item_id,options_from_collection_for_select(@services,'id','name') ) %>
 
     <div class="small">
       Ingrese un termino de busqueda para encontrar un producto.

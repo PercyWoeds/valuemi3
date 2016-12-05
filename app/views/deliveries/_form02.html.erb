@@ -1,0 +1,329 @@
+
+
+<% if @delivery.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@delivery.errors.count, "error") %> prohibited this delivery from being saved:</h2>
+
+    <ul>
+    <% @delivery.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= hr() %>
+
+<div class="mid_box bordered_right">
+  <%= form_for(@delivery) do |f| %>
+    <h3>
+       Informacion Guia        
+    </h3>
+    <%= f.label :remision ,"  "%><br />
+    <%= f.select :remision, options_for_select([["GUIA REMISION",1],["GUIA TRANSPORTISTA",2]]) %>
+
+    <div class="field">
+      <%= f.label :code, "Code*", :class => "bold" %><br />
+      <%= f.text_field :code, :onclick => "$(this).select();" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :fecha1, "Fecha Emision*", :class => "bold" %><br />
+      <%= f.date_field :fecha1, value: Time.now.strftime("%d/%m/%Y") %>
+    </div>
+
+    <div class="field">
+      <%= f.label :fecha2, "Fecha Traslado*", :class => "bold" %><br />
+      <%= f.date_field :fecha2, value: Time.now.strftime("%d/%m/%Y") %>
+    </div>
+
+
+    <label class="bold"> REMITENTE *</label><br />
+    <%= render "/companies/show" %>
+
+
+    <div class="field">
+      <%= f.label :location_id ,"Direccion de Partida "%><br />
+      <%= f.select :location_id, options_from_collection_for_select(@locations,'id','address1') %>
+    
+        <div class="small">
+          <strong>Local :</strong>
+          <span id="selected_local"></span>
+        </div>
+
+    </div>
+    <div class="field">
+      <%= f.label :division_id %><br />
+      <%= f.select :division_id,options_from_collection_for_select(@divisions,'id','name') %>
+    </div>
+    
+    <form method="get"  return false;">
+    <div class="field">
+    
+      <label for="ac_customer" class="bold"> DESTINATARIO *</label><br />
+
+      <%= f.select :customer_id,options_from_collection_for_select(@customers,'id','name') %>
+
+      <div class="small">
+        Ingrese una termino de busqueda para encontrar un cliente.
+      </div>
+      <br />
+
+      <div class="small">  
+        <strong>Seleccionar cliente:</strong>
+        <%= render 'deliveries/customer' %>  
+      </div>
+    </div>
+
+   </form> 
+   
+    <div class="field">
+      <%= f.label :address_id,"Direccion de llegada :"   %><br />
+      <%= f.select :address_id,options_from_collection_for_select(@addresses,'id','address') %>
+    </div>
+    
+
+    <%= hr() %>
+
+
+    
+    <div class="field" id="list_items">
+      <p class="bold big">Servicios:</p>
+    </div>
+    
+    <div class="field">
+      <%= f.label :description,"Descripcion " %><br />
+      <%= f.text_area :description %>
+    </div>
+
+    <%= hr() %>
+  
+    <div class="field">
+      <%= f.check_box :processed %>
+      <%= f.label :processed, "Process delivery", :class => "bold" %>
+      <div class="small">
+        Marks wether or not this delivery has been payed and we can deduct the product quantities and count it towards the month's total.
+      </div>
+    </div>
+  
+    <div class="field">
+       <%= f.check_box :return %>
+      <%= f.label :return, :class => "bold" %>
+      <div class="small">
+        Is it a return order?
+      </div>
+    </div>
+    
+    <%= hr() %>
+
+   
+    <div class="field">
+      <%= f.label :truck_id ,"Vehiculo "%><br />
+      <%= f.select :truck_id, options_from_collection_for_select(@trucks,'id','placa') %>
+    </div>
+
+    <div class="field">
+      <%= f.label :truck2_id ,"Vehiculo 2 "%><br />
+      <%= f.select :truck2_id, options_from_collection_for_select(@trucks,'id','placa') %>
+    </div>
+   
+   
+    <div class="field">
+      <%= f.label :employee_id , "Empleado "%><br />
+      <%= f.select :employee_id,options_from_collection_for_select(@employees,'id','full_name') %>
+    </div>
+
+   
+    <%= hr() %>
+
+     <div class="field">
+      <%= f.label :subcontrat_id,"Empresa Subcontratada " %><br />
+      <%= f.select :subcontrat_id, options_from_collection_for_select(@empsubs,'id','name') %>
+     </div>
+
+
+    <%= hr() %>
+  
+    <div class="field">
+      <label for="ac_user" class="bold">Usuario*</label><br />
+      <input type="text" name="ac_user" id="ac_user" value="<% if @ac_user %><%= @ac_user %><% end %>" />
+
+      <div class="small">
+        Enter a search term to find a user.
+      </div>
+
+      <br />
+
+      <div class="small">
+        <strong>Selected seller:</strong>
+        <span id="selected_seller"><% if @ac_user %><%= @ac_user %><% else %><!-- i --><% end %></span>
+      </div>
+    </div>
+  
+    <%= hr() %>
+
+
+  
+    <div class="actions">
+      <input type="hidden" name="items" id="items" value="<% if @products_lines %><%= @products_lines %> <% end %> " />
+      <%= f.hidden_field :user_id, :id => "ac_user_id" %>
+      <%= f.hidden_field :customer_id, :id => "ac_customer_id" %>
+      <%= f.hidden_field :company_id %>
+      <%= f.submit %>
+    </div>
+
+    
+    <div class="small">
+      Once you're done adding products, don't forget to <strong><%= @action_txt %></strong> your delivery.
+    </div>
+
+  <% end %>
+</div>
+
+
+<div class="mid_box">
+  <h3>
+    Agregar servicios a la guia  
+  </h3>
+  
+  <form method="get" action="/services" onsubmit="addItemTodelivery(); return false;">
+
+  
+    <input type="hidden" name="ac_item_unidad" id="ac_item_unidad" value="" />
+
+    <strong>Servicio :</strong><br />
+    <%= select_tag(:ac_item_id,options_from_collection_for_select(@services,'id','name') ) %>
+
+    <div class="small">
+      Ingrese un termino de busqueda para encontrar un producto.
+    </div>
+    <br />
+    
+
+    <strong>Cantidad :</strong><br />
+    <input type="text" name="ac_item_quantity" id="ac_item_quantity" value="1" class="tf_short" />
+    <div class="small">
+     Cantidad del producto para agregar una guia.
+    </div>
+    <br />
+
+
+    <strong>Unidad:</strong><br />
+    
+    <%= select_tag(:ac_item2,options_from_collection_for_select(@unidads,'id','descrip') ) %>
+
+    <div class="small">
+      Ingrese un termino de busqueda para encontrar un producto.
+    </div>
+    <br />
+
+  
+    <br />
+      <strong>Peso :</strong><br />
+    <input type="text" name="ac_item_peso" id="ac_item_peso" value="1" class="tf_short" />
+    <div class="small">
+     Cantidad del peso para agregar una guia
+    </div>
+    <br />
+    
+    <strong>Precio :</strong><br />
+    <input type="text" name="ac_item_price" id="ac_item_price" value="" class="tf_short" />
+    <div class="small">
+      Precio del  servicio para agregar una guia
+    </div>
+    <br />
+    
+    
+    <strong>Dscto %:</strong><br />
+    <input type="text" name="ac_item_discount" id="ac_item_discount" value="0" class="tf_short" />
+    
+    <div class="small">
+      Descuento % del servicio para agregar una guia 
+    </div>
+    <br />
+    
+    <div>
+      <strong>Total:</strong><br />
+      <span id="ac_item_total">$0.00</span>
+    </div>
+    
+    <br />
+    <input type="submit" value="Agregar item a Guia" />
+  </form>
+
+</div>
+
+<%= br() %>
+<br />
+
+
+<%= render 'layouts/autocomplete' %>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("#ac_customer").autocomplete("/deliveries/ac_customers/<%= @company.id %>", {
+      matchSubset: 1,
+      matchContains: 1,
+      selectFirst: false
+    });
+    
+    $("#ac_customer").result(function(event, data, formatted) {
+      $("#ac_customer_id").val(data[2]);
+      $("#selected_customer").html(data[0]);
+    });
+    
+    
+    $("#ac_user").autocomplete("/deliveries/ac_user/<%= @company.id %>", {
+      matchSubset: 1,
+      matchContains: 1,
+      selectFirst: false
+    });
+    
+    $("#ac_user").result(function(event, data, formatted) {
+      $("#ac_user_id").val(data[2]);
+      $("#selected_seller").html(data[0]);
+    });
+    
+    $("#ac_item").autocomplete("/deliveries/ac_services/<%= @company.id %>", {
+      matchSubset: 1,
+      matchContains: 1,
+      selectFirst: false
+    });
+    
+    $("#ac_item").result(function(event, data, formatted) {
+      $("#ac_item_id").val(data[2]);
+      $("#ac_item_price").val(data[4]);
+      
+      updateItemdelivery();
+    });
+
+    $("#ac_item2").autocomplete("/deliveries/ac_unidads/<%= @company.id %>", {
+      matchSubset: 1,
+      matchContains: 1,
+      selectFirst: false
+    });
+    
+    $("#ac_item2").result(function(event, data, formatted) {
+      $("#ac_item_unidad").val(data[2]);    
+      $("#selected_unidad").html(data[0]);      
+    });
+
+    
+    $("#ac_item_quantity").bind("keyup", function() {
+      updateItemdelivery();
+    });
+    
+    $("#ac_item_price").bind("keyup", function() {
+      updateItemdelivery();
+    });
+    
+    $("#ac_item_discount").bind("keyup", function() {
+      updateItemdelivery();
+    }); 
+    
+    <% if @products_lines %>
+    alert 'holas products_lines';
+      listItemsdelivery();
+    <% end %>
+  });
+</script>

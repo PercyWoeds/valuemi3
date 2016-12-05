@@ -17,6 +17,12 @@ self.per_page = 20
   has_many :delivery_services
   has_many :declarationdeliveries
 
+def self.search(params)        
+    customers = Factura.where("name  LIKE ?","%#{params[:search]}%") if params[:search].present?
+    customers
+end
+
+
 def not_friends_with?(delivery_id)
     declarationdeliveries.where(delivery_id: delivery_id).count < 1
 end

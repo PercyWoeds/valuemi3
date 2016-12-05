@@ -20,6 +20,10 @@
   resources :deliveryships
 
   resources :declarations 
+
+  resources :deliveries do
+    collection { get :search   }
+   end 
   
 
   resources :orders do 

@@ -44,7 +44,6 @@ class Company < ActiveRecord::Base
   
   def get_locations()
 
-
     locations = Location.where(company_id: self.id).order("name ASC")
     
     return locations
@@ -63,6 +62,10 @@ class Company < ActiveRecord::Base
     payments = payments_f
     
     return payments
+  end
+  def get_services()
+     services = Service.where(company_id: self.id).order(:name)
+     return services
   end
 
 
@@ -87,7 +90,7 @@ class Company < ActiveRecord::Base
   end 
 
   def get_unidads()
-     unidads = Unidad.all 
+     unidads = Unidad.all.order(:id)
      return unidads
   end 
   
@@ -348,7 +351,7 @@ class Company < ActiveRecord::Base
   
   # Get customers for Company
   def get_customers()
-    customers = Customer.where(company_id: self.id)
+    customers = Customer.where(company_id: self.id).order(:name)
 
     return customers
   end

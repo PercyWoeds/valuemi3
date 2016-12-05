@@ -6,15 +6,22 @@ include ServicesHelper
 class DeliveriesController < ApplicationController
   before_filter :authenticate_user!, :checkServices
     
-  def search
+def search
+  
 
-  @deliveries = Delivery.search(params[:search_param])
-  if @deliveries
-    render partial: 'friends/lookup'
+  if params[:search].blank?
+    
   else
-    render status: :not_found, nothing: true
+      @Customer = Delivery.search(params[:search_param])  
+      if @deliveries
+        return @deliveries
+
+      else
+          flash[:notice] = "Cliente no encontrado"
+      end
   end
 
+    render :layout => false
 end
 
 
@@ -81,11 +88,12 @@ end
     items_arr = []
     @products = []
     i = 0
+    puts items 
 
     for item in items
-      if item != ""
+      if item != "" 
         parts = item.split("|BRK|")
-        puts parts
+        
 
         id = parts[0]
         quantity = parts[1]
@@ -260,10 +268,12 @@ end
 
     @trucks    = @company.get_trucks()
     @employees = @company.get_employees()
+    @customers = @company.get_customers()
     @empsubs   = @company.get_empsubs()
     @unidads   = @company.get_unidads()
     @addresses  = @company.get_addresses()
-    
+    @services  = @company.get_services()
+
     @ac_user = getUsername()
     @delivery[:user_id] = getUserId()
   end
@@ -282,11 +292,14 @@ end
     @trucks    = @company.get_trucks()
     @employees = @company.get_employees()
     @empsubs   = @company.get_empsubs()
-    
+    @customers = @company.get_customers()
+
     @ac_customer = @delivery.customer.name
     @ac_user = @delivery.user.username
     @payments = @company.get_payments()    
     @addresses  = @company.get_addresses()
+    @services  = @company.get_services()
+
 
     @products_lines = @delivery.services_lines
     
@@ -313,7 +326,8 @@ end
     @empsubs   = @company.get_empsubs()
     @unidads   = @company.get_unidads()
     @addresses  = @company.get_addresses()
-      
+    @services  = @company.get_services()      
+    @customers = @company.get_customers()
 
     @delivery[:subtotal] = @delivery.get_subtotal(items)
     

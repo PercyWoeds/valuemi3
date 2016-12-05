@@ -13,6 +13,7 @@
 <%= hr() %>
 
 <div class="mid_box bordered_right">
+
   <%= form_for(@delivery) do |f| %>
     <h3>
        Informacion Guia        
@@ -59,24 +60,19 @@
     <div class="field">
     
       <label for="ac_customer" class="bold"> DESTINATARIO *</label><br />
-      <input type="text" name="ac_customer" id="ac_customer" value="<% if @ac_customer %><%= @ac_customer %><% end %>" />
-      
-      
+
+      <%= f.select :customer_id,options_from_collection_for_select(@customers,'id','name') %>
       <div class="small">
         Ingrese una termino de busqueda para encontrar un cliente.
       </div>
       <br />
 
-      <div class="small">
-        <strong>Seleccionar cliente:</strong>
-        <span id="selected_customer"><% if @ac_customer %><%= @ac_customer %><% else %><!-- i --><% end %></span>
-      </div>
+
     </div>
     
     <div class="field">
       <%= f.label :address_id,"Direccion de llegada :" %><br />
       <%= f.select :address_id,options_from_collection_for_select(@addresses,'id','address') %>
-
     </div>
     
 
@@ -160,19 +156,20 @@
     <%= hr() %>
 
 
-  
     <div class="actions">
       <input type="hidden" name="items" id="items" value="<% if @products_lines %><%= @products_lines %><% end %>" />
       <%= f.hidden_field :user_id, :id => "ac_user_id" %>
-      <%= f.hidden_field :customer_id, :id => "ac_customer_id" %>
       <%= f.hidden_field :company_id %>
       <%= f.submit %>
     </div>
     
+    
     <div class="small">
       Once you're done adding products, don't forget to <strong><%= @action_txt %></strong> your delivery.
     </div>
+
   <% end %>
+
 </div>
 
 
@@ -183,11 +180,11 @@
   
   <form method="get" action="/services" onsubmit="addItemTodelivery(); return false;">
 
-    <input type="hidden" name="ac_item_id" id="ac_item_id" value="" />
-    <input type="hidden" name="ac_item_unidad" id="ac_item_unidad" value="" />
-
+    
+    
     <strong>Servicio :</strong><br />
-    <input type="text" name="ac_item" id="ac_item" value="" />
+    <%= select_tag(:ac_item_id,options_from_collection_for_select(@services,'id','name') ) %>
+
     <div class="small">
       Ingrese un termino de busqueda para encontrar un producto.
     </div>
@@ -202,7 +199,9 @@
 
 
     <strong>Unidad:</strong><br />
-    <input type="text" name="ac_item2" id="ac_item2" value="" />
+
+    <%= select_tag(:ac_item_unidad,options_from_collection_for_select(@unidads,'id','descrip') ) %>
+
     <div class="small">
       Ingrese un termino de busqueda para encontrar un producto.
     </div>
@@ -266,7 +265,6 @@
       $("#ac_customer_id").val(data[2]);
       $("#selected_customer").html(data[0]);
     });
-    
     
     
     $("#ac_user").autocomplete("/deliveries/ac_user/<%= @company.id %>", {

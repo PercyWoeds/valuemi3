@@ -5,6 +5,7 @@ class Customer < ActiveRecord::Base
   
   has_many :invoices
   has_many :manifests
+  has_many :facturas
   
   has_many :addresses , :dependent => :destroy
   
@@ -15,9 +16,7 @@ class Customer < ActiveRecord::Base
           CSV.foreach(file.path, headers: true, encoding:'iso-8859-1:utf-8') do |row|
           Customer.create! row.to_hash 
         end
-      end       
-      
-
+      end           
   
   def get_taxable
     if(self.taxable == "1")

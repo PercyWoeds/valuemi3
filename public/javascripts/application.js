@@ -345,8 +345,8 @@ function updateItemdelivery() {
 
 // Add an item to a product kit
 function addItemTodelivery() {
-  var item = $("#ac_item").val();
-  
+  var item = $("#ac_item_id").val();
+
  if(item != "") {
     var company_id = $("#delivery_company_id").val();
     var item_id = $("#ac_item_id").val();
@@ -369,6 +369,7 @@ function addItemTodelivery() {
       alert("Please enter a valid discount");
     } else {
 
+
   var item_line = item_id + "|BRK|" + quantity + "|BRK|" + unidad+"|BRK|" + peso+"|BRK|" + price + "|BRK|" + discount;
       
       $("#items").val($("#items").val() + "," + item_line);
@@ -387,7 +388,7 @@ function addItemTodelivery() {
       
     }
   } else {
-    alert("Please find a product to add first.");
+    alert("Por favor primero ingrese un servicio .");
   }
 }
 

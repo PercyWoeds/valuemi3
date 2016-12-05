@@ -13,11 +13,11 @@ class Factura < ActiveRecord::Base
   
   
   has_many   :deliveryship
-  has_many :delivery 
-  
+  has_many   :delivery 
   has_many   :invoice_services
   
 
+  
   def self.to_csv(result)
     unless result.nil?
       CSV.generate do |csv|

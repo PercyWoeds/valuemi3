@@ -265,7 +265,7 @@ class FacturasController < ApplicationController
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
     @payments = @company.get_payments()
-
+    @services = @company.get_services()
     @deliveryships = @invoice.my_deliverys 
 
     @ac_user = getUsername()
@@ -306,6 +306,7 @@ class FacturasController < ApplicationController
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
     @payments = @company.get_payments()    
+    @services = @company.get_services()
 
     @invoice[:subtotal] = @invoice.get_subtotal(items)
     
