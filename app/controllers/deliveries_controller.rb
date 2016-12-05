@@ -60,6 +60,17 @@ end
     flash[:notice] = "The delivery order has been processed."
     redirect_to @delivery
   end
+
+# Process an delivery
+  def do_numberdelivery
+    @delivery = Delivery.find(params[:code])
+    
+  if @delivery            
+    flash[:error] = "El numero de guia ya ha sido ingresado"
+  end
+    redirect_to @delivery
+  end
+
   
   # Do send delivery via email
   def do_email
@@ -345,11 +356,10 @@ end
     end
 
     respond_to do |format|
+
       if @delivery.save
         # Create products for kit
         @delivery.add_services(items)
-
-        
         # Check if we gotta process the delivery
         @delivery.process()
 
