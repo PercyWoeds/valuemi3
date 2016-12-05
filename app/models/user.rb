@@ -30,21 +30,21 @@ class User < ActiveRecord::Base
   end
   
   def get_companies
-    companies = Company.where(user_id: self.id).order("name")
-    alr_ids = []
+    #companies = Company.where(user_id: self.id).order("name")
+    #alr_ids = []
     
-    for company in companies
-      alr_ids.push(company.id)
-    end
-    
+   # for company in companies
+   #   alr_ids.push(company.id)
+   # end
+   # 
     # Check if we gotta add shared companies
     company_users = CompanyUser.where(user_id: self.id)
     
     for cu in company_users
-      if(not alr_ids.include?(cu.company_id))
+    
         curr_company = Company.find(cu.company_id)
         companies.push(curr_company)
-      end
+    
     end
     
     return companies
