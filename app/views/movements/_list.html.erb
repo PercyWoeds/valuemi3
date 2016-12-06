@@ -1,0 +1,61 @@
+<% if @movements.count > 0 %>
+  <table>
+    <thead>
+      <tr>
+        <th class="bordered_right bordered_bottom" style="width: 100px;">
+          movement
+        </th>
+        <th class="bordered_right bordered_bottom" style="width: 350px;">
+          supplier
+        </th>
+        <th class="bordered_right bordered_bottom">
+          Total
+        </th>
+        <th class="bordered_right bordered_bottom">
+          Date
+        </th>
+        <th class="bordered_right bordered_bottom">
+          Processed
+        </th>
+        <th class="bordered_right bordered_bottom" colspan="3">
+          Options
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <% for movement in @movements %>
+        <tr>
+          <td class="bordered_right bordered_bottom">
+            <%= link_to movement.code, movement, :title => "Ir a factura" %>
+          </td>
+          <td class="bordered_right bordered_bottom">
+            <%= link_to movement.supplier.name, movement.supplier, :title => "Go to supplier" %>
+          </td>
+          <td class="bordered_right bordered_bottom right">
+            $<%= money(movement.total) %>
+          </td>
+          <td class="bordered_right bordered_bottom">
+            <%= doDate(movement.created_at) %>
+          </td>
+          <td class="bordered_right bordered_bottom <%= movement.processed_color %>">
+            <%= movement.get_processed_short %>
+          </td>
+          <td class="bordered_right bordered_bottom">
+            <%= link_to "View", movement %>
+          </td>
+          <td class="bordered_right bordered_bottom">
+            <%= link_to "Edit", edit_movement_path(movement) %>
+          </td>
+          <td class="bordered_right bordered_bottom">
+            <%= link_to 'Delete', movement, :confirm => 'Are you sure?', :method => :delete %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p class="error">
+    We couldn't find any movements.
+  </p>
+<% end %>

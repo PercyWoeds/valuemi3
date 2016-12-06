@@ -1,0 +1,176 @@
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @movement.company.name, @movement.company %> &raquo;
+  <%= link_to "movements", "/companies/movements/#{@movement.company.id}" %>
+</div>
+
+<h1>
+  <%= image_tag("movement_48.png", :class => "vmiddle") %>
+  <%= @movement.identifier %>
+</h1>
+
+<%= hr() %>
+
+<% if @movement.location %>
+  <p>
+    <b>Location:</b>
+    <%= link_to @movement.location.name, @movement.location %>
+  </p>
+<% end %>
+
+<% if @movement.division %>
+  <p>
+    <b>Division:</b>
+    <%= link_to @movement.division.name, @movement.division %>
+  </p>
+<% end %>
+
+
+<p>
+  <b>Code:</b>
+  <%= @movement.code %>
+</p>
+
+
+<%= hr() %>
+
+<h3>
+  supplier information
+</h3>
+
+<p>
+  <b>Name:</b>
+  <%= link_to @supplier.name, @supplier %>
+</p>
+
+<%= render "suppliers/show" %>
+
+<%= hr() %>
+
+<h3>
+  Details
+</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>
+        Product
+      </th>
+      <th>
+        Price
+      </th>
+      <th>
+        Quantity
+      </th>
+      <th>
+        Discount
+      </th>
+      <th>
+        Total
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <% for productItem in @movement.get_products() %>
+      <tr>
+        <td class="bordered_bottom bordered_right">
+          <%= link_to productItem.name   %>
+        </td>
+        <td class="bordered_bottom bordered_right">
+          $<%= money(productItem.price) %>
+        </td>
+        <td class="bordered_bottom bordered_right">
+          <%= productItem.quantity %>
+        </td>
+        <td class="bordered_bottom bordered_right">
+          <%= money(productItem.discount) %>%
+        </td>
+        <td class="bordered_bottom bordered_right">
+          $<%= money(productItem.total) %>
+        </td>
+      </tr>
+    <% end %>
+    <tr>
+      <td colspan="5" class="bordered_bottom bordered_right">
+        &nbsp;
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4" class="bordered_bottom bordered_right bold">
+        Subtotal:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        $<%= money(@movement.subtotal) %>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4" class="bordered_bottom bordered_right bold">
+        Tax:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        $<%= money(@movement.tax) %>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4" class="bordered_bottom bordered_right bold">
+        Total:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        $<%= money(@movement.total) %>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br />
+
+<%= hr() %>
+
+<% if @movement.description != "" %>
+  <div>
+    <b>Description:</b>
+    <br />
+    <br />
+    <%= format_text(@movement.description) %>
+  </div>
+  <%= hr() %>
+<% end %>
+
+<% if @movement.comments != "" %>
+  <div>
+    <b>Comments:</b>
+    <br />
+    <br />
+    <%= format_text(@movement.comments) %>
+  </div>
+  <%= hr() %>
+<% end %>
+
+<br />
+
+<div>
+  <strong><%= @movement.get_processed %></strong>
+  <% if @movement.processed == "1" and @movement.date_processed %>
+    <%= doDate(@movement.date_processed) %>
+  <% end %>
+</div>
+
+<p>
+  <b>Return:</b>
+  <%= @movement.get_return %>
+</p>
+
+<p>
+  <strong>Seller:</strong>
+  <%= link_to @movement.user.username, @movement.user %>
+</p>
+
+<%= hr() %>
+
+<div class="button">
+  <%= link_to 'Export to PDF', "/movements/pdf/#{@movement.id}.pdf" %>
+  <%= link_to 'Send movement via email', "/movements/email/#{@movement.id}" %>
+  <%= link_to 'Process movement', "/movements/do_process/#{@movement.id}" %>
+  <%= link_to 'Edit', edit_movement_path(@movement) %>
+  <%= link_to 'Back', "/companies/movements/#{@movement.company.id}" %>
+</div>

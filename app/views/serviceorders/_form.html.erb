@@ -1,0 +1,214 @@
+<% if @serviceorder.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@serviceorder.errors.count, "error") %> prohibited this serviceorder from being saved:</h2>
+    <ul>
+    <% @serviceorder.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= hr() %>
+
+<div class="mid_box bordered_right">
+  <%= form_for(@serviceorder) do |f| %>
+    <h3>
+       Informacion Order de Servicio 
+    </h3>
+
+    <div class="field">  
+      <label for="ac_supplier" class="bold"> PROVEEDOR *</label><br />
+      <%= f.select :supplier_id,options_from_collection_for_select(@suppliers,'id','name') %>
+      <div class="small">
+        Ingrese una termino de busqueda para encontrar un proveedor.
+      </div>
+      <br />
+    </div>
+    
+            
+    <div class="small">
+        <strong>Seleccionar proveedor:</strong>
+        <span id="selected_supplierr"><% if @ac_supplier %><%= @ac_supplier %><% else %><!-- i --><% end %></span>
+    </div>
+    
+    
+    <div class="field">
+      <%= f.label :fecha1, "Fecha Entrega*", :class => "bold" %><br />
+      <%= f.date_field :fecha1, value: Time.now.strftime("%d/%m/%Y") %>
+    </div>
+
+
+    <div class="field">
+      <%= f.label :payment_id,"Forma de Pago " %><br />
+      <%= f.select :payment_id, @payments %>
+    </div>
+  
+    <div class="field">
+      <%= f.label :moneda ,"  "%><br />
+      <%= f.select :moneda, options_for_select([["SOLES",1],["DOLARES",2]]) %>
+    </div>
+    
+
+    <div class="field">
+      <%= f.label :code, "Code*", :class => "bold" %><br />
+      <%= f.text_field :code, :onclick => "$(this).select();" %>
+    </div>
+
+  
+    <div class="field">
+      <%= f.label :location_id ,"Local"%><br />
+      <%= f.select :location_id, options_from_collection_for_select(@locations,'id','name') %>
+    
+        
+    </div>
+    <div class="field">
+      <%= f.label :division_id %><br />
+      <%= f.select :division_id,options_from_collection_for_select(@divisions,'id','name') %>
+    </div>
+
+  
+    <%= hr() %>
+    
+    <div class="field" id="list_items">
+      <p class="bold big">suppliers:</p>
+    </div>
+    
+    <%= hr() %>
+  
+  
+    
+    <div class="field">
+      <label for="ac_user" class="bold">Seller*</label><br />
+      <input type="text" name="ac_user" id="ac_user" value="<% if @ac_user %><%= @ac_user %><% end %>" />
+
+      <div class="small">
+        Enter a search term to find a user.
+      </div>
+      <br />
+
+      <div class="small">
+        <strong>Selected seller:</strong>
+        <span id="selected_seller"><% if @ac_user %><%= @ac_user %><% else %><!-- i --><% end %></span>
+      </div>
+    </div>
+  
+    <%= hr() %>
+  
+  
+    
+    <%= hr() %>
+  
+    <div class="actions">
+      <input type="hidden" name="items" id="items" value="<% if @suppliers_lines %><%= @suppliers_lines %><% end %>" />
+      <%= f.hidden_field :user_id, :id => "ac_user_id" %>
+      <%= f.hidden_field :company_id %>
+      <%= f.submit %>
+    </div>
+    
+    <div class="small">
+      Once you're done adding suppliers, don't forget to <strong><%= @action_txt %></strong> your serviceorder.
+    </div>
+  <% end %>
+</div>
+
+<div class="mid_box">
+  <h3>
+    Agregar Servicios a la orden
+  </h3>
+  
+  <form method="get" action="/suppliers" onsubmit="addItemToserviceorder(); return false;">
+  
+    
+    <strong>Product:</strong><br />
+    <%= select_tag(:ac_item_id,options_from_collection_for_select(@servicebuys,'id','name') ) %>
+
+    <div class="small">
+      Ingrese un termino de busqueda para encontrar un producto.
+    </div>
+    <br />
+    
+    <strong>Precio:</strong><br />
+    <input type="text" name="ac_item_price" id="ac_item_price" value="" class="tf_short" />
+    <div class="small">
+      Precio del  producto para agregar una factura.
+    </div>
+    <br />
+    
+    <strong>Cantidad:</strong><br />
+    <input type="text" name="ac_item_quantity" id="ac_item_quantity" value="1" class="tf_short" />
+    <div class="small">
+     Cantidad del producto para agregar una factura.
+    </div>
+    <br />
+    
+    <strong>Descuento %:</strong><br />
+    <input type="text" name="ac_item_discount" id="ac_item_discount" value="0" class="tf_short" />
+    <div class="small">
+      Descuento % del producto para agregar una factura.
+    </div>
+    <br />
+    
+    <div>
+      <strong>Total:</strong><br />
+      <span id="ac_item_total">$0.00</span>
+    </div>
+    
+    <br />
+    <input type="submit" value="Agregar item a Factura" />
+  </form>
+  
+  <%= hr() %>
+  
+  
+</div>
+
+<%= br() %>
+<br />
+
+<%= render 'layouts/autocomplete' %>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("#ac_supplier").autocomplete("/serviceorders/ac_suppliers/<%= @company.id %>", {
+			matchSubset: 1,
+			matchContains: 1,
+      selectFirst: false
+    });
+    
+    $("#ac_supplier").result(function(event, data, formatted) {
+      $("#ac_supplier_id").val(data[2]);
+      $("#selected_supplier").html(data[0]);
+    });
+    
+    
+    $("#ac_user").autocomplete("/serviceorders/ac_user/<%= @company.id %>", {
+			matchSubset: 1,
+			matchContains: 1,
+      selectFirst: false
+    });
+    
+    $("#ac_user").result(function(event, data, formatted) {
+      $("#ac_user_id").val(data[2]);
+      $("#selected_seller").html(data[0]);
+    });
+    
+    
+    $("#ac_item_quantity").bind("keyup", function() {
+      updateItemTotal4();
+    });
+    
+    $("#ac_item_price").bind("keyup", function() {
+      updateItemTotal4();
+    });
+    
+    $("#ac_item_discount").bind("keyup", function() {
+      updateItemTotal4();
+    });
+    
+    <% if @suppliers_lines %>
+    alert 'holas suppliers_lines';
+      listItemsserviceorder();
+    <% end %>
+  });
+</script>

@@ -1,0 +1,1 @@
+json.array! @servicebuys, partial: 'servicebuys/servicebuy', as: :servicebuy

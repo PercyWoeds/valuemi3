@@ -1,0 +1,1 @@
+json.partial! "instruccions/instruccion", instruccion: @instruccion

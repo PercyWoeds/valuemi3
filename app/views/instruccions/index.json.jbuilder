@@ -1,0 +1,1 @@
+json.array! @instruccions, partial: 'instruccions/instruccion', as: :instruccion

@@ -1,0 +1,61 @@
+<% if @serviceorders.count > 0 %>
+  <table>
+    <thead>
+      <tr>
+        <th class="bordered_right bordered_bottom" style="width: 100px;">
+         Orden
+        </th>
+        <th class="bordered_right bordered_bottom" style="width: 350px;">
+          Customer
+        </th>
+        <th class="bordered_right bordered_bottom">
+          Total
+        </th>
+        <th class="bordered_right bordered_bottom">
+          Date
+        </th>
+        <th class="bordered_right bordered_bottom">
+          Processed
+        </th>
+        <th class="bordered_right bordered_bottom" colspan="3">
+          Options
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <% for serviceorder in @serviceorders %>
+        <tr>
+          <td class="bordered_right bordered_bottom">
+            <%= link_to serviceorder.code, serviceorder, :title => "Ir a factura" %>
+          </td>
+          <td class="bordered_right bordered_bottom">
+            <%= link_to serviceorder.supplier.name, serviceorder.supplier, :title => "Go to customer" %>
+          </td>
+          <td class="bordered_right bordered_bottom right">
+            $<%= money(serviceorder.total) %>
+          </td>
+          <td class="bordered_right bordered_bottom">
+            <%= doDate(serviceorder.created_at) %>
+          </td>
+          <td class="bordered_right bordered_bottom <%= serviceorder.processed_color %>">
+            <%= serviceorder.get_processed_short %>
+          </td>
+          <td class="bordered_right bordered_bottom">
+            <%= link_to "View", serviceorder %>
+          </td>
+          <td class="bordered_right bordered_bottom">
+            <%= link_to "Edit", edit_serviceorder_path(serviceorder) %>
+          </td>
+          <td class="bordered_right bordered_bottom">
+            <%= link_to 'Delete', serviceorder, :confirm => 'Are you sure?', :method => :delete %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p class="error">
+    We couldn't find any serviceorders.
+  </p>
+<% end %>

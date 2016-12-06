@@ -25,4 +25,8 @@ class Customer < ActiveRecord::Base
       return "Not taxable"
     end
   end
+
+  
+
+
 end

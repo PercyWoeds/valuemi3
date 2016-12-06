@@ -141,16 +141,12 @@
   </h3>
   
   <form method="get" action="/services" onsubmit="addItemToInvoice2(); return false;">
-    <input type="hidden" name="ac_item_id" id="ac_item_id" value="" />
     
     <strong>Servicio:</strong><br />
-
     <%= select_tag(:ac_item_id,options_from_collection_for_select(@services,'id','name') ) %>
-
     <div class="small">
       Ingrese un termino de busqueda para encontrar un producto.
     </div>
-
     <br />
     
     <strong>Precio:</strong><br />
@@ -176,7 +172,7 @@
     
     <div>
       <strong>Total:</strong><br />
-      <span id="ac_item_total">$0.00</span>
+      <span id="ac_item_total">0.00</span>
     </div>
     
     <br />
@@ -239,17 +235,6 @@
       $("#selected_seller").html(data[0]);
     });
     
-    $("#ac_item").autocomplete("/facturas/ac_services/<%= @company.id %>", {
-			matchSubset: 1,
-			matchContains: 1,
-      selectFirst: false
-    });
-    
-    $("#ac_item").result(function(event, data, formatted) {
-      $("#ac_item_id").val(data[2]);
-      $("#ac_item_price").val(data[4]);      
-      updateItemTotal();
-    });
 
 
     $("#ac_item3").autocomplete("/facturas/ac_guias/<%= @company.id %>", {

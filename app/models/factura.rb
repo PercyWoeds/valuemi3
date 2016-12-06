@@ -245,24 +245,10 @@ class Factura < ActiveRecord::Base
   # Process the invoice
   def process
 
-    if(self.processed == "1" or self.processed == true)
-      invoice_products = InvoiceService.where(factura_id: self.id)
-    
-      for ip in invoice_products
-        product = ip.product
-        
-        if(product.quantity)
-          if(self.return == "0")
-            ip.product.quantity -= ip.quantity
-          else
-            ip.product.quantity += ip.quantity
-          end
-          ip.product.save
-        end
-      end
-      
+    if(self.processed == "1" or self.processed == true)            
       self.date_processed = Time.now
       self.save
+      puts "grabo ok "
     end
   end
   

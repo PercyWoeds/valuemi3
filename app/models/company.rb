@@ -33,12 +33,8 @@ class Company < ActiveRecord::Base
   end
   
   def get_suppliers()
-    suppliers = Supplier.where(company_id: self.id).order("name ASC")
-    suppliers = suppliers.map {|s| [s.name, s.id]}
-    suppliers_f = [["", nil]]
-    suppliers_f += suppliers
-    suppliers = suppliers_f
-    
+     suppliers = Supplier.where(company_id: self.id).order(:name)
+       
     return suppliers
   end
   
@@ -98,6 +94,11 @@ class Company < ActiveRecord::Base
     puntos = Punto.all 
     return puntos
   end
+
+  def get_servicebuys()
+     servicebuys = Servicebuy.all.order(:id)
+     return servicebuys
+  end 
   
   def get_last_tax_name(tax_number)
     product = Product.where(company_id: self.id)

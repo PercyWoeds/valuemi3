@@ -1,0 +1,1 @@
+json.partial! "servicebuys/servicebuy", servicebuy: @servicebuy

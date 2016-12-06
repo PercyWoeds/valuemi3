@@ -18,8 +18,7 @@ class FacturasController < ApplicationController
   # Process an invoice
   def do_process
     @invoice = Factura.find(params[:id])
-    @invoice[:processed] = true
-    
+    @invoice[:processed] = true    
     @invoice.process
     
     flash[:notice] = "The invoice order has been processed."
@@ -282,6 +281,8 @@ class FacturasController < ApplicationController
     @ac_customer = @invoice.customer.name
     @ac_user = @invoice.user.username
     @payments = @company.get_payments()    
+    @services = @company.get_services()
+    @deliveryships = @invoice.my_deliverys 
 
     @products_lines = @invoice.products_lines
     

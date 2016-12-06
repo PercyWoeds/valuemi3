@@ -62,14 +62,8 @@ end
   end
 
 # Process an delivery
-  def do_numberdelivery
-    @delivery = Delivery.find(params[:code])
-    
-  if @delivery            
-    flash[:error] = "El numero de guia ya ha sido ingresado"
-  end
-    redirect_to @delivery
-  end
+
+
 
   
   # Do send delivery via email
@@ -257,6 +251,7 @@ end
   def show
     @delivery  = Delivery.find(params[:id])
     @customer = @delivery.customer    
+    @remite  =  Customer.find(@delivery.remite_id)
     
   end
 
@@ -280,10 +275,12 @@ end
     @trucks    = @company.get_trucks()
     @employees = @company.get_employees()
     @customers = @company.get_customers()
+    @remites = @company.get_customers()
     @empsubs   = @company.get_empsubs()
     @unidads   = @company.get_unidads()
     @addresses  = @company.get_addresses()
     @services  = @company.get_services()
+    @servicebuys  = @company.get_servicebuys()
 
     @ac_user = getUsername()
     @delivery[:user_id] = getUserId()
@@ -299,10 +296,12 @@ end
 
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
-
     @trucks    = @company.get_trucks()
     @employees = @company.get_employees()
     @empsubs   = @company.get_empsubs()
+    @unidads   = @company.get_unidads()
+    @addresses  = @company.get_addresses()
+    @services  = @company.get_services()      
     @customers = @company.get_customers()
 
     @ac_customer = @delivery.customer.name
@@ -310,7 +309,7 @@ end
     @payments = @company.get_payments()    
     @addresses  = @company.get_addresses()
     @services  = @company.get_services()
-
+    @servicebuys  = @company.get_servicebuys()
 
     @products_lines = @delivery.services_lines
     
@@ -338,10 +337,11 @@ end
     @unidads   = @company.get_unidads()
     @addresses  = @company.get_addresses()
     @services  = @company.get_services()      
+    @servicebuys  = @company.get_servicebuys()
     @customers = @company.get_customers()
-
+    @remites = @company.get_customers()
     @delivery[:subtotal] = @delivery.get_subtotal(items)
-    
+        
     begin
       @delivery[:tax] = @delivery.get_tax(items, @delivery[:customer_id])
     rescue
@@ -355,23 +355,24 @@ end
       @ac_user = curr_seller.username
     end
 
+          
+        
     respond_to do |format|
-
-      if @delivery.save
+      if @delivery.save 
         # Create products for kit
         @delivery.add_services(items)
         # Check if we gotta process the delivery
         @delivery.process()
-
-        @delivery.correlativo()
-        
+        @delivery.correlativo()              
         format.html { redirect_to(@delivery, :notice => 'delivery was successfully created.') }
         format.xml  { render :xml => @delivery, :status => :created, :location => @delivery }
       else
         format.html { render :action => "new" }
         format.xml  { render :xml => @delivery.errors, :status => :unprocessable_entity }
       end
+    
     end
+
   end
   
 
@@ -396,7 +397,16 @@ end
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
-    
+    @trucks    = @company.get_trucks()
+    @employees = @company.get_employees()
+    @empsubs   = @company.get_empsubs()
+    @unidads   = @company.get_unidads()
+    @addresses  = @company.get_addresses()
+    @services  = @company.get_services()      
+    @servicebuys  = @company.get_servicebuys()
+    @customers = @company.get_customers()
+    @remites = @company.get_customers()
+
     @delivery[:subtotal] = @delivery.get_subtotal(items)
     @delivery[:tax] = @delivery.get_tax(items, @delivery[:customer_id])
     @delivery[:total] = @delivery[:subtotal] + @delivery[:tax]
@@ -433,10 +443,11 @@ end
 
   private
   def delivery_params
-    params.require(:delivery).permit(:company_id,:location_id,:division_id,:customer_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:fecha1,:fecha2,:employee_id,:empsub_id,:subcontrat_id,:truck_id,:truck2_id,:address_id,:remision)
+    params.require(:delivery).permit(:company_id,:location_id,:division_id,:customer_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:fecha1,:fecha2,:employee_id,:empsub_id,:subcontrat_id,:truck_id,:truck2_id,:address_id,:remision,:remite_id)
   end
 
 end
+
 
 
 

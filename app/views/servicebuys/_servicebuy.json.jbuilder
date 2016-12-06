@@ -1,0 +1,2 @@
+json.extract! servicebuy, :id, :code, :name, :cost, :price, :tax1_name, :tax1, :tax2_name, :tax2, :tax3_name, :tax3, :quantity, :description, :comments, :company_id, :discount, :currtotal, :i, :total, :created_at, :updated_at
+json.url servicebuy_url(servicebuy, format: :json)

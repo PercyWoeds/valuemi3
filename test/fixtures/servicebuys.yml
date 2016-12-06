@@ -1,0 +1,41 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  code: MyString
+  name: MyString
+  cost: 1.5
+  price: 1.5
+  tax1_name: MyString
+  tax1: 1.5
+  tax2_name: MyString
+  tax2: 1.5
+  tax3_name: MyString
+  tax3: 1.5
+  quantity: 1
+  description: MyText
+  comments: MyText
+  company_id: 1
+  discount: 1.5
+  currtotal: 1.5
+  i: 1
+  total: 1.5
+
+two:
+  code: MyString
+  name: MyString
+  cost: 1.5
+  price: 1.5
+  tax1_name: MyString
+  tax1: 1.5
+  tax2_name: MyString
+  tax2: 1.5
+  tax3_name: MyString
+  tax3: 1.5
+  quantity: 1
+  description: MyText
+  comments: MyText
+  company_id: 1
+  discount: 1.5
+  currtotal: 1.5
+  i: 1
+  total: 1.5

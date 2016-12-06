@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Instruccions</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Description1</th>
+      <th>Description2</th>
+      <th>Description3</th>
+      <th>Description4</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @instruccions.each do |instruccion| %>
+      <tr>
+        <td><%= instruccion.description1 %></td>
+        <td><%= instruccion.description2 %></td>
+        <td><%= instruccion.description3 %></td>
+        <td><%= instruccion.description4 %></td>
+        <td><%= link_to 'Show', instruccion %></td>
+        <td><%= link_to 'Edit', edit_instruccion_path(instruccion) %></td>
+        <td><%= link_to 'Destroy', instruccion, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Instruccion', new_instruccion_path %>

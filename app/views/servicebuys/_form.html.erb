@@ -1,0 +1,28 @@
+<%= simple_form_for(@servicebuy) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :code %>
+    <%= f.input :name %>
+    <%= f.input :cost %>
+    <%= f.input :price %>
+    <%= f.input :tax1_name %>
+    <%= f.input :tax1 %>
+    <%= f.input :tax2_name %>
+    <%= f.input :tax2 %>
+    <%= f.input :tax3_name %>
+    <%= f.input :tax3 %>
+    <%= f.input :quantity %>
+    <%= f.input :description %>
+    <%= f.input :comments %>
+    <%= f.input :company_id %>
+    <%= f.input :discount %>
+    <%= f.input :currtotal %>
+    <%= f.input :i %>
+    <%= f.input :total %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

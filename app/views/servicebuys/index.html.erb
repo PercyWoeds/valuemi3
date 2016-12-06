@@ -1,0 +1,61 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Servicebuys</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Cost</th>
+      <th>Price</th>
+      <th>Tax1 name</th>
+      <th>Tax1</th>
+      <th>Tax2 name</th>
+      <th>Tax2</th>
+      <th>Tax3 name</th>
+      <th>Tax3</th>
+      <th>Quantity</th>
+      <th>Description</th>
+      <th>Comments</th>
+      <th>Company</th>
+      <th>Discount</th>
+      <th>Currtotal</th>
+      <th>I</th>
+      <th>Total</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @servicebuys.each do |servicebuy| %>
+      <tr>
+        <td><%= servicebuy.code %></td>
+        <td><%= servicebuy.name %></td>
+        <td><%= servicebuy.cost %></td>
+        <td><%= servicebuy.price %></td>
+        <td><%= servicebuy.tax1_name %></td>
+        <td><%= servicebuy.tax1 %></td>
+        <td><%= servicebuy.tax2_name %></td>
+        <td><%= servicebuy.tax2 %></td>
+        <td><%= servicebuy.tax3_name %></td>
+        <td><%= servicebuy.tax3 %></td>
+        <td><%= servicebuy.quantity %></td>
+        <td><%= servicebuy.description %></td>
+        <td><%= servicebuy.comments %></td>
+        <td><%= servicebuy.company_id %></td>
+        <td><%= servicebuy.discount %></td>
+        <td><%= servicebuy.currtotal %></td>
+        <td><%= servicebuy.i %></td>
+        <td><%= servicebuy.total %></td>
+        <td><%= link_to 'Show', servicebuy %></td>
+        <td><%= link_to 'Edit', edit_servicebuy_path(servicebuy) %></td>
+        <td><%= link_to 'Destroy', servicebuy, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Servicebuy', new_servicebuy_path %>

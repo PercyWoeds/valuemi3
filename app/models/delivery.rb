@@ -23,9 +23,10 @@ def self.search(params)
 end
 
 
-def not_friends_with?(delivery_id)
-    declarationdeliveries.where(delivery_id: delivery_id).count < 1
+def not_delivery_with?(delivery_code)
+    Delivery.where(code: delivery_code).count < 1
 end
+
 
 def self.search(param)
     return Delivery.none if param.blank?

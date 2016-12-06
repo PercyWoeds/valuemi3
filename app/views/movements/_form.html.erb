@@ -1,0 +1,255 @@
+<% if @movement.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@movement.errors.count, "error") %> prohibited this movement from being saved:</h2>
+
+    <ul>
+    <% @movement.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= hr() %>
+
+<div class="mid_box bordered_right">
+  <%= form_for(@movement) do |f| %>
+    <h3>
+       Informacion Factura 
+    </h3>
+
+    <div class="field">
+    
+      <label for="ac_supplier" class="bold">Cliente*</label><br />
+      <input type="text" name="ac_supplier" id="ac_supplier" value="<% if @ac_supplier %><%= @ac_supplier %><% end %>" />
+      
+      
+      <div class="small">
+        Ingrese una termino de busqueda para encontrar un cliente.
+      </div>
+      <br />
+
+      <div class="small">
+        <strong>Seleccionar cliente:</strong>
+        <span id="selected_supplier"><% if @ac_supplier %><%= @ac_supplier %><% else %><!-- i --><% end %></span>
+      </div>
+    </div>
+    
+    <div class="field">
+      <%= f.label :code, "Code*", :class => "bold" %><br />
+      <%= f.text_field :code, :onclick => "$(this).select();" %>
+    </div>
+  
+    <div class="field">
+      <%= f.label :location_id ,"Local"%><br />
+      <%= f.select :location_id, options_from_collection_for_select(@locations,'id','name') %>
+    
+        
+    </div>
+    <div class="field">
+      <%= f.label :division_id %><br />
+      <%= f.select :division_id,options_from_collection_for_select(@divisions,'id','name') %>
+    </div>
+    
+
+  
+    <%= hr() %>
+    
+    <div class="field" id="list_items">
+      <p class="bold big">Products:</p>
+    </div>
+    
+    <%= hr() %>
+  
+    <div class="field">
+      <%= f.check_box :processed %>
+      <%= f.label :processed, "Process movement", :class => "bold" %>
+      <div class="small">
+        Marks wether or not this movement has been payed and we can deduct the product quantities and count it towards the month's total.
+      </div>
+    </div>
+  
+    <div class="field">
+      <%= f.check_box :return %>
+      <%= f.label :return, :class => "bold" %>
+      <div class="small">
+        Is it a return order?
+      </div>
+    </div>
+    
+    <%= hr() %>
+    
+    <div class="field">
+      <label for="ac_user" class="bold">Seller*</label><br />
+      <input type="text" name="ac_user" id="ac_user" value="<% if @ac_user %><%= @ac_user %><% end %>" />
+
+      <div class="small">
+        Enter a search term to find a user.
+      </div>
+      <br />
+
+      <div class="small">
+        <strong>Selected seller:</strong>
+        <span id="selected_seller"><% if @ac_user %><%= @ac_user %><% else %><!-- i --><% end %></span>
+      </div>
+    </div>
+  
+    <%= hr() %>
+  
+  
+    
+    <%= hr() %>
+  
+    <div class="actions">
+      <input type="hidden" name="items" id="items" value="<% if @products_lines %><%= @products_lines %><% end %>" />
+      <%= f.hidden_field :user_id, :id => "ac_user_id" %>
+      <%= f.hidden_field :supplier_id, :id => "ac_supplier_id" %>
+      <%= f.hidden_field :company_id %>
+      <%= f.submit %>
+    </div>
+    
+    <div class="small">
+      Once you're done adding products, don't forget to <strong><%= @action_txt %></strong> your movement.
+    </div>
+  <% end %>
+</div>
+
+<div class="mid_box">
+  <h3>
+    Agregar Productos  a la factura 
+  </h3>
+  
+  <form method="get" action="/products" onsubmit="addItemTomovement(); return false;">
+    <input type="hidden" name="ac_item_id" id="ac_item_id" value="" />
+    
+    <strong>Product:</strong><br />
+    <input type="text" name="ac_item" id="ac_item" value="" />
+    <div class="small">
+      Ingrese un termino de busqueda para encontrar un producto.
+    </div>
+    <br />
+    
+    <strong>Price:</strong><br />
+    <input type="text" name="ac_item_price" id="ac_item_price" value="" class="tf_short" />
+    <div class="small">
+      Precio del  producto para agregar una factura.
+    </div>
+    <br />
+    
+    <strong>Quantity:</strong><br />
+    <input type="text" name="ac_item_quantity" id="ac_item_quantity" value="1" class="tf_short" />
+    <div class="small">
+     Cantidad del producto para agregar una factura.
+    </div>
+    <br />
+    
+    <strong>Discount %:</strong><br />
+    <input type="text" name="ac_item_discount" id="ac_item_discount" value="0" class="tf_short" />
+    <div class="small">
+      Descuento % del producto para agregar una factura.
+    </div>
+    <br />
+    
+    <div>
+      <strong>Total:</strong><br />
+      <span id="ac_item_total">$0.00</span>
+    </div>
+    
+    <br />
+    <input type="submit" value="Agregar item a Factura" />
+  </form>
+  
+  <%= hr() %>
+  
+  <h3>
+    Agregar Productos Kit a Factura
+  </h3>
+  
+  <form method="get" action="/products_kits" onsubmit="addKitTomovement(); return false;">
+    <input type="hidden" name="ac_kit_id" id="ac_kit_id" value="" />
+    
+    <strong>Product kit:</strong><br />
+    <input type="text" name="ac_kit" id="ac_kit" value="" />
+    <div class="small">      
+      Ingrese un termino de busqueda para encontrar un producto Kit.
+    </div>
+    <br />
+    
+    <strong>Discount %:</strong><br />
+    <input type="text" name="ac_kit_discount" id="ac_kit_discount" value="0" class="tf_short" />
+    <div class="small">
+      Descuento % del producto Kit  para agregar una factura.
+    </div>
+    <br />
+    
+    <input type="submit" value="Add product kit to movement" />
+  </form>
+</div>
+
+<%= br() %>
+<br />
+
+<%= render 'layouts/autocomplete' %>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("#ac_supplier").autocomplete("/movements/ac_suppliers/<%= @company.id %>", {
+			matchSubset: 1,
+			matchContains: 1,
+      selectFirst: false
+    });
+    
+    $("#ac_supplier").result(function(event, data, formatted) {
+      $("#ac_supplier_id").val(data[2]);
+      $("#selected_supplier").html(data[0]);
+    });
+    
+    $("#ac_kit").autocomplete("/movements/ac_kit/<%= @company.id %>", {
+			matchSubset: 1,
+			matchContains: 1,
+      selectFirst: false
+    });
+    
+    
+    $("#ac_user").autocomplete("/movements/ac_user/<%= @company.id %>", {
+			matchSubset: 1,
+			matchContains: 1,
+      selectFirst: false
+    });
+    
+    $("#ac_user").result(function(event, data, formatted) {
+      $("#ac_user_id").val(data[2]);
+      $("#selected_seller").html(data[0]);
+    });
+    
+    $("#ac_item").autocomplete("/movements/ac_products/<%= @company.id %>", {
+			matchSubset: 1,
+			matchContains: 1,
+      selectFirst: false
+    });
+    
+    $("#ac_item").result(function(event, data, formatted) {
+      $("#ac_item_id").val(data[2]);
+      $("#ac_item_price").val(data[4]);
+      
+      updateItemTotal();
+    });
+    
+    $("#ac_item_quantity").bind("keyup", function() {
+      updateItemTotal();
+    });
+    
+    $("#ac_item_price").bind("keyup", function() {
+      updateItemTotal();
+    });
+    
+    $("#ac_item_discount").bind("keyup", function() {
+      updateItemTotal();
+    });
+    
+    <% if @products_lines %>
+    alert 'holas products_lines';
+      listItemsmovement();
+    <% end %>
+  });
+</script>

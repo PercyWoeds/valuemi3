@@ -12,7 +12,7 @@
 <%= render "suppliers/show" %>
 
 <div class="button">
-  <%= link_to "Invoices for supplier", "/companies/invoices/#{@supplier.company.id}?supplier=#{@supplier.id}" %>
+  <%= link_to "Invoices for supplier", "/companies/serviceorders/#{@supplier.company.id}?supplier=#{@supplier.id}" %>
   <%= link_to 'Edit', edit_supplier_path(@supplier) %>
   <%= link_to 'Back', "/companies/suppliers/#{@supplier.company.id}" %>
 </div>

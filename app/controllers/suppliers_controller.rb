@@ -1,6 +1,7 @@
 include UsersHelper
 include CompaniesHelper
 
+
 class SuppliersController < ApplicationController
   before_filter :authenticate_user!, :checkCompanies
   
@@ -112,12 +113,12 @@ class SuppliersController < ApplicationController
     @supplier = Supplier.find(params[:id])
     
     # Erase supplier id for products from supplier
-    products = Product.find(:all, :conditions => {:supplier_id => @supplier[:id]})
+    #products = Product.find( {:supplier_id => @supplier[:id]})
     
-    for product in products
-      product.supplier_id = nil
-      product.save
-    end
+   # for product in products
+   #   product.supplier_id = nil
+   #   product.save
+   # end
     
     @company = @supplier.company
     @supplier.destroy
@@ -135,7 +136,7 @@ class SuppliersController < ApplicationController
       @supplier = Supplier.new(:company_id => params[:company_id].to_i, :name => params[:name], :email => params[:email], :phone1 => params[:phone1], :phone2 => params[:phone2], :address1 => params[:address1], :address2 => params[:address2], :city => params[:city], :state => params[:state], :zip => params[:zip], :country => params[:country], :comments => params[:comments],:ruc=>params[:ruc])
       
       if @customer.save
-        render :text => "#{@customer.id}|BRK|#{@customer.name}"
+        render :text => "#{@supplier.id}|BRK|#{@supplier.name}"
       else
         render :text => "error"
       end
@@ -146,7 +147,6 @@ class SuppliersController < ApplicationController
 
   def supplier_params
     params.require(:supplier).permit(:name, :email, :phone1, :phone2, :address1,:address2,:city, :state,:zip,:country,:comments,:ruc,:company_id )    
-
   end
   
 

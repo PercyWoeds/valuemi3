@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161202175944) do
+ActiveRecord::Schema.define(version: 20161206222331) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "address"
@@ -127,6 +127,7 @@ ActiveRecord::Schema.define(version: 20161202175944) do
     t.string   "processed"
     t.integer  "division_id"
     t.float    "i"
+    t.integer  "remite_id"
   end
 
   create_table "delivery_services", force: :cascade do |t|
@@ -237,6 +238,15 @@ ActiveRecord::Schema.define(version: 20161202175944) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.integer  "Delivery_id"
+  end
+
+  create_table "instruccions", force: :cascade do |t|
+    t.text     "description1"
+    t.text     "description2"
+    t.text     "description3"
+    t.text     "description4"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   create_table "inventories", force: :cascade do |t|
@@ -417,6 +427,44 @@ ActiveRecord::Schema.define(version: 20161202175944) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "movement_products", force: :cascade do |t|
+    t.integer  "movement_id"
+    t.integer  "product_id"
+    t.integer  "unidad_id"
+    t.float    "price"
+    t.integer  "quantity"
+    t.float    "discount"
+    t.float    "total"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "movements", force: :cascade do |t|
+    t.integer  "company_id"
+    t.integer  "location_id"
+    t.integer  "division_id"
+    t.integer  "supplier_id"
+    t.text     "description"
+    t.text     "comments"
+    t.datetime "fecha1"
+    t.datetime "fecha2"
+    t.integer  "payment_id"
+    t.string   "money"
+    t.string   "code"
+    t.float    "subtotal"
+    t.float    "tax"
+    t.float    "detraccion"
+    t.float    "percepcion"
+    t.float    "total"
+    t.string   "processed"
+    t.string   "return"
+    t.datetime "date_proceseed"
+    t.integer  "user_id"
+    t.string   "tm"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
   create_table "orders", force: :cascade do |t|
     t.string   "name"
     t.text     "address"
@@ -558,6 +606,43 @@ ActiveRecord::Schema.define(version: 20161202175944) do
     t.integer  "purchase_id"
   end
 
+  create_table "purchaseorder_details", force: :cascade do |t|
+    t.integer  "purchaseorder_id"
+    t.integer  "product_id"
+    t.integer  "unidad_id"
+    t.float    "price"
+    t.integer  "quantity"
+    t.float    "discount"
+    t.float    "total"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  create_table "purchaseorders", force: :cascade do |t|
+    t.integer  "company_id"
+    t.integer  "location_id"
+    t.integer  "division_id"
+    t.integer  "supplier_id"
+    t.text     "description"
+    t.text     "comments"
+    t.datetime "fecha1"
+    t.integer  "payment_id"
+    t.string   "money"
+    t.string   "code"
+    t.float    "subtotal"
+    t.float    "tax"
+    t.float    "detraccion"
+    t.float    "percepcion"
+    t.float    "total"
+    t.string   "processed"
+    t.string   "return"
+    t.datetime "date_proceseed"
+    t.integer  "user_id"
+    t.string   "moneda"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
   create_table "purchases", force: :cascade do |t|
     t.string   "tank_id"
     t.string   "integer"
@@ -612,6 +697,67 @@ ActiveRecord::Schema.define(version: 20161202175944) do
     t.integer  "company_id"
     t.string   "code"
     t.string   "already_processed"
+  end
+
+  create_table "servicebuys", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.float    "cost"
+    t.float    "price"
+    t.string   "tax1_name"
+    t.float    "tax1"
+    t.string   "tax2_name"
+    t.float    "tax2"
+    t.string   "tax3_name"
+    t.float    "tax3"
+    t.integer  "quantity"
+    t.text     "description"
+    t.text     "comments"
+    t.integer  "company_id"
+    t.float    "discount"
+    t.float    "currtotal"
+    t.integer  "i"
+    t.float    "total"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "serviceorder_services", force: :cascade do |t|
+    t.integer  "serviceorder_id"
+    t.integer  "service_id"
+    t.float    "price"
+    t.integer  "quantity"
+    t.float    "discount"
+    t.float    "total"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.integer  "servicebuy_id"
+  end
+
+  create_table "serviceorders", force: :cascade do |t|
+    t.integer  "company_id"
+    t.integer  "location_id"
+    t.integer  "division_id"
+    t.integer  "supplier_id"
+    t.text     "description"
+    t.text     "comments"
+    t.datetime "fecha1"
+    t.integer  "payment_id"
+    t.string   "money"
+    t.string   "code"
+    t.float    "subtotal"
+    t.float    "tax"
+    t.float    "detraccion"
+    t.float    "percepcion"
+    t.float    "total"
+    t.string   "processed"
+    t.string   "return"
+    t.datetime "date_proceseed"
+    t.integer  "user_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.integer  "instruccion_id"
+    t.string   "moneda"
   end
 
   create_table "services", force: :cascade do |t|
@@ -676,6 +822,7 @@ ActiveRecord::Schema.define(version: 20161202175944) do
     t.integer  "company_id"
     t.string   "ruc",        limit: 11
     t.string   "taxable"
+    t.string   "account"
   end
 
   create_table "tanks", force: :cascade do |t|

@@ -23,7 +23,8 @@
 
     <div class="field">
       <%= f.label :code, "Code*", :class => "bold" %><br />
-      <%= f.text_field :code, :onclick => "$(this).select();" %>
+      <%= f.text_field :code, :onclick => "$(this).select();" %>      
+
     </div>
 
     <div class="field">
@@ -35,11 +36,21 @@
       <%= f.label :fecha2, "Fecha Traslado*", :class => "bold" %><br />
       <%= f.date_field :fecha2, value: Time.now.strftime("%d/%m/%Y") %>
     </div>
+    <%= hr() %>
+
+    <div class="field">
+    <label class="bold"> REMITENTE *</label><br />      
+      <%= f.select :remite_id,options_from_collection_for_select(@remites,'id','name') %>
+    </div>
+      <div class="small">
+      <p>
+        Seleccione un remitente para la guia 
 
 
-    <label class="bold"> REMITENTE *</label><br />
-    <%= render "/companies/show" %>
-
+       </p>
+          
+      </div>
+    
 
     <div class="field">
       <%= f.label :location_id ,"Direccion de Partida "%><br />
@@ -56,29 +67,24 @@
       <%= f.select :division_id,options_from_collection_for_select(@divisions,'id','name') %>
     </div>
     
-  
-    <div class="field">
-    
-      <label for="ac_customer" class="bold"> DESTINATARIO *</label><br />
+  <%= hr() %>
 
+    <div class="field">
+      <label for="ac_customer" class="bold"> DESTINATARIO *</label><br />
       <%= f.select :customer_id,options_from_collection_for_select(@customers,'id','name') %>
       <div class="small">
         Ingrese una termino de busqueda para encontrar un cliente.
       </div>
       <br />
-
-
     </div>
     
     <div class="field">
       <%= f.label :address_id,"Direccion de llegada :" %><br />
       <%= f.select :address_id,options_from_collection_for_select(@addresses,'id','address') %>
     </div>
+
     
-
     <%= hr() %>
-
-
     
     <div class="field" id="list_items">
       <p class="bold big">Servicios:</p>
@@ -156,6 +162,7 @@
     <%= hr() %>
 
 
+
     <div class="actions">
       <input type="hidden" name="items" id="items" value="<% if @products_lines %><%= @products_lines %><% end %>" />
       <%= f.hidden_field :user_id, :id => "ac_user_id" %>
@@ -179,11 +186,9 @@
   </h3>
   
   <form method="get" action="/services" onsubmit="addItemTodelivery(); return false;">
-
-    
-    
-    <strong>Servicio :</strong><br />
-    <%= select_tag(:ac_item_id,options_from_collection_for_select(@services,'id','name') ) %>
+   
+   <strong>Servicio :</strong><br />
+   <%= select_tag(:ac_item_id,options_from_collection_for_select(@services,'id','name'))%>
 
     <div class="small">
       Ingrese un termino de busqueda para encontrar un producto.

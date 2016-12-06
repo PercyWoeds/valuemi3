@@ -1,0 +1,252 @@
+<% if @purchaseorder.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@purchaseorder.errors.count, "error") %> prohibited this purchaseorder from being saved:</h2>
+
+    <ul>
+    <% @purchaseorder.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= hr() %>
+
+<div class="mid_box bordered_right">
+  <%= form_for(@purchaseorder) do |f| %>
+    <h3>
+       Informacion Orden de Compra 
+    </h3>
+
+    <div class="field">  
+      <label for="ac_supplier" class="bold"> PROVEEDOR *</label><br />
+      <%= f.select :supplier_id,options_from_collection_for_select(@suppliers,'id','name') %>
+      <div class="small">
+        Ingrese una termino de busqueda para encontrar un proveedor.
+      </div>
+      <br />
+    </div>
+              
+    <div class="small">
+        <strong>Seleccionar proveedor:</strong>
+        <span id="selected_supplierr"><% if @ac_supplier %><%= @ac_supplier %><% else %><!-- i --><% end %></span>
+    </div>
+        
+    <div class="field">
+      <%= f.label :code, "Code*", :class => "bold" %><br />
+      <%= f.text_field :code, :onclick => "$(this).select();" %>
+    </div>
+    <div class="field">
+      <%= f.label :fecha1, "Fecha Emision*", :class => "bold" %><br />
+      <%= f.date_field :fecha1, value: Time.now.strftime("%d/%m/%Y") %>
+    </div>
+
+    <div class="field">
+      <%= f.label :fecha2, "Fecha Entrega*", :class => "bold" %><br />
+      <%= f.date_field :fecha2, value: Time.now.strftime("%d/%m/%Y") %>
+    </div>
+
+
+    <div class="field">
+      <%= f.label :payment_id,"Forma de Pago " %><br />
+      <%= f.select :payment_id, @payments %>
+    </div>
+  
+    <div class="field">
+      <%= f.label :moneda ,"Moneda"%><br />
+      <%= f.select :moneda, options_for_select([["SOLES",1],["DOLARES",2]]) %>
+    </div>
+      
+    <div class="field">
+      <%= f.label :location_id ,"Local"%><br />
+      <%= f.select :location_id, options_from_collection_for_select(@locations,'id','name') %>         
+    </div>
+    <div class="field">
+      <%= f.label :division_id, "Solicitante" %><br />
+      <%= f.select :division_id,options_from_collection_for_select(@divisions,'id','name') %>
+    </div>  
+  
+    <%= hr() %>
+    
+    <div class="field" id="list_items">
+      <p class="bold big">Productos:</p>
+    </div>
+    
+    <%= hr() %>
+  
+    <div class="field">
+      <%= f.check_box :processed %>
+      <%= f.label :processed, "Process purchaseorder", :class => "bold" %>
+      <div class="small">
+        Marks wether or not this purchaseorder has been payed and we can deduct the product quantities and count it towards the month's total.
+      </div>
+    </div>
+  
+    <div class="field">
+      <%= f.check_box :return %>
+      <%= f.label :return, :class => "bold" %>
+      <div class="small">
+        Is it a return order?
+      </div>
+    </div>
+    
+    <%= hr() %>
+    
+    <div class="field">
+      <label for="ac_user" class="bold">Seller*</label><br />
+      <input type="text" name="ac_user" id="ac_user" value="<% if @ac_user %><%= @ac_user %><% end %>" />
+
+      <div class="small">
+        Enter a search term to find a user.
+      </div>
+      <br />
+
+      <div class="small">
+        <strong>Selected seller:</strong>
+        <span id="selected_seller"><% if @ac_user %><%= @ac_user %><% else %><!-- i --><% end %></span>
+      </div>
+    </div>
+  
+    <%= hr() %>
+      <div class="field">
+      <%= f.label :description,"Destino: " %><br />
+      <%= f.text_area :description %>
+      </div>  
+    <%= hr() %>
+    <div class="field">
+      <%= f.label :comments,"Observaciones: " %><br />
+      <%= f.text_area :comments %>
+      </div>  
+    <%= hr() %>
+  
+    <div class="actions">
+      <input type="hidden" name="items" id="items" value="<% if @products_lines %><%= @products_lines %><% end %>" />
+      <%= f.hidden_field :user_id, :id => "ac_user_id" %>
+      <%= f.hidden_field :company_id %>
+      <%= f.submit %>
+    </div>
+    
+    <div class="small">
+      Once you're done adding products, don't forget to <strong><%= @action_txt %></strong> your purchaseorder.
+    </div>
+  <% end %>
+</div>
+
+<div class="mid_box">
+  <h2>
+    Agregar Productos a la Orden de Compra 
+  </h2>
+  
+  <form method="get" action="/products" onsubmit="addItemTopurchaseorder(); return false;">
+    <input type="hidden" name="ac_item_id" id="ac_item_id" value="" />
+    
+    <strong>Producto:</strong><br />
+    <input type="text" name="ac_item" id="ac_item" value="" />
+    <div class="small">
+      Ingrese un termino de busqueda para encontrar un producto.
+    </div>
+    <br />
+    
+    <strong>Precio:</strong><br />
+    <input type="text" name="ac_item_price" id="ac_item_price" value="" class="tf_short" />
+    <div class="small">
+      Precio del  producto para agregar una Orden de Compra.
+    </div>
+    <br />
+    
+    <strong>Cantidad:</strong><br />
+    <input type="text" name="ac_item_quantity" id="ac_item_quantity" value="1" class="tf_short" />
+    <div class="small">
+     Cantidad del producto para agregar una Orden de Compra.
+    </div>
+    <br />
+    
+    <strong>Discount %:</strong><br />
+    <input type="text" name="ac_item_discount" id="ac_item_discount" value="0" class="tf_short" />
+    <div class="small">
+      Descuento % del producto para agregar una Orden de Compra.
+    </div>
+    <br />
+    
+    <div>
+      <strong>Total:</strong><br />
+      <span id="ac_item_total">0.00</span>
+    </div>
+    
+    <br />
+    <input type="submit" value="Agregar item a Orden de Compra" />
+  </form>
+  
+  <%= hr() %>
+  
+  
+</div>
+
+<%= br() %>
+<br />
+
+<%= render 'layouts/autocomplete' %>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    
+  $("#ac_item").autocomplete("/purchaseorders/ac_products/<%= @company.id %>", {
+      matchSubset: 1,
+      matchContains: 1,
+      selectFirst: false
+    });
+    
+    $("#ac_item").result(function(event, data, formatted) {
+      $("#ac_item_id").val(data[2]);
+      $("#ac_item_price").val(data[4]);
+      
+      updateItemTotal5();
+    });
+      
+    $("#ac_user").result(function(event, data, formatted) {
+      $("#ac_user_id").val(data[2]);
+      $("#selected_seller").html(data[0]);
+    });
+    
+    $("#ac_user").autocomplete("/purchaseorders/ac_user/<%= @company.id %>", {
+			matchSubset: 1,
+			matchContains: 1,
+      selectFirst: false
+    });
+    
+    $("#ac_user").result(function(event, data, formatted) {
+      $("#ac_user_id").val(data[2]);
+      $("#selected_seller").html(data[0]);
+    });
+    
+    $("#ac_item").autocomplete("/purchaseorders/ac_products/<%= @company.id %>", {
+			matchSubset: 1,
+			matchContains: 1,
+      selectFirst: false
+    });
+    
+    $("#ac_item").result(function(event, data, formatted) {
+      $("#ac_item_id").val(data[2]);
+      $("#ac_item_price").val(data[4]);
+      
+      updateItemTotal5();
+    });
+    
+    $("#ac_item_quantity").bind("keyup", function() {
+      updateItemTotal5();
+    });
+    
+    $("#ac_item_price").bind("keyup", function() {
+      updateItemTotal5();
+    });
+    
+    $("#ac_item_discount").bind("keyup", function() {
+      updateItemTotal5();
+    });
+    
+    <% if @products_lines %>
+    alert 'holas products_lines';
+      listItemspurchaseorder();
+    <% end %>
+  });
+</script>
