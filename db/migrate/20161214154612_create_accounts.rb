@@ -42,7 +42,6 @@ class CreateAccounts < ActiveRecord::Migration
 	  add_index :accounts, :date
 	  add_index :accounts, :description
 	  add_index :accounts, :due_date
-	  add_index :accounts, :extras
 	  add_index :accounts, :has_error
 	  add_index :accounts, :name
 	  add_index :accounts, :nuller_id
