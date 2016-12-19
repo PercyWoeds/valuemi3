@@ -803,23 +803,6 @@ function updateItemTotal5() {
   }
 }
 
-// Removes an item from an invoice
-function removeItemFromserviceorder(id) {
-  var items = $("#items").val();
-  var items_arr = items.split(",");
-  var items_final = Array();
-  var i = 0;
-  
-  while(i < items_arr.length) {
-    if(i != id) {
-      items_final[i] = items_arr[i];
-    }
-    i++;
-  }
-  
-  $("#items").val(items_final.join(","));
-  listItemspurchaseorder();
-}
 
 // Add an item to a product kit
 function addItemToMovement() {

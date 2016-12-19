@@ -1,0 +1,31 @@
+{:uriI"~file://app/assets/javascripts/422.html?type=text/html&id=7a7aac72ffb6805fc8f4532704211f63da531bce771973de55f5a65b97e63282:ET:load_pathI"app/assets/javascripts;T:filenameI"$app/assets/javascripts/422.html;T:	nameI"422;T:logical_pathI"422.html;T:content_typeI"text/html;T:sourceI"Ç<!DOCTYPE html>
+<html>
+<head>
+  <title>The change you wanted was rejected (422)</title>
+  <style type="text/css">
+    body { background-color: #fff; color: #666; text-align: center; font-family: arial, sans-serif; }
+    div.dialog {
+      width: 25em;
+      padding: 0 4em;
+      margin: 4em auto 0 auto;
+      border: 1px solid #ccc;
+      border-right-color: #999;
+      border-bottom-color: #999;
+    }
+    h1 { font-size: 100%; color: #f00; line-height: 1.5em; }
+  </style>
+</head>
+
+<body>
+  <!-- This file lives in public/422.html -->
+  <div class="dialog">
+    <h1>The change you wanted was rejected.</h1>
+    <p>Maybe you tried to change something you didn't have access to.</p>
+  </div>
+</body>
+</html>
+;T:metadata{	:dependencieso:Set:
+@hash}
+I"environment-version;TTI"environment-paths;TTI"rails-env;TTI"2processors:type=text/html&file_type=text/html;TTI"2file-digest://app/assets/javascripts/422.html;TTF:charsetI"
+utf-8;F:digest"%—§°=Sd«Ë>f}”ÚQÝH}o–œ#ë_,×Â:lengthiÇ:dependencies_digest"%[M/uã(&S¤—ò3R,à‡xœïkC_íxJwú²:idI"E7a7aac72ffb6805fc8f4532704211f63da531bce771973de55f5a65b97e63282;F:
+mtimel+ûRW
