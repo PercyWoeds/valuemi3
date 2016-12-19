@@ -78,6 +78,13 @@
   
     
     <div class="field">
+      <%= f.label :description %><br />
+      <%= f.text_area :description %>
+    </div>  
+
+
+    
+    <div class="field">
       <label for="ac_user" class="bold">Seller*</label><br />
       <input type="text" name="ac_user" id="ac_user" value="<% if @ac_user %><%= @ac_user %><% end %>" />
 

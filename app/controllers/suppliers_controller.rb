@@ -24,7 +24,7 @@ class SuppliersController < ApplicationController
 
         query = str_sql_search(q, fields)
 
-        @suppliers = Supplier.paginate(:page => params[:page], :order => 'name', :conditions => ["company_id = ? AND (#{query})", @company.id])
+        @suppliers = Supplier.paginate(:page => params[:page]).order(:name).where(["company_id = ? AND (#{query})", @company.id])
       else
         @suppliers = Supplier.where(company_id: @company.id).paginate(:page => params[:page])
       end
