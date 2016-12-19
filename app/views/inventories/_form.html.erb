@@ -1,14 +1,3 @@
-<% if @inventory.errors.any? %>
-  <div id="error_explanation">
-    <h2><%= pluralize(@inventory.errors.count, "error") %> prohibited this invoice from being saved:</h2>
-
-    <ul>
-    <% @inventory.errors.full_messages.each do |msg| %>
-      <li><%= msg %></li>
-    <% end %>
-    </ul>
-  </div>
-<% end %>
 
 <%= hr() %>
 
