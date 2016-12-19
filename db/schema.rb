@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161219141833) do
+ActiveRecord::Schema.define(version: 20161219212619) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "name"
@@ -353,19 +353,6 @@ ActiveRecord::Schema.define(version: 20161219141833) do
   add_index "inventories", ["state"], name: "index_inventories_on_state"
   add_index "inventories", ["store_id"], name: "index_inventories_on_store_id"
 
-  create_table "inventory_details", force: :cascade do |t|
-    t.integer  "inventory_operation_id"
-    t.integer  "item_id"
-    t.integer  "store_id"
-    t.decimal  "quantity",               precision: 14, scale: 2, default: 0.0
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "inventory_details", ["inventory_operation_id"], name: "index_inventory_details_on_inventory_operation_id"
-  add_index "inventory_details", ["item_id"], name: "index_inventory_details_on_item_id"
-  add_index "inventory_details", ["store_id"], name: "index_inventory_details_on_store_id"
-
   create_table "invoice2s", force: :cascade do |t|
     t.integer  "company_id"
     t.integer  "location_id"
@@ -536,12 +523,14 @@ ActiveRecord::Schema.define(version: 20161219141833) do
     t.string   "descrip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "company_id"
   end
 
   create_table "modelos", force: :cascade do |t|
     t.string   "descrip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "company_id"
   end
 
   create_table "monedas", force: :cascade do |t|
@@ -696,6 +685,8 @@ ActiveRecord::Schema.define(version: 20161219141833) do
     t.float    "price2"
     t.string   "status"
     t.integer  "quantity_transit"
+    t.integer  "marca_id"
+    t.integer  "modelo_id"
   end
 
   create_table "products_categories", force: :cascade do |t|

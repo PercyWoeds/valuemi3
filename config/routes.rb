@@ -37,7 +37,7 @@
   end 
   
   resources :suppliers do
-    collection { get :import  }
+    collection { post :import  }
   end 
 
   resources :orders do 

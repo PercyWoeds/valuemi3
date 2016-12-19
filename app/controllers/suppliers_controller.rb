@@ -4,7 +4,12 @@ include CompaniesHelper
 
 class SuppliersController < ApplicationController
   before_filter :authenticate_user!, :checkCompanies
+  def import
+      Supplier.import(params[:file])
+       redirect_to root_url, notice: "Proveedor  importadas."
+  end 
   
+
   # Show suppliers for a company
   def list_suppliers
     @company = Company.find(params[:company_id])
