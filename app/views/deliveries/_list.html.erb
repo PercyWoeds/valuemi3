@@ -33,7 +33,7 @@
             <%= link_to delivery.customer.name, delivery.customer, :title => "Go to customer" %>
           </td>
           <td class="bordered_right bordered_bottom right">
-            $<%= money(delivery.total) %>
+            <%= money(delivery.total) %>
           </td>
           <td class="bordered_right bordered_bottom">
             <%= doDate(delivery.created_at) %>

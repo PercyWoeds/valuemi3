@@ -1,0 +1,169 @@
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @purchaseorder.company.name, @purchaseorder.company %> &raquo;
+  <%= link_to "purchaseorders", "/companies/purchaseorders/#{@purchaseorder.company.id}" %>
+</div>
+
+<h1>
+  <%= image_tag("invoice_48.png", :class => "vmiddle") %>
+  <%= @purchaseorder.identifier %>
+</h1>
+
+<%= hr() %>
+
+<% if @purchaseorder.location %>
+  <p>
+    <b>Location:</b>
+    <%= link_to @purchaseorder.location.name, @purchaseorder.location %>
+  </p>
+<% end %>
+
+
+<% if @purchaseorder.division %>
+  <p>
+    <b>Division:</b>
+    <%= link_to @purchaseorder.division.name, @purchaseorder.division %>
+  </p>
+<% end %>
+
+
+<p>
+  <b>Code:</b>
+  <%= @purchaseorder.code %>
+</p>
+
+<%= hr() %>
+
+      <div class="field">
+      <strong> Fecha :</strong><br />           
+      <input type="date"  name= "fecha1" id="fecha1" value="01/12/2016" />
+      </div>
+
+    <strong>Documento:</strong><br />
+
+    <%= select_tag "id_document", options_from_collection_for_select(@documents,'id','description') %>
+
+    <div>
+    <strong>Nro Documento:</strong><br />    
+    <input type="text" name="ac_document" id="ac_document" value="" />
+    <div class="small">
+      Ingrese un numero de documento para registrar el ingreso.
+    </div>
+    </div>
+
+<%= hr() %>
+
+<h3>
+  Informacion proveedor 
+</h3>
+
+<p>
+  <b>Name:</b>
+  <%= link_to @supplier.name, @supplier %>
+</p>
+
+<%= render "suppliers/show" %>
+
+<%= hr() %>
+
+<h3>
+  Detalle
+</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>
+        Id
+      </th>
+      <th>
+        Codigo
+      </th>
+    
+      <th>
+        Producto
+      </th>
+      <th>
+        Cantidad
+      </th>
+      <th>
+        Pendiente 
+
+      </th>
+
+      <th>
+        Recibir
+      </th>
+
+    </tr>
+  </thead>
+  <tbody>
+
+<ul>
+
+<% for item in @purchaseorder.get_products2() %>
+  <li id="cart_item_<%= item.id %>">
+    <%= render :partial => "carts/item", :object => item %>
+  </li>
+<% end %> 
+</ul>
+   
+    <tr>
+      <td colspan="5" class="bordered_bottom bordered_right">
+        &nbsp;
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+<br />
+
+<%= hr() %>
+
+<% if @purchaseorder.description != "" %>
+  <div>
+    <b>Description:</b>
+    <br />
+    <br />
+    <%= format_text(@purchaseorder.description) %>
+  </div>
+  <%= hr() %>
+<% end %>
+
+<% if @purchaseorder.comments != "" %>
+  <div>
+    <b>Comments:</b>
+    <br />
+    <br />
+    <%= format_text(@purchaseorder.comments) %>
+  </div>
+  <%= hr() %>
+<% end %>
+
+<br />
+
+<div>
+  <strong><%= @purchaseorder.get_processed %></strong>
+  <% if @purchaseorder.processed == "1" and @purchaseorder.date_processed %>
+    <%= doDate(@purchaseorder.date_processed) %>
+  <% end %>
+</div>
+
+<p>
+  <b>Return:</b>
+  <%= @purchaseorder.get_return %>
+</p>
+
+<p>
+  <strong>Seller:</strong>
+  <%= link_to @purchaseorder.user.username, @purchaseorder.user %>
+</p>
+
+<%= hr() %>
+
+<div class="button">
+  <%= link_to 'Grabar', "/purchaseorders/do_grabar_ins/#{@purchaseorder.id}" %>
+  <%= link_to 'Cerrar', "/purchaseorders/do_cerrar/#{@purchaseorder.id}" %>
+  <%= link_to 'Regresar', "/companies/purchaseorders/receive/#{@purchaseorder.company.id}" %>
+</div>
+    

@@ -40,16 +40,15 @@
 
 
     <div class="field">
-      <%= f.label :payment_id,"Forma de Pago " %><br />
-      <%= f.select :payment_id, @payments %>
+      <%= f.label  :payment_id,"Forma de Pago " %><br />
+      <%= f.select :payment_id, options_from_collection_for_select(@payments,'id','descrip') %>
     </div>
   
     <div class="field">
-      <%= f.label :moneda ,"  "%><br />
-      <%= f.select :moneda, options_for_select([["SOLES",1],["DOLARES",2]]) %>
+      <%= f.label :moneda_id , "Moneda"%><br />
+      <%= f.select :moneda_id, options_from_collection_for_select(@monedas,'id','description') %>
     </div>
     
-
     <div class="field">
       <%= f.label :code, "Code*", :class => "bold" %><br />
       <%= f.text_field :code, :onclick => "$(this).select();" %>
@@ -151,7 +150,7 @@
     
     <div>
       <strong>Total:</strong><br />
-      <span id="ac_item_total">$0.00</span>
+      <span id="ac_item_total">0.00</span>
     </div>
     
     <br />

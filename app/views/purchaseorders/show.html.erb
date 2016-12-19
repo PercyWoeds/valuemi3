@@ -31,11 +31,16 @@
   <%= @purchaseorder.code %>
 </p>
 
+<p>
+    <b>Moneda:</b>
+    <%= @purchaseorder.moneda.description %>   
+</p>
+    
 
 <%= hr() %>
 
 <h3>
-  supplier information
+  Informacion proveedor 
 </h3>
 
 <p>
@@ -46,7 +51,7 @@
 <%= render "suppliers/show" %>
 
 <%= hr() %>
-
+  
 <h3>
   Details
 </h3>
@@ -72,13 +77,14 @@
     </tr>
   </thead>
   <tbody>
+
     <% for productItem in @purchaseorder.get_products() %>
       <tr>
         <td class="bordered_bottom bordered_right">
           <%= link_to productItem.name   %>
         </td>
         <td class="bordered_bottom bordered_right">
-          $<%= money(productItem.price) %>
+          <%= money(productItem.price) %>
         </td>
         <td class="bordered_bottom bordered_right">
           <%= productItem.quantity %>
@@ -87,7 +93,7 @@
           <%= money(productItem.discount) %>%
         </td>
         <td class="bordered_bottom bordered_right">
-          $<%= money(productItem.total) %>
+          <%= money(productItem.total) %>
         </td>
       </tr>
     <% end %>
@@ -101,7 +107,7 @@
         Subtotal:
       </td>
       <td class="bordered_bottom bordered_right bold right">
-        $<%= money(@purchaseorder.subtotal) %>
+        <%= money(@purchaseorder.subtotal) %>
       </td>
     </tr>
     <tr>
@@ -109,7 +115,7 @@
         Tax:
       </td>
       <td class="bordered_bottom bordered_right bold right">
-        $<%= money(@purchaseorder.tax) %>
+        <%= money(@purchaseorder.tax) %>
       </td>
     </tr>
     <tr>
@@ -117,7 +123,7 @@
         Total:
       </td>
       <td class="bordered_bottom bordered_right bold right">
-        $<%= money(@purchaseorder.total) %>
+        <%= money(@purchaseorder.total) %>
       </td>
     </tr>
   </tbody>
@@ -170,7 +176,16 @@
 <div class="button">
   <%= link_to 'Exportar a PDF', "/purchaseorders/pdf/#{@purchaseorder.id}.pdf" %>
   <%= link_to 'Enviarvia email', "/purchaseorders/email/#{@purchaseorder.id}" %>
-  <%= link_to 'Aprobarr', "/purchaseorders/do_process/#{@purchaseorder.id}" %>
-  <%= link_to 'Editar', edit_purchaseorder_path(@purchaseorder) %>
+
+  <% if @purchaseorder.processed =="0" %>
+    <%= link_to 'Aprobar', "/purchaseorders/do_process/#{@purchaseorder.id}" %>
+    <%= link_to 'Editar   ', edit_purchaseorder_path(@purchaseorder) %>
+  <% else %>
+  
+    <%= link_to 'Registrar Ingreso',"/purchaseorders/receive/#{@purchaseorder.id}" %>
+    <%= link_to 'Cerrar', "/purchaseorders/do_cerrar/#{@purchaseorder.id}" %>
+  <% end %>
   <%= link_to 'Regresar', "/companies/purchaseorders/#{@purchaseorder.company.id}" %>
 </div>
+
+

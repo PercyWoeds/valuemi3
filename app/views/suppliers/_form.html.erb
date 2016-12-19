@@ -35,7 +35,7 @@
   </div>
   <div class="field">
     <%= f.label :address1 %><br />
-    <%= f.text_field :address1 %>
+    <%= f.text_field :address1 , :input_html => {:style => 'width: 350px' } %>
   </div>
   <div class="field">
     <%= f.label :address2 %><br />
@@ -61,6 +61,14 @@
     <%= f.label :comments %><br />
     <%= f.text_area :comments %>
   </div>
+  <div class="field">
+      <%= f.check_box :taxable%>
+      <%= f.label :taxable ,"Impuesto", :class => "bold" %>
+      <div class="small">
+        Es un proveedor con impuesto ?
+      </div>
+    </div>
+    
   <div class="actions">
     <%= f.hidden_field :company_id %>
     <%= f.submit %>

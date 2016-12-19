@@ -5,7 +5,7 @@ include ProductsHelper
 
 class PurchaseordersController < ApplicationController
   before_filter :authenticate_user!, :checkProducts
-  
+    
   
   # Export purchaseorder to PDF
   def pdf
@@ -15,11 +15,35 @@ class PurchaseordersController < ApplicationController
       format.pdf { render :layout => false }
     end
   end
-  
+       
+  def populate_order
+
+    for cart_item in @cart.cart_items
+    order_item = Item.new(  
+    :product_id => cart_item.id,
+    :description => cart_item.name,
+    :quantity => cart_item.quantity,
+    :qty      => cart_item.qty,
+    :recibir  => cart_item.recibir
+    )
+
+    @purchaseorder.purchaseorder_details << order_item
+    end
+  end
+
+
+  def do_grabar_ins
+    @purchaseorder = Purchaseorder.find(params[:id])    
+
+    populate_order
+    
+    flash[:notice] = "The purchaseorder order has been grabada."
+    redirect_to @purchaseorder
+  end
   # Process an purchaseorder
   def do_process
     @purchaseorder = Purchaseorder.find(params[:id])
-    @purchaseorder[:processed] = true
+    @purchaseorder[:processed] = "1"
     
     @purchaseorder.process
     
@@ -182,6 +206,67 @@ class PurchaseordersController < ApplicationController
       errPerms()
     end
   end
+  # Show purchaseorders for a company
+  def list_receiveorders
+    @company = Company.find(params[:company_id])
+    @pagetitle = "#{@company.name} - Orden Compra"
+    @filters_display = "block"
+    
+    @locations = Location.where(company_id: @company.id).order("name ASC")
+    @divisions = Division.where(company_id: @company.id).order("name ASC")
+    
+    if(params[:location] and params[:location] != "")
+      @sel_location = params[:location]
+    end
+    
+    if(params[:division] and params[:division] != "")
+      @sel_division = params[:division]
+    end
+  
+    if(@company.can_view(current_user))
+      if(params[:ac_supplier] and params[:ac_supplier] != "")
+        @supplier = supplier.find(:first, :conditions => {:company_id => @company.id, :name => params[:ac_supplier].strip})
+        
+        if @supplier
+          @purchaseorders = Purchaseorder.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :supplier_id => @supplier.id}, :order => "id DESC")
+        else
+          flash[:error] = "We couldn't find any purchaseorders for that supplier."
+          redirect_to "/companies/purchaseorders/#{@company.id}"
+        end
+      elsif(params[:supplier] and params[:supplier] != "")
+        @supplier = supplier.find(params[:supplier])
+        
+        if @supplier
+          @purchaseorders = Purchaseorder.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :supplier_id => @supplier.id}, :order => "id DESC")
+        else
+          flash[:error] = "We couldn't find any purchaseorders for that supplier."
+          redirect_to "/companies/purchaseorders/#{@company.id}"
+        end
+      elsif(params[:location] and params[:location] != "" and params[:division] and params[:division] != "")
+        @purchaseorders = Purchaseorder.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :location_id => params[:location], :division_id => params[:division]}, :order => "id DESC")
+      elsif(params[:location] and params[:location] != "")
+        @purchaseorders = Purchaseorder.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :location_id => params[:location]}, :order => "id DESC")
+      elsif(params[:division] and params[:division] != "")
+        @purchaseorders = Purchaseorder.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :division_id => params[:division]}, :order => "id DESC")
+      else
+        if(params[:q] and params[:q] != "")
+          fields = ["description", "comments", "code"]
+
+          q = params[:q].strip
+          @q_org = q
+
+          query = str_sql_search(q, fields)
+
+          @purchaseorders = Purchaseorder.paginate(:page => params[:page], :order => 'id DESC', :conditions => ["company_id = ? AND (#{query})", @company.id])
+        else
+          @purchaseorders = Purchaseorder.where(company_id:  @company.id, :processed => "1").order("id DESC").paginate(:page => params[:page])
+          @filters_display = "none"
+        end
+      end
+    else
+      errPerms()
+    end
+  end
   
   # GET /purchaseorders
   # GET /purchaseorders.xml
@@ -196,6 +281,13 @@ class PurchaseordersController < ApplicationController
   def show
     @purchaseorder = Purchaseorder.find(params[:id])
     @supplier = @purchaseorder.supplier
+  end
+
+  def receive
+    @purchaseorder = Purchaseorder.find(params[:id])
+    @supplier = @purchaseorder.supplier
+    @company = Company.find(@purchaseorder.company_id)
+    @documents =@company.get_documents()
   end
 
   # GET /purchaseorders/new
@@ -215,7 +307,8 @@ class PurchaseordersController < ApplicationController
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
     @suppliers = @company.get_suppliers()
-    @payments  = @company.get_payments()    
+    @payments  = @company.get_payments()
+    @monedas  = @company.get_monedas()
         
     @ac_user = getUsername()
     @purchaseorder[:user_id] = getUserId()
@@ -232,6 +325,7 @@ class PurchaseordersController < ApplicationController
     @ac_user = @purchaseorder.user.username
     @suppliers = @company.get_suppliers()
     @payments  = @company.get_payments()    
+    @monedas  = @company.get_monedas()
     
     @products_lines = @purchaseorder.products_lines
     
@@ -255,6 +349,7 @@ class PurchaseordersController < ApplicationController
     @divisions = @company.get_divisions()
     @suppliers = @company.get_suppliers()
     @payments = @company.get_payments()    
+    @monedas  = @company.get_monedas()
 
     @purchaseorder[:subtotal] = @purchaseorder.get_subtotal(items)
     
@@ -309,17 +404,20 @@ class PurchaseordersController < ApplicationController
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
+    @suppliers = @company.get_suppliers()
+    @payments = @company.get_payments()    
+    
+    @monedas  = @company.get_monedas()
     
     @purchaseorder[:subtotal] = @purchaseorder.get_subtotal(items)
-    @purchaseorder[:tax] = @purchaseorder.get_tax(items, @purchaseorder[:supplier_id])
-    @purchaseorder[:total] = @purchaseorder[:subtotal] + @purchaseorder[:tax]
+    @purchaseorder[:tax]      = @purchaseorder.get_tax(items, @purchaseorder[:supplier_id])
+    @purchaseorder[:total]    = @purchaseorder[:subtotal] + @purchaseorder[:tax]
 
     respond_to do |format|
       if @purchaseorder.update_attributes(params[:purchaseorder])
         # Create products for kit
         @purchaseorder.delete_products()
         @purchaseorder.add_products(items)
-        
         # Check if we gotta process the purchaseorder
         @purchaseorder.process()
         
@@ -345,7 +443,7 @@ class PurchaseordersController < ApplicationController
   end
   private
   def purchaseorder_params
-    params.require(:purchaseorder).permit(:company_id,:location_id,:division_id,:supplier_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:money)
+    params.require(:purchaseorder).permit(:company_id,:location_id,:division_id,:supplier_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:moneda_id)
   end
 
 end

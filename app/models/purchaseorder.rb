@@ -9,9 +9,11 @@ class Purchaseorder < ActiveRecord::Base
   belongs_to :supplier
   belongs_to :user
   belongs_to :payment 
+  belongs_to :moneda  
   
   has_many :purchaseorder_details
-  
+
+
   def get_subtotal(items)
     subtotal = 0
     
@@ -121,6 +123,7 @@ class Purchaseorder < ActiveRecord::Base
   def identifier
     return "#{self.code} - #{self.supplier.name}"
   end
+  
   def get_products    
     @itemproducts = PurchaseorderDetail.find_by_sql(['Select purchaseorder_details.price,
     	purchaseorder_details.quantity,purchaseorder_details.discount,purchaseorder_details.total,
@@ -129,6 +132,18 @@ class Purchaseorder < ActiveRecord::Base
     	where purchaseorder_details.purchaseorder_id = ?', self.id ])
     puts self.id
 
+    return @itemproducts
+  end
+  def get_products2
+    @itemproducts = PurchaseorderDetail.find_by_sql(['Select purchaseorder_details.id,purchaseorder_details.product_id,purchaseorder_details.quantity_transit as qty,
+      purchaseorder_details.quantity,
+      purchaseorder_details.pending,
+      purchaseorder_details.discount,purchaseorder_details.total,
+      products.name 
+      from purchaseorder_details
+      INNER JOIN products ON purchaseorder_details.product_id = products.id
+      where purchaseorder_details.purchaseorder_id = ?', self.id ])
+    
     return @itemproducts
   end
   
@@ -175,7 +190,6 @@ class Purchaseorder < ActiveRecord::Base
       return "No"
     end
   end
-  
   # Process the purchaseorder
   def process
 
@@ -185,13 +199,15 @@ class Purchaseorder < ActiveRecord::Base
       for ip in purchaseorder_details
         product = ip.product
         
-        if(product.quantity)
-          if(self.return == "0")
-            ip.product.quantity -= ip.quantity
+        if(ip.quantity)    
+          if(self.return == "1")
+            ip.product.quantity_transit -= ip.quantity
           else
-            ip.product.quantity += ip.quantity
+            ip.product.quantity_transit += ip.quantity
           end
           ip.product.save
+        else
+         puts  product.quantity
         end
       end
       
@@ -199,6 +215,7 @@ class Purchaseorder < ActiveRecord::Base
       self.save
     end
   end
+
   
   # Color for processed or not
   def processed_color

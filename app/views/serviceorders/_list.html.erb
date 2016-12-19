@@ -6,19 +6,19 @@
          Orden
         </th>
         <th class="bordered_right bordered_bottom" style="width: 350px;">
-          Customer
+          Proveedor 
         </th>
         <th class="bordered_right bordered_bottom">
           Total
         </th>
         <th class="bordered_right bordered_bottom">
-          Date
+          Fecha
         </th>
         <th class="bordered_right bordered_bottom">
-          Processed
+          Aprobado 
         </th>
         <th class="bordered_right bordered_bottom" colspan="3">
-          Options
+          Opciones 
         </th>
       </tr>
     </thead>
@@ -33,7 +33,7 @@
             <%= link_to serviceorder.supplier.name, serviceorder.supplier, :title => "Go to customer" %>
           </td>
           <td class="bordered_right bordered_bottom right">
-            $<%= money(serviceorder.total) %>
+            <%= money(serviceorder.total) %>
           </td>
           <td class="bordered_right bordered_bottom">
             <%= doDate(serviceorder.created_at) %>
@@ -44,11 +44,21 @@
           <td class="bordered_right bordered_bottom">
             <%= link_to "View", serviceorder %>
           </td>
-          <td class="bordered_right bordered_bottom">
-            <%= link_to "Edit", edit_serviceorder_path(serviceorder) %>
-          </td>
-          <td class="bordered_right bordered_bottom">
-            <%= link_to 'Delete', serviceorder, :confirm => 'Are you sure?', :method => :delete %>
+          <td class="bordered_right bordered_bottom">  
+
+          
+          <% if serviceorder.processed =="" || serviceorder.processed == nil %>
+          <%= link_to "Edit", edit_serviceorder_path(serviceorder) %>                      
+          <%= link_to 'Eliminar', serviceorder, :confirm => 'Are you sure?', :method => :delete 
+          %>
+
+            
+          <% elsif serviceorder.processed =="2"%>  
+          <%= "** Anulado **" %>
+          <%= link_to 'Eliminar', serviceorder, :confirm => 'Are you sure?', :method => :delete %>
+            
+          <% end %> 
+
           </td>
         </tr>
       <% end %>

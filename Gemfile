@@ -13,8 +13,9 @@ gem 'bluecloth'
 
 gem 'htmlentities'
 gem 'will_paginate'
-gem 'prawn'
+gem "prawn"
 gem 'prawnto'
+gem 'prawn-table'
 gem 'devise', '~> 4.1', '>= 4.1.1'
 
 gem 'protected_attributes'
@@ -45,8 +46,7 @@ gem 'rmagick', '~> 2.15', '>= 2.15.4'
 
 gem 'simple_form', '~> 3.3', '>= 3.3.1'
 
-
-	gem 'rails_autolink', '~> 1.1', '>= 1.1.6'
+gem 'rails_autolink', '~> 1.1', '>= 1.1.6'
 
 # Use unicorn as the web server
 # gem 'unicorn'
@@ -85,6 +85,8 @@ group :development do
   gem 'spring'
   gem 'better_errors', '~> 2.1', '>= 2.1.1'
   gem 'binding_of_caller', '~> 0.7.2'
+  gem 'web-console', '~> 2.0'
+
 
 end
 

@@ -11,7 +11,56 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161206222331) do
+ActiveRecord::Schema.define(version: 20161219141833) do
+
+  create_table "accounts", force: :cascade do |t|
+    t.string   "name"
+    t.string   "currency",       limit: 10
+    t.decimal  "exchange_rate",              precision: 14, scale: 4, default: 1.0
+    t.decimal  "amount",                     precision: 14, scale: 2, default: 0.0
+    t.string   "type",           limit: 30
+    t.integer  "contact_id"
+    t.integer  "project_id"
+    t.boolean  "active",                                              default: true
+    t.string   "description",    limit: 500
+    t.date     "date"
+    t.string   "state",          limit: 30
+    t.boolean  "has_error",                                           default: false
+    t.string   "error_messages", limit: 400
+    t.integer  "tag_ids"
+    t.integer  "updater_id"
+    t.decimal  "tax_percentage",             precision: 5,  scale: 2, default: 0.0
+    t.integer  "tax_id"
+    t.decimal  "total",                      precision: 14, scale: 2, default: 0.0
+    t.boolean  "tax_in_out",                                          default: false
+    t.integer  "creator_id"
+    t.integer  "approver_id"
+    t.integer  "nuller_id"
+    t.date     "due_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "accounts", ["active"], name: "index_accounts_on_active"
+  add_index "accounts", ["amount"], name: "index_accounts_on_amount"
+  add_index "accounts", ["approver_id"], name: "index_accounts_on_approver_id"
+  add_index "accounts", ["contact_id"], name: "index_accounts_on_contact_id"
+  add_index "accounts", ["creator_id"], name: "index_accounts_on_creator_id"
+  add_index "accounts", ["currency"], name: "index_accounts_on_currency"
+  add_index "accounts", ["date"], name: "index_accounts_on_date"
+  add_index "accounts", ["description"], name: "index_accounts_on_description"
+  add_index "accounts", ["due_date"], name: "index_accounts_on_due_date"
+  add_index "accounts", ["has_error"], name: "index_accounts_on_has_error"
+  add_index "accounts", ["name"], name: "index_accounts_on_name"
+  add_index "accounts", ["nuller_id"], name: "index_accounts_on_nuller_id"
+  add_index "accounts", ["project_id"], name: "index_accounts_on_project_id"
+  add_index "accounts", ["state"], name: "index_accounts_on_state"
+  add_index "accounts", ["tag_ids"], name: "index_accounts_on_tag_ids"
+  add_index "accounts", ["tax_id"], name: "index_accounts_on_tax_id"
+  add_index "accounts", ["tax_in_out"], name: "index_accounts_on_tax_in_out"
+  add_index "accounts", ["type"], name: "index_accounts_on_type"
+  add_index "accounts", ["updater_id"], name: "index_accounts_on_updater_id"
+  add_index "accounts", [nil], name: "index_accounts_on_extras"
 
   create_table "addresses", force: :cascade do |t|
     t.string   "address"
@@ -23,6 +72,7 @@ ActiveRecord::Schema.define(version: 20161206222331) do
     t.datetime "updated_at",   null: false
     t.integer  "customer_id"
     t.string   "full_address"
+    t.integer  "address2_id"
   end
 
   add_index "addresses", ["customer_id"], name: "index_addresses_on_customer_id"
@@ -128,6 +178,8 @@ ActiveRecord::Schema.define(version: 20161206222331) do
     t.integer  "division_id"
     t.float    "i"
     t.integer  "remite_id"
+    t.integer  "address2_id"
+    t.datetime "date_processed"
   end
 
   create_table "delivery_services", force: :cascade do |t|
@@ -157,6 +209,13 @@ ActiveRecord::Schema.define(version: 20161206222331) do
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "documents", force: :cascade do |t|
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "company_id"
   end
 
   create_table "employees", force: :cascade do |t|
@@ -240,6 +299,20 @@ ActiveRecord::Schema.define(version: 20161206222331) do
     t.integer  "Delivery_id"
   end
 
+  create_table "histories", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "historiable_id"
+    t.boolean  "new_item",         default: false
+    t.string   "historiable_type"
+    t.datetime "created_at",                       null: false
+    t.string   "klass_type"
+    t.datetime "updated_at",                       null: false
+  end
+
+  add_index "histories", ["created_at"], name: "index_histories_on_created_at"
+  add_index "histories", ["historiable_id"], name: "index_histories_on_historiable_id"
+  add_index "histories", ["user_id"], name: "index_histories_on_user_id"
+
   create_table "instruccions", force: :cascade do |t|
     t.text     "description1"
     t.text     "description2"
@@ -250,36 +323,48 @@ ActiveRecord::Schema.define(version: 20161206222331) do
   end
 
   create_table "inventories", force: :cascade do |t|
-    t.integer  "company_id"
-    t.integer  "location_id"
-    t.integer  "division_id"
-    t.text     "description"
-    t.text     "comments"
-    t.integer  "category_id"
-    t.float    "logicalStock"
-    t.float    "physicalStock"
-    t.float    "cost"
-    t.float    "total"
-    t.string   "processed"
-    t.datetime "date_processed"
-    t.integer  "user_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-    t.datetime "date1"
+    t.integer  "contact_id"
+    t.integer  "store_id"
+    t.integer  "account_id"
+    t.date     "date"
+    t.string   "ref_number"
+    t.string   "operation",       limit: 10
+    t.string   "state"
+    t.string   "description"
+    t.decimal  "total",                      precision: 14, scale: 2, default: 0.0
+    t.integer  "creator_id"
+    t.integer  "transference_id"
+    t.integer  "store_to_id"
+    t.integer  "project_id"
+    t.boolean  "has_error",                                           default: false
+    t.string   "error_messages"
+    t.integer  "updater_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
+  add_index "inventories", ["account_id"], name: "index_inventories_on_account_id"
+  add_index "inventories", ["contact_id"], name: "index_inventories_on_contact_id"
+  add_index "inventories", ["date"], name: "index_inventories_on_date"
+  add_index "inventories", ["has_error"], name: "index_inventories_on_has_error"
+  add_index "inventories", ["operation"], name: "index_inventories_on_operation"
+  add_index "inventories", ["project_id"], name: "index_inventories_on_project_id"
+  add_index "inventories", ["ref_number"], name: "index_inventories_on_ref_number"
+  add_index "inventories", ["state"], name: "index_inventories_on_state"
+  add_index "inventories", ["store_id"], name: "index_inventories_on_store_id"
+
   create_table "inventory_details", force: :cascade do |t|
-    t.integer  "inventory_id"
-    t.integer  "product_id"
-    t.float    "logicalStock"
-    t.float    "physicalStock"
-    t.float    "cost"
-    t.float    "price"
-    t.float    "totallogical"
-    t.float    "totalphysical"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.integer  "inventory_operation_id"
+    t.integer  "item_id"
+    t.integer  "store_id"
+    t.decimal  "quantity",               precision: 14, scale: 2, default: 0.0
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
+
+  add_index "inventory_details", ["inventory_operation_id"], name: "index_inventory_details_on_inventory_operation_id"
+  add_index "inventory_details", ["item_id"], name: "index_inventory_details_on_item_id"
+  add_index "inventory_details", ["store_id"], name: "index_inventory_details_on_store_id"
 
   create_table "invoice2s", force: :cascade do |t|
     t.integer  "company_id"
@@ -343,6 +428,37 @@ ActiveRecord::Schema.define(version: 20161206222331) do
     t.integer  "user_id"
   end
 
+  create_table "items", force: :cascade do |t|
+    t.integer  "unit_id"
+    t.decimal  "price",                   precision: 14, scale: 2, default: 0.0
+    t.string   "name"
+    t.string   "description"
+    t.string   "code",        limit: 100
+    t.boolean  "for_sale",                                         default: true
+    t.boolean  "stockable",                                        default: true
+    t.boolean  "active",                                           default: true
+    t.decimal  "buy_price",               precision: 14, scale: 2, default: 0.0
+    t.string   "unit_symbol", limit: 20
+    t.string   "unit_name"
+    t.integer  "tag_ids"
+    t.integer  "updater_id"
+    t.integer  "creator_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "product_id"
+    t.integer  "quantity"
+    t.integer  "qty"
+    t.integer  "recibir"
+  end
+
+  add_index "items", ["code"], name: "index_items_on_code"
+  add_index "items", ["creator_id"], name: "index_items_on_creator_id"
+  add_index "items", ["for_sale"], name: "index_items_on_for_sale"
+  add_index "items", ["stockable"], name: "index_items_on_stockable"
+  add_index "items", ["tag_ids"], name: "index_items_on_tag_ids"
+  add_index "items", ["unit_id"], name: "index_items_on_unit_id"
+  add_index "items", ["updater_id"], name: "index_items_on_updater_id"
+
   create_table "kits_products", force: :cascade do |t|
     t.integer  "product_kit_id"
     t.integer  "product_id"
@@ -355,10 +471,11 @@ ActiveRecord::Schema.define(version: 20161206222331) do
   create_table "line_items", force: :cascade do |t|
     t.integer  "product_id"
     t.integer  "cart_id"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-    t.integer  "quantity",   default: 1
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.integer  "quantity",         default: 1
     t.integer  "order_id"
+    t.integer  "purchaseorder_id"
   end
 
   create_table "locations", force: :cascade do |t|
@@ -427,6 +544,30 @@ ActiveRecord::Schema.define(version: 20161206222331) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "monedas", force: :cascade do |t|
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.string   "description"
+    t.string   "symbol"
+    t.integer  "company_id"
+  end
+
+  create_table "movement_details", force: :cascade do |t|
+    t.integer  "account_id"
+    t.integer  "item_id"
+    t.decimal  "quantity",       precision: 14, scale: 2, default: 0.0
+    t.decimal  "price",          precision: 14, scale: 2, default: 0.0
+    t.string   "description"
+    t.decimal  "discount",       precision: 14, scale: 2, default: 0.0
+    t.decimal  "balance",        precision: 14, scale: 2, default: 0.0
+    t.decimal  "original_price", precision: 14, scale: 2, default: 0.0
+    t.datetime "created_at",                                            null: false
+    t.datetime "updated_at",                                            null: false
+  end
+
+  add_index "movement_details", ["account_id"], name: "index_movement_details_on_account_id"
+  add_index "movement_details", ["item_id"], name: "index_movement_details_on_item_id"
+
   create_table "movement_products", force: :cascade do |t|
     t.integer  "movement_id"
     t.integer  "product_id"
@@ -463,6 +604,9 @@ ActiveRecord::Schema.define(version: 20161206222331) do
     t.string   "tm"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.integer  "document_id"
+    t.string   "documento"
+    t.string   "purchaseorder"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -523,6 +667,7 @@ ActiveRecord::Schema.define(version: 20161206222331) do
     t.integer  "day"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "company_id"
   end
 
   create_table "products", force: :cascade do |t|
@@ -550,6 +695,7 @@ ActiveRecord::Schema.define(version: 20161206222331) do
     t.integer  "i"
     t.float    "price2"
     t.string   "status"
+    t.integer  "quantity_transit"
   end
 
   create_table "products_categories", force: :cascade do |t|
@@ -616,6 +762,8 @@ ActiveRecord::Schema.define(version: 20161206222331) do
     t.float    "total"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
+    t.integer  "quantity_transit"
+    t.integer  "pending"
   end
 
   create_table "purchaseorders", force: :cascade do |t|
@@ -641,24 +789,23 @@ ActiveRecord::Schema.define(version: 20161206222331) do
     t.string   "moneda"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.string   "received"
+    t.datetime "date_processed"
+    t.integer  "moneda_id"
   end
 
   create_table "purchases", force: :cascade do |t|
-    t.string   "tank_id"
-    t.string   "integer"
     t.integer  "document_type_id"
     t.string   "document"
     t.datetime "date1"
     t.datetime "date2"
     t.float    "exchange"
-    t.integer  "product_id"
     t.integer  "unit_id"
     t.float    "price_with_tax"
     t.float    "price_without_tax"
     t.float    "price_public"
     t.float    "quantity"
     t.integer  "other"
-    t.string   "money_type"
     t.float    "discount"
     t.float    "tax1"
     t.float    "payable_amount"
@@ -672,7 +819,6 @@ ActiveRecord::Schema.define(version: 20161206222331) do
     t.float    "tax2"
     t.integer  "supplier_id"
     t.string   "order1"
-    t.integer  "plate_id"
     t.integer  "user_id"
     t.integer  "company_id"
     t.integer  "location_id"
@@ -683,6 +829,7 @@ ActiveRecord::Schema.define(version: 20161206222331) do
     t.string   "processed"
     t.string   "return"
     t.datetime "date_processed"
+    t.string   "money"
   end
 
   create_table "restocks", force: :cascade do |t|
@@ -752,12 +899,13 @@ ActiveRecord::Schema.define(version: 20161206222331) do
     t.float    "total"
     t.string   "processed"
     t.string   "return"
-    t.datetime "date_proceseed"
     t.integer  "user_id"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
     t.integer  "instruccion_id"
     t.string   "moneda"
+    t.integer  "moneda_id"
+    t.datetime "date_processed"
   end
 
   create_table "services", force: :cascade do |t|
@@ -792,6 +940,26 @@ ActiveRecord::Schema.define(version: 20161206222331) do
 
   add_index "sessions", ["session_id"], name: "index_sessions_on_session_id", unique: true
   add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at"
+
+  create_table "stocks", force: :cascade do |t|
+    t.integer  "store_id"
+    t.integer  "item_id"
+    t.string   "state",        limit: 20
+    t.decimal  "unitary_cost",            precision: 14, scale: 2, default: 0.0
+    t.decimal  "quantity",                precision: 14, scale: 2, default: 0.0
+    t.decimal  "minimum",                 precision: 14, scale: 2, default: 0.0
+    t.integer  "user_id"
+    t.boolean  "active",                                           default: true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "stocks", ["item_id"], name: "index_stocks_on_item_id"
+  add_index "stocks", ["minimum"], name: "index_stocks_on_minimum"
+  add_index "stocks", ["quantity"], name: "index_stocks_on_quantity"
+  add_index "stocks", ["state"], name: "index_stocks_on_state"
+  add_index "stocks", ["store_id"], name: "index_stocks_on_store_id"
+  add_index "stocks", ["user_id"], name: "index_stocks_on_user_id"
 
   create_table "subcontrats", force: :cascade do |t|
     t.string   "ruc"

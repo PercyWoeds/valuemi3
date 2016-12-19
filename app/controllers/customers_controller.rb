@@ -6,12 +6,15 @@ class CustomersController < ApplicationController
   
   # Show customers for a company
 
-   def import
- 
+  def import
       Customer.import(params[:file])
        redirect_to root_url, notice: "Clientes importadas."
   end 
-  
+  def import2
+      Customer.import2(params[:file])
+       redirect_to root_url, notice: "Clientes direcciones importadas."
+  end 
+    
 
   def list_customers
     @company = Company.find(params[:company_id])

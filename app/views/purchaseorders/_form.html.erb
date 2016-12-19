@@ -10,7 +10,7 @@
   </div>
 <% end %>
 
-<%= hr() %>
+  <%= hr() %>
 
 <div class="mid_box bordered_right">
   <%= form_for(@purchaseorder) do |f| %>
@@ -18,7 +18,7 @@
        Informacion Orden de Compra 
     </h3>
 
-    <div class="field">  
+    <div class="field">
       <label for="ac_supplier" class="bold"> PROVEEDOR *</label><br />
       <%= f.select :supplier_id,options_from_collection_for_select(@suppliers,'id','name') %>
       <div class="small">
@@ -53,8 +53,8 @@
     </div>
   
     <div class="field">
-      <%= f.label :moneda ,"Moneda"%><br />
-      <%= f.select :moneda, options_for_select([["SOLES",1],["DOLARES",2]]) %>
+      <%= f.label :moneda ,"  "%><br />
+      <%= f.select :moneda, options_from_collection_for_select(@monedas,'id','description') %>
     </div>
       
     <div class="field">

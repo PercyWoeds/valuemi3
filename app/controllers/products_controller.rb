@@ -71,6 +71,8 @@ class ProductsController < ApplicationController
     
     @product = Product.new
     @product[:cost] = 0
+    @product[:quantity] = 0
+    @product[:quantity_transit] = 0
     @product[:company_id] = params[:company_id]
     @company = Company.find(params[:company_id])
     @suppliers = @company.get_suppliers()

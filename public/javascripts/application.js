@@ -230,6 +230,7 @@ function addItemToInvoice() {
       var item_line = item_id + "|BRK|" + quantity + "|BRK|" + price + "|BRK|" + discount;
       
       $("#items").val($("#items").val() + "," + item_line);
+      
       listItemsInvoice();
       
       $("#ac_item_id").val("");
@@ -678,7 +679,7 @@ function addItemToserviceorder() {
       updateItemTotal4();
     }
   } else {
-    alert("Por favor ingrese un servicio primero.");
+    alert("Por favor ingrese un servicio primero.");    
   }
 }
 
@@ -707,9 +708,9 @@ function updateItemTotal4() {
     var total = quantity * price;
     total -= total * (discount / 100);
 
-    $("#ac_item_total").html("$" + total);
+    $("#ac_item_total").html(total);
   } else {
-    $("#ac_item_total").html("$0.00");
+    $("#ac_item_total").html("0.00");
   }
 }
 
@@ -819,6 +820,84 @@ function removeItemFromserviceorder(id) {
   $("#items").val(items_final.join(","));
   listItemspurchaseorder();
 }
+
+// Add an item to a product kit
+function addItemToMovement() {
+  var item = $("#ac_item").val();
+  
+  if(item != "") {
+    var company_id = $("#movement_company_id").val();
+    var item_id = $("#ac_item_id").val();
+    
+    var quantity = $("#ac_item_quantity").val();
+    var items_arr = $("#items").val().split(",");
+
+    if(quantity == "" || !isNumeric(quantity)) {
+      alert("Por favor una cantidad ");
+    } else {
+      var item_line = item_id + "|BRK|" + quantity + "|BRK|";
+      
+      $("#items").val($("#items").val() + "," + item_line);
+      listItemsMovement();
+      
+      $("#ac_item_id").val("");
+      $("#ac_item").val("");
+      $("#ac_item_quantity").val("1");
+      
+      updateItemTotalMov();
+    }
+  } else {
+    alert("Please find a product to add first.");
+  }
+}
+
+// List items in a kit
+function listItemsMovement() {
+  var items = $("#items").val();
+  var company_id = $("#movement_company_id").val();
+  
+  $.get('/movements/list_items/' + company_id, {
+    items: items
+  },
+  function(data) {
+    $("#list_items").html(data);
+    documentReady();
+  });
+}
+
+// Update price total for invoice
+function updateItemTotalMov() {
+  var quantity = $("#ac_item_quantity").val();
+  var price = $("#ac_item_price").val();
+  var discount = $("#ac_item_discount").val();
+  
+  if(isNumeric(quantity) && isNumeric(price) && isNumeric(discount)) {
+    var total = quantity * price;
+    total -= total * (discount / 100);
+
+    $("#ac_item_total").html("$" + total);
+  } else {
+    $("#ac_item_total").html("$0.00");
+  }
+}
+// Removes an item from an invoice
+function removeItemFromMovement(id) {
+  var items = $("#items").val();
+  var items_arr = items.split(",");
+  var items_final = Array();
+  var i = 0;
+  
+  while(i < items_arr.length) {
+    if(i != id) {
+      items_final[i] = items_arr[i];
+    }
+    i++;
+  }
+  
+  $("#items").val(items_final.join(","));
+  listItemsMovement();
+}
+
 
 
 // On ready

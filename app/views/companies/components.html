@@ -1,12 +1,11 @@
 <div class="mid_box bordered_right">
-
-  <h3>
+    <h3>
     <%= image_tag("invoice_32.png", :class => "vmiddle") %>
-    <%= link_to "Ingresos", "/companies/movements/#{@company.id}" %>
+    <%= link_to "Recepcion orden de Compra", "/companies/purchaseorders/receive/#{@company.id}" %>
   </h3>
 
   <p>
-     Ingresos de almacen
+    Recepcion de Orden de Compra   
   </p>
   
   <%= hr() %>

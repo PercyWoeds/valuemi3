@@ -97,7 +97,7 @@ class SuppliersController < ApplicationController
     @supplier = Supplier.find(params[:id])
 
     respond_to do |format|
-      if @supplier.update_attributes(params[:supplier])
+      if @supplier.update_attributes(supplier_params)
         format.html { redirect_to(@supplier, :notice => 'Supplier was successfully updated.') }
         format.xml  { head :ok }
       else
@@ -146,7 +146,7 @@ class SuppliersController < ApplicationController
   end
 
   def supplier_params
-    params.require(:supplier).permit(:name, :email, :phone1, :phone2, :address1,:address2,:city, :state,:zip,:country,:comments,:ruc,:company_id )    
+    params.require(:supplier).permit(:name, :email, :phone1, :phone2, :address1,:address2,:city, :state,:zip,:country,:comments,:ruc,:company_id,:taxable )    
   end
   
 

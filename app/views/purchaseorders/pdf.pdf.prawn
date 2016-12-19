@@ -15,9 +15,9 @@ pdf.text "Code: #{@purchaseorder.code}", :size => 13, :spacing => 4
 pdf.text "______________________________________________________________________", :size => 13, :spacing => 4
 pdf.text " ", :size => 13, :spacing => 4
 
-pdf.text "Subtotal: $#{money(@purchaseorder.subtotal)}", :size => 15, :style => :bold, :spacing => 4
-pdf.text "Tax: $#{money(@purchaseorder.tax)}", :size => 15, :style => :bold, :spacing => 4
-pdf.text "Total: $#{money(@purchaseorder.total)}", :size => 15, :style => :bold, :spacing => 4
+pdf.text "Subtotal: #{money(@purchaseorder.subtotal)}", :size => 15, :style => :bold, :spacing => 4
+pdf.text "Tax: #{money(@purchaseorder.tax)}", :size => 15, :style => :bold, :spacing => 4
+pdf.text "Total: #{money(@purchaseorder.total)}", :size => 15, :style => :bold, :spacing => 4
 
 pdf.text "______________________________________________________________________", :size => 13, :spacing => 4
 pdf.text " ", :size => 13, :spacing => 4
@@ -74,13 +74,13 @@ pdf.text "Details", :size => 15, :style => :bold, :spacing => 4
 pdf.text " ", :size => 13, :spacing => 4
 
 for product in @purchaseorder.get_products()
-  pdf.text "#{product.name} - Price: $#{money(product.price)} - Quantity: #{product.quantity} - Discount: #{money(product.discount)} - Total: $#{money(product.total)}", :size => 13, :spacing => 4
+  pdf.text "#{product.name} - Price: #{money(product.price)} - Quantity: #{product.quantity} - Discount: #{money(product.discount)} - Total: #{money(product.total)}", :size => 13, :spacing => 4
 end
 
 pdf.text " ", :size => 13, :spacing => 4
 
-pdf.text "Subtotal: $#{money(@purchaseorder.subtotal)}", :size => 13, :spacing => 4
-pdf.text "Tax: $#{money(@purchaseorder.tax)}", :size => 13, :spacing => 4
-pdf.text "Total: $#{money(@purchaseorder.total)}", :size => 13, :spacing => 4
+pdf.text "Subtotal: #{money(@purchaseorder.subtotal)}", :size => 13, :spacing => 4
+pdf.text "Tax: #{money(@purchaseorder.tax)}", :size => 13, :spacing => 4
+pdf.text "Total: #{money(@purchaseorder.total)}", :size => 13, :spacing => 4
 
 pdf.draw_text "Company: #{@purchaseorder.company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]

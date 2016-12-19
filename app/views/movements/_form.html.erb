@@ -19,38 +19,45 @@
     </h3>
 
     <div class="field">
-    
-      <label for="ac_supplier" class="bold">Cliente*</label><br />
-      <input type="text" name="ac_supplier" id="ac_supplier" value="<% if @ac_supplier %><%= @ac_supplier %><% end %>" />
-      
-      
-      <div class="small">
-        Ingrese una termino de busqueda para encontrar un cliente.
-      </div>
-      <br />
-
-      <div class="small">
-        <strong>Seleccionar cliente:</strong>
-        <span id="selected_supplier"><% if @ac_supplier %><%= @ac_supplier %><% else %><!-- i --><% end %></span>
-      </div>
-    </div>
-    
-    <div class="field">
       <%= f.label :code, "Code*", :class => "bold" %><br />
       <%= f.text_field :code, :onclick => "$(this).select();" %>
     </div>
-  
     <div class="field">
       <%= f.label :location_id ,"Local"%><br />
-      <%= f.select :location_id, options_from_collection_for_select(@locations,'id','name') %>
-    
-        
+      <%= f.select :location_id, options_from_collection_for_select(@locations,'id','name') %>    
     </div>
+
     <div class="field">
       <%= f.label :division_id %><br />
       <%= f.select :division_id,options_from_collection_for_select(@divisions,'id','name') %>
     </div>
     
+    <div class="field">    
+    <label for="ac_supplier" class="bold">Proveedor *</label><br />
+     <div>       
+      <%= f.select :supplier_id, options_from_collection_for_select(@suppliers,'id','name') %>      
+     </div>        
+      <div class="small">
+        Ingrese una termino de busqueda para encontrar un proveedor.
+      </div>
+
+      <br />
+    </div>
+
+    <div class="field">
+      <%= f.label :documento, "Documento*", :class => "bold" %><br />
+      <%= f.text_field :documento %>
+    </div>
+
+    <div class="field">      
+      <%= f.label :fecha1, "Fecha Emision", :class => "bold" %><br />
+      <%= f.text_field :fecha1 %>
+    </div>
+
+    <div class="field">      
+      <%= f.label :fecha2, "Fecha Recepcion*", :class => "bold" %><br />
+      <%= f.text_field :fecha2 %>
+    </div>
 
   
     <%= hr() %>
@@ -119,34 +126,21 @@
     Agregar Productos  a la factura 
   </h3>
   
-  <form method="get" action="/products" onsubmit="addItemTomovement(); return false;">
+  <form method="get" action="/products" onsubmit="addItemToMovement(); return false;">
     <input type="hidden" name="ac_item_id" id="ac_item_id" value="" />
     
-    <strong>Product:</strong><br />
+    <strong>Producto:</strong><br />
     <input type="text" name="ac_item" id="ac_item" value="" />
     <div class="small">
       Ingrese un termino de busqueda para encontrar un producto.
     </div>
     <br />
     
-    <strong>Price:</strong><br />
-    <input type="text" name="ac_item_price" id="ac_item_price" value="" class="tf_short" />
-    <div class="small">
-      Precio del  producto para agregar una factura.
-    </div>
-    <br />
     
-    <strong>Quantity:</strong><br />
+    <strong>Cantidad:</strong><br />
     <input type="text" name="ac_item_quantity" id="ac_item_quantity" value="1" class="tf_short" />
     <div class="small">
      Cantidad del producto para agregar una factura.
-    </div>
-    <br />
-    
-    <strong>Discount %:</strong><br />
-    <input type="text" name="ac_item_discount" id="ac_item_discount" value="0" class="tf_short" />
-    <div class="small">
-      Descuento % del producto para agregar una factura.
     </div>
     <br />
     
@@ -161,29 +155,7 @@
   
   <%= hr() %>
   
-  <h3>
-    Agregar Productos Kit a Factura
-  </h3>
   
-  <form method="get" action="/products_kits" onsubmit="addKitTomovement(); return false;">
-    <input type="hidden" name="ac_kit_id" id="ac_kit_id" value="" />
-    
-    <strong>Product kit:</strong><br />
-    <input type="text" name="ac_kit" id="ac_kit" value="" />
-    <div class="small">      
-      Ingrese un termino de busqueda para encontrar un producto Kit.
-    </div>
-    <br />
-    
-    <strong>Discount %:</strong><br />
-    <input type="text" name="ac_kit_discount" id="ac_kit_discount" value="0" class="tf_short" />
-    <div class="small">
-      Descuento % del producto Kit  para agregar una factura.
-    </div>
-    <br />
-    
-    <input type="submit" value="Add product kit to movement" />
-  </form>
 </div>
 
 <%= br() %>
@@ -232,20 +204,14 @@
       $("#ac_item_id").val(data[2]);
       $("#ac_item_price").val(data[4]);
       
-      updateItemTotal();
+      updateItemMovement();
     });
     
     $("#ac_item_quantity").bind("keyup", function() {
-      updateItemTotal();
+      updateItemMovement();
     });
     
-    $("#ac_item_price").bind("keyup", function() {
-      updateItemTotal();
-    });
     
-    $("#ac_item_discount").bind("keyup", function() {
-      updateItemTotal();
-    });
     
     <% if @products_lines %>
     alert 'holas products_lines';

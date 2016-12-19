@@ -1,0 +1,30 @@
+
+<ol class='hidden' id='devolution-tour'>
+  <li data-sel='#devolution-link' data-text='Fin' data-tip-location='bottom'>
+    <p>
+      Haga click para abrir botón,
+      <strong class='text-error'>Devolución</strong>
+    </p>
+  </li>
+</ol>
+<ul class='hidden' id='devolution-inventory'>
+  <li data-sel='#inventory-devolution-link' data-text='Fin' data-tip-location='bottom'>
+    <p>
+      Haga click en el botón
+      <strong class='text-error'>Devolución de mercadería</strong>
+      y seleccione el almacen.
+    </p>
+  </li>
+</ul>
+<script>
+  $(function() {
+    $('#negative-balance-link').click(function() {
+      new Plugins.Bride('#devolution-tour').init();
+    });
+  
+  
+    $('body').on('click', '#negative-invenory-balance-link', function() {
+      new Plugins.Bride('#devolution-inventory').init();
+    });
+  })
+</script>

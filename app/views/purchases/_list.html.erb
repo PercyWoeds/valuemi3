@@ -1,27 +1,27 @@
 <% if @purchases.count > 0 %>
 
-<h1>Listing Purchases</h1>
+<h1>Compras Proveedores </h1>
 
 <table>
   <thead>
     <tr>
-      <th>Document type</th>
-      <th>Document</th>
-      <th>Date1</th>
-      <th>Date2</th>
-      <th>Exchange</th>
+      <th>Tipo</th>
+      <th>Documento</th>
+      <th>Fec.Emision</th>
+      <th>Fec.Vmto </th>
+      <th>T.Cambio</th>
       
-      <th>Money type</th>
-      <th>Discount</th>
+      <th>Moneda</th>
+      <th>Dscto</th>
       
-      <th>Payable amount</th>
-      <th>Tax amount</th>
-      <th>Total amount</th>
+      <th>V.Venta </th>
+      <th>IGV</th>
+      <th>Importe</th>
       <th>Status </th>
       
-      <th>Charge</th>
-      <th>Payment</th>
-      <th>Balance</th>
+      <th>Cargos</th>
+      <th>Pagos</th>
+      <th>Saldo</th>
       
       <th colspan="3"></th>
     </tr>
@@ -35,21 +35,21 @@
         <td><%= purchase.date1 %></td>
         <td><%= purchase.date2 %></td>
         <td><%= purchase.exchange %></td>
-        <td><%= purchase.money_type %></td>
-        <td><%= purchase.discount %></td>
       
+        <td><%= purchase.discount %></td>      
         <td><%= purchase.payable_amount %></td>
-        <td><%= purchase.tax_amount %></td>
-        <td><%= purchase.total_amount %></td>
-        <td <%= purchase.processed_color %> ><%= purchase.get_processed_short %></td>
+
+        <td><%= money(purchase.tax_amount) %></td>
+        <td><%= money(purchase.total_amount) %></td>
+        <td <%= money(purchase.processed_color) %></td>
       
         <td><%= purchase.charge %></td>
         <td><%= purchase.payment %></td>
         <td><%= purchase.balance %></td>
       
-        <td><%= link_to 'Show', purchase %></td>
-        <td><%= link_to 'Edit', edit_purchase_path(purchase) %></td>
-        <td><%= link_to 'Destroy', purchase, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Ver', purchase %></td>
+        <td><%= link_to 'Editar', edit_purchase_path(purchase) %></td>
+        <td><%= link_to 'Eliminar', purchase, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

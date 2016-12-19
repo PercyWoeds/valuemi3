@@ -36,11 +36,11 @@
             <%= link_to purchaseorder.supplier.name, purchaseorder.supplier, :title => "Go to supplier" %>
           </td>
           <td class="bordered_right bordered_bottom right">
-            $<%= purchaseorder.moneda %>
+            <%= purchaseorder.moneda.symbol %>
           </td>
           
           <td class="bordered_right bordered_bottom right">
-            $<%= money(purchaseorder.total) %>
+            <%= purchaseorder.total %>
           </td>
           <td class="bordered_right bordered_bottom">
             <%= doDate(purchaseorder.created_at) %>

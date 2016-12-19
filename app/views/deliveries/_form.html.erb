@@ -40,27 +40,30 @@
 
     <div class="field">
     <label class="bold"> REMITENTE *</label><br />      
-      <%= f.select :remite_id,options_from_collection_for_select(@remites,'id','name') %>
+      <%= f.select :remite_id,options_from_collection_for_select(@remites,'id','name'),:style => "width:200px" %>
     </div>
-      <div class="small">
-      <p>
-        Seleccione un remitente para la guia 
 
 
-       </p>
-          
-      </div>
-    
-
-    <div class="field">
-      <%= f.label :location_id ,"Direccion de Partida "%><br />
-      <%= f.select :location_id, options_from_collection_for_select(@locations,'id','address1') %>
+     <div class="field">
+      <%= f.label :address_id ,"Direccion de partida"%><br />
+      <%= f.select :address_id, options_from_collection_for_select(@addresses,'id','address'),  :style => "width: 200px" %>
     
         <div class="small">
           <strong>Local :</strong>
           <span id="selected_local"></span>
         </div>
+     </div>
 
+    <%= hr() %>        
+
+    <div class="field">
+      <%= f.label :location_id ,"Local "%><br />
+      <%= f.select :location_id, options_from_collection_for_select(@locations,'id','name'),   :style => "width: 200px" %>
+    
+        <div class="small">
+          <strong>Local :</strong>
+          <span id="selected_local"></span>
+        </div>
     </div>
     <div class="field">
       <%= f.label :division_id %><br />
@@ -79,8 +82,8 @@
     </div>
     
     <div class="field">
-      <%= f.label :address_id,"Direccion de llegada :" %><br />
-      <%= f.select :address_id,options_from_collection_for_select(@addresses,'id','address') %>
+      <%= f.label :address2_id,"Direccion de llegada :" %><br />
+      <%= f.select :address2_id,options_from_collection_for_select(@addresses2,'id','address'),  {style: "width: 100px" } %>
     </div>
 
     
@@ -202,7 +205,6 @@
     </div>
     <br />
 
-
     <strong>Unidad:</strong><br />
 
     <%= select_tag(:ac_item_unidad,options_from_collection_for_select(@unidads,'id','descrip') ) %>
@@ -243,7 +245,7 @@
     
     <div>
       <strong>Total:</strong><br />
-      <span id="ac_item_total">$0.00</span>
+      <span id="ac_item_total">0.00</span>
     </div>
     
     <br />

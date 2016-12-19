@@ -37,8 +37,9 @@
 </h3>
 
 <%=  @remite.name  %>
-
-
+<%=  @addresses.address  %>
+<%=  @addresses.address2  %>
+<%=  @addresses.state  %>
 <%= hr() %>
 
 <h3>
@@ -48,6 +49,7 @@
 <p>
   <b>Nombre:</b>
   <%= link_to @customer.name, @customer %>
+
 </p>
 
 <%= render "customers/show" %>
@@ -104,7 +106,7 @@
           <%= link_to productItem.name   %>
         </td>
         <td class="bordered_bottom bordered_right">
-          $<%= money(productItem.price) %>
+          <%= money(productItem.price) %>
         </td>
         <td class="bordered_bottom bordered_right">
           <%= productItem.quantity %>
@@ -113,7 +115,7 @@
           <%= money(productItem.discount) %>%
         </td>
         <td class="bordered_bottom bordered_right">
-          $<%= money(productItem.total) %>
+          <%= money(productItem.total) %>
         </td>
       </tr>
     <% end %>
@@ -127,15 +129,15 @@
         Subtotal:
       </td>
       <td class="bordered_bottom bordered_right bold right">
-        $<%= money(@delivery.subtotal) %>
+        <%= money(@delivery.subtotal) %>
       </td>
     </tr>
     <tr>
       <td colspan="4" class="bordered_bottom bordered_right bold">
-        Tax:
+        IGV :
       </td>
       <td class="bordered_bottom bordered_right bold right">
-        $<%= money(@delivery.tax) %>
+        <%= money(@delivery.tax) %>
       </td>
     </tr>
     <tr>
@@ -143,7 +145,7 @@
         Total:
       </td>
       <td class="bordered_bottom bordered_right bold right">
-        $<%= money(@delivery.total) %>
+        <%= money(@delivery.total) %>
       </td>
     </tr>
   </tbody>
@@ -238,7 +240,17 @@
 <div class="button">
   <%= link_to 'Exportar to PDF', "/deliveries/pdf/#{@delivery.id}.pdf" %>
   <%= link_to 'Enviar via email', "/deliveries/email/#{@delivery.id}" %>
-  <%= link_to 'Procesar guia', "/deliveries/do_process/#{@delivery.id}" %>
+
+<% if @delivery.processed   =="0"  || @delivery.processed   ==nil %>
+  <%= link_to 'Aprobar', "/deliveries/do_process/#{@delivery.id}" %>
   <%= link_to 'Editar', edit_delivery_path(@delivery) %>
+  
+<% elsif @delivery.processed =="1" %>  
+  <%= link_to 'Anular', "/deliveries/do_anular/#{@delivery.id}" %>
+<% end %>
+
+
+
+  
   <%= link_to 'Regresar', "/companies/deliveries/#{@delivery.company.id}" %>
 </div>

@@ -31,6 +31,26 @@
   <%= @serviceorder.code %>
 </p>
 
+ <p>
+    <b>Moneda:</b>
+    <%= @serviceorder.moneda.description %>   
+ </p>
+
+ <p>
+    <b>Forma de pago:</b>
+    <%= @serviceorder.payment.descrip  %>   
+ </p>
+
+<p>
+    <b>Fecha entrega:</b>
+    <%= @serviceorder.fecha1  %>   
+</p>
+ 
+<p>
+    <b>Estado: </b>
+    <%=   @serviceorder.get_processed   %>   
+</p>
+
 
 <%= hr() %>
 
@@ -78,7 +98,7 @@
           <%= link_to productItem.name   %>
         </td>
         <td class="bordered_bottom bordered_right">
-          $<%= money(productItem.price) %>
+          <%= money(productItem.price) %>
         </td>
         <td class="bordered_bottom bordered_right">
           <%= productItem.quantity %>
@@ -87,7 +107,7 @@
           <%= money(productItem.discount) %>%
         </td>
         <td class="bordered_bottom bordered_right">
-          $<%= money(productItem.total) %>
+          <%= money(productItem.total) %>
         </td>
       </tr>
     <% end %>
@@ -101,7 +121,7 @@
         Subtotal:
       </td>
       <td class="bordered_bottom bordered_right bold right">
-        $<%= money(@serviceorder.subtotal) %>
+        <%= money(@serviceorder.subtotal) %>
       </td>
     </tr>
     <tr>
@@ -109,7 +129,7 @@
         Tax:
       </td>
       <td class="bordered_bottom bordered_right bold right">
-        $<%= money(@serviceorder.tax) %>
+        <%= money(@serviceorder.tax) %>
       </td>
     </tr>
     <tr>
@@ -117,9 +137,19 @@
         Total:
       </td>
       <td class="bordered_bottom bordered_right bold right">
-        $<%= money(@serviceorder.total) %>
+        <%= money(@serviceorder.total) %>
       </td>
     </tr>
+
+        <tr>
+      <td colspan="4" class="bordered_bottom bordered_right bold">
+        Detraccion :
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= @serviceorder.detraccion  %>
+      </td>
+    </tr>
+
   </tbody>
 </table>
 <br />
@@ -168,9 +198,16 @@
 <%= hr() %>
 
 <div class="button">
-  <%= link_to 'Exportar to PDF', "/serviceorders/pdf/#{@serviceorder.id}.pdf" %>
+  <%= link_to 'Exportar to PDF', "/serviceorders/pdf/#{@serviceorder.id}.pdf" %>  
   <%= link_to 'Enviar via email', "/serviceorders/email/#{@serviceorder.id}" %>
+
+<% if @serviceorder.processed =="0" || @serviceorder.processed==nil %>
   <%= link_to 'Aprobar', "/serviceorders/do_process/#{@serviceorder.id}" %>
-  <%= link_to 'Editar', edit_serviceorder_path(@serviceorder) %>
+  <%= link_to 'Editar', edit_serviceorder_path(@serviceorder) %>  
+<% elsif @serviceorder.processed =="1" %>  
+  <%= link_to 'Anular', "/serviceorders/do_anular/#{@serviceorder.id}" %>
+<% end %>
+
+  
   <%= link_to 'Regresar', "/companies/serviceorders/#{@serviceorder.company.id}" %>
 </div>

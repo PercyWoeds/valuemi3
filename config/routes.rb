@@ -1,5 +1,8 @@
   Mnygo::Application.routes.draw do
 
+
+  resources :purchases
+  resources :documents
   resources :servicebuys
   resources :instruccions
   resources :puntos
@@ -11,21 +14,27 @@
   resources :unidads
   resources :payments
 
-  
   resources :tanks
   resources :employees
   resources :pumps
   resources :purchases
+
+
   resources :inventory_details
   resources :inventories
   resources :payment_methods
   resources :deliveryships
-
   resources :declarations 
 
+  resources :purchaseorders do 
+    collection { get :search   }
+    collection { get :receive    }
+  
+  end 
+  
   resources :deliveries do
     collection { get :search   }
-   end 
+  end 
   
 
   resources :orders do 
@@ -51,8 +60,11 @@
 
   resources :line_items
 
-  resources :carts
+  resources :items do
+    collection { get :update}
+  end 
 
+  resources :carts
 
   devise_for :users, :controllers => { 
     register: 'new_user_registration' ,
@@ -80,6 +92,7 @@
   resources :customers do
     resources :addresses
     collection { post :import }
+    collection { post :import2 }
   end 
 
   resources :employees do
@@ -92,6 +105,7 @@
   get 'my_declarations', to: 'declarations#my_deliveries'
   get 'search_friends', to: 'deliveries#search'
   post 'add_friend', to: 'deliveries#add_friend'
+  post 'items/update', to: 'items#update'
 
   # Reports
   match 'companies/reports/monthly_profits/:company_id' => 'reports#monthly_profits', via: [:get, :post]
@@ -112,6 +126,7 @@
   match 'companies/reports/monthly_sellers/:company_id' => 'reports#report_monthly_sellers', via: [:get, :post]
   match 'companies/reports/sellers/:company_id' => 'reports#report_sellers', via: [:get, :post]
   match 'companies/reports/monthly_sales/:company_id' => 'reports#report_monthly_sales', via: [:get, :post]
+
   match 'companies/reports/sales/:company_id' => 'reports#report_sales', via: [:get, :post]
   match 'companies/reports/:company_id' => 'reports#reports', via: [:get, :post]
 
@@ -149,7 +164,6 @@
   match 'facturas/ac_guias/:company_id' => 'facturas#ac_guias', via: [:get, :post]
   match 'facturas/new/:company_id' => 'facturas#new', via: [:get, :post]
   
-
   match 'facturas/do_email/:id' => 'facturas#do_email', via: [:get, :post]
   match 'facturas/do_process/:id' => 'facturas#do_process', via: [:get, :post]
   match 'facturas/email/:id' => 'facturas#email', via: [:get, :post]
@@ -168,8 +182,11 @@
   
   match 'deliveries/do_email/:id' => 'deliveries#do_email', via: [:get, :post]
   match 'deliveries/do_process/:id' => 'deliveries#do_process', via: [:get, :post]
+  match 'deliveries/do_anular/:id' => 'deliveries#do_anular', via: [:get, :post]
   match 'deliveries/email/:id' => 'deliveries#email', via: [:get, :post]
   match 'deliveries/pdf/:id' => 'deliveries#pdf', via: [:get, :post]
+  match 'deliveries/guias1/:company_id' => 'deliveries#guias1', via: [:get, :post]
+
   match 'companies/deliveries/:company_id' => 'deliveries#list_deliveries', via: [:get, :post]
   resources :deliveries
 
@@ -184,6 +201,7 @@
   
   match 'serviceorders/do_email/:id' => 'serviceorders#do_email', via: [:get, :post]
   match 'serviceorders/do_process/:id' => 'serviceorders#do_process', via: [:get, :post]
+  match 'serviceorders/do_anular/:id' => 'serviceorders#do_anular', via: [:get, :post]
   match 'serviceorders/email/:id' => 'serviceorders#email', via: [:get, :post]
   match 'serviceorders/pdf/:id' => 'serviceorders#pdf', via: [:get, :post]
   match 'companies/serviceorders/:company_id' => 'serviceorders#list_serviceorders', via: [:get, :post]
@@ -196,14 +214,32 @@
   match 'purchaseorders/ac_user/:company_id' => 'purchaseorders#ac_user', via: [:get, :post]
   match 'purchaseorders/ac_purchases/:company_id' => 'purchaseorders#ac_purchases', via: [:get, :post]
   match 'purchaseorders/new/:company_id' => 'purchaseorders#new', via: [:get, :post]
-  
+
+  match 'purchaseorders/receive/:id' => 'purchaseorders#receive', via: [:get, :post]
   match 'purchaseorders/do_email/:id' => 'purchaseorders#do_email', via: [:get, :post]
   match 'purchaseorders/do_process/:id' => 'purchaseorders#do_process', via: [:get, :post]
+  match 'purchaseorders/do_grabar_ins/:id' => 'purchaseorders#do_grabar_ins', via: [:get, :post]
   match 'purchaseorders/email/:id' => 'purchaseorders#email', via: [:get, :post]
   match 'purchaseorders/pdf/:id' => 'purchaseorders#pdf', via: [:get, :post]
+  
+  match 'companies/purchaseorders/receive/:company_id' => 'purchaseorders#list_receiveorders', via: [:get, :post]
   match 'companies/purchaseorders/:company_id' => 'purchaseorders#list_purchaseorders', via: [:get, :post]
+
   resources :purchaseorders
 
+  match 'receiveorders/list_items/:company_id' => 'receiveorders#list_items', via: [:get, :post]
+  match 'receiveorders/ac_products/:company_id' => 'receiveorders#ac_products', via: [:get, :post]
+  match 'receiveorders/ac_unidads/:company_id' => 'receiveorders#ac_unidads', via: [:get, :post]
+  match 'receiveorders/ac_user/:company_id' => 'receiveorders#ac_user', via: [:get, :post]
+  match 'receiveorders/new/:company_id' => 'receiveorders#new', via: [:get, :post]
+  
+  match 'receiveorders/do_email/:id' => 'receiveorders#do_email', via: [:get, :post]
+  match 'receiveorders/do_process/:id' => 'receiveorders#do_process', via: [:get, :post]
+  match 'receiveorders/email/:id' => 'receiveorders#email', via: [:get, :post]
+  match 'receiveorders/pdf/:id' => 'receiveorders#pdf', via: [:get, :post]
+  match 'companies/receiveorders/:company_id' => 'receiveorders#list_receiveorders', via: [:get, :post]
+  resources :receiveorders
+  
 
   match 'movements/list_items/:company_id' => 'movements#list_items', via: [:get, :post]
   match 'movements/ac_products/:company_id' => 'movements#ac_products', via: [:get, :post]
@@ -231,7 +267,7 @@
   match 'purchases/do_process/:id' => 'purchases#do_process', via: [:get, :post]
   match 'purchases/email/:id' => 'purchases#email', via: [:get, :post]
   match 'purchases/pdf/:id' => 'purchases#pdf', via: [:get, :post]
-  match 'companies/purchases/:company_id' => 'purchases#list_purchases', via: [:get, :post]
+  match 'companies/purchases/:company_id' => 'purchases#list_purchases', via: [:get, :post]  
   resources :purchases
 
 
@@ -339,6 +375,7 @@
   match 'companies/charts/:id' => 'companies#charts', via: [:get, :post]
   match 'companies/license/:id' => 'companies#license', via: [:get, :post]
   match 'companies/components/:id' => 'companies#components', via: [:get, :post]
+  match 'companies/cpagar/:id' => 'companies#cpagar', via: [:get, :post]
   resources :companies
 
   # Users packages

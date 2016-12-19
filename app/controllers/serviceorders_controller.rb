@@ -7,24 +7,216 @@ class ServiceordersController < ApplicationController
 
   before_filter :authenticate_user!, :checkServices
  
-  
+
+  def build_pdf_header(pdf)
+
+     $lcCli  =  @serviceorder.supplier.name
+     $lcdir1 = @serviceorder.supplier.address1
+     $lcdir2 =@serviceorder.supplier.address2
+     $lcdis  =@serviceorder.supplier.city
+     $lcProv = @serviceorder.supplier.state
+     $lcFecha1= @serviceorder.fecha1.strftime("%d/%m/%Y") 
+     $lcMon=@serviceorder.moneda.description     
+     $lcPay= @serviceorder.payment.descrip
+     $lcSubtotal=@serviceorder.subtotal
+     $lcIgv=@serviceorder.tax
+     $lcTotal=@serviceorder.total
+     $lcDetracion=@serviceorder.detraccion
+     $lcAprobado= @serviceorder.get_processed 
+    
+      pdf.image "#{Dir.pwd}/public/images/logo.png", :width => 270
+        
+      pdf.move_down 6
+        
+      pdf.move_down 4
+      #pdf.text supplier.street, :size => 10
+      #pdf.text supplier.district, :size => 10
+      #pdf.text supplier.city, :size => 10
+      pdf.move_down 4
+
+      pdf.bounding_box([325, 725], :width => 200, :height => 80) do
+        pdf.stroke_bounds
+        pdf.move_down 15
+        pdf.font "Helvetica", :style => :bold do
+          pdf.text "R.U.C: 20424092941", :align => :center
+          pdf.text "ORDEN DE SERVICIO", :align => :center
+          pdf.text "#{@serviceorder.code}", :align => :center,
+                                 :style => :bold
+          
+        end
+      end
+      pdf.move_down 25
+      pdf 
+  end   
+
+  def build_pdf_body(pdf)
+    
+    pdf.text "__________________________________________________________________________", :size => 13, :spacing => 4
+    pdf.text " ", :size => 13, :spacing => 4
+    pdf.font "Helvetica" , :size => 8
+
+    max_rows = [client_data_headers.length, invoice_headers.length, 0].max
+      rows = []
+      (1..max_rows).each do |row|
+        rows_index = row - 1
+        rows[rows_index] = []
+        rows[rows_index] += (client_data_headers.length >= row ? client_data_headers[rows_index] : ['',''])
+        rows[rows_index] += (invoice_headers.length >= row ? invoice_headers[rows_index] : ['',''])
+      end
+
+      if rows.present?
+
+        pdf.table(rows, {
+          :position => :center,
+          :cell_style => {:border_width => 0},
+          :width => pdf.bounds.width
+        }) do
+          columns([0, 2]).font_style = :bold
+
+        end
+
+        pdf.move_down 20
+
+      end
+
+      headers = []
+      table_content = []
+
+      Serviceorder::TABLE_HEADERS.each do |header|
+        cell = pdf.make_cell(:content => header)
+        cell.background_color = "FFFFCC"
+        headers << cell
+      end
+
+      table_content << headers
+
+      nroitem=1
+
+       for  product in @serviceorder.get_services() 
+            row = []
+            row << nroitem.to_s
+            row << product.quantity.to_s
+            row << product.name
+            row << product.price.to_s
+            row << product.discount
+            row << product .total.to_s
+            table_content << row
+
+            nroitem=nroitem + 1
+        end
+
+      result = pdf.table table_content, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width
+                                        } do 
+                                          columns([0]).align=:center
+                                          columns([1]).align=:right
+                                          columns([2]).align=:center
+                                          columns([3]).align=:right
+                                          columns([4]).align=:right
+                                          columns([5]).align=:right
+                                         
+                                        end
+
+      pdf.move_down 10      
+      pdf.table invoice_summary, {
+        :position => :right,
+        :cell_style => {:border_width => 1},
+        :width => pdf.bounds.width/2
+      } do
+        columns([0]).font_style = :bold
+        columns([1]).align = :right
+        
+      end
+      pdf
+
+    end
+
+
+    def build_pdf_footer(pdf)
+
+        pdf.text ""
+        pdf.text "" 
+        pdf.text "Descripcion : #{@serviceorder.description}", :size => 8, :spacing => 4
+        pdf.text "Comentarios : #{@serviceorder.comments}", :size => 8, :spacing => 4
+        
+        
+
+        data =[[{:content=> $lcEntrega4,:colspan=>2},"" ] ,
+               [$lcEntrega1,{:content=> $lcEntrega3,:rowspan=>2}],
+               [$lcEntrega2]               
+               ]
+
+           {:border_width=>0  }.each do |property,value|
+            pdf.text " Instrucciones: "
+            pdf.table(data,:cell_style=> {property =>value})
+            pdf.move_down 20          
+           end     
+
+        pdf.bounding_box([0, 20], :width => 535, :height => 40) do
+        
+        pdf.text "_________________               _____________________         ____________________      ", :size => 13, :spacing => 4
+        pdf.text ""
+        pdf.text "                  Realizado por                                                 V.B.Jefe Compras                                            V.B.Gerencia           ", :size => 10, :spacing => 4
+
+        pdf.draw_text "Company: #{@serviceorder.company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
+
+      end
+
+      pdf
+      
+  end
+
+
+
   # Export serviceorder to PDF
   def pdf
     @serviceorder = Serviceorder.find(params[:id])
-    respond_to do |format|
-      format.html { redirect_to("/serviceorders/pdf/#{@serviceorder.id}.pdf") }
-      format.pdf { render :layout => false }
-    end
+    company =@serviceorder.company_id
+    @company =Company.find(company)
+
+    @instrucciones = @company.get_instruccions()
+
+    @lcEntrega =  @instrucciones.find(1)
+    $lcEntrega1 =  @lcEntrega.description1
+    $lcEntrega2 =  @lcEntrega.description2
+    $lcEntrega3 =  @lcEntrega.description3
+    $lcEntrega4 =  @lcEntrega.description4
+
+    Prawn::Document.generate("app/pdf_output/#{@serviceorder.id}.pdf") do |pdf|
+        pdf.font "Helvetica"
+        pdf = build_pdf_header(pdf)
+        pdf = build_pdf_body(pdf)
+        build_pdf_footer(pdf)
+        $lcFileName =  "app/pdf_output/#{@serviceorder.id}.pdf"      
+        
+    end     
+
+    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
+                
+    send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
+  
+
   end
   
   # Process an serviceorder
   def do_process
     @serviceorder = Serviceorder.find(params[:id])
-    @serviceorder[:processed] = true
+    @serviceorder[:processed] = "1"
     
     @serviceorder.process
     
     flash[:notice] = "The serviceorder order has been processed."
+    redirect_to @serviceorder
+  end
+  # Process an serviceorder
+  def do_anular
+    @serviceorder = Serviceorder.find(params[:id])
+    @serviceorder[:processed] = "2"
+    
+    @serviceorder.anular 
+    
+    flash[:notice] = "The serviceorder order has been anulado."
     redirect_to @serviceorder
   end
   
@@ -217,7 +409,8 @@ class ServiceordersController < ApplicationController
     @suppliers = @company.get_suppliers()
     @payments = @company.get_payments()    
     @servicebuys  = @company.get_servicebuys()
-    
+    @monedas  = @company.get_monedas()
+
     @ac_user = getUsername()
     @serviceorder[:user_id] = getUserId()
   end
@@ -233,9 +426,10 @@ class ServiceordersController < ApplicationController
     @ac_user = @serviceorder.user.username
     @suppliers = @company.get_suppliers()
     @servicebuys  = @company.get_servicebuys()
-
+    @payments = @company.get_payments()
+    @monedas  = @company.get_monedas()
     
-    @products_lines = @serviceorder.products_lines
+    @products_lines = @serviceorder.services_lines
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
@@ -258,6 +452,7 @@ class ServiceordersController < ApplicationController
     @suppliers = @company.get_suppliers()
     @servicebuys  = @company.get_servicebuys()
     @payments = @company.get_payments()
+    @monedas  = @company.get_monedas()
 
     @serviceorder[:subtotal] = @serviceorder.get_subtotal(items)
     
@@ -268,6 +463,9 @@ class ServiceordersController < ApplicationController
     end
     
     @serviceorder[:total] = @serviceorder[:subtotal] + @serviceorder[:tax]
+
+    @serviceorder[:detraccion] = @serviceorder[:total] * 4/100
+
     
     if(params[:serviceorder][:user_id] and params[:serviceorder][:user_id] != "")
       curr_seller = User.find(params[:serviceorder][:user_id])
@@ -314,7 +512,9 @@ class ServiceordersController < ApplicationController
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
     @suppliers = @company.get_suppliers()
+    @payments = @company.get_payments()
     @servicebuys  = @company.get_servicebuys()
+    @monedas  = @company.get_monedas()
     
     @serviceorder[:subtotal] = @serviceorder.get_subtotal(items)
     @serviceorder[:tax] = @serviceorder.get_tax(items, @serviceorder[:supplier_id])
@@ -349,9 +549,39 @@ class ServiceordersController < ApplicationController
       format.html { redirect_to("/companies/serviceorders/" + company_id.to_s) }
     end
   end
+
+  def client_data_headers
+
+    #{@serviceorder.description}
+      client_headers  = [["Proveedor  :", $lcCli ]]
+      client_headers << ["Direccion :", $lcdir1]
+      client_headers << ["Dirección :",$lcdir2]
+      client_headers << ["Distrito  :",$lcdis]
+      client_headers << ["Provincia :",$lcProv]     
+      client_headers
+  end
+
+  def invoice_headers            
+      invoice_headers  = [["Fecha de emisión : ",$lcFecha1]]
+      invoice_headers <<  ["Tipo de moneda : ", $lcMon]
+      invoice_headers <<  ["Forma de pago : ",$lcPay ]    
+      invoice_headers <<  ["Estado  : ",$lcAprobado ]    
+      invoice_headers
+  end
+
+  def invoice_summary
+      invoice_summary = []
+      invoice_summary << ["SubTotal",  ActiveSupport::NumberHelper::number_to_delimited($lcSubtotal,delimiter:",",separator:".").to_s]
+      invoice_summary << ["IGV",ActiveSupport::NumberHelper::number_to_delimited($lcIgv,delimiter:",",separator:".").to_s]
+      invoice_summary << ["Total", ActiveSupport::NumberHelper::number_to_delimited($lcTotal ,delimiter:",",separator:".").to_s]
+      invoice_summary << ["Detraccion", ActiveSupport::NumberHelper::number_to_delimited($lcDetracion,delimiter:",",separator:".")]
+      invoice_summary
+    end
+
+  
   private
   def serviceorder_params
-    params.require(:serviceorder).permit(:company_id,:location_id,:division_id,:supplier_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id)
+    params.require(:serviceorder).permit(:company_id,:location_id,:division_id,:supplier_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:detraccion,:payment_id,:moneda_id,:fecha1)
   end
 
 end

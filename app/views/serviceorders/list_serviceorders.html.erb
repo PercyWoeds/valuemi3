@@ -5,7 +5,8 @@
 
 <h1>
   <%= image_tag("invoice_48.png", :class => "vmiddle") %>
-  serviceorders
+  Orden de Servicio 
+  
   <% if @customer %>
     for customer: <%= @customer.name %>
   <% end %>
@@ -15,7 +16,7 @@
   <a href="#" onclick="toggle('filters'); return false;">Filters</a>
 </div>
 
-<div id="filters" class="filters" style="display: <%= @filters_display %>;">
+<div id="filters" class="filters" style=" display: <%= @filters_display %>;">
   <div>
     <div class="small">
       <form method="get" action="/companies/serviceorders/<%= @company.id %>">
@@ -71,7 +72,7 @@
 <br />
 
 <div class="button">
-  <%= link_to 'New serviceorder', "/serviceorders/new/#{@company.id}" %>
+  <%= link_to 'Nueva Orden servicio ', "/serviceorders/new/#{@company.id}" %>
 </div>
 
 <%= will_paginate @serviceorders %>

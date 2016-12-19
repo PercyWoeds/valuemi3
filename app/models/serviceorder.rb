@@ -1,7 +1,11 @@
 class Serviceorder < ActiveRecord::Base
   self.per_page = 20
-  
-  validates_presence_of :company_id, :supplier_id, :code, :user_id
+
+  #autoload :InvoiceLine,                    "invoice_line"
+
+ # property :lines,                           [InvoiceLine]
+
+  validates_presence_of :company_id, :supplier_id, :code, :user_id,:moneda_id
   
   belongs_to :company
   belongs_to :location
@@ -9,9 +13,19 @@ class Serviceorder < ActiveRecord::Base
   belongs_to :supplier
   belongs_to :user
   belongs_to :payment 
+  belongs_to :moneda  
   
   has_many :serviceorder_services
   
+ TABLE_HEADERS = ["ITEM",
+                     "CANTIDAD",
+                     "DESCRIPCION",
+                     "PRECIO UNITARIO",
+                     "DSCTO",
+                     "VALOR TOTAL"]
+
+
+
   def get_subtotal(items)
     subtotal = 0
     
@@ -72,6 +86,8 @@ class Serviceorder < ActiveRecord::Base
                 if(product.tax3 and product.tax3 > 0)
                   tax += total * (product.tax3 / 100)
                 end
+
+
               end
             rescue
             end
@@ -120,6 +136,7 @@ class Serviceorder < ActiveRecord::Base
   def identifier
     return "#{self.code} - #{self.supplier.name}"
   end
+
   def get_services    
 @itemservices = ServiceorderService.find_by_sql(['Select serviceorder_services.price,
 serviceorder_services.quantity,serviceorder_services.discount,serviceorder_services.total,
@@ -137,27 +154,32 @@ serviceorder_services.servicebuy_id = servicebuys.id where serviceorder_services
   
   def services_lines
     services = []
-    invoice_services = ServiceorderService.where(serviceorder_id:  self.id)
+    order_services = ServiceorderService.where(serviceorder_id:  self.id)
     
-    invoice_services.each do | ip |
+    order_services.each do | ip |
 
-      ip.product[:price] = ip.price
-      ip.product[:quantity] = ip.quantity
-      ip.product[:discount] = ip.discount
-      ip.product[:total] = ip.total
+      ip.servicebuy[:price] = ip.price
+      ip.servicebuy[:quantity] = ip.quantity
+      ip.servicebuy[:discount] = ip.discount
+      ip.servicebuy[:total] = ip.total
       
-      services.push("#{ip.product.id}|BRK|#{ip.product.quantity}|BRK|#{ip.product.price}|BRK|#{ip.product.discount}")
-    end
+      services.push("#{ip.servicebuy.id}|BRK|#{ip.servicebuy.quantity}|BRK|#{ip.servicebuy.price}|BRK|#{ip.servicebuy.discount}")
 
+    end 
 
     return services.join(",")
   end
+
   
   def get_processed
     if(self.processed == "1")
-      return "Processed"
-    else
+      return "Aprobado "
+    elsif (self.processed == "2")
+      
+      return "**Anulado **"
+    else 
       return "Not yet processed"
+        
     end
   end
   
@@ -176,26 +198,18 @@ serviceorder_services.servicebuy_id = servicebuys.id where serviceorder_services
       return "No"
     end
   end
-  
   # Process the invoice
   def process
-
-    if(self.processed == "1" or self.processed == true)
-      invoice_services = ServiceorderService.where(serviceorder_id: self.id)
-    
-      for ip in invoice_services
-        product = ip.product
-        
-        if(product.quantity)
-          if(self.return == "0")
-            ip.product.quantity -= ip.quantity
-          else
-            ip.product.quantity += ip.quantity
-          end
-          ip.product.save
-        end
-      end
-      
+    if(self.processed == "1" or self.processed == true)          
+      self.processed="1"
+      self.date_processed = Time.now
+      self.save
+    end
+  end
+  # Process the invoice
+  def anular
+    if(self.processed == "2" )          
+      self.processed="2"
       self.date_processed = Time.now
       self.save
     end
@@ -209,4 +223,6 @@ serviceorder_services.servicebuy_id = servicebuys.id where serviceorder_services
       return "red"
     end
   end
-end
+
+end 
+

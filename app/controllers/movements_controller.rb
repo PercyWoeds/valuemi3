@@ -214,7 +214,7 @@ class MovementsController < ApplicationController
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
-    
+    @suppliers = @company.get_suppliers()
     
     @ac_user = getUsername()
     @movement[:user_id] = getUserId()

@@ -40,6 +40,7 @@ def add_friend
   end
 
 end
+
   
   # Export delivery to PDF
   def pdf
@@ -53,7 +54,7 @@ end
   # Process an delivery
   def do_process
     @delivery = Delivery.find(params[:id])
-    @delivery[:processed] = true
+    @delivery[:processed] = '1'
     
     @delivery.process
     
@@ -61,11 +62,17 @@ end
     redirect_to @delivery
   end
 
-# Process an delivery
-
-
-
-  
+# Anular an delivery
+  def do_anular
+    @delivery = Delivery.find(params[:id])
+    @delivery[:processed] = '2'
+    
+    @delivery.anular 
+    
+    flash[:notice] = "The delivery order has been processed."
+    redirect_to @delivery
+  end
+ 
   # Do send delivery via email
   def do_email
     @delivery = Delivery.find(params[:id])
@@ -252,7 +259,9 @@ end
     @delivery  = Delivery.find(params[:id])
     @customer = @delivery.customer    
     @remite  =  Customer.find(@delivery.remite_id)
-    
+    @addresses  = Address.find(@delivery.address_id)
+    @addresses2 = Address.find(@delivery.address2_id)
+
   end
 
   # GET /deliverys/new
@@ -279,6 +288,8 @@ end
     @empsubs   = @company.get_empsubs()
     @unidads   = @company.get_unidads()
     @addresses  = @company.get_addresses()
+    @addresses2  = @company.get_addresses()
+
     @services  = @company.get_services()
     @servicebuys  = @company.get_servicebuys()
 
@@ -301,6 +312,7 @@ end
     @empsubs   = @company.get_empsubs()
     @unidads   = @company.get_unidads()
     @addresses  = @company.get_addresses()
+    @addresses2  = @company.get_addresses()
     @services  = @company.get_services()      
     @customers = @company.get_customers()
 
@@ -336,6 +348,7 @@ end
     @empsubs   = @company.get_empsubs()
     @unidads   = @company.get_unidads()
     @addresses  = @company.get_addresses()
+    @addresses2  = @company.get_addresses()
     @services  = @company.get_services()      
     @servicebuys  = @company.get_servicebuys()
     @customers = @company.get_customers()
@@ -352,7 +365,7 @@ end
     
     if(params[:delivery][:user_id] and params[:delivery][:user_id] != "")
       curr_seller = User.find(params[:delivery][:user_id])
-      @ac_user = curr_seller.username
+        @ac_user = curr_seller.username
     end
 
           
@@ -402,6 +415,7 @@ end
     @empsubs   = @company.get_empsubs()
     @unidads   = @company.get_unidads()
     @addresses  = @company.get_addresses()
+    @addresses2  = @company.get_addresses()
     @services  = @company.get_services()      
     @servicebuys  = @company.get_servicebuys()
     @customers = @company.get_customers()
@@ -441,9 +455,170 @@ end
     end
   end
 
+
+  def build_pdf_header(pdf)
+      pdf.font "Helvetica" , :size => 8
+     $lcCli  =  @company.name 
+     $lcdir1 = @company.address1+@company.address2+@company.city+@company.state
+
+     $lcFecha1= Date.today.strftime("%d/%m/%Y").to_s
+     $lcHora  = Time.now.to_s
+
+    max_rows = [client_data_headers.length, invoice_headers.length, 0].max
+      rows = []
+      (1..max_rows).each do |row|
+        rows_index = row - 1
+        rows[rows_index] = []
+        rows[rows_index] += (client_data_headers.length >= row ? client_data_headers[rows_index] : ['',''])
+        rows[rows_index] += (invoice_headers.length >= row ? invoice_headers[rows_index] : ['',''])
+      end
+
+      if rows.present?
+
+        pdf.table(rows, {
+          :position => :center,
+          :cell_style => {:border_width => 0},
+          :width => pdf.bounds.width
+        }) do
+          columns([0, 2]).font_style = :bold
+
+        end
+
+        pdf.move_down 10
+
+      end
+
+
+      pdf.move_down 25
+      pdf 
+  end   
+
+  def build_pdf_body(pdf)
+    
+    pdf.text "Guias Emitidas : Año "+@year.to_s , :size => 11 
+    pdf.text ""
+    pdf.font "Helvetica" , :size => 8
+
+
+
+      headers = []
+      table_content = []
+
+      Delivery::TABLE_HEADERS.each do |header|
+        cell = pdf.make_cell(:content => header)
+        cell.background_color = "FFFFCC"
+        headers << cell
+      end
+
+      table_content << headers
+
+      nroitem=1
+
+       for  product in @delivery
+
+            row = []
+            row << nroitem.to_s
+            row << product.fecha1.strftime("%d/%m/%Y")
+            row << product.get_remision
+            row << product.code
+            row << product.customer.name  
+            row << product.subtotal.to_s
+            row << product.tax.to_s
+            row << product.total.to_s
+            row << product.get_processed
+            table_content << row
+
+            nroitem=nroitem + 1
+            puts nroitem 
+        end
+
+      result = pdf.table table_content, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width
+                                        } do 
+                                          columns([0]).align=:center
+                                          columns([1]).align=:left
+                                          columns([2]).align=:left
+                                          columns([3]).align=:left
+                                          columns([4]).align=:left  
+                                          columns([5]).align=:right
+                                          columns([6]).align=:right
+                                          columns([7]).align=:right
+                                        end                                          
+      pdf.move_down 10      
+      pdf
+
+    end
+
+
+    def build_pdf_footer(pdf)
+
+        pdf.text ""
+        pdf.text "" 
+
+        pdf.bounding_box([0, 20], :width => 535, :height => 40) do
+        pdf.draw_text "Company: #{@company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
+
+      end
+
+      pdf
+      
+  end
+
+
+
+  # Export serviceorder to PDF
+  def guias1
+    @company=Company.find(params[:company_id])      
+    
+    
+    if(params[:year] and params[:year].numeric?)
+      @year = params[:year].to_i
+    else
+      @year = Time.now.year
+    end
+    
+    if(params[:month] and params[:month].numeric?)
+      @month = params[:month].to_i
+    else
+      @month = Time.now.month
+    end
+    
+    @delivery = @company.get_guias_year_month(@year,@month)  
+      
+    Prawn::Document.generate("app/pdf_output/guias1.pdf") do |pdf|
+        pdf.font "Helvetica"
+        pdf = build_pdf_header(pdf)
+        pdf = build_pdf_body(pdf)
+        build_pdf_footer(pdf)
+        $lcFileName =  "app/pdf_output/guias1.pdf"      
+        
+    end     
+
+    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
+                
+    send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
+  
+
+  end
+
+  def client_data_headers
+
+    #{@serviceorder.description}
+      client_headers  = [["Empresa  :", $lcCli ]]
+      client_headers << ["Direccion :", $lcdir1]
+      client_headers
+  end
+
+  def invoice_headers            
+      invoice_headers  = [["Fecha : ",$lcHora]]
+    
+      invoice_headers
+  end
+
   private
   def delivery_params
-    params.require(:delivery).permit(:company_id,:location_id,:division_id,:customer_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:fecha1,:fecha2,:employee_id,:empsub_id,:subcontrat_id,:truck_id,:truck2_id,:address_id,:remision,:remite_id)
+    params.require(:delivery).permit(:company_id,:location_id,:division_id,:customer_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:fecha1,:fecha2,:employee_id,:empsub_id,:subcontrat_id,:truck_id,:truck2_id,:address_id,:remision,:remite_id,:address2_id)
   end
 
 end

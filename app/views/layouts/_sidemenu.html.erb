@@ -17,20 +17,12 @@
     <%= javascript_include_tag "/plugins/bootstrap/js/bootstrap.min.js" %>
     <%= javascript_include_tag "/plugins/jquery-match-height/jquery.matchHeight-min.js" %>
     <%= javascript_include_tag "/js/main.js" %>
-
-
     <!-- Global CSS -->
     <%= stylesheet_link_tag "/plugins/bootstrap/css/bootstrap.min.css" %>
-
-
     <!-- Plugins CSS -->    
-
     <%= stylesheet_link_tag "/plugins/font-awesome/css/font-awesome.css" %>
-
-    <%= stylesheet_link_tag "/plugins/elegant_font/css/style.css" %>
-    
+    <%= stylesheet_link_tag "/plugins/elegant_font/css/style.css" %>    
     <!-- Theme CSS -->
-
     <%= stylesheet_link_tag "/css/styles.css" %>
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -94,6 +86,7 @@
                             <%= link_to "", "/companies/components/#{@company.id}", class: "link" %><span></span></a>
                         </div><!--//item-inner-->
                     </div><!--//item-->
+
                     <div class="item item-blue col-md-4 col-sm-6 col-xs-6">
                         <div class="item-inner">
                             <div class="icon-holder">
@@ -136,8 +129,41 @@
                             <a><%= link_to "", "/companies/license/#{@company.id}", class: "link" %><span></span></a>
                         </div><!--//item-inner-->
                     </div><!--//item-->
+
+
+                    <div class="item item-purple col-md-4 col-sm-6 col-xs-6">                
+                            <div class="item-inner">
+                                <div class="icon-holder">
+                                    <span aria-hidden="true" class="icon icon_genius"></span>
+                                </div><!--//icon-holder-->
+                                <h3 class="title">Cuentas por pagar </h3>
+                                <p class="intro">Cuentas por pagar proveedores </p>
+                                <a><%= link_to "", "/companies/cpagar/#{@company.id}", class: "link" %><span></span></a>
+                            </div><!--//item-inner-->
+                    </div><!--//item-->
+
+                    <div class="item item-primary col-md-4 col-sm-6 col-xs-6">
+                        <div class="item-inner">
+                            <div class="icon-holder">
+                                <span aria-hidden="true" class="icon icon_genius"></span>
+                            </div><!--//icon-holder-->
+                            <h3 class="title">Caja </h3>
+                            <p class="intro">Control de caja y liquidaciones de viaje </p>
+                            <a class="link" href="showcase.html"><span></span></a>
+                        </div><!--//item-inner-->
+                    </div><!--//item-->
+                    <div class="item item-orange col-md-4 col-sm-6 col-xs-6">
+                        <div class="item-inner">
+                            <div class="icon-holder">
+                                <span aria-hidden="true" class="icon icon_gift"></span>
+                            </div><!--//icon-holder-->
+                            <h3 class="title"> Bancos</h3>
+                            <p class="intro">Configuracion.</p>
+                            <a><%= link_to "", "/companies/license/#{@company.id}", class: "link" %><span></span></a>
+                        </div><!--//item-inner-->
+                    </div><!--//item-->
                 </div><!--//cards-->
-                
+            </div><!--//cards-->
             </div><!--//container-->
         </section><!--//cards-section-->
     </div><!--//page-wrapper-->

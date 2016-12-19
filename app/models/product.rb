@@ -7,7 +7,8 @@ class Product < ActiveRecord::Base
   
   belongs_to :company
   belongs_to :supplier
-  
+
+  has_many :items
   has_many :kits_products
   has_many :restocks
   has_many :invoice_products
@@ -89,6 +90,7 @@ end
     
     return name
   end
+  
 private
   # ensure that there are no line items referencing this product
   def ensure_not_referenced_by_any_line_item

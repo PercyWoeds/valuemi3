@@ -4,5 +4,5 @@ class Payment < ActiveRecord::Base
   belongs_to :company
   
   has_many :facturas 
-
+  has_many :serviceorders 
 end

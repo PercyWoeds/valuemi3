@@ -1,7 +1,7 @@
 <%= render 'layouts/charts' %>
 <%
 invoices_subtotal = 0
-invoices_tax = 0
+invoices_tax = 0	
 invoices_total = 0
 subtotals = []
 taxes = []
@@ -15,12 +15,13 @@ totals = []
 
 <h1>
   <%= image_tag("reports_48.png", :class => "vmiddle") %>
-  Yearly sales report - <%= @year %>
+  Reporte de Guias  - <%= @year %>
 </h1>
 
 <form method="get" action="/companies/reports/sales/<%= @company.id %>">
   <%= select_tag(:year, options_for_select(@years, @year)) %>
-  <input type="submit" value="View report" class="small_btn" />
+
+  <input type="submit" value="Ver Reporte" class="small_btn" />
   <a href="/companies/reports/sales/<%= @company.id %>" class="small_btn">Today</a>
 </form>
 

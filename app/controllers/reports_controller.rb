@@ -792,7 +792,13 @@ class ReportsController < ApplicationController
       i += 1
     end
   end
-  
+
+
+  def report_guias1
+    
+
+  end 
+
   # Reports
   def reports
     @company = Company.find(params[:company_id])

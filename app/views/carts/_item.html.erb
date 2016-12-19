@@ -1,0 +1,35 @@
+		<tr>
+      <td class="bordered_bottom bordered_right">
+          <%=  item.id   %>
+      </td>
+
+ 		  <td class="bordered_bottom bordered_right">
+          <%=  item.product_id   %>
+      </td>
+    
+      <td class="bordered_bottom bordered_right">
+          <%=  item.name   %>
+      </td>
+      <td class="bordered_bottom bordered_right">
+          <%= item.quantity %>
+      </td>
+      <td class="bordered_bottom bordered_right">
+          <%= item.qty   %>
+      </td>      
+
+      <td class="bordered_bottom bordered_right">      
+
+        <%= form_for :item, :url => items_update_path( id: item.id) do |f| %>
+
+                <%= f.hidden_field :id , :id => item.id %>
+
+                <div class="field">
+                    <%= f.number_field :pending, :value => item.pending  %>
+                    <%= submit_tag "Save" %>
+                </div>
+            <% end %>
+
+        </td>      
+
+
+      </tr>      

@@ -19,6 +19,11 @@
 			<%= render @customer.addresses %>
 			<div>
 			<%= link_to "Agregar direcciones  ", new_customer_address_path(@customer),class: "button" %>	
+			<%= form_tag import2_customers_path, multipart: true do %>
+				  <%= file_field_tag :file %>
+				  <%= submit_tag "Importar direcciones " %>
+			<% end %>
+
 			</div>
 		</div>
 

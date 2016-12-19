@@ -17,6 +17,20 @@ self.per_page = 20
   has_many :delivery_services
   has_many :declarationdeliveries
 
+
+  TABLE_HEADERS = ["ITEM",
+                     "Fecha",
+                     "Tipo",
+                     "Número",
+                     "CLIENTE",
+                     "subtotal",
+                     "IGV.",
+                     "TOTAL",
+                     "ESTADO"]
+
+
+
+
 def self.search(params)        
     customers = Factura.where("name  LIKE ?","%#{params[:search]}%") if params[:search].present?
     customers
@@ -160,6 +174,8 @@ end
 
   
 
+  
+
   def get_services   
     @itemservices = DeliveryService.find_by_sql(['Select delivery_services.price,delivery_services.quantity,delivery_services.discount,
 delivery_services.total,delivery_services.unidad_id,delivery_services.peso,services.name  
@@ -199,12 +215,25 @@ where delivery_services.delivery_id = ?', self.id ])
   
   def get_processed
     if(self.processed == "1")
-      return "Processed"
-    else
-      return "Not yet processed"
+      return "Aprobado "
+    elsif (self.processed == "2")
+      
+      return "**Anulado **"
+    else 
+      return "No Aprobado"
+        
     end
   end
   
+  def get_remision
+    if(self.remision == "1")
+      return "GR"
+    
+    else 
+      return "GT"
+        
+    end
+  end
   def get_processed_short
     if(self.processed == "1")
       return "Yes"
@@ -231,22 +260,16 @@ where delivery_services.delivery_id = ?', self.id ])
   
   def process
 
-    if(self.processed == "1" or self.processed == true)
-      delivery_services = DeliveryService.where(delivery_id: self.id)
-    
-      for ip in delivery_services
-        service = ip.service
-        
-        if(service.quantity)
-          if(self.return == "0")
-            ip.service.quantity -= ip.quantity
-          else
-            ip.service.quantity += ip.quantity
-          end
-          ip.service.save
-        end
-      end
-      
+    if(self.processed == "1" or self.processed == true)            
+      self.date_processed = Time.now
+      self.save
+    end
+  end
+
+
+  def anular
+
+    if(self.processed == "2")            
       self.date_processed = Time.now
       self.save
     end

@@ -31,6 +31,23 @@ class Company < ActiveRecord::Base
       end
     end
   end
+  def get_instruccions()
+     instruccions = Instruccion.all      
+    return instruccions
+  end
+
+  def get_documents()
+     documents = Document.where(company_id: self.id)
+       
+    return documents
+  end
+
+  def get_monedas()
+     monedas = Moneda.where(company_id: self.id).order(:description)
+       
+    return monedas
+  end
+  
   
   def get_suppliers()
      suppliers = Supplier.where(company_id: self.id).order(:name)
@@ -51,11 +68,7 @@ class Company < ActiveRecord::Base
     return divisions
   end
   def get_payments()
-    payments = Payment.order("descrip ASC")
-    payments = payments.map {|s| [s.descrip, s.id]}
-    payments_f = [["", nil]]
-    payments_f += payments
-    payments = payments_f
+    payments = Payment.where(company_id:  self.id).order("descrip ASC")    
     
     return payments
   end
@@ -250,7 +263,16 @@ class Company < ActiveRecord::Base
 
     return users
   end
-  
+  def get_guias_year(year)
+    @delivery = Delivery.where(["fecha1>= ? AND fecha1 <= ? and company_id  = ? ", "#{year}-01-01 00:00:00", "#{year}-12-31 23:59:59", self.id])   
+    return @delivery
+  end
+
+ def get_guias_year_month(year,month)
+    @delivery = Delivery.where(["company_id = ? AND fecha1 >= ? AND fecha1 <= ?", self.id, "#{year}-#{month}-01 00:00:00", "#{year}-#{month}-31 23:59:59"])
+    return @delivery
+ end 
+ 
   # Return value for user
   def get_invoices_value_user(user, year, value = "total")
     invoices = Invoice.where(["invoices.return = '0' AND company_id = ? AND user_id = ? AND date_processed >= ? AND date_processed <= ?", self.id, user.id, "#{year}-01-01 00:00:00", "#{year}-12-31 23:59:59"])
