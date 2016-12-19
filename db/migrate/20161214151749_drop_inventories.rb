@@ -1,7 +1,7 @@
 class DropInventories < ActiveRecord::Migration
  
   def up
-    drop_table :inventory
+    drop_table :inventories
 
   end
 end
