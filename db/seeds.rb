@@ -42,9 +42,9 @@
 @v.save
 
 @v = Moneda.new
-@v.description: "SOLES"
-@v.symbol: "S/."
-@v.company_id: 1
+@v.description= "SOLES"
+@v.symbol= "S/."
+@v.company_id= 1
 @v.save
 
 @c =Company.new
@@ -81,14 +81,14 @@
  @d.company_id= 1 
  @d.location_id= 1 
  @d.name= "ADMINISTRACION" 
- @d.description: "ADMINISTRACION"
+ @d.description= "ADMINISTRACION"
 @d.save
 
 @d =Division.new
  @d.company_id= 1 
  @d.location_id= 1 
  @d.name= "COMPRAS" 
- @d.description: "COMPRAS"
+ @d.description= "COMPRAS"
 @d.save
 
 
@@ -96,7 +96,7 @@
  @d.company_id= 1 
  @d.location_id= 1 
  @d.name= "OPERACIONES" 
- @d.description: "OPERACIONES"
+ @d.description= "OPERACIONES"
 @d.save
 
 
