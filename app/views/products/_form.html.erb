@@ -40,6 +40,22 @@
   </div>
   
   <div class="field">
+    <%= f.label :marca_id %><br />
+    <%= f.select :marca_id,options_from_collection_for_select(@marcas,'id','descrip') %>
+    <div class="small">
+      Marca del producto.
+    </div>
+  </div>
+
+  <div class="field">
+    <%= f.label :modelo_id %><br />
+    <%= f.select :modelo_id,options_from_collection_for_select(@modelos,'id','descrip') %>
+    <div class="small">
+      Modelo del producto.
+    </div>
+  </div>
+  
+  <div class="field">
     <%= f.label :cost, "Cost*", :class => "bold" %><br />
     <%= f.text_field :cost %>
     <div class="small">

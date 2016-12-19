@@ -69,6 +69,8 @@
 @l.country= "Peru"
 @l.save
 @l.company_id= 1
+
+@l =Location.new
 @l.name="AREQUIPA"
 @l.address1= "AREQUIPA"
 @l.address2= "AREQUIPA"

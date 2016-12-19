@@ -36,6 +36,9 @@
     collection { get :search   }
   end 
   
+  resources :suppliers do
+    collection { get :import  }
+  end 
 
   resources :orders do 
     collection { post :payment  }
