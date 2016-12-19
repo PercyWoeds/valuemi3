@@ -29,16 +29,17 @@
     <div class="field">
       <%= f.label :document, "Document*", :class => "bold" %><br />
       <%= f.text_field :document, :onclick => "$(this).select();" %>
+
     </div>
   
     <div class="field">
       <%= f.label :location_id %><br />
-      <%= f.select :location_id, @locations %>
+      <%= f.select :location_id, options_from_collection_for_select(@locations,'id','name') %>
     </div>
   
     <div class="field">
       <%= f.label :division_id %><br />
-      <%= f.select :division_id, @divisions %>
+      <%= f.select :division_id, options_from_collection_for_select(@divisions,'id','name') %>
     </div>
   
     <%= hr() %>
@@ -149,7 +150,7 @@
 
     <div>
       <strong>Total:</strong><br />
-      <span id="ac_item_total">$0.00</span>
+      <span id="ac_item_total">0.00</span>
     </div>
 
     
