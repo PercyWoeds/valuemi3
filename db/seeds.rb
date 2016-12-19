@@ -100,3 +100,24 @@
 @d.save
 
 
+@u=User.new
+@u.username= "percywoeds"
+@u.level= "user"
+@u.first_name= "percy"
+@u.last_name= "woeds",
+@u.email= "percywoeds@gmail.com"
+
+@u.save
+
+@c=CompanyUser.new
+@c.company_id= 1
+@c.user_id= 1
+@c.save
+
+
+
+
+
+
+
+
