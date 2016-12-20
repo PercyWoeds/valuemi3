@@ -31,6 +31,15 @@ class Company < ActiveRecord::Base
       end
     end
   end
+  def get_marcas()
+     marcas = Marca.all      
+    return marcas
+  end
+  def get_modelos()
+     modelos = Modelo.all      
+    return modelos
+  end
+
   def get_instruccions()
      instruccions = Instruccion.all      
     return instruccions

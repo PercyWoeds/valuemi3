@@ -76,7 +76,9 @@ class ProductsController < ApplicationController
     @product[:company_id] = params[:company_id]
     @company = Company.find(params[:company_id])
     @suppliers = @company.get_suppliers()
-    
+    @marcas = @company.get_marcas()
+    @modelos = @company.get_modelos()
+
     @product[:tax1_name] = @company.get_last_tax_name(1)
     @product[:tax2_name] = @company.get_last_tax_name(2)
     @product[:tax2_name] = @company.get_last_tax_name(3)
@@ -121,6 +123,8 @@ class ProductsController < ApplicationController
     @product = Product.new(products_params)
     @company = Company.find(params[:product][:company_id])
     @suppliers = @company.get_suppliers()
+    @marcas = @company.get_marcas()
+    @modelos = @company.get_modelos()
     
     if(@product[:tax1] == nil)
       @product[:tax1] = 0
@@ -160,7 +164,9 @@ class ProductsController < ApplicationController
     @product = Product.find(params[:id])
     @company = @product.company
     @suppliers = @company.get_suppliers()
-
+    @marcas = @company.get_marcas()
+    @modelos = @company.get_modelos()
+    
     respond_to do |format|
       if @product.update_attributes(products_params)
         format.html { redirect_to(@product, :notice => 'Product was successfully updated.') }
