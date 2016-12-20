@@ -108,10 +108,13 @@ class Serviceorder < ActiveRecord::Base
   end
   
   def add_services(items)
+
     for item in items
       if(item and item != "")
         parts = item.split("|BRK|")
-        
+
+        puts parts   
+
         id = parts[0]
         quantity = parts[1]
         price = parts[2]
@@ -122,11 +125,18 @@ class Serviceorder < ActiveRecord::Base
         
         begin
           product = Servicebuy.find(id.to_i)
+          puts "add Services "
+          puts product.id
+          puts self.id
           
+          puts id
+          puts quantity
+          puts  price
+          puts discount
+          puts total 
+
           new_invoice_product = ServiceorderService.new(:serviceorder_id => self.id, :servicebuy_id => product.id, :price => price.to_f, :quantity => quantity.to_i, :discount => discount.to_f, :total => total.to_f)
           new_invoice_product.save
-
-        rescue
           
         end
       end

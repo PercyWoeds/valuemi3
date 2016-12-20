@@ -107,13 +107,12 @@ class Purchaseorder < ActiveRecord::Base
         total -= total * (discount.to_f / 100)
 
         puts parts
+        
 
         begin
           product = Product.find(id.to_i)          
           new_purchaseorder_detail = PurchaseorderDetail.new(:purchaseorder_id => self.id, :product_id => product.id, :price => price.to_f, :quantity => quantity.to_i, :discount => discount.to_f, :total => total.to_f)
           new_purchaseorder_detail.save
-
-        rescue
           
         end
       end

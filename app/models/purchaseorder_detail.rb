@@ -10,11 +10,12 @@ class PurchaseorderDetail < ActiveRecord::Base
   private
 
   def calcular_transito
-
+    if self.pending == nil
+      self.pending=0
+    end     
 		self.quantity_transit  = self.quantity - self.pending
 		
   end 
-
 
     private
   def purchaseorderdetail_params
