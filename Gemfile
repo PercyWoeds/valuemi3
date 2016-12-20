@@ -17,6 +17,7 @@ gem "prawn"
 gem 'prawnto'
 gem 'prawn-table'
 gem 'devise', '~> 4.1', '>= 4.1.1'
+gem 'thin'
 
 gem 'protected_attributes'
  

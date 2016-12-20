@@ -134,7 +134,7 @@ class Serviceorder < ActiveRecord::Base
           puts  price
           puts discount
           puts total 
-
+          
           new_invoice_product = ServiceorderService.new(:serviceorder_id => self.id, :servicebuy_id => product.id, :price => price.to_f, :quantity => quantity.to_i, :discount => discount.to_f, :total => total.to_f)
           new_invoice_product.save
           
@@ -150,7 +150,7 @@ class Serviceorder < ActiveRecord::Base
   def get_services    
 @itemservices = ServiceorderService.find_by_sql(['Select serviceorder_services.price,
 serviceorder_services.quantity,serviceorder_services.discount,serviceorder_services.total,
-servicebuys.name  from serviceorder_services INNER JOIN servicebuys ON
+servicebuys.name,servicebuys.id  from serviceorder_services INNER JOIN servicebuys ON
 serviceorder_services.servicebuy_id = servicebuys.id where serviceorder_services.serviceorder_id = ?', self.id ])
     puts self.id
 
@@ -184,10 +184,15 @@ serviceorder_services.servicebuy_id = servicebuys.id where serviceorder_services
   def get_processed
     if(self.processed == "1")
       return "Aprobado "
+
     elsif (self.processed == "2")
       
       return "**Anulado **"
-    else 
+
+    elsif (self.processed == "3")
+
+      return "-Cerrado --"  
+    else   
       return "Not yet processed"
         
     end
@@ -196,6 +201,8 @@ serviceorder_services.servicebuy_id = servicebuys.id where serviceorder_services
   def get_processed_short
     if(self.processed == "1")
       return "Yes"
+    elsif (self.processed == "3")
+       return "Yes"
     else
       return "No"
     end
@@ -216,6 +223,14 @@ serviceorder_services.servicebuy_id = servicebuys.id where serviceorder_services
       self.save
     end
   end
+  def cerrar
+    if(self.processed == "3" )          
+      self.processed="3"
+      self.date_processed = Time.now
+      self.save
+    end
+  end
+  
   # Process the invoice
   def anular
     if(self.processed == "2" )          

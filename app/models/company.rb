@@ -263,16 +263,42 @@ class Company < ActiveRecord::Base
 
     return users
   end
-  def get_guias_year(year)
+ def get_guias_year(year)
     @delivery = Delivery.where(["fecha1>= ? AND fecha1 <= ? and company_id  = ? ", "#{year}-01-01 00:00:00", "#{year}-12-31 23:59:59", self.id])   
     return @delivery
-  end
+ end
 
  def get_guias_year_month(year,month)
     @delivery = Delivery.where(["company_id = ? AND fecha1 >= ? AND fecha1 <= ?", self.id, "#{year}-#{month}-01 00:00:00", "#{year}-#{month}-31 23:59:59"])
     return @delivery
  end 
+
+ def get_services_year_month(year,month)
+    @serviceorder = Serviceorder.where(["company_id = ? AND fecha1 >= ? AND fecha1 <= ?", self.id, "#{year}-#{month}-01 00:00:00", "#{year}-#{month}-31 23:59:59"])
+    return @serviceorder
+ end 
  
+ # Return value for user
+ def get_services_year_month_value( year,month, value = "total")
+  
+    services = Serviceorder.where([" company_id = ?  AND fecha1 >= ? AND fecha1 <= ?", self.id,"#{year}-#{month}-01 00:00:00", "#{year}-#{month}-31 23:59:59"]).order("id desc")
+    ret = 0
+    
+    for service in services
+      puts service.code 
+
+      if(value == "subtotal")
+        ret += service.subtotal
+      elsif(value == "tax")
+        ret += service.tax
+      else
+        ret += service.total
+      end
+    end
+    
+    return ret
+  end
+  
   # Return value for user
   def get_invoices_value_user(user, year, value = "total")
     invoices = Invoice.where(["invoices.return = '0' AND company_id = ? AND user_id = ? AND date_processed >= ? AND date_processed <= ?", self.id, user.id, "#{year}-01-01 00:00:00", "#{year}-12-31 23:59:59"])

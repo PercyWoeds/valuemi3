@@ -3,22 +3,25 @@
     <thead>
       <tr>
         <th class="bordered_right bordered_bottom" style="width: 100px;">
-         Orden
+          Orden Servicio
         </th>
         <th class="bordered_right bordered_bottom" style="width: 350px;">
-          Proveedor 
+          supplier
         </th>
+        <th class="bordered_right bordered_bottom">
+          Moneda
+        </th>      
         <th class="bordered_right bordered_bottom">
           Total
         </th>
         <th class="bordered_right bordered_bottom">
-          Fecha
+          Date
         </th>
         <th class="bordered_right bordered_bottom">
           Aprobado 
         </th>
         <th class="bordered_right bordered_bottom" colspan="3">
-          Opciones 
+          Options
         </th>
       </tr>
     </thead>
@@ -30,8 +33,12 @@
             <%= link_to serviceorder.code, serviceorder, :title => "Ir a factura" %>
           </td>
           <td class="bordered_right bordered_bottom">
-            <%= link_to serviceorder.supplier.name, serviceorder.supplier, :title => "Go to customer" %>
+            <%= link_to serviceorder.supplier.name, serviceorder.supplier, :title => "Go to supplier" %>
           </td>
+          <td class="bordered_right bordered_bottom right">
+            <%= serviceorder.moneda.symbol %>
+          </td>
+          
           <td class="bordered_right bordered_bottom right">
             <%= money(serviceorder.total) %>
           </td>
@@ -42,32 +49,16 @@
             <%= serviceorder.get_processed_short %>
           </td>
           <td class="bordered_right bordered_bottom">
-            <%= link_to "View", serviceorder %>
-          </td>
-          <td class="bordered_right bordered_bottom">  
-
-          
-          <% if serviceorder.processed =="" || serviceorder.processed == nil %>
-          <%= link_to "Edit", edit_serviceorder_path(serviceorder) %>                      
-          <%= link_to 'Eliminar', serviceorder, :confirm => 'Are you sure?', :method => :delete 
-          %>
             
-          <% elsif serviceorder.processed =="2"%>  
-          <%= "** Anulado **" %>
-          <%= link_to 'Eliminar', serviceorder, :confirm => 'Are you sure?', :method => :delete %>
-          <% elsif serviceorder.processed =="3"%>  
-          <%= "** Cerrado **" %>
-          
-            
-          <% end %> 
-
+            <%= link_to 'Ver',"/serviceorders/receive/#{serviceorder.id}" %>
           </td>
+          
         </tr>
       <% end %>
     </tbody>
   </table>
 <% else %>
   <p class="error">
-    We couldn't find any serviceorders.
+    We couldn't <figcaption></figcaption>d any serviceorders.
   </p>
 <% end %>

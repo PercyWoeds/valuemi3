@@ -130,6 +130,10 @@
   match 'companies/reports/sellers/:company_id' => 'reports#report_sellers', via: [:get, :post]
   match 'companies/reports/monthly_sales/:company_id' => 'reports#report_monthly_sales', via: [:get, :post]
 
+  match 'companies/reports_guias/:company_id' => 'reports#reports_guias', via: [:get, :post]
+  match 'companies/reports_compras/:company_id' => 'reports#reports_compras', via: [:get, :post]
+  match 'companies/reports/rpt_serviceorder_all/:company_id' => 'reports#rpt_serviceorder_all', via: [:get, :post]
+  
   match 'companies/reports/sales/:company_id' => 'reports#report_sales', via: [:get, :post]
   match 'companies/reports/:company_id' => 'reports#reports', via: [:get, :post]
 
@@ -201,12 +205,17 @@
   match 'serviceorders/ac_user/:company_id' => 'serviceorders#ac_user', via: [:get, :post]
   match 'serviceorders/ac_customers/:company_id' => 'serviceorders#ac_customers', via: [:get, :post]
   match 'serviceorders/new/:company_id' => 'serviceorders#new', via: [:get, :post]
-  
+  match 'serviceorders/do_grabar_ins/:id' => 'serviceorders#do_grabar_ins', via: [:get, :post]
+
   match 'serviceorders/do_email/:id' => 'serviceorders#do_email', via: [:get, :post]
   match 'serviceorders/do_process/:id' => 'serviceorders#do_process', via: [:get, :post]
   match 'serviceorders/do_anular/:id' => 'serviceorders#do_anular', via: [:get, :post]
   match 'serviceorders/email/:id' => 'serviceorders#email', via: [:get, :post]
   match 'serviceorders/pdf/:id' => 'serviceorders#pdf', via: [:get, :post]
+  match 'serviceorders/rpt_serviceorder_all_pdf/:id' => 'serviceorders#rpt_serviceorder_all_pdf', via: [:get, :post]
+  match 'serviceorders/receive/:id' => 'serviceorders#receive', via: [:get, :post]
+  
+  match 'companies/serviceorders/receive_orderservice/:company_id' => 'serviceorders#list_receive_serviceorders', via: [:get, :post]  
   match 'companies/serviceorders/:company_id' => 'serviceorders#list_serviceorders', via: [:get, :post]
   resources :serviceorders
 
@@ -241,6 +250,8 @@
   match 'receiveorders/email/:id' => 'receiveorders#email', via: [:get, :post]
   match 'receiveorders/pdf/:id' => 'receiveorders#pdf', via: [:get, :post]
   match 'companies/receiveorders/:company_id' => 'receiveorders#list_receiveorders', via: [:get, :post]
+  
+
   resources :receiveorders
   
 

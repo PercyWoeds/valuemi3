@@ -28,9 +28,17 @@
     <%= image_tag("invoice_32.png", :class => "vmiddle") %>
     <%= link_to "Facturas", "/companies/purchases/#{@company.id}" %>
   </h3>
-
   <p>
      Agregar, editar or eliminar facturas para tu negocio.
+  </p>
+    <%= hr() %>  
+
+  <h3>
+    <%= image_tag("invoice_32.png", :class => "vmiddle") %>
+    <%= link_to "Recepcion Orden de servicio ", "/companies/serviceorders/receive_orderservice/#{@company.id}" %>
+  </h3>
+  <p>
+     Registrar facturas de las ordenes de servicio 
   </p>
   
   <%= hr() %>
@@ -151,7 +159,7 @@
   
   <h3>
     <%= image_tag("reports_32.png", :class => "vmiddle") %>
-    <%= link_to "Reportes", "/companies/reports/#{@company.id}" %>
+    <%= link_to "Reportes", "/companies/reports_compras/#{@company.id}" %>
   </h3>
 
   <p>

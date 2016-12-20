@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161220153417) do
+ActiveRecord::Schema.define(version: 20161220204702) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "name"
@@ -898,6 +898,11 @@ ActiveRecord::Schema.define(version: 20161220153417) do
     t.string   "moneda"
     t.integer  "moneda_id"
     t.datetime "date_processed"
+    t.integer  "document_id"
+    t.string   "document"
+    t.datetime "fecha2"
+    t.datetime "fecha3"
+    t.datetime "fecha4"
   end
 
   create_table "services", force: :cascade do |t|

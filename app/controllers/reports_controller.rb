@@ -695,6 +695,7 @@ class ReportsController < ApplicationController
   
   # Report sales monthly
   def report_monthly_sales
+    
     @company = Company.find(params[:company_id])
     
     if(params[:year] and params[:year].numeric?)
@@ -793,11 +794,147 @@ class ReportsController < ApplicationController
     end
   end
 
-
-  def report_guias1
+  def reports_guias
+    @company = Company.find(params[:company_id])
     
+    if(params[:year] and params[:year].numeric?)
+      @year = params[:year].to_i
+    else
+      @year = Time.now.year
+    end
+    
+    @pagetitle = "Yearly sales report - #{@year} - #{@company.name}"
+    
+    curr_year = Time.now.year
+    c_year = curr_year
+    
+    @years = []
+    @months_cats = []
+    arr_meses = monthsArr
+    
+    while(c_year > Time.now.year - 5)
+      @years.push(c_year)
+      c_year -= 1
+    end
+    
+    @dates = []
+    
+    i = 1
+    
+    while(i <= 12)
+      if(i < 10)
+        i_s = "0#{i}"
+      else
+        i_s = i.to_s
+      end
+      
+      @dates.push("#{@year}-#{i_s}-01")
+      @months_cats.push("'#{arr_meses[i - 1][0]}'")
+      
+      i += 1
+    end
+  end
 
-  end 
+  def rpt_serviceorder_all
+    @company = Company.find(params[:company_id])
+    
+    if(params[:year] and params[:year].numeric?)
+      @year = params[:year].to_i
+    else
+      @year = Time.now.year
+    end
+    
+    if(params[:month] and params[:month].numeric?)
+      @month = params[:month].to_i
+    else
+      @month = Time.now.month
+    end
+    
+    if(@month < 10)
+      month_s = "0#{@month}"
+    else
+      month_s = @month.to_s
+    end
+    
+    curr_year = Time.now.year
+    c_year = curr_year
+    c_month = 1
+    
+    @years = []
+    @months = monthsArr
+    @month_name = @months[@month - 1][0]
+    
+    @pagetitle = "Monthly sales report - #{@month_name} #{@year} - #{@company.name}"
+    
+    while(c_year > Time.now.year - 5)
+      @years.push(c_year)
+      c_year -= 1
+    end
+    
+    @dates = []
+    
+    last_day_of_month = last_day_of_month(@year, @month)
+    @date_cats = []
+    
+    i = 1
+    
+    while(i <= last_day_of_month)
+      if(i < 10)
+        i_s = "0#{i}"
+      else
+        i_s = i.to_s
+      end
+      
+      @dates.push("#{@year}-#{month_s}-#{i_s}")
+      @date_cats.push("'" + doDate(Time.parse("#{@year}-#{@month}-#{i_s}"), 5) + "'")
+      
+      i += 1
+    end
+  end
+
+
+  def reports_compras
+    @company = Company.find(params[:company_id])
+    
+    if(params[:year] and params[:year].numeric?)
+      @year = params[:year].to_i
+    else
+      @year = Time.now.year
+    end
+    
+    @pagetitle = "Yearly sales report - #{@year} - #{@company.name}"
+    
+    curr_year = Time.now.year
+    c_year = curr_year
+    
+    @years = []
+    @months_cats = []
+    arr_meses = monthsArr
+    
+    while(c_year > Time.now.year - 5)
+      @years.push(c_year)
+      c_year -= 1
+    end
+    
+    @dates = []
+    
+    i = 1
+    
+    while(i <= 12)
+      if(i < 10)
+        i_s = "0#{i}"
+      else
+        i_s = i.to_s
+      end
+      
+      @dates.push("#{@year}-#{i_s}-01")
+      @months_cats.push("'#{arr_meses[i - 1][0]}'")
+      
+      i += 1
+    end
+  end
+
+ 
 
   # Reports
   def reports

@@ -1,0 +1,225 @@
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @serviceorder.company.name, @serviceorder.company %> &raquo;
+  <%= link_to "serviceorders", "/companies/serviceorders/#{@serviceorder.company.id}" %>
+</div>
+
+<h1>
+  <%= image_tag("invoice_48.png", :class => "vmiddle") %>
+  <%= @serviceorder.identifier %>
+</h1>
+
+<%= hr() %>
+
+<% if @serviceorder.location %>
+  <p>
+    <b>Location:</b>
+    <%= link_to @serviceorder.location.name, @serviceorder.location %>
+  </p>
+<% end %>
+
+
+<% if @serviceorder.division %>
+  <p>
+    <b>Division:</b>
+    <%= link_to @serviceorder.division.name, @serviceorder.division %>
+  </p>
+<% end %>
+
+
+<p>
+  <b>Code:</b>
+  <%= @serviceorder.code %>
+</p>
+
+<%= hr() %>
+
+<%= form_for(@serviceorder)  do |f| %>
+
+  <div class="field">
+  <strong>Documento:</strong><br />
+    <%= select_tag "id_document", options_from_collection_for_select(@documents,'id','description') %>
+  </div>
+
+
+  <div class="field">
+    <%= f.label :document , "Documento *", :class => "bold" %><br />
+    <%= f.text_field :document %>
+  </div>
+
+  <div class="field">    
+    <%= f.label :fecha3, "Fecha Emision*", :class => "bold" %><br />
+    <%= f.date_field :fecha3, value: Time.now.strftime("%d/%m/%Y") %>
+   </div>
+    
+  <div class="field">
+    <%= f.label :fecha4, "Fecha Vmto*", :class => "bold" %><br />
+    <%= f.date_field :fecha4, value: Time.now.strftime("%d/%m/%Y") %>
+  </div>
+
+  
+<%end %>    
+<%= hr() %>
+
+<h3>
+  Informacion proveedor 
+</h3>
+
+<p>
+  <b>Name:</b>
+  <%= link_to @supplier.name, @supplier %>
+</p>
+
+<%= render "suppliers/show" %>
+
+<%= hr() %>
+
+<h3>
+  Detalle
+</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>
+        Codigo
+      </th>
+    
+      <th>
+        Producto
+      </th>
+      <th>
+        Precio
+      </th>
+      
+      <th>
+        Cantidad
+      </th>
+      <th>
+        Dscto.
+      </th>
+
+      <th>
+        Total
+      </th>
+
+    </tr>
+  </thead>
+  <tbody>
+
+<ul>
+
+<% for item in @serviceorder.get_services() %>
+
+          <tr>
+          <td class="small bordered_bottom bordered_right">
+            <%= item.id %>
+          </td>
+          
+          <td class="small bordered_bottom bordered_right" style="width: 220px;">
+            <%= item.name %></a>            
+          </td>
+
+          <td class="small bordered_bottom bordered_right">
+            <%= money(item.price) %>
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= item.quantity %>
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= money(item.discount) %>%
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= money(item.total) %>
+          </td>
+        </tr>
+
+<% end %> 
+
+<tr>
+      <td colspan="4" class="bordered_bottom bordered_right bold">
+        Subtotal:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@serviceorder.subtotal) %>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4" class="bordered_bottom bordered_right bold">
+        Tax:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@serviceorder.tax) %>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4" class="bordered_bottom bordered_right bold">
+        Total:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@serviceorder.total) %>
+      </td>
+    </tr>
+
+</ul>
+   
+    <tr>
+      <td colspan="5" class="bordered_bottom bordered_right">
+        &nbsp;
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+<br />
+
+<%= hr() %>
+
+<% if @serviceorder.description != "" %>
+  <div>
+    <b>Description:</b>
+    <br />
+    <br />
+    <%= format_text(@serviceorder.description) %>
+  </div>
+  <%= hr() %>
+<% end %>
+
+<% if @serviceorder.comments != "" %>
+  <div>
+    <b>Comments:</b>
+    <br />
+    <br />
+    <%= format_text(@serviceorder.comments) %>
+  </div>
+  <%= hr() %>
+<% end %>
+
+<br />
+
+<div>
+  <strong><%= @serviceorder.get_processed %></strong>
+  <% if @serviceorder.processed == "1" and @serviceorder.date_processed %>
+    <%= doDate(@serviceorder.date_processed) %>
+  <% end %>
+</div>
+
+<p>
+  <b>Return:</b>
+  <%= @serviceorder.get_return %>
+</p>
+
+<p>
+  <strong>Seller:</strong>
+  <%= link_to @serviceorder.user.username, @serviceorder.user %>
+</p>
+
+<%= hr() %>
+
+<div class="button">
+  <%= link_to 'Grabar', "/serviceorders/do_grabar_ins/#{@serviceorder.id}" %>
+  <%= link_to 'Cerrar', "/serviceorders/do_cerrar/#{@serviceorder.id}" %>
+  <%= link_to 'Regresar', "/companies/serviceorders/receive_orderservice/#{@serviceorder.company.id}" %>
+
+</div>
+    
