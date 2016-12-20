@@ -14,6 +14,16 @@ class Purchaseorder < ActiveRecord::Base
   has_many :purchaseorder_details
 
 
+  TABLE_HEADERS = ["ITEM",
+                     "CANTIDAD",
+                     "DESCRIPCION",
+                     "PRECIO UNITARIO",
+                     "DSCTO",
+                     "VALOR TOTAL"]
+
+
+
+
   def get_subtotal(items)
     subtotal = 0
     
@@ -107,7 +117,7 @@ class Purchaseorder < ActiveRecord::Base
         total -= total * (discount.to_f / 100)
 
         puts parts
-        
+          
 
         begin
           product = Product.find(id.to_i)          

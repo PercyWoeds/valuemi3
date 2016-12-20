@@ -8,6 +8,7 @@ class Purchase < ActiveRecord::Base
   belongs_to :division
   belongs_to :supplier 
   belongs_to :user  
+  
   has_many :purchase_details
   
   def get_subtotal(items)

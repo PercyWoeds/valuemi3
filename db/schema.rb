@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161219212619) do
+ActiveRecord::Schema.define(version: 20161220153417) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "name"
@@ -783,6 +783,7 @@ ActiveRecord::Schema.define(version: 20161219212619) do
     t.string   "received"
     t.datetime "date_processed"
     t.integer  "moneda_id"
+    t.datetime "fecha2"
   end
 
   create_table "purchases", force: :cascade do |t|
