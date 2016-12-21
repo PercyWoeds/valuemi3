@@ -57,7 +57,6 @@ def self.matches(field_name, param)
     where("lower(#{field_name}) like ?", "%#{param}%")
 end
 
-
   def correlativo
         voided= Voided.new()
         voided.numero=Voided.find(1).numero.to_i + 1

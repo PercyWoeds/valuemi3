@@ -7,6 +7,7 @@
 
     <div class="field">
     
+
       <label for="ac_supplier" class="bold">Proveedor*</label><br />
       <input type="text" name="ac_supplier" id="ac_supplier" value="<% if @ac_supplier %><%= @ac_supplier %><% end %>" />
       
@@ -25,12 +26,37 @@
         <span id="selected supplier"><% if @ac_supplier %><%= @ac_supplier %><% else %><!-- i --><% end %></span>
       </div>
     </div>
-    
     <div class="field">
-      <%= f.label :document, "Document*", :class => "bold" %><br />
-      <%= f.text_field :document, :onclick => "$(this).select();" %>
+      <%= f.label :document_id,"Documento" %><br />
+      <%= f.select :document_id, options_from_collection_for_select(@documents,'id','description')%>
+    </div>
+      
+    <div class="field">
+      <%= f.label :documento, "Nro DOcumento *", :class => "bold" %><br />
+      <%= f.text_field :documento %>
 
     </div>
+    <div class="field">
+      <%= f.label :date1, "Fecha Emision*", :class => "bold" %><br />
+      <%= f.date_field :date1, value: Time.now.strftime("%d/%m/%Y") %>
+    </div>
+
+    <div class="field">
+      <%= f.label :date2, "Fecha Entrega*", :class => "bold" %><br />
+      <%= f.date_field :date2, value: Time.now.strftime("%d/%m/%Y") %>
+    </div>
+
+
+    <div class="field">
+      <%= f.label :payment_id,"Forma de Pago " %><br />
+      <%= f.select :payment_id, options_from_collection_for_select(@payments,'id','descrip')%>
+    </div>
+  
+    <div class="field">
+      <%= f.label :moneda_id ,"  "%><br />
+      <%= f.select :moneda_id, options_from_collection_for_select(@monedas,'id','description') %>
+    </div>
+    
   
     <div class="field">
       <%= f.label :location_id %><br />
@@ -106,6 +132,7 @@
   </h3>
   
   <form method="get" action="/products" onsubmit="addItemToPurchase(); return false;">
+
     <input type="hidden" name="ac_item_id" id="ac_item_id" value="" />
     
     <strong>Producto:</strong><br />
@@ -122,11 +149,7 @@
     </div>
     <br />
 
-    <div>
-      <strong>Precio Sigv:</strong><br />
-      <span id="ac_item_price2">$0.00</span>
-    </div>
-
+    
     <div class="small">
       Precio S/IGV del  producto para agregar una factura.
     </div>
@@ -204,6 +227,8 @@
       $("#ac_item_price").val(data[4]);
       updateItemTotal();
     });
+
+
     
     $("#ac_item_quantity").bind("keyup", function() {
       updateItemTotal();

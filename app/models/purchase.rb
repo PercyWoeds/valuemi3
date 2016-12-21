@@ -1,15 +1,29 @@
 class Purchase < ActiveRecord::Base
   self.per_page = 20
   
-  validates_presence_of :company_id, :supplier_id, :document  
-
+  validates_presence_of :company_id, :supplier_id, :documento,:document_id,:date1,:date2
+  
+  
+    
   belongs_to :company
   belongs_to :location
   belongs_to :division
   belongs_to :supplier 
   belongs_to :user  
-  
+  belongs_to :document
+    
   has_many :purchase_details
+
+
+  def not_purchase_with?()
+    document_tipo = self.document_id
+    document_numero=  self.documento
+    
+    existe=Purchase.where(document_id: document_tipo,documento: document_numero).count < 1
+    return existe 
+  end
+
+
   
   def get_subtotal(items)
     subtotal = 0
@@ -116,7 +130,7 @@ class Purchase < ActiveRecord::Base
     
   
   def identifier
-    return "#{self.document} - #{self.supplier.name}"
+    return "#{self.documento} - #{self.supplier.name}"
   end
   
   def get_products    

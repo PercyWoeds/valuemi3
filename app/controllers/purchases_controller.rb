@@ -1,10 +1,11 @@
 include UsersHelper
 include SuppliersHelper
 include ProductsHelper
+include PurchasesHelper
 
 class PurchasesController < ApplicationController
   before_filter :authenticate_user!, :checkProducts
- 
+
   
   # Export purchase to PDF
   def pdf
@@ -14,7 +15,9 @@ class PurchasesController < ApplicationController
       format.pdf { render :layout => false }
     end
   end
-  
+
+
+
   # Process an purchase
   def do_process
     @purchase = Purchase.find(params[:id])
@@ -162,7 +165,7 @@ class PurchasesController < ApplicationController
         @purchases = Purchase.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :division_id => params[:division]}, :order => "id DESC")
       else
         if(params[:q] and params[:q] != "")
-          fields = ["description", "comments", "document"]
+          fields = ["description", "comments", "documento"]
 
           q = params[:q].strip
           @q_org = q
@@ -211,12 +214,18 @@ class PurchasesController < ApplicationController
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
+
+    @documents = @company.get_documents()    
+    @servicebuys  = @company.get_servicebuys()
+    @monedas  = @company.get_monedas()
+    @payments  = @company.get_payments()
+
     
     @ac_user = getUsername()
     @purchase[:user_id] = getUserId()
   end
 
-  # GET /purchases/1/edit
+  # GET /purchases/1/Edit
   def edit
     @pagetitle = "Editar factura"
     @action_txt = "Actualizacion"
@@ -247,13 +256,23 @@ class PurchasesController < ApplicationController
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
+      
+    @documents = @company.get_documents()    
+    @servicebuys  = @company.get_servicebuys()
+    @monedas  = @company.get_monedas()
+    @payments  = @company.get_payments()
+
+
     
+
+
     @purchase[:payable_amount] = @purchase.get_subtotal(items)
     
     begin
       @purchase[:tax_amount] = @purchase.get_tax(items, @purchase[:supplier_id])
     rescue
       @purchase[:tax_amount] = 0
+      
     end
     
     @purchase[:total_amount] = @purchase[:payable_amount] + @purchase[:tax_amount]
@@ -264,23 +283,26 @@ class PurchasesController < ApplicationController
       curr_seller = User.find(params[:purchase][:user_id])
 
       @ac_user = curr_seller.username
-    end
+    end    
+    
 
-    respond_to do |format|
-      if @purchase.save
-        # Create products for kit
-        @purchase.add_products(items)
-        
-        # Check if we gotta process the invoice
-        @purchase.process()
-        
-        format.html { redirect_to(@purchase, :notice => 'Factura fue grabada con exito .') }
-        format.xml  { render :xml => @purchase, :status => :created, :location => @purchase}
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @purchase.errors, :status => :unprocessable_entity }
+      respond_to do |format|
+        if @purchase.save 
+          # Create products for kit
+          @purchase.add_products(items)
+          
+          # Check if we gotta process the invoice
+          @purchase.process()
+          
+          format.html { redirect_to(@purchase, :notice => 'Factura fue grabada con exito .') }
+          format.xml  { render :xml => @purchase, :status => :created, :location => @purchase}
+        else
+          format.html { render :action => "new" }
+          format.xml  { render :xml => @purchase.errors, :status => :unprocessable_entity }
+        end
       end
-    end
+    
+    
   end
   
 
@@ -295,6 +317,11 @@ class PurchasesController < ApplicationController
     @purchase = purchase.find(params[:id])
     @company = @purchase.company
     
+    @documents = @company.get_documents()    
+    @servicebuys  = @company.get_servicebuys()
+    @monedas  = @company.get_monedas()
+    @payments  = @company.get_payments()
+
     if(params[:ac_supplier] and params[:ac_supplier] != "")
       @ac_supplier = params[:ac_supplier]
     else
@@ -341,11 +368,11 @@ class PurchasesController < ApplicationController
   end
   private
   def purchase_params
-    params.require(:purchase).permit(:tank_id,:document_type_id,:document,:date1,:date2,:exchange,
+    params.require(:purchase).permit(:tank_id,:date1,:date2,:exchange,
       :product_id,:unit_id,:price_with_tax,:price_without_tax,:price_public,:quantity,:other,:money_type,
       :discount,:tax1,:payable_amount,:tax_amount,:total_amount,:status,:pricestatus,:charge,:payment,
       :balance,:tax2,:supplier_id,:order1,:plate_id,:user_id,:company_id,:location_id,:division_id,:comments,
-      :processed,:return)
+      :processed,:return,:date_processed,:payment_id,:document_id,:documento)
   end
 
 end

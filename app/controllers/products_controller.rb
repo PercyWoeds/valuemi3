@@ -3,7 +3,9 @@ include CompaniesHelper
 
 class ProductsController < ApplicationController
   before_filter :authenticate_user!, :checkCompanies
-  
+
+
+
   def import
      Product.import(params[:file])
       redirect_to root_url, notice: "categories importadas."
@@ -28,20 +30,13 @@ class ProductsController < ApplicationController
   
     if(@company.can_view(current_user))
       if(params[:restock])
-        @products = Product.where(["company_id = ? AND quantity <= reorder", @company.id]).paginate(:page => params[:page])
+        @products = Product.where(["company_id = ? AND quantity <= reorder", @company.id]).order('name').paginate(:page => params[:page]) 
         @view_restock = true
       else
-        if(params[:q] and params[:q] != "")
-          fields = ["name", "code", "category", "description", "comments"]
-        
-          q = params[:q].strip
-          @q_org = q
-        
-          query = str_sql_search(q, fields)
-        
-          @products = Product.where(["company_id = ? AND (#{query})", @company.id]).paginate(:page => params[:page]) 
+        if(params[:search] and params[:search] != "")         
+          @products = Product.where(["company_id = ? and (code LIKE ? OR name LIKE ?)", @company.id,"%" + params[:search] + "%", "%" + params[:search] + "%"]).order('name').paginate(:page => params[:page]) 
         else
-          @products = Product.where(company_id: @company.id).paginate(:page => params[:page])
+          @products = Product.where(["company_id = ?",@company.id ]).order('name').paginate(:page => params[:page]) 
         end
       end
     else
@@ -113,6 +108,9 @@ class ProductsController < ApplicationController
     @product = Product.find(params[:id])
     @company = @product.company
     @suppliers = @company.get_suppliers()
+    @marcas = @company.get_marcas()
+    @modelos = @company.get_modelos()
+
   end
 
   # POST /products

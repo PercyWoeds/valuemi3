@@ -735,7 +735,7 @@ function removeItemFromserviceorder(id) {
 
 
 // Add an item to a purchase order
-
+        
 function addItemTopurchaseorder() {
   var item = $("#ac_item").val();
   
@@ -747,7 +747,7 @@ function addItemTopurchaseorder() {
     var price = $("#ac_item_price").val();
     var discount = $("#ac_item_discount").val();    
     var items_arr = $("#items").val().split(",");
-
+      
     if(quantity == "" || !isNumeric(quantity)) {
       alert("Por favor ingrese una cantidad validad");
     } else if(price == "" || !isNumeric(price)) {
@@ -771,6 +771,57 @@ function addItemTopurchaseorder() {
     alert("Por favor ingrese un servicio primero.");
   }
 }
+
+function addItemToPurchase() {
+  var item = $("#ac_item").val();
+  
+  if(item != "") {
+    var company_id = $("#purchase_company_id").val();
+    var item_id = $("#ac_item_id").val();
+    
+    var quantity = $("#ac_item_quantity").val();
+    var price = $("#ac_item_price").val();
+    var discount = $("#ac_item_discount").val();    
+    var items_arr = $("#items").val().split(",");
+      
+    if(quantity == "" || !isNumeric(quantity)) {
+      alert("Por favor ingrese una cantidad validad");
+    } else if(price == "" || !isNumeric(price)) {
+      alert("Por favor ingrese un precio valido");
+    } else if(discount == "" || !isNumeric(discount)) {
+      alert("Por favor ingrese un descuento valido");
+    } else {
+      var item_line = item_id + "|BRK|" + quantity + "|BRK|" + price + "|BRK|" + discount;
+      
+      $("#items").val($("#items").val() + "," + item_line);
+      listItemsPurchase();
+      
+      $("#ac_item_id").val("");
+      $("#ac_item").val("");
+      $("#ac_item_quantity").val("1");
+      $("#ac_item_price").val("");
+      $("#ac_item_discount").val("0");
+      updateItemTotal5();
+    }
+  } else {
+    alert("Por favor ingrese un servicio primero.");
+  }
+}
+
+// List items in a kit
+function listItemsPurchase() {
+  var items = $("#items").val();
+  var company_id = $("#purchase_company_id").val();
+  
+  $.get('/purchases/list_items/' + company_id, {
+    items: items
+  },
+  function(data) {
+    $("#list_items").html(data);
+    documentReady();
+  });
+}
+
 
 // List items in a kit
 function listItemspurchaseorder() {
@@ -797,9 +848,9 @@ function updateItemTotal5() {
     var total = quantity * price;
     total -= total * (discount / 100);
 
-    $("#ac_item_total").html("$" + total);
+    $("#ac_item_total").html( total);
   } else {
-    $("#ac_item_total").html("$0.00");
+    $("#ac_item_total").html("0.00");
   }
 }
 

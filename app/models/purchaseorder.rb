@@ -10,6 +10,8 @@ class Purchaseorder < ActiveRecord::Base
   belongs_to :user
   belongs_to :payment 
   belongs_to :moneda  
+  belongs_to :document
+  
   
   has_many :purchaseorder_details
 
@@ -60,7 +62,7 @@ class Purchaseorder < ActiveRecord::Base
         for item in items
           if(item and item != "")
             parts = item.split("|BRK|")
-        
+            
             id = parts[0]
             quantity = parts[1]
             price = parts[2]
@@ -73,6 +75,10 @@ class Purchaseorder < ActiveRecord::Base
               product = Product.find(id.to_i)
               
               if(product)
+
+                puts product.tax1.to_s
+                
+
                 if(product.tax1 and product.tax1 > 0)
                   tax += total * (product.tax1 / 100)
                 end
@@ -84,6 +90,10 @@ class Purchaseorder < ActiveRecord::Base
                 if(product.tax3 and product.tax3 > 0)
                   tax += total * (product.tax3 / 100)
                 end
+              else 
+                puts "producto no "
+                puts id.to_s
+
               end
             rescue
             end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161220204702) do
+ActiveRecord::Schema.define(version: 20161221173255) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "name"
@@ -788,7 +788,6 @@ ActiveRecord::Schema.define(version: 20161220204702) do
 
   create_table "purchases", force: :cascade do |t|
     t.integer  "document_type_id"
-    t.string   "document"
     t.datetime "date1"
     t.datetime "date2"
     t.float    "exchange"
@@ -822,6 +821,10 @@ ActiveRecord::Schema.define(version: 20161220204702) do
     t.string   "return"
     t.datetime "date_processed"
     t.string   "money"
+    t.integer  "payment_id"
+    t.integer  "document_id"
+    t.integer  "moneda_id"
+    t.string   "documento"
   end
 
   create_table "restocks", force: :cascade do |t|

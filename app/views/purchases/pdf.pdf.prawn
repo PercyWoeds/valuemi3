@@ -11,14 +11,14 @@ pdf.text "purchase: #{@purchase.identifier}", :size => 18, :style => :bold, :spa
 pdf.text "______________________________________________________________________", :size => 13, :spacing => 4
 pdf.text " ", :size => 13, :spacing => 4
 
-pdf.text "Code: #{@purchase.document}", :size => 13, :spacing => 4
+pdf.text "Code: #{@purchase.documento}", :size => 13, :spacing => 4
 
 pdf.text "______________________________________________________________________", :size => 13, :spacing => 4
 pdf.text " ", :size => 13, :spacing => 4
 
-pdf.text "Subtotal: $#{money(@purchase.payable_amount)}", :size => 15, :style => :bold, :spacing => 4
-pdf.text "Tax: $#{money(@purchase.tax_amount)}", :size => 15, :style => :bold, :spacing => 4
-pdf.text "Total: $#{money(@purchase.total_amount)}", :size => 15, :style => :bold, :spacing => 4
+pdf.text "Subtotal: #{money(@purchase.payable_amount)}", :size => 15, :style => :bold, :spacing => 4
+pdf.text "IGV : #{money(@purchase.tax_amount)}", :size => 15, :style => :bold, :spacing => 4
+pdf.text "Total: #{money(@purchase.total_amount)}", :size => 15, :style => :bold, :spacing => 4
 
 pdf.text "______________________________________________________________________", :size => 13, :spacing => 4
 pdf.text " ", :size => 13, :spacing => 4
@@ -72,13 +72,13 @@ pdf.text "Details", :size => 15, :style => :bold, :spacing => 4
 pdf.text " ", :size => 13, :spacing => 4
 
 for product in @purchase.get_products()
-  pdf.text "#{product.name} - Price: $#{money(product.price)} - Quantity: #{product.quantity} - Discount: #{money(product.discount)} - Total: $#{money(product.total)}", :size => 13, :spacing => 4
+  pdf.text "#{product.name} - Precio: #{money(product.price)} - Quantity: #{product.quantity} - Discount: #{money(product.discount)} - Total: #{money(product.total)}", :size => 13, :spacing => 4
 end
 
 pdf.text " ", :size => 13, :spacing => 4
 
-pdf.text "Subtotal: $#{money(@purchase.payable_amount)}", :size => 13, :spacing => 4
-pdf.text "Tax: $#{money(@purchase.tax_amount)}", :size => 13, :spacing => 4
-pdf.text "Total: $#{money(@purchase.total_amount)}", :size => 13, :spacing => 4
+pdf.text "Subtotal: #{money(@purchase.payable_amount)}", :size => 13, :spacing => 4
+pdf.text "Tax: #{money(@purchase.tax_amount)}", :size => 13, :spacing => 4
+pdf.text "Total: #{money(@purchase.total_amount)}", :size => 13, :spacing => 4
 
 pdf.draw_text "Company: #{@purchase.company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]

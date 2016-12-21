@@ -54,7 +54,7 @@
             
           <% elsif serviceorder.processed =="2"%>  
           <%= "** Anulado **" %>
-          <%= link_to 'Eliminar', serviceorder, :confirm => 'Are you sure?', :method => :delete %>
+          <%= link_to 'Eliminar', serviceorder,:data=> {:confirm => 'Esta seguro ?'}, :method => :delete %>
           <% elsif serviceorder.processed =="3"%>  
           <%= "** Cerrado **" %>
           

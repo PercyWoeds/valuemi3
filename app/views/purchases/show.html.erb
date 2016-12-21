@@ -27,7 +27,7 @@
 
 <p>
   <b>Code:</b>
-  <%= @purchase.document %>
+  <%= @purchase.documento %>
 </p>
 
 <%= hr() %>
@@ -77,7 +77,7 @@
           <%= link_to productItem.name   %>
         </td>
         <td class="bordered_bottom bordered_right">
-          $<%= money(productItem.price) %>
+          <%= money(productItem.price) %>
         </td>
         <td class="bordered_bottom bordered_right">
           <%= productItem.quantity %>
@@ -88,7 +88,7 @@
           <%= money(productItem.discount) %>%
         </td>
         <td class="bordered_bottom bordered_right">
-          $<%= money(productItem.total) %>
+          <%= money(productItem.total) %>
         </td>
       </tr>
     <% end %>
@@ -102,7 +102,7 @@
         Subtotal:
       </td>
       <td class="bordered_bottom bordered_right bold right">
-        $<%= money(@purchase.payable_amount) %>
+        <%= money(@purchase.payable_amount) %>
       </td>
     </tr>
     <tr>
@@ -110,7 +110,7 @@
         Tax:
       </td>
       <td class="bordered_bottom bordered_right bold right">
-        $<%= money(@purchase.tax_amount) %>
+        <%= money(@purchase.tax_amount) %>
       </td>
     </tr>
     <tr>
@@ -118,7 +118,7 @@
         Total:
       </td>
       <td class="bordered_bottom bordered_right bold right">
-        $<%= money(@purchase.total_amount) %>
+        <%= money(@purchase.total_amount) %>
       </td>
     </tr>
   </tbody>

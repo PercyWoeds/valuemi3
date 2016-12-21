@@ -2,7 +2,7 @@ module PurchasesHelper
 
   def checkSuppliers()
     if(params[:company_id])
-      supplier  = Supplier.find(:first, :conditions => {:company_id => params[:company_id]})
+      supplier  = Supplier.where(:company_id => params[:company_id])
     
       if(not supplier )
         flash[:error] = "Por favor crear un nuevo  proveedor primero."
@@ -10,4 +10,9 @@ module PurchasesHelper
       end
     end
   end
+
+
+
+  
+
 end

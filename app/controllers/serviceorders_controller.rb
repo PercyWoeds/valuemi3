@@ -239,16 +239,17 @@ class ServiceordersController < ApplicationController
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
     @suppliers = @company.get_suppliers()
-    @payments = @company.get_payments()
-    @servicebuys  = @company.get_servicebuys()
+    @payments = @company.get_payments()    
     @monedas  = @company.get_monedas()    
     ##Cerrar la order de servicio 
     @serviceorder[:processed]='3'
+                  
 
-
+    doc = params[:document]
+    
     respond_to do |format|
 #,:document=>@serviceorder.document,:fecha3=>@serviceorder.fecha3,:fecha4=>@serviceorder.fecha4)  
-    if @serviceorder.update_attributes(:document_id=> params[:document_id])
+    if @serviceorder.update_attributes(params[:serviceorder])
       
         # Check if we gotta process the serviceorder
         @serviceorder.cerrar()
@@ -504,8 +505,9 @@ class ServiceordersController < ApplicationController
     
     if(params[:serviceorder][:user_id] and params[:serviceorder][:user_id] != "")
       curr_seller = User.find(params[:serviceorder][:user_id])
-      @ac_user = curr_seller.username
+      @ac_user = curr_seller.username    
     end
+
 
     respond_to do |format|
       if @serviceorder.save

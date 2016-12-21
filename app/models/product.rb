@@ -20,11 +20,17 @@ class Product < ActiveRecord::Base
   
   before_destroy :ensure_not_referenced_by_any_line_item
 
-def self.search(query)
-# where(:title, query) -> This would return an exact match of the query
-where("name  like ?", "%#{query}%")
+
+
+def self.search(params)        
+        products = Product.where("(code LIKE ? OR name LIKE ?)", params[:search], "%" + params[:search] + "%") if params[:search].present?
+        products
 end
 
+
+def self.matches(field_name, param)
+    where("upper(#{field_name}) like ?", "%#{param}%")
+end
 
   def self.import(file)
           CSV.foreach(file.path, headers: true) do |row|

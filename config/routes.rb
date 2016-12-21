@@ -90,6 +90,7 @@
   end 
   resources :products_categories   do
     collection { post :import }
+
   end 
 
   resources :customers do
@@ -107,6 +108,7 @@
   #Manifiesto busqueda de guias
   get 'my_declarations', to: 'declarations#my_deliveries'
   get 'search_friends', to: 'deliveries#search'
+
   post 'add_friend', to: 'deliveries#add_friend'
   post 'items/update', to: 'items#update'
 
@@ -240,7 +242,7 @@
   resources :purchaseorders
 
   match 'receiveorders/list_items/:company_id' => 'receiveorders#list_items', via: [:get, :post]
-  match 'receiveorders/ac_products/:company_id' => 'receiveorders#ac_products', via: [:get, :post]
+match 'receiveorders/ac_products/:company_id' => 'receiveorders#ac_products', via: [:get, :post]
   match 'receiveorders/ac_unidads/:company_id' => 'receiveorders#ac_unidads', via: [:get, :post]
   match 'receiveorders/ac_user/:company_id' => 'receiveorders#ac_user', via: [:get, :post]
   match 'receiveorders/new/:company_id' => 'receiveorders#new', via: [:get, :post]

@@ -14,7 +14,8 @@ class Serviceorder < ActiveRecord::Base
   belongs_to :user
   belongs_to :payment 
   belongs_to :moneda  
-  
+  belongs_to :document
+    
   has_many :serviceorder_services
   
  TABLE_HEADERS = ["ITEM",
