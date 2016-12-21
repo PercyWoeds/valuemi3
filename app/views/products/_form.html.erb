@@ -33,7 +33,7 @@
   </div>
   <div class="field">
     <%= f.label :category %><br />
-    <%= f.text_field :category %>
+      
     <div class="small">
       You can group products together using categories.
     </div>
@@ -117,13 +117,6 @@
     <strong>Inventory</strong>
   </div>
   
-  <div class="field">
-    <%= f.label :supplier_id %><br />
-    <%= f.select :supplier_id, @suppliers %>
-    <div class="small">
-      Who supplies you the product.
-    </div>
-  </div>
   
   <div class="field">
     <%= f.label :quantity %><br />

@@ -22,10 +22,7 @@ class Product < ActiveRecord::Base
 
 
 
-def self.search(params)        
-        products = Product.where("(code LIKE ? OR name LIKE ?)", params[:search], "%" + params[:search] + "%") if params[:search].present?
-        products
-end
+
 
 
 def self.matches(field_name, param)

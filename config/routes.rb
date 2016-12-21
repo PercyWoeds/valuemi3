@@ -337,7 +337,7 @@ match 'receiveorders/ac_products/:company_id' => 'receiveorders#ac_products', vi
 
   # Products
   match 'products/ac_products/:company_id' => 'products#ac_products', via: [:get, :post]
-  #match 'products/ac_categories/:company_id' => 'products#ac_categories', via: [:get, :post]
+  match 'products/ac_categories/:company_id' => 'products#ac_categories', via: [:get, :post]
   match 'products/new/:company_id' => 'products#new', via: [:get, :post]
   match 'companies/products/:company_id' => 'products#list_products', via: [:get, :post]
   resources :products
