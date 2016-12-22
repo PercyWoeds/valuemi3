@@ -18,10 +18,11 @@ class ServiceordersController < ApplicationController
      $lcFecha1= @serviceorder.fecha1.strftime("%d/%m/%Y") 
      $lcMon=@serviceorder.moneda.description     
      $lcPay= @serviceorder.payment.descrip
-     $lcSubtotal=@serviceorder.subtotal
-     $lcIgv=@serviceorder.tax
-     $lcTotal=@serviceorder.total
-     $lcDetracion=@serviceorder.detraccion
+     $lcSubtotal=sprintf("%.2f",@serviceorder.subtotal)
+     $lcIgv=sprintf("%.2f",@serviceorder.tax)
+     $lcTotal=sprintf("%.2f",@serviceorder.total)
+
+     $lcDetracion=sprintf("%.2f",@serviceorder.detraccion)
      $lcAprobado= @serviceorder.get_processed 
     
       pdf.image "#{Dir.pwd}/public/images/logo.png", :width => 270
