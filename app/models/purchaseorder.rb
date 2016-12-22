@@ -24,9 +24,6 @@ class Purchaseorder < ActiveRecord::Base
                      "DSCTO",
                      "VALOR TOTAL"]
 
-
-
-
   def get_subtotal(items)
     subtotal = 0
     
@@ -81,8 +78,7 @@ class Purchaseorder < ActiveRecord::Base
               puts id 
 
               if(product)
-
-                puts product.tax1.to_s
+            
                 
 
                 if(product.tax1 and product.tax1 > 0)

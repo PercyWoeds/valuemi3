@@ -4,6 +4,7 @@ include CompaniesHelper
 
 class SuppliersController < ApplicationController
   before_filter :authenticate_user!, :checkCompanies
+
   def import
       Supplier.import(params[:file])
        redirect_to root_url, notice: "Proveedor  importadas."
@@ -16,9 +17,9 @@ class SuppliersController < ApplicationController
     @pagetitle = "#{@company.name} - Suppliers"
   
     if(@company.can_view(current_user))
-      if if(params[:search] and params[:search] != "")                     
+     if(params[:search] and params[:search] != "")                     
         
-        @suppliers = Supplier.where(["company_id = ? and (code LIKE ? OR name LIKE ?)", @company.id,"%" + params[:search] + "%", "%" + params[:search] + "%"]).order('name').paginate(:page => params[:page]) 
+        @suppliers = Supplier.where(["company_id = ? and (ruc LIKE ? OR name LIKE ?)", @company.id,"%" + params[:search] + "%", "%" + params[:search] + "%"]).order('name').paginate(:page => params[:page]) 
       else
         @suppliers = Supplier.where(company_id: @company.id).paginate(:page => params[:page])
       end
