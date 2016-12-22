@@ -18,7 +18,6 @@
   </p>
 <% end %>
 
-
 <% if @serviceorder.division %>
   <p>
     <b>Division:</b>
@@ -26,39 +25,34 @@
   </p>
 <% end %>
 
-
 <p>
   <b>Code:</b>
   <%= @serviceorder.code %>
 </p>
 
 <%= hr() %>
-
-<%= form_for(@serviceorder)  do |f| %>
+ 
 
   <div class="field">
   <strong>Documento:</strong><br />
-    <%= select_tag "id_document", options_from_collection_for_select(@documents,'id','description') %>
+  <%= select_tag "ac_document_id", options_from_collection_for_select(@documents,"id","description") %>
   </div>
 
+  <div class="field">  
+  <input type="text" name="ac_documento" id="ac_documento"  value="" />            
+  </div>
 
   <div class="field">
-    <%= f.label :document , "Documento *", :class => "bold" %><br />
-    <%= f.text_field :document %>
+  <strong>Fecha Emision:</strong><br />
+  <input type="date_text" name="ac_fecha_emision" id="ac_fecha_emision" />
   </div>
 
-  <div class="field">    
-    <%= f.label :fecha3, "Fecha Emision*", :class => "bold" %><br />
-    <%= f.date_field :fecha3, value: Time.now.strftime("%d/%m/%Y") %>
-   </div>
-    
   <div class="field">
-    <%= f.label :fecha4, "Fecha Vmto*", :class => "bold" %><br />
-    <%= f.date_field :fecha4, value: Time.now.strftime("%d/%m/%Y") %>
+  <strong>Fecha Vmto:</strong><br />
+  <input type="date_text" name="ac_fecha_vmto" id="ac_fecha_vmto" />
   </div>
-
   
-<%end %>    
+  
 <%= hr() %>
 
 <h3>
@@ -98,7 +92,6 @@
       <th>
         Dscto.
       </th>
-
       <th>
         Total
       </th>
@@ -110,16 +103,13 @@
 <ul>
 
 <% for item in @serviceorder.get_services() %>
-
           <tr>
           <td class="small bordered_bottom bordered_right">
             <%= item.id %>
-          </td>
-          
+          </td>          
           <td class="small bordered_bottom bordered_right" style="width: 220px;">
             <%= item.name %></a>            
           </td>
-
           <td class="small bordered_bottom bordered_right">
             <%= money(item.price) %>
           </td>
@@ -218,6 +208,7 @@
 
 <div class="button">
   <%= link_to 'Grabar', "/serviceorders/do_grabar_ins/#{@serviceorder.id}" %>
+
   <%= link_to 'Cerrar', "/serviceorders/do_cerrar/#{@serviceorder.id}" %>
   <%= link_to 'Regresar', "/companies/serviceorders/receive_orderservice/#{@serviceorder.company.id}" %>
 

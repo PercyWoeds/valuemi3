@@ -225,7 +225,8 @@ serviceorder_services.servicebuy_id = servicebuys.id where serviceorder_services
     end
   end
   def cerrar
-    if(self.processed == "3" )          
+    if(self.processed == "3" )         
+      
       self.processed="3"
       self.date_processed = Time.now
       self.save

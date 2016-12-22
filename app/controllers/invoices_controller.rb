@@ -16,6 +16,7 @@ class InvoicesController < ApplicationController
       render :layout => false
     end
   end
+
   
   # Export invoice to PDF
   def pdf
@@ -47,6 +48,7 @@ class InvoicesController < ApplicationController
     flash[:notice] = "The invoice has been sent successfully."
     redirect_to "/invoices/#{@invoice.id}"
   end
+
   
   # Send invoice via email
   def email
@@ -216,6 +218,8 @@ class InvoicesController < ApplicationController
 
   # GET /invoices/new
   # GET /invoices/new.xml
+
+  
   
   def new
     @pagetitle = "New invoice"
@@ -235,6 +239,7 @@ class InvoicesController < ApplicationController
     @ac_user = getUsername()
     @invoice[:user_id] = getUserId()
   end
+
 
   # GET /invoices/1/edit
   def edit

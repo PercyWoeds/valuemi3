@@ -218,23 +218,7 @@ class Purchaseorder < ActiveRecord::Base
   def process
 
     if(self.processed == "1" or self.processed == true)
-      purchaseorder_details = PurchaseorderDetail.where(purchaseorder_id: self.id)
-    
-      for ip in purchaseorder_details
-        product = ip.product
-        
-        if(ip.quantity)    
-          if(self.return == "1")
-            ip.product.quantity_transit -= ip.quantity
-          else
-            ip.product.quantity_transit += ip.quantity
-          end
-          ip.product.save
-        else
-         puts  product.quantity
-        end
-      end
-      
+      self.processed="1"      
       self.date_processed = Time.now
       self.save
     end

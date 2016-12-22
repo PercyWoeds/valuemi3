@@ -26,6 +26,12 @@
   resources :deliveryships
   resources :declarations 
 
+  resources :serviceorders do 
+
+    collection { post  :dograbarins }  
+  
+  end 
+
   resources :purchaseorders do 
     collection { get :search   }
     collection { get :receive    }

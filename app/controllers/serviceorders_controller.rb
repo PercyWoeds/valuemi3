@@ -231,7 +231,7 @@ class ServiceordersController < ApplicationController
     redirect_to "/serviceorders/#{@serviceorder.id}"
   end
 
-  def do_grabar_ins 
+  def do_grabar_ins
     
     @serviceorder = Serviceorder.find(params[:id])
 
@@ -243,15 +243,19 @@ class ServiceordersController < ApplicationController
     @monedas  = @company.get_monedas()    
     ##Cerrar la order de servicio 
     @serviceorder[:processed]='3'
-                  
 
-    doc = params[:document]
-    
-    respond_to do |format|
-#,:document=>@serviceorder.document,:fecha3=>@serviceorder.fecha3,:fecha4=>@serviceorder.fecha4)  
-    if @serviceorder.update_attributes(params[:serviceorder])
-      
-        # Check if we gotta process the serviceorder
+    documento =  params[:ac_documento]
+    documento_id =  params[:ac_documento_id]
+
+    puts "documento*----------------------------------------------**********"
+    puts documento
+    puts documento_id    
+
+    submision_hash = {"document_id" => params[:ac_document_id],
+                       "documento"  => params[:ac_documento] }
+
+    respond_to do |format|    
+    if  @serviceorder.update_attributes(submision_hash)            
         @serviceorder.cerrar()
         
         format.html { redirect_to(@serviceorder, :notice => 'Orden de servicio actualizada  ') }
@@ -261,9 +265,6 @@ class ServiceordersController < ApplicationController
         format.xml  { render :xml => @serviceorder.errors, :status => :unprocessable_entity }
       end
     end
-
-    
-
   end
   
   # Send serviceorder via email
@@ -454,7 +455,7 @@ class ServiceordersController < ApplicationController
   # GET /serviceorders/1/edit
   def edit
     @pagetitle = "Edit serviceorder"
-    @action_txt = "Update"
+    @action_txt = "Update..."
     
     @serviceorder = Serviceorder.find(params[:id])
     @company = @serviceorder.company
@@ -793,6 +794,7 @@ class ServiceordersController < ApplicationController
     @company = Company.find(@serviceorder.company_id)
     @documents =@company.get_documents()
 
+
   end
 
 
@@ -870,7 +872,7 @@ def list_receive_serviceorders
   
   private
   def serviceorder_params
-    params.require(:serviceorder).permit(:company_id,:location_id,:division_id,:supplier_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:detraccion,:payment_id,:moneda_id,:fecha1,:fecha2,:fecha3,:fecha4,:document_id,:document)
+    params.require(:serviceorder).permit(:company_id,:location_id,:division_id,:supplier_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:detraccion,:payment_id,:moneda_id,:fecha1,:fecha2,:fecha3,:fecha4,:document_id,:documento)
   end
 
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161221173255) do
+ActiveRecord::Schema.define(version: 20161222154121) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "name"
@@ -76,6 +76,24 @@ ActiveRecord::Schema.define(version: 20161221173255) do
   end
 
   add_index "addresses", ["customer_id"], name: "index_addresses_on_customer_id"
+
+  create_table "bank_acounts", force: :cascade do |t|
+    t.string   "number"
+    t.integer  "moneda_id"
+    t.integer  "bank_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "banks", force: :cascade do |t|
+    t.string   "name"
+    t.string   "address1"
+    t.string   "address2"
+    t.string   "phone1"
+    t.string   "email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "carts", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -902,10 +920,10 @@ ActiveRecord::Schema.define(version: 20161221173255) do
     t.integer  "moneda_id"
     t.datetime "date_processed"
     t.integer  "document_id"
-    t.string   "document"
     t.datetime "fecha2"
     t.datetime "fecha3"
     t.datetime "fecha4"
+    t.string   "documento"
   end
 
   create_table "services", force: :cascade do |t|
