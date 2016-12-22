@@ -17,9 +17,11 @@ def build_pdf_header(pdf)
      $lcFecha1= @purchaseorder.fecha1.strftime("%d/%m/%Y") 
      $lcMon=@purchaseorder.moneda.description     
      $lcPay= @purchaseorder.payment.descrip
-     $lcSubtotal=@purchaseorder.subtotal
-     $lcIgv=@purchaseorder.tax
-     $lcTotal=@purchaseorder.total
+
+     $lcSubtotal=sprintf("%.2f",@purchaseorder.subtotal)
+     $lcIgv=sprintf("%.2f",@purchaseorder.tax)
+     $lcTotal=sprintf("%.2f",@purchaseorder.total)
+
      $lcDetracion=@purchaseorder.detraccion
      $lcAprobado= @purchaseorder.get_processed 
     
@@ -157,7 +159,6 @@ def build_pdf_header(pdf)
         pdf.text "_________________               _____________________         ____________________      ", :size => 13, :spacing => 4
         pdf.text ""
         pdf.text "                  Realizado por                                                 V.B.Jefe Compras                                            V.B.Gerencia           ", :size => 10, :spacing => 4
-
         pdf.draw_text "Company: #{@purchaseorder.company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
 
       end
