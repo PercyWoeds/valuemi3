@@ -269,9 +269,9 @@ function updateItemTotal2() {
     var total = quantity * price;
     total -= total * (discount / 100);
 
-    $("#ac_item_total").html("$" + total);
+    $("#ac_item_total").html(total);
   } else {
-    $("#ac_item_total").html("$0.00");
+    $("#ac_item_total").html("0.00");
   }
 }
 
@@ -444,6 +444,29 @@ function listItemsdelivery2() {
 }
 
 
+// Add an item to orden de servicio 
+function addItemToOrden1() {
+  var item = $("#ac_item3").val();
+  
+ if(item != "") {
+    var company_id = $("#purchase_company_id").val();
+    var item_id = $("#ac_item_os").val();        
+    var items_arr = $("#items2").val().split(",");
+    var item_line = item_id + "|BRK|" ;
+      
+      $("#items2").val($("#items2").val() + "," + item_line );
+
+      listItemsdelivery2();
+      
+      $("#ac_item_os").val("");
+      $("#ac_item3").val("");      
+    
+  } else {
+    alert("Please find a guia  to add first.");
+  }
+}
+
+
 // Removes an item from a kit
 function removeItemFromKit(id) {
   var items = $("#items").val();
@@ -529,6 +552,24 @@ function removeItemFromdelivery2(id) {
   
   $("#items2").val(items_final.join(","));
   listItemsdelivery2();
+}
+
+// Removes an item from an invoice
+function removeItemFromPurchaseorder(id) {
+  var items = $("#items").val();
+  var items_arr = items.split(",");
+  var items_final = Array();
+  var i = 0;
+  
+  while(i < items_arr.length) {
+    if(i != id) {
+      items_final[i] = items_arr[i];
+    }
+    i++;
+  }
+  
+  $("#items").val(items_final.join(","));
+  listItemspurchaseorder();
 }
 
 // Shortcut to create new customer form

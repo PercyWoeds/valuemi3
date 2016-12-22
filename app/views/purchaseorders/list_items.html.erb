@@ -27,8 +27,8 @@
       <% for product in @products %>
         <tr>
           <td class="small bordered_bottom bordered_right" style="width: 220px;">
-            <a href="#" onclick="removeItemFromInvoice(<%= product.i %>); return false;" title="Remove product from invoice"><%= product.name %></a>
-            [<a href="#" onclick="removeItemFromInvoice(<%= product.i %>); return false;" title="Remove product from invoice">X</a>]
+            <a href="#" onclick="removeItemFromPurchaseorder(<%= product.i %>); return false;" title="Remove product from invoice"><%= product.name %></a>
+            [<a href="#" onclick="removeItemFromPurchaseorder(<%= product.i %>); return false;" title="Remove product from invoice">X</a>]
           </td>
           <td class="small bordered_bottom bordered_right">
             $<%= money(product.price) %>

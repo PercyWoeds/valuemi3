@@ -263,15 +263,15 @@ class PurchasesController < ApplicationController
     @payments  = @company.get_payments()
 
 
-    
+   puts items 
 
 
     @purchase[:payable_amount] = @purchase.get_subtotal(items)
     
     begin
       @purchase[:tax_amount] = @purchase.get_tax(items, @purchase[:supplier_id])
-    rescue
-      @purchase[:tax_amount] = 0
+    #rescue
+    #  @purchase[:tax_amount] = 0
       
     end
     
@@ -342,6 +342,8 @@ class PurchasesController < ApplicationController
         # Create products for kit
         @purchase.delete_products()
         @purchase.add_products(items)
+
+
         
         # Check if we gotta process the purchase
         @purchase.process()

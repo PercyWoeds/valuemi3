@@ -54,8 +54,9 @@ class Purchaseorder < ActiveRecord::Base
   
   def get_tax(items, supplier_id)
     tax = 0
+    puts "get tax "
     
-    supplier = supplier.find(supplier_id)
+    supplier = Supplier.find(supplier_id)
     
     if(supplier)
       if(supplier.taxable == "1")
@@ -72,8 +73,12 @@ class Purchaseorder < ActiveRecord::Base
             total -= total * (discount.to_f / 100)
         
             begin
-              product = Product.find(id.to_i)
               
+              product = Product.find(id.to_i)
+
+              puts "codigo"
+              puts id 
+
               if(product)
 
                 puts product.tax1.to_s

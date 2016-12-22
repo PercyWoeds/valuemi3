@@ -184,6 +184,30 @@
   <%= hr() %>
     
 </div>
+  </form>
+  
+  <%= hr() %>
+  
+
+  <h3>
+    Agregar Orden de Servicio   
+  </h3>
+  
+  <form method="get" action="/purchases" onsubmit="addItemToOrden1(); return false;">
+
+    <input type="hidden" name="ac_item_os" id="ac_item_os" value="" />
+    <strong>Guia :</strong><br />
+
+    <input type="text" name="ac_item3" id="ac_item3" value="" />
+        <div class="small">
+          Ingrese un termino de busqueda para encontrar un producto.
+        </div>
+    <br />    
+    
+
+    <input type="submit" value="Agregar Guias" />
+
+  </form>
 
 
 
