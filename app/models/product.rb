@@ -22,9 +22,6 @@ class Product < ActiveRecord::Base
 
 
 
-
-
-
 def self.matches(field_name, param)
     where("upper(#{field_name}) like ?", "%#{param}%")
 end

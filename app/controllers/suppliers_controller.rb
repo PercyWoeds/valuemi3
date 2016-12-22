@@ -16,15 +16,9 @@ class SuppliersController < ApplicationController
     @pagetitle = "#{@company.name} - Suppliers"
   
     if(@company.can_view(current_user))
-      if(params[:q] and params[:q] != "")
-        fields = ["email", "name"]
-
-        q = params[:q].strip
-        @q_org = q
-
-        query = str_sql_search(q, fields)
-
-        @suppliers = Supplier.paginate(:page => params[:page]).order(:name).where(["company_id = ? AND (#{query})", @company.id])
+      if if(params[:search] and params[:search] != "")                     
+        
+        @suppliers = Supplier.where(["company_id = ? and (code LIKE ? OR name LIKE ?)", @company.id,"%" + params[:search] + "%", "%" + params[:search] + "%"]).order('name').paginate(:page => params[:page]) 
       else
         @suppliers = Supplier.where(company_id: @company.id).paginate(:page => params[:page])
       end

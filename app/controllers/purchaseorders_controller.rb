@@ -18,9 +18,9 @@ def build_pdf_header(pdf)
      $lcMon=@purchaseorder.moneda.description     
      $lcPay= @purchaseorder.payment.descrip
 
-     $lcSubtotal=sprintf("%.2f",@purchaseorder.subtotal)
-     $lcIgv=sprintf("%.2f",@purchaseorder.tax)
-     $lcTotal=sprintf("%.2f",@purchaseorder.total)
+     $lcSubtotal=sprintf("%.2f",(@purchaseorder.subtotal).round(2))
+     $lcIgv=sprintf("%.2f",(@purchaseorder.tax).round(2))
+     $lcTotal=sprintf("%.2f",(@purchaseorder.total).round(2))
 
      $lcDetracion=@purchaseorder.detraccion
      $lcAprobado= @purchaseorder.get_processed 
@@ -95,8 +95,9 @@ def build_pdf_header(pdf)
 
        for  product in @purchaseorder.get_products()
             row = []
-            row << nroitem.to_s
+            row << nroitem.to_s      
             row << product.quantity.to_s
+            row << product.code
             row << product.name
             row << product.price.to_s
             row << product.discount
@@ -113,9 +114,10 @@ def build_pdf_header(pdf)
                                           columns([0]).align=:center
                                           columns([1]).align=:right
                                           columns([2]).align=:center
-                                          columns([3]).align=:right
+                                          columns([3]).align=:center
                                           columns([4]).align=:right
                                           columns([5]).align=:right
+                                          columns([6]).align=:right
                                          
                                         end
 
