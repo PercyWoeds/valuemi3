@@ -21,7 +21,7 @@ class SuppliersController < ApplicationController
         
         @suppliers = Supplier.where(["company_id = ? and (ruc LIKE ? OR name LIKE ?)", @company.id,"%" + params[:search] + "%", "%" + params[:search] + "%"]).order('name').paginate(:page => params[:page]) 
       else
-        @suppliers = Supplier.where(company_id: @company.id).paginate(:page => params[:page])
+        @suppliers = Supplier.where(company_id: @company.id).order('name').paginate(:page => params[:page])
       end
     else
       errPerms()
