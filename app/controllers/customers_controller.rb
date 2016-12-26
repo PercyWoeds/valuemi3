@@ -18,18 +18,12 @@ class CustomersController < ApplicationController
 
   def list_customers
     @company = Company.find(params[:company_id])
-    @pagetitle = "#{@company.name} - Customers"
+    @pagetitle = "#{@company.name} - Clientes"
   
     if(@company.can_view(current_user))
-      if(params[:q] and params[:q] != "")
-        fields = ["email", "name", "account"]
-
-        q = params[:q].strip
-        @q_org = q
-
-        query = str_sql_search(q, fields)
-
-        @customers = Customer.where(["company_id = ? AND (#{query})", @company.id]).order("name").paginate(:page => params[:page])
+      if(params[:search] and params[:search] != "")                 
+  
+        @customers = Customer.where(["company_id = ? AND  (ruc LIKE ? OR name LIKE ?)", @company.id,"%" + params[:search] + "%", "%" + params[:search] + "%"]).order('name').paginate(:page => params[:page]) 
       else
         @customers = Customer.where(:company_id => @company.id).order("name").paginate(:page => params[:page])
       end

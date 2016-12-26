@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  document_id: 1
+  documento: MyString
+  supplier_id: 1
+  tm: MyString
+  total: 1.5
+  descrip: MyText
+
+two:
+  document_id: 1
+  documento: MyString
+  supplier_id: 1
+  tm: MyString
+  total: 1.5
+  descrip: MyText

@@ -17,7 +17,6 @@
   resources :tanks
   resources :employees
   resources :pumps
-  resources :purchases
 
 
   resources :inventory_details
@@ -25,6 +24,16 @@
   resources :payment_methods
   resources :deliveryships
   resources :declarations 
+
+
+    namespace :inventory do
+      resources :suppliers
+      resources :overviews
+      resources :purchase_orders
+      resources :receivings
+      resources :adjustments
+    end
+
 
   resources :serviceorders do 
 
@@ -81,7 +90,6 @@
     login: 'user_session'
   }
 
-  
   devise_scope :user  do 
         match '/sessions/user', to: 'devise/sessions#create', via: :post
   end  
@@ -104,7 +112,10 @@
     collection { post :import }
     collection { post :import2 }
   end 
-
+  resources :purchases do
+     collection { post :datos  }
+  end 
+  
   resources :employees do
     collection { post :import }
   end 
@@ -114,6 +125,9 @@
   #Manifiesto busqueda de guias
   get 'my_declarations', to: 'declarations#my_deliveries'
   get 'search_friends', to: 'deliveries#search'
+
+  get 'search_serviceorders', to: 'purchases#search_serviceorders'
+  post 'add_serviceorders', to: 'purchases#add_serviceorders'
 
   post 'add_friend', to: 'deliveries#add_friend'
   post 'items/update', to: 'items#update'
@@ -218,8 +232,9 @@
   match 'serviceorders/do_email/:id' => 'serviceorders#do_email', via: [:get, :post]
   match 'serviceorders/do_process/:id' => 'serviceorders#do_process', via: [:get, :post]
   match 'serviceorders/do_anular/:id' => 'serviceorders#do_anular', via: [:get, :post]
-  match 'serviceorders/email/:id' => 'serviceorders#email', via: [:get, :post]
+  match 'serviceorders/email/:id' => 'serviceorders#email', via: [:get, :post]  
   match 'serviceorders/pdf/:id' => 'serviceorders#pdf', via: [:get, :post]
+
   match 'serviceorders/rpt_serviceorder_all_pdf/:id' => 'serviceorders#rpt_serviceorder_all_pdf', via: [:get, :post]
   match 'serviceorders/receive/:id' => 'serviceorders#receive', via: [:get, :post]
   
@@ -289,6 +304,8 @@ match 'receiveorders/ac_products/:company_id' => 'receiveorders#ac_products', vi
   match 'purchases/do_process/:id' => 'purchases#do_process', via: [:get, :post]
   match 'purchases/email/:id' => 'purchases#email', via: [:get, :post]
   match 'purchases/pdf/:id' => 'purchases#pdf', via: [:get, :post]
+  match 'purchases/search/:id' => 'purchases#search', via: [:get, :post]
+
   match 'companies/purchases/:company_id' => 'purchases#list_purchases', via: [:get, :post]  
   resources :purchases
 

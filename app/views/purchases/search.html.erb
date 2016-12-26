@@ -1,0 +1,88 @@
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %> &raquo;
+  <%= link_to "Compras", "/companies/purchases/#{@company.id}" %>
+</div>
+
+<h4>
+  <%= image_tag("invoice_48.png", :class => "vmiddle") %>
+  Cargar orden de servicio
+</h4>
+
+<p>
+  Para crear una nueva factura, por favor cargar el numero de orden de servicio y llenar el siguiente formulario. Los campos marcados con <strong>*</strong> son obligatorios  
+</p>
+
+<div id="oservice-lookup">
+
+
+<h3>Ordenes</h3>
+
+<%= form_tag search_serviceorders_path, method: :get do %>
+  <%= text_field_tag :search,nil,placeholder: "Search", class:"form-control" , type:"buscar" %> 
+  <%= submit_tag "buscar", class:"button"  %>
+<% end %>
+
+
+
+<% if @serviceorders %>
+
+<% if @serviceorders.size > 0 %>
+
+<h3>Resultados busqueda</h3>
+
+<div id="oservice-lookup-results" class="well results-block col-md-10">
+
+<table class="search-results-table col-md-12">
+
+	<tbody>
+		<% @serviceorders.each do |serviceorder| %>
+			<tr>
+			<td><strong>Name:</strong> <%= user.full_name %></td>
+			<td><strong>Email:</strong> <%= user.email %></td>
+			<td><strong>Profile:</strong> <%= link_to "View Profile", serviceorder_path(serviceorder), class: "btn btn-xs btn-success" %>
+
+			<% if serviceorder.not_friends_with?(user.id) %>
+				<%= link_to "Add as my friend", add_oservice_path(purchase: serviceorder, service: serviceorder),
+				class: 'btn btn-xs btn-success', method: :post %>
+			<% else %>
+				<span class='label label-primary'>
+				Ya esta registrada en factura...
+				</span>
+			<% end %>
+
+			</td>
+			</tr>
+		<% end %>
+	</tbody>
+
+</table>
+
+</div>
+
+<% else %>
+
+<p class="lead col-md-12">
+
+No existen order de servicio con la informacion ingresada 
+
+</p>
+
+<% end %>
+
+<% end %>
+
+<div id="oservice-lookup-errors"></div>
+
+</div>
+
+<%= hr() %>
+
+<div class="button">
+
+  <%= link_to 'Regresar', "/companies/purchases/#{@company.id}" %>
+</div>
+
+
+
+

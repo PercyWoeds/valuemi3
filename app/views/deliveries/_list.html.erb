@@ -42,12 +42,25 @@
             <%= delivery.get_processed_short %>
           </td>
           <td class="bordered_right bordered_bottom">
-            <%= link_to "Ver", delivery %>
-          </td>
-          <td class="bordered_right bordered_bottom">
-            <%= link_to 'Eliminar', delivery, :confirm => 'Are you sure?', :method => :delete %>
-          </td>
-        </tr>
+          
+          <%= link_to "Ver",delivery %>                        
+          
+          <% if delivery.processed =="" || delivery.processed == nil %>
+          <%= link_to "Edit", edit_delivery_path(delivery) %>                      
+          <%= link_to 'Eliminar', delivery,:data=> {:confirm => 'Esta seguro ?'}, :method => :delete %>            
+          <% elsif delivery.processed =="1"%>  
+          <%= "** Aprobado **" %>
+          <%= link_to 'Eliminar', delivery,:data=> {:confirm => 'Esta seguro ?'}, :method => :delete %>          
+          <% elsif delivery.processed =="2"%>  
+          <%= "** Anulado **" %>
+          <%= link_to 'Eliminar', delivery,:data=> {:confirm => 'Esta seguro ?'}, :method => :delete %>          
+          
+          <% elsif delivery.processed =="0"%>  
+          <%= link_to "Edit", edit_delivery_path(delivery) %>                                        
+          <%= link_to 'Eliminar', delivery,:data=> {:confirm => 'Esta seguro ?'}, :method => :delete %>          
+          </tr>
+          <%end%>
+
       <% end %>
     </tbody>
   </table>

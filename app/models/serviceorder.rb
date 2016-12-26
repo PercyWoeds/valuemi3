@@ -25,7 +25,35 @@ class Serviceorder < ActiveRecord::Base
                      "DSCTO",
                      "VALOR TOTAL"]
 
+def not_serviceorders_with?(serviceorder_id)
 
+  purchaseships.where(serviceorder_id: serviceorder_id).count < 1
+
+end
+
+
+def self.search(param)
+
+  return Serviceorder.none if param.blank?
+  param.strip!
+  (code_matches(param)) 
+
+end
+
+def self.code_matches(param)
+
+ matches(' code ', param)
+
+end
+
+
+def self.matches(field_name, param)
+
+where("#{field_name} like ?", "%#{param}%")
+
+end
+
+#Remove turbolinks from application.js file if having issues with search
 
   def get_subtotal(items)
     subtotal = 0
@@ -113,8 +141,7 @@ class Serviceorder < ActiveRecord::Base
     for item in items
       if(item and item != "")
         parts = item.split("|BRK|")
-
-        puts parts   
+      
 
         id = parts[0]
         quantity = parts[1]
@@ -125,17 +152,8 @@ class Serviceorder < ActiveRecord::Base
         total -= total * (discount.to_f / 100)
         
         begin
-          product = Servicebuy.find(id.to_i)
-          puts "add Services "
-          puts product.id
-          puts self.id
-          
-          puts id
-          puts quantity
-          puts  price
-          puts discount
-          puts total 
-          
+          product = Servicebuy.find(id.to_i)          
+
           new_invoice_product = ServiceorderService.new(:serviceorder_id => self.id, :servicebuy_id => product.id, :price => price.to_f, :quantity => quantity.to_i, :discount => discount.to_f, :total => total.to_f)
           new_invoice_product.save
           

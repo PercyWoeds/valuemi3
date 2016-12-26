@@ -46,12 +46,16 @@
           </td>
           <td class="bordered_right bordered_bottom">  
 
-          
+            
           <% if serviceorder.processed =="" || serviceorder.processed == nil %>
+          <%= link_to "Ver", serviceorder %>                      
           <%= link_to "Edit", edit_serviceorder_path(serviceorder) %>                      
           <%= link_to 'Eliminar', serviceorder, :confirm => 'Are you sure?', :method => :delete 
           %>
-            
+          <% elsif serviceorder.processed =="0"%>    
+          <%= "** Arpobado **" %>
+          <%= link_to 'Eliminar', serviceorder,:data=> {:confirm => 'Esta seguro ?'}, :method => :delete %>
+          
           <% elsif serviceorder.processed =="2"%>  
           <%= "** Anulado **" %>
           <%= link_to 'Eliminar', serviceorder,:data=> {:confirm => 'Esta seguro ?'}, :method => :delete %>

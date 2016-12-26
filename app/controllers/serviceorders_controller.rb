@@ -242,21 +242,27 @@ class ServiceordersController < ApplicationController
     @suppliers = @company.get_suppliers()
     @payments = @company.get_payments()    
     @monedas  = @company.get_monedas()    
-    ##Cerrar la order de servicio 
+
+    ##Cerrar la order de servicio
     @serviceorder[:processed]='3'
+    documento =  @serviceorder[:documento]
+    documento_id =  params[:documento_id]
 
-    documento =  params[:ac_documento]
-    documento_id =  params[:ac_documento_id]
-
-    puts "documento*----------------------------------------------**********"
+    puts "documento----------------------------------------------**********"
     puts documento
-    puts documento_id    
-
+    puts documento_id
+    
+    if(params[:ac_documento] and params[:ac_documento] != "")
+     
+    else
+        puts documento
+    end
+    
     submision_hash = {"document_id" => params[:ac_document_id],
                        "documento"  => params[:ac_documento] }
 
-    respond_to do |format|    
-    if  @serviceorder.update_attributes(submision_hash)            
+    respond_to do |format| 
+    if  @serviceorder.update_attributes(submision_hash)
         @serviceorder.cerrar()
         
         format.html { redirect_to(@serviceorder, :notice => 'Orden de servicio actualizada  ') }
@@ -795,7 +801,7 @@ class ServiceordersController < ApplicationController
     @company = Company.find(@serviceorder.company_id)
     @documents =@company.get_documents()
 
-
+    
   end
 
 

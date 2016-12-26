@@ -11,7 +11,7 @@
 <div class="small">
   <form method="get" action="/companies/customers/<%= @company.id %>">
     <strong>Search:</strong>
-    <input type="text" name="q" value="<% if @q_org %><%= @q_org %><% end %>" class="small" style="width: 250px;" onclick="$(this).select();" />
+    <input type="text" name="search" value="<% if @q_org %><%= @q_org %><% end %>" class="small" style="width: 250px;" onclick="$(this).select();" />
     <input type="submit" value="Find" class="bold small_btn" />
     <a href="/companies/customers/<%= @company.id %>" class="small_btn">Clear</a>
   </form>

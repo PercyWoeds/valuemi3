@@ -11,7 +11,7 @@
 
   <h3>
     <%= image_tag("invoice_32.png", :class => "vmiddle") %>
-    <%= link_to "Cancelar documentos ", "/companies/purchaseorders/#{@company.id}" %>
+    <%= link_to "Cancelar documentos ", "/companies/supplier_payments/#{@company.id}" %>
   </h3>
   <p>
      Cancelar documentos 
@@ -39,7 +39,7 @@
   <h3>
         <div>
     <%= image_tag("clients_32.png", :class => "vmiddle") %>
-    <%= link_to "Bancos", "/companies/servicebuys/#{@company.id}" %>
+    <%= link_to "Bancos", "/companies/banks/#{@company.id}" %>
         </div>
   </h3>
   <p>
@@ -50,7 +50,7 @@
 
   <h3>
     <%= image_tag("supplier_32.png", :class => "vmiddle") %>
-    <%= link_to "Cuentas bancarias ", "/companies/suppliers/#{@company.id}" %>
+    <%= link_to "Cuentas bancarias ", "/companies/bank_acounts/#{@company.id}" %>
   </h3>
   <p>
      Agregar, editar or eliminar cuentas por pagar 

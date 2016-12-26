@@ -6,7 +6,13 @@ include PurchasesHelper
 class PurchasesController < ApplicationController
   before_filter :authenticate_user!, :checkProducts
 
-  
+  def datos
+    nrodocumento =params[:documento]
+    puts "nro"
+    puts nrodocumento
+
+  end 
+
   # Export purchase to PDF
   def pdf
     @purchase = Purchase.find(params[:id])
@@ -16,6 +22,23 @@ class PurchasesController < ApplicationController
     end
   end
 
+  def search_serviceorders
+    
+    @serviceorders = Serviceorder.search(params[:search_param])
+  end
+
+  def add_oservice
+
+    @oservice = Serviceorder.find(params[:oservice])
+    purchases.build(oservice_id: @oservice.id)
+    if purchases.save
+      redirect_to my_purchases_path, notice: "Orden service was successfully added."
+    else
+      redirect_to my_purchases_path, flash[:error] = "There was an error with adding user as oservice."
+
+    end
+
+  end
 
 
   # Process an purchase
@@ -200,7 +223,32 @@ class PurchasesController < ApplicationController
 
   # GET /purchases/new
   # GET /purchases/new.xml
-  
+  def search
+    @pagetitle = "Nueva Factura"
+    @action_txt = "search"
+    
+    @purchase = Purchase.new
+    
+    
+    
+    @company = Company.find(params[:id])
+    @purchase.company_id = @company.id
+    
+    @locations = @company.get_locations()
+    @divisions = @company.get_divisions()
+
+    @documents = @company.get_documents()    
+    @servicebuys  = @company.get_servicebuys()
+    @monedas  = @company.get_monedas()
+    @payments  = @company.get_payments()
+
+    
+    @ac_user = getUsername()
+    @purchase[:user_id] = getUserId()
+
+
+  end
+
   def new
     @pagetitle = "New purchase"
     @action_txt = "Create"

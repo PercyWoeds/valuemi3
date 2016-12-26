@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161222154121) do
+ActiveRecord::Schema.define(version: 20161223224444) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "name"
@@ -845,6 +845,13 @@ ActiveRecord::Schema.define(version: 20161222154121) do
     t.string   "documento"
   end
 
+  create_table "purchaseships", force: :cascade do |t|
+    t.integer  "serviceorder_id"
+    t.integer  "purchase_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
   create_table "restocks", force: :cascade do |t|
     t.integer  "product_id"
     t.integer  "supplier_id"
@@ -989,6 +996,40 @@ ActiveRecord::Schema.define(version: 20161222154121) do
     t.string   "pais"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "supplier_payment_details", force: :cascade do |t|
+    t.integer  "document_id"
+    t.string   "documento"
+    t.integer  "supplier_id"
+    t.string   "tm"
+    t.float    "total"
+    t.text     "descrip"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "supplier_payments", force: :cascade do |t|
+    t.integer  "company_id"
+    t.integer  "location_id"
+    t.integer  "division_id"
+    t.integer  "bank_acount_id"
+    t.integer  "document_id"
+    t.string   "documento"
+    t.integer  "supplier_id"
+    t.string   "tm"
+    t.float    "total"
+    t.datetime "fecha1"
+    t.datetime "fecha2"
+    t.string   "nrooperacion"
+    t.string   "operacion"
+    t.text     "descrip"
+    t.text     "comments"
+    t.integer  "user_id"
+    t.string   "processed"
+    t.datetime "date_processed"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
   end
 
   create_table "suppliers", force: :cascade do |t|

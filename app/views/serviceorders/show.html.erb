@@ -94,6 +94,7 @@
   <tbody>
     <% for productItem in @serviceorder.get_services() %>
       <tr>
+              
         <td class="bordered_bottom bordered_right">
           <%= link_to productItem.name   %>
         </td>
@@ -112,12 +113,12 @@
       </tr>
     <% end %>
     <tr>
-      <td colspan="6" class="bordered_bottom bordered_right">
+      <td colspan="5" class="bordered_bottom bordered_right">
         &nbsp;
       </td>
     </tr>
     <tr>
-      <td colspan="5" class="bordered_bottom bordered_right bold">
+      <td colspan="4" class="bordered_bottom bordered_right bold">
         Subtotal:
       </td>
       <td class="bordered_bottom bordered_right bold right">
@@ -125,7 +126,7 @@
       </td>
     </tr>
     <tr>
-      <td colspan="5" class="bordered_bottom bordered_right bold">
+      <td colspan="4" class="bordered_bottom bordered_right bold">
         Tax:
       </td>
       <td class="bordered_bottom bordered_right bold right">
@@ -133,7 +134,7 @@
       </td>
     </tr>
     <tr>
-      <td colspan="5" class="bordered_bottom bordered_right bold">
+      <td colspan="4" class="bordered_bottom bordered_right bold">
         Total:
       </td>
       <td class="bordered_bottom bordered_right bold right">

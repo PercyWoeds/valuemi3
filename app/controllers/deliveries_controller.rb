@@ -305,21 +305,22 @@ end
     @delivery = Delivery.find(params[:id])
     @company = @delivery.company
 
-    @locations = @company.get_locations()
-    @divisions = @company.get_divisions()
     @trucks    = @company.get_trucks()
     @employees = @company.get_employees()
+    @customers = @company.get_customers()
+    @remites = @company.get_customers()
     @empsubs   = @company.get_empsubs()
     @unidads   = @company.get_unidads()
     @addresses  = @company.get_addresses()
     @addresses2  = @company.get_addresses()
-    @services  = @company.get_services()      
-    @customers = @company.get_customers()
+
+    @services  = @company.get_services()
+    @servicebuys  = @company.get_servicebuys()
 
     @ac_customer = @delivery.customer.name
     @ac_user = @delivery.user.username
     @payments = @company.get_payments()    
-    @addresses  = @company.get_addresses()
+    
     @services  = @company.get_services()
     @servicebuys  = @company.get_servicebuys()
 

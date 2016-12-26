@@ -49,8 +49,8 @@
             <%= serviceorder.get_processed_short %>
           </td>
           <td class="bordered_right bordered_bottom">
-            
-            <%= link_to 'Ver',"/serviceorders/receive/#{serviceorder.id}" %>
+
+          <td><%= link_to "Ver", "/serviceorders/receive/#{serviceorder.id}" %> </td>                                  
           </td>
           
         </tr>
@@ -59,6 +59,6 @@
   </table>
 <% else %>
   <p class="error">
-    We couldn't <figcaption></figcaption>d any serviceorders.
+    No encontramos <figcaption></figcaption> ninguna orden de servicio.
   </p>
 <% end %>

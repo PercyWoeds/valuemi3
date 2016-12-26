@@ -156,6 +156,7 @@ class CompaniesController < ApplicationController
     end
   end
 
+
   # PUT /companies/1
   # PUT /companies/1.xml
   def update

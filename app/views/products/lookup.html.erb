@@ -1,0 +1,126 @@
+
+  <%= form_for(@purchase) do |f| %>
+    <h3>
+       Informacion Factura 
+    </h3>
+
+    <div class="field">
+    
+
+      <label for="ac_supplier" class="bold">Proveedor*</label><br />
+      <input type="text" name="ac_supplier" id="ac_supplier" value="<% if @ac_supplier %><%= @ac_supplier %><% end %>" />
+      
+      <div class="small">
+      <a href="#" onclick="createSupplierPurchase(); return false;">+ Crear nuevo proveedor</a>
+      </div>
+
+      <div class="small">
+        Ingrese una termino de busqueda para encontrar un cliente.
+      </div>
+
+      <br />
+
+      <div class="small">
+        <strong>Seleccionar proveedor:</strong>
+        <span id="selected supplier"><% if @ac_supplier %><%= @ac_supplier %><% else %><!-- i --><% end %></span>
+      </div>
+    </div>
+    <div class="field">
+      <%= f.label :document_id,"Documento" %><br />
+      <%= f.select :document_id, options_from_collection_for_select(@documents,'id','description')%>
+    </div>
+      
+    <div class="field">
+      <%= f.label :documento, "Nro DOcumento *", :class => "bold" %><br />
+      <%= f.text_field :documento %>
+
+    </div>
+    <div class="field">
+      <%= f.label :date1, "Fecha Emision*", :class => "bold" %><br />
+      <%= f.date_field :date1, value: Time.now.strftime("%d/%m/%Y") %>
+    </div>
+
+    <div class="field">
+      <%= f.label :date2, "Fecha Entrega*", :class => "bold" %><br />
+      <%= f.date_field :date2, value: Time.now.strftime("%d/%m/%Y") %>
+    </div>
+
+
+    <div class="field">
+      <%= f.label :payment_id,"Forma de Pago " %><br />
+      <%= f.select :payment_id, options_from_collection_for_select(@payments,'id','descrip')%>
+    </div>
+  
+    <div class="field">
+      <%= f.label :moneda_id ,"  "%><br />
+      <%= f.select :moneda_id, options_from_collection_for_select(@monedas,'id','description') %>
+    </div>
+    
+  
+    <div class="field">
+      <%= f.label :location_id %><br />
+      <%= f.select :location_id, options_from_collection_for_select(@locations,'id','name') %>
+    </div>
+  
+    <div class="field">
+      <%= f.label :division_id %><br />
+      <%= f.select :division_id, options_from_collection_for_select(@divisions,'id','name') %>
+    </div>
+  
+    <%= hr() %>
+    
+    <div class="field" id="list_items">
+      <p class="bold big">Productos:</p>
+    </div>
+    
+    <%= hr() %>
+  
+    <div class="field">
+      <%= f.check_box :processed %>
+      <%= f.label :processed, "Procesar Factura", :class => "bold" %>
+      <div class="small">
+        Marcas de tiempo o no esta factura se ha pagado y que pueden deducir las cantidades de productos y contar hacia el total del mes.
+      </div>
+    </div>
+  
+    <div class="field">
+      <%= f.check_box :return %>
+      <%= f.label :return, :class => "bold" %>
+      <div class="small">
+        Es una orden de devolución?
+      </div>
+    </div>
+    
+    <%= hr() %>
+    
+    <div class="field">
+      <label for="ac_user" class="bold">Vendedor*</label><br />
+      <input type="text" name="ac_user" id="ac_user" value="<% if @ac_user %><%= @ac_user %><% end %>" />
+
+      <div class="small">
+        Introduzca un término de búsqueda para encontrar a un usuario .
+      </div>
+      <br />
+
+      <div class="small">
+        <strong>Seleccionar vendedor:</strong>
+        <span id="selected_seller"><% if @ac_user %><%= @ac_user %><% else %><!-- i --><% end %></span>
+      </div>
+    </div>
+  
+    <%= hr() %>
+  
+
+    <div class="actions">
+      <input type="hidden" name="items" id="items" value="<% if @products_lines %><%= @products_lines %><% end %>" />
+      <%= f.hidden_field :user_id, :id => "ac_user_id" %>
+      <%= f.hidden_field :supplier_id, :id => "ac_supplier_id" %>
+      <%= f.hidden_field :company_id %>
+      <%= f.submit %>
+    </div>
+    
+    <div class="small">
+      Una vez que haya terminado la adición de productos , no olvide <strong><%= @action_txt %></strong> tu factura.
+    </div>
+  <% end %>
+</div>
