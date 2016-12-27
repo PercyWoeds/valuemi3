@@ -31,6 +31,11 @@ class Company < ActiveRecord::Base
       end
     end
   end
+  def get_bank_acounts()
+     bank_acounts = BankAcount.all      
+    return bank_acounts
+  end
+  
   def get_marcas()
      marcas = Marca.all      
     return marcas

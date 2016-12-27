@@ -13,41 +13,15 @@
 
 <div class="mid_box bordered_right">
   <%= form_for(@supplierpayment) do |f| %>
-    <h3>
-       Informacion Order de Servicio 
-    </h3>
-
-    <div class="field">  
-      <label for="ac_supplier" class="bold"> PROVEEDOR *</label><br />
-      <%= f.select :supplier_id,options_from_collection_for_select(@suppliers,'id','name') %>
-      <div class="small">
-        Ingrese una termino de busqueda para encontrar un proveedor.
-      </div>
-      <br />
-    </div>
-    
-            
-    <div class="small">
-        <strong>Seleccionar proveedor:</strong>
-        <span id="selected_supplierr"><% if @ac_supplier %><%= @ac_supplier %><% else %><!-- i --><% end %></span>
-    </div>
-    
-    
+    <h4>
+       Informacion Orden de Pago 
+    </h4>
+                  
     <div class="field">
-      <%= f.label :fecha1, "Fecha Entrega*", :class => "bold" %><br />
+      <%= f.label :fecha1, "Fecha*", :class => "bold" %><br />
       <%= f.date_field :fecha1, value: Time.now.strftime("%d/%m/%Y") %>
     </div>
-
-
-    <div class="field">
-      <%= f.label  :payment_id,"Forma de Pago " %><br />
-      <%= f.select :payment_id, options_from_collection_for_select(@payments,'id','descrip') %>
-    </div>
   
-    <div class="field">
-      <%= f.label :moneda_id , "Moneda"%><br />
-      <%= f.select :moneda_id, options_from_collection_for_select(@monedas,'id','description') %>
-    </div>
     
     <div class="field">
       <%= f.label :code, "Code*", :class => "bold" %><br />
@@ -66,18 +40,47 @@
       <%= f.select :division_id,options_from_collection_for_select(@divisions,'id','name') %>
     </div>
 
+
+    <div class="field">
+      <%= f.label :bank_acount_id %><br />
+      <%= f.select :bank_acount_id,options_from_collection_for_select(@bank_acounts,'id','number') %>
+    </div>
+
+    <div class="field">
+      <%= f.label  :document_id %><br />
+      <%= f.select :document_id,options_from_collection_for_select(@documents,'id','description') %>
+    </div>
+
+    <div class="field">
+      <%= f.label :documento, "Documento ", :class => "bold" %><br />
+      <%= f.text_field :documento %>
+    </div>
+
+    <div class="field">
+      <%= f.label :nrooperacion, "Nro.Operacion" %><br />
+      <%= f.text_field :nrooperacion %>
+    </div>
+
+    <div class="field">
+      <%= f.label :operacion, "Operacion" %><br />
+      <%= f.text_field :operacion  %>
+    </div>
+    <div class="field">
+      <%= f.label :total, "Importe ", :class => "bold" %><br />
+      <%= f.number_field :total ,:step => 0.01 %>
+    </div>
   
     <%= hr() %>
     
     <div class="field" id="list_items">
-      <p class="bold big">suppliers:</p>
+      <p class="bold big">Documentos a cancelar :</p>
     </div>
     
     <%= hr() %>
       
     <div class="field">
-      <%= f.label :description %><br />
-      <%= f.text_area :description %>
+      <%= f.label :descrip %><br />
+      <%= f.text_area :descrip %>
     </div>  
 
 
@@ -117,48 +120,37 @@
 </div>
 
 <div class="mid_box">
-  <h3>
-    Agregar Servicios a la orden
-  </h3>
+  <h4>
+    Agregar documento 
+  </h4>
   
-  <form method="get" action="/servicebuys" onsubmit="addItemTosupplierpayment(); return false;">
-      
-    <strong>Product:</strong><br />
-    <%= select_tag(:ac_item_id,options_from_collection_for_select(@servicebuys,'id','name') ) %>
+  <form method="get" action="/purchases" onsubmit="addItemToSupplierPayment(); return false;">     <input type="hidden" name="ac_item_id" id="ac_item_id" value="" />
+
+    <strong>Documento :</strong><br />
+    <input type="text" name="ac_item" id="ac_item" value="" />
+    <div class="small">
+      Ingrese un termino de busqueda para encontrar un documento 
+    </div>
+    <br />  
+    
+    <strong>Importe:</strong><br />
+    <span id="ac_item_price"></span>
 
     <div class="small">
-      Ingrese un termino de busqueda para encontrar un producto.
-    </div>
-    <br />
-    
-    <strong>Precio:</strong><br />
-    <input type="text" name="ac_item_price" id="ac_item_price" value="" class="tf_short" />
-    <div class="small">
-      Precio del  producto para agregar una factura.
-    </div>
-    <br />
-    
-    <strong>Cantidad:</strong><br />
-    <input type="text" name="ac_item_quantity" id="ac_item_quantity" value="1" class="tf_short" />
-    <div class="small">
-     Cantidad del producto para agregar una factura.
-    </div>
-    <br />
-    
-    <strong>Descuento %:</strong><br />
-    <input type="text" name="ac_item_discount" id="ac_item_discount" value="0" class="tf_short" />
-    <div class="small">
-      Descuento % del producto para agregar una factura.
+      Total
     </div>
     <br />
     
     <div>
-      <strong>Total:</strong><br />
-      <span id="ac_item_total">0.00</span>
+      <strong>Total:</strong><br />    
+    <input type="text" name="ac_item_total" id="ac_item_total" value="0 " class="tf_short" />
+
     </div>
     
     <br />
     <input type="submit" value="Agregar item a Factura" />
+      
+
   </form>
   
   <%= hr() %>
@@ -173,15 +165,17 @@
 
 <script type="text/javascript">
   $(document).ready(function() {
-    $("#ac_supplier").autocomplete("/supplierpayments/ac_suppliers/<%= @company.id %>", {
-			matchSubset: 1,
-			matchContains: 1,
+
+    $("#ac_item").autocomplete("/supplierpayments/ac_documentos/<%= @company.id %>", {
+      matchSubset: 1,
+      matchContains: 1,
       selectFirst: false
     });
     
-    $("#ac_supplier").result(function(event, data, formatted) {
-      $("#ac_supplier_id").val(data[2]);
-      $("#selected_supplier").html(data[0]);
+    $("#ac_item").result(function(event, data, formatted) {
+      $("#ac_item_id").val(data[2]);
+      $("#ac_item_total").val(data[4]);  
+      updateItemTotal6();
     });
     
     
@@ -194,24 +188,17 @@
     $("#ac_user").result(function(event, data, formatted) {
       $("#ac_user_id").val(data[2]);
       $("#selected_seller").html(data[0]);
-    });
+    });    
     
-    
-    $("#ac_item_quantity").bind("keyup", function() {
-      updateItemTotal4();
-    });
     
     $("#ac_item_price").bind("keyup", function() {
-      updateItemTotal4();
+      updateItemTotal6();
     });
     
-    $("#ac_item_discount").bind("keyup", function() {
-      updateItemTotal4();
-    });
     
     <% if @suppliers_lines %>
     alert 'holas suppliers_lines';
-      listItemssupplierpayment();
+      listItemsSupplierPayment();
     <% end %>
   });
 </script>

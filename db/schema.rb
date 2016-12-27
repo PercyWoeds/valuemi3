@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161223224444) do
+ActiveRecord::Schema.define(version: 20161227154933) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "name"
@@ -1005,8 +1005,9 @@ ActiveRecord::Schema.define(version: 20161223224444) do
     t.string   "tm"
     t.float    "total"
     t.text     "descrip"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.integer  "supplierpayment_id"
   end
 
   create_table "supplier_payments", force: :cascade do |t|
@@ -1030,6 +1031,7 @@ ActiveRecord::Schema.define(version: 20161223224444) do
     t.datetime "date_processed"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.string   "code"
   end
 
   create_table "suppliers", force: :cascade do |t|

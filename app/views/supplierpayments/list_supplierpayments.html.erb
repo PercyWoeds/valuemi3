@@ -5,7 +5,7 @@
 
 <h1>
   <%= image_tag("invoice_48.png", :class => "vmiddle") %>
-  Registrar facturas por Orden de Servicio 
+  Registrar Cancelaciones  
   
   <% if @customer %>
     for customer: <%= @customer.name %>
@@ -62,7 +62,7 @@
   </div>
   
   <div class="button">
-    <a href="/companies/supplierpayments/<%= @company.id %>" class="small_btn">Clear filters</a>
+    <a href="/companies/supplier_payments/<%= @company.id %>" class="small_btn">Clear filters</a>
   </div>
 </div>
 
@@ -72,7 +72,7 @@
 <br />
 
 <div class="button">
-  <%= link_to 'Nueva Orden servicio ', "/supplierpayments/new/#{@company.id}" %>
+  <%= link_to 'Nueva Cancelacion ', "/supplierpayments/new/#{@company.id}" %>
 </div>
 
 <%= will_paginate @supplierpayments %>

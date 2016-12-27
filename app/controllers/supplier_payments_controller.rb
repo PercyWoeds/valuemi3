@@ -8,20 +8,20 @@ class SupplierPaymentsController < ApplicationController
  
   def build_pdf_header(pdf)
 
-     $lcCli  =  @serviceorder.supplier.name
-     $lcdir1 = @serviceorder.supplier.address1
-     $lcdir2 =@serviceorder.supplier.address2
-     $lcdis  =@serviceorder.supplier.city
-     $lcProv = @serviceorder.supplier.state
-     $lcFecha1= @serviceorder.fecha1.strftime("%d/%m/%Y") 
-     $lcMon=@serviceorder.moneda.description     
-     $lcPay= @serviceorder.payment.descrip
-     $lcSubtotal=sprintf("%.2f",@serviceorder.subtotal)
-     $lcIgv=sprintf("%.2f",@serviceorder.tax)
-     $lcTotal=sprintf("%.2f",@serviceorder.total)
+     $lcCli  =  @supplierpayment.supplier.name
+     $lcdir1 = @supplierpayment.supplier.address1
+     $lcdir2 =@supplierpayment.supplier.address2
+     $lcdis  =@supplierpayment.supplier.city
+     $lcProv = @supplierpayment.supplier.state
+     $lcFecha1= @supplierpayment.fecha1.strftime("%d/%m/%Y") 
+     $lcMon=@supplierpayment.moneda.description     
+     $lcPay= @supplierpayment.payment.descrip
+     $lcSubtotal=sprintf("%.2f",@supplierpayment.subtotal)
+     $lcIgv=sprintf("%.2f",@supplierpayment.tax)
+     $lcTotal=sprintf("%.2f",@supplierpayment.total)
 
-     $lcDetracion=sprintf("%.2f",@serviceorder.detraccion)
-     $lcAprobado= @serviceorder.get_processed 
+     $lcDetracion=sprintf("%.2f",@supplierpayment.detraccion)
+     $lcAprobado= @supplierpayment.get_processed 
     
       pdf.image "#{Dir.pwd}/public/images/logo.png", :width => 270
         
@@ -39,7 +39,7 @@ class SupplierPaymentsController < ApplicationController
         pdf.font "Helvetica", :style => :bold do
           pdf.text "R.U.C: 20424092941", :align => :center
           pdf.text "ORDEN DE SERVICIO", :align => :center
-          pdf.text "#{@serviceorder.code}", :align => :center,
+          pdf.text "#{@supplierpayment.code}", :align => :center,
                                  :style => :bold
           
         end
@@ -81,7 +81,7 @@ class SupplierPaymentsController < ApplicationController
       headers = []
       table_content = []
 
-      Serviceorder::TABLE_HEADERS.each do |header|
+      SupplierPayment::TABLE_HEADERS.each do |header|
         cell = pdf.make_cell(:content => header)
         cell.background_color = "FFFFCC"
         headers << cell
@@ -91,7 +91,7 @@ class SupplierPaymentsController < ApplicationController
 
       nroitem=1
 
-       for  product in @serviceorder.get_services() 
+       for  product in @supplierpayment.get_services() 
             row = []
             row << nroitem.to_s
             row << product.quantity.to_s
@@ -136,8 +136,8 @@ class SupplierPaymentsController < ApplicationController
 
         pdf.text ""
         pdf.text "" 
-        pdf.text "Descripcion : #{@serviceorder.description}", :size => 8, :spacing => 4
-        pdf.text "Comentarios : #{@serviceorder.comments}", :size => 8, :spacing => 4
+        pdf.text "Descripcion : #{@supplierpayment.description}", :size => 8, :spacing => 4
+        pdf.text "Comentarios : #{@supplierpayment.comments}", :size => 8, :spacing => 4
         
         
 
@@ -158,7 +158,7 @@ class SupplierPaymentsController < ApplicationController
         pdf.text ""
         pdf.text "                  Realizado por                                                 V.B.Jefe Compras                                            V.B.Gerencia           ", :size => 10, :spacing => 4
 
-        pdf.draw_text "Company: #{@serviceorder.company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
+        pdf.draw_text "Company: #{@supplierpayment.company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
 
       end
 
@@ -168,10 +168,10 @@ class SupplierPaymentsController < ApplicationController
 
 
 
-  # Export serviceorder to PDF
+  # Export supplierpayment to PDF
   def pdf
-    @serviceorder =SupplierPayment.find(params[:id])
-    company =@serviceorder.company_id
+    @supplierpayment =SupplierPayment.find(params[:id])
+    company =@supplierpayment.company_id
     @company =Company.find(company)
 
     @instrucciones = @company.get_instruccions()
@@ -182,12 +182,12 @@ class SupplierPaymentsController < ApplicationController
     $lcEntrega3 =  @lcEntrega.description3
     $lcEntrega4 =  @lcEntrega.description4
 
-    Prawn::Document.generate("app/pdf_output/#{@serviceorder.id}.pdf") do |pdf|
+    Prawn::Document.generate("app/pdf_output/#{@supplierpayment.id}.pdf") do |pdf|
         pdf.font "Helvetica"
         pdf = build_pdf_header(pdf)
         pdf = build_pdf_body(pdf)
         build_pdf_footer(pdf)
-        $lcFileName =  "app/pdf_output/#{@serviceorder.id}.pdf"      
+        $lcFileName =  "app/pdf_output/#{@supplierpayment.id}.pdf"      
         
     end     
 
@@ -198,43 +198,43 @@ class SupplierPaymentsController < ApplicationController
 
   end
   
-  # Process an serviceorder
+  # Process an supplierpayment
   def do_process
-    @serviceorder = SupplierPayment.find(params[:id])
-    @serviceorder[:processed] = "1"
+    @supplierpayment = SupplierPayment.find(params[:id])
+    @supplierpayment[:processed] = "1"
     
-    @serviceorder.process
+    @supplierpayment.process
     
-    flash[:notice] = "The serviceorder order has been processed."
-    redirect_to @serviceorder
+    flash[:notice] = "The supplierpayment order has been processed."
+    redirect_to @supplierpayment
   end
-  # Process an serviceorder
+  # Process an supplierpayment
   def do_anular
-    @serviceorder = SupplierPayment.find(params[:id])
-    @serviceorder[:processed] = "2"
+    @supplierpayment = SupplierPayment.find(params[:id])
+    @supplierpayment[:processed] = "2"
     
-    @serviceorder.anular 
+    @supplierpayment.anular 
     
-    flash[:notice] = "The serviceorder order has been anulado."
-    redirect_to @serviceorder
+    flash[:notice] = "The supplierpayment order has been anulado."
+    redirect_to @supplierpayment
   end
   
-  # Do send serviceorder via email
+  # Do send supplierpayment via email
   def do_email
-    @serviceorder = SupplierPayment.find(params[:id])
+    @supplierpayment = SupplierPayment.find(params[:id])
     @email = params[:email]
     
-    Notifier.serviceorder(@email, @serviceorder).deliver
+    Notifier.supplierpayment(@email, @supplierpayment).deliver
       
-    flash[:notice] = "The serviceorder has been sent successfully."
-    redirect_to "/serviceorders/#{@serviceorder.id}"
+    flash[:notice] = "The supplierpayment has been sent successfully."
+    redirect_to "/supplierpayments/#{@supplierpayment.id}"
   end
 
   def do_grabar_ins
     
-    @serviceorder = SupplierPayment.find(params[:id])
+    @supplierpayment = SupplierPayment.find(params[:id])
 
-    @company = @serviceorder.company
+    @company = @supplierpayment.company
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
     @suppliers = @company.get_suppliers()
@@ -242,8 +242,8 @@ class SupplierPaymentsController < ApplicationController
     @monedas  = @company.get_monedas()    
 
     ##Cerrar la order de servicio
-    @serviceorder[:processed]='3'
-    documento =  @serviceorder[:documento]
+    @supplierpayment[:processed]='3'
+    documento =  @supplierpayment[:documento]
     documento_id =  params[:documento_id]
 
     puts "documento----------------------------------------------**********"
@@ -260,22 +260,22 @@ class SupplierPaymentsController < ApplicationController
                        "documento"  => params[:ac_documento] }
 
     respond_to do |format| 
-    if  @serviceorder.update_attributes(submision_hash)
-        @serviceorder.cerrar()
+    if  @supplierpayment.update_attributes(submision_hash)
+        @supplierpayment.cerrar()
         
-        format.html { redirect_to(@serviceorder, :notice => 'Orden de servicio actualizada  ') }
+        format.html { redirect_to(@supplierpayment, :notice => 'Orden de servicio actualizada  ') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
-        format.xml  { render :xml => @serviceorder.errors, :status => :unprocessable_entity }
+        format.xml  { render :xml => @supplierpayment.errors, :status => :unprocessable_entity }
       end
     end
   end
   
-  # Send serviceorder via email
+  # Send supplierpayment via email
   def email
-    @serviceorder = SupplierPayment.find(params[:id])
-    @company = @serviceorder.company
+    @supplierpayment = SupplierPayment.find(params[:id])
+    @company = @supplierpayment.company
   end
   
   # List items
@@ -286,28 +286,30 @@ class SupplierPaymentsController < ApplicationController
     items = items.split(",")
     items_arr = []
     @products = []
+    @total_pago=0
+    @importe_total=0
     i = 0
 
     for item in items
       if item != ""
         parts = item.split("|BRK|")
         
-        id = parts[0]
-        quantity = parts[1]
-        price = parts[2]
-        discount = parts[3]
+        id = parts[0]        
+        price = parts[1]        
         
-        product = Servicebuy.find(id.to_i)
-        product[:i] = i
-        product[:quantity] = quantity.to_i
-        product[:price] = price.to_f
-        product[:discount] = discount.to_f
-        
-        total = product[:price] * product[:quantity]
-        total -= total * (product[:discount] / 100)
-        
-        product[:currtotal] = total
-        
+        product = Purchase.find(id.to_i)
+
+        product[:tax1] = i        
+
+        product[:price_with_tax] = price.to_f
+              
+        total = product[:price_with_tax]
+                
+    
+        product[:total_amount] = total
+
+        @total_pago = @total_pago + total   
+    
         @products.push(product)
       end
       
@@ -317,6 +319,11 @@ class SupplierPaymentsController < ApplicationController
     render :layout => false
   end
   
+  # Autocomplete for documents
+  def ac_documentos
+    @docs = Purchase.where(["company_id = ? AND (documento LIKE ? )", params[:company_id], "%" + params[:q] + "%"])   
+    render :layout => false
+  end
   
   # Autocomplete for products
   def ac_products
@@ -354,11 +361,11 @@ class SupplierPaymentsController < ApplicationController
     render :layout => false
   end
   
-  # Show serviceorders for a company
+  # Show supplierpayments for a company
   
-  def list_serviceorders
+  def list_supplierpayments
     @company = Company.find(params[:company_id])
-    @pagetitle = "#{@company.name} - serviceorders"
+    @pagetitle = "#{@company.name} - supplierpayments"
     @filters_display = "block"
     
     @locations = Location.where(company_id: @company.id).order("name ASC")
@@ -373,30 +380,30 @@ class SupplierPaymentsController < ApplicationController
     end
   
     if(@company.can_view(current_user))
-      if(params[:ac_supplier] and params[:ac_supplier] != "")
+      if(params[:ac_documentos] and params[:ac_documentos] != "")
         @supplier = supplier.find(:first, :conditions => {:company_id => @company.id, :name => params[:ac_supplier].strip})
         
         if @supplier
-          @serviceorders = Serviceorder.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :supplier_id => @supplier.id}, :order => "id DESC")
+          @supplierpayments = supplierpayment.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :supplier_id => @supplier.id}, :order => "id DESC")
         else
-          flash[:error] = "We couldn't find any serviceorders for that supplier."
-          redirect_to "/companies/serviceorders/#{@company.id}"
+          flash[:error] = "We couldn't find any supplierpayments for that supplier."
+          redirect_to "/companies/supplierpayments/#{@company.id}"
         end
       elsif(params[:supplier] and params[:supplier] != "")
         @supplier = Supplier.find(params[:supplier])
         
         if @supplier
-          @serviceorders = SupplierPayment.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :supplier_id => @supplier.id}, :order => "id DESC")
+          @supplierpayments = SupplierPayment.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :supplier_id => @supplier.id}, :order => "id DESC")
         else
-          flash[:error] = "We couldn't find any serviceorders for that supplier."
-          redirect_to "/companies/serviceorders/#{@company.id}"
+          flash[:error] = "We couldn't find any supplierpayments for that supplier."
+          redirect_to "/companies/supplierpayments/#{@company.id}"
         end
       elsif(params[:location] and params[:location] != "" and params[:division] and params[:division] != "")
-        @serviceorders = SupplierPayment.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :location_id => params[:location], :division_id => params[:division]}, :order => "id DESC")
+        @supplierpayments = SupplierPayment.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :location_id => params[:location], :division_id => params[:division]}, :order => "id DESC")
       elsif(params[:location] and params[:location] != "")
-        @serviceorders = SupplierPayment.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :location_id => params[:location]}, :order => "id DESC")
+        @supplierpayments = SupplierPayment.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :location_id => params[:location]}, :order => "id DESC")
       elsif(params[:division] and params[:division] != "")
-        @serviceorders = SupplierPayment.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :division_id => params[:division]}, :order => "id DESC")
+        @supplierpayments = SupplierPayment.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :division_id => params[:division]}, :order => "id DESC")
       else
         if(params[:q] and params[:q] != "")
           fields = ["description", "comments", "code"]
@@ -406,9 +413,9 @@ class SupplierPaymentsController < ApplicationController
 
           query = str_sql_search(q, fields)
 
-          @serviceorders = SupplierPayment.paginate(:page => params[:page], :order => 'id DESC', :conditions => ["company_id = ? AND (#{query})", @company.id])
+          @supplierpayments = SupplierPayment.paginate(:page => params[:page], :order => 'id DESC', :conditions => ["company_id = ? AND (#{query})", @company.id])
         else
-          @serviceorders = SupplierPayment.where(company_id:  @company.id).order("id DESC").paginate(:page => params[:page])
+          @supplierpayments = SupplierPayment.where(company_id:  @company.id).order("id DESC").paginate(:page => params[:page])
           @filters_display = "none"
         end
       end
@@ -417,77 +424,77 @@ class SupplierPaymentsController < ApplicationController
     end
   end
   
-  # GET /serviceorders
-  # GET /serviceorders.xml
+  # GET /supplierpayments
+  # GET /supplierpayments.xml
   def index
     @companies = Company.where(user_id: current_user.id).order("name")
-    @path = 'serviceorders'
-    @pagetitle = "serviceorders"
+    @path = 'supplierpayments'
+    @pagetitle = "supplierpayments"
   end
 
-  # GET /serviceorders/1
-  # GET /serviceorders/1.xml
+  # GET /supplierpayments/1
+  # GET /supplierpayments/1.xml
   def show
-    @serviceorder = SupplierPayment.find(params[:id])
-    @supplier = @serviceorder.supplier
+    @supplierpayment = SupplierPayment.find(params[:id])
+    @supplier = @supplierpayment.supplier
   end
 
-  # GET /serviceorders/new
-  # GET /serviceorders/new.xml
+  # GET /supplierpayments/new
+  # GET /supplierpayments/new.xml
   
   def new
     @pagetitle = "Nueva Orden"
     @action_txt = "Create"
     
-    @serviceorder = SupplierPayment.new
-    @serviceorder[:code] = "I_#{generate_guid()}"
-    @serviceorder[:processed] = false
+    @supplierpayment = SupplierPayment.new
+    @supplierpayment[:code] = "I_#{generate_guid()}"
+    @supplierpayment[:processed] = false
     
     @company = Company.find(params[:company_id])
-    @serviceorder.company_id = @company.id
+    @supplierpayment.company_id = @company.id
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
     @suppliers = @company.get_suppliers()
-    @payments = @company.get_payments()    
+    @bank_acounts = @company.get_bank_acounts()    
     @servicebuys  = @company.get_servicebuys()
     @monedas  = @company.get_monedas()
+    @documents  = @company.get_documents()
 
     @ac_user = getUsername()
-    @serviceorder[:user_id] = getUserId()
+    @supplierpayment[:user_id] = getUserId()
   end
 
-  # GET /serviceorders/1/edit
+  # GET /supplierpayments/1/edit
   def edit
-    @pagetitle = "Edit serviceorder"
+    @pagetitle = "Edit supplierpayment"
     @action_txt = "Update..."
     
-    @serviceorder = SupplierPayment.find(params[:id])
-    @company = @serviceorder.company
-    @ac_supplier = @serviceorder.supplier.name
-    @ac_user = @serviceorder.user.username
+    @supplierpayment = SupplierPayment.find(params[:id])
+    @company = @supplierpayment.company
+    @ac_supplier = @supplierpayment.supplier.name
+    @ac_user = @supplierpayment.user.username
     @suppliers = @company.get_suppliers()
     @servicebuys  = @company.get_servicebuys()
     @payments = @company.get_payments()
     @monedas  = @company.get_monedas()
     
-    @products_lines = @serviceorder.services_lines
+    @products_lines = @supplierpayment.services_lines
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
   end
 
-  # POST /serviceorders
-  # POST /serviceorders.xml
+  # POST /supplierpayments
+  # POST /supplierpayments.xml
   def create
     @pagetitle = "Nueva Orden"
     @action_txt = "Create"
     
     items = params[:items].split(",")
     
-    @serviceorder = SupplierPayment.new(serviceorder_params)
-    
-    @company = Company.find(params[:serviceorder][:company_id])
+    @supplierpayment = SupplierPayment.new(supplierpayment_params)    
+    @company = Company.find(params[:supplierpayment][:company_id])
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
@@ -496,61 +503,61 @@ class SupplierPaymentsController < ApplicationController
     @payments = @company.get_payments()
     @monedas  = @company.get_monedas()
 
-    @serviceorder[:subtotal] = @serviceorder.get_subtotal(items)
-    
+    @supplierpayment[:subtotal] = @supplierpayment.get_subtotal(items)  
     begin
-      @serviceorder[:tax] = @serviceorder.get_tax(items, @serviceorder[:supplier_id])
+      @supplierpayment[:tax] = @supplierpayment.get_tax(items, @supplierpayment[:supplier_id])
     rescue
-      @serviceorder[:tax] = 0
+      @supplierpayment[:tax] = 0
+    end  
+    @supplierpayment[:total] = @supplierpayment[:subtotal] + @supplierpayment[:tax]
+    @supplierpayment[:detraccion] = @supplierpayment[:total] * 4/100
+
+    if @supplierpaymen[:total] != @total_pago 
+        flash[:error] = "Existe diferencia entre importe a cancelar y documentos ingresados."
     end
     
-    @serviceorder[:total] = @serviceorder[:subtotal] + @serviceorder[:tax]
-
-    @serviceorder[:detraccion] = @serviceorder[:total] * 4/100
-
-    
-    if(params[:serviceorder][:user_id] and params[:serviceorder][:user_id] != "")
-      curr_seller = User.find(params[:serviceorder][:user_id])
+    if(params[:supplierpayment][:user_id] and params[:supplierpayment][:user_id] != "")
+      curr_seller = User.find(params[:supplierpayment][:user_id])
       @ac_user = curr_seller.username    
     end
 
 
     respond_to do |format|
-      if @serviceorder.save
+      if @supplierpayment.save
         # Create products for kit
-        @serviceorder.add_services(items)
+        @supplierpayment.add_products(items)
         
-        # Check if we gotta process the serviceorder
-        @serviceorder.process()
+        # Check if we gotta process the supplierpayment
+        @supplierpayment.process()
         
-        format.html { redirect_to(@serviceorder, :notice => 'serviceorder was successfully created.') }
-        format.xml  { render :xml => @serviceorder, :status => :created, :location => @serviceorder }
+        format.html { redirect_to(@supplierpayment, :notice => 'supplierpayment was successfully created.') }
+        format.xml  { render :xml => @supplierpayment, :status => :created, :location => @supplierpayment }
       else
         format.html { render :action => "new" }
-        format.xml  { render :xml => @serviceorder.errors, :status => :unprocessable_entity }
+        format.xml  { render :xml => @supplierpayment.errors, :status => :unprocessable_entity }
       end
     end
   end
   
 
-  # PUT /serviceorders/1
-  # PUT /serviceorders/1.xml
+  # PUT /supplierpayments/1
+  # PUT /supplierpayments/1.xml
   def update
     @pagetitle = "Editar Orden"
     @action_txt = "Update"
     
     items = params[:items].split(",")
     
-    @serviceorder = SupplierPayment.find(params[:id])
-    @company = @serviceorder.company
+    @supplierpayment = SupplierPayment.find(params[:id])
+    @company = @supplierpayment.company
     
     if(params[:ac_supplier] and params[:ac_supplier] != "")
       @ac_supplier = params[:ac_supplier]
     else
-      @ac_supplier = @serviceorder.supplier.name
+      @ac_supplier = @supplierpayment.supplier.name
     end
     
-    @products_lines = @serviceorder.products_lines
+    @products_lines = @supplierpayment.products_lines
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
@@ -559,44 +566,44 @@ class SupplierPaymentsController < ApplicationController
     @servicebuys  = @company.get_servicebuys()
     @monedas  = @company.get_monedas()
     
-    @serviceorder[:subtotal] = @serviceorder.get_subtotal(items)
-    @serviceorder[:tax] = @serviceorder.get_tax(items, @serviceorder[:supplier_id])
-    @serviceorder[:total] = @serviceorder[:subtotal] + @serviceorder[:tax]
+    @supplierpayment[:subtotal] = @supplierpayment.get_subtotal(items)
+    @supplierpayment[:tax] = @supplierpayment.get_tax(items, @supplierpayment[:supplier_id])
+    @supplierpayment[:total] = @supplierpayment[:subtotal] + @supplierpayment[:tax]
 
     respond_to do |format|
-      if @serviceorder.update_attributes(params[:serviceorder])
+      if @supplierpayment.update_attributes(params[:supplierpayment])
         # Create products for kit
-        @serviceorder.delete_products()
-        @serviceorder.add_products(items)
+        @supplierpayment.delete_products()
+        @supplierpayment.add_products(items)
         
-        # Check if we gotta process the serviceorder
-        @serviceorder.process()
+        # Check if we gotta process the supplierpayment
+        @supplierpayment.process()
         
-        format.html { redirect_to(@serviceorder, :notice => 'serviceorder was successfully updated.') }
+        format.html { redirect_to(@supplierpayment, :notice => 'supplierpayment was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
-        format.xml  { render :xml => @serviceorder.errors, :status => :unprocessable_entity }
+        format.xml  { render :xml => @supplierpayment.errors, :status => :unprocessable_entity }
       end
     end
   end
 
 
-  # DELETE /serviceorders/1
-  # DELETE /serviceorders/1.xml
+  # DELETE /supplierpayments/1
+  # DELETE /supplierpayments/1.xml
   def destroy
-    @serviceorder = SupplierPayment.find(params[:id])
-    company_id = @serviceorder[:company_id]
-    @serviceorder.destroy
+    @supplierpayment = SupplierPayment.find(params[:id])
+    company_id = @supplierpayment[:company_id]
+    @supplierpayment.destroy
 
     respond_to do |format|
-      format.html { redirect_to("/companies/serviceorders/" + company_id.to_s) }
+      format.html { redirect_to("/companies/supplierpayments/" + company_id.to_s) }
     end
   end
 
   def client_data_headers
 
-    #{@serviceorder.description}
+    #{@supplierpayment.description}
       client_headers  = [["Proveedor :", $lcCli ]]
       client_headers << ["Direccion :", $lcdir1]
       client_headers << ["Dirección :",$lcdir2]
@@ -679,7 +686,7 @@ class SupplierPaymentsController < ApplicationController
 
       nroitem=1
 
-       for  product in @serviceorder_rpt
+       for  product in @supplierpayment_rpt
 
             row = []
             row << nroitem.to_s
@@ -757,8 +764,8 @@ class SupplierPaymentsController < ApplicationController
 
 
 
-  # Export serviceorder to PDF
-  def rpt_serviceorder_all_pdf
+  # Export supplierpayment to PDF
+  def rpt_supplierpayment_all_pdf
     @company=Company.find(params[:id])      
     
     
@@ -775,7 +782,7 @@ class SupplierPaymentsController < ApplicationController
     end
     
 
-    @serviceorder_rpt = @company.get_services_year_month(@year,@month)  
+    @supplierpayment_rpt = @company.get_services_year_month(@year,@month)  
       
     Prawn::Document.generate("app/pdf_output/rpt_serviceall.pdf") do |pdf|
         pdf.font "Helvetica"
@@ -794,9 +801,9 @@ class SupplierPaymentsController < ApplicationController
   end
 
   def receive
-    @serviceorder = Serviceorder.find(params[:id])
-    @supplier = @serviceorder.supplier
-    @company = Company.find(@serviceorder.company_id)
+    @supplierpayment = SupplierPayment.find(params[:id])
+    @supplier = @supplierpayment.supplier
+    @company = Company.find(@supplierpayment.company_id)
     @documents =@company.get_documents()
 
     
@@ -813,7 +820,7 @@ class SupplierPaymentsController < ApplicationController
       invoice_headers  = [["Fecha : ",$lcHora]]    
       invoice_headers
   end
-def list_receive_serviceorders
+def list_receive_supplierpayments
     @company = Company.find(params[:company_id])
     @pagetitle = "#{@company.name} - Orden Compra"
     @filters_display = "block"
@@ -834,26 +841,26 @@ def list_receive_serviceorders
         @supplier = supplier.find(:first, :conditions => {:company_id => @company.id, :name => params[:ac_supplier].strip})
         
         if @supplier
-          @serviceorders = Seriveorder.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :supplier_id => @supplier.id}, :order => "id DESC")
+          @supplierpayments = Seriveorder.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :supplier_id => @supplier.id}, :order => "id DESC")
         else
-          flash[:error] = "We couldn't find any serviceorders for that supplier."
-          redirect_to "/companies/serviceorders/#{@company.id}"
+          flash[:error] = "We couldn't find any supplierpayments for that supplier."
+          redirect_to "/companies/supplierpayments/#{@company.id}"
         end
       elsif(params[:supplier] and params[:supplier] != "")
         @supplier = supplier.find(params[:supplier])
         
         if @supplier
-          @serviceorders = SupplierPayment.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :supplier_id => @supplier.id}, :order => "id DESC")
+          @supplierpayments = SupplierPayment.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :supplier_id => @supplier.id}, :order => "id DESC")
         else
-          flash[:error] = "We couldn't find any serviceorders for that supplier."
-          redirect_to "/companies/serviceorders/#{@company.id}"
+          flash[:error] = "We couldn't find any supplierpayments for that supplier."
+          redirect_to "/companies/supplierpayments/#{@company.id}"
         end
       elsif(params[:location] and params[:location] != "" and params[:division] and params[:division] != "")
-        @serviceorders = SupplierPayment.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :location_id => params[:location], :division_id => params[:division]}, :order => "id DESC")
+        @supplierpayments = SupplierPayment.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :location_id => params[:location], :division_id => params[:division]}, :order => "id DESC")
       elsif(params[:location] and params[:location] != "")
-        @serviceorders = SupplierPayment.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :location_id => params[:location]}, :order => "id DESC")
+        @supplierpayments = SupplierPayment.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :location_id => params[:location]}, :order => "id DESC")
       elsif(params[:division] and params[:division] != "")
-        @serviceorders = SupplierPayment.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :division_id => params[:division]}, :order => "id DESC")
+        @supplierpayments = SupplierPayment.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :division_id => params[:division]}, :order => "id DESC")
       else
         if(params[:q] and params[:q] != "")
           fields = ["description", "comments", "code"]
@@ -863,9 +870,9 @@ def list_receive_serviceorders
 
           query = str_sql_search(q, fields)
 
-          @serviceorders = SupplierPayment.paginate(:page => params[:page], :order => 'id DESC', :conditions => ["company_id = ? AND (#{query})", @company.id])
+          @supplierpayments = SupplierPayment.paginate(:page => params[:page], :order => 'id DESC', :conditions => ["company_id = ? AND (#{query})", @company.id])
         else
-          @serviceorders = SupplierPayment.where(company_id:  @company.id, :processed => "1").order("id DESC").paginate(:page => params[:page])
+          @supplierpayments = SupplierPayment.where(company_id:  @company.id, :processed => "1").order("id DESC").paginate(:page => params[:page])
           @filters_display = "none"
         end
       end
@@ -876,8 +883,8 @@ def list_receive_serviceorders
   
   
   private
-  def serviceorder_params
-    params.require(:serviceorder).permit(:company_id,:location_id,:division_id,:supplier_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:detraccion,:payment_id,:moneda_id,:fecha1,:fecha2,:fecha3,:fecha4,:document_id,:documento)
+  def supplierpayment_params
+    params.require(:SupplierPayment).permit!
   end
 
 end

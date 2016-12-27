@@ -101,7 +101,7 @@ def build_pdf_header(pdf)
             row << product.name
             row << product.price.to_s
             row << product.discount
-            row << product .total.to_s
+            row << product.total.to_s
             table_content << row
 
             nroitem=nroitem + 1
@@ -564,10 +564,22 @@ def build_pdf_header(pdf)
     @payments = @company.get_payments()    
     @monedas  = @company.get_monedas()
 
+    @tipodocumento = @purchaseorder[:document_id]
+
+
+    if @tipodocumento == 3
+    @purchaseorder[:subtotal] = @purchaseorder.get_subtotal(items)*-1
+    else
     @purchaseorder[:subtotal] = @purchaseorder.get_subtotal(items)
+
+    end
     
     begin
+      if @tipodocumento == 3
+      @purchaseorder[:tax] = @purchaseorder.get_tax(items, @purchaseorder[:supplier_id])*-1
+      else
       @purchaseorder[:tax] = @purchaseorder.get_tax(items, @purchaseorder[:supplier_id])
+      end 
     rescue
       @purchaseorder[:tax] = 0
     end

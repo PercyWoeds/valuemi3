@@ -1,0 +1,5 @@
+<% if @docs %>
+  <% for purchase in @docs %>
+    <%= purchase.documento %>|BRK|<%= purchase.id %>|BRK| <%= purchase.balance.round(2) %>
+  <% end %>
+<% end %>

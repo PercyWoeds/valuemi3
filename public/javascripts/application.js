@@ -604,6 +604,23 @@ function removeItemFromPurchaseorder(id) {
   $("#items").val(items_final.join(","));
   listItemspurchaseorder();
 }
+// Removes an item from an purchase
+function removeItemFromPurchase(id) {
+  var items = $("#items").val();
+  var items_arr = items.split(",");
+  var items_final = Array();
+  var i = 0;
+  
+  while(i < items_arr.length) {
+    if(i != id) {
+      items_final[i] = items_arr[i];
+    }
+    i++;
+  }
+  
+  $("#items").val(items_final.join(","));
+  listItemsPurchase();
+}
 
 // Shortcut to create new customer form
 function createCustomerInvoice() {
@@ -1006,6 +1023,101 @@ function removeItemFromMovement(id) {
   listItemsMovement();
 }
 
+// Add an item to a 
+function addItemToSupplierPayment() {
+  var item = $("#ac_item").val();
+  
+  if(item != "") {
+    var company_id = $("#supplier_payment_company_id").val();
+
+    var importe_cheque = $("#supplier_payment_total").val();
+    var item_total = 0
+    var item_id = $("#ac_item_id").val();      
+    var price = $("#ac_item_total").val();   
+
+    var items_arr = $("#items").val().split(",");
+
+    if (price == "" || !isNumeric(price)) {
+      alert("Por favor ingrese un precio valido  ");
+    } 
+    else if (importe_cheque == "" || !isNumeric(importe_cheque)) {
+      alert("Por favor ingrese importe valido  ");
+    }
+    else {
+      var item_line = item_id + "|BRK|" + price + "|BRK|";
+      
+      $("#items").val($("#items").val() + "," + item_line);
+      
+      listItemsSupplierPayment();
+      
+      $("#ac_item_id").val("");
+      $("#ac_item").val("");
+      $("#ac_item_total").val("");
+  
+      updateItemTotal6();
+    }
+  } else {
+    alert("Por favor ingrese un documento.");
+  }
+}
+
+
+// Update price total for invoice
+function updateItemTotal6() {
+  
+  var price = $("#ac_item_total").val();
+
+  if( isNumeric(price)) {
+    var total =  price *1;
+    
+    $("#ac_item_total").html(total);
+    
+
+  } else {
+    
+    $("#ac_item_total").html("0.00");
+  }
+
+
+
+}
+
+
+// List items in a kit
+function listItemsSupplierPayment() {
+  var items = $("#items").val();
+  var company_id = $("#supplier_payment_company_id").val();
+  
+  $.get('/supplierpayments/list_items/' + company_id, {
+    items: items
+  },
+  function(data) {
+    $("#list_items").html(data);
+    documentReady();
+  });
+
+
+}
+
+
+
+function removeItemFromSupplierPayment(id) {
+  var items = $("#items").val();
+  var items_arr = items.split(",");
+  var items_final = Array();
+  var i = 0;
+  
+
+  while(i < items_arr.length) {
+    if(i != id) {
+      items_final[i] = items_arr[i];
+    }
+    i++;
+  }
+  
+  $("#items").val(items_final.join(","));
+  listItemsSupplierPayment();
+}
 
 
 // On ready

@@ -11,7 +11,8 @@ class Purchase < ActiveRecord::Base
   belongs_to :supplier 
   belongs_to :user  
   belongs_to :document
-    
+  belongs_to :moneda
+  
   has_many :purchase_details
 
 

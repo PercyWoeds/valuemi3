@@ -18,7 +18,7 @@
   resources :employees
   resources :pumps
 
-
+  resources :supplier_payments
   resources :inventory_details
   resources :inventories
   resources :payment_methods
@@ -308,6 +308,25 @@ match 'receiveorders/ac_products/:company_id' => 'receiveorders#ac_products', vi
 
   match 'companies/purchases/:company_id' => 'purchases#list_purchases', via: [:get, :post]  
   resources :purchases
+
+
+  # Purchases
+  
+  match 'supplierpayments/list_items/:company_id' => 'supplierpayments#list_items', via: [:get, :post]  
+  match 'supplierpayments/ac_products/:company_id' => 'supplierpayments#ac_products', via: [:get, :post]
+  match 'supplierpayments/ac_documentos/:company_id' => 'supplierpayments#ac_documentos', via: [:get, :post]
+  match 'supplierpayments/ac_user/:company_id' => 'supplierpayments#ac_user', via: [:get, :post]
+  match 'supplierpayments/ac_suppliers/:company_id' => 'supplierpayments#ac_suppliers', via: [:get, :post]
+  match 'supplier_payments/new/:company_id' => 'supplier_payments#new', via: [:get, :post]  
+
+  match 'supplierpayments/do_email/:id' => 'supplierpayments#do_email', via: [:get, :post]
+  match 'supplierpayments/do_process/:id' => 'supplierpayments#do_process', via: [:get, :post]
+  match 'supplierpayments/email/:id' => 'supplierpayments#email', via: [:get, :post]
+  match 'supplierpayments/pdf/:id' => 'supplierpayments#pdf', via: [:get, :post]
+  match 'supplierpayments/search/:id' => 'supplierpayments#search', via: [:get, :post]
+
+  match 'companies/supplier_payments/:company_id' => 'supplier_payments#list_supplierpayments', via: [:get, :post]  
+  resources :supplier_payments
 
 
   match 'inventories_detaisl/additems/:company_id' => 'additems#list', via: [:get, :post]  
