@@ -48,7 +48,7 @@
 
             
           <% if serviceorder.processed =="" || serviceorder.processed == nil %>
-          <%= link_to "Ver", serviceorder %>                      
+
           <%= link_to "Edit", edit_serviceorder_path(serviceorder) %>                      
           <%= link_to 'Eliminar', serviceorder, :confirm => 'Are you sure?', :method => :delete 
           %>

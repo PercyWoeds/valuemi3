@@ -23,6 +23,9 @@ class ServiceordersController < ApplicationController
      $lcTotal=sprintf("%.2f",@serviceorder.total)
 
      $lcDetracion=sprintf("%.2f",@serviceorder.detraccion)
+     $lcTotal0 = @serviceorder.total   - @serviceorder.detraccion 
+     $lcTotal2 = sprintf("%.2f",$lcTotal0)
+
      $lcAprobado= @serviceorder.get_processed 
     
       pdf.image "#{Dir.pwd}/public/images/logo.png", :width => 270
@@ -105,6 +108,17 @@ class ServiceordersController < ApplicationController
 
             nroitem=nroitem + 1
         end
+##agrego description para orden de servicio                                     
+      row=[]
+      row<<nroitem.to_s
+      row<<""
+      row<<@serviceorder.description
+      row<<""                                  
+      row<<""                                  
+      row<<""                                  
+      
+      table_content<<row
+
 
       result = pdf.table table_content, {:position => :center,
                                         :header => true,
@@ -112,12 +126,13 @@ class ServiceordersController < ApplicationController
                                         } do 
                                           columns([0]).align=:center
                                           columns([1]).align=:right
-                                          columns([2]).align=:center
+                                          columns([2]).align=:left
                                           columns([3]).align=:right
                                           columns([4]).align=:right
                                           columns([5]).align=:right
                                          
                                         end
+
 
       pdf.move_down 10      
       pdf.table invoice_summary, {
@@ -129,6 +144,7 @@ class ServiceordersController < ApplicationController
         columns([1]).align = :right
         
       end
+
       pdf
 
     end
@@ -137,8 +153,7 @@ class ServiceordersController < ApplicationController
     def build_pdf_footer(pdf)
 
         pdf.text ""
-        pdf.text "" 
-        pdf.text "Descripcion : #{@serviceorder.description}", :size => 8, :spacing => 4
+        pdf.text ""     
         pdf.text "Comentarios : #{@serviceorder.comments}", :size => 8, :spacing => 4
         
         
@@ -620,6 +635,7 @@ class ServiceordersController < ApplicationController
       invoice_summary << ["IGV",ActiveSupport::NumberHelper::number_to_delimited($lcIgv,delimiter:",",separator:".").to_s]
       invoice_summary << ["Total", ActiveSupport::NumberHelper::number_to_delimited($lcTotal ,delimiter:",",separator:".").to_s]
       invoice_summary << ["Detraccion", ActiveSupport::NumberHelper::number_to_delimited($lcDetracion,delimiter:",",separator:".")]
+      invoice_summary << ["Total a pagar", ActiveSupport::NumberHelper::number_to_delimited($lcTotal2,delimiter:",",separator:".")]
       invoice_summary
     end
 
@@ -743,6 +759,13 @@ class ServiceordersController < ApplicationController
           services_total += total
         
           pdf.text total.to_s
+
+          detraccion = @company.get_services_year_month_value(@year,@month, "detraccion")
+          detraccions.push(detraccion)
+          services_detraccion += detraccion
+        
+          pdf.text detraccion.to_s
+            
         
         
         pdf.text "" 

@@ -8,8 +8,8 @@ Mnygo::Application.configure do
   config.cache_classes = true
   config.eager_load= true 
 
-  config.assets.compile = true
-
+  config.assets.compile = false
+  config.assets.digest = true
   # Full error reports are disabled and caching is turned on
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
@@ -36,6 +36,7 @@ Mnygo::Application.configure do
   # In production, Apache or nginx will already do this
    
    config.serve_static_files = false
+    
    config.log_level = :info
 
   # Enable serving of images, stylesheets, and javascripts from an asset server
@@ -58,3 +59,6 @@ Mnygo::Application.configure do
   config.assets.precompile =  ['*.js', '*.css', '*.css.erb']
 
 end
+
+  
+

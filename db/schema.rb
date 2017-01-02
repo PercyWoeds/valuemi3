@@ -954,7 +954,7 @@ ActiveRecord::Schema.define(version: 20170102162120) do
     t.float    "subtotal"
     t.float    "tax"
     t.float    "detraccion"
-    t.float    "percepcion"
+    t.float    "percepcion" 
     t.float    "total"
     t.string   "processed"
     t.string   "return"

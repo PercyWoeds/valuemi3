@@ -147,9 +147,19 @@
         Detraccion :
       </td>
       <td class="bordered_bottom bordered_right bold right">
-        <%= @serviceorder.detraccion  %>
+        <%= money(@serviceorder.detraccion)  %>
       </td>
-    </tr>
+        </tr>
+
+
+        <tr>
+      <td colspan="4" class="bordered_bottom bordered_right bold">
+        Total a pagar :
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= @serviceorder.total_pagar  %>
+      </td>
+        </tr>
 
   </tbody>
 </table>

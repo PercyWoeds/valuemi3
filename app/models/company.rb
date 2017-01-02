@@ -318,7 +318,10 @@ class Company < ActiveRecord::Base
         ret += service.subtotal
       elsif(value == "tax")
         ret += service.tax
-      else
+      elsif(value == "detraccion")
+      ret += service.detraccion
+      else 
+        
         ret += service.total
       end
     end

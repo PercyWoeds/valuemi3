@@ -63,6 +63,8 @@ end
 
 #Remove turbolinks from application.js file if having issues with search
 
+
+
   def get_subtotal(items)
     subtotal = 0
     
@@ -183,6 +185,12 @@ serviceorder_services.servicebuy_id = servicebuys.id where serviceorder_services
 
     return @itemservices
   end
+
+  def total_pagar
+   total_pagar =  self.total - self.detraccion
+   return total_pagar
+   
+  end 
   
   def get_invoice_services
     invoice_services = ServiceorderService.where(serviceorder_id:  self.id)    
