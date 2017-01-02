@@ -1,5 +1,5 @@
 class AddCodeToSupplierpayment < ActiveRecord::Migration
   def change
-    add_column :Supplier_Payments, :code, :string
+    add_column :supplier_payments, :code, :string
   end
 end
