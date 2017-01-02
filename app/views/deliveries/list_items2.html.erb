@@ -1,0 +1,27 @@
+<p class="bold big">
+  Guias:
+</p>
+
+
+  <table>
+    <thead>
+      <tr>
+        <th class="small bordered_bottom bordered_right">
+          Guia
+        </th>
+       
+      </tr>
+    </thead>
+    <tbody>
+      <% for product in @guias %>
+        <tr>
+          <td class="small bordered_bottom bordered_right" style="width: 220px;">
+            <a href="#" onclick="removeItemFromdelivery2(<%= product.i %>); return false;" title="Eliminar desde factura"><%= product.code %></a>
+            [<a href="#" onclick="removeItemFromdelivery2(<%= product.i %>); return false;" title="
+            Eliminar desde factura">X</a>]
+          </td>
+       
+        </tr>
+      <% end %>
+    </tbody>
+  </table>

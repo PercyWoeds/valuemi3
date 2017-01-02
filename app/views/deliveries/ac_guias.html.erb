@@ -1,0 +1,5 @@
+<% if @guias %>
+  <% for guia in @guias %>
+    <%= guia.code %>|BRK|<%= guia.id %>|BRK|%>
+  <% end %>
+<% end %>

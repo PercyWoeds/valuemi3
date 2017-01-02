@@ -15,10 +15,11 @@ def unir
     
     @pagetitle = "Agrega guia de remision "
     
-    @mines =  Delivery.where([" code like ?", "%" + params[:ac_gt] + "%"])  
+    @mines =  Delivery.where([" code like ?", "%" + params[:ac_gt] + "%"]).first 
 
-    @deliverymines=Deliverymine.new 
-  
+    $minesid= @mines.id
+
+    @guias =  @mines.get_guiaremision 
     
 end
       
@@ -63,10 +64,7 @@ end
         parts = item.split("|BRK|")
         
         id = parts[0]
-        puts "add guia "
-        puts parts 
-        puts id
-
+        
         begin
           guia = Delivery.find(id.to_i)
           
@@ -93,12 +91,11 @@ end
 
   def do_unir
     @company = Company.find(params[:company_id])
-    #@delivery = Delivery.find(self.id)
-    #@myguias = @delivery.mines 
 
+    @deliverymines =Deliverymine.all 
+  
   end 
   
-
 
   # Process an delivery
   def do_process
@@ -229,6 +226,12 @@ end
   def ac_unidads
     @unidads = Unidad.where(["company_id = ? AND descrip LIKE ?", params[:company_id], "%" + params[:q] + "%"])
 
+    render :layout => false
+  end
+  # Autocomplete for guias
+  def ac_guias
+    @guias = Delivery.where(["company_id = ? AND (code  LIKE ?)", params[:company_id], "%" + params[:q] + "%"])
+  
     render :layout => false
   end
   
@@ -664,6 +667,30 @@ end
     
       invoice_headers
   end
+
+
+
+  def discontinue
+
+    @guiasselect = Delivery.find(params[:products_ids])
+
+
+    for item in @guiasselect
+        begin
+          a = item.id
+          b = item.remite_id               
+
+          new_invoice_guia = Deliverymine.new(:mine_id =>$minesid, :delivery_id =>item.id)          
+          new_invoice_guia.save
+           
+        
+         end              
+    end
+
+    
+    redirect_to deliveries_url 
+
+  end 
 
   private
   def delivery_params

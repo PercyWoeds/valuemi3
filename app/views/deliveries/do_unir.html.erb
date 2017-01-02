@@ -11,12 +11,11 @@
 </h4>
 
 <p>
-  Para agregar una guias de remision a una guia de transportista, por favor ingrese el siguiente formulario con los datos solicitados   . Los campos marcados con <strong>*</strong> son obligatorios 
+  Para agregar una guias de remision a una guia de transportista, por favor ingrese el siguiente formulario con los datos solicitados. Los campos marcados con <strong>*</strong> son obligatorios 
 </p>
 
 <%= hr() %>
 
-<%= hr() %>
 
     <form method="get" action="/companies/deliveries/unir/<%= @company.id %>">
         <strong>Buscar Gt :</strong>
@@ -25,6 +24,78 @@
     </form> 
 
 <%= hr() %>
+
+<% if @deliverymines.count > 0 %>
+  <table>
+    <thead>
+      <tr>
+        <th class="bordered_right bordered_bottom" style="width: 100px;">
+          GT
+        </th>
+        <th class="bordered_right bordered_bottom" style="width: 300px;">
+          Cliente GT
+        </th>
+
+        <th class="bordered_right bordered_bottom" style="width: 100px;">
+          GR
+        </th>
+        
+        <th class="bordered_right bordered_bottom" style="width: 300px;">
+          Cliente GR
+        </th>
+
+        <th class="bordered_right bordered_bottom">
+          Fecha GT
+        </th>
+
+        <th class="bordered_right bordered_bottom">
+          Procesado
+        </th>
+        
+      </tr>
+    </thead>
+    <tbody>
+    
+      <% for delivery in @deliverymines %>
+        <tr>
+          <td class="bordered_right bordered_bottom">
+            <%= delivery.mine.code %>
+          </td>
+
+          <td class="bordered_right bordered_bottom">
+            <%= delivery.mine.customer.name %>
+          </td>
+        
+          <td class="bordered_right bordered_bottom">
+            <%= delivery.delivery.code %>
+          </td>
+          <td class="bordered_right bordered_bottom">
+            <%= delivery.delivery.customer.name %>
+          </td>
+        
+          <td class="bordered_right bordered_bottom">
+            <%= doDate(delivery.mine.fecha1) %>
+          </td>
+          
+          <td class="bordered_right bordered_bottom">
+          
+
+          <%= link_to 'Eliminar', delivery,:data=> {:confirm => 'Esta seguro ?'}, :method => :delete %>          
+          </tr>
+
+        
+
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p class="error">
+    We couldn't find any deliveries.
+  </p>
+<% end %>
+
+
+
 
 <div class="button">
   <%= link_to 'Back', "/companies/deliveries/#{@company.id}" %>

@@ -25,6 +25,7 @@ Mnygo::Application.routes.draw do
   resources :deliveryships
   resources :declarations 
   resources :inventarios  
+  resources :deliverymines   
 
     namespace :inventory do
       resources :suppliers
@@ -41,6 +42,7 @@ Mnygo::Application.routes.draw do
   
   end 
 
+
   resources :purchaseorders do 
     collection { get :search   }
     collection { get :receive    }
@@ -49,6 +51,9 @@ Mnygo::Application.routes.draw do
   
   resources :deliveries do
     collection { get :search   }
+    collection do 
+      put :discontinue 
+    end 
   end 
   
   resources :suppliers do
@@ -217,6 +222,7 @@ Mnygo::Application.routes.draw do
   match 'deliveries/ac_unidads/:company_id' => 'deliveries#ac_unidads', via: [:get, :post]
   match 'deliveries/ac_user/:company_id' => 'deliveries#ac_user', via: [:get, :post]
   match 'deliveries/ac_customers/:company_id' => 'deliveries#ac_customers', via: [:get, :post]
+  match 'deliveries/ac_guiass/:company_id' => 'deliveries#ac_guias', via: [:get, :post]
   match 'deliveries/new/:company_id' => 'deliveries#new', via: [:get, :post]
   match 'deliveries/do_unir/:company_id' => 'deliveries#do_unir', via: [:get, :post]
   match 'companies/deliveries/unir/:company_id' => 'deliveries#unir', via: [:get, :post]

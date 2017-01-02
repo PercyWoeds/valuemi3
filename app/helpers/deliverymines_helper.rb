@@ -1,0 +1,2 @@
+module DeliveryminesHelper
+end

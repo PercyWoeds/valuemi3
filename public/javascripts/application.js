@@ -1111,6 +1111,66 @@
     listItemsSupplierPayment();
   }
 
+// agregar item guias  
+  function addItemToGuias() {
+
+    alert("Buscando... ");
+    var item = $("#ac_item").val();
+    var company_id = $("#delivery_company_id").val();
+
+    if(item != "") {
+      var company_id = $("#delivery_company_id").val();
+      var item_guia = $("#ac_item_guia").val();      
+      var items_arr = $("#items").val().split(",");
+
+      if (item_guia == "" ) {
+        alert("Por favor ingrese una documento valido  ");
+      }     
+      else {
+        var item_line = item_guia + "|BRK|";        
+        $("#items").val($("#items").val() + "," + item_line);        
+        listItemsGuias();        
+        $("#ac_item_guia").val("");
+        $("#ac_item").val("");          
+      }
+    } else {
+      alert("Por favor ingrese un documento.");
+    }
+  }
+
+  // List items in a kit
+  function listItemsGuias() {
+    var items = $("#items").val();
+    
+    $.get('/deliveries/list_items2/' + company_id, {
+      items: items
+    },
+    function(data) {
+      $("#list_items2").html(data);
+      documentReady();
+    });
+  }
+
+
+  function removeItemFromGuias(id) {
+    var items = $("#items").val();
+    var items_arr = items.split(",");
+    var items_final = Array();
+    var i = 0;
+    
+
+    while(i < items_arr.length) {
+      if(i != id) {
+        items_final[i] = items_arr[i];
+      }
+      i++;
+    }
+    
+    $("#items").val(items_final.join(","));
+    listItemsGuias();
+  }
+
+
   // On ready
   $(document).ready(function() {
     documentReady();

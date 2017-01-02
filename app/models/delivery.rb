@@ -31,6 +31,10 @@ self.per_page = 20
                      "ESTADO"]
 
 
+def not_guias_with?(mine_id)
+    Deliverymine.where(mine_id: mine_id).count < 1
+end
+
 
 
 def self.search(params)        
@@ -38,6 +42,11 @@ def self.search(params)
     customers
 end
 
+def get_guiaremision
+  @guiaremision= Delivery.where(:remite_id => self.customer_id, :remision=> "1")
+  return @guiaremision
+
+end 
 
 def not_delivery_with?(delivery_code)
     Delivery.where(code: delivery_code).count < 1

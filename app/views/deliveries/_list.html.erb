@@ -5,6 +5,10 @@
         <th class="bordered_right bordered_bottom" style="width: 100px;">
           Guia
         </th>
+        <th class="bordered_right bordered_bottom" style="width: 10px;">
+          Tipo
+        </th>
+        
         <th class="bordered_right bordered_bottom" style="width: 350px;">
           Cliente
         </th>
@@ -26,9 +30,14 @@
     
       <% for delivery in @deliveries %>
         <tr>
+
           <td class="bordered_right bordered_bottom">
             <%= delivery.code %>
           </td>
+          <td class="bordered_right bordered_bottom">
+            <%= delivery.remision %>
+          </td>
+        
           <td class="bordered_right bordered_bottom">
             <%= link_to delivery.customer.name, delivery.customer, :title => "Go to customer" %>
           </td>

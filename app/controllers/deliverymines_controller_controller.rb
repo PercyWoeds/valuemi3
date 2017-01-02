@@ -1,0 +1,2 @@
+class DeliveryminesController < ApplicationController
+end
