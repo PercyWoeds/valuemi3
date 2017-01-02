@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161227154933) do
+ActiveRecord::Schema.define(version: 20161230231116) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "name"
@@ -76,6 +76,15 @@ ActiveRecord::Schema.define(version: 20161227154933) do
   end
 
   add_index "addresses", ["customer_id"], name: "index_addresses_on_customer_id"
+
+  create_table "almacens", force: :cascade do |t|
+    t.string   "nombre"
+    t.string   "direccion"
+    t.string   "codigo"
+    t.string   "telefono"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "bank_acounts", force: :cascade do |t|
     t.string   "number"
@@ -213,6 +222,13 @@ ActiveRecord::Schema.define(version: 20161227154933) do
     t.datetime "updated_at",  null: false
   end
 
+  create_table "deliverymines", force: :cascade do |t|
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "delivery_id"
+    t.integer  "mine_id"
+  end
+
   create_table "deliveryships", force: :cascade do |t|
     t.integer  "factura_id"
     t.integer  "delivery_id"
@@ -231,9 +247,11 @@ ActiveRecord::Schema.define(version: 20161227154933) do
 
   create_table "documents", force: :cascade do |t|
     t.string   "description"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
     t.integer  "company_id"
+    t.string   "descripshort"
+    t.string   "tiposunat"
   end
 
   create_table "employees", force: :cascade do |t|
@@ -278,6 +296,7 @@ ActiveRecord::Schema.define(version: 20161227154933) do
     t.string   "numero"
     t.string   "payment_id"
     t.integer  "factura_id"
+    t.string   "tipo"
   end
 
   create_table "guia", force: :cascade do |t|
@@ -338,6 +357,27 @@ ActiveRecord::Schema.define(version: 20161227154933) do
     t.text     "description4"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+  end
+
+  create_table "inventario_detalles", force: :cascade do |t|
+    t.integer  "inventario_id"
+    t.integer  "item_id"
+    t.decimal  "cantidad",          precision: 10, scale: 2
+    t.decimal  "precio_unitario",   precision: 10, scale: 2
+    t.boolean  "activo"
+    t.date     "fecha_vencimiento"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "inventarios", force: :cascade do |t|
+    t.integer  "almacen_id"
+    t.datetime "fecha"
+    t.string   "descripcion"
+    t.string   "tipo"
+    t.decimal  "total",       precision: 12, scale: 2
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "inventories", force: :cascade do |t|
@@ -823,7 +863,6 @@ ActiveRecord::Schema.define(version: 20161227154933) do
     t.string   "status"
     t.string   "pricestatus"
     t.float    "charge"
-    t.float    "payment"
     t.float    "balance"
     t.float    "tax2"
     t.integer  "supplier_id"
@@ -843,6 +882,8 @@ ActiveRecord::Schema.define(version: 20161227154933) do
     t.integer  "document_id"
     t.integer  "moneda_id"
     t.string   "documento"
+    t.datetime "date3"
+    t.float    "pago"
   end
 
   create_table "purchaseships", force: :cascade do |t|
@@ -1005,9 +1046,10 @@ ActiveRecord::Schema.define(version: 20161227154933) do
     t.string   "tm"
     t.float    "total"
     t.text     "descrip"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
-    t.integer  "supplierpayment_id"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.integer  "purchase_id"
+    t.integer  "supplier_payment_id"
   end
 
   create_table "supplier_payments", force: :cascade do |t|
@@ -1064,6 +1106,30 @@ ActiveRecord::Schema.define(version: 20161227154933) do
 
   add_index "tanks", ["company_id"], name: "index_tanks_on_company_id"
   add_index "tanks", ["product_id"], name: "index_tanks_on_product_id"
+
+  create_table "tipofacturas", force: :cascade do |t|
+    t.string   "descrip"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "company_id"
+  end
+
+  create_table "transferencia_detalles", force: :cascade do |t|
+    t.integer  "item_id"
+    t.integer  "transferencia_id"
+    t.float    "cantidad"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "transferencias", force: :cascade do |t|
+    t.integer  "almacen_origen_id"
+    t.integer  "almacen_destino_id"
+    t.datetime "fecha"
+    t.float    "total"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "trucks", force: :cascade do |t|
     t.string   "code"

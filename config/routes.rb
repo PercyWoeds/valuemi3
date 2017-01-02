@@ -1,4 +1,4 @@
-  Mnygo::Application.routes.draw do
+Mnygo::Application.routes.draw do
 
 
   resources :purchases
@@ -24,7 +24,7 @@
   resources :payment_methods
   resources :deliveryships
   resources :declarations 
-
+  resources :inventarios  
 
     namespace :inventory do
       resources :suppliers
@@ -63,7 +63,8 @@
   end 
 
   resources :facturas do
-    collection { post :export  }
+    collection { get :generar  }
+
   end 
   resources :stores  do 
     collection { post :search }    
@@ -123,8 +124,13 @@
     collection { post :import }
   end 
   #Manifiesto busqueda de guias
+
+  get 'search_mines', to: 'deliveries#search'
+  post 'add_mine', to: 'delliveries#add_mine'
+
+
   get 'my_declarations', to: 'declarations#my_deliveries'
-  get 'search_friends', to: 'deliveries#search'
+ # get 'search_friends', to: 'deliveries#search'
 
   get 'search_serviceorders', to: 'purchases#search_serviceorders'
   post 'add_serviceorders', to: 'purchases#add_serviceorders'
@@ -154,8 +160,9 @@
 
   match 'companies/reports_guias/:company_id' => 'reports#reports_guias', via: [:get, :post]
   match 'companies/reports_compras/:company_id' => 'reports#reports_compras', via: [:get, :post]
+  match 'companies/reports_cpagar/:company_id' => 'reports#reports_cpagar', via: [:get, :post]
   match 'companies/reports/rpt_serviceorder_all/:company_id' => 'reports#rpt_serviceorder_all', via: [:get, :post]
-  
+  match 'companies/reports/rpt_purchases_all/:company_id' => 'reports#rpt_purchases_all', via: [:get, :post]
   match 'companies/reports/sales/:company_id' => 'reports#report_sales', via: [:get, :post]
   match 'companies/reports/:company_id' => 'reports#reports', via: [:get, :post]
 
@@ -192,7 +199,10 @@
   match 'facturas/ac_customers/:company_id' => 'facturas#ac_customers', via: [:get, :post]
   match 'facturas/ac_guias/:company_id' => 'facturas#ac_guias', via: [:get, :post]
   match 'facturas/new/:company_id' => 'facturas#new', via: [:get, :post]
-  
+  match 'facturas/export/:company_id' => 'facturas#export', via: [:get, :post]
+  match 'companies/facturas/generar/:company_id' => 'facturas#generar', via: [:get, :post]
+
+  match 'facturas/do_anular/:id' => 'facturas#do_anular', via: [:get, :post]
   match 'facturas/do_email/:id' => 'facturas#do_email', via: [:get, :post]
   match 'facturas/do_process/:id' => 'facturas#do_process', via: [:get, :post]
   match 'facturas/email/:id' => 'facturas#email', via: [:get, :post]
@@ -208,7 +218,9 @@
   match 'deliveries/ac_user/:company_id' => 'deliveries#ac_user', via: [:get, :post]
   match 'deliveries/ac_customers/:company_id' => 'deliveries#ac_customers', via: [:get, :post]
   match 'deliveries/new/:company_id' => 'deliveries#new', via: [:get, :post]
-  
+  match 'deliveries/do_unir/:company_id' => 'deliveries#do_unir', via: [:get, :post]
+  match 'companies/deliveries/unir/:company_id' => 'deliveries#unir', via: [:get, :post]
+
   match 'deliveries/do_email/:id' => 'deliveries#do_email', via: [:get, :post]
   match 'deliveries/do_process/:id' => 'deliveries#do_process', via: [:get, :post]
   match 'deliveries/do_anular/:id' => 'deliveries#do_anular', via: [:get, :post]
@@ -268,6 +280,7 @@ match 'receiveorders/ac_products/:company_id' => 'receiveorders#ac_products', vi
   match 'receiveorders/ac_user/:company_id' => 'receiveorders#ac_user', via: [:get, :post]
   match 'receiveorders/new/:company_id' => 'receiveorders#new', via: [:get, :post]
   
+
   match 'receiveorders/do_email/:id' => 'receiveorders#do_email', via: [:get, :post]
   match 'receiveorders/do_process/:id' => 'receiveorders#do_process', via: [:get, :post]
   match 'receiveorders/email/:id' => 'receiveorders#email', via: [:get, :post]
@@ -312,19 +325,19 @@ match 'receiveorders/ac_products/:company_id' => 'receiveorders#ac_products', vi
 
   # Purchases
   
-  match 'supplierpayments/list_items/:company_id' => 'supplierpayments#list_items', via: [:get, :post]  
-  match 'supplierpayments/ac_products/:company_id' => 'supplierpayments#ac_products', via: [:get, :post]
-  match 'supplierpayments/ac_documentos/:company_id' => 'supplierpayments#ac_documentos', via: [:get, :post]
-  match 'supplierpayments/ac_user/:company_id' => 'supplierpayments#ac_user', via: [:get, :post]
-  match 'supplierpayments/ac_suppliers/:company_id' => 'supplierpayments#ac_suppliers', via: [:get, :post]
+  match 'supplier_payments/list_items/:company_id' => 'supplier_payments#list_items', via: [:get, :post]  
+  match 'supplier_payments/ac_products/:company_id' => 'supplier_payments#ac_products', via: [:get, :post]
+  match 'supplier_payments/ac_documentos/:company_id' => 'supplier_payments#ac_documentos', via: [:get, :post]
+  match 'supplier_payments/ac_user/:company_id' => 'supplier_payments#ac_user', via: [:get, :post]
+  match 'supplier_payments/ac_suppliers/:company_id' => 'supplier_payments#ac_suppliers', via: [:get, :post]
   match 'supplier_payments/new/:company_id' => 'supplier_payments#new', via: [:get, :post]  
 
-  match 'supplierpayments/do_email/:id' => 'supplierpayments#do_email', via: [:get, :post]
-  match 'supplierpayments/do_process/:id' => 'supplierpayments#do_process', via: [:get, :post]
-  match 'supplierpayments/email/:id' => 'supplierpayments#email', via: [:get, :post]
-  match 'supplierpayments/pdf/:id' => 'supplierpayments#pdf', via: [:get, :post]
-  match 'supplierpayments/search/:id' => 'supplierpayments#search', via: [:get, :post]
-
+  match 'supplier_payments/do_email/:id' => 'supplier_payments#do_email', via: [:get, :post]
+  match 'supplier_payments/do_process/:id' => 'supplier_payments#do_process', via: [:get, :post]
+  match 'supplier_payments/email/:id' => 'supplier_payments#email', via: [:get, :post]
+  match 'supplier_payments/pdf/:id' => 'supplier_payments#pdf', via: [:get, :post]
+  match 'supplier_payments/search/:id' => 'supplier_payments#search', via: [:get, :post]
+  match 'supplier_payments/rpt_purchases_all/:id' => 'supplier_payments#rpt_purchases_all', via: [:get, :post]
   match 'companies/supplier_payments/:company_id' => 'supplier_payments#list_supplierpayments', via: [:get, :post]  
   resources :supplier_payments
 
@@ -481,6 +494,16 @@ match 'receiveorders/ac_products/:company_id' => 'receiveorders#ac_products', vi
   match 'inventories/addAll/:company_id' => 'inventories#addAll', via: [:get, :post]
   resources :inventories
 
+  match 'inventories/ac_categories/:company_id' => 'inventories#ac_categories', via: [:get, :post]
+  match 'inventories/new/:company_id' => 'inventories#new', via: [:get, :post]  
+  match 'inventories/do_email/:id' => 'inventories#do_email', via: [:get, :post]
+  match 'inventories/do_process/:id' => 'inventories#do_process', via: [:get, :post]
+  match 'inventories/email/:id' => 'inventories#email', via: [:get, :post]
+  match 'inventories/pdf/:id' => 'inventories#pdf', via: [:get, :post]
+  match 'companies/inventarios/:company_id' => 'inventarios#index', via: [:get, :post]
+  
+  resources :inventarios
+
 
   # Sessions
   resources :sessions
@@ -490,60 +513,4 @@ match 'receiveorders/ac_products/:company_id' => 'receiveorders#ac_products', vi
 
   root :to => "pages#frontpage"
   
-  # The priority is based upon order of creation:
-  # first created -> highest priority.
-
-  # Sample of regular route:
-  #   match 'products/:id' => 'catalog#view'
-  # Keep in mind you can assign values other than :controller and :action
-
-  # Sample of named route:
-  #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
-  # This route can be invoked with purchase_url(:id => product.id)
-
-  # Sample resource route (maps HTTP verbs to controller actions automatically):
-    #   resources :products
-
-  # Sample resource route with options:
-  #   resources :products do
-  #     member do
-  #       get 'short'
-  #       post 'toggle'
-  #     end
-  #
-  #     collection do
-  #       get 'sold'
-  #     end
-  #   end
-
-  # Sample resource route with sub-resources:
-  #   resources :products do
-  #     resources :comments, :sales
-  #     resource :seller
-  #   end
-
-  # Sample resource route with more complex sub-resources
-  #   resources :products do
-  #     resources :comments
-  #     resources :sales do
-  #       get 'recent', :on => :collection
-  #     end
-  #   end
-
-  # Sample resource route within a namespace:
-  #   namespace :admin do
-  #     # Directs /admin/products/* to Admin::ProductsController
-  #     # (app/controllers/admin/products_controller.rb)
-  #     resources :products
-  #   end
-
-  # You can have the root of your site routed with "root"
-  # just remember to delete public/index.html.
-  # root :to => "welcome#index"
-
-  # See how all your routes lay out with "rake routes"
-
-  # This is a legacy wild controller route that's not recommended for RESTful applications.
-  # Note: This route will make all actions in every controller accessible via GET requests.
-  # match ':controller(/:action(/:id(.:format)))'
 end

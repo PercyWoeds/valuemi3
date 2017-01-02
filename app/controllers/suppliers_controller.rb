@@ -11,6 +11,7 @@ class SuppliersController < ApplicationController
   end 
   
 
+
   # Show suppliers for a company
   def list_suppliers
     @company = Company.find(params[:company_id])

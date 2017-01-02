@@ -335,7 +335,7 @@ class PurchasesController < ApplicationController
     
     @purchase[:total_amount] = @purchase[:payable_amount] + @purchase[:tax_amount]
     @purchase[:charge]  = 0
-    @purchase[:payment] = 0
+    @purchase[:pago] = 0
     @purchase[:balance] =   @purchase[:total_amount]
     
     
@@ -430,9 +430,9 @@ class PurchasesController < ApplicationController
   end
   private
   def purchase_params
-    params.require(:purchase).permit(:tank_id,:date1,:date2,:exchange,
+    params.require(:purchase).permit(:tank_id,:date1,:date2,:date3,:exchange,
       :product_id,:unit_id,:price_with_tax,:price_without_tax,:price_public,:quantity,:other,:money_type,
-      :discount,:tax1,:payable_amount,:tax_amount,:total_amount,:status,:pricestatus,:charge,:payment,
+      :discount,:tax1,:payable_amount,:tax_amount,:total_amount,:status,:pricestatus,:charge,:pago,
       :balance,:tax2,:supplier_id,:order1,:plate_id,:user_id,:company_id,:location_id,:division_id,:comments,
       :processed,:return,:date_processed,:payment_id,:document_id,:documento,:moneda_id)
   end

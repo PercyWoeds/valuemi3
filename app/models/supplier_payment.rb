@@ -1,18 +1,41 @@
 class SupplierPayment < ActiveRecord::Base
 self.per_page = 20
    
-  validates_presence_of :company_id, :code, :user_id
+  validates_presence_of :company_id, :total,:user_id
   
   belongs_to :company
   belongs_to :location
   belongs_to :division
-  belongs_to :suppier 
+  belongs_to :supplier 
   belongs_to :user
-  belongs_to :payment 
-  belongs_to :purchase 
+  belongs_to :payment
+  belongs_to :bank_acount
 
   has_many :supplier_payment_details
   
+  TABLE_HEADERS = ["ITEM",
+                     "TIPO",
+                     "DOCUMENTO",
+                     "PROVEEDOR",
+                     "OPERACION",
+                     "IMPORTE  "]
+  
+  TABLE_HEADERS1 = ["ITEM",
+                     "FECHA",
+                     "RECEP.",
+                     "VENCE",
+                     "",
+                     "",
+                     "DOCUMENTO",
+                     "PROVEEDOR",
+                     "IMPORTE  ",
+                     "CARGOS  ",
+                     "PAGOS  ",
+                      "SALDO  "]
+
+
+          
+            
   def get_subtotal(items)
     subtotal = 0
     
@@ -41,10 +64,36 @@ self.per_page = 20
   
   
   def delete_products()
-    invoice_products = SupplierPaymentDetail.where(supplierpayment_id: self.id)
+    invoice_products = SupplierPaymentDetail.where(supplier_payment_id: self.id)
     
     for ip in invoice_products
+
+        id = ip.id
+        balance = ip.total
+                  
+        
+        begin
+          purchase = Purchase.find(id.to_i)          
+
+
+          if purchase.payment == nil
+             purchase.payment =0 
+          end 
+          if purchase.balance == nil
+             purchase.balance =0 
+          end 
+
+
+          @last_payment = purchase.payment - balance.round(2) 
+          @last_balance = purchase.balance 
+          @newbalance = @last_balance + balance.round(2) 
+          purchase.update_attributes(payment: @last_payment,balance: @newbalance )  
+          
+        end
+
       ip.destroy
+
+
     end
   end
   
@@ -59,37 +108,68 @@ self.per_page = 20
         
         begin
           purchase = Purchase.find(id.to_i)          
-new_invoice_purchase = SupplierPaymentDetail.new(:supplierpayment_id => self.id, 
+
+new_purchase = SupplierPaymentDetail.new(:supplier_payment_id => self.id, 
   :purchase_id => purchase.id, :total => balance.to_f )
-          new_purchase_product.save
+          new_purchase.save
+
+          if purchase.payment == nil
+             purchase.payment =0 
+          end 
+          if purchase.balance == nil
+             purchase.balance =0 
+          end 
+
 
           @last_payment = purchase.payment + balance.to_f.round(2) 
           @last_balance = purchase.balance 
-
           @newbalance = @last_balance - balance.to_f.round(2) 
-
           purchase.update_attributes(payment: @last_payment,balance: @newbalance )  
-
-
-        rescue
           
         end
       end
     end
   end
   
-  def identifier
-    return "#{self.code} - #{self.customer.name}"
+  def get_banco(id)
+    a = Bank.find(id)
+
+    return a.name 
   end
+  def get_moneda(id)
+    a = Moneda.find(id)
+
+    return a.description
+  end
+
+  def get_supplier(id)
+
+    a =Supplier.find(id)
+    return a.name 
+
+  end 
+  def get_document(id)
+
+    a = Document.find(id)
+    return a.description 
+
+  end 
+  
+  def identifier
+    return "#{self.code} - #{self.bank_acount.number}"
+  end
+
   def get_payments    
-    @itemproducts =SupplierPaymentDetail.find_by_sql(['Select invoice_products.price,invoice_products.quantity,invoice_products.discount,invoice_products.total,products.name  from invoice_products INNER JOIN products ON invoice_products.product_id = products.id where invoice_products.invoice_id = ?', self.id ])
-    puts self.id
+ @itemproducts =SupplierPaymentDetail.find_by_sql(['Select supplier_payment_details.total,
+      purchases.documento,purchases.document_id,purchases.supplier_id  from supplier_payment_details   
+      INNER JOIN purchases ON   supplier_payment_details.purchase_id = purchases.id
+      WHERE  supplier_payment_details.supplier_payment_id = ?', self.id ])
 
     return @itemproducts
   end
   
   def get_payments_supplier
-    invoice_products = SupplierPaymentDetail.where(supplierpayment_id:  self.id)    
+    invoice_products = SupplierPaymentDetail.where(supplierpayment_id:  self.id)                                                                                                                                                                                                                                                                                        
     return invoice_products
   end
   
@@ -98,7 +178,7 @@ new_invoice_purchase = SupplierPaymentDetail.new(:supplierpayment_id => self.id,
     invoice_products = SupplierPaymentDetail.where(supplierpayment_id:  self.id)
     
     invoice_products.each do | ip |
-      
+                                                                                                                                                                                                                                                                                                              
       ip.purchases[:balance] = ip.total 
       
       purchases.push("#{ip.purchase.id}|BRK#{ip.purchase.total}")
@@ -135,20 +215,8 @@ new_invoice_purchase = SupplierPaymentDetail.new(:supplierpayment_id => self.id,
   def process
 
     if(self.processed == "1" or self.processed == true)
-      invoice_products = SupplierPaymentDetail.where(supplierpayment_id: self.id)
+      invoice_products = SupplierPaymentDetail.where(supplier_payment_id: self.id)
     
-      for ip in invoice_products
-        product = ip.product
-        
-        if(product.quantity)
-          if(self.return == "0")
-            ip.product.quantity -= ip.quantity
-          else
-            ip.product.quantity += ip.quantity
-          end
-          ip.product.save
-        end
-      end
       
       self.date_processed = Time.now
       self.save

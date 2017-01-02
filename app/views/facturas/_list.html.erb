@@ -41,15 +41,23 @@
           <td class="bordered_right bordered_bottom <%= invoice.processed_color %>">
             <%= invoice.get_processed_short %>
           </td>
-          <td class="bordered_right bordered_bottom">
-            <%= link_to "Ver", invoice %>
-          </td>
-          <td class="bordered_right bordered_bottom">
-            <%= link_to "Editar", edit_factura_path(invoice) %>
-          </td>
-          <td class="bordered_right bordered_bottom">
+        <td class="bordered_right bordered_bottom <%= invoice.processed_color %>">
 
-            <%= link_to 'Eliminar', invoice, :confirm => 'Are you sure?', :method => :delete %>            
+          <% if invoice.processed =="0" %>
+          <%= link_to "Ver", invoice %>                      
+          <%= link_to "Edit", edit_factura_path(invoice) %>                      
+          <%= link_to 'Eliminar', invoice, :data=> {:confirm => 'Esta seguro ?'}, :method => :delete %>            
+
+          <% elsif invoice.processed =="1"%>    
+        
+          <%= link_to "Ver", invoice %>                      
+          <%= link_to 'Eliminar', invoice,:data=> {:confirm => 'Esta seguro ?'}, :method => :delete %>            
+          <% elsif invoice.processed =="2"%>  
+          <%= "** Anulado **" %>
+          <%= link_to 'Eliminar', invoice,:data=> {:confirm => 'Esta seguro ?'}, :method => :delete %>            
+          <% elsif invoice.processed =="3"%>  
+          <%= "** Cerrado **" %>                      
+          <% end %> 
           </td>
         </tr>
       <% end %>

@@ -90,7 +90,12 @@ class Company < ActiveRecord::Base
      services = Service.where(company_id: self.id).order(:name)
      return services
   end
-
+  def get_tipofacturas()
+     tipos = Tipofactura.where(company_id: self.id).order(:descrip)
+       
+    return tipos
+  end
+  
 
   def get_addresses()
      addresses = Address.find_by_sql(['Select id,full_address as address from addresses' ]) 
@@ -292,6 +297,14 @@ class Company < ActiveRecord::Base
     return @serviceorder
  end 
  
+ def get_facturas_year_month_day(fecha1)
+
+    @facturas = Factura.where(["processed = '1' and company_id = ? AND fecha >= ? and fecha<= ?", self.id, "#{fecha1} 00:00:00","#{fecha1}-31 23:59:59"])
+    return @facturas
+
+    
+ end 
+ 
  # Return value for user
  def get_services_year_month_value( year,month, value = "total")
   
@@ -312,6 +325,33 @@ class Company < ActiveRecord::Base
     
     return ret
   end
+ # Return value 
+ def get_purchases_year_month_value( year,month, value = "total_amount")
+  
+    purchases = Purchase.where(["purchases.balance > 0  and  company_id = ?  AND date2 >= ? AND date2 <= ?", self.id,"2000-01-01 00:00:00", "#{year}-#{month}-31 23:59:59"]).order("id desc")
+    ret = 0
+    
+    for purchase in purchases
+      
+      if(value == "subtotal")
+        ret += purchase.subtotal
+      elsif(value == "tax")
+        ret += purchase.tax
+      else
+        ret += purchase.total_amount
+      end
+    end
+    
+    return ret
+  end
+
+  def get_purchases_year_month( year,month)
+  
+    @purchases = Purchase.where(["purchases.balance > 0  and  company_id = ?  AND date2 >= ? AND date2 <= ?", self.id,"2000-01-01 00:00:00", "#{year}-#{month}-31 23:59:59"]).order("supplier_id")  
+    
+    return @purchases 
+  end
+
   
   # Return value for user
   def get_invoices_value_user(user, year, value = "total")

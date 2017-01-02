@@ -14,12 +14,15 @@
 
 <div class="mid_box bordered_right">
   <%= form_for(@invoice) do |f| %>
-    <h3>
+    <h4>
        Informacion Factura 
-    </h3>
+    </h4>
 
     <div class="field">
-    
+      <div class="field">
+      <%= f.label :tipo , "Factura", :class => "bold" %><br />
+      <%= f.select :tipo, options_from_collection_for_select(@tipofacturas,'id','descrip') %>
+      </div>
 
       <div class="field">
       <%= f.label :fecha , "Fecha *", :class => "bold" %><br />
@@ -28,9 +31,9 @@
 
     <div class="field">
       <%= f.label :location_id ,"Local"%><br />
-      <%= f.select :location_id, options_from_collection_for_select(@locations,'id','name') %>
-    
+      <%= f.select :location_id, options_from_collection_for_select(@locations,'id','name') %>    
     </div>
+
     <div class="field">
       <%= f.label :division_id %><br />
       <%= f.select :division_id,options_from_collection_for_select(@divisions,'id','name') %>
@@ -136,9 +139,9 @@
 </div>
 
 <div class="mid_box">
-  <h3>
-    Agregar Servicios  a la factura 
-  </h3>
+  <h4>
+    Agregar Servicios  
+  </h4>
   
   <form method="get" action="/services" onsubmit="addItemToInvoice2(); return false;">
     
@@ -183,9 +186,9 @@
   <%= hr() %>
   
 
-  <h3>
-    Agregar servicios a la guia  
-  </h3>
+  <h4>
+    Agregar guias 
+  </h4>
   
   <form method="get" action="/facturas" onsubmit="addItemTodelivery2(); return false;">
 
@@ -198,7 +201,6 @@
         </div>
     <br />    
     
-
     <input type="submit" value="Agregar Guias" />
 
   </form>

@@ -53,6 +53,14 @@ where("#{field_name} like ?", "%#{param}%")
 
 end
 
+def correlativo
+        voided= Voided.new()
+        voided.numero=Voided.find(6).numero.to_i + 1
+        lcnumero=voided.numero.to_s
+        Voided.where(:id=>'6').update_all(:numero =>lcnumero)        
+end
+
+
 #Remove turbolinks from application.js file if having issues with search
 
   def get_subtotal(items)

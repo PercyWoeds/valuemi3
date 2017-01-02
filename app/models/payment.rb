@@ -6,4 +6,5 @@ class Payment < ActiveRecord::Base
   has_many :facturas 
   has_many :serviceorders 
   has_many :purchaseorders 
+  has_many :purchases
 end

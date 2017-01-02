@@ -5,12 +5,27 @@ include ServicesHelper
 
 class DeliveriesController < ApplicationController
   before_filter :authenticate_user!, :checkServices
+
+
+def unir
+        
+    @company = Company.find(params[:company_id])
+    @users = @company.get_users()
+    @users_cats = []
     
+    @pagetitle = "Agrega guia de remision "
+    
+    @mines =  Delivery.where([" code like ?", "%" + params[:ac_gt] + "%"])  
+
+    @deliverymines=Deliverymine.new 
+  
+    
+end
+      
 def search
   
-
   if params[:search].blank?
-    
+  
   else
       @Customer = Delivery.search(params[:search_param])  
       if @deliveries
@@ -41,6 +56,31 @@ def add_friend
 
 end
 
+ 
+  def add_guias(items)
+    for item in items
+      if(item and item != "")
+        parts = item.split("|BRK|")
+        
+        id = parts[0]
+        puts "add guia "
+        puts parts 
+        puts id
+
+        begin
+          guia = Delivery.find(id.to_i)
+          
+          new_invoice_guia = Deliveryship.new(:factura_id => self.id, :delivery_id => guia.id)          
+          new_invoice_guia.save
+           
+        rescue
+          
+        end
+      end
+    end
+  end
+  
+
   
   # Export delivery to PDF
   def pdf
@@ -50,7 +90,16 @@ end
       format.pdf { render :layout => false }
     end
   end
+
+  def do_unir
+    @company = Company.find(params[:company_id])
+    #@delivery = Delivery.find(self.id)
+    #@myguias = @delivery.mines 
+
+  end 
   
+
+
   # Process an delivery
   def do_process
     @delivery = Delivery.find(params[:id])
@@ -61,6 +110,7 @@ end
     flash[:notice] = "The delivery order has been processed."
     redirect_to @delivery
   end
+
 
 # Anular an delivery
   def do_anular
@@ -308,7 +358,7 @@ end
     @trucks    = @company.get_trucks()
     @employees = @company.get_employees()
     @customers = @company.get_customers()
-    @remites = @company.get_customers()
+    @remites   = @company.get_customers()
     @empsubs   = @company.get_empsubs()
     @unidads   = @company.get_unidads()
     @addresses  = @company.get_addresses()
@@ -367,9 +417,7 @@ end
     if(params[:delivery][:user_id] and params[:delivery][:user_id] != "")
       curr_seller = User.find(params[:delivery][:user_id])
         @ac_user = curr_seller.username
-    end
-
-          
+    end        
         
     respond_to do |format|
       if @delivery.save 

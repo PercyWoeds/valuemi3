@@ -18,7 +18,7 @@ class FacturasController < ApplicationController
   # Process an invoice
   def do_process
     @invoice = Factura.find(params[:id])
-    @invoice[:processed] = true    
+    @invoice[:processed] = "1"
     @invoice.process
     
     flash[:notice] = "The invoice order has been processed."
@@ -41,6 +41,22 @@ class FacturasController < ApplicationController
     @invoice = Factura.find(params[:id])
     @company = @invoice.company
   end
+
+  def do_anular
+    @invoice = Factura.find(params[:id])
+    @invoice[:processed] = "2"
+    
+    @invoice.anular 
+    @invoice.delete_guias()
+
+
+    
+    flash[:notice] = "Documento a sido anulado."
+    redirect_to @invoice 
+  end
+  
+  
+
   
   # List items
   def list_items
@@ -220,7 +236,7 @@ class FacturasController < ApplicationController
   def index
     @companies = Company.where(user_id: current_user.id).order("name")
     @path = 'factura'
-    @pagetitle = "Invoices"
+    @pagetitle = "Facturas"
 
     #@facturas = Factura.find_by_sql('Select customer_id as cliente,facturas.fecha,facturas.code as numero,  
     #  payments.descrip as formapago,invoice_services.price as preciosigv,invoice_services.preciocigv,invoice_services.quantity,
@@ -228,7 +244,7 @@ class FacturasController < ApplicationController
     #facturas.description,facturas.comments  from facturas 
     #        LEFT JOIN payments ON facturas.payment_id = payments.id 
     #        LEFT JOIN invoice_services ON invoice_services.factura_id = facturas.id')
-    @facturas = Factura.find_by_sql('select * from facturas ')
+    @facturas = Factura.find_by_sql('select * from facturas')
     
     if  @facturas.size >0 
       respond_to do |format|
@@ -238,6 +254,61 @@ class FacturasController < ApplicationController
       end 
 
   end
+  def export
+
+    @company = Company.find(params[:company_id])
+    @facturas  = Factura.all
+    
+    
+  end
+  def generar
+        
+    @company = Company.find(params[:company_id])
+    @users = @company.get_users()
+    @users_cats = []
+    
+    @pagetitle = "Generar archivo txt"
+    
+    @f =(params[:fecha1])
+
+        parts = @f.split("-")
+        yy = parts[0]
+        mm = parts[1]
+        dd = parts[2]
+
+     @fechadoc=dd+"/"+mm+"/"+yy   
+     @tipodocumento='01'
+    
+    files_to_clean =  Dir.glob("./app/txt_output/*.txt")
+        files_to_clean.each do |file|
+          File.delete(file)
+        end 
+  
+
+    @facturas_all_txt = @company.get_facturas_year_month_day(@f)
+
+
+
+    if @facturas_all_txt
+      out_file = File.new("#{Dir.pwd}/app/txt_output/20424092941-RF-#{dd}#{mm}#{yy}-01.txt", "w")      
+        for factura in @facturas_all_txt 
+            parts = factura.code.split("-")
+            @serie     =parts[0]
+            @nrodocumento=parts[1]
+
+            out_file.puts("7|#{@fechadoc}|#{@tipodocumento}|#{@serie}|#{@nrodocumento}||6|#{factura.customer.ruc}|#{factura.customer.name}|#{factura.subtotal}|0.00|0.00|0.00|#{factura.tax}|0.00|#{factura.total}||||\n")
+                    
+        end 
+    out_file.close
+    end 
+
+
+    #out_file = File.new("#{Dir.pwd}/app/txt_output/20424092941-RF-01.txt", "w")
+    #out_file.puts("write your stuff here")
+    #out_file.close
+
+  end
+  
 
   # GET /invoices/1
   # GET /invoices/1.xml
@@ -266,6 +337,7 @@ class FacturasController < ApplicationController
     @payments = @company.get_payments()
     @services = @company.get_services()
     @deliveryships = @invoice.my_deliverys 
+    @tipofacturas = @company.get_tipofacturas() 
 
     @ac_user = getUsername()
     @invoice[:user_id] = getUserId()
@@ -392,7 +464,10 @@ class FacturasController < ApplicationController
   def destroy
     @invoice = Factura.find(params[:id])
     company_id = @invoice[:company_id]
-    @invoice.destroy
+    if @invoice.destroy
+      @invoice.delete_guias()
+    end   
+
 
     respond_to do |format|
       format.html { redirect_to("/companies/facturas/" + company_id.to_s) }
@@ -402,7 +477,7 @@ class FacturasController < ApplicationController
 
   private
   def factura_params
-    params.require(:factura).permit(:company_id,:location_id,:division_id,:customer_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:payment_id,:fecha,:preciocigv)
+    params.require(:factura).permit(:company_id,:location_id,:division_id,:customer_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:payment_id,:fecha,:preciocigv,:tipo)
   end
 
 end

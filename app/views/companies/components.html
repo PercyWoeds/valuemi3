@@ -42,7 +42,7 @@
   <h3>
         <div>
     <%= image_tag("clients_32.png", :class => "vmiddle") %>
-    <%= link_to "Toma de inventario", "/companies/servicebuys/#{@company.id}" %>
+    <%= link_to "Inventario", "/companies/inventarios/#{@company.id}" %>
         </div>
   </h3>
   <p>
@@ -62,16 +62,6 @@
   </p>
   <%= hr() %>
 
-  <h3>
-    <%= image_tag("divisions_32.png", :class => "vmiddle") %>
-    <%= link_to "", "/companies/divisions/#{@company.id}" %>
-  </h3>
-
-  <p>
-     Agregar, editar or eliminar divisiones de tu negocio(tablas, secciones, etc).
-  </p>
-  
-  <%= hr() %>
   
   <h3>
     <%= image_tag("reports_32.png", :class => "vmiddle") %>

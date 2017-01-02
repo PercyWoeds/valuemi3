@@ -1,0 +1,194 @@
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @supplierpayment.company.name, @supplierpayment.company %> &raquo;
+  <%= link_to "supplierpayments", "/companies/supplier_payments/#{@supplierpayment.company.id}" %>
+</div>
+
+<h1>
+  <%= image_tag("invoice_48.png", :class => "vmiddle") %>
+  <%= @supplierpayment.identifier %>
+</h1>
+
+<%= hr() %>
+
+<% if @supplierpayment.location %>
+  <p>
+    <b>Location:</b>
+    <%= link_to @supplierpayment.location.name, @supplierpayment.location %>
+  </p>
+<% end %>
+
+<% if @supplierpayment.division %>
+  <p>
+    <b>Division:</b>
+    <%= link_to @supplierpayment.division.name, @supplierpayment.division %>
+  </p>
+<% end %>
+
+<p>
+  <b>Code:</b>
+  <%= @supplierpayment.code %>
+</p>
+
+<p>
+    <b>Fecha entrega:</b>
+    <%= @supplierpayment.fecha1.strftime("%d/%m/%Y") %>   
+</p>
+ 
+<p>
+    <b>Estado: </b>
+    <%= @supplierpayment.get_processed   %>   
+</p>
+
+
+<%= hr() %>
+
+<h3>
+  Informacion Pago
+</h3>
+
+<p>
+  <b>Cuenta </b>  
+  <%= link_to @supplierpayment.bank_acount.number %>
+</p>
+
+<p>
+  <b>Banco : </b>  
+  <%=  @supplierpayment.get_banco(@supplierpayment.bank_acount.bank_id)   %>
+</p>  
+
+<b>Moneda : </b>  
+  <%=  @supplierpayment.get_moneda(@supplierpayment.bank_acount.bank_id)     %>
+</p>
+
+<b>Girado  : </b>  
+  <%=  @supplierpayment.supplier.name     %>
+</p>
+
+<%= hr() %>
+
+<h3>
+  Details
+</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>
+        Tipo  
+      </th>
+      <th>
+        Documento
+      </th>
+      <th>    
+        Operacion
+      </th>
+      <th>
+        Op.Telecredito  
+      </th>
+
+      <th>
+        Total
+      </th>
+
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td class="bordered_bottom bordered_right">
+           <%=  @supplierpayment.get_document (@supplierpayment.document_id)     %>
+        </td>
+        
+              
+        <td class="bordered_bottom bordered_right">
+          <%=  @supplierpayment.documento     %>
+        </td>
+
+        <td class="bordered_bottom bordered_right">
+          <%=  @supplierpayment.nrooperacion  %>
+        </td>
+        
+         <td class="bordered_bottom bordered_right">
+          <%=  @supplierpayment.operacion    %>
+        </td>
+
+        <td class="bordered_bottom bordered_right">
+            <%=  @supplierpayment.total     %>
+        </td>
+
+      </tr>
+    
+
+
+    <% for productItem in @supplierpayment.get_payments() %>
+      <tr>
+        <td class="bordered_bottom bordered_right">
+          <%= productItem.get_document(productItem.document_id)   %>
+        </td>
+        
+              
+        <td class="bordered_bottom bordered_right">
+          <%=  productItem.documento   %>
+        </td>
+
+        <td class="bordered_bottom bordered_right">
+          <%=  productItem.get_supplier(productItem.supplier_id)   %>
+        </td>
+        
+         <td class="bordered_bottom bordered_right">
+
+        </td>
+
+        <td class="bordered_bottom bordered_right">
+          <%= money(productItem.total) %>
+        </td>
+
+      </tr>
+    <% end %>
+    <tr>
+      <td colspan="5" class="bordered_bottom bordered_right">
+        &nbsp;
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="4" class="bordered_bottom bordered_right bold">
+        Total:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@supplierpayment.total) %>
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+<br />
+
+<%= hr() %>
+
+
+<br />
+
+
+<p>
+  <strong>Seller:</strong>
+  <%= link_to @supplierpayment.user.username, @supplierpayment.user %>
+</p>
+
+<%= hr() %>
+
+<div class="button">
+  <%= link_to 'Exportar to PDF', "/supplier_payments/pdf/#{@supplierpayment.id}.pdf" %>  
+  
+ <% if @supplierpayment.processed == "1" %> 
+
+ <% %>
+
+ <% else %>
+
+  <%= link_to 'Procesar', "/supplier_payments/do_process/#{@supplierpayment.id}" %>
+
+ <% end %> 
+  
+  <%= link_to 'Regresar', "/companies/supplier_payments/#{@supplierpayment.company.id}" %>
+</div>

@@ -1,0 +1,33 @@
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %>
+</div>
+
+<h1>
+  <%= image_tag("reports_48.png", :class => "vmiddle") %>
+  Reportes
+</h1>
+
+<div class="mid_box bordered_right">
+  <h3>
+    Cuentas por Pagar
+  </h3>
+  
+  <p class="big">
+    <%= link_to "Pendientes de Pago ", "/companies/reports/rpt_purchases_all/#{@company.id}" %>
+  </p>
+
+  <p class="big">
+    <%= link_to "Cancelaciones", "/companies/reports/purchaseorder_all/#{@company.id}" %>
+  </p>
+
+  <p class="big">
+    <%= link_to "Cuentas Bancarias ", "/companies/reports/invoice_all/#{@company.id}" %>
+  </p>
+  
+</div>
+
+<div class="mid_box">
+</div>
+
+<%= br() %>

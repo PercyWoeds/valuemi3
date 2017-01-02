@@ -17,6 +17,8 @@ self.per_page = 20
   has_many :delivery_services
   has_many :declarationdeliveries
 
+  has_many :deliverymines
+  has_many :mines, through: :deliverymines
 
   TABLE_HEADERS = ["ITEM",
                      "Fecha",

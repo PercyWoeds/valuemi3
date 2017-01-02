@@ -1,0 +1,62 @@
+<% if @supplierpayments.count > 0 %>
+  <table>
+    <thead>
+      <tr>
+        <th class="bordered_right bordered_bottom" style="width: 100px;">
+         Orden
+        </th>
+        <th class="bordered_right bordered_bottom" style="width: 350px;">
+          Proveedor 
+        </th>
+        <th class="bordered_right bordered_bottom">
+          Total
+        </th>
+        <th class="bordered_right bordered_bottom">
+          Fecha
+        </th>
+        <th class="bordered_right bordered_bottom">
+          Aprobado 
+        </th>
+        <th class="bordered_right bordered_bottom" colspan="3">
+          Opciones 
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <% for supplierpayment in @supplierpayments %>
+        <tr>
+          <td class="bordered_right bordered_bottom">
+            <%= link_to supplierpayment.code, supplierpayment, :title => "Ir a factura" %>
+          </td>
+          <td class="bordered_right bordered_bottom">
+            <%= link_to supplierpayment.bank_acount.number %>
+          </td>
+          <td class="bordered_right bordered_bottom right">
+            <%= money(supplierpayment.total) %>
+          </td>
+          <td class="bordered_right bordered_bottom">
+            <%= doDate(supplierpayment.created_at) %>
+          </td>
+          <td class="bordered_right bordered_bottom <%= supplierpayment.processed_color %>">
+            <%= supplierpayment.get_processed_short %>
+          </td>
+          <td class="bordered_right bordered_bottom">
+            <%= link_to "Ver", supplierpayment %>
+          </td>
+          <td class="bordered_right bordered_bottom">  
+            
+          <%= link_to 'Eliminar', supplierpayment, :confirm => 'Are you sure?', :method => :delete  %>           
+            
+        
+
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p class="error">
+    We couldn't find any supplierpayments.
+  </p>
+<% end %>

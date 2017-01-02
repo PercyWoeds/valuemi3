@@ -30,7 +30,7 @@ class InvoicesController < ApplicationController
   # Process an invoice
   def do_process
     @invoice = Invoice.find(params[:id])
-    @invoice[:processed] = true
+    @invoice[:processed] = "1"
     
     @invoice.process
     

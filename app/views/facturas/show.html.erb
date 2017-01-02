@@ -89,7 +89,7 @@
           <%= link_to productItem.name   %>
         </td>
         <td class="bordered_bottom bordered_right">
-          $<%= money(productItem.price) %>
+          <%= money(productItem.price) %>
         </td>
         <td class="bordered_bottom bordered_right">
           <%= productItem.quantity %>
@@ -98,7 +98,7 @@
           <%= money(productItem.discount) %>%
         </td>
         <td class="bordered_bottom bordered_right">
-          $<%= money(productItem.total) %>
+          <%= money(productItem.total) %>
         </td>
       </tr>
     <% end %>
@@ -112,7 +112,7 @@
         Subtotal:
       </td>
       <td class="bordered_bottom bordered_right bold right">
-        $<%= money(@invoice.subtotal) %>
+        <%= money(@invoice.subtotal) %>
       </td>
     </tr>
     <tr>
@@ -120,7 +120,7 @@
         Tax:
       </td>
       <td class="bordered_bottom bordered_right bold right">
-        $<%= money(@invoice.tax) %>
+        <%= money(@invoice.tax) %>
       </td>
     </tr>
     <tr>
@@ -128,7 +128,7 @@
         Total:
       </td>
       <td class="bordered_bottom bordered_right bold right">
-        $<%= money(@invoice.total) %>
+        <%= money(@invoice.total) %>
       </td>
     </tr>
   </tbody>
@@ -211,7 +211,14 @@
 <div class="button">
   <%= link_to 'Exportar to PDF', "/facturas/pdf/#{@invoice.id}.pdf" %>
   <%= link_to 'Send invoice via email', "/facturas/email/#{@invoice.id}" %>
+
+  
+<% if @invoice.processed =="0" || @invoice.processed==nil %>
   <%= link_to 'Procesar factura', "/facturas/do_process/#{@invoice.id}" %>
   <%= link_to 'Editar', edit_factura_path(@invoice) %>
+<% elsif @invoice.processed =="1" %>  
+  <%= link_to 'Anular', "/facturas/do_anular/#{@invoice.id}" %>
+<% end %>
+
   <%= link_to 'Regresar', "/companies/facturas/#{@invoice.company.id}" %>
 </div>

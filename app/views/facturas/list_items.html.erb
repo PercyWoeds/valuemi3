@@ -31,16 +31,16 @@
             [<a href="#" onclick="removeItemFromInvoice2(<%= product.i %>); return false;" title="Remove product from invoice">X</a>]
           </td>
           <td class="small bordered_bottom bordered_right">
-            $<%= money(product.price) %>
+            <%= money(product.price) %>
           </td>
           <td class="small bordered_bottom bordered_right">
             <%= product.quantity %>
           </td>
           <td class="small bordered_bottom bordered_right">
-            <%= money(product.discount) %>%
+            <%= (product.discount) %>%
           </td>
           <td class="small bordered_bottom bordered_right">
-            $<%= money(product.currtotal) %>
+            <%= money(product.currtotal) %>
           </td>
         </tr>
       <% end %>

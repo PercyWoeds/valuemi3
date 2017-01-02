@@ -8,20 +8,6 @@ class SupplierPaymentsController < ApplicationController
  
   def build_pdf_header(pdf)
 
-     $lcCli  =  @supplierpayment.supplier.name
-     $lcdir1 = @supplierpayment.supplier.address1
-     $lcdir2 =@supplierpayment.supplier.address2
-     $lcdis  =@supplierpayment.supplier.city
-     $lcProv = @supplierpayment.supplier.state
-     $lcFecha1= @supplierpayment.fecha1.strftime("%d/%m/%Y") 
-     $lcMon=@supplierpayment.moneda.description     
-     $lcPay= @supplierpayment.payment.descrip
-     $lcSubtotal=sprintf("%.2f",@supplierpayment.subtotal)
-     $lcIgv=sprintf("%.2f",@supplierpayment.tax)
-     $lcTotal=sprintf("%.2f",@supplierpayment.total)
-
-     $lcDetracion=sprintf("%.2f",@supplierpayment.detraccion)
-     $lcAprobado= @supplierpayment.get_processed 
     
       pdf.image "#{Dir.pwd}/public/images/logo.png", :width => 270
         
@@ -38,13 +24,13 @@ class SupplierPaymentsController < ApplicationController
         pdf.move_down 15
         pdf.font "Helvetica", :style => :bold do
           pdf.text "R.U.C: 20424092941", :align => :center
-          pdf.text "ORDEN DE SERVICIO", :align => :center
+          pdf.text "COMPROBANTE DE PAGO", :align => :center
           pdf.text "#{@supplierpayment.code}", :align => :center,
                                  :style => :bold
           
         end
       end
-      pdf.move_down 25
+      pdf.move_down 10
       pdf 
   end   
 
@@ -54,29 +40,17 @@ class SupplierPaymentsController < ApplicationController
     pdf.text " ", :size => 13, :spacing => 4
     pdf.font "Helvetica" , :size => 8
 
-    max_rows = [client_data_headers.length, invoice_headers.length, 0].max
-      rows = []
-      (1..max_rows).each do |row|
-        rows_index = row - 1
-        rows[rows_index] = []
-        rows[rows_index] += (client_data_headers.length >= row ? client_data_headers[rows_index] : ['',''])
-        rows[rows_index] += (invoice_headers.length >= row ? invoice_headers[rows_index] : ['',''])
-      end
+    
+          data =[  [$lcEntrega1,""],
+               [$lcEntrega3,$lcEntrega5],
+               [$lcEntrega4,$lcEntrega6]]
 
-      if rows.present?
+           
+            pdf.text " "
+            pdf.table(data,:cell_style=> {:border_width=>0,:width=> 270,:height => 20 })
+            pdf.move_down 10          
+          
 
-        pdf.table(rows, {
-          :position => :center,
-          :cell_style => {:border_width => 0},
-          :width => pdf.bounds.width
-        }) do
-          columns([0, 2]).font_style = :bold
-
-        end
-
-        pdf.move_down 20
-
-      end
 
       headers = []
       table_content = []
@@ -91,42 +65,43 @@ class SupplierPaymentsController < ApplicationController
 
       nroitem=1
 
-       for  product in @supplierpayment.get_services() 
-            row = []
-            row << nroitem.to_s
-            row << product.quantity.to_s
-            row << product.name
-            row << product.price.to_s
-            row << product.discount
-            row << product .total.to_s
-              table_content << row
+      row=[]
+      row<< "0"
+      row<< @supplierpayment.get_document(@supplierpayment.document_id)    
+      row<< @supplierpayment.documento    
+      row<< @supplierpayment.nrooperacion 
+      row<< @supplierpayment.operacion   
+      row<< @supplierpayment.total.to_s    
+      table_content << row     
 
+       for  product in @supplierpayment.get_payments() 
+            row = []
+            row << nroitem.to_s          
+            row << product.get_document(product.document_id)
+            row << product.documento    
+            row << product.get_supplier(product.supplier_id)
+            row << "" 
+            row << product.total.to_s
+
+            table_content << row
             nroitem=nroitem + 1
+      
         end
+
+
 
       result = pdf.table table_content, {:position => :center,
                                         :header => true,
                                         :width => pdf.bounds.width
-                                        } do 
+                                          } do 
                                           columns([0]).align=:center
-                                          columns([1]).align=:right
-                                          columns([2]).align=:center
-                                          columns([3]).align=:right
-                                          columns([4]).align=:right
-                                          columns([5]).align=:right
-                                         
+                                          columns([1]).align=:left 
+                                          columns([2]).align=:left
+                                          columns([3]).align=:left 
+                                          columns([4]).align=:right 
                                         end
 
-      pdf.move_down 10      
-      pdf.table invoice_summary, {
-        :position => :right,
-        :cell_style => {:border_width => 1},
-        :width => pdf.bounds.width/2
-      } do
-        columns([0]).font_style = :bold
-        columns([1]).align = :right
-        
-      end
+      pdf.move_down 10  
       pdf
 
     end
@@ -134,31 +109,49 @@ class SupplierPaymentsController < ApplicationController
 
     def build_pdf_footer(pdf)
 
+   $lcAccount= @supplierpayment.bank_acount.number
+   $lcBanco =@supplierpayment.get_banco(@supplierpayment.bank_acount.bank_id)  
+   $lcCheque =@supplierpayment.get_document(@supplierpayment.document_id)+ "-"+@supplierpayment.documento    
+      
+   
+      data =[  ["BANCO","NRO.CUENTA","OPERACION :","GIRADO :","MONEDA : ","T/C."],
+               [$lcBanco,$lcAccount,$lcCheque,$lcFecha1,$lcMon,"0.00"]]
+
+            pdf.move_down 100
+            pdf.text " "
+            pdf.table(data,:cell_style=> {:border_width=>1, :width=> 90,:height => 20 })
+            pdf.move_down 10          
+          
+
         pdf.text ""
         pdf.text "" 
-        pdf.text "Descripcion : #{@supplierpayment.description}", :size => 8, :spacing => 4
-        pdf.text "Comentarios : #{@supplierpayment.comments}", :size => 8, :spacing => 4
+        pdf.text "CONCEPTO : #{@supplierpayment.descrip}", :size => 8, :spacing => 4
+
+        
+       data =[ ["Procesado por ","V.B.Contador","V.B.Gerente Fin.","V.B. Gerente Gral."],
+               [":",":",":",":"],
+               [":",":",":",":"],
+               ["Fecha:","Fecha:","Fecha:","Fecha:"] ]
+
+           
+            pdf.text " "
+            pdf.table(data,:cell_style=> {:border_width=>1} , :width => pdf.bounds.width)
+            pdf.move_down 10          
+   
         
         
+        pdf.table invoice_summary, {
+        :position => :right,
+        :cell_style => {:border_width => 1},
+        :width => pdf.bounds.width/2
+        } do
+        columns([0]).font_style = :bold
+        columns([1]).align = :right        
+        end
+    
 
-        data =[[{:content=> $lcEntrega4,:colspan=>2},"" ] ,
-               [$lcEntrega1,{:content=> $lcEntrega3,:rowspan=>2}],
-               [$lcEntrega2]               
-               ]
-
-           {:border_width=>0  }.each do |property,value|
-            pdf.text " Instrucciones: "
-            pdf.table(data,:cell_style=> {property =>value})
-            pdf.move_down 20          
-           end     
-
-        pdf.bounding_box([0, 20], :width => 535, :height => 40) do
-        
-        pdf.text "_________________               _____________________         ____________________      ", :size => 13, :spacing => 4
-        pdf.text ""
-        pdf.text "                  Realizado por                                                 V.B.Jefe Compras                                            V.B.Gerencia           ", :size => 10, :spacing => 4
-
-        pdf.draw_text "Company: #{@supplierpayment.company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
+        pdf.bounding_box([0, 20], :width => 538, :height => 50) do        
+        pdf.draw_text "Company: #{@supplierpayment.company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom ]
 
       end
 
@@ -170,17 +163,31 @@ class SupplierPaymentsController < ApplicationController
 
   # Export supplierpayment to PDF
   def pdf
-    @supplierpayment =SupplierPayment.find(params[:id])
+    @supplierpayment = SupplierPayment.find(params[:id])
     company =@supplierpayment.company_id
     @company =Company.find(company)
+  
 
-    @instrucciones = @company.get_instruccions()
+     $lcCli  = @supplierpayment.supplier.name
+     $lcdir1 = @supplierpayment.supplier.address1
+     
+     $lcFecha1= @supplierpayment.fecha1.strftime("%d/%m/%Y") 
+     $lcMon   = @supplierpayment.get_moneda(@supplierpayment.bank_acount.bank_id)
+     $lcPay= ""
+     $lcSubtotal=0
+     $lcIgv=0
+     $lcTotal=sprintf("%.2f",@supplierpayment.total)
 
-    @lcEntrega =  @instrucciones.find(1)
-    $lcEntrega1 =  @lcEntrega.description1
-    $lcEntrega2 =  @lcEntrega.description2
-    $lcEntrega3 =  @lcEntrega.description3
-    $lcEntrega4 =  @lcEntrega.description4
+     $lcDetracion=0
+     $lcAprobado= @supplierpayment.get_processed 
+
+
+    $lcEntrega1 =  "PAGUESE A NOMBRE :"+$lcCli 
+    $lcEntrega2 =  $lcCli
+    $lcEntrega3 =  "NOMBRE DEL PROVEEDOR: "
+    $lcEntrega4 =  $lcCli
+    $lcEntrega5 =  "FECHA COMPRO:"
+    $lcEntrega6 =  $lcFecha1
 
     Prawn::Document.generate("app/pdf_output/#{@supplierpayment.id}.pdf") do |pdf|
         pdf.font "Helvetica"
@@ -200,6 +207,7 @@ class SupplierPaymentsController < ApplicationController
   
   # Process an supplierpayment
   def do_process
+
     @supplierpayment = SupplierPayment.find(params[:id])
     @supplierpayment[:processed] = "1"
     
@@ -245,10 +253,6 @@ class SupplierPaymentsController < ApplicationController
     @supplierpayment[:processed]='3'
     documento =  @supplierpayment[:documento]
     documento_id =  params[:documento_id]
-
-    puts "documento----------------------------------------------**********"
-    puts documento
-    puts documento_id
     
     if(params[:ac_documento] and params[:ac_documento] != "")
      
@@ -263,8 +267,9 @@ class SupplierPaymentsController < ApplicationController
     if  @supplierpayment.update_attributes(submision_hash)
         @supplierpayment.cerrar()
         
-        format.html { redirect_to(@supplierpayment, :notice => 'Orden de servicio actualizada  ') }
+        format.html { redirect_to(@supplierpayment, :notice => 'Orden de servicio actualizada  ') }        
         format.xml  { head :ok }
+
       else
         format.html { render :action => "edit" }
         format.xml  { render :xml => @supplierpayment.errors, :status => :unprocessable_entity }
@@ -292,24 +297,15 @@ class SupplierPaymentsController < ApplicationController
 
     for item in items
       if item != ""
-        parts = item.split("|BRK|")
-        
+        parts = item.split("|BRK|")        
         id = parts[0]        
-        price = parts[1]        
-        
+        price = parts[1]                
         product = Purchase.find(id.to_i)
-
         product[:tax1] = i        
-
-        product[:price_with_tax] = price.to_f
-              
-        total = product[:price_with_tax]
-                
-    
+        product[:price_with_tax] = price.to_f              
+        total = product[:price_with_tax]                  
         product[:total_amount] = total
-
-        @total_pago = @total_pago + total   
-    
+        @total_pago = @total_pago + total       
         @products.push(product)
       end
       
@@ -319,6 +315,7 @@ class SupplierPaymentsController < ApplicationController
     render :layout => false
   end
   
+
   # Autocomplete for documents
   def ac_documentos
     @docs = Purchase.where(["company_id = ? AND (documento LIKE ? )", params[:company_id], "%" + params[:q] + "%"])   
@@ -326,8 +323,8 @@ class SupplierPaymentsController < ApplicationController
   end
   
   # Autocomplete for products
-  def ac_products
-    @products = Product.where(["company_id = ? AND (code LIKE ? OR name LIKE ?)", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])   
+  def ac_suppliers
+    @supplier = Supplier.where(["company_id = ? AND (ruc LIKE ? OR name LIKE ?)", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])   
     render :layout => false
   end
   
@@ -436,7 +433,15 @@ class SupplierPaymentsController < ApplicationController
   # GET /supplierpayments/1.xml
   def show
     @supplierpayment = SupplierPayment.find(params[:id])
-    @supplier = @supplierpayment.supplier
+
+    @company = Company.find(@supplierpayment.company_id)
+
+    
+    @bank_acounts = @company.get_bank_acounts()        
+    @monedas  = @company.get_monedas()
+    @documents  = @company.get_documents()
+
+
   end
 
   # GET /supplierpayments/new
@@ -456,8 +461,7 @@ class SupplierPaymentsController < ApplicationController
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
     @suppliers = @company.get_suppliers()
-    @bank_acounts = @company.get_bank_acounts()    
-    @servicebuys  = @company.get_servicebuys()
+    @bank_acounts = @company.get_bank_acounts()        
     @monedas  = @company.get_monedas()
     @documents  = @company.get_documents()
 
@@ -494,33 +498,18 @@ class SupplierPaymentsController < ApplicationController
     items = params[:items].split(",")
     
     @supplierpayment = SupplierPayment.new(supplierpayment_params)    
-    @company = Company.find(params[:supplierpayment][:company_id])
+    @company = Company.find(params[:supplier_payment][:company_id])
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
     @suppliers = @company.get_suppliers()
-    @servicebuys  = @company.get_servicebuys()
-    @payments = @company.get_payments()
+    @bank_acounts = @company.get_bank_acounts()        
     @monedas  = @company.get_monedas()
+    @documents  = @company.get_documents()
 
-    @supplierpayment[:subtotal] = @supplierpayment.get_subtotal(items)  
-    begin
-      @supplierpayment[:tax] = @supplierpayment.get_tax(items, @supplierpayment[:supplier_id])
-    rescue
-      @supplierpayment[:tax] = 0
-    end  
-    @supplierpayment[:total] = @supplierpayment[:subtotal] + @supplierpayment[:tax]
-    @supplierpayment[:detraccion] = @supplierpayment[:total] * 4/100
-
-    if @supplierpaymen[:total] != @total_pago 
-        flash[:error] = "Existe diferencia entre importe a cancelar y documentos ingresados."
-    end
-    
-    if(params[:supplierpayment][:user_id] and params[:supplierpayment][:user_id] != "")
-      curr_seller = User.find(params[:supplierpayment][:user_id])
-      @ac_user = curr_seller.username    
-    end
-
+    @supplierpayment.processed='1'
+        
+    @supplierpayment.user_id=@current_user.id 
 
     respond_to do |format|
       if @supplierpayment.save
@@ -597,7 +586,7 @@ class SupplierPaymentsController < ApplicationController
     @supplierpayment.destroy
 
     respond_to do |format|
-      format.html { redirect_to("/companies/supplierpayments/" + company_id.to_s) }
+      format.html { redirect_to("/companies/supplier_payments/" + company_id.to_s) }
     end
   end
 
@@ -605,167 +594,29 @@ class SupplierPaymentsController < ApplicationController
 
     #{@supplierpayment.description}
       client_headers  = [["Proveedor :", $lcCli ]]
-      client_headers << ["Direccion :", $lcdir1]
-      client_headers << ["Dirección :",$lcdir2]
-      client_headers << ["Distrito  :",$lcdis]
-      client_headers << ["Provincia :",$lcProv]     
+      client_headers << ["Direccion :", $lcdir1]      
       client_headers
   end
 
   def invoice_headers            
-      invoice_headers  = [["Fecha de emisión : ",$lcFecha1]]
-      invoice_headers <<  ["Tipo de moneda : ", $lcMon]
-      invoice_headers <<  ["Forma de pago : ",$lcPay ]    
-      invoice_headers <<  ["Estado  : ",$lcAprobado ]    
+      invoice_headers  = [["Fecha Compro. : ",$lcFecha1]]
+      invoice_headers <<  ["Tipo de moneda : ", $lcMon]    
       invoice_headers
   end
 
   def invoice_summary
       invoice_summary = []
-      invoice_summary << ["SubTotal",  ActiveSupport::NumberHelper::number_to_delimited($lcSubtotal,delimiter:",",separator:".").to_s]
-      invoice_summary << ["IGV",ActiveSupport::NumberHelper::number_to_delimited($lcIgv,delimiter:",",separator:".").to_s]
-      invoice_summary << ["Total", ActiveSupport::NumberHelper::number_to_delimited($lcTotal ,delimiter:",",separator:".").to_s]
-      invoice_summary << ["Detraccion", ActiveSupport::NumberHelper::number_to_delimited($lcDetracion,delimiter:",",separator:".")]
+      invoice_summary << ["RECIBI CONFORME ",""]
+      invoice_summary << ["Fecha  :",""]
+      invoice_summary << ["D.N.I. :","Firma"]
+      invoice_summary << ["Nombre y Apellidos :",""]
       invoice_summary
-    end
-
-# reporte completo
-  def build_pdf_header_rpt(pdf)
-      pdf.font "Helvetica" , :size => 8
-     $lcCli  =  @company.name 
-     $lcdir1 = @company.address1+@company.address2+@company.city+@company.state
-
-     $lcFecha1= Date.today.strftime("%d/%m/%Y").to_s
-     $lcHora  = Time.now.to_s
-
-    max_rows = [client_data_headers.length, invoice_headers.length, 0].max
-      rows = []
-      (1..max_rows).each do |row|
-        rows_index = row - 1
-        rows[rows_index] = []
-        rows[rows_index] += (client_data_headers_rpt.length >= row ? client_data_headers_rpt[rows_index] : ['',''])
-        rows[rows_index] += (invoice_headers_rpt.length >= row ? invoice_headers_rpt[rows_index] : ['',''])
-      end
-
-      if rows.present?
-
-        pdf.table(rows, {
-          :position => :center,
-          :cell_style => {:border_width => 0},
-          :width => pdf.bounds.width
-        }) do
-          columns([0, 2]).font_style = :bold
-
-        end
-
-        pdf.move_down 10
-
-      end
-
-
-      
-      pdf 
-  end   
-
-  def build_pdf_body_rpt(pdf)
-    
-    pdf.text "Orden Servicio  Emitidas : Año "+@year.to_s+ " Mes : "+@month.to_s , :size => 11 
-    pdf.text ""
-    pdf.font "Helvetica" , :size => 8
-
-      headers = []
-      table_content = []
-
-      Delivery::TABLE_HEADERS.each do |header|
-        cell = pdf.make_cell(:content => header)
-        cell.background_color = "FFFFCC"
-        headers << cell
-      end
-
-      table_content << headers
-
-      nroitem=1
-
-       for  product in @supplierpayment_rpt
-
-            row = []
-            row << nroitem.to_s
-            row << product.fecha1.strftime("%d/%m/%Y")
-            row << product.payment.descrip
-            row << product.code
-            row << product.supplier.name  
-            row << product.subtotal.to_s
-            row << product.tax.to_s
-            row << product.total.to_s
-            row << product.get_processed
-            table_content << row
-
-            nroitem=nroitem + 1
-            puts nroitem 
-        end
-
-      result = pdf.table table_content, {:position => :center,
-                                        :header => true,
-                                        :width => pdf.bounds.width
-                                        } do 
-                                          columns([0]).align=:center
-                                          columns([1]).align=:left
-                                          columns([2]).align=:left
-                                          columns([3]).align=:left
-                                          columns([4]).align=:left  
-                                          columns([5]).align=:right
-                                          columns([6]).align=:right
-                                          columns([7]).align=:right
-                                        end                                          
-      pdf.move_down 10      
-      pdf
-
-    end
-
-
-    def build_pdf_footer_rpt(pdf)
-      subtotals = []
-      taxes = []
-      totals = []
-      services_subtotal = 0
-      services_tax = 0
-      services_total = 0
-
-
-          subtotal = @company.get_services_year_month_value(@year,@month, "subtotal")
-          subtotals.push(subtotal)
-          services_subtotal += subtotal          
-          pdf.text subtotal.to_s
-        
-        
-          tax = @company.get_services_year_month_value(@year,@month, "tax")
-          taxes.push(tax)
-          services_tax += tax
-        
-          pdf.text tax.to_s
-          
-          total = @company.get_services_year_month_value(@year,@month, "total")
-          totals.push(total)
-          services_total += total
-        
-          pdf.text total.to_s
-        
-        
-        pdf.text "" 
-
-        pdf.bounding_box([0, 20], :width => 535, :height => 40) do
-        pdf.draw_text "Company: #{@company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
-
-      end
-
-      pdf
-      
   end
 
 
 
   # Export supplierpayment to PDF
-  def rpt_supplierpayment_all_pdf
+  def rpt_purchases_all
     @company=Company.find(params[:id])      
     
     
@@ -782,14 +633,16 @@ class SupplierPaymentsController < ApplicationController
     end
     
 
-    @supplierpayment_rpt = @company.get_services_year_month(@year,@month)  
-      
-    Prawn::Document.generate("app/pdf_output/rpt_serviceall.pdf") do |pdf|
+    @purchases_all_rpt = @company.get_purchases_year_month(@year,@month)  
+    
+    @rpt = "rpt_#{generate_guid()}"
+
+    Prawn::Document.generate("app/pdf_output/#{@rpt}.pdf") do |pdf|
         pdf.font "Helvetica"
-        pdf = build_pdf_header_rpt(pdf)
+        pdf = build_pdf_header_rpt(pdf)        
         pdf = build_pdf_body_rpt(pdf)
         build_pdf_footer_rpt(pdf)
-        $lcFileName =  "app/pdf_output/rpt_serviceall.pdf"      
+        $lcFileName =  "app/pdf_output/#{@rpt}.pdf"      
         
     end     
 
@@ -805,14 +658,13 @@ class SupplierPaymentsController < ApplicationController
     @supplier = @supplierpayment.supplier
     @company = Company.find(@supplierpayment.company_id)
     @documents =@company.get_documents()
-
-    
+  
   end
 
 
   def client_data_headers_rpt
       client_headers  = [["Empresa  :", $lcCli ]]
-      client_headers << ["Direccion :", $lcdir1]
+      client_headers << ["Direccion :", $lcdir1]      
       client_headers
   end
 
@@ -880,11 +732,203 @@ def list_receive_supplierpayments
       errPerms()
     end
   end
+
+  # reporte completo
+  def build_pdf_header_rpt(pdf)
+      pdf.font "Helvetica" , :size => 6
+     $lcCli  =  @company.name 
+     $lcdir1 = @company.address1+@company.address2+@company.city+@company.state
+
+     $lcFecha1= Date.today.strftime("%d/%m/%Y").to_s
+     $lcHora  = Time.now.to_s
+
+    max_rows = [client_data_headers.length, invoice_headers.length, 0].max
+      rows = []
+      (1..max_rows).each do |row|
+        rows_index = row - 1
+        rows[rows_index] = []
+        rows[rows_index] += (client_data_headers_rpt.length >= row ? client_data_headers_rpt[rows_index] : ['',''])
+        rows[rows_index] += (invoice_headers_rpt.length >= row ? invoice_headers_rpt[rows_index] : ['',''])
+      end
+
+      if rows.present?
+
+        pdf.table(rows, {
+          :position => :center,
+          :cell_style => {:border_width => 0},
+          :width => pdf.bounds.width
+        }) do
+          columns([0, 2]).font_style = :bold
+
+        end
+
+        pdf.move_down 10
+
+      end
+
+
+      
+      pdf 
+  end   
+
+  def build_pdf_body_rpt(pdf)
+    
+    pdf.text "Pendientes de Pago    Emitidas : Año "+@year.to_s+ " Mes : "+@month.to_s , :size => 11 
+    pdf.text ""
+    pdf.font "Helvetica" , :size => 6
+
+      headers = []
+      table_content = []
+
+      SupplierPayment::TABLE_HEADERS1.each do |header|
+        cell = pdf.make_cell(:content => header)
+        cell.background_color = "FFFFCC"
+        headers << cell
+      end
+      table_content << headers
+      nroitem=1
+
+
+       for  product in @purchases_all_rpt
+
+            row = []
+            row << nroitem.to_s
+            row << product.date1.strftime("%d/%m/%Y")
+            row << product.date2.strftime("%d/%m/%Y")
+            row << product.date3.strftime("%d/%m/%Y")
+            row << product.payment.day 
+            row << product.document.descripshort 
+            row << product.documento
+            row << product.supplier.name  
+            row << product.total_amount.to_s            
+            row << product.charge.to_s      
+            row << product.pago.to_s      
+            row << product.balance.to_s            
+            table_content << row
+
+            nroitem=nroitem + 1
+            puts nroitem 
+        end
+
+        
+      result = pdf.table table_content, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width
+                                        } do 
+                                          columns([0]).align=:center
+                                          columns([1]).align=:left
+                                          columns([2]).align=:left
+                                          columns([3]).align=:left
+                                          columns([4]).align=:left  
+                                          columns([5]).align=:right
+                                          columns([6]).align=:right
+                                          columns([7]).align=:left 
+                                          columns([8]).align=:right
+                                          columns([9]).align=:right
+                                          columns([10]).align=:right
+                                        end                                          
+      pdf.move_down 10      
+      pdf
+
+    end
+
+
+    def build_pdf_footer_rpt(pdf)
+      subtotals = []
+      taxes = []
+      totals = []
+      services_subtotal = 0
+      services_tax = 0
+      services_total = 0
+
+
+          
+          total = @company.get_services_year_month_value(@year,@month, "total_amount")
+          totals.push(total)
+          services_total += total
+        
+          pdf.text total.to_s
+        
+        
+        pdf.text "" 
+
+        pdf.bounding_box([0, 20], :width => 535, :height => 40) do
+        pdf.draw_text "Company: #{@company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
+
+      end
+
+      pdf
+      
+  end
+
+
+
+  # Export serviceorder to PDF
+  def rpt_serviceorder_all_pdf
+    @company=Company.find(params[:id])      
+    
+    
+    if(params[:year] and params[:year].numeric?)
+      @year = params[:year].to_i
+    else
+      @year = Time.now.year
+    end
+    
+    if(params[:month] and params[:month].numeric?)
+      @month = params[:month].to_i
+    else
+      @month = Time.now.month
+    end
+    
+
+    @serviceorder_rpt = @company.get_services_year_month(@year,@month)  
+      
+    Prawn::Document.generate("app/pdf_output/rpt_serviceall.pdf") do |pdf|
+        pdf.font "Helvetica"
+        pdf = build_pdf_header_rpt(pdf)
+        pdf = build_pdf_body_rpt(pdf)
+        build_pdf_footer_rpt(pdf)
+        $lcFileName =  "app/pdf_output/rpt_serviceall.pdf"      
+        
+    end     
+
+    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
+                
+    send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
   
+
+  end
+
+  def receive
+    @serviceorder = Serviceorder.find(params[:id])
+    @supplier = @serviceorder.supplier
+    @company = Company.find(@serviceorder.company_id)
+    @documents =@company.get_documents()
+
+    
+  end
+
+
+  def client_data_headers_rpt
+      client_headers  = [["Empresa  :", $lcCli ]]
+      client_headers << ["Direccion :", $lcdir1]
+      client_headers
+  end
+
+  def invoice_headers_rpt            
+      invoice_headers  = [["Fecha : ",$lcHora]]    
+      invoice_headers
+  end
+
+  
+
   
   private
   def supplierpayment_params
-    params.require(:SupplierPayment).permit!
+    params.require(:supplier_payment).permit(:company_id,:location_id,:division_id,:bank_acount_id,
+      :document_id,:documento,:supplier_id,:tm,:total,:fecha1,:fecha2,:nrooperacion,:operacion,
+      :descrip,:comments,:user_id,:processed,:code)
+
   end
 
 end

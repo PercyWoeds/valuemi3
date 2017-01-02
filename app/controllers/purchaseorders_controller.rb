@@ -226,9 +226,7 @@ def build_pdf_header(pdf)
       invoice_summary
     end
 
-  
-
-         
+           
   def populate_order
 
     for cart_item in @cart.cart_items
@@ -511,7 +509,8 @@ def build_pdf_header(pdf)
     @action_txt = "Create"
     
     @purchaseorder = Purchaseorder.new
-    @purchaseorder[:code] = "I_#{generate_guid()}"
+    
+    @purchaseorder[:code] = "#{generate_guid5()}"
     @purchaseorder[:processed] = false
     
     @company = Company.find(params[:company_id])
@@ -596,6 +595,7 @@ def build_pdf_header(pdf)
         # Create products for kit
         @purchaseorder.add_products(items)        
         # Check if we gotta process the purchaseorder
+        @purchaseorder.correlativo
         @purchaseorder.process()
         
         format.html { redirect_to(@purchaseorder, :notice => 'purchaseorder was successfully created.') }

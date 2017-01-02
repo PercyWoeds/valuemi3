@@ -1,9 +1,8 @@
 class Purchase < ActiveRecord::Base
   self.per_page = 20
   
-  validates_presence_of :company_id, :supplier_id, :documento,:document_id,:date1,:date2
-  
-  
+  validates_presence_of :company_id, :supplier_id, :documento,:document_id,:date1,:date2,:date3
+        
     
   belongs_to :company
   belongs_to :location
@@ -12,7 +11,8 @@ class Purchase < ActiveRecord::Base
   belongs_to :user  
   belongs_to :document
   belongs_to :moneda
-  
+  belongs_to :payment
+
   has_many :purchase_details
 
 

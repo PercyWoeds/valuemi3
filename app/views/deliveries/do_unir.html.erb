@@ -1,0 +1,32 @@
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %> &raquo;
+  <%= link_to "facturas", "/companies/facturas/#{@company.id}" %>
+</div>
+
+<h4>
+  <%= image_tag("invoice_48.png", :class => "vmiddle") %>
+  (GR -> GT) Agregar guias de remision a guias de transportista  
+
+</h4>
+
+<p>
+  Para agregar una guias de remision a una guia de transportista, por favor ingrese el siguiente formulario con los datos solicitados   . Los campos marcados con <strong>*</strong> son obligatorios 
+</p>
+
+<%= hr() %>
+
+<%= hr() %>
+
+    <form method="get" action="/companies/deliveries/unir/<%= @company.id %>">
+        <strong>Buscar Gt :</strong>
+        <input type="text" name="ac_gt" value="" style = width: 200px;"  />
+        <input type="submit" value="Buscar" class="bold small_btn" />
+    </form> 
+
+<%= hr() %>
+
+<div class="button">
+  <%= link_to 'Back', "/companies/deliveries/#{@company.id}" %>
+</div>
+

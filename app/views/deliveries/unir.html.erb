@@ -1,0 +1,137 @@
+
+
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+
+
+<%= hr() %>
+
+  
+   
+   <p class="bold big"> Registrar Guias de Remision
+   </p>
+
+
+  
+ <% if @mines %>
+
+<% if @mines.size > 0 %>
+
+ 	<table class="search-results-table col-md-12">
+		<tbody>
+	<% @mines.each do |f| %>
+
+	<tr>
+	<td><strong>Documento:</strong> <%= f.code %></td>
+	<td><strong>Cliente:</strong> <%= f.customer.name %></td>
+
+	<td><strong>RUC:</strong> <%= f.customer.ruc %></td>
+	<%end %>
+
+<% else %>
+
+	<span class='label label-primary'>
+
+	Guia no existe con los datos ingresados
+
+	</span>
+
+<% end %>
+
+</td>
+
+</tr>
+
+<% end %>
+
+</tbody>
+
+</table> 
+
+<%= form_for(@delivery) do |f| %>
+
+<div class="mid_box bordered_right">
+
+    <div class="field" id="list_items">
+      <p class="bold big"> Guias de Remision:</p>
+    </div>
+
+    <div class="actions">
+      <input type="hidden" name="items" id="items" value="<% if @products_lines %><%= @products_lines %><% end %>" />
+      <%= f.hidden_field :user_id, :id => "ac_user_id" %>
+      <%= f.hidden_field :company_id %>
+      <%= f.submit %>
+    </div>
+      
+    <div class="small">
+      Once you're done adding products, don't forget to <strong><%= @action_txt %></strong> your delivery.
+    </div>
+
+  <% end %>
+    
+</div>
+
+
+<div class="mid_box">
+  <h3>
+    Agregar servicios a la guia  
+  </h3>
+  
+  <form method="get" action="/facturas" onsubmit="addItemTodelivery2(); return false;">
+
+    <input type="hidden" name="ac_item_guia" id="ac_item_guia" value="" />
+    <strong>Guia :</strong><br />
+
+    <input type="text" name="ac_item3" id="ac_item3" value="" />
+        <div class="small">
+          Ingrese un termino de busqueda para encontrar un producto.
+        </div>
+    <br />    
+    
+    <input type="submit" value="Agregar Guias" />
+
+  </form>
+
+</div>
+
+<%= br() %>
+
+ 
+
+<div class="button">
+
+  <%= link_to 'Back', "/companies/deliveries/#{@company.id}" %>
+</div>
+
+ 
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("#ac_item3").autocomplete("/facturas/ac_guias/<%= @company.id %>", {
+      matchSubset: 1,
+      matchContains: 1,
+      selectFirst: false
+    });
+    
+    $("#ac_item3").result(function(event, data, formatted) {
+      $("#ac_item_guia").val(data[2]);    
+      $("#selected_guia").html(data[0]);      
+    });
+    
+    
+    <% if @products_lines %>
+    alert 'holas products_lines';
+      listItemsInvoice2();
+    <% end %>
+
+   <% if @guias_lines %>
+    alert 'holas guias_lines';
+      listItemsdelivery2();
+    <% end %>
+
+  });
+</script>
+
+
+

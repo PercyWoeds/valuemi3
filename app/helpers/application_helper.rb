@@ -145,6 +145,8 @@ module ApplicationHelper
   end
 
   def generate_guid2
+
+
     @voidedlast = Voided.find(1)
 
     correlative_number =@voidedlast.serie + "-"+@voidedlast.numero.to_s
@@ -153,11 +155,28 @@ module ApplicationHelper
   end
   def generate_guid3
     @voidedlast = Voided.find(2)
+    correlative_number =@voidedlast.serie + "-"+@voidedlast.numero.to_s
+
+    return correlative_number
+  end
+
+  #orden de servicio
+  def generate_guid4
+    @voidedlast = Voided.find(6)
+    correlative_number =@voidedlast.serie + "-"+@voidedlast.numero.to_s
+
+    return correlative_number
+  end
+
+  #orden de compra
+  def generate_guid5
+    @voidedlast = Voided.find(7)
 
     correlative_number =@voidedlast.serie + "-"+@voidedlast.numero.to_s
 
     return correlative_number
   end
+
   
   # Regresa extensiones para imagenes
   def imgTypes()

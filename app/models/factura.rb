@@ -166,6 +166,15 @@ class Factura < ActiveRecord::Base
     end
   end
   
+
+ def delete_guias()
+    invoice_guias = Deliveryship.where(factura_id: self.id)
+    
+    for ip in invoice_guias
+      ip.destroy
+    end
+  end
+
   def identifier
     return "#{self.code} - #{self.customer.name}"
   end
@@ -199,7 +208,7 @@ class Factura < ActiveRecord::Base
       ip.service[:price]    = ip.price
       ip.service[:quantity] = ip.quantity
       ip.service[:discount] = ip.discount
-      #ip.service[:total]    = ip.total
+      ip.service[:total]    = ip.total
       services.push("#{ip.service.id}|BRK|#{ip.service.quantity}|BRK|#{ip.service.price}|BRK|#{ip.service.discount}")
     end
       puts  #{ip.service.id}|BRK|#{ip.service.quantity}|BRK|#{ip.service.price}|BRK|#{ip.service.discount
@@ -218,17 +227,28 @@ class Factura < ActiveRecord::Base
     return guias.join(",")
   end
   
-  def get_processed
+    def get_processed
     if(self.processed == "1")
-      return "Processed"
-    else
+      return "Aprobado "
+
+    elsif (self.processed == "2")
+      
+      return "**Anulado **"
+
+    elsif (self.processed == "3")
+
+      return "-Cerrado --"  
+    else   
       return "Not yet processed"
+        
     end
   end
   
   def get_processed_short
     if(self.processed == "1")
       return "Yes"
+    elsif (self.processed == "3")
+       return "Yes"
     else
       return "No"
     end
@@ -241,18 +261,34 @@ class Factura < ActiveRecord::Base
       return "No"
     end
   end
-  
   # Process the invoice
   def process
-
-    if(self.processed == "1" or self.processed == true)            
+    if(self.processed == "1" or self.processed == true)          
+      self.processed="1"
       self.date_processed = Time.now
       self.save
-      puts "grabo ok "
+    end
+  end
+  def cerrar
+    if(self.processed == "3" )         
+      
+      self.processed="3"
+      self.date_processed = Time.now
+      self.save
     end
   end
   
-  # Color for processed or not
+  # Process the invoice
+  def anular
+    if(self.processed == "2" )          
+      self.processed="2"
+      self.subtotal =0
+      self.tax = 0
+      self.total = 0
+      self.date_processed = Time.now
+      self.save
+    end
+  end
   def processed_color
     if(self.processed == "1")
       return "green"
@@ -260,6 +296,7 @@ class Factura < ActiveRecord::Base
       return "red"
     end
   end
+  
 
 
   

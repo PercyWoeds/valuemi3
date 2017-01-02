@@ -150,17 +150,28 @@ class Invoice < ActiveRecord::Base
     return products.join(",")
   end
   
-  def get_processed
+    def get_processed
     if(self.processed == "1")
-      return "Processed"
-    else
+      return "Aprobado "
+
+    elsif (self.processed == "2")
+      
+      return "**Anulado **"
+
+    elsif (self.processed == "3")
+
+      return "-Cerrado --"  
+    else   
       return "Not yet processed"
+        
     end
   end
   
   def get_processed_short
     if(self.processed == "1")
-      return "Yes"
+      return "Si"
+    elsif (self.processed == "3")
+       return "Si"
     else
       return "No"
     end
@@ -168,42 +179,35 @@ class Invoice < ActiveRecord::Base
   
   def get_return
     if(self.return == "1")
-      return "Yes"
+      return "Si"
     else
       return "No"
     end
   end
-  
   # Process the invoice
   def process
-
-    if(self.processed == "1" or self.processed == true)
-      invoice_products = InvoiceProduct.where(invoice_id: self.id)
-    
-      for ip in invoice_products
-        product = ip.product
-        
-        if(product.quantity)
-          if(self.return == "0")
-            ip.product.quantity -= ip.quantity
-          else
-            ip.product.quantity += ip.quantity
-          end
-          ip.product.save
-        end
-      end
+    if(self.processed == "1" or self.processed == true)          
+      self.processed="1"
+      self.date_processed = Time.now
+      self.save
+    end
+  end
+  def cerrar
+    if(self.processed == "3" )         
       
+      self.processed="3"
       self.date_processed = Time.now
       self.save
     end
   end
   
-  # Color for processed or not
-  def processed_color
-    if(self.processed == "1")
-      return "green"
-    else
-      return "red"
+  # Process the invoice
+  def anular
+    if(self.processed == "2" )          
+      self.processed="2"
+      self.date_processed = Time.now
+      self.save
     end
-  end
+  end  
+
 end

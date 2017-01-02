@@ -33,7 +33,7 @@
     </div>
       
     <div class="field">
-      <%= f.label :documento, "Nro DOcumento *", :class => "bold" %><br />
+      <%= f.label :documento, "Nro Documento *", :class => "bold" %><br />
       <%= f.text_field :documento %>
 
     </div>
@@ -52,7 +52,13 @@
       <%= f.label :payment_id,"Forma de Pago " %><br />
       <%= f.select :payment_id, options_from_collection_for_select(@payments,'id','descrip')%>
     </div>
-  
+    <div class="field">
+      <%= f.label :date3, "Fecha Vmto*", :class => "bold" %><br />
+      <%= f.date_field :date3, value: Time.now.strftime("%d/%m/%Y")  %>
+    </div>quit
+    
+
+
     <div class="field">
       <%= f.label :moneda_id ,"  "%><br />
       <%= f.select :moneda_id, options_from_collection_for_select(@monedas,'id','description') %>

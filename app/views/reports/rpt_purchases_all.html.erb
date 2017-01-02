@@ -1,0 +1,30 @@
+<%= render 'layouts/charts' %>
+<%
+invoices_subtotal = 0
+invoices_tax = 0
+invoices_total = 0
+subtotals = []
+taxes = []
+totals = []
+%>
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %> &raquo;
+  <%= link_to "Reports", "/companies/reports/#{@company.id}" %>
+</div>
+
+<h3>
+  <%= image_tag("reports_48.png", :class => "vmiddle") %>
+ Reporte de cuentas proveedores - <%= @month_name %> <%= @year %>
+</h3	>
+
+<form method="get" action="/supplier_payments/rpt_purchases_all/<%= @company.id %>">
+  <%= select_tag(:year, options_for_select(@years, @year)) %>
+  <%= select_tag(:month, options_for_select(@months, @month)) %>
+
+  <input type="submit" value="Ver" class="small_btn" />
+  <a href="/supplier_payments/rpt_purchases_all/<%= @company.id %>" class="small_btn">Today</a>
+</form>
+
+<br />
+

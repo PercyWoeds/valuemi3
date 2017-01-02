@@ -52,7 +52,7 @@
           <%= link_to "Edit", edit_serviceorder_path(serviceorder) %>                      
           <%= link_to 'Eliminar', serviceorder, :confirm => 'Are you sure?', :method => :delete 
           %>
-          <% elsif serviceorder.processed =="0"%>    
+          <% elsif serviceorder.processed =="1"%>    
           <%= "** Arpobado **" %>
           <%= link_to 'Eliminar', serviceorder,:data=> {:confirm => 'Esta seguro ?'}, :method => :delete %>
           
@@ -60,9 +60,7 @@
           <%= "** Anulado **" %>
           <%= link_to 'Eliminar', serviceorder,:data=> {:confirm => 'Esta seguro ?'}, :method => :delete %>
           <% elsif serviceorder.processed =="3"%>  
-          <%= "** Cerrado **" %>
-          
-            
+          <%= "** Cerrado **" %>                      
           <% end %> 
 
           </td>

@@ -442,7 +442,8 @@ class ServiceordersController < ApplicationController
     @action_txt = "Create"
     
     @serviceorder = Serviceorder.new
-    @serviceorder[:code] = "I_#{generate_guid()}"
+    
+    @serviceorder[:code] = "#{generate_guid4()}"
     @serviceorder[:processed] = false
     
     @company = Company.find(params[:company_id])
@@ -521,7 +522,7 @@ class ServiceordersController < ApplicationController
       if @serviceorder.save
         # Create products for kit
         @serviceorder.add_services(items)
-        
+        @serviceorder.correlativo
         # Check if we gotta process the serviceorder
         @serviceorder.process()
         
@@ -598,12 +599,11 @@ class ServiceordersController < ApplicationController
 
   def client_data_headers
 
-    #{@serviceorder.description}
-      client_headers  = [["Proveedor :", $lcCli ]]
-      client_headers << ["Direccion :", $lcdir1]
-      client_headers << ["Dirección :",$lcdir2]
-      client_headers << ["Distrito  :",$lcdis]
-      client_headers << ["Provincia :",$lcProv]     
+    #{@purchaseorder.description}
+      client_headers  = [["Proveedor: ", $lcCli ]] 
+      client_headers << ["Direccion : ", $lcdir1]
+      client_headers << ["Distrito  : ",$lcdis]
+      client_headers << ["Provincia : ",$lcProv]     
       client_headers
   end
 
@@ -614,7 +614,6 @@ class ServiceordersController < ApplicationController
       invoice_headers <<  ["Estado  : ",$lcAprobado ]    
       invoice_headers
   end
-
   def invoice_summary
       invoice_summary = []
       invoice_summary << ["SubTotal",  ActiveSupport::NumberHelper::number_to_delimited($lcSubtotal,delimiter:",",separator:".").to_s]
