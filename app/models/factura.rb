@@ -30,7 +30,7 @@ class Factura < ActiveRecord::Base
   end
 
 
-  def    my_deliverys
+  def my_deliverys
         @deliveryships = Delivery.all 
         return @deliveryships
   end 
@@ -178,23 +178,70 @@ class Factura < ActiveRecord::Base
   def identifier
     return "#{self.code} - #{self.customer.name}"
   end
+
+  def get_invoices
+    @facturas= Factura.find_by_sql(['Select facturas.*,customers.ruc,payments.descrip from facturas 
+      LEFT JOIN customers on facturas.customer_id = customers.id 
+      LEFT JOIN payments  on facturas.payment_id = payments.id'])
+      return @facturas
+  end 
+
+  
+  def get_invoices_details
+
+  
+    
+  end 
+
+  def get_products2(id)    
+    @itemproducts = InvoiceService.find_by_sql(['Select invoice_services.price,
+      invoice_services.quantity,invoice_services.discount,invoice_services.total,services.name 
+     from invoice_services INNER JOIN services ON invoice_services.service_id = services.id where invoice_services.factura_id = ?', id ])
+    
+    return @itemproducts
+  end
+
   def get_products    
     @itemproducts = InvoiceService.find_by_sql(['Select invoice_services.price,
     	invoice_services.quantity,invoice_services.discount,invoice_services.total,services.name 
   	 from invoice_services INNER JOIN services ON invoice_services.service_id = services.id where invoice_services.factura_id = ?', self.id ])
-    puts self.id
-
+    
     return @itemproducts
   end
   
   def get_guias    
-    @itemguias = Deliveryship.find_by_sql(['Select deliveries.code 
-     from deliveryships INNER JOIN deliveries ON deliveryships.delivery_id = deliveries.id where deliveryships.factura_id = ?', self.id ])
+    @itemguias = Deliveryship.find_by_sql(['Select deliveries.id,deliveries.code 
+     from deliveryships INNER JOIN deliveries ON deliveryships.delivery_id =  deliveries.id where deliveries.remision=2 and  deliveryships.factura_id = ?', self.id ])
     return @itemguias
+  end
+
+  def get_guiasremision 
+    @itemguias1 = Deliveryship.find_by_sql(['Select deliveries.code 
+     from deliveryships INNER JOIN deliveries ON deliveryships.delivery_id =  deliveries.id where deliveries.remision=1 and  deliveryships.factura_id = ?', self.id ])
+    return @itemguias1
+  end
+  def get_guias2(id)    
+    @itemguias = Deliveryship.find_by_sql(['Select deliveries.id,deliveries.code 
+     from deliveryships INNER JOIN deliveries ON deliveryships.delivery_id =  deliveries.id where deliveries.remision=2 and  deliveryships.factura_id = ?', id ])
+    return @itemguias
+  end
+
+  def get_guiasremision2(id)
+    @itemguias1 = Deliveryship.find_by_sql(['Select deliveries.code 
+     from deliveryships INNER JOIN deliveries ON deliveryships.delivery_id =  deliveries.id where deliveries.remision=1 and  deliveryships.factura_id = ?', id ])
+    return @itemguias1
+  end
+
+  def get_guias_remision(id)    
+        
+    guias = []
+    invoice_guias = Deliverymine.where(:mine_id => id)
+    return invoice_guias
+        
   end
   
 
-  def get_invoice_prod  ucts
+  def get_invoice_products
     invoice_products = InvoiceService.where(factura_id:  self.id)    
     return invoice_products
   end

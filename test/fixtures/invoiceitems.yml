@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  factura_id: 1
+  code: MyString
+  cantidad: MyString
+  um: MyString
+  codigo: MyString
+  descrip: MyString
+  vunit: 1.5
+  punit: 1.5
+  vventa: 1.5
+
+two:
+  factura_id: 1
+  code: MyString
+  cantidad: MyString
+  um: MyString
+  codigo: MyString
+  descrip: MyString
+  vunit: 1.5
+  punit: 1.5
+  vventa: 1.5

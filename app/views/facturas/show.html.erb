@@ -143,12 +143,54 @@
   <thead>
     <tr>
       <th>
-        Guias...
-      
+        Guias Transportista.
+       </th>
+      <th>
+        Guias Remision 
+       </th>
+        
     </tr>
   </thead>
   <tbody>
     <% for productItem in @invoice.get_guias() %>
+      <tr>
+        <td class="bordered_bottom bordered_right">
+          <%= link_to productItem.code   %>
+        </td>
+      </tr>
+
+      <% for guias in  @invoice.get_guias_remision(productItem.id) %>
+      <tr>
+        <td>
+        </td>
+        <td>
+          <%= guias.delivery.code  %>
+        <td>
+      </tr>    
+      <%end %>
+
+
+    <% end %>
+    <tr>
+      <td colspan="5" class="bordered_bottom bordered_right">
+        &nbsp;
+      </td>
+    </tr>
+    
+  </tbody>
+
+</table>
+<table>
+  <thead>
+    <tr>
+      <th>
+        Guias Remision....
+       </th> 
+    </tr>
+  </thead>
+
+    <tbody>
+    <% for productItem in @invoice.get_guiasremision() %>
       <tr>
         <td class="bordered_bottom bordered_right">
           <%= link_to productItem.code   %>
@@ -162,6 +204,7 @@
     </tr>
     
   </tbody>
+
 </table>
 <br />
 
@@ -211,7 +254,6 @@
 <div class="button">
   <%= link_to 'Exportar to PDF', "/facturas/pdf/#{@invoice.id}.pdf" %>
   <%= link_to 'Send invoice via email', "/facturas/email/#{@invoice.id}" %>
-
   
 <% if @invoice.processed =="0" || @invoice.processed==nil %>
   <%= link_to 'Procesar factura', "/facturas/do_process/#{@invoice.id}" %>
@@ -219,6 +261,5 @@
 <% elsif @invoice.processed =="1" %>  
   <%= link_to 'Anular', "/facturas/do_anular/#{@invoice.id}" %>
 <% end %>
-
-  <%= link_to 'Regresar', "/companies/facturas/#{@invoice.company.id}" %>
+<%= link_to 'Regresar', "/companies/facturas/#{@invoice.company.id}" %>
 </div>

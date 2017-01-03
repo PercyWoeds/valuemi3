@@ -238,29 +238,96 @@ class FacturasController < ApplicationController
     @path = 'factura'
     @pagetitle = "Facturas"
 
-    #@facturas = Factura.find_by_sql('Select customer_id as cliente,facturas.fecha,facturas.code as numero,  
-    #  payments.descrip as formapago,invoice_services.price as preciosigv,invoice_services.preciocigv,invoice_services.quantity,
-    #invoice_services.total,facturas.subtotal as vventa, facturas.tax as igv,facturas.total as importe, 
-    #facturas.description,facturas.comments  from facturas 
-    #        LEFT JOIN payments ON facturas.payment_id = payments.id 
-    #        LEFT JOIN invoice_services ON invoice_services.factura_id = facturas.id')
-    @facturas = Factura.find_by_sql('select * from facturas')
-    
-    if  @facturas.size >0 
-      respond_to do |format|
-        format.html
-        format.csv { send_data @facturas.to_csv }  
-      end
-      end 
+    @invoicesunat = Invoicesunat.order(:numero)
+    respond_to do |format|
 
+      format.html
+      format.csv {send_data @invoicesunat.to_csv }
+
+    end
+    
+    
+    
   end
+
   def export
+    @company = Company.find(params[:company_id])
+    @facturas  = Factura.all
+  
+  end
+
+  def export2
+    Invoicesunat.delete_all
 
     @company = Company.find(params[:company_id])
     @facturas  = Factura.all
-    
+     a = ""
+     
+     lcGuia=""
+    for f in @facturas      
+        @fec =(f.code)
+        parts = @fec.split("-")
+        lcSerie  = parts[0]
+        lcNumero = parts[1]
+        lcFecha  = f.fecha 
+        lcTD = "FT"
+        lcVventa = f.subtotal
+        lcIGV = f.tax
+        lcImporte = f.total 
+        lcFormapago =f.payment.descrip
+        lcRuc = f.customer.ruc         
+        lcDes = f.description
+              
+        for productItem in f.get_products2(f.id)
+
+        lcPsigv= productItem.price
+        lcPsigv1= lcPsigv*1.18
+        lcPcigv = lcPsigv1.round(2)
+        lcCantidad= productItem.quantity
+        lcDescrip = ""
+        a = ""        
+
+        a << productItem.name + "\n"
+
+        begin
+          a << " Guias Transportista: \n"
+
+            for guia in f.get_guias2(f.id)
+
+              a <<  guia.code
+              a<<  "\n GR:" 
+                for guias in  f.get_guias_remision(guia.id)
+        
+                   a<< guias.delivery.code<< ", " 
+                end        
+            end
+
+              a << "\n Guias Remision : "
+                for guia in f.get_guiasremision2(f.id)
+                  a << guia.code << " "            
+                end
+            
+            lcDescrip << a
+            lcComments = ""
+
+
+             puts lcDescrip
+        end
+        new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcTD,
+:serie=>lcSerie,:numero=>lcNumero,:preciocigv => lcPcigv ,:preciosigv=>lcPsigv, :cantidad=>lcCantidad,
+:vventa=>lcVventa,:igv=>lcIGV,:importe => lcImporte,:ruc=>lcRuc,:guia=> lcGuia,:formapago=>lcFormapago,
+:description=>lcDescrip,:comments=> lcComments,:descrip=>lcDes)
+          new_invoice_item.save
+
+       end  
+    end 
+
+  
+    @invoice = Invoicesunat.all
+    send_data @invoice.to_csv  
     
   end
+  
   def generar
         
     @company = Company.find(params[:company_id])
@@ -301,12 +368,8 @@ class FacturasController < ApplicationController
         end 
     out_file.close
     end 
-
-
-    #out_file = File.new("#{Dir.pwd}/app/txt_output/20424092941-RF-01.txt", "w")
-    #out_file.puts("write your stuff here")
-    #out_file.close
-
+    
+    
   end
   
 

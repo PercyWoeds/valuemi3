@@ -1,0 +1,41 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  cliente: MyString
+  fecha: 2017-01-03
+  td: MyString
+  serie: MyString
+  numero: MyString
+  preciocigv: 9.99
+  preciosigv: 9.99
+  cantidad: 1.5
+  vventa: 1.5
+  igv: 1.5
+  importe: 1.5
+  ruc: MyString
+  guia: MyString
+  codplaca10: MyString
+  formapago: MyString
+  description: MyText
+  comments: MyText
+  descrip: MyString
+
+two:
+  cliente: MyString
+  fecha: 2017-01-03
+  td: MyString
+  serie: MyString
+  numero: MyString
+  preciocigv: 9.99
+  preciosigv: 9.99
+  cantidad: 1.5
+  vventa: 1.5
+  igv: 1.5
+  importe: 1.5
+  ruc: MyString
+  guia: MyString
+  codplaca10: MyString
+  formapago: MyString
+  description: MyText
+  comments: MyText
+  descrip: MyString

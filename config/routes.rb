@@ -205,6 +205,7 @@ Mnygo::Application.routes.draw do
   match 'facturas/ac_guias/:company_id' => 'facturas#ac_guias', via: [:get, :post]
   match 'facturas/new/:company_id' => 'facturas#new', via: [:get, :post]
   match 'facturas/export/:company_id' => 'facturas#export', via: [:get, :post]
+  match 'facturas/export2/:company_id' => 'facturas#export2', via: [:get, :post]
   match 'companies/facturas/generar/:company_id' => 'facturas#generar', via: [:get, :post]
 
   match 'facturas/do_anular/:id' => 'facturas#do_anular', via: [:get, :post]

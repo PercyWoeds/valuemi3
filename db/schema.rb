@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170102162120) do
+ActiveRecord::Schema.define(version: 20170103171209) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "name"
@@ -452,6 +452,20 @@ ActiveRecord::Schema.define(version: 20170102162120) do
     t.float    "preciocigv"
   end
 
+  create_table "invoiceitems", force: :cascade do |t|
+    t.integer  "factura_id"
+    t.string   "code"
+    t.string   "cantidad"
+    t.string   "um"
+    t.string   "codigo"
+    t.string   "descrip"
+    t.float    "vunit"
+    t.float    "punit"
+    t.float    "vventa"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "invoices", force: :cascade do |t|
     t.integer  "company_id"
     t.integer  "location_id"
@@ -469,6 +483,29 @@ ActiveRecord::Schema.define(version: 20170102162120) do
     t.string   "return"
     t.datetime "date_processed"
     t.integer  "user_id"
+  end
+
+  create_table "invoicesunats", force: :cascade do |t|
+    t.string   "cliente"
+    t.date     "fecha"
+    t.string   "td"
+    t.string   "serie"
+    t.string   "numero"
+    t.float    "cantidad"
+    t.float    "vventa"
+    t.float    "igv"
+    t.float    "importe"
+    t.string   "ruc"
+    t.string   "guia"
+    t.string   "codplaca10"
+    t.string   "formapago"
+    t.text     "description"
+    t.text     "comments"
+    t.string   "descrip"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.float    "preciocigv"
+    t.float    "preciosigv"
   end
 
   create_table "items", force: :cascade do |t|
@@ -954,7 +991,7 @@ ActiveRecord::Schema.define(version: 20170102162120) do
     t.float    "subtotal"
     t.float    "tax"
     t.float    "detraccion"
-    t.float    "percepcion" 
+    t.float    "percepcion"
     t.float    "total"
     t.string   "processed"
     t.string   "return"

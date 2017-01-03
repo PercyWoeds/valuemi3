@@ -81,11 +81,22 @@ for product in @invoice.get_products()
   
 end
 
-pdf.text "Guias"
+pdf.text "Guias Transportista"
+
 for guia in @invoice.get_guias()
+
   pdf.text "#{guia.code} "
+
+  for guias in  @invoice.get_guias_remision(guia.id)
+     pdf.text  "GR:" "#{guias.delivery.code}"
+  end        
+
 end
 
+pdf.text "Guias Remision"
+for guia in @invoice.get_guiasremision()
+  pdf.text "#{guia.code} "
+end
 
 pdf.text " ", :size => 13, :spacing => 4
 

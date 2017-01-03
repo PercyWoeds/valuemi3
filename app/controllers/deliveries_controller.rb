@@ -14,12 +14,9 @@ def unir
     @users_cats = []
     
     @pagetitle = "Agrega guia de remision "
-    
     @mines =  Delivery.where([" code like ?", "%" + params[:ac_gt] + "%"]).first 
-
     $minesid= @mines.id
-
-    @guias =  @mines.get_guiaremision 
+    @guias =  @mines.get_guiaremision    
     
 end
       
