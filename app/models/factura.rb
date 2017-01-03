@@ -16,6 +16,16 @@ class Factura < ActiveRecord::Base
   has_many   :delivery 
   has_many   :invoice_services
   
+   TABLE_HEADERS = ["TD",
+                      "Documento",
+                     "Fecha",
+                     "Cliente",
+                     "Moneda",
+                     "",
+                     "subtotal",
+                     "IGV.",
+                     "TOTAL",
+                     "ESTADO"]
 
   
   def self.to_csv(result)

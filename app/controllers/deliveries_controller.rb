@@ -645,9 +645,8 @@ end
     end     
 
     $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
-                
-    send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
-  
+    #send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
+    send_file("app/pdf_output/guias1.pdf", :type => 'application/pdf', :disposition => 'inline')
 
   end
 
