@@ -159,14 +159,14 @@ class Factura < ActiveRecord::Base
         parts = item.split("|BRK|")
         
         id = parts[0]
-        puts "add guia "
-        puts parts 
-        puts id
-
+        
         begin
-          guia = Delivery.find(id.to_i)
+          @guia = Delivery.find(id.to_i)
+
+          @guia.processed='4'
+          @guia.facturar 
           
-          new_invoice_guia = Deliveryship.new(:factura_id => self.id, :delivery_id => guia.id)          
+          new_invoice_guia = Deliveryship.new(:factura_id => self.id, :delivery_id => @guia.id)          
           new_invoice_guia.save
            
         rescue
@@ -220,7 +220,7 @@ class Factura < ActiveRecord::Base
   end
   
   def get_guias    
-    @itemguias = Deliveryship.find_by_sql(['Select deliveries.id,deliveries.code 
+    @itemguias = Deliveryship.find_by_sql(['Select deliveries.id,deliveries.code,deliveries.description 
      from deliveryships INNER JOIN deliveries ON deliveryships.delivery_id =  deliveries.id where deliveries.remision=2 and  deliveryships.factura_id = ?', self.id ])
     return @itemguias
   end
@@ -231,7 +231,7 @@ class Factura < ActiveRecord::Base
     return @itemguias1
   end
   def get_guias2(id)    
-    @itemguias = Deliveryship.find_by_sql(['Select deliveries.id,deliveries.code 
+    @itemguias = Deliveryship.find_by_sql(['Select deliveries.id,deliveries.code,deliveries.description
      from deliveryships INNER JOIN deliveries ON deliveryships.delivery_id =  deliveries.id where deliveries.remision=2 and  deliveryships.factura_id = ?', id ])
     return @itemguias
   end
@@ -295,6 +295,11 @@ class Factura < ActiveRecord::Base
     elsif (self.processed == "3")
 
       return "-Cerrado --"  
+
+    elsif (self.processed == "4")
+
+      return "-Facturado --"  
+
     else   
       return "Not yet processed"
         
@@ -346,6 +351,7 @@ class Factura < ActiveRecord::Base
       self.save
     end
   end
+
   def processed_color
     if(self.processed == "1")
       return "green"

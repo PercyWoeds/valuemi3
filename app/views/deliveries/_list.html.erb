@@ -2,15 +2,18 @@
   <table>
     <thead>
       <tr>
-        <th class="bordered_right bordered_bottom" style="width: 100px;">
+        <th class="bordered_right bordered_bottom" style="width: 60px;">
           Guia
         </th>
         <th class="bordered_right bordered_bottom" style="width: 10px;">
           Tipo
         </th>
-        
-        <th class="bordered_right bordered_bottom" style="width: 350px;">
+        <th class="bordered_right bordered_bottom" style="width: 200px;">
           Cliente
+        </th>
+        
+        <th class="bordered_right bordered_bottom" style="width: 200px;">
+          Destinatario
         </th>
         <th class="bordered_right bordered_bottom">
           Total
@@ -19,7 +22,7 @@
           Fecha
         </th>
         <th class="bordered_right bordered_bottom">
-          Procesado
+          Pro.
         </th>
         <th class="bordered_right bordered_bottom" colspan="3">
           Opciones 
@@ -28,18 +31,20 @@
     </thead>
     <tbody>
     
-      <% for delivery in @deliveries %>
+      <% for delivery in @deliveries %>          
         <tr>
-
           <td class="bordered_right bordered_bottom">
             <%= delivery.code %>
           </td>
           <td class="bordered_right bordered_bottom">
-            <%= delivery.remision %>
+            <%= delivery.get_remision %>
           </td>
-        
           <td class="bordered_right bordered_bottom">
-            <%= link_to delivery.customer.name, delivery.customer, :title => "Go to customer" %>
+            <%=  delivery.get_origen(delivery.remite_id) %>
+          </td>
+                    
+          <td class="bordered_right bordered_bottom">
+            <%= delivery.customer.name  %>
           </td>
           <td class="bordered_right bordered_bottom right">
             <%= money(delivery.total) %>

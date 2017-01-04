@@ -38,6 +38,7 @@ if @delivery.customer.phone2 and @delivery.customer.phone2 != ""
   pdf.text "Phone 2: #{@delivery.customer.phone2}", :size => 10, :spacing => 4
 end
 
+
 if @delivery.customer.address1 and @delivery.customer.address1 != ""
   pdf.text "Address 1: #{@delivery.customer.address1}", :size => 10, :spacing => 4
 end

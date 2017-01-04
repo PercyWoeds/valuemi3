@@ -128,7 +128,9 @@ class FacturasController < ApplicationController
   end 
   # Autocomplete for products
   def ac_guias
-    @guias = Delivery.where(["company_id = ? AND (code LIKE ?)", params[:company_id], "%" + params[:q] + "%"])   
+    procesado='4'
+
+    @guias = Delivery.where(["processed  <> ? and  company_id = ? AND (code LIKE ?)",procesado, params[:company_id], "%" + params[:q] + "%"])   
     render :layout => false
   end
   
@@ -295,6 +297,7 @@ class FacturasController < ApplicationController
             for guia in f.get_guias2(f.id)
 
               a <<  guia.code
+              a <<  guia.description 
               a<<  "\n GR:" 
                 for guias in  f.get_guias_remision(guia.id)
         
@@ -467,6 +470,7 @@ class FacturasController < ApplicationController
         @invoice.correlativo
         # Check if we gotta process the invoice
         @invoice.process()
+
         
         format.html { redirect_to(@invoice, :notice => 'Invoice was successfully created.') }
         format.xml  { render :xml => @invoice, :status => :created, :location => @invoice }
@@ -547,7 +551,7 @@ class FacturasController < ApplicationController
      $lcFecha1= Date.today.strftime("%d/%m/%Y").to_s
      $lcHora  = Time.now.to_s
 
-    max_rows = [client_data_headers.length, invoice_headers.length, 0].max
+    max_rows = [client_data_headers_rpt.length, invoice_headers_rpt.length, 0].max
       rows = []
       (1..max_rows).each do |row|
         rows_index = row - 1
@@ -595,14 +599,13 @@ class FacturasController < ApplicationController
 
       nroitem=1
 
-       for  product in @serviceorder_rpt
+       for  product in @facturas_rpt
 
             row = []
             row << nroitem.to_s
-            row << product.fecha1.strftime("%d/%m/%Y")
-            row << product.payment.descrip
             row << product.code
-            row << product.supplier.name  
+            row << product.fecha.strftime("%d/%m/%Y")            
+            row << product.customer.name  
             row << product.subtotal.to_s
             row << product.tax.to_s
             row << product.total.to_s
@@ -641,30 +644,24 @@ class FacturasController < ApplicationController
       services_total = 0
 
 
-          subtotal = @company.get_services_year_month_value(@year,@month, "subtotal")
+          subtotal = @company.get_facturas_day_value(@fecha1,@fecha2, "subtotal")
           subtotals.push(subtotal)
           services_subtotal += subtotal          
           pdf.text subtotal.to_s
         
         
-          tax = @company.get_services_year_month_value(@year,@month, "tax")
+          tax = @company.get_facturas_day_value(@fecha1,@fecha2, "tax")
           taxes.push(tax)
           services_tax += tax
         
           pdf.text tax.to_s
           
-          total = @company.get_services_year_month_value(@year,@month, "total")
+          total = @company.get_facturas_day_value(@fecha1,@fecha2, "total")
           totals.push(total)
           services_total += total
         
           pdf.text total.to_s
-
-          detraccion = @company.get_services_year_month_value(@year,@month, "detraccion")
-          detraccions.push(detraccion)
-          services_detraccion += detraccion
-        
-          pdf.text detraccion.to_s
-            
+          
         
         
         pdf.text "" 
@@ -681,37 +678,26 @@ class FacturasController < ApplicationController
 
 
   # Export serviceorder to PDF
-  def rpt_serviceorder_all_pdf
-    @company=Company.find(params[:id])      
+  def rpt_facturas_all_pdf
+    @company=Company.find(params[:company_id])      
     
+      @fecha1 = params[:fecha1]
     
-    if(params[:year] and params[:year].numeric?)
-      @year = params[:year].to_i
-    else
-      @year = Time.now.year
-    end
-    
-    if(params[:month] and params[:month].numeric?)
-      @month = params[:month].to_i
-    else
-      @month = Time.now.month
-    end
+      @fecha2 = params[:fecha2]
     
 
-    @facturaorder_rpt = @company.get_facturas_year_month(@year,@month)  
+    @facturas_rpt = @company.get_facturas_day(@fecha1,@fecha2)  
       
-    Prawn::Document.generate("app/pdf_output/rpt_serviceall.pdf") do |pdf|
+    Prawn::Document.generate("app/pdf_output/rpt_factura_all.pdf") do |pdf|
         pdf.font "Helvetica"
         pdf = build_pdf_header_rpt(pdf)
         pdf = build_pdf_body_rpt(pdf)
         build_pdf_footer_rpt(pdf)
-        $lcFileName =  "app/pdf_output/rpt_serviceall.pdf"      
-        
+        $lcFileName =  "app/pdf_output/rpt_factura_all.pdf"              
     end     
 
-    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
-                
-    send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
+    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
+    send_file("app/pdf_output/rpt_factura_all.pdf", :type => 'application/pdf', :disposition => 'inline')
   
 
   end

@@ -1,0 +1,37 @@
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %>
+</div>
+
+<h1>
+  <%= image_tag("reports_48.png", :class => "vmiddle") %>
+  Reportes
+</h1>
+
+<div class="mid_box bordered_right">
+  <h3>
+    Guias
+  </h3>
+  
+  <p class="big">
+    <%= link_to "Facturas  ", "/companies/reports/rpt_facturas_all/#{@company.id}" %>
+  </p>
+
+  <p class="big">
+    <%= link_to "Guias Remision ", "/companies/reports/monthly_sales/#{@company.id}" %>
+  </p>
+
+  <p class="big">
+    <%= link_to "Guias Transportista ", "/companies/reports/monthly_sales/#{@company.id}" %>
+  </p>
+  <p class="big">
+    <%= link_to "Guias pendientes de facturar ", "/companies/reports/monthly_sales/#{@company.id}" %>
+  </p>
+  
+</div>
+
+<div class="mid_box">
+</div>
+
+<%= br() %>
+

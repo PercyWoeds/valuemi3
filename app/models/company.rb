@@ -301,7 +301,32 @@ class Company < ActiveRecord::Base
 
     @facturas = Factura.where(["processed = '1' and company_id = ? AND fecha >= ? and fecha<= ?", self.id, "#{fecha1} 00:00:00","#{fecha1}-31 23:59:59"])
     return @facturas
+    
+ end 
 
+ def get_facturas_day(fecha1,fecha2)
+
+    @facturas = Factura.where([" company_id = ? AND fecha >= ? and fecha<= ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59"])
+    return @facturas
+    
+ end 
+ 
+ def get_facturas_day_value(fecha1,fecha2,value = "total")
+
+    facturas = Factura.where([" company_id = ? AND fecha >= ? and fecha<= ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59"])
+    for factura in facturas
+      
+
+      if(value == "subtotal")
+        ret += factura.subtotal
+      elsif(value == "tax")
+        ret += factura.tax
+      else         
+        ret += factura.total
+      end
+    end
+    
+    return ret
     
  end 
  

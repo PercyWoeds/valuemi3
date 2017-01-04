@@ -25,9 +25,8 @@ self.per_page = 20
                      "Tipo",
                      "Número",
                      "CLIENTE",
-                     "subtotal",
-                     "IGV.",
-                     "TOTAL",
+                     "DESTINO",
+                     "DESCRIP",                     
                      "ESTADO"]
 
 
@@ -45,6 +44,20 @@ end
 def get_guiaremision
   @guiaremision= Delivery.where(:remite_id => self.customer_id, :remision=> "1")
   return @guiaremision
+end 
+
+def get_direccion(id)
+  
+  guiaorigen = Address.find(id)
+
+  return guiaorigen.full_address
+
+end 
+
+def get_origen(id)
+  guiaorigen = Customer.find(id)
+
+  return guiaorigen.name 
 
 end 
 
@@ -226,9 +239,12 @@ where delivery_services.delivery_id = ?', self.id ])
   def get_processed
     if(self.processed == "1")
       return "Aprobado "
-    elsif (self.processed == "2")
-      
+    elsif (self.processed == "2")      
       return "**Anulado **"
+    elsif (self.processed == "3")      
+      return "* Cerrado **"
+    elsif (self.processed == "4")        
+      return "* Facturado **"
     else 
       return "No Aprobado"
         
@@ -284,6 +300,17 @@ where delivery_services.delivery_id = ?', self.id ])
       self.save
     end
   end
+  
+  def facturar
+
+    if(self.processed == "4")            
+      self.processed = "4"
+      self.date_processed = Time.now
+      self.save
+    end
+  end
+  
+
   
   # Color for processed or not
   def processed_color

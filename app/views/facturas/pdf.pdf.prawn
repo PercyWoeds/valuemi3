@@ -86,6 +86,7 @@ pdf.text "Guias Transportista"
 for guia in @invoice.get_guias()
 
   pdf.text "#{guia.code} "
+  pdf.text "#{guia.description} "
 
   for guias in  @invoice.get_guias_remision(guia.id)
      pdf.text  "GR:" "#{guias.delivery.code}"

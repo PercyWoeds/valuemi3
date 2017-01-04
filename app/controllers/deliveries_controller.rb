@@ -546,9 +546,7 @@ end
     
     pdf.text "Guias Emitidas : Año "+@year.to_s , :size => 11 
     pdf.text ""
-    pdf.font "Helvetica" , :size => 8
-
-
+    pdf.font "Helvetica" , :size => 6
 
       headers = []
       table_content = []
@@ -565,15 +563,16 @@ end
 
        for  product in @delivery
 
+            lcOrigen = product.get_origen(product.remite_id)
+
             row = []
             row << nroitem.to_s
             row << product.fecha1.strftime("%d/%m/%Y")
             row << product.get_remision
             row << product.code
-            row << product.customer.name  
-            row << product.subtotal.to_s
-            row << product.tax.to_s
-            row << product.total.to_s
+            row << lcOrigen
+            row << product.customer.name              
+            row << product.description 
             row << product.get_processed
             table_content << row
 
@@ -590,8 +589,8 @@ end
                                           columns([2]).align=:left
                                           columns([3]).align=:left
                                           columns([4]).align=:left  
-                                          columns([5]).align=:right
-                                          columns([6]).align=:right
+                                          columns([5]).align=:left 
+                                          columns([6]).align=:left
                                           columns([7]).align=:right
                                         end                                          
       pdf.move_down 10      
@@ -635,7 +634,7 @@ end
     
     @delivery = @company.get_guias_year_month(@year,@month)  
       
-    Prawn::Document.generate("app/pdf_output/guias1.pdf") do |pdf|
+    Prawn::Document.generate("app/pdf_output/guias1.pdf") do |pdf|      
         pdf.font "Helvetica"
         pdf = build_pdf_header(pdf)
         pdf = build_pdf_body(pdf)
