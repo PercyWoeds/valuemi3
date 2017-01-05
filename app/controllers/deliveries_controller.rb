@@ -453,6 +453,7 @@ end
     @delivery[:tax] = @delivery.get_tax(items, @delivery[:customer_id])
     @delivery[:total] = @delivery[:subtotal] + @delivery[:tax]
 
+
     remision =@delivery[:remision]
     code = @delivery[:code]
     fecha1 =@delivery[:fecha1]
@@ -470,14 +471,19 @@ end
      employee_id = @delivery[:employee_id]
      subcontrat_id = @delivery[:subcontrat_id]
      user_id =@delivery[:user_id]
-    company_id = @delivery[:company_id]
+     company_id = @delivery[:company_id]
+     return1=""
+     date_processed = Date.today 
+     tranportorder_id = @delivery[:tranportorder_id]
+     comments=""
+     subtotal = 0
+     tax = 0
+     total = 0
+     empsub_id =@delivery[:empsub_id]
+
 
     respond_to do |format|
-      if @delivery.update_attribute(delivery_params)
-        #, :code=>code,:fecha1=>fecha1,:fecha2=>fecha2,:remite_id=>remite_id,:address_id=>address_id,
-        #:location_id=>location_id,:division_id=>division_id,:customer_id=>customer_id,:address2_id=>address2_id,:description=>description,
-        #:processed=>processed,:truck_id=> truck_id,:truck2_id=>truck2_id,:employee_id=>employee_id,:subcontrat_id=>subcontrat_id,
-        #:user_id=>user_id,:company_id=>company_id)
+      if @delivery.update(delivery_params)
       
         # Create products for kit
         #@delivery.delete_services()
