@@ -287,12 +287,18 @@ class FacturasController < ApplicationController
         lcPcigv = lcPsigv1.round(2)
         lcCantidad= productItem.quantity
         lcDescrip = ""
-        a = ""        
 
-        a << productItem.name + "\n"
+
+        lcDescrip << productItem.name + "\n"
+
+        lcDescrip << lcDes
+
+        a = ""        
+        lcDes1 = ""
 
         begin
-          a << " Guias Transportista: \n"
+
+          a << " GT: "
 
             for guia in f.get_guias2(f.id)
 
@@ -300,30 +306,34 @@ class FacturasController < ApplicationController
               if guia.description == nil
                 
               else  
-              a <<  guia.description 
+              a << " " << guia.description 
               end   
-              a<<  "\n GR:" 
-                for guias in  f.get_guias_remision(guia.id)
-        
-                   a<< guias.delivery.code<< ", " 
-                end        
-            end
+              existe1 = f.get_guias_remision(guia.id)
 
-              a << "\n Guias Remision : "
+              if existe1.size > 0 
+                a<<  "\n GR:" 
+                for guias in  f.get_guias_remision(guia.id)    
+                   a<< guias.delivery.code<< ", " 
+                end     
+              end      
+
+            end
+              existe2 = f.get_guiasremision2(f.id)
+              if existe2.size > 0
+              a << "\n GR : "
                 for guia in f.get_guiasremision2(f.id)
                   a << guia.code << " "            
                 end
-            
-            lcDescrip << a
+              end 
+
+            lcDes1 << a
             lcComments = ""
-
-
-             puts lcDescrip
+          
         end
         new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcTD,
 :serie=>lcSerie,:numero=>lcNumero,:preciocigv => lcPcigv ,:preciosigv=>lcPsigv, :cantidad=>lcCantidad,
 :vventa=>lcVventa,:igv=>lcIGV,:importe => lcImporte,:ruc=>lcRuc,:guia=> lcGuia,:formapago=>lcFormapago,
-:description=>lcDescrip,:comments=> lcComments,:descrip=>lcDes)
+:description=>lcDescrip,:comments=> lcComments,:descrip=>lcDes1)
           new_invoice_item.save
 
        end  
