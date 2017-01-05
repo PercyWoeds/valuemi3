@@ -315,6 +315,8 @@ end
     @services  = @company.get_services()
     @servicebuys  = @company.get_servicebuys()
 
+    @transports = @company.get_transports()
+
     @ac_user = getUsername()
     @delivery[:user_id] = getUserId()
   end
@@ -350,6 +352,7 @@ end
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
+    @transports = @company.get_transports()
   end
 
   # POST /deliverys
@@ -376,6 +379,8 @@ end
     @servicebuys  = @company.get_servicebuys()
     @customers = @company.get_customers()
     @remites = @company.get_customers()
+    @transports = @company.get_transports()
+
     @delivery[:subtotal] = @delivery.get_subtotal(items)
         
     begin
@@ -421,13 +426,15 @@ end
     @delivery = Delivery.find(params[:id])
     @company = @delivery.company
     @payments = @company.get_payments()    
+    @transports = @company.get_transports()
+
     if(params[:ac_customer] and params[:ac_customer] != "")
       @ac_customer = params[:ac_customer]
     else
       @ac_customer = @delivery.customer.name
     end
     
-    @products_lines = @delivery.products_lines
+    @products_lines = @delivery.services_lines
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
@@ -446,11 +453,35 @@ end
     @delivery[:tax] = @delivery.get_tax(items, @delivery[:customer_id])
     @delivery[:total] = @delivery[:subtotal] + @delivery[:tax]
 
+    remision =@delivery[:remision]
+    code = @delivery[:code]
+    fecha1 =@delivery[:fecha1]
+    fecha2 =@delivery[:fecha2]
+    remite_id =@delivery[:remite_id]
+    address_id = @delivery[:address_id]
+    location_id =@delivery[:location_id]
+    division_id = @delivery[:division_id]
+    customer_id = @delivery[:customer_id]
+    address2_id = @delivery[:address2_id]
+    description =@delivery[:description]
+     processed = @delivery[:processed]
+     truck_id =@delivery[:truck_id]
+     truck2_id = @delivery[:truck2_id]
+     employee_id = @delivery[:employee_id]
+     subcontrat_id = @delivery[:subcontrat_id]
+     user_id =@delivery[:user_id]
+    company_id = @delivery[:company_id]
+
     respond_to do |format|
       if @delivery.update_attribute(delivery_params)
+        #, :code=>code,:fecha1=>fecha1,:fecha2=>fecha2,:remite_id=>remite_id,:address_id=>address_id,
+        #:location_id=>location_id,:division_id=>division_id,:customer_id=>customer_id,:address2_id=>address2_id,:description=>description,
+        #:processed=>processed,:truck_id=> truck_id,:truck2_id=>truck2_id,:employee_id=>employee_id,:subcontrat_id=>subcontrat_id,
+        #:user_id=>user_id,:company_id=>company_id)
+      
         # Create products for kit
-        @delivery.delete_services()
-        @delivery.add_services(items)
+        #@delivery.delete_services()
+        #@delivery.add_services(items)
         
         # Check if we gotta process the delivery
         @delivery.process()
@@ -641,7 +672,6 @@ end
 
     @guiasselect = Delivery.find(params[:products_ids])
 
-
     for item in @guiasselect
         begin
           a = item.id
@@ -653,7 +683,6 @@ end
         
          end              
     end
-
     
     redirect_to deliveries_url 
 
@@ -661,7 +690,7 @@ end
 
   private
   def delivery_params
-    params.require(:delivery).permit(:company_id,:location_id,:division_id,:customer_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:fecha1,:fecha2,:employee_id,:empsub_id,:subcontrat_id,:truck_id,:truck2_id,:address_id,:remision,:remite_id,:address2_id)
+    params.require(:delivery).permit(:company_id,:location_id,:division_id,:customer_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:fecha1,:fecha2,:employee_id,:empsub_id,:subcontrat_id,:truck_id,:truck2_id,:address_id,:remision,:remite_id,:address2_id,:tranportorder_id)
   end
 
 end

@@ -28,6 +28,12 @@
     </div>
 
     <div class="field">
+      <%= f.label :tranportorder_id ,"ORDEN SERVICIO TRANSPORTE "%><br />
+      <%= f.select :tranportorder_id, options_from_collection_for_select(@transports,'id','code') %>
+    </div>
+
+
+    <div class="field">
       <%= f.label :fecha1, "Fecha Emision*", :class => "bold" %><br />
       <%= f.date_field :fecha1, value: Time.now.strftime("%d/%m/%Y") %>
     </div>

@@ -61,6 +61,11 @@ class Company < ActiveRecord::Base
        
     return monedas
   end
+  def get_transports()
+     transports = Tranportorder.where(company_id: self.id).order(:code)
+       
+    return transports
+  end
   
   
   def get_suppliers()

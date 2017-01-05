@@ -276,7 +276,7 @@ class FacturasController < ApplicationController
         lcVventa = f.subtotal
         lcIGV = f.tax
         lcImporte = f.total 
-        lcFormapago =f.payment.descrip
+        lcFormapago = f.payment.descrip
         lcRuc = f.customer.ruc         
         lcDes = f.description
               
@@ -287,7 +287,6 @@ class FacturasController < ApplicationController
         lcPcigv = lcPsigv1.round(2)
         lcCantidad= productItem.quantity
         lcDescrip = ""
-
 
         lcDescrip << productItem.name + "\n"
 
@@ -330,10 +329,10 @@ class FacturasController < ApplicationController
             lcComments = ""
           
         end
-        new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcTD,
-:serie=>lcSerie,:numero=>lcNumero,:preciocigv => lcPcigv ,:preciosigv=>lcPsigv, :cantidad=>lcCantidad,
+new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcTD,
+:serie=>lcSerie,:numero=>lcNumero,:preciocigv => lcPcigv ,:preciosigv=>lcPsigv,:cantidad=>lcCantidad,
 :vventa=>lcVventa,:igv=>lcIGV,:importe => lcImporte,:ruc=>lcRuc,:guia=> lcGuia,:formapago=>lcFormapago,
-:description=>lcDescrip,:comments=> lcComments,:descrip=>lcDes1)
+:description=>lcDescrip,:comments=> lcComments,:descrip=>lcDes1 )
           new_invoice_item.save
 
        end  

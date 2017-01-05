@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170104171917) do
+ActiveRecord::Schema.define(version: 20170105194122) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "name"
@@ -197,14 +197,15 @@ ActiveRecord::Schema.define(version: 20170104171917) do
     t.integer  "truck2_id"
     t.integer  "address_id"
     t.integer  "remision"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
     t.string   "processed"
     t.integer  "division_id"
     t.float    "i"
     t.integer  "remite_id"
     t.integer  "address2_id"
     t.datetime "date_processed"
+    t.integer  "tranportorder_id"
   end
 
   create_table "delivery_services", force: :cascade do |t|
