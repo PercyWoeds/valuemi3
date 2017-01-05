@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170103171209) do
+ActiveRecord::Schema.define(version: 20170104171917) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "name"
@@ -928,6 +928,25 @@ ActiveRecord::Schema.define(version: 20170103171209) do
     t.datetime "updated_at",      null: false
   end
 
+  create_table "quotations", force: :cascade do |t|
+    t.datetime "fecha1"
+    t.string   "code"
+    t.integer  "customer_id"
+    t.integer  "punto_id"
+    t.text     "carga"
+    t.text     "tipo_unidad"
+    t.float    "importe"
+    t.text     "condiciones"
+    t.text     "respon"
+    t.text     "seguro"
+    t.integer  "firma_id"
+    t.integer  "company_id"
+    t.integer  "location_id"
+    t.integer  "division_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
   create_table "restocks", force: :cascade do |t|
     t.integer  "product_id"
     t.integer  "supplier_id"
@@ -1149,6 +1168,27 @@ ActiveRecord::Schema.define(version: 20170103171209) do
     t.integer  "company_id"
   end
 
+  create_table "tranportorders", force: :cascade do |t|
+    t.string   "code"
+    t.integer  "employee_id"
+    t.integer  "truck_id"
+    t.integer  "employee2_id"
+    t.integer  "truck2_id"
+    t.integer  "ubication_id"
+    t.integer  "ubication2_id"
+    t.datetime "fecha1"
+    t.datetime "fecha2"
+    t.text     "description"
+    t.text     "comments"
+    t.string   "processed"
+    t.integer  "company_id"
+    t.integer  "location_id"
+    t.integer  "division_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "user_id"
+  end
+
   create_table "transferencia_detalles", force: :cascade do |t|
     t.integer  "item_id"
     t.integer  "transferencia_id"
@@ -1183,6 +1223,13 @@ ActiveRecord::Schema.define(version: 20170103171209) do
     t.string   "propio"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+  end
+
+  create_table "ubications", force: :cascade do |t|
+    t.string   "descrip"
+    t.integer  "company_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "unidads", force: :cascade do |t|

@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Ubications</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Descrip</th>
+      <th>Company</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @ubications.each do |ubication| %>
+      <tr>
+        <td><%= ubication.descrip %></td>
+        <td><%= ubication.company_id %></td>
+        <td><%= link_to 'Show', ubication %></td>
+        <td><%= link_to 'Edit', edit_ubication_path(ubication) %></td>
+        <td><%= link_to 'Destroy', ubication, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Ubication', new_ubication_path %>

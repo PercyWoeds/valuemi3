@@ -73,7 +73,19 @@
 <div class="button">
   <%= link_to 'Nueva Guia', "/deliveries/new/#{@company.id}" %>
   <%= link_to 'Unir Guias', "/deliveries/do_unir/#{@company.id}" %>
+
+
 </div>
+
+
+<h2>Importar Archivo  "*.csv"</h2>
+
+<%= form_tag import_deliveries_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Importar " %>
+<% end %>
+
+
 
 <%= will_paginate @deliveries %>
 

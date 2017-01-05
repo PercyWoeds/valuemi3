@@ -1,0 +1,2 @@
+json.extract! quotation, :id, :fecha1, :code, :customer_id, :punto_id, :carga, :tipo_unidad, :importe, :condiciones, :respon, :seguro, :firma_id, :company_id, :location_id, :division_id, :created_at, :updated_at
+json.url quotation_url(quotation, format: :json)

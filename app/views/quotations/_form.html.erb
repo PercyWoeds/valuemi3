@@ -1,0 +1,101 @@
+<% if @quotation.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@quotation.errors.count, "error") %> prohibited this serviceorder from being saved:</h2>
+    <ul>
+    <% @quotation.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= hr() %>
+
+
+
+<%= form_for(@quotation) do |f| %>
+  
+
+  <div class="form-inputs">
+
+  <div class="field">
+      <%= f.label :location_id ,"Local"%><br />
+      <%= f.select :location_id, options_from_collection_for_select(@locations,'id','name') %>         
+    </div>
+    <div class="field">
+      <%= f.label :division_id, "Solicitante" %><br />
+      <%= f.select :division_id,options_from_collection_for_select(@divisions,'id','name') %>
+    </div>  
+      <div class="field">
+      <%= f.label :fecha1, "Fecha Emision*", :class => "bold" %><br />
+      <%= f.date_field :fecha1, value: Time.now.strftime("%d/%m/%Y") %>
+    </div>
+
+    <div class="field">  
+      <label for="ac_customer" class="bold"> CLIENTE  *</label><br />
+      <%= f.select :customer_id,options_from_collection_for_select(@customers,'id','name') %>
+      <div class="small">
+        Ingrese una termino de busqueda para encontrar un proveedor.
+      </div>
+      <br />
+    </div>
+    
+
+
+    <div class="field">
+      <%= f.label :code, "Code*", :class => "bold" %><br />
+      <%= f.text_field :code, :onclick => "$(this).select();" %>
+    </div>
+
+        
+    <div class="field">
+      <%= f.label :punto_id , "Lugar de Destino:  "%><br />
+      <%= f.select :punto_id,options_from_collection_for_select(@puntos,'id','name') %>
+    </div>
+
+    <div class="field">
+      <%= f.label :carga,"Carga a transportar: " %><br />
+      <%= f.text_area :carga %>
+    </div>
+
+  
+
+    <div class="field">
+      <%= f.label :tipo_unidad,"Tipo de Unidad e importe del Servicio  " %><br />
+      <%= f.text_area :tipo_unidad  %>
+    </div>
+  
+
+    <div class="field">
+      <%= f.label :importe,"Importe: " %><br />
+      <%= f.number_field :importe  %>
+    </div>
+    
+
+    <div class="field">
+      <%= f.label :condiciones,"Condiciones: " %><br />
+      <%= f.text_area :condiciones %>
+    </div>
+
+    <div class="field">
+      <%= f.label :respon,"Responsabilidades:" %><br />
+      <%= f.text_area :respon %>
+    </div>
+    <div class="field">
+      <%= f.label :seguro,"Seguros:" %><br />
+      <%= f.text_area :seguro %>
+    </div>
+
+    <div class="field">
+      <%= f.label :firma_id,"Firma " %><br />
+      <%= f.select :firma_id,options_from_collection_for_select(@employees,'id','full_name') %>
+    </div>
+
+  
+  </div>
+
+  <div class="form-actions">
+  
+    <%= f.button :submit %>
+  </div>
+<% end %>

@@ -6,6 +6,10 @@ include ServicesHelper
 class DeliveriesController < ApplicationController
   before_filter :authenticate_user!, :checkServices
 
+def import
+      Delivery.import(params[:file])
+       redirect_to root_url, notice: "Clientes importadas."
+  end 
 
 def unir
         

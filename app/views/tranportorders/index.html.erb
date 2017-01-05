@@ -1,0 +1,46 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Orden de Servicio Transporte  </h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Employee</th>
+      <th>Truck</th>
+      
+      <th>Truck2</th>
+      <th>Ubication</th>
+      <th>Ubication2</th>
+      <th>Fecha1</th>
+      <th>Fecha2</th>
+      
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @tranportorders.each do |tranportorder| %>
+      <tr>
+        <td><%= tranportorder.code %></td>
+        <td><%= tranportorder.employee.full_name  %></td>
+        <td><%= tranportorder.truck.placa %></td>
+        <td><%= tranportorder.get_placa(tranportorder.truck2_id) %></td>
+        <td><%= tranportorder.get_punto(tranportorder.ubication_id)  %></td>
+        <td><%= tranportorder.get_punto(tranportorder.ubication2_id) %></td>
+        <td><%= doDate(tranportorder.fecha1) %></td>
+        <td><%= doDate(tranportorder.fecha2) %></td>
+      
+        <td><%= link_to 'Show', tranportorder %></td>
+        <td><%= link_to 'Edit', edit_tranportorder_path(tranportorder) %></td>
+        <td><%= link_to 'Destroy', tranportorder, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<div class="button">
+<%= link_to 'Nueva Orden', new_tranportorder_path %>
+</div>

@@ -27,6 +27,15 @@ class Factura < ActiveRecord::Base
                      "TOTAL",
                      "ESTADO"]
 
+  TABLE_HEADERS2 = ["TD",
+                      "Documento",
+                     "Fecha",
+                     "Cliente",
+                     "Moneda",
+                     "SUBTOTAL",
+                     "IGV.",
+                     "TOTAL",
+                     "ESTADO"]
   
   def self.to_csv(result)
     unless result.nil?
@@ -46,9 +55,9 @@ class Factura < ActiveRecord::Base
   end 
 
   def correlativo
-        voided= Voided.new()
-        voided.numero=Voided.find(2).numero.to_i + 1
-        lcnumero=voided.numero.to_s
+        
+        numero = Voided.find(2).numero.to_i + 1
+        lcnumero = numero.to_s
         Voided.where(:id=>'2').update_all(:numero =>lcnumero)        
   end
 
@@ -301,7 +310,7 @@ class Factura < ActiveRecord::Base
       return "-Facturado --"  
 
     else   
-      return "Not yet processed"
+      return "No Aprobado"
         
     end
   end

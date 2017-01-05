@@ -29,6 +29,12 @@ self.per_page = 20
                      "DESCRIP",                     
                      "ESTADO"]
 
+def self.import(file)
+          CSV.foreach(file.path, headers: true, encoding:'iso-8859-1:utf-8') do |row|
+          Delivery.create! row.to_hash 
+        end
+    end      
+
 
 def not_guias_with?(mine_id)
     Deliverymine.where(mine_id: mine_id).count < 1
@@ -82,9 +88,9 @@ def self.matches(field_name, param)
 end
 
   def correlativo
-        voided= Voided.new()
-        voided.numero=Voided.find(1).numero.to_i + 1
-        lcnumero=voided.numero.to_s
+        
+        numero = Voided.find(1).numero.to_i + 1
+        lcnumero = numero.to_s
         Voided.where(:id=>'1').update_all(:numero =>lcnumero)        
   end
 

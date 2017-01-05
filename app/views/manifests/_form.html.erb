@@ -8,9 +8,12 @@
         <%= f.select :customer_id,options_from_collection_for_select(@customers,'id','name') %>
     </div>  
     
-    <div class="field">  
-    <%= f.input :fecha1 %>
+
+    <div class="field">
+      <%= f.label :fecha1, "Fecha Emision*", :class => "bold" %><br />
+      <%= f.date_field :fecha1, value: Time.now.strftime("%d/%m/%Y") %>
     </div>
+
 
     <div class="field">  
         <%= f.label :solicitante, "Solicitante. *", :class => "bold" %><br />
@@ -127,8 +130,9 @@
         <%= f.label :punto2_id, "Punto de llegada *", :class => "bold" %><br />
         <%= f.select :punto2_id,options_from_collection_for_select(@puntos,'id','name') %>
     </div>
-    <div class="field">  
-    <%= f.input :fecha2 %>
+    <div class="field">
+      <%= f.label :fecha2, "Fecha Carga*", :class => "bold" %><br />
+      <%= f.date_field :fecha2, value: Time.now.strftime("%d/%m/%Y") %>
     </div>
 
     <div class="field">  
@@ -216,15 +220,16 @@
   </table>
 
     <div class="field">  
-        <%= f.label :observa, "Observaciones", :class => "bold" %><br />
-        <%= f.text_field :observa %>
+    
+        <%= f.label :observa, "Observaciones carga", :class => "bold" %><br />
+        <%= f.text_area :observa %>
 
     </div>
     <%= hr() %>
 
     <div class="field">  
         <%= f.label :observa2, "Observaciones ", :class => "bold" %><br />
-        <%= f.text_field :observa2 %>
+        <%= f.text_area :observa2 %>
 
     </div>
 

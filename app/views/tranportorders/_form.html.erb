@@ -1,0 +1,90 @@
+<%= simple_form_for(@tranportorder) do |f| %>
+  <%= f.error_notification %>
+
+
+  <div class="form-inputs">
+
+    <div class="field">
+      <%= f.label :location_id ,"Local"%><br />
+      <%= f.select :location_id, options_from_collection_for_select(@locations,'id','name') %>
+    
+        
+    </div>
+    <div class="field">
+      <%= f.label :division_id %><br />
+      <%= f.select :division_id,options_from_collection_for_select(@divisions,'id','name') %>
+    </div>
+
+
+
+    <div class="field">
+      <%= f.label :code, "Numero *", :class => "bold" %><br />
+      <%= f.text_field :code, :onclick => "$(this).select();" %>
+    </div>
+
+    <%= hr() %>
+
+    <div class="field">
+      <%= f.label :employee_id , "Empleado "%><br />
+      <%= f.select :employee_id,options_from_collection_for_select(@employees,'id','full_name') %>
+    </div>
+
+    <div class="field">
+      <%= f.label :employee2_id , "Empleado "%><br />
+      <%= f.select :employee2_id,options_from_collection_for_select(@employees,'id','full_name') %>
+    </div>
+
+
+    <div class="field">
+      <%= f.label :ubication_id , "De  "%><br />
+      <%= f.select :ubication_id,options_from_collection_for_select(@puntos,'id','name') %>
+    </div>
+   
+    <div class="field">
+      <%= f.label :ubication2_id , "De  "%><br />
+      <%= f.select :ubication2_id,options_from_collection_for_select(@puntos,'id','name') %>
+    </div>
+   
+
+    <div class="field">
+      <%= f.label :truck_id ,"Vehiculo "%><br />
+      <%= f.select :truck_id, options_from_collection_for_select(@trucks,'id','placa') %>
+    </div>
+
+    <div class="field">
+      <%= f.label :truck2_id ,"Vehiculo 2 "%><br />
+      <%= f.select :truck2_id, options_from_collection_for_select(@trucks,'id','placa') %>
+    </div>
+   
+   
+    <%= hr() %>
+
+    <div class="field">
+      <%= f.label :fecha1, "Fecha Emision*", :class => "bold" %><br />
+      <%= f.date_field :fecha1, value: Time.now.strftime("%d/%m/%Y") %>
+    </div>
+
+    <div class="field">
+      <%= f.label :fecha2, "Fecha Traslado*", :class => "bold" %><br />
+      <%= f.date_field :fecha2, value: Time.now.strftime("%d/%m/%Y") %>
+    </div>
+    
+    <%= hr() %>
+    <div class="field">
+      <%= f.label :description,"Descripcion " %><br />
+      <%= f.text_area :description %>
+    </div>
+    <div class="field">
+      <%= f.label :comments,"Comentarios  " %><br />
+      <%= f.text_area :comments %>
+    </div>
+
+    
+  </div>
+
+  <div class="form-actions">
+    
+      
+      <%= f.button :submit %>
+  </div>
+<% end %>

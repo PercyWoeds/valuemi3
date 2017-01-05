@@ -948,6 +948,12 @@ def rpt_purchases_all
       i += 1
     end
   end
+
+  def reports_ccobrar
+    @company = Company.find(params[:company_id])
+    @pagetitle = "Facturas "    
+  end
+
   def rpt_facturas_all
     @company = Company.find(params[:company_id])
     

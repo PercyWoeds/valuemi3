@@ -2,11 +2,11 @@
   
   <h3>
     <%= image_tag("products_32.png", :class => "vmiddle") %>
-    <%= link_to "Cotizacion", "/companies/products/#{@company.id}" %>
+    <%= link_to "Cotizacion", quotations_path %>
   </h3>
 
   <p>
-    Agregar, editar or eliminar los productos o servicios  que tu negocio ofrece.
+    Agregar, editar or eliminar las cotizaciones que tu negocio ofrece.
   </p>
 
   <%= hr() %>
@@ -17,18 +17,18 @@
   </h3>
 
   <p>
-   Agregar, editar or eliminar kits de productos (grupos of productos).
+   Agregar, editar or eliminar Solicitud de transporte .
   </p>
 
   <%= hr() %>
 
   <h3>
     <%= image_tag("product_category_32.png", :class => "vmiddle") %>
-    <%= link_to "Orden de Servicio de Transporte", my_declarations_path %>
+    <%= link_to "Orden de Servicio de Transporte", tranportorders_path %>
   </h3>
 
   <p>
-     Agregar, editar or eliminar las categorias para tus productos.
+     Agregar, editar or eliminar las Ordenes de servicio de transporte.
   </p>
 
 
@@ -40,7 +40,7 @@
   </h3>
 
   <p>
-     Agregar, editar or eliminar facturas para tu negocio.
+     Agregar, editar or eliminar guias para tu negocio.
   </p>
 
 
@@ -55,7 +55,8 @@
         </div>
   </h3>
   <p>
-     Agregar, editar or eliminar ordenes de venta 
+     Agregar, editar or eliminar vehiculos
+     .
   </p>
 
 <%= hr() %>
@@ -66,10 +67,23 @@
         </div>
   </h3>
   <p>
-     Agregar, editar or eliminar ordenes de venta 
+     Agregar, editar or eliminar empresa subcontratada
   </p>
 
 <%= hr() %>
+
+  <h3>
+        <div>
+          <%= image_tag("clients_32.png", :class => "vmiddle") %>
+          <%= link_to "Punto Geografico ", puntos_path %>
+        </div>
+  </h3>
+  <p>
+     Agregar, editar or eliminar empresa subcontratada
+  </p>
+
+<%= hr() %>
+
   
   <h3>
     <%= image_tag("reports_32.png", :class => "vmiddle") %>

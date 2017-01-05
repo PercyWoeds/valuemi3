@@ -176,6 +176,21 @@ module ApplicationHelper
 
     return correlative_number
   end
+  #orden de servicio transporte
+  def generate_guid6
+    @voidedlast = Voided.find(8)
+    correlative_number =@voidedlast.serie + "-"+@voidedlast.numero.to_s
+
+    return correlative_number
+  end
+
+# Cotizacion
+  def generate_guid7
+    @voidedlast = Voided.find(9)
+    correlative_number =@voidedlast.serie + "-"+@voidedlast.numero.to_s
+    return correlative_number
+  end
+
 
   
   # Regresa extensiones para imagenes

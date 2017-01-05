@@ -1,0 +1,2 @@
+json.extract! tranportorder, :id, :code, :employee_id, :truck_id, :employee2_id, :truck2_id, :ubication_id, :ubication2_id, :fecha1, :fecha2, :description, :comments, :processed, :company_id, :location_id, :division_id, :created_at, :updated_at
+json.url tranportorder_url(tranportorder, format: :json)

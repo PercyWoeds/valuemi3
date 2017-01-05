@@ -1,0 +1,82 @@
+<p id="notice"><%= notice %></p>
+
+
+<h1>
+  <%= image_tag("invoice_48.png", :class => "vmiddle") %>
+  <%= @tranportorder.identifier %>
+</h1>
+
+<p>
+  <strong>Numero :</strong>
+  <%= @tranportorder.code %>
+</p>
+
+<p>
+  <strong>Conductor:</strong>
+  <%= @tranportorder.employee.full_name %>
+</p>
+
+<p>
+  <strong>Copiloto:</strong>
+  <%= @tranportorder.get_empleado(@tranportorder.employee2_id) %>
+</p>
+
+<p>
+  <strong>Vehiculo 1:</strong>
+  <%= @tranportorder.truck.placa %>
+</p>
+
+
+<p>
+  <strong>Vehiculo2 :</strong>
+  <%= @tranportorder.get_placa(@tranportorder.truck2_id) %>
+</p>
+
+<p>
+  <strong>De :</strong>
+  <%= @tranportorder.get_punto(@tranportorder.ubication_id) %>
+</p>
+
+<p>
+  <strong>A :</strong>
+  <%= @tranportorder.get_punto(@tranportorder.ubication2_id) %>
+</p>
+
+<p>
+  <strong>Fecha1:</strong>
+  <%= @tranportorder.fecha1 %>
+</p>
+
+<p>
+  <strong>Fecha2:</strong>
+  <%= @tranportorder.fecha2 %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @tranportorder.description %>
+</p>
+
+<p>
+  <strong>Comments:</strong>
+  <%= @tranportorder.comments %>
+</p>
+
+<p>
+  <strong>Processed:</strong>
+  <%= @tranportorder.processed %>
+</p>
+
+
+<p>
+  <strong>Location:</strong>
+  <%= @tranportorder.location_id %>
+</p>
+
+<p>
+  <strong>Division:</strong>
+  <%= @tranportorder.division_id %>
+</p>
+
+<%= link_to 'Edit', edit_tranportorder_path(@tranportorder) %> |
+<%= link_to 'Back', tranportorders_path %>

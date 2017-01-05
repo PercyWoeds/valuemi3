@@ -25,9 +25,9 @@ class Purchaseorder < ActiveRecord::Base
                      "VALOR TOTAL"]
 
     def correlativo
-            voided= Voided.new()
-            voided.numero=Voided.find(7).numero.to_i + 1
-            lcnumero=voided.numero.to_s
+            
+            numero = Voided.find(7).numero.to_i + 1
+            lcnumero = numero.to_s
             Voided.where(:id=>'7').update_all(:numero =>lcnumero)        
     end
 

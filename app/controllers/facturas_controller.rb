@@ -130,7 +130,7 @@ class FacturasController < ApplicationController
   def ac_guias
     procesado='4'
 
-    @guias = Delivery.where(["processed  <> ? and  company_id = ? AND (code LIKE ?)",procesado, params[:company_id], "%" + params[:q] + "%"])   
+    @guias = Delivery.where(["company_id = ? AND (code LIKE ?)", params[:company_id], "%" + params[:q] + "%"])   
     render :layout => false
   end
   
@@ -582,14 +582,14 @@ class FacturasController < ApplicationController
 
   def build_pdf_body_rpt(pdf)
     
-    pdf.text "Orden Servicio  Emitidas : Año "+@year.to_s+ " Mes : "+@month.to_s , :size => 11 
+    pdf.text "Facturas  Emitidas : desde "+@fecha1.to_s+ " Hasta: "+@fecha2.to_s , :size => 8 
     pdf.text ""
-    pdf.font "Helvetica" , :size => 8
+    pdf.font "Helvetica" , :size => 6
 
       headers = []
       table_content = []
 
-      Factura::TABLE_HEADERS.each do |header|
+      Factura::TABLE_HEADERS2.each do |header|
         cell = pdf.make_cell(:content => header)
         cell.background_color = "FFFFCC"
         headers << cell
@@ -598,14 +598,17 @@ class FacturasController < ApplicationController
       table_content << headers
 
       nroitem=1
+      lcDoc='FT'
+      lcMon='S/.'
 
        for  product in @facturas_rpt
 
-            row = []
-            row << nroitem.to_s
+            row = []          
+            row << lcDoc
             row << product.code
             row << product.fecha.strftime("%d/%m/%Y")            
             row << product.customer.name  
+            row << lcMon
             row << product.subtotal.to_s
             row << product.tax.to_s
             row << product.total.to_s
@@ -613,29 +616,9 @@ class FacturasController < ApplicationController
             table_content << row
 
             nroitem=nroitem + 1
-            puts nroitem 
+       
         end
 
-      result = pdf.table table_content, {:position => :center,
-                                        :header => true,
-                                        :width => pdf.bounds.width
-                                        } do 
-                                          columns([0]).align=:center
-                                          columns([1]).align=:left
-                                          columns([2]).align=:left
-                                          columns([3]).align=:left
-                                          columns([4]).align=:left  
-                                          columns([5]).align=:right
-                                          columns([6]).align=:right
-                                          columns([7]).align=:right
-                                        end                                          
-      pdf.move_down 10      
-      pdf
-
-    end
-
-
-    def build_pdf_footer_rpt(pdf)
       subtotals = []
       taxes = []
       totals = []
@@ -644,30 +627,64 @@ class FacturasController < ApplicationController
       services_total = 0
 
 
-          subtotal = @company.get_facturas_day_value(@fecha1,@fecha2, "subtotal")
-          subtotals.push(subtotal)
-          services_subtotal += subtotal          
-          pdf.text subtotal.to_s
-        
-        
-          tax = @company.get_facturas_day_value(@fecha1,@fecha2, "tax")
-          taxes.push(tax)
-          services_tax += tax
-        
-          pdf.text tax.to_s
-          
-          total = @company.get_facturas_day_value(@fecha1,@fecha2, "total")
-          totals.push(total)
-          services_total += total
-        
-          pdf.text total.to_s
-          
-        
-        
-        pdf.text "" 
+      subtotal = @company.get_facturas_day_value(@fecha1,@fecha2, "subtotal")
+      subtotals.push(subtotal)
+      services_subtotal += subtotal          
+      #pdf.text subtotal.to_s
+    
+    
+      tax = @company.get_facturas_day_value(@fecha1,@fecha2, "tax")
+      taxes.push(tax)
+      services_tax += tax
+    
+      #pdf.text tax.to_s
+      
+      total = @company.get_facturas_day_value(@fecha1,@fecha2, "total")
+      totals.push(total)
+      services_total += total
+      #pdf.text total.to_s
 
-        pdf.bounding_box([0, 20], :width => 535, :height => 40) do
-        pdf.draw_text "Company: #{@company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
+      row =[]
+      row << ""
+      row << ""
+      row << ""
+      row << "TOTALES => "
+      row << ""
+      row << subtotal.to_s
+      row << tax.to_s
+      row << total.to_s
+      row << ""
+      table_content << row
+      
+      result = pdf.table table_content, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width
+                                        } do 
+                                          columns([0]).align=:center
+                                          columns([1]).align=:left
+                                          columns([2]).align=:left
+                                          columns([3]).align=:left
+                                          columns([4]).align=:left
+                                          columns([5]).align=:right  
+                                          columns([6]).align=:right
+                                          columns([7]).align=:right
+                                          columns([8]).align=:right
+                                        end                                          
+      pdf.move_down 10      
+
+      #totales 
+
+      pdf 
+
+    end
+
+
+    def build_pdf_footer_rpt(pdf)
+      
+                  
+      pdf.text "" 
+      pdf.bounding_box([0, 20], :width => 535, :height => 40) do
+      pdf.draw_text "Company: #{@company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
 
       end
 
@@ -688,7 +705,7 @@ class FacturasController < ApplicationController
 
     @facturas_rpt = @company.get_facturas_day(@fecha1,@fecha2)  
       
-    Prawn::Document.generate("app/pdf_output/rpt_factura_all.pdf") do |pdf|
+    Prawn::Document.generate("app/pdf_output/rpt_factura.pdf") do |pdf|
         pdf.font "Helvetica"
         pdf = build_pdf_header_rpt(pdf)
         pdf = build_pdf_body_rpt(pdf)
@@ -697,7 +714,7 @@ class FacturasController < ApplicationController
     end     
 
     $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
-    send_file("app/pdf_output/rpt_factura_all.pdf", :type => 'application/pdf', :disposition => 'inline')
+    send_file("app/pdf_output/rpt_factura.pdf", :type => 'application/pdf', :disposition => 'inline')
   
 
   end

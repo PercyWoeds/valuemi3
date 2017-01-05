@@ -28,7 +28,8 @@ class TrucksController < ApplicationController
   # GET /trucks/1/edit
   def edit
     @marcas = @truck.get_marcas() 
-    @modelos = @truck.get_modelos()     
+    @modelos = @truck.get_modelos()
+         
   end
 
   # POST /trucks

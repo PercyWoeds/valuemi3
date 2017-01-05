@@ -1,0 +1,74 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Fecha1:</strong>
+  <%= @quotation.fecha1 %>
+</p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @quotation.code %>
+</p>
+
+<p>
+  <strong>Customer:</strong>
+  <%= @customers.name %>
+</p>
+
+<p>
+  <strong>Punto:</strong>
+  <%= @puntos.name  %>
+</p>
+
+<p>
+  <strong>Carga:</strong>
+  <%= @quotation.carga %>
+</p>
+
+<p>
+  <strong>Tipo unidad:</strong>
+  <%= @quotation.tipo_unidad %>
+</p>
+
+<p>
+  <strong>Importe:</strong>
+  <%= @quotation.importe %>
+</p>
+
+<p>
+  <strong>Condiciones:</strong>
+  <%= @quotation.condiciones %>
+</p>
+
+<p>
+  <strong>Respon:</strong>
+  <%= @quotation.respon %>
+</p>
+
+<p>
+  <strong>Seguro:</strong>
+  <%= @quotation.seguro %>
+</p>
+
+<p>
+  <strong>Firma:</strong>
+  <%= @quotation.firma_id %>
+</p>
+
+<p>
+  <strong>Company:</strong>
+  <%= @quotation.company_id %>
+</p>
+
+<p>
+  <strong>Location:</strong>
+  <%= @quotation.location_id %>
+</p>
+
+<p>
+  <strong>Division:</strong>
+  <%= @quotation.division_id %>
+</p>
+
+<%= link_to 'Edit', edit_quotation_path(@quotation) %> |
+<%= link_to 'Back', quotations_path %>

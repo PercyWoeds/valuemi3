@@ -1,6 +1,9 @@
 Mnygo::Application.routes.draw do
 
 
+  resources :quotations
+  resources :tranportorders
+  resources :ubications
   resources :purchases
   resources :documents
   resources :servicebuys
@@ -51,6 +54,7 @@ Mnygo::Application.routes.draw do
   
   resources :deliveries do
     collection { get :search   }
+    collection { post :import }
     collection do 
       put :discontinue 
     end 
@@ -168,8 +172,10 @@ Mnygo::Application.routes.draw do
   match 'companies/reports_cpagar/:company_id' => 'reports#reports_cpagar', via: [:get, :post]
   match 'companies/reports/rpt_serviceorder_all/:company_id' => 'reports#rpt_serviceorder_all', via: [:get, :post]
   match 'companies/reports/rpt_purchases_all/:company_id' => 'reports#rpt_purchases_all', via: [:get, :post]
-  match 'companies/reports/rpt_facturas_all/:company_id' => 'reports#rpt_facturas_all', via: [:get, :post]
-  
+
+  match 'companies/reports/reports_ccobrar/:company_id' => 'reports#reports_ccobrar', via: [:get, :post]
+   match 'companies/reports/rpt_facturas_all/:company_id' => 'reports#rpt_facturas_all', via: [:get, :post]
+
   match 'companies/reports/sales/:company_id' => 'reports#report_sales', via: [:get, :post]
   match 'companies/reports/:company_id' => 'reports#reports', via: [:get, :post]
 
@@ -189,7 +195,6 @@ Mnygo::Application.routes.draw do
   match 'invoices/ac_customers/:company_id' => 'invoices#ac_customers', via: [:get, :post]
   match 'invoices/new/:company_id' => 'invoices#new', via: [:get, :post]
   
-
   match 'invoices/do_email/:id' => 'invoices#do_email', via: [:get, :post]
   match 'invoices/do_process/:id' => 'invoices#do_process', via: [:get, :post]
   match 'invoices/email/:id' => 'invoices#email', via: [:get, :post]
@@ -197,6 +202,24 @@ Mnygo::Application.routes.draw do
   match 'companies/invoices/:company_id' => 'invoices#list_invoices', via: [:get, :post]
   resources :invoices
 
+
+# Declarations
+  
+  match 'declarations/list_items/:company_id' => 'invoices#list_items', via: [:get, :post]
+  match 'declarations/ac_kit/:company_id' => 'invoices#ac_kit', via: [:get, :post]
+  match 'invoices/ac_products/:company_id' => 'invoices#ac_products', via: [:get, :post]
+  match 'invoices/ac_user/:company_id' => 'invoices#ac_user', via: [:get, :post]
+  match 'invoices/ac_customers/:company_id' => 'invoices#ac_customers', via: [:get, :post]
+  match 'invoices/new/:company_id' => 'invoices#new', via: [:get, :post]
+  
+  match 'invoices/do_email/:id' => 'invoices#do_email', via: [:get, :post]
+  match 'invoices/do_process/:id' => 'invoices#do_process', via: [:get, :post]
+  match 'invoices/email/:id' => 'invoices#email', via: [:get, :post]
+  match 'invoices/pdf/:id' => 'invoices#pdf', via: [:get, :post]
+  match 'companies/invoices/:company_id' => 'invoices#list_invoices', via: [:get, :post]
+  resources :invoices
+
+  
   # Facturas Ventas
   
   match 'facturas/list_items/:company_id' => 'facturas#list_items', via: [:get, :post]

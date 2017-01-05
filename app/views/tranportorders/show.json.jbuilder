@@ -1,0 +1,1 @@
+json.partial! "tranportorders/tranportorder", tranportorder: @tranportorder

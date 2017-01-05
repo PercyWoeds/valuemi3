@@ -1,0 +1,1 @@
+json.array! @tranportorders, partial: 'tranportorders/tranportorder', as: :tranportorder

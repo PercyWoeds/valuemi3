@@ -1,0 +1,33 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  fecha1: 2017-01-04 12:19:17
+  code: MyString
+  customer_id: 1
+  punto_id: 1
+  carga: MyText
+  tipo_unidad: MyText
+  importe: 1.5
+  condiciones: MyText
+  respon: MyText
+  seguro: MyText
+  firma_id: 1
+  company_id: 1
+  location_id: 1
+  division_id: 1
+
+two:
+  fecha1: 2017-01-04 12:19:17
+  code: MyString
+  customer_id: 1
+  punto_id: 1
+  carga: MyText
+  tipo_unidad: MyText
+  importe: 1.5
+  condiciones: MyText
+  respon: MyText
+  seguro: MyText
+  firma_id: 1
+  company_id: 1
+  location_id: 1
+  division_id: 1
