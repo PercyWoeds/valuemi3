@@ -297,7 +297,11 @@ class FacturasController < ApplicationController
             for guia in f.get_guias2(f.id)
 
               a <<  guia.code
+              if guia.description == nil
+                
+              else  
               a <<  guia.description 
+              end   
               a<<  "\n GR:" 
                 for guias in  f.get_guias_remision(guia.id)
         
