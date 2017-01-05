@@ -524,7 +524,14 @@ class ServiceordersController < ApplicationController
     
     @serviceorder[:total] = @serviceorder[:subtotal] + @serviceorder[:tax]
 
-    @serviceorder[:detraccion] = @serviceorder[:total] * 10/100
+    if @serviceorder[:total] >= 700.00
+
+      @serviceorder[:detraccion] = @serviceorder[:total] * 10/100
+    else
+
+      @serviceorder[:detraccion] = 0
+
+    end 
 
     
     if(params[:serviceorder][:user_id] and params[:serviceorder][:user_id] != "")
