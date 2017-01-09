@@ -306,8 +306,9 @@ class FacturasController < ApplicationController
               if guia.description == nil
                 
               else  
-                if guia.processed<>"4"  
-                  a << " " << guia.description 
+
+                if (guia.processed != "4" ) 
+                  a << " " << guia.description                   
                 end 
 
               end   
