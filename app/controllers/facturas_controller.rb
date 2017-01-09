@@ -6,6 +6,7 @@ class FacturasController < ApplicationController
   before_filter :authenticate_user!, :checkServices
   
 
+
     # Export invoice to PDF
   def pdf
     @invoice = Factura.find(params[:id])
@@ -305,7 +306,10 @@ class FacturasController < ApplicationController
               if guia.description == nil
                 
               else  
-              a << " " << guia.description 
+                if guia.processed<>"4"  
+                  a << " " << guia.description 
+                end 
+
               end   
               existe1 = f.get_guias_remision(guia.id)
 

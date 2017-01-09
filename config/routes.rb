@@ -42,7 +42,9 @@ Mnygo::Application.routes.draw do
   resources :serviceorders do 
 
     collection { post  :dograbarins }  
-  
+    collection do 
+      put :discontinue 
+    end 
   end 
 
 

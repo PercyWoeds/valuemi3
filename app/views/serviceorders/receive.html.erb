@@ -35,12 +35,14 @@
 <%= form_for(@serviceorder) do |f| %>
 
   <div class="field">
-  <strong>Documento:</strong><br />
+  
+  <%= f.label :document_id , "Tipo de Documento"%><br />
   <%= select_tag :document_id, options_from_collection_for_select(@documents,"id","description") %>
   </div>
 
   <div class="field">  
-  <input type="text" name="ac_documento" id="ac_documento" value="<% if @ac_documento %><%= @ac_documento %><% end %>" />  
+      <%= f.label :documento, "Documento*", :class => "bold" %><br />    
+      <%= f.text_field :documento  %>     
   </div>
 
   <div class="field">
@@ -53,7 +55,7 @@
       <%= f.date_field :fecha4 , value: Time.now.strftime("%d/%m/%Y") %>   
   </div>  
 
-<% end %>  
+
 <%= hr() %>
 
 <h3>
@@ -202,6 +204,7 @@
   <%= @serviceorder.get_return %>
 </p>
 
+
 <p>
   <strong>Seller:</strong>
   <%= link_to @serviceorder.user.username, @serviceorder.user %>
@@ -210,12 +213,12 @@
 <%= hr() %>
 
 <div class="button">
+  <%= f.button :submit %>
 
-  <%= link_to 'Generar Factura', "/serviceorders/do_grabar_ins/#{@serviceorder.id}" %>
-  <%= link_to 'Cerrar', "/serviceorders/do_cerrar/#{@serviceorder.id}" %>
   <%= link_to 'Regresar', "/companies/serviceorders/receive_orderservice/#{@serviceorder.company.id}" %>
 
 </div>
-      
+<% end %>  
+
 
 

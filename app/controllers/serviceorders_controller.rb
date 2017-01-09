@@ -267,17 +267,17 @@ class ServiceordersController < ApplicationController
     puts documento
     puts documento_id
     
-    if(params[:ac_documento] and params[:ac_documento] != "")
+    if(params[:documento] and params[:documento] != "")
      
     else
-        puts documento
+        puts documento x
     end
     
-    submision_hash = {"document_id" => params[:ac_document_id],
-                       "documento"  => params[:ac_documento] }
+    submision_hash = {"document_id" => params[:document_id],
+                       "documento"  => params[:documento] }
 
     respond_to do |format| 
-    if  @serviceorder.update_attributes(submision_hash)
+    if  @serviceorder.update2(submision_hash)
         @serviceorder.cerrar()
         
         format.html { redirect_to(@serviceorder, :notice => 'Orden de servicio actualizada  ') }
@@ -478,7 +478,7 @@ class ServiceordersController < ApplicationController
   # GET /serviceorders/1/edit
   def edit
     @pagetitle = "Edit serviceorder"
-    @action_txt = "Update..."
+    @action_txt = "Update"
     
     @serviceorder = Serviceorder.find(params[:id])
     @company = @serviceorder.company
@@ -606,6 +606,53 @@ class ServiceordersController < ApplicationController
     end
   end
 
+# PUT /serviceorders/1
+  # PUT /serviceorders/1.xml
+  def update2
+    @pagetitle = "Editar Orden"
+    @action_txt = "Update"
+    
+  
+    
+    @serviceorder = Serviceorder.find(params[:id])
+    @company = @serviceorder.company
+    
+    if(params[:ac_supplier] and params[:ac_supplier] != "")
+      @ac_supplier = params[:ac_supplier]
+    else
+      @ac_supplier = @serviceorder.supplier.name
+    end
+    
+    @products_lines = @serviceorder.products_lines
+    
+    @locations = @company.get_locations()
+    @divisions = @company.get_divisions()
+    @suppliers = @company.get_suppliers()
+    @payments = @company.get_payments()
+    @servicebuys  = @company.get_servicebuys()
+    @monedas  = @company.get_monedas()
+    
+    @serviceorder[:subtotal] = @serviceorder.get_subtotal(items)
+    @serviceorder[:tax] = @serviceorder.get_tax(items, @serviceorder[:supplier_id])
+    @serviceorder[:total] = @serviceorder[:subtotal] + @serviceorder[:tax]
+
+    respond_to do |format|
+      if @serviceorder.update(serviceorder_params)
+        # Create products for kit
+        @serviceorder.delete_products()
+        @serviceorder.add_products(items)
+        
+        # Check if we gotta process the serviceorder
+        @serviceorder.process()
+        
+        format.html { redirect_to(@serviceorder, :notice => 'serviceorder was successfully updated.') }
+        format.xml  { head :ok }
+      else
+        format.html { render :action => "edit" }
+        format.xml  { render :xml => @serviceorder.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
 
   # DELETE /serviceorders/1
   # DELETE /serviceorders/1.xml
@@ -825,6 +872,10 @@ class ServiceordersController < ApplicationController
   end
 
   def receive
+
+    @pagetitle = "Generar "
+    @action_txt = "grabar_ins"
+    
     @serviceorder = Serviceorder.find(params[:id])
     @supplier = @serviceorder.supplier
     @company = Company.find(@serviceorder.company_id)
@@ -904,6 +955,10 @@ def list_receive_serviceorders
       errPerms()
     end
   end
+
+  def discontinue
+
+  end 
   
   
   private

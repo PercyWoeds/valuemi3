@@ -65,12 +65,13 @@
           <% elsif delivery.processed =="1"%>  
           <%= "** Aprobado **" %>
           <%= link_to 'Eliminar', delivery,:data=> {:confirm => 'Esta seguro ?'}, :method => :delete %>          
-          <% elsif delivery.processed =="2"%>  
+          <% elsif delivery.processed =="2" %>  
           <%= "** Anulado **" %>
           <%= link_to 'Eliminar', delivery,:data=> {:confirm => 'Esta seguro ?'}, :method => :delete %>          
           
-          <% elsif delivery.processed =="0"%>  
-          <%= link_to "Edit", edit_delivery_path(delivery) %>                                        
+          <% elsif delivery.processed =="0"%>            
+          <%= link_to "Edit", edit_delivery_path(delivery) %>
+
           <%= link_to 'Eliminar', delivery,:data=> {:confirm => 'Esta seguro ?'}, :method => :delete %>          
           </tr>
           <%end%>

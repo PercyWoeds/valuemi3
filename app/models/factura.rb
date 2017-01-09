@@ -12,6 +12,7 @@ class Factura < ActiveRecord::Base
   belongs_to :user
   
   
+
   has_many   :deliveryship
   has_many   :delivery 
   has_many   :invoice_services
@@ -240,7 +241,7 @@ class Factura < ActiveRecord::Base
     return @itemguias1
   end
   def get_guias2(id)    
-    @itemguias = Deliveryship.find_by_sql(['Select deliveries.id,deliveries.code,deliveries.description
+    @itemguias = Deliveryship.find_by_sql(['Select deliveries.id,deliveries.code,deliveries.description,deliveries.processed
      from deliveryships INNER JOIN deliveries ON deliveryships.delivery_id =  deliveries.id where deliveries.remision=2 and  deliveryships.factura_id = ?', id ])
     return @itemguias
   end

@@ -1,3 +1,5 @@
+<%= form_tag  discontinue_serviceorders_path, method: :put do %>
+
 <% if @serviceorders.count > 0 %>
   <table>
     <thead>
@@ -20,15 +22,16 @@
         <th class="bordered_right bordered_bottom">
           Aprobado 
         </th>
-        <th class="bordered_right bordered_bottom" colspan="3">
-          Options
-        </th>
+        
       </tr>
     </thead>
     <tbody>
     
       <% for serviceorder in @serviceorders %>
         <tr>
+          <td>
+            <%=  check_box_tag "serviceorder_ids[]",serviceorder.id %>
+          </td>
           <td class="bordered_right bordered_bottom">
             <%= link_to serviceorder.code, serviceorder, :title => "Ir a factura" %>
           </td>
@@ -48,10 +51,6 @@
           <td class="bordered_right bordered_bottom <%= serviceorder.processed_color %>">
             <%= serviceorder.get_processed_short %>
           </td>
-          <td class="bordered_right bordered_bottom">
-
-          <td><%= link_to "Ver", "/serviceorders/receive/#{serviceorder.id}" %> </td>                                  
-          </td>
           
         </tr>
       <% end %>
@@ -62,3 +61,8 @@
     No encontramos <figcaption></figcaption> ninguna orden de servicio.
   </p>
 <% end %>
+
+<%= submit_tag "Generar" %>
+
+<% end %>
+
