@@ -10,7 +10,7 @@ class Factura < ActiveRecord::Base
   belongs_to :customer
   belongs_to :payment 
   belongs_to :user
-  
+  belongs_to :moneda 
   
 
   has_many   :deliveryship
@@ -37,6 +37,15 @@ class Factura < ActiveRecord::Base
                      "IGV.",
                      "TOTAL",
                      "ESTADO"]
+  TABLE_HEADERS3 = ["TD",
+                      "Documento",
+                     "Fecha",
+                     "Fec.Vmto",
+                     "Cliente",
+                     "Moneda",                                         
+                     "DOLARES",
+                     "SOLES ",
+                     "OBSERV"]
   
   def self.to_csv(result)
     unless result.nil?

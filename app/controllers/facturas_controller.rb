@@ -761,7 +761,7 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
       headers = []
       table_content = []
 
-      Factura::TABLE_HEADERS2.each do |header|
+      Factura::TABLE_HEADERS3.each do |header|
         cell = pdf.make_cell(:content => header)
         cell.background_color = "FFFFCC"
         headers << cell
@@ -770,51 +770,84 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
       table_content << headers
 
       nroitem=1
+
       lcDoc='FT'
-      lcMon='S/.'
+
+
+
+       lcCliente = @facturas_rpt.first.customer_id 
 
        for  product in @facturas_rpt
 
+        
+          if product.customer_id == lcCliente
             row = []          
             row << lcDoc
             row << product.code
-            row << product.fecha.strftime("%d/%m/%Y")            
-            row << product.customer.name  
-            row << lcMon
-            row << product.subtotal.to_s
-            row << product.tax.to_s
-            row << product.total.to_s
-            row << product.get_processed
+            row << product.fecha.strftime("%d/%m/%Y")
+            row << product.fecha2.strftime("%d/%m/%Y")
+            row << product.customer.name
+            row << product.moneda.symbol  
+
+            if product.moneda_id == "1"
+                row << " "
+                row << sprintf("%.2f",product.total.to_s)
+            else
+                row << sprintf("%.2f",product.total.to_s)
+                row << " "
+            end 
+            row << product.observ
+
+            
             table_content << row
 
-            nroitem=nroitem + 1
+            nroitem = nroitem + 1
+
+          else
+            
+            totals = []            
+            total_cliente = 0
+
+            total_cliente = @company.get_pendientes_day_customer(@fecha1,@fecha2, lcCliente)
+            
+            row =[]
+            row << ""
+            row << ""
+            row << ""
+            row << ""          
+            row << "TOTALES POR CLIENTE=> "            
+            row << ""
+            row << sprintf("%.2f",total_cliente.to_s)
+            row << ""
+            table_content << row
+
+            lcCliente = product.customer_id
+
+          end 
        
         end
 
-      subtotals = []
-      taxes = []
-      totals = []
-      services_subtotal = 0
-      services_tax = 0
-      services_total = 0
+        lcCliente = @facturas_rpt.last.customer_id 
+            totals = []            
+            total_cliente = 0
 
+            total_cliente = @company.get_pendientes_day_customer(@fecha1,@fecha2, lcCliente)
+            
+            row =[]
+            row << ""
+            row << ""
+            row << ""
+            row << ""          
+            row << "TOTALES POR CLIENTE=> "            
+            row << ""
+            row << sprintf("%.2f",total_cliente.to_s)
+            row << ""
+            table_content << row
+        
 
-      subtotal = @company.get_facturas_day_value(@fecha1,@fecha2, "subtotal")
-      subtotals.push(subtotal)
-      services_subtotal += subtotal          
-      #pdf.text subtotal.to_s
-    
-    
-      tax = @company.get_facturas_day_value(@fecha1,@fecha2, "tax")
-      taxes.push(tax)
-      services_tax += tax
-    
-      #pdf.text tax.to_s
       
-      total = @company.get_facturas_day_value(@fecha1,@fecha2, "total")
-      totals.push(total)
-      services_total += total
-      #pdf.text total.to_s
+      total = @company.get_pendientes_day_value(@fecha1,@fecha2, "total")
+      
 
       row =[]
       row << ""
@@ -822,9 +855,9 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
       row << ""
       row << "TOTALES => "
       row << ""
-      row << subtotal.to_s
-      row << tax.to_s
-      row << total.to_s
+      row << ""
+      row << ""
+      row << sprintf("%.2f",total.to_s)
       row << ""
       table_content << row
       
@@ -905,6 +938,7 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
         pdf = build_pdf_header_rpt2(pdf)
         pdf = build_pdf_body_rpt2(pdf)
         build_pdf_footer_rpt2(pdf)
+
         $lcFileName =  "app/pdf_output/rpt_pendientes.pdf"              
     end     
 
@@ -930,7 +964,7 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
 
   private
   def factura_params
-    params.require(:factura).permit(:company_id,:location_id,:division_id,:customer_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:payment_id,:fecha,:preciocigv,:tipo)
+    params.require(:factura).permit(:company_id,:location_id,:division_id,:customer_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:payment_id,:fecha,:preciocigv,:tipo,:observ)
   end
 
 end

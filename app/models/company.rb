@@ -324,12 +324,13 @@ class Company < ActiveRecord::Base
     @serviceorder = Serviceorder.where(["company_id = ? AND fecha1 >= ? AND fecha1 <= ?", self.id, "#{year}-#{month}-01 00:00:00", "#{year}-#{month}-31 23:59:59"])
     return @serviceorder
  end 
- 
+## ESTADO DE CUENTA 
  def get_facturas_year_month_day(fecha1)
     @facturas = Factura.where(["company_id = ? AND fecha >= ? and fecha<= ?", self.id, "#{fecha1} 00:00:00","#{fecha1} 23:59:59"])
     return @facturas
     
  end 
+## ESTADO DE CUENTA 
 
  def get_facturas_day(fecha1,fecha2)
 
@@ -360,14 +361,14 @@ class Company < ActiveRecord::Base
  end 
  def get_pendientes_day(fecha1,fecha2)
 
-    @facturas = Factura.where(["balance > 0  and  company_id = ? AND fecha >= ? and fecha<= ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59"])
+    @facturas = Factura.where(["balance > 0  and  company_id = ? AND fecha >= ? and fecha<= ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59"]).order(:customer_id,:moneda_id)
     return @facturas
     
  end 
  
  def get_pendientes_day_value(fecha1,fecha2,value = "total")
 
-    facturas = Factura.where(["balance>0  and  company_id = ? AND fecha >= ? and fecha<= ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59"])
+    facturas = Factura.where(["balance>0  and  company_id = ? AND fecha >= ? and fecha<= ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59"]).order(:customer_id,:moneda_id)
     if facturas
     ret=0  
     for factura in facturas
@@ -377,7 +378,28 @@ class Company < ActiveRecord::Base
       elsif(value == "tax")
         ret += factura.tax
       else         
-        ret += factura.total
+        ret += factura.total.round(2)
+      end
+    end
+    end 
+
+    return ret
+    
+ end 
+ def get_pendientes_day_customer(fecha1,fecha2,value)
+
+    facturas = Factura.where(["balance>0  and  company_id = ? AND fecha >= ? and fecha<= ? AND customer_id = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", value ]).order(:customer_id,:moneda_id)
+
+    if facturas
+    ret=0  
+    for factura in facturas
+      
+      if(value == "subtotal")
+        ret += factura.subtotal
+      elsif(value == "tax")
+        ret += factura.tax
+      else         
+        ret += factura.total.round(2)
       end
     end
     end 

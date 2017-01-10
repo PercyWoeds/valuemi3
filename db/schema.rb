@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170109233911) do
+ActiveRecord::Schema.define(version: 20170110152829) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "name"
@@ -299,9 +299,9 @@ ActiveRecord::Schema.define(version: 20170109233911) do
     t.float    "pago"
     t.float    "charge"
     t.float    "balance"
-    t.datetime "fechas2"
     t.integer  "moneda_id"
     t.text     "observ"
+    t.datetime "fecha2"
   end
 
   create_table "guia", force: :cascade do |t|
