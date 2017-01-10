@@ -75,7 +75,7 @@ Mnygo::Application.routes.draw do
 
   resources :facturas do
     collection { get :generar  }
-
+    collection { post :import }
   end 
   resources :stores  do 
     collection { post :search }    
@@ -175,8 +175,11 @@ Mnygo::Application.routes.draw do
   match 'companies/reports/rpt_serviceorder_all/:company_id' => 'reports#rpt_serviceorder_all', via: [:get, :post]
   match 'companies/reports/rpt_purchases_all/:company_id' => 'reports#rpt_purchases_all', via: [:get, :post]
 
-  match 'companies/reports/reports_ccobrar/:company_id' => 'reports#reports_ccobrar', via: [:get, :post]
-   match 'companies/reports/rpt_facturas_all/:company_id' => 'reports#rpt_facturas_all', via: [:get, :post]
+  match 'companies/reports/reports_ccobrar/:company_id' => 'reports#reports_ccobrar', via: [:get, :post]  
+  match 'companies/reports/rpt_ccobrar2_pdf/:company_id' => 'reports#rpt_ccobrar2_pdf', via: [:get, :post]  
+  
+  match 'companies/reports/rpt_facturas_all/:company_id' => 'reports#rpt_facturas_all', via: [:get, :post]
+
 
   match 'companies/reports/sales/:company_id' => 'reports#report_sales', via: [:get, :post]
   match 'companies/reports/:company_id' => 'reports#reports', via: [:get, :post]
@@ -234,6 +237,8 @@ Mnygo::Application.routes.draw do
   match 'facturas/export/:company_id' => 'facturas#export', via: [:get, :post]
   match 'facturas/export2/:company_id' => 'facturas#export2', via: [:get, :post]
   match 'facturas/rpt_facturas_all/:company_id' => 'facturas#rpt_facturas_all_pdf', via: [:get, :post]
+  match 'facturas/rpt_ccobrar2_pdf/:company_id' => 'facturas#rpt_ccobrar2_pdf', via: [:get, :post]
+
   match 'companies/facturas/generar/:company_id' => 'facturas#generar', via: [:get, :post]
   #match 'serviceorders/rpt_serviceorder_all_pdf/:id' => 'serviceorders#rpt_serviceorder_all_pdf', via: [:get, :post]
 

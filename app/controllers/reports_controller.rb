@@ -953,6 +953,10 @@ def rpt_purchases_all
     @company = Company.find(params[:company_id])
     @pagetitle = "Facturas "    
   end
+  def rpt_ccobrar2_pdf
+    @company = Company.find(params[:company_id])
+    @pagetitle = "Facturas "    
+  end
 
   def rpt_facturas_all
     @company = Company.find(params[:company_id])

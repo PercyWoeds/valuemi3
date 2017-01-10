@@ -267,6 +267,29 @@ class Company < ActiveRecord::Base
     
     return ret
   end
+
+  # Get subtotal made from invoices in a date
+  def get_invoices_value_date(date, value)
+    date_arr = date.split("-")
+    year = date_arr[0]
+    month = date_arr[1]
+    
+    invoices = Invoice.where(["invoices.return = '0' AND company_id = ? AND date_processed >= ? AND date_processed <= ? AND processed = '1'", self.id, "#{date} 00:00:00", "#{year}-#{month}-31 23:59:59"])
+    ret = 0
+    
+    for invoice in invoices
+      if(value == "subtotal")
+        ret += invoice.subtotal
+      elsif(value == "tax")
+        ret += invoice.tax
+      else
+        ret += invoice.total
+      end
+    end
+    
+    return ret
+  end
+  
   
   def get_users()
     owner = self.user
@@ -318,6 +341,33 @@ class Company < ActiveRecord::Base
  def get_facturas_day_value(fecha1,fecha2,value = "total")
 
     facturas = Factura.where([" company_id = ? AND fecha >= ? and fecha<= ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59"])
+    if facturas
+    ret=0  
+    for factura in facturas
+      
+      if(value == "subtotal")
+        ret += factura.subtotal
+      elsif(value == "tax")
+        ret += factura.tax
+      else         
+        ret += factura.total
+      end
+    end
+    end 
+
+    return ret
+    
+ end 
+ def get_pendientes_day(fecha1,fecha2)
+
+    @facturas = Factura.where(["balance > 0  and  company_id = ? AND fecha >= ? and fecha<= ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59"])
+    return @facturas
+    
+ end 
+ 
+ def get_pendientes_day_value(fecha1,fecha2,value = "total")
+
+    facturas = Factura.where(["balance>0  and  company_id = ? AND fecha >= ? and fecha<= ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59"])
     if facturas
     ret=0  
     for factura in facturas
