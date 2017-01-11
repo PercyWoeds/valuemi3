@@ -831,8 +831,9 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
             row << ""          
             row << "TOTALES POR CLIENTE=> "            
             row << ""
-            row << sprintf("%.2f",total_cliente_soles.to_s)
             row << sprintf("%.2f",total_cliente_dolares.to_s)
+            row << sprintf("%.2f",total_cliente_soles.to_s)
+            
             
             table_content << row
 
@@ -883,9 +884,8 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
             row << ""          
             row << "TOTALES POR CLIENTE=> "            
             row << ""
-            row << sprintf("%.2f",total_cliente_soles.to_s)
             row << sprintf("%.2f",total_cliente_dolares.to_s)
-            
+            row << sprintf("%.2f",total_cliente_soles.to_s)                      
 
             table_content << row
         
@@ -902,8 +902,9 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
           row << "TOTALES => "
           row << ""
           row << ""
-          row << sprintf("%.2f",total_soles.to_s)
           row << sprintf("%.2f",total_dolares.to_s)
+          row << sprintf("%.2f",total_soles.to_s)
+          
           
           row << ""
           table_content << row
