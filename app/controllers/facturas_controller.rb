@@ -775,6 +775,9 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
       table_content << headers
 
       nroitem=1
+              lcmonedasoles   = 2
+            lcmonedadolares = 1
+    
 
       lcDoc='FT'
 
@@ -782,10 +785,12 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
 
        for  product in @facturas_rpt
         
-          if product.customer_id == lcCliente
+          if lcCliente == product.customer_id
+
             days = product.payment.day 
             fechas2 = product.fecha + days 
             
+
             row = []          
             row << lcDoc
             row << product.code
@@ -794,12 +799,12 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
             row << product.customer.name
             row << product.moneda.symbol  
 
-            if product.moneda_id == "1"
-                row << " "
+            if product.moneda_id == 1 
+                row << "0.00 "
                 row << sprintf("%.2f",product.total.to_s)
             else
                 row << sprintf("%.2f",product.total.to_s)
-                row << " "
+                row << "0.00 "
             end 
             row << product.observ
 
@@ -809,11 +814,11 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
             nroitem = nroitem + 1
 
           else
-            
             totals = []            
-            total_cliente = 0
-
-            total_cliente = @company.get_pendientes_day_customer(@fecha1,@fecha2, lcCliente)
+            total_cliente_soles = 0
+            total_cliente_soles = @company.get_pendientes_day_customer(@fecha1,@fecha2, lcCliente, lcmonedadolares)
+            total_cliente_dolares = 0
+            total_cliente_dolares = @company.get_pendientes_day_customer(@fecha1,@fecha2, lcCliente, lcmonedasoles)
             
             row =[]
             row << ""
@@ -822,11 +827,32 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
             row << ""          
             row << "TOTALES POR CLIENTE=> "            
             row << ""
-            row << sprintf("%.2f",total_cliente.to_s)
-            row << ""
+            row << sprintf("%.2f",total_cliente_dolares.to_s)
+            row << sprintf("%.2f",total_cliente_soles.to_s)
             table_content << row
 
             lcCliente = product.customer_id
+            row = []          
+            row << lcDoc
+            row << product.code
+            row << product.fecha.strftime("%d/%m/%Y")
+            row << fechas2.strftime("%d/%m/%Y")
+            row << product.customer.name
+            row << product.moneda.symbol  
+
+            if product.moneda_id == 1 
+                row << "0.00 "
+                row << sprintf("%.2f",product.total.to_s)
+            else
+                row << sprintf("%.2f",product.total.to_s)
+                row << "0.00 "
+            end 
+            row << product.observ
+
+            
+            table_content << row
+
+
 
           end 
           
@@ -837,7 +863,11 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
             totals = []            
             total_cliente = 0
 
-            total_cliente = @company.get_pendientes_day_customer(@fecha1,@fecha2, lcCliente)
+            total_cliente_soles = 0
+            total_cliente_soles = @company.get_pendientes_day_customer(@fecha1,@fecha2, lcCliente, lcmonedadolares)
+            total_cliente_dolares = 0
+            total_cliente_dolares = @company.get_pendientes_day_customer(@fecha1,@fecha2, lcCliente, lcmonedasoles)
+    
             
             row =[]
             row << ""
@@ -846,28 +876,30 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
             row << ""          
             row << "TOTALES POR CLIENTE=> "            
             row << ""
-            row << sprintf("%.2f",total_cliente.to_s)
-            row << ""
+            row << sprintf("%.2f",total_cliente_dolares.to_s)
+            row << sprintf("%.2f",total_cliente_soles.to_s)
+
             table_content << row
         
 
       
-      total = @company.get_pendientes_day_value(@fecha1,@fecha2, "total")
+          total_soles = @company.get_pendientes_day_value(@fecha1,@fecha2, "total",lcmonedasoles)
+          total_dolares = @company.get_pendientes_day_value(@fecha1,@fecha2, "total",lcmonedadolares)
       
 
-      row =[]
-      row << ""
-      row << ""
-      row << ""
-      row << "TOTALES => "
-      row << ""
-      row << ""
-      row << ""
-      row << sprintf("%.2f",total.to_s)
-      row << ""
-      table_content << row
+          row =[]
+          row << ""
+          row << ""
+          row << ""
+          row << "TOTALES => "
+          row << ""
+          row << ""
+          row << sprintf("%.2f",total_dolares.to_s)
+          row << sprintf("%.2f",total_soles.to_s)
+          row << ""
+          table_content << row
       
-      result = pdf.table table_content, {:position => :center,
+          result = pdf.table table_content, {:position => :center,
                                         :header => true,
                                         :width => pdf.bounds.width
                                         } do 

@@ -366,9 +366,9 @@ class Company < ActiveRecord::Base
     
  end 
  
- def get_pendientes_day_value(fecha1,fecha2,value = "total")
+ def get_pendientes_day_value(fecha1,fecha2,value = "total",moneda)
 
-    facturas = Factura.where(["balance>0  and  company_id = ? AND fecha >= ? and fecha<= ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59"]).order(:customer_id,:moneda_id)
+    facturas = Factura.where(["balance>0  and  company_id = ? AND fecha >= ? and fecha<= ? and moneda_id = ? ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda ]).order(:customer_id,:moneda_id)
     if facturas
     ret=0  
     for factura in facturas
@@ -386,9 +386,9 @@ class Company < ActiveRecord::Base
     return ret
     
  end 
- def get_pendientes_day_customer(fecha1,fecha2,value)
+ def get_pendientes_day_customer(fecha1,fecha2,value,moneda)
 
-    facturas = Factura.where(["balance>0  and  company_id = ? AND fecha >= ? and fecha<= ? AND customer_id = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", value ]).order(:customer_id,:moneda_id)
+    facturas = Factura.where(["balance>0  and  company_id = ? AND fecha >= ? and fecha<= ? AND customer_id = ? and moneda_id =  ? ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", value , moneda ]).order(:customer_id,:moneda_id)
 
     if facturas
     ret=0  
