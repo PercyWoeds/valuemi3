@@ -43,8 +43,8 @@ class Factura < ActiveRecord::Base
                      "Fec.Vmto",
                      "Cliente",
                      "Moneda",                                         
-                     "DOLARES",
-                     "SOLES ",
+                     "SOLES",
+                     "DOLARES ",
                      "OBSERV"]
   
   def self.to_csv(result)
