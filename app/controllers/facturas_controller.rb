@@ -773,12 +773,9 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
 
       lcDoc='FT'
 
-
-
        lcCliente = @facturas_rpt.first.customer_id 
 
        for  product in @facturas_rpt
-
         
           if product.customer_id == lcCliente
             days = product.payment.day 
@@ -827,6 +824,7 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
             lcCliente = product.customer_id
 
           end 
+          
        
         end
 
