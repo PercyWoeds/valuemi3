@@ -759,7 +759,7 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
 
   def build_pdf_body_rpt2(pdf)
     
-    pdf.text "Facturas  Emitidas : desde "+@fecha1.to_s+ " Hasta: "+@fecha2.to_s , :size => 8 
+    pdf.text "Cuentas por cobrar  : desde "+@fecha1.to_s+ " Hasta: "+@fecha2.to_s , :size => 8 
     pdf.text ""
     pdf.font "Helvetica" , :size => 6
 
@@ -791,7 +791,7 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
               fechas2 = product.fecha2 
              else 
               days = product.payment.day 
-              fechas2 = product.fecha + days 
+              fechas2 = product.fecha + days.days  
             
             end 
 
