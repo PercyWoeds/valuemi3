@@ -899,11 +899,12 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
           row << ""
           row << ""
           row << ""
+          row << ""
           row << "TOTALES => "
           row << ""
-          row << ""
-          row << sprintf("%.2f",total_dolares.to_s)
           row << sprintf("%.2f",total_soles.to_s)
+          row << sprintf("%.2f",total_dolares.to_s)
+          
           
           
           row << ""
