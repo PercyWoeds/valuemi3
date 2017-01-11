@@ -478,6 +478,11 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
     end
     
     @invoice[:total] = @invoice[:subtotal] + @invoice[:tax]
+    @invoice[:balance] = @invoice[:total]
+    @invoice[:pago] = 0
+    @invoice[:charge] = 0
+    @invoice[:moneda_id] = 2
+
     
     if(params[:factura][:user_id] and params[:factura][:user_id] != "")
       curr_seller = User.find(params[:factura][:user_id])
