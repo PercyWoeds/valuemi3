@@ -504,7 +504,7 @@ class SupplierPaymentsController < ApplicationController
     @divisions = @company.get_divisions()
     @suppliers = @company.get_suppliers()
     @bank_acounts = @company.get_bank_acounts()        
-    @monedas  = @company.get_monedas()
+    @monedas     = @company.get_monedas()
     @documents  = @company.get_documents()
 
     @supplierpayment.processed='1'

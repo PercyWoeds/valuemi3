@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170110152829) do
+ActiveRecord::Schema.define(version: 20170111193843) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "name"
@@ -131,6 +131,52 @@ ActiveRecord::Schema.define(version: 20170110152829) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "concepts", force: :cascade do |t|
+    t.string   "descrip"
+    t.string   "code"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "customer_payment_details", force: :cascade do |t|
+    t.integer  "document_id"
+    t.string   "documento"
+    t.integer  "customer_id"
+    t.string   "tm"
+    t.float    "total"
+    t.text     "descrip"
+    t.integer  "factura_id"
+    t.integer  "customer_payment_id"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+  end
+
+  create_table "customer_payments", force: :cascade do |t|
+    t.integer  "company_id"
+    t.integer  "location_id"
+    t.integer  "division_id"
+    t.integer  "bank_account_id"
+    t.integer  "document_id"
+    t.string   "documento"
+    t.integer  "customer_id"
+    t.string   "tm"
+    t.float    "total"
+    t.datetime "fecha1"
+    t.datetime "fecha2"
+    t.string   "nrooperacion"
+    t.string   "operacion"
+    t.text     "descrip"
+    t.text     "comments"
+    t.integer  "user_id"
+    t.string   "processed"
+    t.datetime "date_processed"
+    t.string   "code"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.integer  "bank_acount_id"
+    t.integer  "concept_id"
   end
 
   create_table "customers", force: :cascade do |t|

@@ -1,7 +1,7 @@
 <div class="breadcrumbs">
   <%= link_to "My companies", "/companies" %> &raquo;
   <%= link_to @company.name, @company %> &raquo;
-  <%= link_to "supplierpayments", "/companies/supplier_payments/#{@company.id}" %>
+  <%= link_to "customerpayments", "/companies/customer_payments/#{@company.id}" %>
 </div>
 
 <h1>
@@ -18,5 +18,5 @@
 <%= hr() %>
 
 <div class="button">
-  <%= link_to 'Back', "/companies/supplier_payments/#{@company.id}" %>
+  <%= link_to 'Back', "/companies/customer_payments/#{@company.id}" %>
 </div>

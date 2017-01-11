@@ -1,6 +1,7 @@
 Mnygo::Application.routes.draw do
 
 
+  resources :concepts
   resources :quotations
   resources :tranportorders
   resources :ubications
@@ -171,7 +172,9 @@ Mnygo::Application.routes.draw do
 
   match 'companies/reports_guias/:company_id' => 'reports#reports_guias', via: [:get, :post]
   match 'companies/reports_compras/:company_id' => 'reports#reports_compras', via: [:get, :post]
-  match 'companies/reports_cpagar/:company_id' => 'reports#reports_cpagar', via: [:get, :post]
+  match 'companies/reports/reports_cpagar/:company_id' => 'reports#reports_cpagar', via: [:get, :post]
+  match 'companies/reports/reports_cventas/:company_id' => 'reports#reports_cventas', via: [:get, :post]
+
   match 'companies/reports/rpt_serviceorder_all/:company_id' => 'reports#rpt_serviceorder_all', via: [:get, :post]
   match 'companies/reports/rpt_purchases_all/:company_id' => 'reports#rpt_purchases_all', via: [:get, :post]
 
@@ -364,7 +367,7 @@ match 'receiveorders/ac_products/:company_id' => 'receiveorders#ac_products', vi
   resources :purchases
 
 
-  # Purchases
+  # supplier payments
   
   match 'supplier_payments/list_items/:company_id' => 'supplier_payments#list_items', via: [:get, :post]  
   match 'supplier_payments/ac_products/:company_id' => 'supplier_payments#ac_products', via: [:get, :post]
@@ -382,6 +385,24 @@ match 'receiveorders/ac_products/:company_id' => 'receiveorders#ac_products', vi
   match 'companies/supplier_payments/:company_id' => 'supplier_payments#list_supplierpayments', via: [:get, :post]  
   resources :supplier_payments
 
+# supplier payments
+  
+  match 'customer_payments/list_items/:company_id' => 'customer_payments#list_items', via: [:get, :post]  
+  match 'customer_payments/ac_products/:company_id' => 'customer_payments#ac_products', via: [:get, :post]
+  match 'customer_payments/ac_documentos/:company_id' => 'customer_payments#ac_documentos', via: [:get, :post]
+  match 'customer_payments/ac_user/:company_id' => 'customer_payments#ac_user', via: [:get, :post]
+  match 'customer_payments/ac_customers/:company_id' => 'customer_payments#ac_customers', via: [:get, :post]
+  match 'customer_payments/new/:company_id' => 'customer_payments#new', via: [:get, :post]  
+
+  match 'customer_payments/do_email/:id' => 'customer_payments#do_email', via: [:get, :post]
+  match 'customer_payments/do_process/:id' => 'customer_payments#do_process', via: [:get, :post]
+  match 'customer_payments/email/:id' => 'customer_payments#email', via: [:get, :post]
+  match 'customer_payments/pdf/:id' => 'customer_payments#pdf', via: [:get, :post]
+  match 'customer_payments/search/:id' => 'customer_payments#search', via: [:get, :post]
+  match 'customer_payments/rpt_purchases_all/:id' => 'customer_payments#rpt_purchases_all', via: [:get, :post]
+  
+  match 'companies/customer_payments/:company_id' => 'customer_payments#list_customerpayments', via: [:get, :post]  
+  resources :customer_payments
 
   match 'inventories_detaisl/additems/:company_id' => 'additems#list', via: [:get, :post]  
   resources :inventory_details
@@ -488,6 +509,7 @@ match 'receiveorders/ac_products/:company_id' => 'receiveorders#ac_products', vi
   match 'companies/license/:id' => 'companies#license', via: [:get, :post]
   match 'companies/components/:id' => 'companies#components', via: [:get, :post]
   match 'companies/cpagar/:id' => 'companies#cpagar', via: [:get, :post]
+  match 'companies/ccobrar/:id' => 'companies#ccobrar', via: [:get, :post]
   resources :companies
 
   # Users packages

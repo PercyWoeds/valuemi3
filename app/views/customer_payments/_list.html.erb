@@ -1,4 +1,4 @@
-<% if @supplierpayments.count > 0 %>
+<% if @customerpayments.count > 0 %>
   <table>
     <thead>
       <tr>
@@ -6,7 +6,7 @@
          Orden
         </th>
         <th class="bordered_right bordered_bottom" style="width: 350px;">
-          Proveedor 
+          Cliente 
         </th>
         <th class="bordered_right bordered_bottom">
           Total
@@ -24,29 +24,29 @@
     </thead>
     <tbody>
     
-      <% for supplierpayment in @supplierpayments %>
+      <% for customerpayment in @customerpayments %>
         <tr>
           <td class="bordered_right bordered_bottom">
-            <%= link_to supplierpayment.code, supplierpayment, :title => "Ir a factura" %>
+            <%= link_to customerpayment.code, customerpayment, :title => "Ir a factura" %>
           </td>
           <td class="bordered_right bordered_bottom">
-            <%= link_to supplierpayment.bank_acount.number %>
+            <%= link_to customerpayment.customer.name %>
           </td>
           <td class="bordered_right bordered_bottom right">
-            <%= money(supplierpayment.total) %>
+            <%= money(customerpayment.total) %>
           </td>
           <td class="bordered_right bordered_bottom">
-            <%= doDate(supplierpayment.created_at) %>
+            <%= doDate(customerpayment.created_at) %>
           </td>
-          <td class="bordered_right bordered_bottom <%= supplierpayment.processed_color %>">
-            <%= supplierpayment.get_processed_short %>
+          <td class="bordered_right bordered_bottom <%= customerpayment.processed_color %>">
+            <%= customerpayment.get_processed_short %>
           </td>
           <td class="bordered_right bordered_bottom">
-            <%= link_to "Ver", supplierpayment %>
+            <%= link_to "Ver", customerpayment %>
           </td>
           <td class="bordered_right bordered_bottom">  
             
-          <%= link_to 'Eliminar', supplierpayment, :confirm => 'Are you sure?', :method => :delete  %>           
+          <%= link_to 'Eliminar', customerpayment, :confirm => 'Esta seguro ?', :method => :delete  %>           
             
         
 
@@ -57,6 +57,6 @@
   </table>
 <% else %>
   <p class="error">
-    We couldn't find any supplierpayments.
+    We couldn't find any customerpayments.
   </p>
 <% end %>

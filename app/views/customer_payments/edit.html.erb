@@ -1,17 +1,17 @@
 <div class="breadcrumbs">
   <%= link_to "My companies", "/companies" %> &raquo;
   <%= link_to @company.name, @company %> &raquo;
-  <%= link_to "supplierpayments", "/companies/supplierpayments/#{@company.id}" %> &raquo;
-  <%= link_to @supplierpayment.identifier, @supplierpayment %>
+  <%= link_to "customerpayments", "/companies/customerpayments/#{@company.id}" %> &raquo;
+  <%= link_to @customerpayment.identifier, @customerpayment %>
 </div>
 
 <h1>
-  <%= image_tag("supplierpayment_48.png", :class => "vmiddle") %>
-  Editing supplierpayment
+  <%= image_tag("customerpayment_48.png", :class => "vmiddle") %>
+  Editing customerpayment
 </h1>
 
 <p>
-  To modify the supplierpayment, please fill out the following form.  Fields marked with <strong>*</strong> are required.
+  To modify the customerpayment, please fill out the following form.  Fields marked with <strong>*</strong> are required.
 </p>
 
 <%= render 'form' %>
@@ -19,6 +19,6 @@
 <%= hr() %>
 
 <div class="button">
-  <%= link_to 'Show', @supplierpayment %>
-  <%= link_to 'Back', "/companies/supplierpayments/#{@company.id}" %>
+  <%= link_to 'Show', @customerpayment %>
+  <%= link_to 'Back', "/companies/customerpayments/#{@company.id}" %>
 </div>

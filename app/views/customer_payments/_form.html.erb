@@ -1,8 +1,8 @@
-<% if @supplierpayment.errors.any? %>
+<% if @customerpayment.errors.any? %>
   <div id="error_explanation">
-    <h2><%= pluralize(@supplierpayment.errors.count, "error") %> prohibited this supplierpayment from being saved:</h2>
+    <h2><%= pluralize(@customerpayment.errors.count, "error") %> prohibited this customerpayment from being saved:</h2>
     <ul>
-    <% @supplierpayment.errors.full_messages.each do |msg| %>
+    <% @customerpayment.errors.full_messages.each do |msg| %>
       <li><%= msg %></li>
     <% end %>
     </ul>
@@ -13,7 +13,7 @@
 
 <div class="mid_box bordered_right">
 
-  <%= form_for(@supplierpayment) do |f| %>
+  <%= form_for(@customerpayment) do |f| %>
     <h4>
        Informacion Orden de Pago 
     </h4>
@@ -45,6 +45,11 @@
       <%= f.select :bank_acount_id,options_from_collection_for_select(@bank_acounts,'id','number') %>
     </div>
 
+    <div class="field">
+      <%= f.label  :concept_id,"Concepto de Cobranza :  " , :class => "bold"%><br />
+      <%= f.select :concept_id,options_from_collection_for_select(@concepts,'id','descrip') %>
+    </div>
+
 
     <div class="field">
       <%= f.label  :document_id %><br />
@@ -56,9 +61,9 @@
       <%= f.text_field :documento %>
     </div>
 
-      <label for="ac_supplier" class="bold">Girado : *</label><br />
+      <label for="ac_customer" class="bold"> Recibido de Cliente  : *</label><br />
       
-      <input type="text" name="ac_supplier" id="ac_supplier" value="<% if @ac_supplier %><%= @ac_supplier %><% end %>" />
+      <input type="text" name="ac_customer" id="ac_customer" value="<% if @ac_customer %><%= @ac_customer %><% end %>" />
             
       <div class="small">
         Ingrese una termino de busqueda para encontrar un proveedor
@@ -67,7 +72,7 @@
 
       <div class="small">
         <strong>Seleccionar proveedor:</strong>
-        <span id="selected_supplier"><% if @ac_supplier %><%= @ac_supplier %><% else %><!-- i --><% end %></span>
+        <span id="selected_customer"><% if @ac_customer %><%= @ac_customer %><% else %><!-- i --><% end %></span>
       </div>
     
 
@@ -121,15 +126,15 @@
   
   
     <div class="actions">
-      <input type="hidden" name="items" id="items" value="<% if @suppliers_lines %><%= @suppliers_lines %><% end %>" />
-      <%= f.hidden_field :supplier_id, :id => "ac_supplier_id" %>
+      <input type="hidden" name="items" id="items" value="<% if @customers_lines %><%= @customers_lines %><% end %>" />
+      <%= f.hidden_field :customer_id, :id => "ac_customer_id" %>
       <%= f.hidden_field :company_id %>
 
       <%= f.submit %>
     </div>
     
     <div class="small">
-      Once you're done adding suppliers, don't forget to <strong><%= @action_txt %></strong> your supplierpayment.
+      Once you're done adding customers, don't forget to <strong><%= @action_txt %></strong> your customerpayment.
     </div>
 
   <% end %>
@@ -142,7 +147,7 @@
     Agregar documento 
   </h4>
   
-  <form method="get" action="/purchases" onsubmit="addItemToSupplierPayment(); return false;">     <input type="hidden" name="ac_item_id" id="ac_item_id" value="" />
+  <form method="get" action="/purchases" onsubmit="addItemToCustomerPayment(); return false;">     <input type="hidden" name="ac_item_id" id="ac_item_id" value="" />
 
     <strong>Documento :</strong><br />
     <input type="text" name="ac_item" id="ac_item" value="" />
@@ -184,7 +189,7 @@
 <script type="text/javascript">
   $(document).ready(function() {
 
-    $("#ac_item").autocomplete("/supplier_payments/ac_documentos/<%= @company.id %>", {
+    $("#ac_item").autocomplete("/customer_payments/ac_documentos/<%= @company.id %>", {
       matchSubset: 1,
       matchContains: 1,
       selectFirst: false
@@ -196,19 +201,19 @@
       updateItemTotal6();
     });
     
-    $("#ac_supplier").autocomplete("/supplier_payments/ac_suppliers/<%= @company.id %>", {
+    $("#ac_customer").autocomplete("/customer_payments/ac_customers/<%= @company.id %>", {
       matchSubset: 1,
       matchContains: 1,
       selectFirst: false
     });
     
-    $("#ac_supplier").result(function(event, data, formatted) {
-      $("#ac_supplier_id").val(data[2]);
+    $("#ac_customer").result(function(event, data, formatted) {
+      $("#ac_customer_id").val(data[2]);
       $("#selected_seller").html(data[0]);
     });    
     
     
-    $("#ac_user").autocomplete("/supplier_payments/ac_user/<%= @company.id %>", {
+    $("#ac_user").autocomplete("/customer_payments/ac_user/<%= @company.id %>", {
 			matchSubset: 1,
 			matchContains: 1,
       selectFirst: false
@@ -221,13 +226,13 @@
     
     
     $("#ac_item_price").bind("keyup", function() {
-      updateItemTotal6();
+      updateItemTotalCP();
     });
     
     
-    <% if @suppliers_lines %>
-    alert 'holas suppliers_lines';
-      listItemsSupplierPayment();
+    <% if @customers_lines %>
+    alert 'holas customers_lines';
+      listItemsCustomerPayment();
     <% end %>
   });
 </script>

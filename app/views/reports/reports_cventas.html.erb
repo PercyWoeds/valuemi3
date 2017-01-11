@@ -16,15 +16,14 @@
   <p class="big">
     <%= link_to "Facturas  ", "/companies/reports/rpt_facturas_all/#{@company.id}" %>
   </p>
-  
+
   <p class="big">
-    <%= link_to "Pendientes de pago ", "/companies/reports/rpt_ccobrar2_pdf/#{@company.id}" %>
+    <%= link_to "Facturas x mes ", "/companies/reports/monthly_sales/#{@company.id}" %>
   </p>
 
   <p class="big">
-    <%= link_to "Facturas x mes ", "/companies/reports/rpt_ccobrar_cancelaciones_pdf/#{@company.id}" %>
+    <%= link_to "Facturas por cliente ", "/companies/reports/rpt_ccobrar2_pdf/#{@company.id}" %>
   </p>
-
   
 </div>
 

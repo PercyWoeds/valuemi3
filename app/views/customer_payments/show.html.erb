@@ -1,43 +1,43 @@
 <div class="breadcrumbs">
   <%= link_to "My companies", "/companies" %> &raquo;
-  <%= link_to @supplierpayment.company.name, @supplierpayment.company %> &raquo;
-  <%= link_to "supplierpayments", "/companies/supplier_payments/#{@supplierpayment.company.id}" %>
+  <%= link_to @customerpayment.company.name, @customerpayment.company %> &raquo;
+  <%= link_to "customerpayments", "/companies/customer_payments/#{@customerpayment.company.id}" %>
 </div>
 
 <h1>
   <%= image_tag("invoice_48.png", :class => "vmiddle") %>
-  <%= @supplierpayment.identifier %>
+  <%= @customerpayment.identifier %>
 </h1>
 
 <%= hr() %>
 
-<% if @supplierpayment.location %>
+<% if @customerpayment.location %>
   <p>
     <b>Location:</b>
-    <%= link_to @supplierpayment.location.name, @supplierpayment.location %>
+    <%= link_to @customerpayment.location.name, @customerpayment.location %>
   </p>
 <% end %>
 
-<% if @supplierpayment.division %>
+<% if @customerpayment.division %>
   <p>
     <b>Division:</b>
-    <%= link_to @supplierpayment.division.name, @supplierpayment.division %>
+    <%= link_to @customerpayment.division.name, @customerpayment.division %>
   </p>
 <% end %>
 
 <p>
   <b>Code:</b>
-  <%= @supplierpayment.code %>
+  <%= @customerpayment.code %>
 </p>
 
 <p>
     <b>Fecha entrega:</b>
-    <%= @supplierpayment.fecha1.strftime("%d/%m/%Y") %>   
+    <%= @customerpayment.fecha1.strftime("%d/%m/%Y") %>   
 </p>
  
 <p>
     <b>Estado: </b>
-    <%= @supplierpayment.get_processed   %>   
+    <%= @customerpayment.get_processed   %>   
 </p>
 
 
@@ -49,20 +49,20 @@
 
 <p>
   <b>Cuenta </b>  
-  <%= link_to @supplierpayment.bank_acount.number %>
+  <%= link_to @customerpayment.bank_acount.number %>
 </p>
 
 <p>
   <b>Banco : </b>  
-  <%=  @supplierpayment.get_banco(@supplierpayment.bank_acount.bank_id)   %>
+  <%=  @customerpayment.get_banco(@customerpayment.bank_acount.bank_id)   %>
 </p>  
 
 <b>Moneda : </b>  
-  <%=  @supplierpayment.get_moneda(@supplierpayment.bank_acount.bank_id)     %>
+  <%=  @customerpayment.get_moneda(@customerpayment.bank_acount.bank_id)     %>
 </p>
 
 <b>Girado  : </b>  
-  <%=  @supplierpayment.supplier.name     %>
+  <%=  @customerpayment.customer.name     %>
 </p>
 
 <%= hr() %>
@@ -96,43 +96,43 @@
   <tbody>
       <tr>
         <td class="bordered_bottom bordered_right">
-           <%=  @supplierpayment.get_document (@supplierpayment.document_id)     %>
+           <%=  @customerpayment.get_document (@customerpayment.document_id)     %>
         </td>
         
               
         <td class="bordered_bottom bordered_right">
-          <%=  @supplierpayment.documento     %>
+          <%=  @customerpayment.documento     %>
         </td>
 
         <td class="bordered_bottom bordered_right">
-          <%=  @supplierpayment.nrooperacion  %>
+          <%=  @customerpayment.nrooperacion  %>
         </td>
         
          <td class="bordered_bottom bordered_right">
-          <%=  @supplierpayment.operacion    %>
+          <%=  @customerpayment.operacion    %>
         </td>
 
         <td class="bordered_bottom bordered_right">
-            <%=  @supplierpayment.total     %>
+            <%=  @customerpayment.total     %>
         </td>
 
       </tr>
     
 
 
-    <% for productItem in @supplierpayment.get_payments() %>
+    <% for productItem in @customerpayment.get_payments() %>
       <tr>
         <td class="bordered_bottom bordered_right">
-          <%= productItem.get_document(productItem.document_id)   %>
+          
         </td>
         
               
         <td class="bordered_bottom bordered_right">
-          <%=  productItem.documento   %>
+          <%=  productItem.code   %>
         </td>
 
         <td class="bordered_bottom bordered_right">
-          <%=  productItem.get_supplier(productItem.supplier_id)   %>
+          <%=  productItem.get_customer(productItem.customer_id)   %>
         </td>
         
          <td class="bordered_bottom bordered_right">
@@ -156,7 +156,7 @@
         Total:
       </td>
       <td class="bordered_bottom bordered_right bold right">
-        <%= money(@supplierpayment.total) %>
+        <%= money(@customerpayment.total) %>
       </td>
     </tr>
     
@@ -172,23 +172,23 @@
 
 <p>
   <strong>Seller:</strong>
-  <%= link_to @supplierpayment.user.username, @supplierpayment.user %>
+  <%= link_to @customerpayment.user.username, @customerpayment.user %>
 </p>
 
 <%= hr() %>
 
 <div class="button">
-  <%= link_to 'Exportar to PDF', "/supplier_payments/pdf/#{@supplierpayment.id}.pdf" %>  
+  <%= link_to 'Exportar to PDF', "/customer_payments/pdf/#{@customerpayment.id}.pdf" %>  
   
- <% if @supplierpayment.processed == "1" %> 
+ <% if @customerpayment.processed == "1" %> 
 
  <% %>
 
  <% else %>
 
-  <%= link_to 'Procesar', "/supplier_payments/do_process/#{@supplierpayment.id}" %>
+  <%= link_to 'Procesar', "/customer_payments/do_process/#{@customerpayment.id}" %>
 
  <% end %> 
   
-  <%= link_to 'Regresar', "/companies/supplier_payments/#{@supplierpayment.company.id}" %>
+  <%= link_to 'Regresar', "/companies/customer_payments/#{@customerpayment.company.id}" %>
 </div>

@@ -1,32 +1,32 @@
 <div class="breadcrumbs">
   <%= link_to "My companies", "/companies" %> &raquo;
   <%= link_to @company.name, @company %> &raquo;
-  <%= link_to "supplierpayments", "/companies/supplierpayments/#{@company.id}" %> &raquo;
-  <%= link_to @supplierpayment.identifier, @supplierpayment %>
+  <%= link_to "customerpayments", "/companies/customer_payments/#{@company.id}" %> &raquo;
+  <%= link_to @customerpayment.identifier, @customerpayment %>
 </div>
 
 <h1>
-  <%= image_tag("supplierpayment_48.png", :class => "vmiddle") %>
-  Send supplierpayment via email
+  <%= image_tag("customerpayment_48.png", :class => "vmiddle") %>
+  Send customerpayment via email
 </h1>
 
 <%= hr() %>
 
 <h3>
-  <%= link_to @supplierpayment.identifier, @supplierpayment %>
+  <%= link_to @customerpayment.identifier, @customerpayment %>
 </h3>
 
 <%= hr() %>
 
-<form method="post" action="/supplierpayments/do_email/<%= @supplierpayment.id %>">
+<form method="post" action="/customer_payments/do_email/<%= @customerpayment.id %>">
   <strong>Email:</strong>
-  <input type="text" name="email" value="<%= @supplierpayment.customer.email %>" onclick="$(this).select();" />
+  <input type="text" name="email" value="<%= @customerpayment.customer.email %>" onclick="$(this).select();" />
   <input type="submit" value="Send" class="bold" />
 </form>
 
 <%= hr() %>
 
 <div class="button">
-  <%= link_to 'Show supplierpayment', @supplierpayment %>
-  <%= link_to 'Back', "/companies/supplierpayments/#{@company.id}" %>
+  <%= link_to 'Ver', @customerpayment %>
+  <%= link_to 'Regresa', "/companies/customer_payments/#{@company.id}" %>
 </div>

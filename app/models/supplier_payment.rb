@@ -121,10 +121,10 @@ new_purchase = SupplierPaymentDetail.new(:supplier_payment_id => self.id,
           end 
 
 
-          @last_payment = purchase.payment + balance.to_f.round(2) 
+          @last_payment = purchase.pago + balance.to_f.round(2) 
           @last_balance = purchase.balance 
           @newbalance = @last_balance - balance.to_f.round(2) 
-          purchase.update_attributes(payment: @last_payment,balance: @newbalance )  
+          purchase.update_attributes(pago: @last_payment,balance: @newbalance )  
           
         end
       end
