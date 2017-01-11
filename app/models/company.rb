@@ -334,7 +334,7 @@ class Company < ActiveRecord::Base
 
  def get_facturas_day(fecha1,fecha2)
 
-    @facturas = Factura.where([" company_id = ? AND fecha >= ? and fecha<= ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59"])
+    @facturas = Factura.where([" company_id = ? AND fecha >= ? and fecha<= ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59"]).order(:code )
     return @facturas
     
  end 

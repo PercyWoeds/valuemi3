@@ -640,7 +640,7 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
             row << product.subtotal.to_s
             row << product.tax.to_s
             row << product.total.to_s
-            row << product.get_processed
+            row << ""
             table_content << row
 
             nroitem=nroitem + 1
@@ -678,9 +678,9 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
       row << ""
       row << "TOTALES => "
       row << ""
-      row << subtotal.to_s
-      row << tax.to_s
-      row << total.to_s
+      row << subtotal.round(2).to_s
+      row << tax.round(2).to_s
+      row << total.round(2).to_s
       row << ""
       table_content << row
       

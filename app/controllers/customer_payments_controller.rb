@@ -591,8 +591,7 @@ class CustomerPaymentsController < ApplicationController
   # Export customerpayment to PDF
   def rpt_facturas_all
     @company=Company.find(params[:id])      
-    
-    
+        
     if(params[:year] and params[:year].numeric?)
       @year = params[:year].to_i
     else
