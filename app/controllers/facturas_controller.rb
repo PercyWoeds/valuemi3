@@ -787,9 +787,13 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
         
           if lcCliente == product.customer_id
 
-            days = product.payment.day 
-            fechas2 = product.fecha + days 
+             if payment.id == nil 
+              fechas2 = product.fecha2 
+             else 
+              days = product.payment.day 
+              fechas2 = product.fecha + days 
             
+            end 
 
             row = []          
             row << lcDoc
