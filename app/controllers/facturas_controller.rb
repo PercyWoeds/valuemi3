@@ -311,9 +311,9 @@ class FacturasController < ApplicationController
                 
               else  
 
-                if (guia.processed != "4" ) 
+
                   a << " " << guia.description                   
-                end 
+
 
               end   
               existe1 = f.get_guias_remision(guia.id)
