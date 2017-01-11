@@ -229,7 +229,8 @@ class FacturasController < ApplicationController
 
           @invoices = Factura.paginate(:page => params[:page], :order => 'code DESC', :conditions => ["company_id = ? AND (#{query})", @company.id])
         else
-          @invoices = Factura.where(company_id:  @company.id).order("code DESC").paginate(:page => params[:page])
+          lctipo = 1
+          @invoices = Factura.where(company_id:  @company.id, tipo: lctipo ).order("code DESC").paginate(:page => params[:page])
           @filters_display = "none"
         end
       end
@@ -267,7 +268,7 @@ class FacturasController < ApplicationController
     Invoicesunat.delete_all
 
     @company = Company.find(params[:company_id])
-    @facturas  = Factura.all
+    @facturas  = Factura.where(:tipo => 1)
      a = ""
      
      lcGuia=""

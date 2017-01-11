@@ -1,0 +1,71 @@
+<p class="bold big">
+  Documentos a cancelar
+</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th class="small bordered_bottom bordered_right">
+          Nro.Documento
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          Proveedor
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          Cantidad
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          Dscto
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          Total
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for product in @products %>
+        <tr>
+          <td class="small bordered_bottom bordered_right" style="width: 220px;">
+            <a href="#" onclick="removeItemFromSupplierPayment(<%= product.tax1%>); return false;" title="Remove product from invoice"><%= product.documento %></a>
+            [<a href="#" onclick="removeItemFromSupplierPayment(<%= product.tax1   %>); return false;" title="Remove product from invoice">X</a>]
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.supplier.name %>
+          </td>
+          <td class="small bordered_bottom bordered_right">
+        
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= money(product.total_amount) %>
+    
+            </td>
+        </tr>
+      <% end %>
+    
+    <tr>
+      <td colspan="4" class="bordered_bottom bordered_right bold">
+        Total:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@total_pago) %>    
+      </td>      
+    </tr>
+
+      <tr>
+      <td colspan="4" class="bordered_bottom bordered_right bold">
+        Diferencia :
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+    
+      </td>
+      
+    </tr>
+
+    </tbody>
+  </table>
+
+
+
