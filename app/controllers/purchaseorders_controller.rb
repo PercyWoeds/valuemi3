@@ -99,9 +99,9 @@ def build_pdf_header(pdf)
             row << product.quantity.to_s
             row << product.code
             row << product.name
-            row << product.price.to_s
-            row << product.discount
-            row << product.total.to_s
+            row << product.price.round(2).to_s
+            row << product.discount.round(2).to_s
+            row << product.total.round(2).to_s
             table_content << row
 
             nroitem=nroitem + 1

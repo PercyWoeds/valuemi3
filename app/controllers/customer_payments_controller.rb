@@ -140,7 +140,7 @@ class CustomerPaymentsController < ApplicationController
        for  product in @customerpayment.get_payments() 
             row = []
             row << nroitem.to_s          
-            row << product.fecha 
+            row << product.fecha.strftime("%d%m%Y")            
             row << product.code
             row << product.get_customer(product.customer_id)
             row << "" 
