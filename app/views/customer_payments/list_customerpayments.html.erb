@@ -72,7 +72,8 @@
 <br />
 
 <div class="button">
-  <%= link_to 'Nueva Cancelacion ', "/customer_payments/new/#{@company.id}" %>
+  <%= link_to 'Nueva Cancelacion', "/customer_payments/new/#{@company.id}" %>
+  <%= link_to 'Registrar', "/customer_payments/new1/#{@company.id}" %>
 </div>
 
 <%= will_paginate @customerpayments %>

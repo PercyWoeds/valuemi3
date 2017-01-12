@@ -31,16 +31,6 @@
         </div>
     
     <div class="field">
-      <%= f.label :location_id ,"Local"%><br />
-      <%= f.select :location_id, options_from_collection_for_select(@locations,'id','name') %>
-    </div>
-
-    <div class="field">
-      <%= f.label :division_id %><br />
-      <%= f.select :division_id,options_from_collection_for_select(@divisions,'id','name') %>
-    </div>
-
-    <div class="field">
       <%= f.label :bank_acount_id %><br />
       <%= f.select :bank_acount_id,options_from_collection_for_select(@bank_acounts,'id','number') %>
     </div>
@@ -48,8 +38,9 @@
     <div class="field">
       <%= f.label  :concept_id,"Concepto de Cobranza :  " , :class => "bold"%><br />
       <%= f.select :concept_id,options_from_collection_for_select(@concepts,'id','descrip') %>
-    </div>
 
+    </div>
+    
 
     <div class="field">
       <%= f.label  :document_id %><br />
@@ -61,34 +52,9 @@
       <%= f.text_field :documento %>
     </div>
 
-      <label for="ac_customer" class="bold"> Recibido de Cliente  : *</label><br />
-      
-      <input type="text" name="ac_customer" id="ac_customer" value="<% if @ac_customer %><%= @ac_customer %><% end %>" />
-            
-      <div class="small">
-        Ingrese una termino de busqueda para encontrar un proveedor
-      </div>
-      <br />
-
-      <div class="small">
-        <strong>Seleccionar proveedor:</strong>
-        <span id="selected_customer"><% if @ac_customer %><%= @ac_customer %><% else %><!-- i --><% end %></span>
-      </div>
-    
-
     <div class="field">
-      <%= f.label :nrooperacion, "Nro.Operacion"  %><br />
-      <%= f.text_field :nrooperacion %>
-    </div>
-
-    <div class="field">
-      <%= f.label :operacion, "Operacion" %><br />
-      <%= f.text_field :operacion  %>
-    </div>
-
-    <div class="field">
-      <%= f.label :total, "Importe ", :class => "bold" %><br />
-      <%= f.number_field :total ,:step => 0.01 %>
+      <%= f.label :total, "Importe Liquidacion ", :class => "bold" %><br />
+      <%= f.text_field :total %>
     </div>
   
     <%= hr() %>
@@ -111,7 +77,7 @@
       <input type="text" name="ac_user" id="ac_user" value="<% if @ac_user %><%= @ac_user %><% end %>" />
 
       <div class="small">
-        Enter a search term to find a user.
+      
       </div>
       <br />
 
@@ -127,7 +93,7 @@
   
     <div class="actions">
       <input type="hidden" name="items" id="items" value="<% if @customers_lines %><%= @customers_lines %><% end %>" />
-      <%= f.hidden_field :customer_id, :id => "ac_customer_id" %>
+  
       <%= f.hidden_field :company_id %>
 
       <%= f.submit %>
@@ -141,13 +107,16 @@
 </div>
 
 
-
 <div class="mid_box">
-  <h4>
-    Agregar documento 
-  </h4>
+  <h5>
+    Agregar informacion Cliente
+  </h5>
   
+
   <form method="get" action="/purchases" onsubmit="addItemToCustomerPayment(); return false;">     <input type="hidden" name="ac_item_id" id="ac_item_id" value="" />
+
+    
+
 
     <strong>Documento :</strong><br />
     <input type="text" name="ac_item" id="ac_item" value="" />

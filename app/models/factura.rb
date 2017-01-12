@@ -221,6 +221,14 @@ class Factura < ActiveRecord::Base
       return @facturas
   end 
 
+  def get_facturas(id)
+  
+    @facturas= Factura.where(["balance > 0  and customer_id = ?",  id ])
+
+    return @facturas
+  end 
+
+
   
   def get_invoices_details
 

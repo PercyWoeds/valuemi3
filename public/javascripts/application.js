@@ -1190,9 +1190,6 @@
       if (price == "" || !isNumeric(price)) {
         alert("Por favor ingrese un precio valido  ");
       } 
-      else if (importe_cheque == "" || !isNumeric(importe_cheque)) {
-        alert("Por favor ingrese importe valido  ");
-      }
       else {
         var item_line = item_id + "|BRK|" + price + "|BRK|";
         

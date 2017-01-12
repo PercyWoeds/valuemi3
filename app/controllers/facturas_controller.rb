@@ -3,7 +3,28 @@ include CustomersHelper
 include ServicesHelper
 
 class FacturasController < ApplicationController
+
   before_filter :authenticate_user!, :checkServices
+
+
+  def discontinue
+    
+      @facturasselect = Factura.find(params[:products_ids])
+
+    for item in @guiasselect
+        begin
+          a = item.id
+          b = item.remite_id               
+
+          new_invoice_guia = Deliverymine.new(:mine_id =>$minesid, :delivery_id =>item.id)          
+          new_invoice_guia.save
+           
+        
+         end              
+    end
+  end   
+
+
   
   def import
       Factura.import(params[:file])

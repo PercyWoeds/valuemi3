@@ -5,7 +5,78 @@ include ServicebuysHelper
 
 class CustomerPaymentsController < ApplicationController
 
+
   before_filter :authenticate_user!, :checkServices
+
+
+
+
+  def new1
+
+    @company = Company.find(params[:company_id])
+    @customerpayments =CustomerPayment.all 
+
+    @customerpayment = CustomerPayment.new
+
+    @customerpayment[:code]="#{generate_guid8()}"  
+    @customerpayment[:processed] = false
+      
+    @company = Company.find(params[:company_id])
+    @customerpayment.company_id = @company.id
+    
+    @locations = @company.get_locations()
+    @divisions = @company.get_divisions()
+    @customers = @company.get_customers()
+    @bank_acounts = @company.get_bank_acounts()        
+    @monedas  = @company.get_monedas()
+    @documents  = @company.get_documents()
+    @concepts = Concept.all 
+
+    @ac_user = getUsername()
+    @customerpayment[:user_id] = getUserId()
+
+  
+  end 
+  
+
+
+  def registrar
+        
+    @company = Company.find(params[:company_id])
+    @users = @company.get_users()
+    @users_cats = []
+    
+    @customerpayment = CustomerPayment.new
+
+    @customerpayment[:code]="#{generate_guid8()}"  
+    @customerpayment[:processed] = false
+      
+    @company = Company.find(params[:company_id])
+    @customerpayment.company_id = @company.id
+    
+    @locations = @company.get_locations()
+    @divisions = @company.get_divisions()
+    @customers = @company.get_customers()
+    @bank_acounts = @company.get_bank_acounts()        
+    @monedas  = @company.get_monedas()
+    @documents  = @company.get_documents()
+    @concepts = Concept.all 
+
+    @ac_user = getUsername()
+    @customerpayment[:user_id] = getUserId()
+
+    @lcCliente = params[:customer_id]
+
+
+    @pagetitle = "Agrega facturas "
+
+    @mines =  Factura.where(["balance > 0  and customer_id = ?",  @lcCliente ]).first 
+
+    $minesid= @mines.customer_id
+    @guias =  @mines.get_facturas($minesid)
+    
+   end
+
  
   def build_pdf_header(pdf)
 
@@ -78,7 +149,7 @@ class CustomerPaymentsController < ApplicationController
        for  product in @customerpayment.get_payments() 
             row = []
             row << nroitem.to_s          
-            row << product.get_document(product.document_id)
+            row << ""
             row << product.documento    
             row << product.get_customer(product.customer_id)
             row << "" 
@@ -169,8 +240,8 @@ class CustomerPaymentsController < ApplicationController
     @company =Company.find(company)
   
 
-     $lcCli  = @customerpayment.customer.name
-     $lcdir1 = @customerpayment.customer.address1
+
+
      
      $lcFecha1= @customerpayment.fecha1.strftime("%d/%m/%Y") 
      $lcMon   = @customerpayment.get_moneda(@customerpayment.bank_acount.bank_id)
@@ -183,10 +254,6 @@ class CustomerPaymentsController < ApplicationController
      $lcAprobado= @customerpayment.get_processed 
 
 
-    $lcEntrega1 =  "PAGUESE A NOMBRE :"+$lcCli 
-    $lcEntrega2 =  $lcCli
-    $lcEntrega3 =  "NOMBRE DEL PROVEEDOR: "
-    $lcEntrega4 =  $lcCli
     $lcEntrega5 =  "FECHA COMPRO:"
     $lcEntrega6 =  $lcFecha1
 
@@ -478,6 +545,7 @@ class CustomerPaymentsController < ApplicationController
     @bank_acounts = @company.get_bank_acounts()        
     @monedas  = @company.get_monedas()
     @documents  = @company.get_documents()
+    @concepts = Concept.all 
 
     @customerpayment.processed='1'
         

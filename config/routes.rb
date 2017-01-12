@@ -77,6 +77,11 @@ Mnygo::Application.routes.draw do
   resources :facturas do
     collection { get :generar  }
     collection { post :import }
+
+    collection do 
+      put :discontinue 
+    end 
+    
   end 
   resources :stores  do 
     collection { post :search }    
@@ -395,6 +400,8 @@ match 'receiveorders/ac_products/:company_id' => 'receiveorders#ac_products', vi
   match 'customer_payments/ac_user/:company_id' => 'customer_payments#ac_user', via: [:get, :post]
   match 'customer_payments/ac_customers/:company_id' => 'customer_payments#ac_customers', via: [:get, :post]
   match 'customer_payments/new/:company_id' => 'customer_payments#new', via: [:get, :post]  
+  match 'customer_payments/new1/:company_id' => 'customer_payments#new1', via: [:get, :post]  
+  match 'companies/customer_payments/registrar/:company_id' => 'customer_payments#registrar', via: [:get, :post]
 
   match 'customer_payments/do_email/:id' => 'customer_payments#do_email', via: [:get, :post]
   match 'customer_payments/do_process/:id' => 'customer_payments#do_process', via: [:get, :post]

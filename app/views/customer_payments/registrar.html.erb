@@ -1,0 +1,101 @@
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+
+<%= hr() %>
+  
+   <p class="bold big"> Seleccionar Facturas 
+   </p>
+  
+ <% if @mines %>
+
+ 	<table class="search-results-table col-md-12">
+		<tbody>
+
+  	<tr>
+
+  	<td><strong>Cliente:</strong> <%= @mines.customer.name %></td>
+  	<td><strong>RUC:</strong> <%= @mines.customer.ruc %></td>
+
+
+    <div class="field">
+      <strong> Concepto de Cobranza  :</strong><br />    
+      
+      <%= select_tag(:concept_id,options_from_collection_for_select(@concepts,'id','descrip')) %>
+
+    </div>
+
+  
+    <div class="field">
+      <strong>Documento :</strong><br />          
+  <%= select_tag(:document_id,options_from_collection_for_select(@documents,'id','description'))%>
+    </div>
+
+    <div class="field">          
+      <input type="text" name="ac_documento" id="ac_documento" value="" class="tf_short" />
+    </div>
+
+
+    </tr>
+
+
+<% else %>
+	<span class='label label-primary'>
+	Cliente no existe con los datos ingresados
+	</span>
+<% end %>
+
+</tbody>
+
+</table> 
+
+
+
+<%= form_tag discontinue_facturas_path, method: :put do %>
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Check</th>
+      <th>Code</th>
+      <th>Cliente  </th>
+      <th>Saldo Pendiente  </th>
+      <th>Importe Cancelar  </th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @guias.each do |f| %>
+      <tr>
+      
+        <td><%= check_box_tag "products_ids[]",  f.id  %></td>
+        <td><%= f.code %></td>
+        <td><%= f.customer.name %></td>
+        <td><%= f.balance %></td>         
+        <td>       
+    <input type="text" name="pago" id="pago" value = "" class="tf_short" /></td>
+
+    </div>
+    
+
+    
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= submit_tag "Registrar.. " %>
+
+<% end %>
+<%= br() %>
+
+
+
+
+<div class="button">
+  <%= link_to 'Back', "/companies/customer_payments/#{@company.id}" %>
+</div>
+
+ 
+</div>
+
