@@ -9,8 +9,6 @@ class CustomerPaymentsController < ApplicationController
   before_filter :authenticate_user!, :checkServices
 
 
-
-
   def new1
 
     @company = Company.find(params[:company_id])
@@ -143,8 +141,9 @@ class CustomerPaymentsController < ApplicationController
             row << product.fecha.strftime("%d%m%Y")            
             row << product.code
             row << product.get_customer(product.customer_id)
-            row << "" 
+            row << product.get_banco(product.bank_acount_id)
             row << product.total.to_s
+
 
             table_content << row
             nroitem=nroitem + 1

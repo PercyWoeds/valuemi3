@@ -171,7 +171,7 @@ self.per_page = 20
 
   def get_payments    
  @itemproducts = CustomerPaymentDetail.find_by_sql(['Select customer_payment_details.total,
-      facturas.code,facturas.customer_id,facturas.fecha  from customer_payment_details   
+      facturas.code,facturas.customer_id,facturas.fecha,facturas.bank_acount_id  from customer_payment_details   
       INNER JOIN facturas ON   customer_payment_details.factura_id = facturas.id
       WHERE  customer_payment_details.customer_payment_id = ?', self.id ])
 
