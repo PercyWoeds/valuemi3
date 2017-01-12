@@ -159,6 +159,7 @@ class CustomerPaymentsController < ApplicationController
                                           columns([2]).align=:left
                                           columns([3]).align=:left 
                                           columns([4]).align=:right 
+                                          columns([5]).align=:right 
                                         end
 
       pdf.move_down 10  
