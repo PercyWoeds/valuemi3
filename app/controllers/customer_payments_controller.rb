@@ -96,7 +96,7 @@ class CustomerPaymentsController < ApplicationController
         pdf.move_down 15
         pdf.font "Helvetica", :style => :bold do
           pdf.text "R.U.C: 20424092941", :align => :center
-          pdf.text "COMPROBANTE DE PAGO", :align => :center
+          pdf.text "LIQUIDACION DE PAGO", :align => :center
           pdf.text "#{@customerpayment.code}", :align => :center,
                                  :style => :bold
           
@@ -110,17 +110,8 @@ class CustomerPaymentsController < ApplicationController
     
     pdf.text "__________________________________________________________________________", :size => 13, :spacing => 4
     pdf.text " ", :size => 13, :spacing => 4
-    pdf.font "Helvetica" , :size => 8
-
-    
-          data =[  [$lcEntrega1,""],
-               [$lcEntrega3,$lcEntrega5],
-               [$lcEntrega4,$lcEntrega6]]
-
-           
-            pdf.text " "
-            pdf.table(data,:cell_style=> {:border_width=>0,:width=> 270,:height => 20 })
-            pdf.move_down 10          
+    pdf.font "Helvetica" , :size => 8        
+    pdf.text $lcEntrega5 << " " << $lcEntrega6
           
 
 
@@ -142,15 +133,15 @@ class CustomerPaymentsController < ApplicationController
       row<< @customerpayment.get_document(@customerpayment.document_id)    
 
       row<< @customerpayment.documento    
-
-      
+      row<< " "
+      row<< " "
       row<< @customerpayment.total.to_s    
       table_content << row     
 
        for  product in @customerpayment.get_payments() 
             row = []
             row << nroitem.to_s          
-            row << ""
+            row << product.fecha            
             row << product.code
             row << product.get_customer(product.customer_id)
             row << "" 
@@ -213,16 +204,6 @@ class CustomerPaymentsController < ApplicationController
    
         
         
-        pdf.table invoice_summary, {
-        :position => :right,
-        :cell_style => {:border_width => 1},
-        :width => pdf.bounds.width/2
-        } do
-        columns([0]).font_style = :bold
-        columns([1]).align = :right        
-        end
-    
-
         pdf.bounding_box([0, 20], :width => 538, :height => 50) do        
         pdf.draw_text "Company: #{@customerpayment.company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom ]
 
