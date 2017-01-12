@@ -1042,9 +1042,9 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
 
     @facturas_rpt = @company.get_pendientes_day_cliente(@fecha1,@fecha2,@cliente)  
 
-    respond_to do |format|    
-      format.xls # { send_data @products.to_csv(col_sep: "\t") }
-    end
+#    respond_to do |format|    
+#      format.xls # { send_data @products.to_csv(col_sep: "\t") }
+#    end
 
 
     if @facturas_rpt.size > 0 
