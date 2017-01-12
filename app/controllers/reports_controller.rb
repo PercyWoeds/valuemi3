@@ -963,6 +963,7 @@ def rpt_purchases_all
     @pagetitle = "Facturas "    
     @customers = @company.get_customers()
 
+
   end
   
   def reports_cventas

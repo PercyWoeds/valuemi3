@@ -114,7 +114,6 @@ class CustomerPaymentsController < ApplicationController
     pdf.text $lcEntrega5 << " " << $lcEntrega6
           
 
-
       headers = []
       table_content = []
 
@@ -131,7 +130,6 @@ class CustomerPaymentsController < ApplicationController
       row=[]
       row<< "0"
       row<< @customerpayment.get_document(@customerpayment.document_id)    
-
       row<< @customerpayment.documento    
       row<< " "
       row<< " "
@@ -141,7 +139,7 @@ class CustomerPaymentsController < ApplicationController
        for  product in @customerpayment.get_payments() 
             row = []
             row << nroitem.to_s          
-            row << product.fecha            
+            row << product.fecha        
             row << product.code
             row << product.get_customer(product.customer_id)
             row << "" 
@@ -151,8 +149,6 @@ class CustomerPaymentsController < ApplicationController
             nroitem=nroitem + 1
       
         end
-
-
 
       result = pdf.table table_content, {:position => :center,
                                         :header => true,
@@ -201,8 +197,7 @@ class CustomerPaymentsController < ApplicationController
             pdf.text " "
             pdf.table(data,:cell_style=> {:border_width=>1} , :width => pdf.bounds.width)
             pdf.move_down 10          
-   
-        
+          
         
         pdf.bounding_box([0, 20], :width => 538, :height => 50) do        
         pdf.draw_text "Company: #{@customerpayment.company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom ]
@@ -244,7 +239,7 @@ class CustomerPaymentsController < ApplicationController
         pdf = build_pdf_header(pdf)
         pdf = build_pdf_body(pdf)
         build_pdf_footer(pdf)
-        $lcFileName =  "app/pdf_output/#{@customerpayment.id}.pdf"      
+         $lcFileName =  "app/pdf_output/#{@customerpayment.id}.pdf"      
         
     end     
 
