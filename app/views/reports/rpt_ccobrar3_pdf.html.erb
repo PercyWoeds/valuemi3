@@ -39,5 +39,7 @@ totals = []
 
 
 <div class="button">
+  <%= link_to "Excel", products_path(format: "xls") %>
+  
   <%= link_to 'Back', "/companies/ccobrar/#{@company.id}" %>
 </div>

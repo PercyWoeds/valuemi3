@@ -119,15 +119,15 @@ self.per_page = 20
                                   :factura_id => factura.id, :total => balance.to_f )
           new_factura.save
 
-          if factura.payment == nil
-             factura.payment =0 
+          if factura.charge== nil
+             factura.charge =0 
           end 
           if factura.balance == nil
              factura.balance =0 
           end 
 
           if factura.pago == nil
-             factura.pago =0 
+             factura.pago = 0 
           end 
          
 
