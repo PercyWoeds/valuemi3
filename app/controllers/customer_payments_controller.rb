@@ -113,7 +113,6 @@ class CustomerPaymentsController < ApplicationController
     pdf.font "Helvetica" , :size => 8        
     pdf.text $lcEntrega5 << " " << $lcEntrega6
           
-
       headers = []
       table_content = []
 
@@ -133,13 +132,15 @@ class CustomerPaymentsController < ApplicationController
       row<< @customerpayment.documento    
       row<< " "
       row<< " "
-      row<< @customerpayment.total.to_s    
+      row<< @customerpayment.total.to_s 
+
       table_content << row     
+
 
        for  product in @customerpayment.get_payments() 
             row = []
             row << nroitem.to_s          
-            row << product.fecha        
+            row << ""    
             row << product.code
             row << product.get_customer(product.customer_id)
             row << "" 
@@ -149,11 +150,10 @@ class CustomerPaymentsController < ApplicationController
             nroitem=nroitem + 1
       
         end
-
       result = pdf.table table_content, {:position => :center,
                                         :header => true,
                                         :width => pdf.bounds.width
-                                          } do 
+                                        } do 
                                           columns([0]).align=:center
                                           columns([1]).align=:left 
                                           columns([2]).align=:left
