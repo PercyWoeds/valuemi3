@@ -94,7 +94,7 @@ class CustomerPaymentsController < ApplicationController
         pdf.move_down 15
         pdf.font "Helvetica", :style => :bold do
           pdf.text "R.U.C: 20424092941", :align => :center
-          pdf.text "LIQUIDACION DE PAGO", :align => :center
+          pdf.text "LIQUIDACION DE COBRANZA", :align => :center
           pdf.text "#{@customerpayment.code}", :align => :center,
                                  :style => :bold
           
@@ -138,10 +138,10 @@ class CustomerPaymentsController < ApplicationController
        for  product in @customerpayment.get_payments() 
             row = []
             row << nroitem.to_s          
-            row << product.fecha.strftime("%d%m%Y")            
+            row << product.fecha            
             row << product.code
             row << product.get_customer(product.customer_id)
-            row << product.get_banco(product.bank_acount_id)
+            row << product.factory.to_s
             row << product.total.to_s
 
 
@@ -173,7 +173,8 @@ class CustomerPaymentsController < ApplicationController
    $lcBanco =@customerpayment.get_banco(@customerpayment.bank_acount.bank_id)  
    $lcCheque =@customerpayment.get_document(@customerpayment.document_id)+ "-"+@customerpayment.documento    
       
-   
+      pdf.text "Factory : "+ money(@customerpayment.get_customer_payment_value("factory"))
+
       data =[  ["BANCO","NRO.CUENTA","OPERACION :","GIRADO :","MONEDA : ","T/C."],
                [$lcBanco,$lcAccount,$lcCheque,$lcFecha1,$lcMon,"0.00"]]
 
@@ -188,7 +189,7 @@ class CustomerPaymentsController < ApplicationController
         pdf.text "CONCEPTO : #{@customerpayment.descrip}", :size => 8, :spacing => 4
 
         
-       data =[ ["Procesado por ","V.B.Contador","V.B.Gerente Fin.","V.B. Gerente Gral."],
+       data =[ ["Procesado por ","V.B.Contador","V.B.Administracion ","V.B. Gerente Gral."],
                [":",":",":",":"],
                [":",":",":",":"],
                ["Fecha:","Fecha:","Fecha:","Fecha:"] ]
@@ -216,10 +217,7 @@ class CustomerPaymentsController < ApplicationController
     company =@customerpayment.company_id
     @company =Company.find(company)
   
-
-
-
-     
+    
      $lcFecha1= @customerpayment.fecha1.strftime("%d/%m/%Y") 
      $lcMon   = @customerpayment.get_moneda(@customerpayment.bank_acount.bank_id)
      $lcPay= ""
@@ -301,7 +299,6 @@ class CustomerPaymentsController < ApplicationController
     @total_pago=0
     @diferencia_pago=0
     @importe_total=0
-
     
 
     i = 0
@@ -310,14 +307,20 @@ class CustomerPaymentsController < ApplicationController
       if item != ""
         parts = item.split("|BRK|")        
         id = parts[0]        
+        cantidad = parts[1]       
+        price = parts[2]         
 
-        price = parts[1]                
+
         product = Factura.find(id.to_i)
         product[:tax] = i        
         product[:subtotal] = price.to_f
-        total = product[:subtotal]
+        product[:pago] =cantidad.to_f
+
+        factory = product[:pago]
+        total   = product[:subtotal]
 
         product[:total] = total
+
         @total_pago = @total_pago + total       
 
         @products.push(product)
@@ -456,7 +459,7 @@ class CustomerPaymentsController < ApplicationController
     @monedas  = @company.get_monedas()
     @documents  = @company.get_documents()
 
-
+        
   end
 
   # GET /customerpayments/new
@@ -535,6 +538,7 @@ class CustomerPaymentsController < ApplicationController
         
         # Check if we gotta process the customerpayment
         @customerpayment.process()
+        @customerpayment.correlativo()              
         
         format.html { redirect_to(@customerpayment, :notice => 'customerpayment was successfully created.') }
         format.xml  { render :xml => @customerpayment, :status => :created, :location => @customerpayment }

@@ -81,7 +81,7 @@
         Operacion
       </th>
       <th>
-        Op.Telecredito  
+        Factory  
       </th>
 
       <th>
@@ -116,7 +116,6 @@
       </tr>
     
 
-
     <% for productItem in @customerpayment.get_payments() %>
       <tr>
         <td class="bordered_bottom bordered_right">
@@ -129,11 +128,11 @@
         </td>
 
         <td class="bordered_bottom bordered_right">
-          <%=  productItem.get_customer(productItem.customer_id)   %>
+          <%=  productItem.get_customer(productItem.customer_id) %>
         </td>
         
          <td class="bordered_bottom bordered_right">
-
+       <%=  productItem.factory   %>
         </td>
 
         <td class="bordered_bottom bordered_right">
@@ -145,6 +144,14 @@
     <tr>
       <td colspan="5" class="bordered_bottom bordered_right">
         &nbsp;
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4" class="bordered_bottom bordered_right bold">
+        Factory:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@customerpayment.get_customer_payment_value("factory")) %>
       </td>
     </tr>
 

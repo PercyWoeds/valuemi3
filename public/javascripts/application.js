@@ -1183,15 +1183,19 @@
       var importe_cheque = $("#customer_payment_total").val();
       var item_total = 0
       var item_id = $("#ac_item_id").val();      
+      var factory = $("#ac_item_factory").val();      
       var price = $("#ac_item_total").val();   
 
       var items_arr = $("#items").val().split(",");
 
-      if (price == "" || !isNumeric(price)) {
+      if(factory == "" || !isNumeric(factory)) {
+        alert("Por favor ingrese una cantidad validad");
+      }     
+      else if  (price == "" || !isNumeric(price)) {
         alert("Por favor ingrese un precio valido  ");
       } 
       else {
-        var item_line = item_id + "|BRK|" + price + "|BRK|";
+        var item_line = item_id + "|BRK|" + factory + "|BRK|"+ price + "|BRK|";
         
         $("#items").val($("#items").val() + "," + item_line);
         
@@ -1200,7 +1204,8 @@
         $("#ac_item_id").val("");
         $("#ac_item").val("");
         $("#ac_item_total").val("");
-    
+        $("#ac_item_factory").val("");
+
         updateItemTotalCP();
       }
     } else {

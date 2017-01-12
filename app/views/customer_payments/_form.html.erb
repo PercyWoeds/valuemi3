@@ -30,14 +30,10 @@
           <%= f.text_field :code, :onclick => "$(this).select();" %>
         </div>
     
+  
     <div class="field">
-      <%= f.label :bank_acount_id %><br />
+      <%= f.label  :bank_acount_id,"Banco:  " , :class => "bold"%><br />
       <%= f.select :bank_acount_id,options_from_collection_for_select(@bank_acounts,'id','number') %>
-    </div>
-
-    <div class="field">
-      <%= f.label  :concept_id,"Concepto de Cobranza :  " , :class => "bold"%><br />
-      <%= f.select :concept_id,options_from_collection_for_select(@concepts,'id','descrip') %>
 
     </div>
     
@@ -113,10 +109,7 @@
   </h5>
   
 
-  <form method="get" action="/purchases" onsubmit="addItemToCustomerPayment(); return false;">     <input type="hidden" name="ac_item_id" id="ac_item_id" value="" />
-
-    
-
+  <form method="get" action="/purchases" onsubmit="addItemToCustomerPayment(); return false;">     <input type="hidden" name="ac_item_id" id="ac_item_id" value="" />  
 
     <strong>Documento :</strong><br />
     <input type="text" name="ac_item" id="ac_item" value="" />
@@ -124,20 +117,26 @@
       Ingrese un termino de busqueda para encontrar un documento 
     </div>
     <br />  
-    
-    <strong>Importe:</strong><br />
-    <span id="ac_item_price"></span>
 
-    <div class="small">
-      Total
-    </div>
-    <br />
-    
-    <div>
+
+  
+    <div >
       <strong>Total:</strong><br />    
     <input type="text" name="ac_item_total" id="ac_item_total" value="0 " class="tf_short" />
+    </div>
+
+    <div >
+     <strong>Factory :</strong><br />
+
+    <input type="text" name="ac_item_factory" id="ac_item_factory" value="0" class="tf_short" />
 
     </div>
+
+    <div class="small">
+     Cantidad del producto para agregar una guia.
+    </div>
+    <br />
+
     
     <br />
     <input type="submit" value="Agregar item a Factura" />
