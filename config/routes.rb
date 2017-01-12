@@ -242,6 +242,7 @@ Mnygo::Application.routes.draw do
   match 'facturas/export2/:company_id' => 'facturas#export2', via: [:get, :post]
   match 'facturas/rpt_facturas_all/:company_id' => 'facturas#rpt_facturas_all_pdf', via: [:get, :post]
   match 'facturas/rpt_ccobrar2_pdf/:company_id' => 'facturas#rpt_ccobrar2_pdf', via: [:get, :post]
+  match 'facturas/rpt_ccobrar3_pdf/:company_id' => 'facturas#rpt_ccobrar3_pdf', via: [:get, :post]
 
   match 'companies/facturas/generar/:company_id' => 'facturas#generar', via: [:get, :post]
   #match 'serviceorders/rpt_serviceorder_all_pdf/:id' => 'serviceorders#rpt_serviceorder_all_pdf', via: [:get, :post]

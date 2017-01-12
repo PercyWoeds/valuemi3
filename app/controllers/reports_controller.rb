@@ -961,7 +961,7 @@ def rpt_purchases_all
   def rpt_ccobrar3_pdf
     @company = Company.find(params[:company_id])    
     @pagetitle = "Facturas "    
-    @customers = Customer.where(:company_id=>@company.id)
+    @customers = @company.get_customers()
 
   end
   

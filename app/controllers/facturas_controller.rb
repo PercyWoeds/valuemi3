@@ -782,6 +782,8 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
 
       lcDoc='FT'
 
+      
+
        lcCliente = @facturas_rpt.first.customer_id 
 
        for  product in @facturas_rpt
@@ -834,7 +836,7 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
             row << ""
             row << sprintf("%.2f",total_cliente_dolares.to_s)
             row << sprintf("%.2f",total_cliente_soles.to_s)
-            
+            row << " "
             
             table_content << row
 
@@ -887,7 +889,7 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
             row << ""
             row << sprintf("%.2f",total_cliente_dolares.to_s)
             row << sprintf("%.2f",total_cliente_soles.to_s)                      
-
+            row << " "
             table_content << row
         
 
@@ -895,6 +897,7 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
           total_soles = @company.get_pendientes_day_value(@fecha1,@fecha2, "total",lcmonedasoles)
           total_dolares = @company.get_pendientes_day_value(@fecha1,@fecha2, "total",lcmonedadolares)
       
+           if $lcxCliente == "0" 
 
           row =[]
           row << ""
@@ -904,13 +907,11 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
           row << "TOTALES => "
           row << ""
           row << sprintf("%.2f",total_soles.to_s)
-          row << sprintf("%.2f",total_dolares.to_s)
-          
-          
-          
-          row << ""
+          row << sprintf("%.2f",total_dolares.to_s)                    
+          row << " "
           table_content << row
-      
+          end 
+
           result = pdf.table table_content, {:position => :center,
                                         :header => true,
                                         :width => pdf.bounds.width
@@ -925,6 +926,7 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
                                           columns([7]).align=:right
                                           columns([8]).align=:right
                                         end                                          
+                                        
       pdf.move_down 10      
 
       #totales 
@@ -957,6 +959,8 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
     
 
     @facturas_rpt = @company.get_facturas_day(@fecha1,@fecha2)  
+
+
       
     Prawn::Document.generate("app/pdf_output/rpt_factura.pdf") do |pdf|
         pdf.font "Helvetica"
@@ -974,6 +978,7 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
 
   ###pendientes de pago 
   def rpt_ccobrar2_pdf
+    $lcxCliente ="0"
     @company=Company.find(params[:company_id])      
     
       @fecha1 = params[:fecha1]
@@ -995,6 +1000,44 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
     $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
     send_file("app/pdf_output/rpt_pendientes.pdf", :type => 'application/pdf', :disposition => 'inline')
   
+
+  end
+  
+  ###pendientes de pago 
+  def rpt_ccobrar3_pdf
+
+    $lcxCliente ="1"
+
+    @company=Company.find(params[:company_id])      
+    
+      @fecha1 = params[:fecha1]
+    
+      @fecha2 = params[:fecha2]
+
+      @cliente = params[:customer_id]
+      
+      puts @cliente 
+
+
+    @facturas_rpt = @company.get_pendientes_day_cliente(@fecha1,@fecha2,@cliente)  
+
+    if @facturas_rpt.size > 0 
+
+    Prawn::Document.generate("app/pdf_output/rpt_pendientes.pdf") do |pdf|
+        pdf.font "Helvetica"
+        pdf = build_pdf_header_rpt2(pdf)
+        pdf = build_pdf_body_rpt2(pdf)
+        build_pdf_footer_rpt2(pdf)
+
+        $lcFileName =  "app/pdf_output/rpt_pendientes.pdf"              
+    end     
+
+
+
+    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
+    send_file("app/pdf_output/rpt_pendientes.pdf", :type => 'application/pdf', :disposition => 'inline')
+
+    end 
 
   end
   
