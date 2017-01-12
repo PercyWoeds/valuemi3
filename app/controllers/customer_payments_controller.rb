@@ -140,9 +140,10 @@ class CustomerPaymentsController < ApplicationController
       row=[]
       row<< "0"
       row<< @customerpayment.get_document(@customerpayment.document_id)    
+
       row<< @customerpayment.documento    
-      row<< @customerpayment.nrooperacion 
-      row<< @customerpayment.operacion   
+
+      
       row<< @customerpayment.total.to_s    
       table_content << row     
 
