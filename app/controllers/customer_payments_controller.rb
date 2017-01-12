@@ -150,7 +150,7 @@ class CustomerPaymentsController < ApplicationController
             row = []
             row << nroitem.to_s          
             row << ""
-            row << product.documento    
+            row << product.code
             row << product.get_customer(product.customer_id)
             row << "" 
             row << product.total.to_s
