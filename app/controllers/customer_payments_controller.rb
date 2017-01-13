@@ -138,12 +138,11 @@ class CustomerPaymentsController < ApplicationController
        for  product in @customerpayment.get_payments() 
             row = []
             row << nroitem.to_s          
-            row << product.fecha            
+            row << " "            
             row << product.code
             row << product.get_customer(product.customer_id)
             row << product.factory.to_s
             row << product.total.to_s
-
 
             table_content << row
             nroitem=nroitem + 1
@@ -305,6 +304,8 @@ class CustomerPaymentsController < ApplicationController
 
     for item in items
       if item != ""
+ 
+        
         parts = item.split("|BRK|")        
         id = parts[0]        
         cantidad = parts[1]       
