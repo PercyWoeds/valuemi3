@@ -130,6 +130,22 @@
       Ingrese un termino de busqueda para encontrar un producto.
     </div>
     <br />
+
+    <% if ( @servicebuys(:ac_item_id).get_name == "TEXTO") %>
+
+      <input type="text" name="ac_item_texto" id="ac_item_texto" value="1" class="tf_short" />
+      <div class="small">
+       Detalle del servicio 
+      </div>
+      <br />
+
+    <% else %>
+
+      <%= ac_item_texto = " " %>
+
+    <% end  %>
+
+
     
     <strong>Precio:</strong><br />
     <input type="text" name="ac_item_price" id="ac_item_price" value="" class="tf_short" />

@@ -13,6 +13,12 @@ class Servicebuy < ActiveRecord::Base
   has_many :purchase_details
   
 
-  
+  def get_name(id)
+
+  	servicio = Servicebuy.find(id)	
+
+  	return servicio 
+
+  end 
   
 end

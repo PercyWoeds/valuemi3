@@ -105,8 +105,7 @@ class CustomerPaymentsController < ApplicationController
   end   
 
   def build_pdf_body(pdf)
-    
-    pdf.text "__________________________________________________________________________", :size => 13, :spacing => 4
+  
     pdf.text " ", :size => 13, :spacing => 4
     pdf.font "Helvetica" , :size => 8        
     pdf.text $lcEntrega5 << " " << $lcEntrega6
@@ -125,7 +124,7 @@ class CustomerPaymentsController < ApplicationController
       nroitem=1
 
       row=[]
-      row<< "0"
+      row<< " "
       row<< @customerpayment.get_document(@customerpayment.document_id)    
       row<< @customerpayment.documento    
       row<< " " 
@@ -177,7 +176,8 @@ class CustomerPaymentsController < ApplicationController
    $lcFactory  = @customerpayment.get_customer_payment_value("factory").round(2).to_s  
 
       data0 = [[" "," "," "," ","TOTALES DEPOSITO => ",$lcDeposito ],
-               [" "," "," "," ","TOTALES FACTORY => ",$lcFactory]]
+               [" "," "," "," ","COMISION FACTORY => ",$lcFactory],
+               [" "," "," "," ","AJUSTE REDONDEDO => ","0.00"] ]
 
       data =[  ["BANCO","NRO.CUENTA","OPERACION :","GIRADO :","MONEDA : ","T/C."],
                [$lcBanco,$lcAccount,$lcCheque,$lcFecha1,$lcMon,"0.00"]]
@@ -235,7 +235,7 @@ class CustomerPaymentsController < ApplicationController
      $lcAprobado= @customerpayment.get_processed 
 
 
-    $lcEntrega5 =  "FECHA COMPRO:"
+    $lcEntrega5 =  "FECHA :"
     $lcEntrega6 =  $lcFecha1
 
     Prawn::Document.generate("app/pdf_output/#{@customerpayment.id}.pdf") do |pdf|
