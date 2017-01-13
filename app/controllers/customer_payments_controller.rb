@@ -79,7 +79,7 @@ class CustomerPaymentsController < ApplicationController
   def build_pdf_header(pdf)
 
     
-      pdf.image "#{Dir.pwd}/public/images/logo.png", :width => 270
+      pdf.image "#{Dir.pwd}/public/images/logo2.png", :width => 270
         
       pdf.move_down 6
         
@@ -176,20 +176,22 @@ class CustomerPaymentsController < ApplicationController
    $lcDeposito = @customerpayment.get_customer_payment_value("total").to_s
    $lcFactory  = @customerpayment.get_customer_payment_value("factory").to_s  
 
-      data0 = [[" "," ","TOTALES DEPOSITO => "," ","",$lcDeposito],
-                [" "," ","TOTALES FACTORY => "," ",$lcFactory,""]]
+      data0 = [[" "," "," "," ","TOTALES DEPOSITO => ",$lcDeposito ],
+               [" "," "," "," ","TOTALES FACTORY => ",$lcFactory]]
 
       data =[  ["BANCO","NRO.CUENTA","OPERACION :","GIRADO :","MONEDA : ","T/C."],
                [$lcBanco,$lcAccount,$lcCheque,$lcFecha1,$lcMon,"0.00"]]
 
-            pdf.move_down 100
-            pdf.text " "
-            pdf.table(data0,:cell_style=> {:border_width=>1, :width=> 90,:height => 20 })
-            pdf.text " "
+        pdf.move_down 100
+            
+        pdf.move_down 150
+        pdf.text " "
+        pdf.table(data0,:cell_style=> {:border_width=>0, :width=> 90,:height => 20 })
+            
+        pdf.text " "
             pdf.table(data,:cell_style=> {:border_width=>1, :width=> 90,:height => 20 })
             pdf.move_down 10          
           
-        
         pdf.text ""
         pdf.text "" 
         pdf.text "CONCEPTO : #{@customerpayment.descrip}", :size => 8, :spacing => 4
@@ -204,8 +206,7 @@ class CustomerPaymentsController < ApplicationController
             pdf.text " "
             pdf.table(data,:cell_style=> {:border_width=>1} , :width => pdf.bounds.width)
             pdf.move_down 10          
-          
-        
+                  
         pdf.bounding_box([0, 20], :width => 538, :height => 50) do        
         pdf.draw_text "Company: #{@customerpayment.company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom ]
 

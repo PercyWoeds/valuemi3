@@ -25,7 +25,7 @@ def build_pdf_header(pdf)
      $lcDetracion=@purchaseorder.detraccion
      $lcAprobado= @purchaseorder.get_processed 
     
-      pdf.image "#{Dir.pwd}/public/images/logo.png", :width => 270
+      pdf.image "#{Dir.pwd}/public/images/logo2.png", :width => 270
         
       pdf.move_down 6
         
