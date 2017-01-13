@@ -225,7 +225,7 @@ class CustomerPaymentsController < ApplicationController
   
     
      $lcFecha1= @customerpayment.fecha1.strftime("%d/%m/%Y") 
-     $lcMon   = @customerpayment.get_moneda(@customerpayment.bank_acount.bank_id)
+     $lcMon   = @customerpayment.get_moneda(@customerpayment.bank_acount.moneda_id)
      $lcPay= ""
      $lcSubtotal=0
      $lcIgv=0
