@@ -173,8 +173,8 @@ class CustomerPaymentsController < ApplicationController
    $lcAccount= @customerpayment.bank_acount.number
    $lcBanco =@customerpayment.get_banco(@customerpayment.bank_acount.bank_id)  
    $lcCheque =@customerpayment.get_document(@customerpayment.document_id)+ "-"+@customerpayment.documento    
-   $lcDeposito = @customerpayment.get_customer_payment_value("total").to_s
-   $lcFactory  = @customerpayment.get_customer_payment_value("factory").to_s  
+   $lcDeposito = @customerpayment.get_customer_payment_value("total").round(2).to_s
+   $lcFactory  = @customerpayment.get_customer_payment_value("factory").round(2).to_s  
 
       data0 = [[" "," "," "," ","TOTALES DEPOSITO => ",$lcDeposito ],
                [" "," "," "," ","TOTALES FACTORY => ",$lcFactory]]
@@ -182,7 +182,6 @@ class CustomerPaymentsController < ApplicationController
       data =[  ["BANCO","NRO.CUENTA","OPERACION :","GIRADO :","MONEDA : ","T/C."],
                [$lcBanco,$lcAccount,$lcCheque,$lcFecha1,$lcMon,"0.00"]]
 
-        pdf.move_down 100
             
         pdf.move_down 150
         pdf.text " "
