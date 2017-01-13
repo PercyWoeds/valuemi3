@@ -128,10 +128,10 @@ class CustomerPaymentsController < ApplicationController
       row<< "0"
       row<< @customerpayment.get_document(@customerpayment.document_id)    
       row<< @customerpayment.documento    
-      row<< " "
+      row<< " " 
       row<< " "
       row<< @customerpayment.total.to_s 
-
+      $lcDeposito = @customerpayment.total.to_s 
       table_content << row     
 
 
@@ -173,7 +173,7 @@ class CustomerPaymentsController < ApplicationController
    $lcAccount= @customerpayment.bank_acount.number
    $lcBanco =@customerpayment.get_banco(@customerpayment.bank_acount.bank_id)  
    $lcCheque =@customerpayment.get_document(@customerpayment.document_id)+ "-"+@customerpayment.documento    
-   $lcDeposito = @customerpayment.get_customer_payment_value("total").round(2).to_s
+   
    $lcFactory  = @customerpayment.get_customer_payment_value("factory").round(2).to_s  
 
       data0 = [[" "," "," "," ","TOTALES DEPOSITO => ",$lcDeposito ],
