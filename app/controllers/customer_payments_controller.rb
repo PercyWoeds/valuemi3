@@ -145,9 +145,11 @@ class CustomerPaymentsController < ApplicationController
             row << product.total.to_s
 
             table_content << row
-            nroitem=nroitem + 1
-      
+            nroitem=nroitem + 1      
         end
+
+       
+
       result = pdf.table table_content, {:position => :center,
                                         :header => true,
                                         :width => pdf.bounds.width
@@ -171,18 +173,23 @@ class CustomerPaymentsController < ApplicationController
    $lcAccount= @customerpayment.bank_acount.number
    $lcBanco =@customerpayment.get_banco(@customerpayment.bank_acount.bank_id)  
    $lcCheque =@customerpayment.get_document(@customerpayment.document_id)+ "-"+@customerpayment.documento    
-      
-      pdf.text "Factory : "+ money(@customerpayment.get_customer_payment_value("factory"))
+   $lcDeposito = @customerpayment.get_customer_payment_value("total").to_s
+   $lcFactory  = @customerpayment.get_customer_payment_value("factory").to_s  
+
+      data0 = [[" "," ","TOTALES DEPOSITO => "," ","",$lcDeposito],
+                [" "," ","TOTALES FACTORY => "," ",$lcFactory,""]]
 
       data =[  ["BANCO","NRO.CUENTA","OPERACION :","GIRADO :","MONEDA : ","T/C."],
                [$lcBanco,$lcAccount,$lcCheque,$lcFecha1,$lcMon,"0.00"]]
 
             pdf.move_down 100
             pdf.text " "
+            pdf.table(data0,:cell_style=> {:border_width=>1, :width=> 90,:height => 20 })
+            pdf.text " "
             pdf.table(data,:cell_style=> {:border_width=>1, :width=> 90,:height => 20 })
             pdf.move_down 10          
           
-
+        
         pdf.text ""
         pdf.text "" 
         pdf.text "CONCEPTO : #{@customerpayment.descrip}", :size => 8, :spacing => 4

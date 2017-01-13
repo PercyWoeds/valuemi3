@@ -38,8 +38,8 @@ self.per_page = 20
     ret = 0
     
     for invoice in invoices
-      if(value == "subtotal")
-        ret = 0 
+      if(value == "total")
+        ret += invoice.total
       else
         ret += invoice.factory
       end
