@@ -33,6 +33,43 @@ self.per_page = 20
                      "PAGOS  ",
                       "SALDO  "]
 
+  TABLE_HEADERS2 = ["ITEM",
+                     "FECHA",
+                     "RECEP.",
+                     "VENCE",
+                     "",
+                     "",
+                     "DOCUMENTO",
+                     "PROVEEDOR",
+                     "IMPORTE  ",
+                     "CARGOS  ",
+                     "PAGOS  ",
+                      "SALDO  "]
+
+  TABLE_HEADERS3 = ["ITEM",
+                     "NRO.",
+                     "FECHA",
+                     "CUENTA",
+                     "BANCO/RUC ",
+                     "",
+                     "",
+                     "",                    
+                     "FACTORY  ",
+                     "IMPORTE  "]                      
+
+
+  TABLE_HEADERS4 = ["ITEM",
+                     "CONCEPTO",
+                     "IMPORTE  "]                      
+
+
+ def get_document_short(id)
+
+     documento = Document.find(id)
+     return documento.descripshort 
+
+
+ end                      
  def get_customer_payment_value(value)
     invoices = CustomerPaymentDetail.where(["customer_payment_id = ?", self.id])
     ret = 0
@@ -193,6 +230,21 @@ self.per_page = 20
 
     return @itemproducts
   end
+
+  def get_
+    
+  end
+
+  def get_payment_dato(id)    
+
+ @itemproducts = CustomerPaymentDetail.find_by_sql(['Select customer_payment_details.total,
+      facturas.code,facturas.customer_id,facturas.fecha,customer_payment_details.factory from customer_payment_details   
+      INNER JOIN facturas ON   customer_payment_details.factura_id = facturas.id
+      WHERE  customer_payment_details.customer_payment_id = ?', id ])
+
+    return @itemproducts
+  end
+  
   
   def get_payments_customer
     invoice_products = CustomerPaymentDetail.where(customer_payment_id:  self.id)                                                                                                                                                                                                                                                                                        

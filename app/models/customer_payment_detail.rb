@@ -5,12 +5,15 @@ class CustomerPaymentDetail < ActiveRecord::Base
   
   belongs_to :customer_payment_details	
   belongs_to :factura 
-   
+  belongs_to :document
+  belongs_to :customer 
+    
 
   def get_customer(id)
     a = Customer.find(id)
     return a.name 
   end 
+
 
   def get_customer_ruc(id)    
     a = Customer.find(id)

@@ -331,7 +331,6 @@ class Company < ActiveRecord::Base
     
  end 
 ## ESTADO DE CUENTA 
-
  def get_facturas_day(fecha1,fecha2)
 
     @facturas = Factura.where([" company_id = ? AND fecha >= ? and fecha<= ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59"]).order(:id )
@@ -357,8 +356,61 @@ class Company < ActiveRecord::Base
     end 
 
     return ret
+  
+ end 
+
+## REPORTES DE LIQUIDACION  DE COBRANZA
+
+ def get_customer_payments(fecha1,fecha2)
+
+    @facturas = CustomerPayment.where([" company_id = ? AND fecha1 >= ? and fecha1<= ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59"]).order(:id)
+    return @facturas
     
  end 
+
+ def get_customer_payments_value(fecha1,fecha2,id)
+
+    facturas = CustomerPayment.where([" company_id = ? AND fecha1 >= ? and fecha1 <= ? and bank_acount_id = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" , id]).order(:id)
+    ret = 0 
+    if facturas 
+    ret=0  
+      for factura in facturas      
+
+          ret += factura.total
+
+      end
+    end 
+
+    return ret
+   
+    
+ end 
+
+def get_customer_payments_detail_value(fecha1,fecha2,value="total")
+
+    facturas = CustomerPaymentDetail.where([" fecha1 >= ? and fecha1 <= ?", "#{fecha1} 00:00:00","#{fecha2} 23:59:59"]).order(:id)
+
+    if facturas
+    ret=0  
+    for factura in facturas      
+      if(value == "subtotal")
+        ret += factura.subtotal
+      elsif(value == "factory")
+        ret += factura.factory.round(2)
+      else         
+        ret += factura.total.round(2)
+      end
+    end
+    end 
+
+    return ret
+   
+    
+ end 
+
+
+ ## Pendientes 
+
  def get_pendientes_day(fecha1,fecha2)
 
     @facturas = Factura.where(["balance > 0  and  company_id = ? AND fecha >= ? and fecha<= ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59"]).order(:customer_id,:moneda_id,:fecha)

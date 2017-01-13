@@ -1031,14 +1031,9 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
 
     @company=Company.find(params[:company_id])      
     
-      @fecha1 = params[:fecha1]
-    
+      @fecha1 = params[:fecha1]    
       @fecha2 = params[:fecha2]
-
-      @cliente = params[:customer_id]
-      
-      puts @cliente 
-
+      @cliente = params[:customer_id]      
 
     @facturas_rpt = @company.get_pendientes_day_cliente(@fecha1,@fecha2,@cliente)  
 
@@ -1064,6 +1059,27 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
 
     end 
 
+  end
+  
+  ###pendientes de pago detalle
+
+  def rpt_ccobrar4_pdf
+      $lcxCliente ="0"
+      @company=Company.find(params[:company_id])          
+      @fecha1 = params[:fecha1]  
+      @fecha2 = params[:fecha2]  
+      @facturas_rpt = @company.get_pendientes_day(@fecha1,@fecha2)  
+      
+      Prawn::Document.generate("app/pdf_output/rpt_pendientes4.pdf") do |pdf|
+          pdf.font "Helvetica"
+          pdf = build_pdf_header_rpt4(pdf)
+          pdf = build_pdf_body_rpt4(pdf)
+          build_pdf_footer_rpt4(pdf)
+          $lcFileName =  "app/pdf_output/rpt_pendientes4.pdf"              
+      end     
+      $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
+      send_file("app/pdf_output/rpt_pendientes4.pdf", :type => 'application/pdf', :disposition => 'inline')
+  
   end
   
 
