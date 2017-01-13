@@ -196,7 +196,7 @@ class CustomerPaymentsController < ApplicationController
         pdf.text "CONCEPTO : #{@customerpayment.descrip}", :size => 8, :spacing => 4
 
         
-       data =[ ["Procesado por ","V.B.Contador","V.B.Administracion ","V.B. Gerente Gral."],
+       data =[ ["Procesado por ","V.B.Contador","V.B.Administracion ","V.B. Gerente ."],
                [":",":",":",":"],
                [":",":",":",":"],
                ["Fecha:","Fecha:","Fecha:","Fecha:"] ]
