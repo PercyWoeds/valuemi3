@@ -380,11 +380,34 @@ class Company < ActiveRecord::Base
 
       end
     end 
+    return ret    
+ end 
 
-    return ret
-   
+## REPORTE DE ESTADISTICAS DE PAGOS
+
+def get_customer_payments2(fecha1,fecha2)
+
+  #@facturas = Factura.find_by_sql("Select customer_id,strftime("%m", 'fecha2') AS 'month' ,strftime("%Y", 'fecha2') AS 'month',sum(balance) from facturas group by customer_id,strftime("%m", 'month') ,strftime("%Y", 'anio') ")    
+  return @facturas
     
  end 
+
+ def get_customer_payments_value2(fecha1,fecha2)
+
+ #   facturas = Factura.find_by_sql("Select customer_id,month(fecha2) as mes,year(fecha2) as anio from facturas group by month(fecha2),year(fecha2)")
+    ret = 0 
+    if facturas 
+    ret=0  
+      for factura in facturas      
+
+          ret += factura.total
+
+      end
+    end 
+    return ret    
+ end 
+
+
 
 def get_customer_payments_detail_value(fecha1,fecha2,value="total")
 
@@ -407,7 +430,19 @@ def get_customer_payments_detail_value(fecha1,fecha2,value="total")
    
     
  end 
+def actualizar_fecha2
 
+    facturas = Factura.where(:fecha2 => nil )
+
+    for factura in facturas
+        fact =  Factura.find(factura.id)
+        days = fact.payment.day 
+        fechas2 = factura.fecha + days.days           
+        fact.update_attributes(:fecha2=>fechas2)   
+    end 
+
+  end
+  
 
  ## Pendientes 
 
@@ -430,7 +465,7 @@ def get_customer_payments_detail_value(fecha1,fecha2,value="total")
       elsif(value == "tax")
         ret += factura.tax
       else         
-        ret += factura.total.round(2)
+        ret += factura.balance.round(2)
       end
     end
     end 
@@ -438,6 +473,14 @@ def get_customer_payments_detail_value(fecha1,fecha2,value="total")
     return ret
     
  end 
+
+ def get_facturas_day_cliente(fecha1,fecha2,cliente)
+
+    @facturas = Factura.where(["total> 0  and  company_id = ? AND fecha >= ? and fecha<= ? and customer_id = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", cliente ]).order(:customer_id,:moneda_id,:fecha)
+    return @facturas
+    
+ end 
+ 
 
  def get_pendientes_day_cliente(fecha1,fecha2,cliente)
 
@@ -480,7 +523,7 @@ def get_customer_payments_detail_value(fecha1,fecha2,value="total")
       elsif(value == "tax")
         ret += factura.tax
       else         
-        ret += factura.total.round(2)
+        ret += factura.balance.round(2)
       end
     end
     end 

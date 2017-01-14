@@ -197,7 +197,7 @@ class CustomerPaymentsController < ApplicationController
         pdf.text "CONCEPTO : #{@customerpayment.descrip}", :size => 8, :spacing => 4
 
         
-       data =[ ["Procesado por ","V.B.Contador","V.B.Administracion ","V.B. Gerente ."],
+       data =[ ["Procesado por Finanzas ","V.B.Contador","V.B.Administracion ","V.B. Gerente ."],
                [":",":",":",":"],
                [":",":",":",":"],
                ["Fecha:","Fecha:","Fecha:","Fecha:"] ]
@@ -961,8 +961,8 @@ class CustomerPaymentsController < ApplicationController
 
        end  
 
-      total_soles = total_factory
-    total_dolares = total_general
+      @total_soles = total_factory
+    @total_dolares = total_general
 
       row =[]
       row << ""
@@ -973,8 +973,8 @@ class CustomerPaymentsController < ApplicationController
       row << ""
       row << ""
       row << "TOTALES => "
-      row << sprintf("%.2f",total_soles.to_s)
-      row << sprintf("%.2f",total_dolares.to_s)                    
+      row << sprintf("%.2f",@total_soles.to_s)
+      row << sprintf("%.2f",@total_dolares.to_s)                    
       
       table_content << row
 
@@ -1047,6 +1047,12 @@ class CustomerPaymentsController < ApplicationController
 
         end
 
+        row = []
+        row << nroitem.to_s
+        row << "FACTORY"
+        row << sprintf("%.2f",@total_soles.to_s)
+
+        table_content2 << row
 
       result = pdf.table table_content2, {:position => :center,
                                         :header => true,
@@ -1054,7 +1060,7 @@ class CustomerPaymentsController < ApplicationController
                                         } do 
                                           columns([0]).align=:center
                                           columns([1]).align=:left
-                                          columns([2]).align=:left
+                                          columns([2]).align=:right 
                                         end                                          
             
         pdf.text "" 
@@ -1093,13 +1099,239 @@ class CustomerPaymentsController < ApplicationController
                 
     send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
   
+  end
 
+##-------------------------------------------------------------------------------------
+## REPORTE DE ESTADISTICA DE VENTAS
+##-------------------------------------------------------------------------------------
+  
+  def build_pdf_header_rpt2(pdf)
+      pdf.font "Helvetica" , :size => 6
+      
+
+     $lcCli  =  @company.name 
+     $lcdir1 = @company.address1+@company.address2+@company.city+@company.state
+
+     $lcFecha1= Date.today.strftime("%d/%m/%Y").to_s
+     $lcHora  = Time.now.to_s
+
+    max_rows = [client_data_headers.length, invoice_headers.length, 0].max
+      rows = []
+      (1..max_rows).each do |row|
+        rows_index = row - 1
+        rows[rows_index] = []
+        rows[rows_index] += (client_data_headers_rpt.length >= row ? client_data_headers_rpt[rows_index] : ['',''])
+        rows[rows_index] += (invoice_headers_rpt.length >= row ? invoice_headers_rpt[rows_index] : ['',''])
+      end
+
+      if rows.present?
+        pdf.table(rows, {
+          :position => :center,
+          :cell_style => {:border_width => 0},
+          :width => pdf.bounds.width
+        }) do
+          columns([0, 2]).font_style = :bold
+
+      end
+
+        pdf.move_down 10
+
+      end
+      
+      pdf 
+  end   
+
+  def build_pdf_body_rpt2(pdf)
+    
+    pdf.text "Listado de Cobranza Emitidas : Fecha "+@fecha1.to_s+ " Mes : "+@fecha2.to_s , :size => 11 
+    pdf.text ""
+    pdf.font "Helvetica" , :size => 6
+
+      headers = []
+      table_content = []
+      total_general = 0
+      total_factory = 0
+
+      CustomerPayment::TABLE_HEADERS3.each do |header|
+        cell = pdf.make_cell(:content => header)
+        cell.background_color = "FFFFCC"
+        headers << cell
+      end
+      table_content << headers
+      nroitem = 1
+
+       for  customerpayment_rpt in @customerpayment_rpt
+
+        @fechacobro = customerpayment_rpt.fecha1
+
+         row = []
+         row << nroitem.to_s
+         row << customerpayment_rpt.customer.name 
+
+         if customer_payment.anio < 2016
+          row << customerpayment_rpt.total 
+         end 
+        if customer_payment.anio > 2016
+            if mes = 1
+              row << customerpayment_rpt.total   
+            end
+            if mes = 2              
+              row << customerpayment_rpt.total   
+            end
+            if mes = 3             
+              row << customerpayment_rpt.total   
+            end
+
+            if mes = 4              
+              row << customerpayment_rpt.total   
+            end
+            if mes = 5              
+              row << customerpayment_rpt.total   
+            end
+            if mes = 6              
+              row << customerpayment_rpt.total   
+            end
+            if mes = 7              
+              row << customerpayment_rpt.total   
+            end
+            if mes = 8              
+              row << customerpayment_rpt.total   
+            end
+            if mes = 9              
+              row << customerpayment_rpt.total   
+            end
+            if mes = 10              
+              row << customerpayment_rpt.total   
+            end
+            if mes = 11             
+              row << customerpayment_rpt.total   
+            end
+            if mes = 12
+              row << customerpayment_rpt.total   
+            end
+         end 
+        if customer_payment.anio > 2017
+            if mes = 1
+              row << customerpayment_rpt.total   
+            end
+            if mes = 2              
+              row << customerpayment_rpt.total   
+            end
+            if mes = 3             
+              row << customerpayment_rpt.total   
+            end
+
+            if mes = 4              
+              row << customerpayment_rpt.total   
+            end
+            if mes = 5              
+              row << customerpayment_rpt.total   
+            end
+            if mes = 6              
+              row << customerpayment_rpt.total   
+            end
+            if mes = 7              
+              row << customerpayment_rpt.total   
+            end
+            if mes = 8              
+              row << customerpayment_rpt.total   
+            end
+            if mes = 9              
+              row << customerpayment_rpt.total   
+            end
+            if mes = 10              
+              row << customerpayment_rpt.total   
+            end
+            if mes = 11             
+              row << customerpayment_rpt.total   
+            end
+            if mes = 12
+              row << customerpayment_rpt.total   
+            end
+         end 
+
+
+
+        
+       end  
+
+
+
+      result = pdf.table table_content, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width
+                                        } do 
+                                          columns([0]).align=:center
+                                          columns([1]).align=:left
+                                          columns([2]).align=:left
+                                          columns([3]).align=:left
+                                          columns([4]).align=:left  
+                                          columns([5]).align=:left
+                                          columns([6]).align=:left
+                                          columns([7]).align=:left 
+                                          columns([8]).align=:right
+                                          columns([9]).align=:right
+                                          columns([10]).align=:right
+                                        end                                          
+      pdf.move_down 10      
+
+
+
+
+      pdf
+
+    end
+
+
+    def build_pdf_footer_rpt2(pdf)
+
+        subtotals = []
+        taxes = []
+        totals = []
+        services_subtotal = 0
+        services_tax = 0
+        services_total = 0
+
+        
+        
+        pdf.text "" 
+
+        pdf.bounding_box([0, 20], :width => 535, :height => 40) do
+        pdf.draw_text "Company: #{@company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
+
+      end
+
+      pdf
+      
   end
 
 
+  def rpt_ccobrar5_pdf
+
+    @company=Company.find(params[:id])      
+    @fecha1 = params[:fecha1]
+    @fecha2 = params[:fecha2]
+
+    @company.actualizar_fecha2
 
 
+    @customerpayment_rpt = @company.get_customer_payments2(@fecha1,@fecha2)  
+      
+    Prawn::Document.generate("app/pdf_output/rpt_customerpayment2.pdf") do |pdf|
+        pdf.font "Helvetica"        
+        pdf = build_pdf_header_rpt2(pdf)
+        pdf = build_pdf_body_rpt2(pdf)
+        build_pdf_footer_rpt2(pdf)
+        $lcFileName =  "app/pdf_output/rpt_customerpayment2.pdf"      
+        
+    end     
 
+    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
+                
+    send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
+  
+
+  end
 
 
   def client_data_headers_rpt

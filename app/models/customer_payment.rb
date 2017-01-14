@@ -183,7 +183,6 @@ self.per_page = 20
              factura.pago = 0 
           end 
          
-
           @last_payment = factura.pago + factura.balance.to_f.round(2) 
           @last_balance = factura.balance 
           @newbalance = @last_balance - balance.to_f.round(2) - factory.to_f.round(2) 

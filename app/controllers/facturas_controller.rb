@@ -25,7 +25,7 @@ class FacturasController < ApplicationController
   end   
 
 
-  
+
   def import
       Factura.import(params[:file])
        redirect_to root_url, notice: "Factura importadas."
@@ -815,9 +815,8 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
               fechas2 = product.fecha2 
              else 
               days = product.payment.day 
-              fechas2 = product.fecha + days.days  
-            
-            end 
+              fechas2 = product.fecha + days.days              
+             end 
 
             row = []          
             row << lcDoc
@@ -829,9 +828,9 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
 
             if product.moneda_id == 1 
                 row << "0.00 "
-                row << sprintf("%.2f",product.total.to_s)
+                row << sprintf("%.2f",product.balance.to_s)
             else
-                row << sprintf("%.2f",product.total.to_s)
+                row << sprintf("%.2f",product.balance.to_s)
                 row << "0.00 "
             end 
             row << product.observ
@@ -873,9 +872,9 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
 
             if product.moneda_id == 1 
                 row << "0.00 "
-                row << sprintf("%.2f",product.total.to_s)
+                row << sprintf("%.2f",product.balance.to_s)
             else
-                row << sprintf("%.2f",product.total.to_s)
+                row << sprintf("%.2f",product.balance.to_s)
                 row << "0.00 "
             end 
             row << product.observ
@@ -912,9 +911,7 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
             row << sprintf("%.2f",total_cliente_soles.to_s)                      
             row << " "
             table_content << row
-        
-
-      
+              
           total_soles = @company.get_pendientes_day_value(@fecha1,@fecha2, "total",lcmonedasoles)
           total_dolares = @company.get_pendientes_day_value(@fecha1,@fecha2, "total",lcmonedadolares)
       
@@ -962,27 +959,19 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
       pdf.bounding_box([0, 20], :width => 535, :height => 40) do
       pdf.draw_text "Company: #{@company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
 
-      end
+    end
 
-      pdf
+    pdf
       
   end
 
 
-
   # Export serviceorder to PDF
   def rpt_facturas_all_pdf
-    @company=Company.find(params[:company_id])      
-    
-      @fecha1 = params[:fecha1]
-    
-      @fecha2 = params[:fecha2]
-    
-
-    @facturas_rpt = @company.get_facturas_day(@fecha1,@fecha2)  
-
-
-      
+    @company=Company.find(params[:company_id])          
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]    
+    @facturas_rpt = @company.get_facturas_day(@fecha1,@fecha2)      
     Prawn::Document.generate("app/pdf_output/rpt_factura.pdf") do |pdf|
         pdf.font "Helvetica"
         pdf = build_pdf_header_rpt(pdf)
@@ -990,11 +979,28 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
         build_pdf_footer_rpt(pdf)
         $lcFileName =  "app/pdf_output/rpt_factura_all.pdf"              
     end     
-
     $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
     send_file("app/pdf_output/rpt_factura.pdf", :type => 'application/pdf', :disposition => 'inline')
-  
+  end
+# Export serviceorder to PDF
+  def rpt_facturas_all2_pdf
+    @company=Company.find(params[:company_id])          
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]    
+    @cliente = params[:customer_id]     
 
+    @facturas_rpt = @company.get_facturas_day_cliente(@fecha1,@fecha2,@cliente)  
+
+
+    Prawn::Document.generate("app/pdf_output/rpt_factura.pdf") do |pdf|
+        pdf.font "Helvetica"
+        pdf = build_pdf_header_rpt(pdf)
+        pdf = build_pdf_body_rpt(pdf)
+        build_pdf_footer_rpt(pdf)
+        $lcFileName =  "app/pdf_output/rpt_factura_all.pdf"              
+    end     
+    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
+    send_file("app/pdf_output/rpt_factura.pdf", :type => 'application/pdf', :disposition => 'inline')
   end
 
   ###pendientes de pago 
@@ -1028,18 +1034,11 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
   def rpt_ccobrar3_pdf
 
     $lcxCliente ="1"
-
     @company=Company.find(params[:company_id])      
-    
-      @fecha1 = params[:fecha1]    
-      @fecha2 = params[:fecha2]
-      @cliente = params[:customer_id]      
-
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]
+    @cliente = params[:customer_id]      
     @facturas_rpt = @company.get_pendientes_day_cliente(@fecha1,@fecha2,@cliente)  
-
-#    respond_to do |format|    
-#      format.xls # { send_data @products.to_csv(col_sep: "\t") }
-#    end
 
 
     if @facturas_rpt.size > 0 

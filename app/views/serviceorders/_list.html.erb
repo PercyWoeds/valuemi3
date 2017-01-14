@@ -53,7 +53,7 @@
           <%= link_to 'Eliminar', serviceorder, :confirm => 'Are you sure?', :method => :delete 
           %>
           <% elsif serviceorder.processed =="1"%>    
-          <%= "** Arpobado **" %>
+          <%= "** Aprobado **" %>
           <%= link_to 'Eliminar', serviceorder,:data=> {:confirm => 'Esta seguro ?'}, :method => :delete %>
           
           <% elsif serviceorder.processed =="2"%>  

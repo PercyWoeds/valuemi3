@@ -141,6 +141,7 @@ class Factura < ActiveRecord::Base
     
     return tax
   end
+
   
   def delete_products()
     invoice_services = InvoiceService.where(factura_id: self.id)
