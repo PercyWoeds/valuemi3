@@ -668,6 +668,8 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
        
         end
 
+
+
       subtotals = []
       taxes = []
       totals = []
@@ -675,7 +677,7 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
       services_tax = 0
       services_total = 0
 
-
+    if $lcFacturasall ='1'    
       subtotal = @company.get_facturas_day_value(@fecha1,@fecha2, "subtotal")
       subtotals.push(subtotal)
       services_subtotal += subtotal          
@@ -692,6 +694,26 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
       totals.push(total)
       services_total += total
       #pdf.text total.to_s
+
+    else
+        #total x cliente 
+      subtotal = @company.get_facturas_day_value_cliente(@fecha1,@fecha2, "subtotal")
+      subtotals.push(subtotal)
+      services_subtotal += subtotal          
+      #pdf.text subtotal.to_s
+    
+    
+      tax = @company.get_facturas_day_value_cliente(@fecha1,@fecha2, "tax")
+      taxes.push(tax)
+      services_tax += tax
+    
+      #pdf.text tax.to_s
+      
+      total = @company.get_facturas_day_value_cliente(@fecha1,@fecha2, "total")
+      totals.push(total)
+      services_total += total
+    
+    end
 
       row =[]
       row << ""
@@ -968,6 +990,9 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
 
   # Export serviceorder to PDF
   def rpt_facturas_all_pdf
+
+    $lcFacturasall = '1'
+
     @company=Company.find(params[:company_id])          
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]    
@@ -984,6 +1009,8 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
   end
 # Export serviceorder to PDF
   def rpt_facturas_all2_pdf
+
+    $lcFacturasall = '0'
     @company=Company.find(params[:company_id])          
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]    

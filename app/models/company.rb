@@ -358,6 +358,26 @@ class Company < ActiveRecord::Base
     return ret
   
  end 
+def get_facturas_day_value_cliente(fecha1,fecha2,value = "total",cliente)
+
+    facturas = Factura.where([" company_id = ? AND fecha >= ? and fecha<= ? and customer_id = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59",cliente ])
+    if facturas
+    ret=0  
+    for factura in facturas
+      
+      if(value == "subtotal")
+        ret += factura.subtotal
+      elsif(value == "tax")
+        ret += factura.tax
+      else         
+        ret += factura.total
+      end
+    end
+    end 
+
+    return ret
+  
+ end 
 
 ## REPORTES DE LIQUIDACION  DE COBRANZA
 
@@ -453,7 +473,7 @@ def actualizar_fecha2
     
  end 
  
- def get_pendientes_day_value(fecha1,fecha2,value = "total",moneda)
+ def get_pendientes_day_value(fecha1,fecha2,value = "balance",moneda)
 
     facturas = Factura.where(["balance>0  and  company_id = ? AND fecha >= ? and fecha<= ? and moneda_id = ? ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda ]).order(:customer_id,:moneda_id)
     if facturas
