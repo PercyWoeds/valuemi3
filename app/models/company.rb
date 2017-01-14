@@ -358,7 +358,7 @@ class Company < ActiveRecord::Base
     return ret
   
  end 
-def get_facturas_day_value_cliente(fecha1,fecha2,value = "total",cliente)
+def get_facturas_day_value_cliente(fecha1,fecha2,cliente,value = "total")
 
     facturas = Factura.where([" company_id = ? AND fecha >= ? and fecha<= ? and customer_id = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59",cliente ])
     if facturas
