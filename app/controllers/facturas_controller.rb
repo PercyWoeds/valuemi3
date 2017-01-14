@@ -677,7 +677,7 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
       services_tax = 0
       services_total = 0
 
-    if $lcFacturasall ='1'    
+    if $lcFacturasall == '1'    
       subtotal = @company.get_facturas_day_value(@fecha1,@fecha2, "subtotal")
       subtotals.push(subtotal)
       services_subtotal += subtotal          
