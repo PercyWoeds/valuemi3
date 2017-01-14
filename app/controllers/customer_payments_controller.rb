@@ -1026,16 +1026,14 @@ class CustomerPaymentsController < ApplicationController
         end
         table_content2 << headers2
         nroitem = 1
-
-
         
         @banks = BankAcount.all
-
-
 
         for banco in @banks
 
         total1 = @company.get_customer_payments_value(@fecha1,@fecha2,banco.id)  
+
+        if total1>0
                   
           row =[]
           row << nroitem.to_s
@@ -1043,24 +1041,22 @@ class CustomerPaymentsController < ApplicationController
           row << sprintf("%.2f",total1.to_s)
           
           nroitem = nroitem + 1
+
           table_content2 << row
+        end   
 
         end
 
 
       result = pdf.table table_content2, {:position => :center,
                                         :header => true,
-                                        :width => pdf.bounds.width
+                                        :width => 300
                                         } do 
                                           columns([0]).align=:center
                                           columns([1]).align=:left
                                           columns([2]).align=:left
                                         end                                          
-      
-
-
-
-        
+            
         pdf.text "" 
 
         pdf.bounding_box([0, 20], :width => 535, :height => 40) do
