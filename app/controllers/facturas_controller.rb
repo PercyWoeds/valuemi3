@@ -697,19 +697,19 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
 
     else
         #total x cliente 
-      subtotal = @company.get_facturas_day_value_cliente(@fecha1,@fecha2, "subtotal")
+      subtotal = @company.get_facturas_day_value_cliente(@fecha1,@fecha2,@cliente, "subtotal")
       subtotals.push(subtotal)
       services_subtotal += subtotal          
       #pdf.text subtotal.to_s
     
     
-      tax = @company.get_facturas_day_value_cliente(@fecha1,@fecha2, "tax")
+      tax = @company.get_facturas_day_value_cliente(@fecha1,@fecha2,@cliente, "tax")
       taxes.push(tax)
       services_tax += tax
     
       #pdf.text tax.to_s
       
-      total = @company.get_facturas_day_value_cliente(@fecha1,@fecha2, "total")
+      total = @company.get_facturas_day_value_cliente(@fecha1,@fecha2,@cliente, "total")
       totals.push(total)
       services_total += total
     
