@@ -16,7 +16,7 @@ totals = []
 <h4>
   <%= image_tag("reports_48.png", :class => "vmiddle") %>
   
- Reporte de cuentas clientes - Cancelaciones detalle
+ Cuentas por cobrar  por mes y año 
 
 </h4>
 
@@ -27,8 +27,13 @@ totals = []
     </div>
 	<div class="field">
 		<input type="date" name="fecha2" value="2017-01-15" style = "width: 80px" >
-    </div>
+  </div>
 
+  <div class="field">
+      
+  <%= select_tag(:moneda_id, options_from_collection_for_select(@monedas,'id','description')) %>
+  </div>
+    
     
   <input type="submit" value="Ver" class="small_btn" />
   <a href="/customer_payments/rpt_ccobrar5_pdf/<%= @company.id %>" class="small_btn">Hoy</a>

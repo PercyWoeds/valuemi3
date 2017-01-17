@@ -2,6 +2,7 @@
 include UsersHelper
 include CustomersHelper
 include ServicebuysHelper
+#include PivotTable 
 
 class CustomerPaymentsController < ApplicationController
 
@@ -1108,8 +1109,7 @@ class CustomerPaymentsController < ApplicationController
   def build_pdf_header_rpt2(pdf)
       pdf.font "Helvetica" , :size => 6
       
-
-     $lcCli  =  @company.name 
+     $lcCli  = @company.name 
      $lcdir1 = @company.address1+@company.address2+@company.city+@company.state
 
      $lcFecha1= Date.today.strftime("%d/%m/%Y").to_s
@@ -1160,101 +1160,41 @@ class CustomerPaymentsController < ApplicationController
       table_content << headers
       nroitem = 1
 
-       for  customerpayment_rpt in @customerpayment_rpt
+      # tabla pivoteadas
+      # hash of hashes
+        # pad columns with spaces and bars from max_lengths
 
-        @fechacobro = customerpayment_rpt.fecha1
+       
+  data = @customerpayment_rpt.collect{ |item| OpenStruct.new(:year_month => item.year_month, :customer_id => item.customer_id, :value => item.balance) }
+  g = PivotTable::Grid.new do |g|
+     g.source_data = data
+     g.column_name = :year_month
+     g.row_name = :customer_id
+  end
+
+
+
+
+
+       #puts g.columns_headers
+
+
+
+#       grid = grid(@customerpayment_rpt , {:row_name => :customer_id , :column_name => :year_month}) 
+
+ #      puts grid 
+
+      
+     for  customerpayment_rpt in @customerpayment_rpt
 
          row = []
-         row << nroitem.to_s
+         row << nroitem.to_s        
          row << customerpayment_rpt.customer.name 
+         row << customerpayment_rpt.year_month  
+         row << sprintf("%.2f",customerpayment_rpt.balance.round(2).to_s)
+         table_content << row
 
-         if customer_payment.anio < 2016
-          row << customerpayment_rpt.total 
-         end 
-        if customer_payment.anio > 2016
-            if mes = 1
-              row << customerpayment_rpt.total   
-            end
-            if mes = 2              
-              row << customerpayment_rpt.total   
-            end
-            if mes = 3             
-              row << customerpayment_rpt.total   
-            end
-
-            if mes = 4              
-              row << customerpayment_rpt.total   
-            end
-            if mes = 5              
-              row << customerpayment_rpt.total   
-            end
-            if mes = 6              
-              row << customerpayment_rpt.total   
-            end
-            if mes = 7              
-              row << customerpayment_rpt.total   
-            end
-            if mes = 8              
-              row << customerpayment_rpt.total   
-            end
-            if mes = 9              
-              row << customerpayment_rpt.total   
-            end
-            if mes = 10              
-              row << customerpayment_rpt.total   
-            end
-            if mes = 11             
-              row << customerpayment_rpt.total   
-            end
-            if mes = 12
-              row << customerpayment_rpt.total   
-            end
-         end 
-        if customer_payment.anio > 2017
-            if mes = 1
-              row << customerpayment_rpt.total   
-            end
-            if mes = 2              
-              row << customerpayment_rpt.total   
-            end
-            if mes = 3             
-              row << customerpayment_rpt.total   
-            end
-
-            if mes = 4              
-              row << customerpayment_rpt.total   
-            end
-            if mes = 5              
-              row << customerpayment_rpt.total   
-            end
-            if mes = 6              
-              row << customerpayment_rpt.total   
-            end
-            if mes = 7              
-              row << customerpayment_rpt.total   
-            end
-            if mes = 8              
-              row << customerpayment_rpt.total   
-            end
-            if mes = 9              
-              row << customerpayment_rpt.total   
-            end
-            if mes = 10              
-              row << customerpayment_rpt.total   
-            end
-            if mes = 11             
-              row << customerpayment_rpt.total   
-            end
-            if mes = 12
-              row << customerpayment_rpt.total   
-            end
-         end 
-
-
-
-        
        end  
-
 
 
       result = pdf.table table_content, {:position => :center,
@@ -1265,13 +1205,7 @@ class CustomerPaymentsController < ApplicationController
                                           columns([1]).align=:left
                                           columns([2]).align=:left
                                           columns([3]).align=:left
-                                          columns([4]).align=:left  
-                                          columns([5]).align=:left
-                                          columns([6]).align=:left
-                                          columns([7]).align=:left 
-                                          columns([8]).align=:right
-                                          columns([9]).align=:right
-                                          columns([10]).align=:right
+                                          
                                         end                                          
       pdf.move_down 10      
 
@@ -1315,7 +1249,7 @@ class CustomerPaymentsController < ApplicationController
     @company.actualizar_fecha2
 
 
-    @customerpayment_rpt = @company.get_customer_payments2(@fecha1,@fecha2)  
+    @customerpayment_rpt = @company.get_customer_payments2(2)
       
     Prawn::Document.generate("app/pdf_output/rpt_customerpayment2.pdf") do |pdf|
         pdf.font "Helvetica"        

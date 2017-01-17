@@ -13,6 +13,15 @@ class Company < ActiveRecord::Base
   has_many :invoices
   has_many :inventories
   has_many :company_users
+
+  def to_hash
+    hash=[]
+
+    instance_variables_each{ |var| hash[var.to_s.delete('@')]= instance_variables_get(var)}
+    hash
+  
+
+  end
   
   def own(user)
     if(self.user_id == user.id)
@@ -405,9 +414,15 @@ def get_facturas_day_value_cliente(fecha1,fecha2,cliente,value = "total")
 
 ## REPORTE DE ESTADISTICAS DE PAGOS
 
-def get_customer_payments2(fecha1,fecha2)
+def get_customer_payments2(moneda)
 
-  #@facturas = Factura.find_by_sql("Select customer_id,strftime("%m", 'fecha2') AS 'month' ,strftime("%Y", 'fecha2') AS 'month',sum(balance) from facturas group by customer_id,strftime("%m", 'month') ,strftime("%Y", 'anio') ")    
+   @facturas = Factura.find_by_sql(["SELECT strftime('%Y%m', fecha2) as year_month,customer_id,
+   SUM(balance) as balance   
+   FROM facturas
+   WHERE moneda_id = ?
+   GROUP BY 2,1
+   ORDER BY 2,1 ", moneda])    
+
   return @facturas
     
  end 
