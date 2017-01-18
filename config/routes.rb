@@ -188,6 +188,7 @@ Mnygo::Application.routes.draw do
   match 'companies/reports/rpt_ccobrar3_pdf/:company_id' => 'reports#rpt_ccobrar3_pdf', via: [:get, :post]  
   match 'companies/reports/rpt_ccobrar4_pdf/:company_id' => 'reports#rpt_ccobrar4_pdf', via: [:get, :post]  
   match 'companies/reports/rpt_ccobrar5_pdf/:company_id' => 'reports#rpt_ccobrar5_pdf', via: [:get, :post]  
+  match 'companies/reports/rpt_ccobrar6_pdf/:company_id' => 'reports#rpt_ccobrar6_pdf', via: [:get, :post]  
 
   match 'companies/reports/rpt_facturas_all/:company_id' => 'reports#rpt_facturas_all', via: [:get, :post]
   match 'companies/reports/rpt_facturas_all2/:company_id' => 'reports#rpt_facturas_all2', via: [:get, :post]
@@ -415,6 +416,7 @@ match 'receiveorders/ac_products/:company_id' => 'receiveorders#ac_products', vi
   match 'customer_payments/rpt_purchases_all/:id' => 'customer_payments#rpt_purchases_all', via: [:get, :post]
   match 'customer_payments/rpt_ccobrar4_pdf/:id' => 'customer_payments#rpt_ccobrar4_pdf', via: [:get, :post]
   match 'customer_payments/rpt_ccobrar5_pdf/:id' => 'customer_payments#rpt_ccobrar5_pdf', via: [:get, :post]
+  match 'customer_payments/rpt_ccobrar6_pdf/:id' => 'customer_payments#rpt_ccobrar6_pdf', via: [:get, :post]
 
   match 'companies/customer_payments/:company_id' => 'customer_payments#list_customerpayments', via: [:get, :post]  
   resources :customer_payments

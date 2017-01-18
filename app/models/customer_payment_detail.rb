@@ -3,7 +3,7 @@ class CustomerPaymentDetail < ActiveRecord::Base
  validates_presence_of :customer_payment_id, :factura_id, :total
 
   
-  belongs_to :customer_payment_details	
+  belongs_to :customer_payment
   belongs_to :factura 
   belongs_to :document
   belongs_to :customer 

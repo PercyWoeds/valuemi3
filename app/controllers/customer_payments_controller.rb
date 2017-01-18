@@ -1048,6 +1048,8 @@ class CustomerPaymentsController < ApplicationController
 
         end
 
+        
+
         row = []
         row << nroitem.to_s
         row << "FACTORY"
@@ -1143,7 +1145,12 @@ class CustomerPaymentsController < ApplicationController
 
   def build_pdf_body_rpt2(pdf)
     
-    pdf.text "Listado de Cobranza Emitidas : Fecha "+@fecha1.to_s+ " Mes : "+@fecha2.to_s , :size => 11 
+    if @tipomoneda = 1
+       @tipomoneda_name ="DOLARES"  
+    else
+       @tipomoneda_name ="SOLES "  
+    end 
+    pdf.text "Resumen Clientes  Moneda : "+@tipomoneda_name  + " Fecha "+@fecha1.to_s+ " Mes : "+@fecha2.to_s , :size => 11 
     pdf.text ""
     pdf.font "Helvetica" , :size => 6
 
@@ -1152,7 +1159,7 @@ class CustomerPaymentsController < ApplicationController
       total_general = 0
       total_factory = 0
 
-      CustomerPayment::TABLE_HEADERS3.each do |header|
+      CustomerPayment::TABLE_HEADERS4.each do |header|
         cell = pdf.make_cell(:content => header)
         cell.background_color = "FFFFCC"
         headers << cell
@@ -1172,17 +1179,12 @@ class CustomerPaymentsController < ApplicationController
      g.row_name = :customer_id
   end
 
-
-
-
-
-       #puts g.columns_headers
+#    pdf.text g.build 
 
 
 
 #       grid = grid(@customerpayment_rpt , {:row_name => :customer_id , :column_name => :year_month}) 
-
- #      puts grid 
+#      puts grid 
 
       
      for  customerpayment_rpt in @customerpayment_rpt
@@ -1245,11 +1247,12 @@ class CustomerPaymentsController < ApplicationController
     @company=Company.find(params[:id])      
     @fecha1 = params[:fecha1]
     @fecha2 = params[:fecha2]
+    @tipomoneda = params[:moneda_id]
 
     @company.actualizar_fecha2
 
 
-    @customerpayment_rpt = @company.get_customer_payments2(2)
+    @customerpayment_rpt = @company.get_customer_payments2(@tipomoneda)
       
     Prawn::Document.generate("app/pdf_output/rpt_customerpayment2.pdf") do |pdf|
         pdf.font "Helvetica"        
@@ -1267,6 +1270,171 @@ class CustomerPaymentsController < ApplicationController
 
   end
 
+##
+## RESUMEN DE INGRESO A BANCOS 
+##
+##-------------------------------------------------------------------------------------
+## reporte completo de cobranza 
+##-------------------------------------------------------------------------------------
+  
+  def build_pdf_header_rpt3(pdf)
+      pdf.font "Helvetica" , :size => 6
+      
+
+     $lcCli  =  @company.name 
+     $lcdir1 = @company.address1+@company.address2+@company.city+@company.state
+
+     $lcFecha1= Date.today.strftime("%d/%m/%Y").to_s
+     $lcHora  = Time.now.to_s
+
+    max_rows = [client_data_headers.length, invoice_headers.length, 0].max
+      rows = []
+      (1..max_rows).each do |row|
+        rows_index = row - 1
+        rows[rows_index] = []
+        rows[rows_index] += (client_data_headers_rpt.length >= row ? client_data_headers_rpt[rows_index] : ['',''])
+        rows[rows_index] += (invoice_headers_rpt.length >= row ? invoice_headers_rpt[rows_index] : ['',''])
+      end
+
+      if rows.present?
+        pdf.table(rows, {
+          :position => :center,
+          :cell_style => {:border_width => 0},
+          :width => pdf.bounds.width
+        }) do
+          columns([0, 2]).font_style = :bold
+
+      end
+
+        pdf.move_down 10
+
+      end
+      
+      pdf 
+  end   
+
+  def build_pdf_body_rpt3(pdf)
+    
+    pdf.text "RESUMEN DE INGRESOS : Desde "+@fecha1.to_s+ " Hasta : "+@fecha2.to_s , :size => 11 ,:align => :center
+    pdf.text ""
+    pdf.font "Helvetica" , :size => 6
+
+      headers = []
+      table_content = []
+      total_general = 0
+      total_factory = 0
+        headers2 = []
+        table_content2 = []
+
+        CustomerPayment::TABLE_HEADERS5.each do |header|
+          cell = pdf.make_cell(:content => header)
+          cell.background_color = "FFFFCC"
+          headers2 << cell
+        end
+        table_content2 << headers2
+        nroitem = 1
+        
+        @banks = BankAcount.all
+        @total_general = 0
+
+        for banco in @banks
+
+        total1 = @company.get_customer_payments_value(@fecha1,@fecha2,banco.id)  
+
+        if total1>0
+                  
+          row =[]
+          row << nroitem.to_s
+          row << banco.number 
+          row << sprintf("%.2f",total1.to_s)
+          
+          nroitem = nroitem + 1
+          @total_general = @total_general + total1
+
+          table_content2 << row
+        end   
+
+        end
+
+        @total_soles = @company.get_customer_payments_value_otros(@fecha1,@fecha2,"factory") 
+        row = []
+        row << nroitem.to_s
+        row << "FACTORY"
+        row << sprintf("%.2f",@total_soles.to_s)
+
+        table_content2 << row
+        @total_general = @total_general + total1
+
+        
+          row =[]
+          row << " "
+          row << "TOTAL GENERAL => "
+          row << sprintf("%.2f",@total_general.to_s)
+          table_content2 << row
+          result = pdf.table table_content2, {:position => :center,
+                                        :header => true,
+                                        :width => 300
+                                        } do 
+                                          columns([0]).align=:center
+                                          columns([1]).align=:left
+                                          columns([2]).align=:right 
+                                        end                                          
+      
+
+          pdf.text "" 
+          pdf 
+
+
+      
+    end
+
+
+    def build_pdf_footer_rpt3(pdf)
+
+      
+        pdf.bounding_box([0, 20], :width => 535, :height => 40) do
+        pdf.draw_text "Company: #{@company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
+
+      end
+
+      pdf
+      
+  end
+
+
+  # Export cobrar  to PDF
+
+  def rpt_ccobrar6_pdf
+
+    @company=Company.find(params[:id])      
+    @fecha1 = params[:fecha1]
+    @fecha2 = params[:fecha2]
+
+    @customerpayment_rpt = @company.get_customer_payments(@fecha1,@fecha2)  
+
+      
+    Prawn::Document.generate("app/pdf_output/rpt_customerpayment.pdf") do |pdf|
+        pdf.font "Helvetica"        
+        pdf = build_pdf_header_rpt3(pdf)
+        pdf = build_pdf_body_rpt3(pdf)
+        build_pdf_footer_rpt3(pdf)
+        $lcFileName =  "app/pdf_output/rpt_customerpayment.pdf"      
+        
+    end     
+
+    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
+                
+    send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
+  
+  end
+
+
+
+
+
+##
+##FIN RESUMEN INGRESO A BANCOS 
+##
 
   def client_data_headers_rpt
       client_headers  = [["Empresa  :", $lcCli ]]

@@ -412,6 +412,31 @@ def get_facturas_day_value_cliente(fecha1,fecha2,cliente,value = "total")
     return ret    
  end 
 
+ def get_customer_payments_value_otros(fecha1,fecha2,value='factory')
+
+    facturas = CustomerPayment.where(["fecha1 >= ? and fecha1 <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
+    
+    
+        ret=0  
+        for factura in facturas
+          
+          @detail = CustomerPaymentDetail.find(factura.id)
+
+          if(value == "ajuste_debe")
+            ret += @detail.ajuste_debe
+          elsif(value == "ajuste_haber")
+            ret += @detail.ajuste_haber
+          else         
+            ret += @detail.factory
+          end
+
+        end
+    
+
+    return ret
+ end 
+
+
 ## REPORTE DE ESTADISTICAS DE PAGOS
 
 def get_customer_payments2(moneda)
