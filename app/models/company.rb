@@ -22,33 +22,19 @@ class Company < ActiveRecord::Base
   end
   
   def actualiza_monthyear
-
-  @factura = Factura.where(:year_mounth=> nil)
-  for factura in @factura
-      f = Factura.find(factura.id)
-     if f
-       @fechas =f.fecha2.to_s
-
-       parts = @fechas.split("-")
-
-
-        puts parts
-
+    @factura = Factura.where(:year_mounth=> nil)
+    for factura in @factura
+        f = Factura.find(factura.id)
+      if f
+        @fechas =f.fecha2.to_s
+        parts = @fechas.split("-")
         year = parts[0]
         mes  = parts[1]
-        dia  = parts[2]
-        
-
-
+        dia  = parts[2]      
         f.year_mounth = year+mes 
         f.save
-
       end 
-
-  end 
-
-
-
+    end 
   end 
 
   def own(user)
@@ -357,6 +343,16 @@ class Company < ActiveRecord::Base
     return @delivery
  end 
 
+def get_guias_2(fecha1,fecha2)
+    @delivery = Delivery.where(["processed<> '4' and  processed <> '2' and company_id = ? AND fecha1 >= ? AND fecha1 <= ?", self.id, "#{fecha1} 00:00:00", "#{fecha2} 23:59:59"])
+    return @delivery
+ end 
+
+def get_guias_3(fecha1,fecha2)
+    @delivery = Delivery.where(["company_id = ? AND fecha1 >= ? AND fecha1 <= ?", self.id, "#{fecha1}-01 00:00:00", "#{fecha2} 23:59:59"])
+    return @delivery
+ end 
+
  def get_services_year_month(year,month)
     @serviceorder = Serviceorder.where(["company_id = ? AND fecha1 >= ? AND fecha1 <= ?", self.id, "#{year}-#{month}-01 00:00:00", "#{year}-#{month}-31 23:59:59"])
     return @serviceorder
@@ -441,10 +437,7 @@ def get_facturas_day_value_cliente(fecha1,fecha2,cliente,value = "total")
  end 
 
  def get_customer_payments_value_otros(fecha1,fecha2,value='factory')
-
-    facturas = CustomerPayment.where(["fecha1 >= ? and fecha1 <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
-    
-    
+    facturas = CustomerPayment.where(["fecha1 >= ? and fecha1 <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])        
         ret=0  
         for factura in facturas
 

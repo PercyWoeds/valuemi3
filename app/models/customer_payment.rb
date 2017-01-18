@@ -71,12 +71,14 @@ self.per_page = 20
                      "YY-MM",                  
                     "IMPORTE "]                      
 
+
+ def 
+
+ end 
  def get_document_short(id)
 
      documento = Document.find(id)
      return documento.descripshort 
-
-
  end                      
  def get_customer_payment_value(value)
     invoices = CustomerPaymentDetail.where(["customer_payment_id = ?", self.id])

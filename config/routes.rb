@@ -174,6 +174,8 @@ Mnygo::Application.routes.draw do
   match 'companies/reports/monthly_sellers/:company_id' => 'reports#report_monthly_sellers', via: [:get, :post]
   match 'companies/reports/sellers/:company_id' => 'reports#report_sellers', via: [:get, :post]
   match 'companies/reports/monthly_sales/:company_id' => 'reports#report_monthly_sales', via: [:get, :post]
+  match 'companies/reports/rpt_guias_2/:company_id' => 'reports#rpt_guias_2', via: [:get, :post]
+  match 'companies/reports/rpt_guias_3/:company_id' => 'reports#rpt_guias_3', via: [:get, :post]
 
   match 'companies/reports_guias/:company_id' => 'reports#reports_guias', via: [:get, :post]
   match 'companies/reports_compras/:company_id' => 'reports#reports_compras', via: [:get, :post]
@@ -283,6 +285,8 @@ Mnygo::Application.routes.draw do
   match 'deliveries/email/:id' => 'deliveries#email', via: [:get, :post]
   match 'deliveries/pdf/:id' => 'deliveries#pdf', via: [:get, :post]
   match 'deliveries/guias1/:company_id' => 'deliveries#guias1', via: [:get, :post]
+  match 'deliveries/guias2/:company_id' => 'deliveries#guias2', via: [:get, :post]
+  match 'deliveries/guias3/:company_id' => 'deliveries#guias3', via: [:get, :post]
 
   match 'companies/deliveries/:company_id' => 'deliveries#list_deliveries', via: [:get, :post]
   resources :deliveries

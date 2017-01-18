@@ -1142,4 +1142,19 @@ def rpt_purchases_all
   def reports
     @company = Company.find(params[:company_id])
   end
+
+  def rpt_guias_2
+    @company = Company.find(params[:company_id])    
+    @pagetitle = "Liquidacion Cobranzas "    
+    @customers = @company.get_customers()
+
+  end
+  def rpt_guias_3
+    @company = Company.find(params[:company_id])    
+    @pagetitle = "Liquidacion Cobranzas "    
+    @customers = @company.get_customers()
+
+  end
+    
+
 end

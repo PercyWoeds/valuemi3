@@ -64,15 +64,13 @@ class Factura < ActiveRecord::Base
         end
   end      
 
-  
 
   def my_deliverys
         @deliveryships = Delivery.all 
         return @deliveryships
   end 
 
-  def correlativo
-        
+  def correlativo      
         numero = Voided.find(2).numero.to_i + 1
         lcnumero = numero.to_s
         Voided.where(:id=>'2').update_all(:numero =>lcnumero)        

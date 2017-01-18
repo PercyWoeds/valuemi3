@@ -18,11 +18,17 @@ totals = []
   Montly sales report - <%= @month_name %> <%= @year %>
 </h1>
 
-<form method="get" action="/deliveries/guias1/<%= @company.id %>">
-  <%= select_tag(:year, options_for_select(@years, @year)) %>
-  <%= select_tag(:month, options_for_select(@months, @month)) %>
+<form method="get" action="/deliveries/guias2/<%= @company.id %>">
+  <div class="field">
+      <input type="date" name="fecha1" value="2007-10-01" style = "width: 80px" >
+
+    </div>
+	<div class="field">
+		<input type="date" name="fecha2" value="2017-01-18" style = "width: 80px" >
+  </div>
+
   <input type="submit" value="Ver" class="small_btn" />
-  <a href="/deliveries/guias1/<%= @company.id %>" class="small_btn">Today</a>
+  <a href="/deliveries/guias2/<%= @company.id %>" class="small_btn">Today</a>
 </form>
 
 <br />

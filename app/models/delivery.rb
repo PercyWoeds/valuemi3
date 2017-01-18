@@ -22,12 +22,30 @@ self.per_page = 20
 
   TABLE_HEADERS = ["ITEM",
                      "Fecha",
-                     "Tipo",
-                     "Número",
+                     "FEC.ING.",
+                     "TD",
+                     "NUMERO",
                      "CLIENTE",
                      "DESTINO",
                      "DESCRIP",                     
                      "ESTADO"]
+  TABLE_HEADERS1 = ["ITEM",
+                     "FECHA",
+                     "FEC.ING.",
+                     "TD",
+                     "NUMERO",
+                     "CLIENTE",
+                     "DESTINO",
+                     "ESTADO"]
+
+  TABLE_HEADERS2 = ["ITEM",
+                     "FECHA",
+                     "FEC.ING.",
+                     "TD",
+                     "NUMERO",
+                     "CLIENTE",
+                     "DESTINO",
+                     "ESTADO"]                     
 
 def self.import(file)
           CSV.foreach(file.path, headers: true, encoding:'iso-8859-1:utf-8') do |row|

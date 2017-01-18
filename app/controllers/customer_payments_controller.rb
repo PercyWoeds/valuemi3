@@ -1145,7 +1145,7 @@ class CustomerPaymentsController < ApplicationController
 
   def build_pdf_body_rpt2(pdf)
     
-    if @tipomoneda = 1
+    if @tipomoneda == 1
        @tipomoneda_name ="DOLARES"  
     else
        @tipomoneda_name ="SOLES "  
@@ -1179,8 +1179,18 @@ class CustomerPaymentsController < ApplicationController
          row << customerpayment_rpt.customer.name
          row << customerpayment_rpt.year_month
          row << sprintf("%.2f",customerpayment_rpt.balance.round(2).to_s)
+         @total_general = @total_general + customerpayment_rpt.balance.round(2)
+
          table_content << row
+         nroitem = nroitem + 1
        end  
+
+        row = []
+         row << ""       
+         row << " TOTAL GENERAL => "
+         row << 
+         row << sprintf("%.2f",@total_general.to_s)
+         table_content << row
 
       result = pdf.table table_content, {:position => :center,
                                         :header => true,
@@ -1189,7 +1199,7 @@ class CustomerPaymentsController < ApplicationController
                                           columns([0]).align=:center
                                           columns([1]).align=:left
                                           columns([2]).align=:left
-                                          columns([3]).align=:left
+                                          columns([3]).align=:right 
                                           
                                         end                                          
       pdf.move_down 10      
@@ -1225,7 +1235,7 @@ class CustomerPaymentsController < ApplicationController
   end
 
 
-  def rpt_ccobrar5_pdf
+  def rpt_ccobrar5_pdff
 
     @company=Company.find(params[:id])      
     @fecha1 = params[:fecha1]
@@ -1234,9 +1244,6 @@ class CustomerPaymentsController < ApplicationController
 
     @company.actualizar_fecha2
     @company.actualiza_monthyear
-
-
-
     @customerpayment_rpt = @company.get_customer_payments2(@tipomoneda)
       
     Prawn::Document.generate("app/pdf_output/rpt_customerpayment2.pdf") do |pdf|
@@ -1248,8 +1255,7 @@ class CustomerPaymentsController < ApplicationController
         
     end     
 
-    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
-                
+    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName                
     send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
   
 
