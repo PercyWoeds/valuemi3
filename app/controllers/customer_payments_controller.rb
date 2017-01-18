@@ -1189,8 +1189,9 @@ class CustomerPaymentsController < ApplicationController
         row = []
          row << ""       
          row << " TOTAL GENERAL => "
-         row << 
+         row << " "
          row << sprintf("%.2f",@total_general.to_s)
+         
          table_content << row
 
       result = pdf.table table_content, {:position => :center,
