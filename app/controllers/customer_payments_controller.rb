@@ -1171,7 +1171,7 @@ class CustomerPaymentsController < ApplicationController
       # hash of hashes
         # pad columns with spaces and bars from max_lengths
 
-      
+      @total_general =0
      for  customerpayment_rpt in @customerpayment_rpt
 
          row = []
@@ -1179,6 +1179,7 @@ class CustomerPaymentsController < ApplicationController
          row << customerpayment_rpt.customer.name
          row << customerpayment_rpt.year_month
          row << sprintf("%.2f",customerpayment_rpt.balance.round(2).to_s)
+
          @total_general = @total_general + customerpayment_rpt.balance.round(2)
 
          table_content << row

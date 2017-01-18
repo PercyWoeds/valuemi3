@@ -702,7 +702,7 @@ end
 
   def build_pdf_body2(pdf)
     
-    pdf.text "Guias Emitidas : Desde "+@fecha1.to_s  + "Hasta : "+ @fecha2.to_s, :size => 11 
+    pdf.text "Guias por facturar  : Desde "+@fecha1.to_s  + "Hasta : "+ @fecha2.to_s, :size => 11 
     pdf.text ""
     pdf.font "Helvetica" , :size => 6
 
@@ -795,7 +795,7 @@ end
   end
 
 ##-----------------------------------------------------------------------------------
-## REPORTE DE GUIAS EMITIDAS 2
+## REPORTE DE GUIAS PENDIENTES CORRELATIVO 2
 ##-----------------------------------------------------------------------------------
   def build_pdf_header3(pdf)
       pdf.font "Helvetica" , :size => 8
@@ -836,7 +836,7 @@ end
 
   def build_pdf_body3(pdf)
     
-    pdf.text "Guias Emitidas : Desde "+@fecha1.to_s  + "Hasta : "+ @fecha2.to_s, :size => 11 
+    pdf.text "Guias NO REGISTRADAS : Desde "+@fecha1.to_s  + "Hasta : "+ @fecha2.to_s, :size => 11 
     pdf.text ""
     pdf.font "Helvetica" , :size => 6
 
