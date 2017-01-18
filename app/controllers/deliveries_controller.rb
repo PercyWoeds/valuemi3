@@ -731,7 +731,6 @@ end
             row << product.code
             row << lcOrigen
             row << product.customer.name              
-            row << product.description 
             row << product.get_processed
             table_content << row
 
@@ -750,7 +749,7 @@ end
                                           columns([4]).align=:left  
                                           columns([5]).align=:left 
                                           columns([6]).align=:left
-                                          columns([7]).align=:right
+                                          
                                         end                                          
       pdf.move_down 10      
       pdf
@@ -784,9 +783,9 @@ end
       
     Prawn::Document.generate("app/pdf_output/guias2.pdf") do |pdf|      
         pdf.font "Helvetica"
-        pdf = build_pdf_header(pdf)
-        pdf = build_pdf_body(pdf)
-        build_pdf_footer(pdf)
+        pdf = build_pdf_header2(pdf)
+        pdf = build_pdf_body2(pdf)
+        build_pdf_footer2(pdf)
         $lcFileName =  "app/pdf_output/guias2.pdf"            
     end     
 
