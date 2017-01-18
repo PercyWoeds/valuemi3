@@ -601,7 +601,7 @@ end
                                           columns([3]).align=:left
                                           columns([4]).align=:left  
                                           columns([5]).align=:left 
-                                          columns([6]).align=:left
+                                          columns([6]).align=:right
                                           columns([7]).align=:right
                                         end                                          
       pdf.move_down 10      
@@ -843,7 +843,7 @@ end
       headers = []
       table_content = []
 
-      Delivery::TABLE_HEADERS2.each do |header|
+      Delivery::TABLE_HEADERS3.each do |header|
         cell = pdf.make_cell(:content => header)
         cell.background_color = "FFFFCC"
         headers << cell
@@ -851,7 +851,24 @@ end
 
       table_content << headers
 
-      nroitem=1
+      nroitem = 1
+
+      min_code = min_code
+
+
+     while(min_code <= max_code)
+
+      if(i < 10)
+        i_s = "0#{i}"
+      else
+        i_s = i.to_s
+      end
+      
+      @dates.push("#{@year}-#{month_s}-#{i_s}")
+      @date_cats.push("'" + doDate(Time.parse("#{@year}-#{@month}-#{i_s}"), 5) + "'")
+      
+      i += 1
+    end
 
        for  product in @delivery
 
@@ -912,15 +929,21 @@ end
     @company=Company.find(params[:company_id])      
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]    
+   
     
-
     @delivery = @company.get_guias_3(@fecha1,@fecha2)  
-      
+
+    @delivery_max_min =  Delivery.select("MAX(code) max_code,MIN(code) mix_code").first.attributes
+
+    maximo = @delivery_max_min.max_code
+    minimo = @delivery_max_min.min_code
+
+
     Prawn::Document.generate("app/pdf_output/guias3.pdf") do |pdf|      
         pdf.font "Helvetica"
-        pdf = build_pdf_header(pdf)
-        pdf = build_pdf_body(pdf)
-        build_pdf_footer(pdf)
+        pdf = build_pdf_header3(pdf)
+        pdf = build_pdf_body3(pdf)
+        build_pdf_footer3(pdf)
         $lcFileName =  "app/pdf_output/guias3.pdf"      
         
     end     
