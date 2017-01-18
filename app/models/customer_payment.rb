@@ -72,9 +72,6 @@ self.per_page = 20
                     "IMPORTE "]                      
 
 
- def 
-
- end 
  def get_document_short(id)
 
      documento = Document.find(id)
@@ -240,9 +237,6 @@ self.per_page = 20
     return @itemproducts
   end
 
-  def get_
-    
-  end
 
   def get_payment_dato(id)    
 
