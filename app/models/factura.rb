@@ -64,6 +64,16 @@ class Factura < ActiveRecord::Base
         end
   end      
 
+  def get_vencido
+
+      if(self.fecha2 < Date.today)   
+
+        return "** Vencido ** "
+      else
+        return ""
+      end 
+
+  end 
 
   def my_deliverys
         @deliveryships = Delivery.all 

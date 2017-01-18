@@ -22,7 +22,7 @@ class FacturasController < ApplicationController
         
          end              
     end
-  end   
+  end  
 
 
 
@@ -855,7 +855,7 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
                 row << sprintf("%.2f",product.balance.to_s)
                 row << "0.00 "
             end 
-            row << product.observ
+            row << product.get_vencido 
 
             
             table_content << row
