@@ -19,10 +19,38 @@ class Company < ActiveRecord::Base
 
     instance_variables_each{ |var| hash[var.to_s.delete('@')]= instance_variables_get(var)}
     hash
-  
-
   end
   
+  def actualiza_monthyear
+
+  @factura = Factura.where(:year_mounth=> nil)
+  for factura in @factura
+      f = Factura.find(factura.id)
+     if f
+       @fechas =f.fecha2.to_s
+
+       parts = @fechas.split("-")
+
+
+        puts parts
+
+        year = parts[0]
+        mes  = parts[1]
+        dia  = parts[2]
+        
+
+
+        f.year_mounth = year+mes 
+        f.save
+
+      end 
+
+  end 
+
+
+
+  end 
+
   def own(user)
     if(self.user_id == user.id)
       return true
@@ -419,7 +447,7 @@ def get_facturas_day_value_cliente(fecha1,fecha2,cliente,value = "total")
     
         ret=0  
         for factura in facturas
-          
+
           @detail = CustomerPaymentDetail.find(factura.id)
 
           if(value == "ajuste_debe")
@@ -430,18 +458,19 @@ def get_facturas_day_value_cliente(fecha1,fecha2,cliente,value = "total")
             ret += @detail.factory
           end
 
-        end
-    
+        end    
 
     return ret
  end 
 
 
-## REPORTE DE ESTADISTICAS DE PAGOS
+## REPORTE DE ESTADISTICAS DE PAGOS pivot
 
 def get_customer_payments2(moneda)
 
-   @facturas = Factura.find_by_sql(["SELECT strftime('%Y%m', fecha2) as year_month,customer_id,
+   @facturas = Factura.find_by_sql(["
+  SELECT   year_mounth as year_month,
+   customer_id,
    SUM(balance) as balance   
    FROM facturas
    WHERE moneda_id = ?
@@ -588,9 +617,10 @@ def actualizar_fecha2
     end
     end 
 
-    return ret
-    
+    return ret    
  end 
+
+
  
  # Return value for user
  def get_services_year_month_value( year,month, value = "total")
@@ -926,4 +956,19 @@ def actualizar_fecha2
     
     return ret
   end
+
+
+  def truncate(truncate_at, options = {})
+  return dup unless length > truncate_at
+
+  options[:omission] ||= '...'
+  length_with_room_for_omission = truncate_at - options[:omission].length
+  stop =        if options[:separator]
+      rindex(options[:separator], length_with_room_for_omission) || length_with_room_for_omission
+    else
+      length_with_room_for_omission
+    end
+
+  "#{self[0...stop]}#{options[:omission]}"
+end
 end

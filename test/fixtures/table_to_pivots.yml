@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  rowname: 1
+  colname: 
+  cellvall: 1.5
+
+two:
+  rowname: 1
+  colname: 
+  cellvall: 1.5

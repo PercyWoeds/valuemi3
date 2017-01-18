@@ -82,6 +82,14 @@
   
 </div>
 
+<h2>Importar Archivo facturas "*.csv"</h2>
+
+<%= form_tag import_facturas_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Importar " %>
+<% end %>
+
+
 <%= will_paginate @invoices %>
 
 <%= render 'layouts/autocomplete' %>

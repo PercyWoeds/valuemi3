@@ -64,6 +64,7 @@ class Factura < ActiveRecord::Base
         end
   end      
 
+  
 
   def my_deliverys
         @deliveryships = Delivery.all 

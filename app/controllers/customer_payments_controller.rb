@@ -1159,7 +1159,7 @@ class CustomerPaymentsController < ApplicationController
       total_general = 0
       total_factory = 0
 
-      CustomerPayment::TABLE_HEADERS4.each do |header|
+      CustomerPayment::TABLE_HEADERS6.each do |header|
         cell = pdf.make_cell(:content => header)
         cell.background_color = "FFFFCC"
         headers << cell
@@ -1171,33 +1171,16 @@ class CustomerPaymentsController < ApplicationController
       # hash of hashes
         # pad columns with spaces and bars from max_lengths
 
-       
-  data = @customerpayment_rpt.collect{ |item| OpenStruct.new(:year_month => item.year_month, :customer_id => item.customer_id, :value => item.balance) }
-  g = PivotTable::Grid.new do |g|
-     g.source_data = data
-     g.column_name = :year_month
-     g.row_name = :customer_id
-  end
-
-#    pdf.text g.build 
-
-
-
-#       grid = grid(@customerpayment_rpt , {:row_name => :customer_id , :column_name => :year_month}) 
-#      puts grid 
-
       
      for  customerpayment_rpt in @customerpayment_rpt
 
          row = []
          row << nroitem.to_s        
-         row << customerpayment_rpt.customer.name 
-         row << customerpayment_rpt.year_month  
+         row << customerpayment_rpt.customer.name
+         row << customerpayment_rpt.year_month
          row << sprintf("%.2f",customerpayment_rpt.balance.round(2).to_s)
          table_content << row
-
        end  
-
 
       result = pdf.table table_content, {:position => :center,
                                         :header => true,
@@ -1250,6 +1233,8 @@ class CustomerPaymentsController < ApplicationController
     @tipomoneda = params[:moneda_id]
 
     @company.actualizar_fecha2
+    @company.actualiza_monthyear
+
 
 
     @customerpayment_rpt = @company.get_customer_payments2(@tipomoneda)
@@ -1404,11 +1389,14 @@ class CustomerPaymentsController < ApplicationController
 
   # Export cobrar  to PDF
 
+
+
   def rpt_ccobrar6_pdf
 
     @company=Company.find(params[:id])      
     @fecha1 = params[:fecha1]
     @fecha2 = params[:fecha2]
+
 
     @customerpayment_rpt = @company.get_customer_payments(@fecha1,@fecha2)  
 

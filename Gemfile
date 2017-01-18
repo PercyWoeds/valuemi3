@@ -71,7 +71,8 @@ gem 'rails_autolink', '~> 1.1', '>= 1.1.6'
 # group :development, :test do
 #   gem 'webrat'
 # end
-
+ gem 'pg', '~> 0.18.4'
+ 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
@@ -92,6 +93,6 @@ group :development do
 end
 
 group :production do 
- gem 'pg', '~> 0.18.4'
+
  gem 'rails_12factor','0.0.2'
 end

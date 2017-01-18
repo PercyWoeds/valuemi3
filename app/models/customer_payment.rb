@@ -59,14 +59,17 @@ self.per_page = 20
 
 
   TABLE_HEADERS4 = ["ITEM",
-                     "CLIENTE",
-                     "MES  ",
+                     "CLIENTE",                     
                     "IMPORTE "]                      
 
   TABLE_HEADERS5 = ["ITEM ",
                      "BANCO ",                  
                     "IMPORTE "]                      
 
+  TABLE_HEADERS6 = ["ITEM",
+                     "CLIENTE",   
+                     "YY-MM",                  
+                    "IMPORTE "]                      
 
  def get_document_short(id)
 

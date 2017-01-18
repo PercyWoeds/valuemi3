@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170112230523) do
+ActiveRecord::Schema.define(version: 20170118180743) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "accounts", force: :cascade do |t|
     t.string   "name"
@@ -27,7 +30,7 @@ ActiveRecord::Schema.define(version: 20170112230523) do
     t.string   "state",          limit: 30
     t.boolean  "has_error",                                           default: false
     t.string   "error_messages", limit: 400
-    t.integer  "tag_ids"
+    t.integer  "tag_ids",                                             default: [],    array: true
     t.integer  "updater_id"
     t.decimal  "tax_percentage",             precision: 5,  scale: 2, default: 0.0
     t.integer  "tax_id"
@@ -41,26 +44,25 @@ ActiveRecord::Schema.define(version: 20170112230523) do
     t.datetime "updated_at"
   end
 
-  add_index "accounts", ["active"], name: "index_accounts_on_active"
-  add_index "accounts", ["amount"], name: "index_accounts_on_amount"
-  add_index "accounts", ["approver_id"], name: "index_accounts_on_approver_id"
-  add_index "accounts", ["contact_id"], name: "index_accounts_on_contact_id"
-  add_index "accounts", ["creator_id"], name: "index_accounts_on_creator_id"
-  add_index "accounts", ["currency"], name: "index_accounts_on_currency"
-  add_index "accounts", ["date"], name: "index_accounts_on_date"
-  add_index "accounts", ["description"], name: "index_accounts_on_description"
-  add_index "accounts", ["due_date"], name: "index_accounts_on_due_date"
-  add_index "accounts", ["has_error"], name: "index_accounts_on_has_error"
-  add_index "accounts", ["name"], name: "index_accounts_on_name"
-  add_index "accounts", ["nuller_id"], name: "index_accounts_on_nuller_id"
-  add_index "accounts", ["project_id"], name: "index_accounts_on_project_id"
-  add_index "accounts", ["state"], name: "index_accounts_on_state"
-  add_index "accounts", ["tag_ids"], name: "index_accounts_on_tag_ids"
-  add_index "accounts", ["tax_id"], name: "index_accounts_on_tax_id"
-  add_index "accounts", ["tax_in_out"], name: "index_accounts_on_tax_in_out"
-  add_index "accounts", ["type"], name: "index_accounts_on_type"
-  add_index "accounts", ["updater_id"], name: "index_accounts_on_updater_id"
-  add_index "accounts", [nil], name: "index_accounts_on_extras"
+  add_index "accounts", ["active"], name: "index_accounts_on_active", using: :btree
+  add_index "accounts", ["amount"], name: "index_accounts_on_amount", using: :btree
+  add_index "accounts", ["approver_id"], name: "index_accounts_on_approver_id", using: :btree
+  add_index "accounts", ["contact_id"], name: "index_accounts_on_contact_id", using: :btree
+  add_index "accounts", ["creator_id"], name: "index_accounts_on_creator_id", using: :btree
+  add_index "accounts", ["currency"], name: "index_accounts_on_currency", using: :btree
+  add_index "accounts", ["date"], name: "index_accounts_on_date", using: :btree
+  add_index "accounts", ["description"], name: "index_accounts_on_description", using: :btree
+  add_index "accounts", ["due_date"], name: "index_accounts_on_due_date", using: :btree
+  add_index "accounts", ["has_error"], name: "index_accounts_on_has_error", using: :btree
+  add_index "accounts", ["name"], name: "index_accounts_on_name", using: :btree
+  add_index "accounts", ["nuller_id"], name: "index_accounts_on_nuller_id", using: :btree
+  add_index "accounts", ["project_id"], name: "index_accounts_on_project_id", using: :btree
+  add_index "accounts", ["state"], name: "index_accounts_on_state", using: :btree
+  add_index "accounts", ["tag_ids"], name: "index_accounts_on_tag_ids", using: :btree
+  add_index "accounts", ["tax_id"], name: "index_accounts_on_tax_id", using: :btree
+  add_index "accounts", ["tax_in_out"], name: "index_accounts_on_tax_in_out", using: :btree
+  add_index "accounts", ["type"], name: "index_accounts_on_type", using: :btree
+  add_index "accounts", ["updater_id"], name: "index_accounts_on_updater_id", using: :btree
 
   create_table "addresses", force: :cascade do |t|
     t.string   "address"
@@ -349,43 +351,7 @@ ActiveRecord::Schema.define(version: 20170112230523) do
     t.integer  "moneda_id"
     t.text     "observ"
     t.datetime "fecha2"
-  end
-
-  create_table "guia", force: :cascade do |t|
-    t.integer  "company_id"
-    t.integer  "location_id"
-    t.integer  "division_id"
-    t.integer  "customer_id"
-    t.text     "description"
-    t.text     "comments"
-    t.string   "code"
-    t.float    "subtotal"
-    t.float    "tax"
-    t.float    "total"
-    t.string   "processed"
-    t.string   "return"
-    t.datetime "date_processed"
-    t.integer  "user_id"
-    t.datetime "fecha1"
-    t.datetime "fecha2"
-    t.integer  "truck_id"
-    t.integer  "employee_id"
-    t.integer  "empsub_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-  end
-
-  create_table "guia_services", force: :cascade do |t|
-    t.integer  "service_id"
-    t.float    "price"
-    t.integer  "quantity"
-    t.integer  "unidad_id"
-    t.integer  "peso"
-    t.float    "discount"
-    t.float    "total"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.integer  "Delivery_id"
+    t.string   "year_mounth"
   end
 
   create_table "histories", force: :cascade do |t|
@@ -398,9 +364,9 @@ ActiveRecord::Schema.define(version: 20170112230523) do
     t.datetime "updated_at",                       null: false
   end
 
-  add_index "histories", ["created_at"], name: "index_histories_on_created_at"
-  add_index "histories", ["historiable_id"], name: "index_histories_on_historiable_id"
-  add_index "histories", ["user_id"], name: "index_histories_on_user_id"
+  add_index "histories", ["created_at"], name: "index_histories_on_created_at", using: :btree
+  add_index "histories", ["historiable_id"], name: "index_histories_on_historiable_id", using: :btree
+  add_index "histories", ["user_id"], name: "index_histories_on_user_id", using: :btree
 
   create_table "instruccions", force: :cascade do |t|
     t.text     "description1"
@@ -453,34 +419,28 @@ ActiveRecord::Schema.define(version: 20170112230523) do
     t.datetime "updated_at"
   end
 
-  add_index "inventories", ["account_id"], name: "index_inventories_on_account_id"
-  add_index "inventories", ["contact_id"], name: "index_inventories_on_contact_id"
-  add_index "inventories", ["date"], name: "index_inventories_on_date"
-  add_index "inventories", ["has_error"], name: "index_inventories_on_has_error"
-  add_index "inventories", ["operation"], name: "index_inventories_on_operation"
-  add_index "inventories", ["project_id"], name: "index_inventories_on_project_id"
-  add_index "inventories", ["ref_number"], name: "index_inventories_on_ref_number"
-  add_index "inventories", ["state"], name: "index_inventories_on_state"
-  add_index "inventories", ["store_id"], name: "index_inventories_on_store_id"
+  add_index "inventories", ["account_id"], name: "index_inventories_on_account_id", using: :btree
+  add_index "inventories", ["contact_id"], name: "index_inventories_on_contact_id", using: :btree
+  add_index "inventories", ["date"], name: "index_inventories_on_date", using: :btree
+  add_index "inventories", ["has_error"], name: "index_inventories_on_has_error", using: :btree
+  add_index "inventories", ["operation"], name: "index_inventories_on_operation", using: :btree
+  add_index "inventories", ["project_id"], name: "index_inventories_on_project_id", using: :btree
+  add_index "inventories", ["ref_number"], name: "index_inventories_on_ref_number", using: :btree
+  add_index "inventories", ["state"], name: "index_inventories_on_state", using: :btree
+  add_index "inventories", ["store_id"], name: "index_inventories_on_store_id", using: :btree
 
-  create_table "invoice2s", force: :cascade do |t|
-    t.integer  "company_id"
-    t.integer  "location_id"
-    t.integer  "division_id"
-    t.integer  "customer_id"
-    t.text     "description"
-    t.text     "comments"
-    t.string   "code"
-    t.float    "subtotal"
-    t.float    "tax"
-    t.float    "total"
-    t.string   "processed"
-    t.string   "return"
-    t.datetime "date_processed"
-    t.integer  "user_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+  create_table "inventory_details", force: :cascade do |t|
+    t.integer  "inventory_operation_id"
+    t.integer  "item_id"
+    t.integer  "store_id"
+    t.decimal  "quantity",               precision: 14, scale: 2, default: 0.0
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
+
+  add_index "inventory_details", ["inventory_operation_id"], name: "index_inventory_details_on_inventory_operation_id", using: :btree
+  add_index "inventory_details", ["item_id"], name: "index_inventory_details_on_item_id", using: :btree
+  add_index "inventory_details", ["store_id"], name: "index_inventory_details_on_store_id", using: :btree
 
   create_table "invoice_products", force: :cascade do |t|
     t.integer  "invoice_id"
@@ -502,7 +462,6 @@ ActiveRecord::Schema.define(version: 20170112230523) do
     t.float    "total"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
-    t.integer  "factura_id"
     t.float    "preciocigv"
   end
 
@@ -574,7 +533,7 @@ ActiveRecord::Schema.define(version: 20170112230523) do
     t.decimal  "buy_price",               precision: 14, scale: 2, default: 0.0
     t.string   "unit_symbol", limit: 20
     t.string   "unit_name"
-    t.integer  "tag_ids"
+    t.integer  "tag_ids",                                          default: [],   array: true
     t.integer  "updater_id"
     t.integer  "creator_id"
     t.datetime "created_at"
@@ -585,13 +544,13 @@ ActiveRecord::Schema.define(version: 20170112230523) do
     t.integer  "recibir"
   end
 
-  add_index "items", ["code"], name: "index_items_on_code"
-  add_index "items", ["creator_id"], name: "index_items_on_creator_id"
-  add_index "items", ["for_sale"], name: "index_items_on_for_sale"
-  add_index "items", ["stockable"], name: "index_items_on_stockable"
-  add_index "items", ["tag_ids"], name: "index_items_on_tag_ids"
-  add_index "items", ["unit_id"], name: "index_items_on_unit_id"
-  add_index "items", ["updater_id"], name: "index_items_on_updater_id"
+  add_index "items", ["code"], name: "index_items_on_code", using: :btree
+  add_index "items", ["creator_id"], name: "index_items_on_creator_id", using: :btree
+  add_index "items", ["for_sale"], name: "index_items_on_for_sale", using: :btree
+  add_index "items", ["stockable"], name: "index_items_on_stockable", using: :btree
+  add_index "items", ["tag_ids"], name: "index_items_on_tag_ids", using: :btree
+  add_index "items", ["unit_id"], name: "index_items_on_unit_id", using: :btree
+  add_index "items", ["updater_id"], name: "index_items_on_updater_id", using: :btree
 
   create_table "kits_products", force: :cascade do |t|
     t.integer  "product_kit_id"
@@ -701,8 +660,8 @@ ActiveRecord::Schema.define(version: 20170112230523) do
     t.datetime "updated_at",                                            null: false
   end
 
-  add_index "movement_details", ["account_id"], name: "index_movement_details_on_account_id"
-  add_index "movement_details", ["item_id"], name: "index_movement_details_on_item_id"
+  add_index "movement_details", ["account_id"], name: "index_movement_details_on_account_id", using: :btree
+  add_index "movement_details", ["item_id"], name: "index_movement_details_on_item_id", using: :btree
 
   create_table "movement_products", force: :cascade do |t|
     t.integer  "movement_id"
@@ -1112,8 +1071,8 @@ ActiveRecord::Schema.define(version: 20170112230523) do
     t.datetime "updated_at"
   end
 
-  add_index "sessions", ["session_id"], name: "index_sessions_on_session_id", unique: true
-  add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at"
+  add_index "sessions", ["session_id"], name: "index_sessions_on_session_id", unique: true, using: :btree
+  add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at", using: :btree
 
   create_table "stocks", force: :cascade do |t|
     t.integer  "store_id"
@@ -1128,12 +1087,12 @@ ActiveRecord::Schema.define(version: 20170112230523) do
     t.datetime "updated_at"
   end
 
-  add_index "stocks", ["item_id"], name: "index_stocks_on_item_id"
-  add_index "stocks", ["minimum"], name: "index_stocks_on_minimum"
-  add_index "stocks", ["quantity"], name: "index_stocks_on_quantity"
-  add_index "stocks", ["state"], name: "index_stocks_on_state"
-  add_index "stocks", ["store_id"], name: "index_stocks_on_store_id"
-  add_index "stocks", ["user_id"], name: "index_stocks_on_user_id"
+  add_index "stocks", ["item_id"], name: "index_stocks_on_item_id", using: :btree
+  add_index "stocks", ["minimum"], name: "index_stocks_on_minimum", using: :btree
+  add_index "stocks", ["quantity"], name: "index_stocks_on_quantity", using: :btree
+  add_index "stocks", ["state"], name: "index_stocks_on_state", using: :btree
+  add_index "stocks", ["store_id"], name: "index_stocks_on_store_id", using: :btree
+  add_index "stocks", ["user_id"], name: "index_stocks_on_user_id", using: :btree
 
   create_table "subcontrats", force: :cascade do |t|
     t.string   "ruc"
@@ -1212,8 +1171,8 @@ ActiveRecord::Schema.define(version: 20170112230523) do
     t.datetime "updated_at", null: false
   end
 
-  add_index "tanks", ["company_id"], name: "index_tanks_on_company_id"
-  add_index "tanks", ["product_id"], name: "index_tanks_on_product_id"
+  add_index "tanks", ["company_id"], name: "index_tanks_on_company_id", using: :btree
+  add_index "tanks", ["product_id"], name: "index_tanks_on_product_id", using: :btree
 
   create_table "tipofacturas", force: :cascade do |t|
     t.string   "descrip"
@@ -1314,8 +1273,8 @@ ActiveRecord::Schema.define(version: 20170112230523) do
     t.string   "last_sign_in_ip"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "users_packages", force: :cascade do |t|
     t.integer  "user_id"
@@ -1337,4 +1296,6 @@ ActiveRecord::Schema.define(version: 20170112230523) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "tanks", "companies"
+  add_foreign_key "tanks", "products"
 end
