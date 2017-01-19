@@ -468,7 +468,7 @@ def get_customer_payments2(moneda)
    customer_id,
    SUM(balance) as balance   
    FROM facturas
-   WHERE moneda_id = ?
+   WHERE moneda_id = ? and balance>0
    GROUP BY 2,1
    ORDER BY 2,1 ", moneda])    
 

@@ -1205,81 +1205,62 @@ class CustomerPaymentsController < ApplicationController
 
 
       lcCli = @customerpayment_rpt.first.customer_id
-      lcCliName = ""
+      $lcCliName = ""
     
 
      for  customerpayment_rpt in @customerpayment_rpt
-                   
+
         if lcCli == customerpayment_rpt.customer_id 
 
-          lcCliName = customerpayment_rpt.customer.name  
+          $lcCliName = customerpayment_rpt.customer.name  
       
-          if customerpayment_rpt.year_month.to_i <= 201612
-            @total_anterior = @total_anterior + customerpayment_rpt.balance.round(2)        
-          else
-            @total_anterior = 0.00
+          if customerpayment_rpt.year_month.to_f <= 201612
+            @total_anterior = @total_anterior + customerpayment_rpt.balance.round(2)            
+
+            if customerpayment_rpt.customer_id == 33
+              puts customerpayment_rpt.year_month
+              puts customerpayment_rpt.balance.round(2).to_s        
+              puts @total_anterior.to_s 
+            end         
+            
           end             
 
           if customerpayment_rpt.year_month == '201701'
             @total_mes01 = @total_mes01 + customerpayment_rpt.balance.round(2)        
-          else
-            @total_mes01 = 0.00
           end   
           if customerpayment_rpt.year_month == '201702' 
             @total_mes02 = @total_mes01 + customerpayment_rpt.balance.round(2)        
-          else
-            @total_mes02 = 0.00
           end 
             
           if customerpayment_rpt.year_month == '201703'   
             @total_mes03 = @total_mes01 + customerpayment_rpt.balance.round(2)        
-          else
-            @total_mes03 = 0.00
           end 
           if customerpayment_rpt.year_month == '201704'     
             @total_mes04 = @total_mes01 + customerpayment_rpt.balance.round(2)        
-          else
-            @total_mes04 = 0.00
           end 
           if customerpayment_rpt.year_month == '201705'       
             @total_mes05 = @total_mes01 + customerpayment_rpt.balance.round(2)        
-          else
-            @total_mes05 = 0.00
           end 
           if customerpayment_rpt.year_month == '201706'
             @total_mes06 = @total_mes01 + customerpayment_rpt.balance.round(2)        
-          else
-            @total_mes06 = 0.00
           end 
           if customerpayment_rpt.year_month == '201707' 
             @total_mes07 = @total_mes01 + customerpayment_rpt.balance.round(2)        
-          else
-            @total_mes07 = 0.00
           end 
           if customerpayment_rpt.year_month == '201708'   
             @total_mes08 = @total_mes01 + customerpayment_rpt.balance.round(2)        
-          else
-            @total_mes08 = 0.00
           end 
           if customerpayment_rpt.year_month == '201709'     
             @total_mes09 = @total_mes01 + customerpayment_rpt.balance.round(2)        
-          else
-            @total_mes09 = 0.00
           end 
           if customerpayment_rpt.year_month == '201710'       
             @total_mes10 = @total_mes01 + customerpayment_rpt.balance.round(2)        
-          else
-            @total_mes10 = 0.00
           end 
           if customerpayment_rpt.year_month == '201711'   
             @total_mes11 = @total_mes01 + customerpayment_rpt.balance.round(2)        
-          else
-            @total_mes11 = 0.00
           end 
           if customerpayment_rpt.year_month == '201712'     
             @total_mes12 = @total_mes01 + customerpayment_rpt.balance.round(2)        
-          else
-            @total_mes12 = 0.00
           end   
         else
 
@@ -1300,7 +1281,7 @@ class CustomerPaymentsController < ApplicationController
 
             row = []
             row << nroitem.to_s        
-            row << lcCliName
+            row << $lcCliName
             row << sprintf("%.2f",@total_anterior.to_s)
             row << sprintf("%.2f",@total_mes01.to_s)
             row << sprintf("%.2f",@total_mes02.to_s)
@@ -1334,7 +1315,7 @@ class CustomerPaymentsController < ApplicationController
             @total_cliente = 0 
             ## TOTAL XMES GENERAL
 
-          
+            $lcCliName =customerpayment_rpt.customer.name
 
             lcCli = customerpayment_rpt.customer_id
         
@@ -1359,8 +1340,9 @@ class CustomerPaymentsController < ApplicationController
 
         end 
          @total_general = @total_general + customerpayment_rpt.balance.round(2)
-      end  
+       end   
 
+      #fin for
           #ultimo cliente 
 
           @total_cliente = @total_anterior+
