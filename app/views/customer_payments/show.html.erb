@@ -83,6 +83,9 @@
       <th>
         Factory  
       </th>
+      <th>
+        Ajuste 
+      </th>
 
       <th>
         Total
@@ -109,6 +112,10 @@
           <%=  @customerpayment.operacion    %>
         </td>
 
+ |||||||<td class="bordered_bottom bordered_right">
+        
+        </td>
+        
         <td class="bordered_bottom bordered_right">
             <%=  @customerpayment.total     %>
         </td>
@@ -134,6 +141,9 @@
          <td class="bordered_bottom bordered_right">
        <%=  productItem.factory   %>
         </td>
+         <td class="bordered_bottom bordered_right">
+       <%=  productItem.ajuste    %>
+        </td>
 
         <td class="bordered_bottom bordered_right">
           <%= money(productItem.total) %>
@@ -142,12 +152,12 @@
       </tr>
     <% end %>
     <tr>
-      <td colspan="5" class="bordered_bottom bordered_right">
+      <td colspan="6" class="bordered_bottom bordered_right">
         &nbsp;
       </td>
     </tr>
     <tr>
-      <td colspan="4" class="bordered_bottom bordered_right bold">
+      <td colspan="5" class="bordered_bottom bordered_right bold">
         Factory:
       </td>
       <td class="bordered_bottom bordered_right bold right">
@@ -156,7 +166,7 @@
     </tr>
 
     <tr>
-      <td colspan="4" class="bordered_bottom bordered_right bold">
+      <td colspan="5" class="bordered_bottom bordered_right bold">
         Total:
       </td>
       <td class="bordered_bottom bordered_right bold right">

@@ -17,6 +17,7 @@ self.per_page = 20
                      "TIPO",
                      "DOCUMENTO",
                      "CLIENTE ",
+                     "AJUSTE",
                      "FACTORY",
                      "IMPORTE  "]
   
@@ -94,10 +95,10 @@ self.per_page = 20
     ret = 0
     
     for invoice in invoices
-      if(value == "total")
-        ret += invoice.total
-      else
+      if(value == "factory")
         ret += invoice.factory
+      else
+        ret += invoice.ajuste
       end
     end
     
@@ -180,15 +181,16 @@ self.per_page = 20
         parts = item.split("|BRK|")
         
         id = parts[0]
-        factory = parts[1]
-        balance = parts[2]
+        ajuste  = parts[1]
+        factory = parts[2]
+        balance = parts[3]
                   
         
         begin
           factura = Factura.find(id.to_i)          
 
-          new_factura = CustomerPaymentDetail.new(:customer_payment_id => self.id, 
-                                  :factura_id => factura.id, :factory => factory,:total => balance.to_f )
+          new_factura = CustomerPaymentDetail.new(:customer_payment_id => self.id,:ajuste => ajuste.to_f, 
+                                  :factura_id => factura.id, :factory => factory.to_f,:total => balance.to_f )
           new_factura.save
 
           if factura.charge== nil
@@ -204,7 +206,8 @@ self.per_page = 20
          
           @last_payment = factura.pago + factura.balance.to_f.round(2) 
           @last_balance = factura.balance 
-          @newbalance = @last_balance - balance.to_f.round(2) 
+          @newbalance = @last_balance - balance.to_f.round(2) + ajuste.to_f.round(2)
+
           factura.update_attributes(pago: @last_payment,balance: @newbalance )  
           
         end
@@ -242,7 +245,7 @@ self.per_page = 20
 
   def get_payments    
  @itemproducts = CustomerPaymentDetail.find_by_sql(['Select customer_payment_details.total,
-      facturas.code,facturas.customer_id,facturas.fecha,customer_payment_details.factory from customer_payment_details   
+      facturas.code,facturas.customer_id,facturas.fecha,customer_payment_details.factory,customer_payment_details.ajuste from customer_payment_details   
       INNER JOIN facturas ON   customer_payment_details.factura_id = facturas.id
       WHERE  customer_payment_details.customer_payment_id = ?', self.id ])
 

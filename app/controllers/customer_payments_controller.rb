@@ -9,7 +9,6 @@ class CustomerPaymentsController < ApplicationController
 
   before_filter :authenticate_user!, :checkServices
 
-
   def new1
 
     @company = Company.find(params[:company_id])
@@ -130,6 +129,7 @@ class CustomerPaymentsController < ApplicationController
       row<< @customerpayment.documento    
       row<< " " 
       row<< " "
+      row<< " "
       row<< @customerpayment.total.to_s 
       $lcDeposito =sprintf("%.2f",@customerpayment.total.to_s) 
       table_content << row     
@@ -141,6 +141,7 @@ class CustomerPaymentsController < ApplicationController
             row << " "            
             row << product.code
             row << product.get_customer(product.customer_id)
+            row << product.ajuste.to_s
             row << product.factory.to_s
             row << product.total.to_s
 
@@ -176,10 +177,11 @@ class CustomerPaymentsController < ApplicationController
    
 
    $lcFactory  = sprintf("%.2f",@customerpayment.get_customer_payment_value("factory").round(2).to_s)  
+   $lcAjuste   = sprintf("%.2f",@customerpayment.get_customer_payment_value("ajuste").round(2).to_s)  
 
       data0 = [[" "," "," "," ","TOTALES DEPOSITO => ",$lcDeposito ],
                [" "," "," "," ","COMISION FACTORY => ",$lcFactory],
-               [" "," "," "," ","AJUSTE REDONDEDO => ","0.00"] ]
+               [" "," "," "," ","AJUSTE REDONDEDO => ",$lcAjuste ] ]
 
       data =[  ["BANCO","NRO.CUENTA","OPERACION :","GIRADO :","MONEDA : ","T/C."],
                [$lcBanco,$lcAccount,$lcCheque,$lcFecha1,$lcMon,"0.00"]]
@@ -316,16 +318,18 @@ class CustomerPaymentsController < ApplicationController
  
         
         parts = item.split("|BRK|")        
-        id = parts[0]        
-        cantidad = parts[1]       
-        price = parts[2]         
+        id = parts[0]
+        ajuste = parts[1]        
+        cantidad = parts[2]       
+        price = parts[3]         
 
 
         product = Factura.find(id.to_i)
         product[:tax] = i        
         product[:subtotal] = price.to_f
-        product[:pago] =cantidad.to_f
-
+        product[:pago]     = cantidad.to_f
+        product[:charge]   = ajuste.to_f
+        ajuste  = product[:charge]
         factory = product[:pago]
         total   = product[:subtotal]
 
@@ -769,7 +773,6 @@ class CustomerPaymentsController < ApplicationController
             puts nroitem 
         end
 
-        
       result = pdf.table table_content, {:position => :center,
                                         :header => true,
                                         :width => pdf.bounds.width
@@ -979,9 +982,6 @@ class CustomerPaymentsController < ApplicationController
       
       table_content << row
 
-
-
-
       result = pdf.table table_content, {:position => :center,
                                         :header => true,
                                         :width => pdf.bounds.width
@@ -1029,6 +1029,7 @@ class CustomerPaymentsController < ApplicationController
         nroitem = 1
         
         @banks = BankAcount.all
+        @totalgeneral = 0
 
         for banco in @banks
 
@@ -1040,22 +1041,40 @@ class CustomerPaymentsController < ApplicationController
           row << nroitem.to_s
           row << banco.number 
           row << sprintf("%.2f",total1.to_s)
-          
+          @totalgeneral = @totalgeneral + total1 
           nroitem = nroitem + 1
-
           table_content2 << row
         end   
 
         end
 
-        
+         $lcFactory = @company.get_customer_payments_value_otros(@fecha1,@fecha2,'factory')      
+         $lcAjuste = @company.get_customer_payments_value_otros(@fecha1,@fecha2,'ajuste')      
+
+         @totalgeneral = @totalgeneral + $lcAjuste 
 
         row = []
         row << nroitem.to_s
         row << "FACTORY"
-        row << sprintf("%.2f",@total_soles.to_s)
+        row << sprintf("%.2f",$lcFactory.to_s)
 
         table_content2 << row
+        row = []
+        row << nroitem.to_s
+        row << "AJUSTE"
+        row << sprintf("%.2f",$lcAjuste.to_s)
+
+        table_content2 << row
+        row = []
+        row << nroitem.to_s
+        row << "TOTAL => "
+        row << sprintf("%.2f",@totalgeneral.to_s)
+
+        table_content2 << row
+        
+
+
+
 
       result = pdf.table table_content2, {:position => :center,
                                         :header => true,
@@ -1086,7 +1105,10 @@ class CustomerPaymentsController < ApplicationController
     @fecha1 = params[:fecha1]
     @fecha2 = params[:fecha2]
 
+
+
     @customerpayment_rpt = @company.get_customer_payments(@fecha1,@fecha2)  
+
 
       
     Prawn::Document.generate("app/pdf_output/rpt_customerpayment.pdf") do |pdf|
@@ -1620,14 +1642,21 @@ class CustomerPaymentsController < ApplicationController
 
         end
 
-        @total_soles = @company.get_customer_payments_value_otros(@fecha1,@fecha2,"factory") 
+        @total_factory = @company.get_customer_payments_value_otros(@fecha1,@fecha2,"factory") 
+        @total_ajuste = @company.get_customer_payments_value_otros(@fecha1,@fecha2,"ajuste") 
+
         row = []
         row << nroitem.to_s
         row << "FACTORY"
-        row << sprintf("%.2f",@total_soles.to_s)
-
+        row << sprintf("%.2f",@total_factory.to_s)
         table_content2 << row
-        @total_general = @total_general + total1
+        row = []
+        row << nroitem.to_s
+        row << "AJUSTE"
+        row << sprintf("%.2f",@total_ajuste.to_s)
+        table_content2 << row
+
+        @total_general = @total_general  + @total_ajuste 
 
         
           row =[]

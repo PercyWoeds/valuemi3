@@ -117,20 +117,25 @@
       Ingrese un termino de busqueda para encontrar un documento 
     </div>
     <br />  
+    <div>
+      <strong>Saldo Original:</strong><br />
+      <span id="ac_item_total2">0.00</span>
+    </div>
 
-
-  
     <div >
       <strong>Total:</strong><br />    
-    <input type="text" name="ac_item_total" id="ac_item_total" value="0 " class="tf_short" />
+    <input type="text" name="ac_item_total" id="ac_item_total" value="0.00" class="tf_short" />
     </div>
 
     <div >
      <strong>Factory :</strong><br />
-
-    <input type="text" name="ac_item_factory" id="ac_item_factory" value="0" class="tf_short" />
-
+    <input type="text" name="ac_item_factory" id="ac_item_factory" value="0.00" class="tf_short"/>
     </div>
+    <div >
+     <strong>Ajuste :</strong><br />
+    <input type="text" name="ac_item_ajuste" id="ac_item_ajuste" value="0.00" class="tf_short"/>
+    </div>
+
 
     <div class="small">
      Cantidad del producto para agregar una guia.
@@ -166,7 +171,8 @@
     $("#ac_item").result(function(event, data, formatted) {
       $("#ac_item_id").val(data[2]);
       $("#ac_item_total").val(data[4]);  
-      updateItemTotal6();
+      
+      updateItemTotalCP();
     });
     
     $("#ac_customer").autocomplete("/customer_payments/ac_customers/<%= @company.id %>", {
@@ -193,10 +199,17 @@
     });    
     
     
-    $("#ac_item_price").bind("keyup", function() {
+    $("#ac_item_total").bind("keyup", function() {
       updateItemTotalCP();
     });
     
+    $("#ac_item_factory").bind("keyup", function() {
+      updateItemTotalCP();
+    });
+    
+    $("#ac_item_ajuste").bind("keyup", function() {
+      updateItemTotalCP();
+    });
     
     <% if @customers_lines %>
     alert 'holas customers_lines';

@@ -1184,6 +1184,8 @@
       var item_total = 0
       var item_id = $("#ac_item_id").val();      
       var factory = $("#ac_item_factory").val();      
+      var ajuste = $("#ac_item_ajuste").val();      
+
       var price = $("#ac_item_total").val();   
 
       var items_arr = $("#items").val().split(",");
@@ -1191,11 +1193,15 @@
       if(factory == "" || !isNumeric(factory)) {
         alert("Por favor ingrese una cantidad validad");
       }     
+
       else if  (price == "" || !isNumeric(price)) {
         alert("Por favor ingrese un precio valido  ");
       } 
+      else if  (ajuste == "" || !isNumeric(ajuste)) {
+        alert("Por favor ingrese un importe de ajuste valido  ");
+      }       
       else {
-        var item_line = item_id + "|BRK|" + factory + "|BRK|"+ price + "|BRK|";
+        var item_line = item_id + "|BRK|" + ajuste + "|BRK|"+ factory + "|BRK|"+ price + "|BRK|";
         
         $("#items").val($("#items").val() + "," + item_line);
         
@@ -1205,6 +1211,8 @@
         $("#ac_item").val("");
         $("#ac_item_total").val("");
         $("#ac_item_factory").val("");
+        $("#ac_item_ajuste").val("");
+     
 
         updateItemTotalCP();
       }
@@ -1216,17 +1224,28 @@
 
   // Update price total for invoice
   function updateItemTotalCP() {
-    
-    var price = $("#ac_item_total").val();
+    var saldooriginal = $("#ac_item_total").val();
 
-    if( isNumeric(price)) {
-      var total =  price *1;
+    var price     = $("#ac_item_total").val();
+
+    var factory  = $("#ac_item_factory").val();
+
+    var ajuste   = $("#ac_item_ajuste").val();
+    $("#ac_item_total2").html(saldooriginal);
+
+    if( isNumeric(price) && isNumeric(factory) && isNumeric(ajuste) && isNumeric(saldooriginal) )  {
       
-      $("#ac_item_total").html(total);
+      var total = price+factory + ajuste ;
+
+      if (total > saldooriginal) {
+     
+
+      }
       
     } else {
-      
-      $("#ac_item_total").html("0.00");
+
+    $("#ac_item_total2").html(saldooriginal);
+            
     }
 
   }

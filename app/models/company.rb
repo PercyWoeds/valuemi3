@@ -131,7 +131,7 @@ class Company < ActiveRecord::Base
   end
   
   def get_trucks()
-     trucks = Truck.all 
+     trucks = Truck.all.order('placa') 
      return trucks
   end
   
@@ -445,10 +445,8 @@ def get_facturas_day_value_cliente(fecha1,fecha2,cliente,value = "total")
 
           @detail = CustomerPaymentDetail.find(factura.id)
 
-          if(value == "ajuste_debe")
-            ret += @detail.ajuste_debe
-          elsif(value == "ajuste_haber")
-            ret += @detail.ajuste_haber
+          if(value == "ajuste")
+            ret += @detail.ajuste
           else         
             ret += @detail.factory
           end
