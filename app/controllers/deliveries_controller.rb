@@ -923,8 +923,6 @@ end
       
   end
 
-
-
   def guias3
     @company=Company.find(params[:company_id])      
     @fecha1 = params[:fecha1]    
@@ -944,14 +942,135 @@ end
         pdf = build_pdf_header3(pdf)
         pdf = build_pdf_body3(pdf)
         build_pdf_footer3(pdf)
-        $lcFileName =  "app/pdf_output/guias3.pdf"      
-        
+        $lcFileName =  "app/pdf_output/guias3.pdf"              
     end     
 
     $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
-
     send_file("app/pdf_output/guias3.pdf", :type => 'application/pdf', :disposition => 'inline')
+  end
+##-----------------------------------------------------------------------------------
+## REPORTE DE GUIAS INGRESADAS X FECHA INGRESO 
+##-----------------------------------------------------------------------------------
+  def build_pdf_header4(pdf)
+      pdf.font "Helvetica" , :size => 8
+     $lcCli  =  @company.name 
+     $lcdir1 = @company.address1+@company.address2+@company.city+@company.state
 
+     $lcFecha1= Date.today.strftime("%d/%m/%Y").to_s
+     $lcHora  = Time.now.to_s
+
+    max_rows = [client_data_headers.length, invoice_headers.length, 0].max
+      rows = []
+      (1..max_rows).each do |row|
+        rows_index = row - 1
+        rows[rows_index] = []
+        rows[rows_index] += (client_data_headers.length >= row ? client_data_headers[rows_index] : ['',''])
+        rows[rows_index] += (invoice_headers.length >= row ? invoice_headers[rows_index] : ['',''])
+      end
+
+      if rows.present?
+
+        pdf.table(rows, {
+          :position => :center,
+          :cell_style => {:border_width => 0},
+          :width => pdf.bounds.width
+        }) do
+          columns([0, 2]).font_style = :bold
+
+        end
+
+        pdf.move_down 10
+
+      end
+
+
+      pdf.move_down 25
+      pdf 
+  end   
+
+  def build_pdf_body4(pdf)
+    
+    pdf.text "Guias por fecha ingreso  : Desde "+@fecha1.to_s  + "Hasta : "+ @fecha2.to_s, :size => 11 
+    pdf.text ""
+    pdf.font "Helvetica" , :size => 6
+
+      headers = []
+      table_content = []
+
+      Delivery::TABLE_HEADERS3.each do |header|
+        cell = pdf.make_cell(:content => header)
+        cell.background_color = "FFFFCC"
+        headers << cell
+      end
+      table_content << headers
+      nroitem = 1
+     
+       for  product in @delivery
+            lcOrigen = product.get_origen(product.remite_id)
+            row = []
+            row << nroitem.to_s
+            row << product.fecha1.strftime("%d/%m/%Y")
+            row << product.created_at.strftime("%d/%m/%Y")
+            row << product.get_remision
+            row << product.code
+            row << lcOrigen
+            row << product.customer.name                          
+            row << product.get_processed
+            table_content << row
+
+            nroitem=nroitem + 1
+            puts nroitem 
+        end
+
+      result = pdf.table table_content, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width
+                                        } do 
+                                          columns([0]).align=:center
+                                          columns([1]).align=:left
+                                          columns([2]).align=:left
+                                          columns([3]).align=:left
+                                          columns([4]).align=:left  
+                                          columns([5]).align=:left                                         
+                                          columns([6]).align=:right
+                                        end                                          
+      pdf.move_down 10      
+      pdf
+
+    end
+
+
+    def build_pdf_footer4(pdf)
+
+        pdf.text ""
+        pdf.text "" 
+
+        pdf.bounding_box([0, 20], :width => 535, :height => 40) do
+        pdf.draw_text "Company: #{@company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
+
+      end
+
+      pdf
+      
+  end
+
+
+  def guias4
+    @company=Company.find(params[:company_id])      
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]    
+   
+    @delivery = @company.get_guias_4(@fecha1,@fecha2)  
+
+    Prawn::Document.generate("app/pdf_output/guias4.pdf") do |pdf|      
+        pdf.font "Helvetica"
+        pdf = build_pdf_header4(pdf)
+        pdf = build_pdf_body4(pdf)
+        build_pdf_footer4(pdf)
+        $lcFileName =  "app/pdf_output/guias4.pdf"              
+    end     
+    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
+    send_file("app/pdf_output/guias4.pdf", :type => 'application/pdf', :disposition => 'inline')
   end
 
 

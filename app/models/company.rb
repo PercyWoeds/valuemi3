@@ -348,10 +348,13 @@ def get_guias_2(fecha1,fecha2)
     return @delivery
  end 
 
-def get_guias_3(fecha1,fecha2)
+ def get_guias_3(fecha1,fecha2)
     @delivery = Delivery.where(["company_id = ? AND fecha1 >= ? AND fecha1 <= ? ", self.id, "#{fecha1} 00:00:00", "#{fecha2} 23:59:59"])
+    return @delivery
+ end 
 
-    
+ def get_guias_4(fecha1,fecha2)
+    @delivery = Delivery.where(["company_id = ? AND created_at >= ? AND created_at <= ? ", self.id, "#{fecha1} 00:00:00", "#{fecha2} 23:59:59"]).order('created_at')
     return @delivery
  end 
 

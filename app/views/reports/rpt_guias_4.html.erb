@@ -1,0 +1,34 @@
+<%= render 'layouts/charts' %>
+<%
+invoices_subtotal = 0
+invoices_tax = 0
+invoices_total = 0
+subtotals = []
+taxes = []
+totals = []
+%>
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %> &raquo;
+  <%= link_to "Reports", "/companies/reports/#{@company.id}" %>
+</div>
+
+<h1>
+  <%= image_tag("reports_48.png", :class => "vmiddle") %>
+  Guias ingresadas al sistema por fecha ingreso
+</h1>
+
+<form method="get" action="/deliveries/guias4/<%= @company.id %>">
+  <div class="field">
+      <input type="date" name="fecha1" value="2007-10-01" style = "width: 80px" >
+    </div>
+	<div class="field">
+		<input type="date" name="fecha2" value="2017-01-18" style = "width: 80px" >
+  </div>
+
+  <input type="submit" value="Ver" class="small_btn" />
+  <a href="/deliveries/guias4/<%= @company.id %>" class="small_btn">Today</a>
+</form>
+
+<br />
+
