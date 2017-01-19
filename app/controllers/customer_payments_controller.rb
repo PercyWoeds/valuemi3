@@ -1205,11 +1205,14 @@ class CustomerPaymentsController < ApplicationController
 
 
       lcCli = @customerpayment_rpt.first.customer_id
+      lcCliName = ""
     
 
      for  customerpayment_rpt in @customerpayment_rpt
                    
         if lcCli == customerpayment_rpt.customer_id 
+
+          lcCliName = customerpayment_rpt.customer.name  
       
           if customerpayment_rpt.year_month.to_i <= 201612
             @total_anterior = @total_anterior + customerpayment_rpt.balance.round(2)        
@@ -1297,7 +1300,7 @@ class CustomerPaymentsController < ApplicationController
 
             row = []
             row << nroitem.to_s        
-            row << customerpayment_rpt.customer.name  
+            row << lcCliName
             row << sprintf("%.2f",@total_anterior.to_s)
             row << sprintf("%.2f",@total_mes01.to_s)
             row << sprintf("%.2f",@total_mes02.to_s)
@@ -1351,9 +1354,63 @@ class CustomerPaymentsController < ApplicationController
             @total_cliente = 0 
 
           nroitem = nroitem + 1 
+
+
+
         end 
          @total_general = @total_general + customerpayment_rpt.balance.round(2)
       end  
+
+          #ultimo cliente 
+
+          @total_cliente = @total_anterior+
+          @total_mes01+
+          @total_mes02+
+          @total_mes03+
+          @total_mes04+
+          @total_mes05+
+          @total_mes06+
+          @total_mes07+
+          @total_mes08+
+          @total_mes09+
+          @total_mes10+
+          @total_mes11+
+          @total_mes12
+            @total_anterior_column = @total_anterior_column + @total_anterior
+            @total_mes01_column = @total_mes01_column +@total_mes01
+            @total_mes02_column = @total_mes02_column +@total_mes02
+            @total_mes03_column = @total_mes03_column +@total_mes03
+            @total_mes04_column = @total_mes04_column +@total_mes04
+            @total_mes05_column = @total_mes05_column +@total_mes05
+            @total_mes06_column = @total_mes06_column +@total_mes06
+            @total_mes07_column = @total_mes07_column +@total_mes07
+            @total_mes08_column = @total_mes08_column +@total_mes08
+            @total_mes09_column = @total_mes09_column +@total_mes09
+            @total_mes10_column = @total_mes10_column +@total_mes10
+            @total_mes11_column = @total_mes11_column +@total_mes11
+            @total_mes12_column = @total_mes12_column +@total_mes12
+          
+            row = []
+            row << nroitem.to_s        
+            row << customerpayment_rpt.customer.name  
+            row << sprintf("%.2f",@total_anterior.to_s)
+            row << sprintf("%.2f",@total_mes01.to_s)
+            row << sprintf("%.2f",@total_mes02.to_s)
+            row << sprintf("%.2f",@total_mes03.to_s)
+            row << sprintf("%.2f",@total_mes04.to_s)
+            row << sprintf("%.2f",@total_mes05.to_s)
+            row << sprintf("%.2f",@total_mes06.to_s)
+            row << sprintf("%.2f",@total_mes07.to_s)
+            row << sprintf("%.2f",@total_mes08.to_s)
+            row << sprintf("%.2f",@total_mes09.to_s)
+            row << sprintf("%.2f",@total_mes10.to_s)
+            row << sprintf("%.2f",@total_mes11.to_s)
+            row << sprintf("%.2f",@total_mes12.to_s)
+            row << sprintf("%.2f",@total_cliente.to_s)
+
+            table_content << row            
+            
+
 
         row = []
          row << ""       
@@ -1443,6 +1500,7 @@ class CustomerPaymentsController < ApplicationController
     @customerpayment_rpt = @company.get_customer_payments2(@tipomoneda)
       
     Prawn::Document.generate("app/pdf_output/rpt_customerpayment2.pdf") do |pdf|        
+
         pdf.start_new_page(:size => "A4", :layout => :landscape)
         pdf.font "Helvetica"
         pdf = build_pdf_header_rpt2(pdf)
