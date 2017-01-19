@@ -1257,51 +1257,7 @@ class CustomerPaymentsController < ApplicationController
             @total_mes12 = @total_mes12 + customerpayment_rpt.balance.round(2)        
           end   
         else
-
-          if customerpayment_rpt.year_month.to_f <= 201612
-            @total_anterior = @total_anterior + customerpayment_rpt.balance.round(2)          
-          end             
-
-          if customerpayment_rpt.year_month == '201701'
-            @total_mes01 = @total_mes01 + customerpayment_rpt.balance.round(2)        
-          end   
-
-          if customerpayment_rpt.year_month == '201702' 
-            @total_mes02 = @total_mes02 + customerpayment_rpt.balance.round(2)        
-          end 
-            
-          if customerpayment_rpt.year_month == '201703'   
-            @total_mes03 = @total_mes03 + customerpayment_rpt.balance.round(2)        
-          end 
-          if customerpayment_rpt.year_month == '201704'     
-            @total_mes04 = @total_mes04 + customerpayment_rpt.balance.round(2)        
-          end 
-          if customerpayment_rpt.year_month == '201705'       
-            @total_mes05 = @total_mes05 + customerpayment_rpt.balance.round(2)        
-          end 
-          if customerpayment_rpt.year_month == '201706'
-            @total_mes06 = @total_mes06 + customerpayment_rpt.balance.round(2)        
-          end 
-          if customerpayment_rpt.year_month == '201707' 
-            @total_mes07 = @total_mes07 + customerpayment_rpt.balance.round(2)        
-          end 
-          if customerpayment_rpt.year_month == '201708'   
-            @total_mes08 = @total_mes08 + customerpayment_rpt.balance.round(2)        
-          end 
-          if customerpayment_rpt.year_month == '201709'     
-            @total_mes09 = @total_mes09 + customerpayment_rpt.balance.round(2)        
-          end 
-          if customerpayment_rpt.year_month == '201710'       
-            @total_mes10 = @total_mes10 + customerpayment_rpt.balance.round(2)        
-          end 
-          if customerpayment_rpt.year_month == '201711'   
-            @total_mes11 = @total_mes11 + customerpayment_rpt.balance.round(2)        
-          end 
-          if customerpayment_rpt.year_month == '201712'     
-            @total_mes12 = @total_mes12 + customerpayment_rpt.balance.round(2)        
-          end   
-
-
+          
             @total_cliente = @total_anterior+
             @total_mes01+
             @total_mes02+
@@ -1353,9 +1309,9 @@ class CustomerPaymentsController < ApplicationController
             ## TOTAL XMES GENERAL
 
             $lcCliName =customerpayment_rpt.customer.name
-
             lcCli = customerpayment_rpt.customer_id
-        
+
+
             @total_anterior = 0
             @total_mes01 = 0
             @total_mes02 = 0
@@ -1370,6 +1326,49 @@ class CustomerPaymentsController < ApplicationController
             @total_mes11 = 0
             @total_mes12 = 0
             @total_cliente = 0 
+
+            if customerpayment_rpt.year_month.to_f <= 201612
+            @total_anterior = @total_anterior + customerpayment_rpt.balance.round(2)          
+          end             
+
+          if customerpayment_rpt.year_month == '201701'
+            @total_mes01 = @total_mes01 + customerpayment_rpt.balance.round(2)        
+          end   
+
+          if customerpayment_rpt.year_month == '201702' 
+            @total_mes02 = @total_mes02 + customerpayment_rpt.balance.round(2)        
+          end 
+            
+          if customerpayment_rpt.year_month == '201703'   
+            @total_mes03 = @total_mes03 + customerpayment_rpt.balance.round(2)        
+          end 
+          if customerpayment_rpt.year_month == '201704'     
+            @total_mes04 = @total_mes04 + customerpayment_rpt.balance.round(2)        
+          end 
+          if customerpayment_rpt.year_month == '201705'       
+            @total_mes05 = @total_mes05 + customerpayment_rpt.balance.round(2)        
+          end 
+          if customerpayment_rpt.year_month == '201706'
+            @total_mes06 = @total_mes06 + customerpayment_rpt.balance.round(2)        
+          end 
+          if customerpayment_rpt.year_month == '201707' 
+            @total_mes07 = @total_mes07 + customerpayment_rpt.balance.round(2)        
+          end 
+          if customerpayment_rpt.year_month == '201708'   
+            @total_mes08 = @total_mes08 + customerpayment_rpt.balance.round(2)        
+          end 
+          if customerpayment_rpt.year_month == '201709'     
+            @total_mes09 = @total_mes09 + customerpayment_rpt.balance.round(2)        
+          end 
+          if customerpayment_rpt.year_month == '201710'       
+            @total_mes10 = @total_mes10 + customerpayment_rpt.balance.round(2)        
+          end 
+          if customerpayment_rpt.year_month == '201711'   
+            @total_mes11 = @total_mes11 + customerpayment_rpt.balance.round(2)        
+          end 
+          if customerpayment_rpt.year_month == '201712'     
+            @total_mes12 = @total_mes12 + customerpayment_rpt.balance.round(2)        
+          end   
 
           nroitem = nroitem + 1 
 
