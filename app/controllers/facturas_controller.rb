@@ -1039,7 +1039,7 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
     
       @fecha2 = params[:fecha2]
     
-
+    @company.actualizar_fecha2
     @facturas_rpt = @company.get_pendientes_day(@fecha1,@fecha2)  
       
     Prawn::Document.generate("app/pdf_output/rpt_pendientes.pdf") do |pdf|
@@ -1065,6 +1065,7 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]
     @cliente = params[:customer_id]      
+    
     @facturas_rpt = @company.get_pendientes_day_cliente(@fecha1,@fecha2,@cliente)  
 
 
