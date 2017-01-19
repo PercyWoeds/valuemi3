@@ -844,7 +844,7 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
             row << lcDoc
             row << product.code
             row << product.fecha.strftime("%d/%m/%Y")
-            row << fechas2.strftime("%d/%m/%Y")
+            row << product.fecha2.strftime("%d/%m/%Y")
             row << product.customer.name
             row << product.moneda.symbol  
 
@@ -1065,7 +1065,7 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]
     @cliente = params[:customer_id]      
-    
+
     @facturas_rpt = @company.get_pendientes_day_cliente(@fecha1,@fecha2,@cliente)  
 
 
