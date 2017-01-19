@@ -126,11 +126,10 @@ class CustomerPaymentsController < ApplicationController
       row=[]
       row<< " "
       row<< @customerpayment.get_document(@customerpayment.document_id)    
-      row<< @customerpayment.documento    
-      row<< " " 
+      row<< @customerpayment.documento        
       row<< " "
       row<< " "
-      row<< @customerpayment.total.to_s 
+      row<< sprintf("%.2f",@customerpayment.total.to_s) 
       $lcDeposito =sprintf("%.2f",@customerpayment.total.to_s) 
       table_content << row     
 
@@ -140,10 +139,9 @@ class CustomerPaymentsController < ApplicationController
             row << nroitem.to_s          
             row << " "            
             row << product.code
-            row << product.get_customer(product.customer_id)
-            row << product.ajuste.to_s
-            row << product.factory.to_s
-            row << product.total.to_s
+            row << product.get_customer(product.customer_id)          
+            row << sprintf("%.2f",product.factory.to_s)
+            row << sprintf("%.2f",product.total.to_s)
 
             table_content << row
             nroitem=nroitem + 1      
@@ -157,8 +155,8 @@ class CustomerPaymentsController < ApplicationController
                                         } do 
                                           columns([0]).align=:center
                                           columns([1]).align=:left 
-                                          columns([2]).align=:left
-                                          columns([3]).align=:left 
+                                          columns([2]).align=:left                                          
+                                          columns([3]).align=:left
                                           columns([4]).align=:right 
                                           columns([5]).align=:right 
                                         end
@@ -575,7 +573,7 @@ class CustomerPaymentsController < ApplicationController
     @customerpayment = CustomerPayment.find(params[:id])
     @company = @customerpayment.company
     
-    if(params[:ac_customer] and params[:ac_customer] != "")
+      if(params[:ac_customer] and params[:ac_customer] != "")
       @ac_customer = params[:ac_customer]
     else
       @ac_customer = @customerpayment.customer.name
