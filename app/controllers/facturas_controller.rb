@@ -844,7 +844,7 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
             row << lcDoc
             row << product.code
             row << product.fecha.strftime("%d/%m/%Y")
-            row << product.fecha2
+            row << product.fecha2.strftime("%d/%m/%Y")
             row << product.customer.name
             row << product.moneda.symbol  
 
@@ -888,7 +888,7 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
             row << lcDoc
             row << product.code
             row << product.fecha.strftime("%d/%m/%Y")
-            row << fechas2.strftime("%d/%m/%Y")
+            row << product.fecha2.strftime("%d/%m/%Y")
             row << product.customer.name
             row << product.moneda.symbol  
 
