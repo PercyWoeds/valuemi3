@@ -1,5 +1,6 @@
 class Tranportorder < ActiveRecord::Base
 
+	validates_presence_of :fecha1,:fecha2
 
 	belongs_to :company
   	belongs_to :location
