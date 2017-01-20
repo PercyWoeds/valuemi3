@@ -66,6 +66,7 @@ class PurchaseordersController < ApplicationController
 
            $lcNumero = ordencompra.code    
            $lcFecha = ordencompra.fecha1
+           $lcProveedor = ordencompra.supplier.name 
 
           @orden_compra1  = @company.get_orden_detalle(ordencompra.id)
 
@@ -73,6 +74,7 @@ class PurchaseordersController < ApplicationController
        for  orden in @orden_compra1
             row = []
             row << nroitem.to_s
+            row << $lcProveedor 
             row << $lcNumero 
             row << $lcFecha.strftime("%d/%m/%Y")        
             row << orden.quantity.to_s
@@ -105,15 +107,6 @@ class PurchaseordersController < ApplicationController
                                         end
 
       pdf.move_down 10      
-      pdf.table invoice_summary, {
-        :position => :right,
-        :cell_style => {:border_width => 1},
-        :width => pdf.bounds.width/2
-      } do
-        columns([0]).font_style = :bold
-        columns([1]).align = :right
-        
-      end
       pdf
 
     end
