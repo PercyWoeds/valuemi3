@@ -70,17 +70,17 @@ class PurchaseordersController < ApplicationController
           @orden_compra1  =@company.get_orden_detalle(ordencompra.id)
 
 
-       for  product in @orden_compra1.get_products()
+       for  orden in @orden_compra1
             row = []
             row << nroitem.to_s
             row << $lcNumero 
             row << $lcFecha       
-            row << product.quantity.to_s
-            row << product.code
-            row << product.name
-            row << product.price.round(2).to_s
-            row << product.discount.round(2).to_s
-            row << product.total.round(2).to_s
+            row << orden.quantity.to_s
+            row << orden.product.code
+            row << orden.product.name
+            row << orden.price.round(2).to_s
+            row << orden.discount.round(2).to_s
+            row << orden.total.round(2).to_s
             table_content << row
 
             nroitem=nroitem + 1
