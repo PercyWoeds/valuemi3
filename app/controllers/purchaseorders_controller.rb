@@ -67,7 +67,7 @@ class PurchaseordersController < ApplicationController
            $lcNumero = ordencompra.code    
            $lcFecha = ordencompra.fecha1
 
-          @orden_compra1  =@company.get_orden_detalle(@rpt_detalle_purchaseorder.id)
+          @orden_compra1  =@company.get_orden_detalle(ordencompra.id)
 
 
        for  product in @orden_compra1.get_products()
