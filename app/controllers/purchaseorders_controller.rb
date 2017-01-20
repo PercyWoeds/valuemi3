@@ -64,7 +64,7 @@ class PurchaseordersController < ApplicationController
 
       for ordencompra in @rpt_detalle_purchaseorder
 
-           $lcNumero = ordencompra.numero   
+           $lcNumero = ordencompra.code    
            $lcFecha = ordencompra.fecha1
 
           @orden_compra1  =@company.get_orden_detalle(@rpt_detalle_purchaseorder.id)
