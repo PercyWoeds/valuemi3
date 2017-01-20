@@ -74,7 +74,7 @@ class PurchaseordersController < ApplicationController
             row = []
             row << nroitem.to_s
             row << $lcNumero 
-            row << $lcFecha       
+            row << $lcFecha.strftime("%d/%m/%Y")        
             row << orden.quantity.to_s
             row << orden.product.code
             row << orden.product.name
@@ -82,7 +82,7 @@ class PurchaseordersController < ApplicationController
             row << orden.discount.round(2).to_s
             row << orden.total.round(2).to_s
             table_content << row
-
+            puts nroitem.to_s 
             nroitem=nroitem + 1
         end
 
