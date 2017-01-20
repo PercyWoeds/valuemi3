@@ -974,7 +974,7 @@ def actualizar_fecha2
     
  end 
  def get_orden_detalle(id)
-    @purchaseorders = PurchaseorderDetail.find(id)
+    @purchaseorders = PurchaseorderDetail.where(:id=>id)
     return @purchaseorders
     
  end 
