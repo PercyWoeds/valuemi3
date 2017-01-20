@@ -45,7 +45,7 @@ class PurchaseordersController < ApplicationController
 
   def build_pdf_body1(pdf)
     
-    pdf.text "Listado de Cobranza Emitidas : Fecha "+@fecha1.to_s+ " Mes : "+@fecha2.to_s , :size => 11 
+    pdf.text "Ordenes de compra Emitidas : Fecha "+@fecha1.to_s+ " Mes : "+@fecha2.to_s , :size => 11 
     pdf.text ""
     pdf.font "Helvetica" , :size => 6
 
@@ -94,13 +94,14 @@ class PurchaseordersController < ApplicationController
                                         :width => pdf.bounds.width
                                         } do 
                                           columns([0]).align=:center
-                                          columns([1]).align=:right
+                                          columns([1]).align=:left
                                           columns([2]).align=:center
                                           columns([3]).align=:center
                                           columns([4]).align=:right
-                                          columns([5]).align=:right
+                                          columns([5]).align=:left
                                           columns([6]).align=:right
-                                         
+                                          columns([7]).align=:right
+                                          columns([8]).align=:right
                                         end
 
       pdf.move_down 10      
