@@ -24,8 +24,8 @@ class Purchaseorder < ActiveRecord::Base
                      "DSCTO",
                      "VALOR TOTAL"]
   TABLE_HEADERS1 = ["ITEM",
-                     "NRO.ORDEN",
                      "PROVEEDOR",
+                     "ORDEN",
                      "FECHA",
                      "CANT.",
                      "CODIGO",

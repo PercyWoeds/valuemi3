@@ -99,11 +99,12 @@ class PurchaseordersController < ApplicationController
                                           columns([1]).align=:left
                                           columns([2]).align=:center
                                           columns([3]).align=:center
-                                          columns([4]).align=:right
+                                          columns([4]).align=:left
                                           columns([5]).align=:left
-                                          columns([6]).align=:right
+                                          columns([6]).align=:left
                                           columns([7]).align=:right
                                           columns([8]).align=:right
+                                          columns([9]).align=:right
                                         end
 
       pdf.move_down 10      
