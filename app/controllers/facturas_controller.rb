@@ -23,8 +23,19 @@ class FacturasController < ApplicationController
          end              
     end
   end  
+  def excel
 
+    @company=Company.find(1)          
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]
 
+    @facturas_rpt = @company.get_facturas_day(@fecha1,@fecha2)      
+
+    respond_to do |format|
+      format.html    
+        format.xls # { send_data @products.to_csv(col_sep: "\t") }
+    end 
+  end 
 
   def import
       Factura.import(params[:file])
@@ -267,16 +278,21 @@ class FacturasController < ApplicationController
     @path = 'factura'
     @pagetitle = "Facturas"
 
-    @invoicesunat = Invoicesunat.order(:numero)
+    @invoicesunat = Invoicesunat.order(:numero)    
+
+    @company= Company.find(1)
+
+    @fecha1 = params[:fecha1]
+    @fecha2 = params[:fecha2]
+
+    @facturas_rpt = @company.get_facturas_day(@fecha1,@fecha2)
+
     respond_to do |format|
+      format.html    
+        format.xls # { send_data @products.to_csv(col_sep: "\t") }
+    end 
 
-      format.html
-      format.csv {send_data @invoicesunat.to_csv }
 
-    end
-    
-    
-    
   end
 
   def export
@@ -997,6 +1013,12 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]    
     @facturas_rpt = @company.get_facturas_day(@fecha1,@fecha2)      
+
+    respond_to do |format|
+      format.html    
+      format.xls # { send_data @products.to_csv(col_sep: "\t") }
+    end 
+
     Prawn::Document.generate("app/pdf_output/rpt_factura.pdf") do |pdf|
         pdf.font "Helvetica"
         pdf = build_pdf_header_rpt(pdf)
@@ -1006,6 +1028,7 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
     end     
     $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
     send_file("app/pdf_output/rpt_factura.pdf", :type => 'application/pdf', :disposition => 'inline')
+
   end
 # Export serviceorder to PDF
   def rpt_facturas_all2_pdf

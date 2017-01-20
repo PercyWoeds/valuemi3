@@ -966,5 +966,18 @@ def actualizar_fecha2
     end
 
   "#{self[0...stop]}#{options[:omission]}"
-end
+  end
+
+ def get_purchaseorder_detail(fecha1,fecha2)
+    @purchaseorders = Purchaseorder.where([" fecha1 >= ? and fecha1 <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ]).order(:fecha1)
+    return @purchaseorders
+    
+ end 
+ def get_orden_detalle(id)
+    @purchaseorders = PurchaseorderDetail.find(id)
+    return @purchaseorders
+    
+ end 
+
+
 end

@@ -18,25 +18,18 @@ totals = []
  Reporte de cuentas proveedores - <%= @month_name %> <%= @year %>
 </h3	>
 
-<form method="get" action="/facturas/rpt_facturas_all/<%= @company.id %>">
- 	<div class="field">
-    <input type="date" name="fecha1" value="2017-01-02" style = "width: 80px" >
-  </div>
+<form method="get" action="/purchaseorders/rpt_purchaseorder_all/<%= @company.id %>">
+
+  <div class="field">
+      <input type="date" name="fecha1" value="2017-01-01" style = "width: 80px" >
+
+    </div>
 	<div class="field">
 		<input type="date" name="fecha2" value="2017-01-20" style = "width: 80px" >
   </div>
-    
   <input type="submit" value="Ver" class="small_btn" />
-  <a href="/facturas/rpt_facturas_all/<%= @company.id %>" class="small_btn">Hoy</a>
-  <%=link_to "Excel", excel_facturas_path(:params1=>"fecha1",:params2=>"fecha2",format: "xls")%>
-
+  <a href="/purchaseorders/rpt_purchaseorder_all/<%= @company.id %>" class="small_btn">Today</a>
 </form>
 
 <br />
 
-
-<div class="button">
-  <%= link_to 'Back', "/companies/faqs/#{@company.id}" %>
-
-
-</div>

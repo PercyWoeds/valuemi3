@@ -5,8 +5,161 @@ include ProductsHelper
 
 class PurchaseordersController < ApplicationController
   before_filter :authenticate_user!, :checkProducts
+##
+## REPORTE DE COMPRAS 
+##    
+ 
+ def build_pdf_header1(pdf)
+    pdf.font "Helvetica" , :size => 6    
+     $lcCli  =  @company.name 
+     $lcdir1 = @company.address1+@company.address2+@company.city+@company.state
+
+     $lcFecha1= Date.today.strftime("%d/%m/%Y").to_s
+     $lcHora  = Time.now.to_s
+
+    max_rows = [client_data_headers.length, invoice_headers.length, 0].max
+      rows = []
+      (1..max_rows).each do |row|
+        rows_index = row - 1
+        rows[rows_index] = []
+        rows[rows_index] += (client_data_headers_rpt.length >= row ? client_data_headers_rpt[rows_index] : ['',''])
+        rows[rows_index] += (invoice_headers_rpt.length >= row ? invoice_headers_rpt[rows_index] : ['',''])
+      end
+
+      if rows.present?
+        pdf.table(rows, {
+          :position => :center,
+          :cell_style => {:border_width => 0},
+          :width => pdf.bounds.width
+        }) do
+          columns([0, 2]).font_style = :bold
+
+      end
+
+        pdf.move_down 10
+
+      end
+      
+      pdf 
+  end   
+
+  def build_pdf_body1(pdf)
     
+    pdf.text "Listado de Cobranza Emitidas : Fecha "+@fecha1.to_s+ " Mes : "+@fecha2.to_s , :size => 11 
+    pdf.text ""
+    pdf.font "Helvetica" , :size => 6
+
+      headers = []
+      table_content = []
+
+      Purchaseorder::TABLE_HEADERS1.each do |header|
+        cell = pdf.make_cell(:content => header)
+        cell.background_color = "FFFFCC"
+        headers << cell
+      end
+
+      table_content << headers
+
+      nroitem=1
+
+      for ordencompra in @rpt_detalle_purchaseorder
+
+           $lcNumero = ordencompra.numero   
+           $lcFecha = ordencompra.fecha1
+
+          @orden_compra1  =@company.get_orden_detalle(@rpt_detalle_purchaseorder.id)
+
+
+       for  product in @orden_compra1.get_products()
+            row = []
+            row << nroitem.to_s
+            row << $lcNumero 
+            row << $lcFecha       
+            row << product.quantity.to_s
+            row << product.code
+            row << product.name
+            row << product.price.round(2).to_s
+            row << product.discount.round(2).to_s
+            row << product.total.round(2).to_s
+            table_content << row
+
+            nroitem=nroitem + 1
+        end
+
+      end
+
+
+      result = pdf.table table_content, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width
+                                        } do 
+                                          columns([0]).align=:center
+                                          columns([1]).align=:right
+                                          columns([2]).align=:center
+                                          columns([3]).align=:center
+                                          columns([4]).align=:right
+                                          columns([5]).align=:right
+                                          columns([6]).align=:right
+                                         
+                                        end
+
+      pdf.move_down 10      
+      pdf.table invoice_summary, {
+        :position => :right,
+        :cell_style => {:border_width => 1},
+        :width => pdf.bounds.width/2
+      } do
+        columns([0]).font_style = :bold
+        columns([1]).align = :right
+        
+      end
+      pdf
+
+    end
+
+
+    def build_pdf_footer1(pdf)
+
+        pdf.text ""
+        pdf.text "" 
+        
+
+     end
+    
+
+  # Export purchaseorder to PDF
+  def rpt_purchaseorder_all
+
+
+    
+    
+    @company =Company.find(1)
+    @fecha1 =params[:fecha1]
+    @fecha2 =params[:fecha2]
+
+    @rpt_detalle_purchaseorder = @company.get_purchaseorder_detail(@fecha1,@fecha2)
+
+    Prawn::Document.generate("app/pdf_output/orden_1.pdf") do |pdf|
+        pdf.font "Helvetica"
+        pdf = build_pdf_header1(pdf)
+        pdf = build_pdf_body1(pdf)
+        build_pdf_footer1(pdf)
+        $lcFileName =  "app/pdf_output/orden_1.pdf"      
+        
+    end     
+
+    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
+                
+    send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
   
+
+  end
+
+##
+##
+
+
+
 def build_pdf_header(pdf)
 
      $lcCli  =  @purchaseorder.supplier.name
@@ -669,7 +822,20 @@ def build_pdf_header(pdf)
   private
   def purchaseorder_params
     params.require(:purchaseorder).permit(:company_id,:location_id,:division_id,:supplier_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:moneda_id,:fecha1,:fecha2,:payment_id)
+
   end
+
+    def client_data_headers_rpt
+      client_headers  = [["Empresa  :", $lcCli ]]
+      client_headers << ["Direccion :", $lcdir1]      
+      client_headers
+  end
+
+  def invoice_headers_rpt            
+      invoice_headers  = [["Fecha : ",$lcHora]]    
+      invoice_headers
+  end
+
 
 end
 

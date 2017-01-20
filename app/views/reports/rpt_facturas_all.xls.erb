@@ -1,0 +1,37 @@
+
+
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell><Data ss:Type="String">Td</Data></Cell>
+        <Cell><Data ss:Type="String">Documento</Data></Cell>
+        <Cell><Data ss:Type="String">Fecha</Data></Cell>
+        <Cell><Data ss:Type="String">Cliente</Data></Cell>
+        <Cell><Data ss:Type="String">Mon.</Data></Cell>
+        <Cell><Data ss:Type="String">V.Venta</Data></Cell>
+        <Cell><Data ss:Type="String">IGV</Data></Cell>
+        <Cell><Data ss:Type="String">Importe</Data></Cell>
+      </Row>
+    <% @facturas_rpt.each do |product| %>
+      <Row>
+        <Cell><Data ss:Type="String"><%= "FT" %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= product.code %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= product.fecha %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= product.customer.name %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= "S/." %></Data></Cell>
+        <Cell><Data ss:Type="Number"><%= product.subtotal %></Data></Cell>
+        <Cell><Data ss:Type="Number"><%= product.tax %></Data></Cell>
+        <Cell><Data ss:Type="Number"><%= product.total %></Data></Cell>
+
+      </Row>
+    <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>
+

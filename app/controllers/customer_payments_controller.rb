@@ -860,9 +860,7 @@ class CustomerPaymentsController < ApplicationController
 ##-------------------------------------------------------------------------------------
   
   def build_pdf_header_rpt1(pdf)
-      pdf.font "Helvetica" , :size => 6
-      
-
+     pdf.font "Helvetica" , :size => 6    
      $lcCli  =  @company.name 
      $lcdir1 = @company.address1+@company.address2+@company.city+@company.state
 

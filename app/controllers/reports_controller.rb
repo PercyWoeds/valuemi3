@@ -892,7 +892,7 @@ class ReportsController < ApplicationController
     end
   end
 
-def rpt_purchases_all
+  def rpt_purchases_all
     @company = Company.find(params[:company_id])
     
     if(params[:year] and params[:year].numeric?)
@@ -921,7 +921,7 @@ def rpt_purchases_all
     @months = monthsArr
     @month_name = @months[@month - 1][0]
     
-    @pagetitle = "Monthly sales report - #{@month_name} #{@year} - #{@company.name}"
+    @pagetitle = "Ventas por mes  - #{@month_name} #{@year} - #{@company.name}"
     
     while(c_year > Time.now.year - 5)
       @years.push(c_year)
@@ -986,7 +986,7 @@ def rpt_purchases_all
   end
   
   def reports_cventas
-    @company = Company.find(params[:company_id])
+    @company = Company.find(params[:company_id])  
     @pagetitle = "Facturas "    
   end
   def rpt_facturas_all2
@@ -1149,6 +1149,7 @@ def rpt_purchases_all
     @customers = @company.get_customers()
 
   end
+
   def rpt_guias_3
     @company = Company.find(params[:company_id])    
     @pagetitle = "Liquidacion Cobranzas "    
@@ -1166,5 +1167,9 @@ def rpt_purchases_all
     @pagetitle = "Orden Servicio de Transporte"    
   end
     
+  def rpt_purchaseorder_all
+    @company = Company.find(params[:company_id])
+    @pagetitle = "Ordenes de compra"    
+  end
 
 end
