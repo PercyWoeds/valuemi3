@@ -7,6 +7,7 @@ class Product < ActiveRecord::Base
   
   belongs_to :company
   belongs_to :supplier
+  belongs_to :products_category
 
   has_many :items
   has_many :kits_products
@@ -19,7 +20,6 @@ class Product < ActiveRecord::Base
   has_many :marcas
   
   before_destroy :ensure_not_referenced_by_any_line_item
-
 
 
 def self.matches(field_name, param)

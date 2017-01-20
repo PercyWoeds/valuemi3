@@ -10,13 +10,13 @@
 </h1>
 
 
-<% if @product.category != "" %>
+
   <div>
-    <b>Category:</b>
-    <%= @product.category %>
+    <b>Categoria:</b>
+    <%= @product.products_category.category  %>
   </div>
   <br />
-<% end %>
+
 
 <% if @product.supplier and @product.supplier_id != "" %>
   <div>

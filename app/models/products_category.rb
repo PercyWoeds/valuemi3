@@ -4,6 +4,7 @@ class ProductsCategory < ActiveRecord::Base
   validates_presence_of :company_id, :category
   
   belongs_to :company
+  has_many :products
 
    def self.import(file)
           CSV.foreach(file.path, headers: true) do |row|

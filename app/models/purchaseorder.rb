@@ -208,22 +208,24 @@ class Purchaseorder < ActiveRecord::Base
   
   def get_processed
     if(self.processed == "1")
-      return "Processed"
+      return "Procesado"
+    elsif (self.processed == "3")
+      return "Cerrado"
     else
-      return "Not yet processed"
+      return "No procesado"
     end
   end
   
   def get_processed_short
-    if(self.processed == "1")
-      return "Yes"
+    if(self.processed == "1" || self.processed == "3")
+      return "Si"
     else
       return "No"
     end
   end
   
   def get_return
-    if(self.return == "1")
+    if(self.return == "1" )
       return "Yes"
     else
       return "No"
@@ -238,7 +240,16 @@ class Purchaseorder < ActiveRecord::Base
       self.save
     end
   end
+  def process_cerrar
 
+    if(self.processed == "3" or self.processed == true)
+      self.processed="3"      
+      self.date_processed = Time.now
+      self.save
+    end
+  end
+
+  
   
   # Color for processed or not
   def processed_color

@@ -24,6 +24,57 @@ class Purchase < ActiveRecord::Base
     return existe 
   end
 
+  def get_subtotal2(items)
+    subtotal = 0
+
+    for item in items
+                    
+        total = item.price * item.quantity
+        total -= total * (item.discount / 100)        
+        begin        
+          subtotal += total      
+        end     
+    end  
+    return subtotal
+  end 
+
+  def get_tax2(items, supplier_id)
+    tax = 0
+    
+    supplier = Supplier.find(supplier_id)
+    
+    if(supplier)
+      if(supplier.taxable == "1")
+        for item in items
+          if(item and item != "")
+
+            total = item.price * item.quantity
+            total -= total * (item.discount / 100)
+        
+            begin
+              product = Product.find(item.product_id)
+              
+              if(product)
+                if(product.tax1 and product.tax1 > 0)
+                  tax += total * (product.tax1 / 100)
+                end
+
+                if(product.tax2 and product.tax2 > 0)
+                  tax += total * (product.tax2 / 100)
+                end
+
+                if(product.tax3 and product.tax3 > 0)
+                  tax += total * (product.tax3 / 100)
+                end
+              end
+            rescue
+            end
+          end
+        end
+      end
+    end
+    return tax
+  end
 
   
   def get_subtotal(items)
@@ -121,14 +172,40 @@ class Purchase < ActiveRecord::Base
         begin
           product = Product.find(id.to_i)
           
-          new_pur_product = PurchaseDetail.new(:purchase_id => self.id, :product_id => product.id,:price_with_tax => price.to_f, :quantity => quantity.to_i, :discount => discount.to_f, :total => total.to_f)
+          new_pur_product = PurchaseDetail.new(:purchase_id => self.id, :product_id => product.id,
+          :price_with_tax => price.to_f, :quantity => quantity.to_i, :discount => discount.to_f,
+          :total => total.to_f)
           new_pur_product.save
         rescue
         end
       end
     end
-  end
+  end   
+  def add_products2(items)
+    for item in items
+        
+        total = item.price * item.quantity
+        total -= total * (item.discount / 100)
+        lcprice_tax = item.price*1.18      
+        
+
+        product = Product.find(item.product_id)
+        puts self.id.to_s
+        puts item.product.code 
+        puts lcprice_tax.to_s
+        puts item.price.to_s
+
+
+        new_pur_product = PurchaseDetail.new(:purchase_id => self.id, :product_id => product.id,
+            :price_with_tax => lcprice_tax,:price_without_tax=>item.price, :quantity => item.quantity, 
+            :discount => item.discount, :total => item.total )
+        new_pur_product.save        
     
+    end
+
+  end   
+
+  
   
   def identifier
     return "#{self.documento} - #{self.supplier.name}"
@@ -160,8 +237,7 @@ class Purchase < ActiveRecord::Base
       ip.product[:price2] = ip.price_without_tax
       ip.product[:total] = ip.total
       products.push("#{ip.product.id}|BRK|#{ip.product.quantity}|BRK|#{ip.product.price}|BRK|#{ip.product.discount}|BRK|#{ip.product.price2}|BRK|#{ip.product.total}")
-    end
-
+      end
 
     return products.join(",")
   end
@@ -224,4 +300,6 @@ class Purchase < ActiveRecord::Base
       return "red"
     end
   end
+
+
 end

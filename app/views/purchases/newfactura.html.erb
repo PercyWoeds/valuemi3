@@ -1,0 +1,164 @@
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %> &raquo;
+  <%= link_to "purchaseorders", "/companies/purchaseorders/#{@company.id}" %>
+</div>
+
+<h3>
+  <%= image_tag("invoice_48.png", :class => "vmiddle") %>
+  Nueva factura 
+</h3>
+
+<p>
+  Para crear una nueva orden de compra, por favor llenar el siguiente formulario. Los campos marcados con <strong>*</strong> son obligatorios
+  
+</p>
+
+<% if @purchaseorder.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@purchaseorder.errors.count, "error") %> prohibited this purchaseorder from being saved:</h2>
+
+    <ul>
+    <% @purchaseorder.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+  <%= hr() %>
+
+<div class="mid_box bordered_right">
+  <form method="get" action="/purchases/do_crear/<%= @company.id %>">
+    <h4>
+       Informacion factura 
+    </h4>
+
+    <div class="field">
+      <label for="ac_supplier" class="bold"> PROVEEDOR *</label><br />
+      <%= $lcProveedorName %>
+    
+    </div>
+
+    <div class="field">
+     <strong>Documento:</strong><br />      
+      <%= select_tag(:document_id, options_from_collection_for_select(@documents,'id','description')) %>
+    </div>
+      
+    <div class="field">    
+
+      <input type="text" name="documento" value="" style = "width: 100px" >
+      
+    </div>
+
+    <div class="field">
+      <strong>Fecha Emision :</strong><br />
+      <input type="date" name="date1" value="2007-10-01" style = "width: 80px" >
+    </div>
+
+      <div class="field">
+      <strong>Fecha Entrega :</strong><br />
+      <input type="date" name="date2" value="2007-10-01" style = "width: 80px" >
+    </div>
+    
+      
+    <div class="field">
+      <%=  "Forma de Pago " %><br />
+      <%= $lcFormaPago %>
+    </div>
+  
+    <div class="field">
+      <%= " Moneda :  "%><br />
+      <%= $lcMoneda %>
+    </div>
+      
+    
+    <%= hr() %>
+
+
+    
+    <p class="bold big">
+  Detalle de productos 
+</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th class="small bordered_bottom bordered_right">
+          Codigo
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          Producto
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          Precio S/IGV
+        </th>        
+        <th class="small bordered_bottom bordered_right">
+          Cantidad
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          Descuento
+        </th>        
+        <th class="small bordered_bottom bordered_right">
+          Total
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for item in @detalleitems %>
+        <tr>
+          <td class="small bordered_bottom bordered_right" style="width: 220px;">
+            <%= (item.product.code) %>
+          </td>
+          
+          <td class="small bordered_bottom bordered_right" style="width: 220px;">
+            <%= (item.product.name) %>
+          </td>
+
+          <td class="small bordered_bottom bordered_right">
+            <%= money(item.price) %>
+          </td>
+          
+          <td class="small bordered_bottom bordered_right">
+            <%= item.quantity %>
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= money(item.discount) %>%
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= money(item.total) %>
+
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+
+    <%= hr() %>
+    <div class="field">
+     <strong>Observaciones:</strong><br />
+     <input type="text_area" name="comments" value="" style = "width: 80px" >         
+    </div> 
+    <%= hr() %>
+  
+    
+    <input type="submit" value="Grabar Factura " />
+
+    
+  </form>
+
+</div>
+
+
+<%= br() %>
+<br />
+
+<%= render 'layouts/autocomplete' %>
+
+
+<%= hr() %>
+
+<div class="button">
+  <%= link_to 'Back', "/companies/purchases/#{@company.id}" %>
+</div>

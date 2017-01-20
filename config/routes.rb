@@ -52,6 +52,7 @@ Mnygo::Application.routes.draw do
   resources :purchaseorders do 
     collection { get :search   }
     collection { get :receive    }
+    collection { post :newfactura }
   
   end 
   
@@ -327,11 +328,14 @@ Mnygo::Application.routes.draw do
   match 'purchaseorders/ac_user/:company_id' => 'purchaseorders#ac_user', via: [:get, :post]
   match 'purchaseorders/ac_purchases/:company_id' => 'purchaseorders#ac_purchases', via: [:get, :post]
   match 'purchaseorders/new/:company_id' => 'purchaseorders#new', via: [:get, :post]
+  match 'purchaseorders/newfactura/:company_id' => 'purchaseorders#newfactura', via: [:get, :post]  
 
   match 'purchaseorders/receive/:id' => 'purchaseorders#receive', via: [:get, :post]
   match 'purchaseorders/do_email/:id' => 'purchaseorders#do_email', via: [:get, :post]
   match 'purchaseorders/do_process/:id' => 'purchaseorders#do_process', via: [:get, :post]
   match 'purchaseorders/do_grabar_ins/:id' => 'purchaseorders#do_grabar_ins', via: [:get, :post]
+  match 'purchaseorders/do_cerrar/:id' => 'purchaseorders#do_cerrar', via: [:get, :post]
+
   match 'purchaseorders/email/:id' => 'purchaseorders#email', via: [:get, :post]
   match 'purchaseorders/pdf/:id' => 'purchaseorders#pdf', via: [:get, :post]
   match 'purchaseorders/rpt_purchaseorder_all/:id' => 'purchaseorders#rpt_purchaseorder_all', via: [:get, :post]
@@ -342,7 +346,7 @@ Mnygo::Application.routes.draw do
   resources :purchaseorders
 
   match 'receiveorders/list_items/:company_id' => 'receiveorders#list_items', via: [:get, :post]
-match 'receiveorders/ac_products/:company_id' => 'receiveorders#ac_products', via: [:get, :post]
+  match 'receiveorders/ac_products/:company_id' => 'receiveorders#ac_products', via: [:get, :post]
   match 'receiveorders/ac_unidads/:company_id' => 'receiveorders#ac_unidads', via: [:get, :post]
   match 'receiveorders/ac_user/:company_id' => 'receiveorders#ac_user', via: [:get, :post]
   match 'receiveorders/new/:company_id' => 'receiveorders#new', via: [:get, :post]
@@ -355,7 +359,7 @@ match 'receiveorders/ac_products/:company_id' => 'receiveorders#ac_products', vi
   match 'companies/receiveorders/:company_id' => 'receiveorders#list_receiveorders', via: [:get, :post]
   
 
-  resources :receiveorders
+    resources :receiveorders
   
 
   match 'movements/list_items/:company_id' => 'movements#list_items', via: [:get, :post]
@@ -372,19 +376,23 @@ match 'receiveorders/ac_products/:company_id' => 'receiveorders#ac_products', vi
   match 'companies/movements/:company_id' => 'movements#list_movements', via: [:get, :post]
   resources :movements
 
-  # Purchases
+  
+    # Purchases
   
   match 'purchases/list_items/:company_id' => 'purchases#list_items', via: [:get, :post]  
   match 'purchases/ac_products/:company_id' => 'purchases#ac_products', via: [:get, :post]
   match 'purchases/ac_user/:company_id' => 'purchases#ac_user', via: [:get, :post]
   match 'purchases/ac_suppliers/:company_id' => 'purchases#ac_suppliers', via: [:get, :post]
   match 'purchases/new/:company_id' => 'purchases#new', via: [:get, :post]  
+  match 'purchases/newfactura/:id' => 'purchases#newfactura', via: [:get, :post]  
 
   match 'purchases/do_email/:id' => 'purchases#do_email', via: [:get, :post]
   match 'purchases/do_process/:id' => 'purchases#do_process', via: [:get, :post]
   match 'purchases/email/:id' => 'purchases#email', via: [:get, :post]
   match 'purchases/pdf/:id' => 'purchases#pdf', via: [:get, :post]
   match 'purchases/search/:id' => 'purchases#search', via: [:get, :post]
+  match 'purchases/cargar/:id'   => 'purchases#cargar', via: [:get, :post]
+  match 'purchases/do_crear/:id'   => 'purchases#do_crear', via: [:get, :post]
 
   match 'companies/purchases/:company_id' => 'purchases#list_purchases', via: [:get, :post]  
   resources :purchases

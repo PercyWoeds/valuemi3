@@ -400,6 +400,16 @@ def build_pdf_header(pdf)
     redirect_to @purchaseorder
   end
   # Process an purchaseorder
+  def do_cerrar
+    @purchaseorder = Purchaseorder.find(params[:id])
+    @purchaseorder[:processed] = "3"
+    
+    @purchaseorder.process
+    
+    flash[:notice] = "The purchaseorder order has been processed closed"
+    redirect_to @purchaseorder
+  end
+
   def do_process
     @purchaseorder = Purchaseorder.find(params[:id])
     @purchaseorder[:processed] = "1"
@@ -640,6 +650,7 @@ def build_pdf_header(pdf)
   def show
     @purchaseorder = Purchaseorder.find(params[:id])
     @supplier = @purchaseorder.supplier
+    
   end
 
   def receive
@@ -668,10 +679,12 @@ def build_pdf_header(pdf)
     @divisions = @company.get_divisions()
     @suppliers = @company.get_suppliers()
     @payments  = @company.get_payments()
-    @monedas  = @company.get_monedas()
+    @monedas    = @company.get_monedas()
+    
         
     @ac_user = getUsername()
     @purchaseorder[:user_id] = getUserId()
+
   end
 
   # GET /purchaseorders/1/edit
@@ -814,6 +827,8 @@ def build_pdf_header(pdf)
       format.html { redirect_to("/companies/purchaseorders/" + company_id.to_s) }
     end
   end
+
+  
   private
   def purchaseorder_params
     params.require(:purchaseorder).permit(:company_id,:location_id,:division_id,:supplier_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:moneda_id,:fecha1,:fecha2,:payment_id)
@@ -830,6 +845,7 @@ def build_pdf_header(pdf)
       invoice_headers  = [["Fecha : ",$lcHora]]    
       invoice_headers
   end
+
 
 
 end

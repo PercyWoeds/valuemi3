@@ -57,6 +57,7 @@ class ProductsController < ApplicationController
   def show
     @product = Product.find(params[:id])
     @pagetitle = "Products - #{@product.name}"
+    
   end
 
   # GET /products/new
@@ -73,6 +74,10 @@ class ProductsController < ApplicationController
     @suppliers = @company.get_suppliers()
     @marcas = @company.get_marcas()
     @modelos = @company.get_modelos()
+    @categories = @company.get_categories()
+
+
+
 
     @product[:tax1_name] = @company.get_last_tax_name(1)
     @product[:tax2_name] = @company.get_last_tax_name(2)
@@ -110,7 +115,7 @@ class ProductsController < ApplicationController
     @suppliers = @company.get_suppliers()
     @marcas = @company.get_marcas()
     @modelos = @company.get_modelos()
-
+    @categories = @company.get_categories()
   end
 
   # POST /products
@@ -164,7 +169,8 @@ class ProductsController < ApplicationController
     @suppliers = @company.get_suppliers()
     @marcas = @company.get_marcas()
     @modelos = @company.get_modelos()
-    
+    @categories = @company.get_categories() 
+
     respond_to do |format|
       if @product.update_attributes(products_params)
         format.html { redirect_to(@product, :notice => 'Product was successfully updated.') }
@@ -205,7 +211,7 @@ class ProductsController < ApplicationController
   end
   private
   def products_params
-    params.require(:product).permit(:code, :name, :category, :cost,:price,:price2,:tax1_name, :tax1,:tax2_name,:tax2, :tax3_name,:tax3 ,:quantity,:reorder,:description,:comments,:company_id,:marca_id,:modelo_id)
+    params.require(:product).permit(:code, :name, :category, :cost,:price,:price2,:tax1_name, :tax1,:tax2_name,:tax2, :tax3_name,:tax3 ,:quantity,:reorder,:description,:comments,:company_id,:marca_id,:modelo_id,:products_category_id)
   end
   
 

@@ -6,11 +6,138 @@ include PurchasesHelper
 class PurchasesController < ApplicationController
   before_filter :authenticate_user!, :checkProducts
 
-  def datos
-    nrodocumento =params[:documento]
-    puts "nro"
-    puts nrodocumento
+  def newfactura  
+    @company = Company.find(1)
+    @purchaseorder = Purchaseorder.find(params[:id])      
+    $lcPurchaseOrderId = @purchaseorder.id
+    $lcProveedorId  = @purchaseorder.supplier_id
+    $lcProveedorName =@purchaseorder.supplier.name 
+    $lcFechaEmision = @purchaseorder.fecha1
+    $lcFormaPagoId  = @purchaseorder.payment_id
+    $lcFormaPago    = @purchaseorder.payment.descrip
+    $lcFormaPagoDias =@purchaseorder.payment.day
+    $lcMonedaId   = @purchaseorder.moneda_id
+    $lcMoneda  = @purchaseorder.moneda.description
+    $lcLocationId = @purchaseorder.location_id
+    $lcDivisionId = @purchaseorder.division_id
 
+
+    @detalleitems =  @company.get_orden_detalle(@purchaseorder.id)
+
+    @purchase = Purchase.new 
+
+    puts @purchaseorder.code 
+    
+    @locations = @company.get_locations()
+    @divisions = @company.get_divisions()
+
+    @documents = @company.get_documents()    
+    @servicebuys  = @company.get_servicebuys()
+    @monedas  = @company.get_monedas()
+    @payments  = @company.get_payments()
+    @suppliers = @company.get_suppliers()      
+
+  end 
+
+  def do_crear
+    @action_txt = "do_crear"
+    $lcDocumentId    =  params[:document_id]
+    $lcFechaEmision  =  params[:date1]
+    $lcFechaEntrega  =  params[:date2]
+
+     days = $lcFormaPagoDias  
+     fechas2 = $lcFechaEntrega.to_date + days.days                           
+
+    $lcFechaVmto     =  fechas2
+    $lcDocumento     =  params[:documento]
+
+    puts "documentos"
+    puts $lcDocumentId
+    puts $lcFechaVmto
+    puts $lcPurchaseOrderId
+
+@purchase = Purchase.new(:company_id=>1,:supplier_id=>$lcProveedorId,:date1=>$lcFechaEmision,:date2=>$lcFechaEmision,:payment_id=>$lcFormaPagoId,:document_id=>$lcDocumentId,:documento=>$lcDocumento,
+:date3 => $lcFechaVmto,:moneda_id => $lcMonedaId,:user_id =>@current_user.id)
+    
+    @company = Company.find(1)
+    
+    @locations = @company.get_locations()
+    @divisions = @company.get_divisions()
+      
+    @documents    = @company.get_documents()    
+    @servicebuys  = @company.get_servicebuys()
+    @monedas      = @company.get_monedas()
+    @payments     = @company.get_payments()
+    @tipodocumento = @purchase[:document_id]
+    @detalleitems =  @company.get_orden_detalle($lcPurchaseOrderId)
+
+    
+    if @tipodocumento == 3
+      @purchase[:payable_amount] = @purchase.get_subtotal2(@detalleitems)*-1
+    else
+      @purchase[:payable_amount] = @purchase.get_subtotal2(@detalleitems)
+    end    
+    
+
+    begin
+       if @tipodocumento == 3
+        @purchase[:tax_amount] = @purchase.get_tax2(@detalleitems, @purchase[:supplier_id])*-1
+       else
+        @purchase[:tax_amount] = @purchase.get_tax2(@detalleitems, @purchase[:supplier_id])
+       end 
+    rescue
+      @purchase[:tax_amount] = 0
+      
+    end
+    
+    @purchase[:total_amount] = @purchase[:payable_amount] + @purchase[:tax_amount]
+    @purchase[:charge]  = 0
+    @purchase[:pago] = 0
+    @purchase[:balance] =   @purchase[:total_amount]
+    
+      curr_seller = User.find(@current_user.id)
+      @ac_user = curr_seller.username
+    
+
+      respond_to do |format|
+          @purchase.save 
+          # Create products for kit
+          @purchase.add_products2(@detalleitems)
+          # Check if we gotta process the invoice
+          @purchase.process()
+
+          order_process = Purchaseorder.find($lcPurchaseOrderId)
+          if order_process
+            order_process.processed ='3'
+            order_process.save
+          end 
+
+          format.html { redirect_to(@purchase, :notice => 'Factura fue grabada con exito .') }
+          format.xml  { render :xml => @purchase, :status => :created, :location => @purchase}
+        #else
+        #  format.html { render :action => "new" }
+        #  format.xml  { render :xml => @purchase.errors, :status => :unprocessable_entity }
+        #end
+      end
+    
+
+
+
+
+
+
+  end 
+
+  def cargar
+    lcProcesado='1'
+    @company = Company.find(1)
+    @purchaseorders = Purchaseorder.where(["processed =  ? ",lcProcesado])
+    return @purchaseorders
+
+  end   
+
+  def datos
+    nrodocumento =params[:documento]    
   end 
 
   # Export purchase to PDF
@@ -309,9 +436,6 @@ class PurchasesController < ApplicationController
     @servicebuys  = @company.get_servicebuys()
     @monedas  = @company.get_monedas()
     @payments  = @company.get_payments()
-
-
-
 
     @tipodocumento = @purchase[:document_id]
     

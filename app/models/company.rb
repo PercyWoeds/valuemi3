@@ -159,6 +159,12 @@ class Company < ActiveRecord::Base
      servicebuys = Servicebuy.all.order(:id)
      return servicebuys
   end 
+
+  def get_categories()
+     category = ProductsCategory.all.order(:category)
+     return category
+  end 
+
   
   def get_last_tax_name(tax_number)
     product = Product.where(company_id: self.id)

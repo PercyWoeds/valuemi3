@@ -25,7 +25,6 @@
   </p>
 <% end %>
 
-
 <p>
   <b>Code:</b>
   <%= @purchaseorder.code %>
@@ -205,10 +204,8 @@
   <% if @purchaseorder.processed =="0" %>
     <%= link_to 'Aprobar', "/purchaseorders/do_process/#{@purchaseorder.id}" %>
     <%= link_to 'Editar', edit_purchaseorder_path(@purchaseorder) %>
-  <% else %>
-  
-    <%= link_to 'Registrar Ingreso',"/purchaseorders/receive/#{@purchaseorder.id}" %>
-    <%= link_to 'Cerrar', "/purchaseorders/do_cerrar/#{@purchaseorder.id}" %>
+  <% else %>    
+    
   <% end %>
   <%= link_to 'Regresar', "/companies/purchaseorders/#{@purchaseorder.company.id}" %>
 </div>
