@@ -1184,16 +1184,18 @@
       var item_total = 0
       var item_id = $("#ac_item_id").val();      
       var factory = $("#ac_item_factory").val();      
-      var ajuste = $("#ac_item_ajuste").val();      
+      var compen = $("#ac_item_compen").val();      
+      var ajuste = $("#ac_item_ajuste").val(); 
 
       var price = $("#ac_item_total").val();   
-
       var items_arr = $("#items").val().split(",");
 
       if(factory == "" || !isNumeric(factory)) {
         alert("Por favor ingrese una cantidad validad");
-      }     
-
+      }
+      else if  (compen == "" || !isNumeric(compen)) {
+        alert("Por favor ingrese una compensacion valida  ");
+      }      
       else if  (price == "" || !isNumeric(price)) {
         alert("Por favor ingrese un precio valido  ");
       } 
@@ -1201,7 +1203,7 @@
         alert("Por favor ingrese un importe de ajuste valido  ");
       }       
       else {
-        var item_line = item_id + "|BRK|" + ajuste + "|BRK|"+ factory + "|BRK|"+ price + "|BRK|";
+        var item_line = item_id + "|BRK|" + compen  + "|BRK|" + ajuste + "|BRK|"+ factory + "|BRK|"+ price + "|BRK|";
         
         $("#items").val($("#items").val() + "," + item_line);
         
@@ -1212,7 +1214,7 @@
         $("#ac_item_total").val("");
         $("#ac_item_factory").val("");
         $("#ac_item_ajuste").val("");
-     
+        $("#ac_item_compen").val("");
 
         updateItemTotalCP();
       }
@@ -1231,9 +1233,12 @@
     var factory  = $("#ac_item_factory").val();
 
     var ajuste   = $("#ac_item_ajuste").val();
+
+    var compen   = $("#ac_item_compen").val();
+
     $("#ac_item_total2").html(saldooriginal);
 
-    if( isNumeric(price) && isNumeric(factory) && isNumeric(ajuste) && isNumeric(saldooriginal) )  {
+    if( isNumeric(price) && isNumeric(factory) && isNumeric(ajuste) && isNumeric(saldooriginal) && isNumeric(compen))  {
       
       var total = price+factory + ajuste ;
 

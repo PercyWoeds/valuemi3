@@ -312,12 +312,15 @@ class FacturasController < ApplicationController
      for f in @facturas
 
 
-#      newsubdia =Csubdia.new(:csubdia=>$lcSubdiario,:ccompro=>factura.code,:ccodmon=>"MN",:csitua=>"F",
-#        :ctipcam=>,:cglosa=>,:ctotal=>,
-#          :ctipo=>"V",:cflag=>,:cdate=>,:chora=>,:cfeccam=>,:cuser=>,:corig=>,:cform,:cextor)
+      newsubdia =Csubdia.new(:csubdia=>$lcSubdiario,:ccompro=>factura.code,:ccodmon=>"MN",:csitua=>"F",
+        :ctipcam=>"0.00",:cglosa=>"",:ctotal=>factura.total,
+          :ctipo=>"V",:cflag=>"N",:cdate=>"",:chora=>"",:cfeccam=>"",:cuser=>"SIST",:corig=>"",
+          :cform=>"M",:cextor=>"") 
+      if newsubdia.save
 
+        
 
-       #newsubdia.save
+      end     
 
    @invoice = Invoicesunat.all
     send_data @invoice.to_csv  

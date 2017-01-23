@@ -12,6 +12,10 @@
           Proveedor
         </th>
         <th class="small bordered_bottom bordered_right">
+          Contribucion
+        </th>
+        
+        <th class="small bordered_bottom bordered_right">
           Factory
         </th>
         <th class="small bordered_bottom bordered_right">
@@ -33,6 +37,10 @@
             <%= product.customer.name %>
           </td>
           <td class="small bordered_bottom bordered_right">
+            <%= money(product.balance) %>
+          </td>
+          
+          <td class="small bordered_bottom bordered_right">
             <%= money(product.pago) %>
           </td>
           <td class="small bordered_bottom bordered_right">
@@ -46,7 +54,7 @@
       <% end %>
     
     <tr>
-      <td colspan="4" class="bordered_bottom bordered_right bold">
+      <td colspan="5" class="bordered_bottom bordered_right bold">
         Total:
       </td>
       <td class="bordered_bottom bordered_right bold right">
@@ -56,7 +64,7 @@
 
   
       <tr>
-      <td colspan="4" class="bordered_bottom bordered_right bold">
+      <td colspan="5" class="bordered_bottom bordered_right bold">
         Diferencia :
       </td>
       <td class="bordered_bottom bordered_right bold right">

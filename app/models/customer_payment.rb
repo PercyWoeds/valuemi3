@@ -96,6 +96,8 @@ self.per_page = 20
     for invoice in invoices
       if(value == "factory")
         ret += invoice.factory
+      elsif (value == "compen")        
+        ret += invoice.compen    
       else
         ret += invoice.ajuste
       end
@@ -180,15 +182,16 @@ self.per_page = 20
         parts = item.split("|BRK|")
         
         id = parts[0]
-        ajuste  = parts[1]
-        factory = parts[2]
-        balance = parts[3]
+        compen  = parts[1]
+        ajuste  = parts[2]
+        factory = parts[3]
+        balance = parts[4]
                   
         
         begin
           factura = Factura.find(id.to_i)          
 
-          new_factura = CustomerPaymentDetail.new(:customer_payment_id => self.id,:ajuste => ajuste.to_f, 
+          new_factura = CustomerPaymentDetail.new(:customer_payment_id => self.id,:compen=> compen.to_f,:ajuste => ajuste.to_f, 
                                   :factura_id => factura.id, :factory => factory.to_f,:total => balance.to_f )
           new_factura.save
 

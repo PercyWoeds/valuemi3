@@ -112,7 +112,7 @@
           <%=  @customerpayment.operacion    %>
         </td>
 
- |||||||<td class="bordered_bottom bordered_right">
+          <td class="bordered_bottom bordered_right">
         
         </td>
         
@@ -160,11 +160,34 @@
       <td colspan="5" class="bordered_bottom bordered_right bold">
         Factory:
       </td>
+
       <td class="bordered_bottom bordered_right bold right">
         <%= money(@customerpayment.get_customer_payment_value("factory")) %>
       </td>
+
+    </tr>
+   
+    <tr>
+      <td colspan="5" class="bordered_bottom bordered_right bold">
+        Compensación:
+      </td>
+
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@customerpayment.get_customer_payment_value("compen")) %>
+      </td>
+      
     </tr>
 
+    <tr>
+      <td colspan="5" class="bordered_bottom bordered_right bold">
+        Ajuste:
+      </td>
+
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@customerpayment.get_customer_payment_value("ajuste")) %>
+      </td>
+      
+    </tr>
     <tr>
       <td colspan="5" class="bordered_bottom bordered_right bold">
         Total:

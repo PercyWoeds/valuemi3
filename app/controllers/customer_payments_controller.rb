@@ -176,9 +176,11 @@ class CustomerPaymentsController < ApplicationController
 
    $lcFactory  = sprintf("%.2f",@customerpayment.get_customer_payment_value("factory").round(2).to_s)  
    $lcAjuste   = sprintf("%.2f",@customerpayment.get_customer_payment_value("ajuste").round(2).to_s)  
+   $lcCompen   = sprintf("%.2f",@customerpayment.get_customer_payment_value("compen").round(2).to_s)  
 
       data0 = [[" "," "," "," ","TOTALES DEPOSITO => ",$lcDeposito ],
                [" "," "," "," ","COMISION FACTORY => ",$lcFactory],
+               [" "," "," "," ","COMPENSACION     => ",$lcCompen],
                [" "," "," "," ","AJUSTE REDONDEDO => ",$lcAjuste ] ]
 
       data =[  ["BANCO","NRO.CUENTA","OPERACION :","GIRADO :","MONEDA : ","T/C."],
@@ -317,16 +319,20 @@ class CustomerPaymentsController < ApplicationController
         
         parts = item.split("|BRK|")        
         id = parts[0]
-        ajuste = parts[1]        
-        cantidad = parts[2]       
-        price = parts[3]         
+        compen    = parts[1]        
+        ajuste    = parts[2]        
+        cantidad  = parts[3]       
+        price     = parts[4]         
 
 
         product = Factura.find(id.to_i)
         product[:tax] = i        
+        product[:balance]  = compen.to_f
         product[:subtotal] = price.to_f
         product[:pago]     = cantidad.to_f
         product[:charge]   = ajuste.to_f
+
+        compen  = product[:balance]
         ajuste  = product[:charge]
         factory = product[:pago]
         total   = product[:subtotal]
@@ -384,7 +390,6 @@ class CustomerPaymentsController < ApplicationController
   # Autocomplete for customers
   def ac_customers
     @customers = Customer.where(["company_id = ? AND (email LIKE ? OR name LIKE ?)", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])
-
     render :layout => false
   end
   
@@ -701,6 +706,7 @@ class CustomerPaymentsController < ApplicationController
 
   # reporte completo
   def build_pdf_header_rpt(pdf)
+
       pdf.font "Helvetica" , :size => 6
      $lcCli  =  @company.name 
      $lcdir1 = @company.address1+@company.address2+@company.city+@company.state
@@ -804,11 +810,8 @@ class CustomerPaymentsController < ApplicationController
           
         total = @company.get_services_year_month_value(@year,@month, "total_amount")
         totals.push(total)
-        services_total += total
-        
-        pdf.text total.to_s
-        
-        
+        services_total += total        
+        pdf.text total.to_s                
         pdf.text "" 
 
         pdf.bounding_box([0, 20], :width => 535, :height => 40) do
@@ -1043,9 +1046,13 @@ class CustomerPaymentsController < ApplicationController
         end   
 
         end
+        $lcFactory = 0
+        $lcCompen  = 0
+        $lcAjuste  = 0
 
          $lcFactory = @company.get_customer_payments_value_otros(@fecha1,@fecha2,'factory')      
-         $lcAjuste = @company.get_customer_payments_value_otros(@fecha1,@fecha2,'ajuste')      
+         $lcCompen= @company.get_customer_payments_value_otros(@fecha1,@fecha2,'ajuste')
+         $lcAjuste = @company.get_customer_payments_value_otros(@fecha1,@fecha2,'compen')
 
          @totalgeneral = @totalgeneral + $lcAjuste 
 
@@ -1053,8 +1060,13 @@ class CustomerPaymentsController < ApplicationController
         row << nroitem.to_s
         row << "FACTORY"
         row << sprintf("%.2f",$lcFactory.to_s)
-
         table_content2 << row
+        row = []
+        row << nroitem.to_s
+        row << "COMPENSACION:"
+        row << sprintf("%.2f",$lcCompen.to_s)
+        table_content2 << row
+        
         row = []
         row << nroitem.to_s
         row << "AJUSTE"
@@ -1066,11 +1078,7 @@ class CustomerPaymentsController < ApplicationController
         row << "TOTAL => "
         row << sprintf("%.2f",@totalgeneral.to_s)
 
-        table_content2 << row
-        
-
-
-
+        table_content2 << row      
 
       result = pdf.table table_content2, {:position => :center,
                                         :header => true,
@@ -1176,8 +1184,6 @@ class CustomerPaymentsController < ApplicationController
       table_content = []
       total_general = 0
       total_factory = 0
-
-
 
       CustomerPayment::TABLE_HEADERS6.each do |header|
         cell = pdf.make_cell(:content => header)
@@ -1492,10 +1498,6 @@ class CustomerPaymentsController < ApplicationController
                                           
                                         end                                          
       pdf.move_down 10      
-
-
-
-
       pdf
 
     end
@@ -1552,7 +1554,7 @@ class CustomerPaymentsController < ApplicationController
 
   end
 
-##
+##-------------------------------------------------------------------------------------##
 ## RESUMEN DE INGRESO A BANCOS 
 ##
 ##-------------------------------------------------------------------------------------
@@ -1639,18 +1641,26 @@ class CustomerPaymentsController < ApplicationController
         end
 
         @total_factory = @company.get_customer_payments_value_otros(@fecha1,@fecha2,"factory") 
-        @total_ajuste = @company.get_customer_payments_value_otros(@fecha1,@fecha2,"ajuste") 
+        @total_ajuste  = @company.get_customer_payments_value_otros(@fecha1,@fecha2,"ajuste") 
+        @total_compen  = @company.get_customer_payments_value_otros(@fecha1,@fecha2,"compen") 
 
         row = []
         row << nroitem.to_s
-        row << "FACTORY"
+        row << "FACTORY :"
         row << sprintf("%.2f",@total_factory.to_s)
         table_content2 << row
         row = []
         row << nroitem.to_s
-        row << "AJUSTE"
+        row << "AJUSTE  :"
         row << sprintf("%.2f",@total_ajuste.to_s)
         table_content2 << row
+
+        row = []
+        row << nroitem.to_s
+        row << "COMPENSACION :"
+        row << sprintf("%.2f",@total_compen.to_s)
+        table_content2 << row
+
 
         @total_general = @total_general  + @total_ajuste 
 
@@ -1679,7 +1689,6 @@ class CustomerPaymentsController < ApplicationController
 
 
     def build_pdf_footer_rpt3(pdf)
-
       
         pdf.bounding_box([0, 20], :width => 535, :height => 40) do
         pdf.draw_text "Company: #{@company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
@@ -1719,9 +1728,6 @@ class CustomerPaymentsController < ApplicationController
     send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
   
   end
-
-
-
 
 
 ##
