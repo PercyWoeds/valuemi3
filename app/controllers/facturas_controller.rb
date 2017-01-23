@@ -340,14 +340,14 @@ class FacturasController < ApplicationController
 
       if newsubdia.save
 
-        newdsubdia =Dsubdia.new(:dsubdia=>$lcSubdiario,:dcompro=>"010001",:dsecue=>"001",
-        :dfeccom=>$lcFecha,:dcuenta=>"",
-        :dcodane=>$lcRuc,:dcencos=>,:dcodmon=>"MN",:ddh=>"D",:dimport=>f.total,
-        :dtipdoc=>"FT",:dnumdoc=>f.code,:dfecdoc=>$lcFecha,:dfecven=>$lcFechavmto,
-        :darea=>"",:dflag="S",:dxglosa=>"",:ddate=>$lcFecha,:dcodane2=>"",:dusimpor=>"",
-        :dmnimpor=>"",:dcodarc=>"",:dtidref=>"",:dndoref=>"",:dfecref=>"",:dbimref=>"",
-        :digvref=>"")    
-        
+        #newdsubdia =Dsubdia.new(:dsubdia=>$lcSubdiario,:dcompro=>"010001",:dsecue=>"001",
+        #:dfeccom=>$lcFecha,:dcuenta=>"",
+        #:dcodane=>$lcRuc,:dcencos=>,:dcodmon=>"MN",:ddh=>"D",:dimport=>f.total,
+        #:dtipdoc=>"FT",:dnumdoc=>f.code,:dfecdoc=>$lcFecha,:dfecven=>$lcFechavmto,
+        #:darea=>"",:dflag="S",:dxglosa=>"",:ddate=>$lcFecha,:dcodane2=>"",:dusimpor=>"",
+        #:dmnimpor=>"",:dcodarc=>"",:dtidref=>"",:dndoref=>"",:dfecref=>"",:dbimref=>"",
+        #:digvref=>"")    
+
       end     
 
       @invoice = Invoicesunat.all
