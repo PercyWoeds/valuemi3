@@ -307,25 +307,51 @@ class FacturasController < ApplicationController
      fecha2 =params[:fecha2]
      @facturas = Factura.where(fecha1,fecha2)
 
-      $lcSubdiario='12'
+      $lcSubdiario='05'
 
      for f in @facturas
 
+      newsubdia =Csubdia.new(:csubdia=>$lcSubdiario,:ccompro=>factura.code,:ccodmon=>"MN",
+        :csitua=>"F",:ctipcam=>"0.00",:cglosa=>"",:ctotal=>factura.total,
+        :ctipo=>"V",:cflag=>"N",:cdate=>"",:chora=>"",:cfeccam=>"",:cuser=>"SIST",
+        :corig=>"",:cform=>"M",:cextor=>"") 
 
-      newsubdia =Csubdia.new(:csubdia=>$lcSubdiario,:ccompro=>factura.code,:ccodmon=>"MN",:csitua=>"F",
-        :ctipcam=>"0.00",:cglosa=>"",:ctotal=>factura.total,
-          :ctipo=>"V",:cflag=>"N",:cdate=>"",:chora=>"",:cfeccam=>"",:cuser=>"SIST",:corig=>"",
-          :cform=>"M",:cextor=>"") 
+        item = f.fecha.to_s 
+        parts = item.split("-")        
+        yy    = parts[0]
+        mm    = parts[1]        
+        dd    = parts[2]        
+        $lcFecha =yy<<mm<<dd
+
+        item = f.fecha.to_s 
+        parts = item.split("-")        
+        yy    = parts[0]
+        mm    = parts[1]        
+        dd    = parts[2]        
+        $lcFechaemision =yy<<mm<<dd
+
+        item = f.fecha2.to_s 
+        parts = item.split("-")        
+        yy    = parts[0]
+        mm    = parts[1]        
+        dd    = parts[2]        
+        $lcFechavmto =yy<<mm<<dd
+        $lcRuc = f.customer.ruc
+
       if newsubdia.save
 
+        newdsubdia =Dsubdia.new(:dsubdia=>$lcSubdiario,:dcompro=>"010001",:dsecue=>"001",
+        :dfeccom=>$lcFecha,:dcuenta=>"",
+        :dcodane=>$lcRuc,:dcencos=>,:dcodmon=>"MN",:ddh=>"D",:dimport=>f.total,
+        :dtipdoc=>"FT",:dnumdoc=>f.code,:dfecdoc=>$lcFecha,:dfecven=>$lcFechavmto,
+        :darea=>"",:dflag="S",:dxglosa=>"",:ddate=>$lcFecha,:dcodane2=>"",:dusimpor=>"",
+        :dmnimpor=>"",:dcodarc=>"",:dtidref=>"",:dndoref=>"",:dfecref=>"",:dbimref=>"",
+        :digvref=>"")    
         
-
       end     
 
-   @invoice = Invoicesunat.all
-    send_data @invoice.to_csv  
-
-
+      @invoice = Invoicesunat.all
+      send_data @invoice.to_csv  
      end 
 
   end

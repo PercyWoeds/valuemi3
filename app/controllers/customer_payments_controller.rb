@@ -621,7 +621,19 @@ class CustomerPaymentsController < ApplicationController
   def destroy
     @customerpayment = CustomerPayment.find(params[:id])
     company_id = @customerpayment[:company_id]
-    
+
+    items = CustomerPaymentDetail.where(:customer_payment_id => @customerpayment.id)
+    for f in items
+          importe = f.total
+          factura = Factura.find(f.factura_id)  
+          
+            @newbalance= factura.balance + importe
+            factura.balance = @newbalance
+            factura.save
+          
+    end 
+
+
     @customerpayment.destroy
 
     respond_to do |format|
