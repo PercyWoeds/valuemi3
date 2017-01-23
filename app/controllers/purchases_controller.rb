@@ -57,7 +57,7 @@ class PurchasesController < ApplicationController
     puts $lcPurchaseOrderId
 
 @purchase = Purchase.new(:company_id=>1,:supplier_id=>$lcProveedorId,:date1=>$lcFechaEmision,:date2=>$lcFechaEmision,:payment_id=>$lcFormaPagoId,:document_id=>$lcDocumentId,:documento=>$lcDocumento,
-:date3 => $lcFechaVmto,:moneda_id => $lcMonedaId,:user_id =>@current_user.id)
+:date3 => $lcFechaVmto,:moneda_id => $lcMonedaId,:user_id =>@current_user.id,:purchaseorder_id=>lcPurchaseOrderId)
     
     @company = Company.find(1)
     
