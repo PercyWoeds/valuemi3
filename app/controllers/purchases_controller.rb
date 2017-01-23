@@ -6,6 +6,548 @@ include PurchasesHelper
 class PurchasesController < ApplicationController
   before_filter :authenticate_user!, :checkProducts
 
+
+  # reporte completo
+  def build_pdf_header_rpt(pdf)
+      pdf.font "Helvetica" , :size => 8
+     $lcCli  =  @company.name 
+     $lcdir1 = @company.address1+@company.address2+@company.city+@company.state
+
+     $lcFecha1= Date.today.strftime("%d/%m/%Y").to_s
+     $lcHora  = Time.now.to_s
+
+    max_rows = [client_data_headers_rpt.length, invoice_headers_rpt.length, 0].max
+      rows = []
+      (1..max_rows).each do |row|
+        rows_index = row - 1
+        rows[rows_index] = []
+        rows[rows_index] += (client_data_headers_rpt.length >= row ? client_data_headers_rpt[rows_index] : ['',''])
+        rows[rows_index] += (invoice_headers_rpt.length >= row ? invoice_headers_rpt[rows_index] : ['',''])
+      end
+
+      if rows.present?
+
+        pdf.table(rows, {
+          :position => :center,
+          :cell_style => {:border_width => 0},
+          :width => pdf.bounds.width
+        }) do
+          columns([0, 2]).font_style = :bold
+
+        end
+
+        pdf.move_down 10
+
+      end
+
+
+      
+      pdf 
+  end   
+
+  def build_pdf_body_rpt(pdf)
+    
+    pdf.text "Facturas  Emitidas : desde "+@fecha1.to_s+ " Hasta: "+@fecha2.to_s , :size => 8 
+    pdf.text ""
+    pdf.font "Helvetica" , :size => 6
+
+      headers = []
+      table_content = []
+
+      Factura::TABLE_HEADERS2.each do |header|
+        cell = pdf.make_cell(:content => header)
+        cell.background_color = "FFFFCC"
+        headers << cell
+      end
+
+      table_content << headers
+
+      nroitem=1
+      lcDoc='FT'
+      lcMon='S/.'
+
+       for  product in @facturas_rpt
+
+            row = []          
+            row << lcDoc
+            row << product.code
+            row << product.fecha.strftime("%d/%m/%Y")            
+            row << product.customer.name  
+            row << lcMon
+            row << product.subtotal.to_s
+            row << product.tax.to_s
+            row << product.total.to_s
+            row << ""
+            table_content << row
+
+            nroitem=nroitem + 1
+       
+        end
+
+
+
+      subtotals = []
+      taxes = []
+      totals = []
+      services_subtotal = 0
+      services_tax = 0
+      services_total = 0
+
+    if $lcFacturasall == '1'    
+      subtotal = @company.get_facturas_day_value(@fecha1,@fecha2, "subtotal")
+      subtotals.push(subtotal)
+      services_subtotal += subtotal          
+      #pdf.text subtotal.to_s
+    
+    
+      tax = @company.get_facturas_day_value(@fecha1,@fecha2, "tax")
+      taxes.push(tax)
+      services_tax += tax
+    
+      #pdf.text tax.to_s
+      
+      total = @company.get_facturas_day_value(@fecha1,@fecha2, "total")
+      totals.push(total)
+      services_total += total
+      #pdf.text total.to_s
+
+    else
+        #total x cliente 
+      subtotal = @company.get_facturas_day_value_cliente(@fecha1,@fecha2,@cliente, "subtotal")
+      subtotals.push(subtotal)
+      services_subtotal += subtotal          
+      #pdf.text subtotal.to_s
+    
+    
+      tax = @company.get_facturas_day_value_cliente(@fecha1,@fecha2,@cliente, "tax")
+      taxes.push(tax)
+      services_tax += tax
+    
+      #pdf.text tax.to_s
+      
+      total = @company.get_facturas_day_value_cliente(@fecha1,@fecha2,@cliente, "total")
+      totals.push(total)
+      services_total += total
+    
+    end
+
+      row =[]
+      row << ""
+      row << ""
+      row << ""
+      row << "TOTALES => "
+      row << ""
+      row << subtotal.round(2).to_s
+      row << tax.round(2).to_s
+      row << total.round(2).to_s
+      row << ""
+      table_content << row
+      
+      result = pdf.table table_content, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width
+                                        } do 
+                                          columns([0]).align=:center
+                                          columns([1]).align=:left
+                                          columns([2]).align=:left
+                                          columns([3]).align=:left
+                                          columns([4]).align=:left
+                                          columns([5]).align=:right  
+                                          columns([6]).align=:right
+                                          columns([7]).align=:right
+                                          columns([8]).align=:right
+                                        end                                          
+      pdf.move_down 10      
+
+      #totales 
+
+      pdf 
+
+    end
+
+    def build_pdf_footer_rpt(pdf)
+      
+                  
+      pdf.text "" 
+      pdf.bounding_box([0, 20], :width => 535, :height => 40) do
+      pdf.draw_text "Company: #{@company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
+
+      end
+
+      pdf
+      
+  end
+
+##### reporte de pendientes de pago..
+
+  def build_pdf_header_rpt2(pdf)
+      pdf.font "Helvetica" , :size => 8
+     $lcCli  =  @company.name 
+     $lcdir1 = @company.address1+@company.address2+@company.city+@company.state
+
+     $lcFecha1= Date.today.strftime("%d/%m/%Y").to_s
+     $lcHora  = Time.now.to_s
+
+    max_rows = [client_data_headers_rpt.length, invoice_headers_rpt.length, 0].max
+      rows = []
+      (1..max_rows).each do |row|
+        rows_index = row - 1
+        rows[rows_index] = []
+        rows[rows_index] += (client_data_headers_rpt.length >= row ? client_data_headers_rpt[rows_index] : ['',''])
+        rows[rows_index] += (invoice_headers_rpt.length >= row ? invoice_headers_rpt[rows_index] : ['',''])
+      end
+
+      if rows.present?
+
+        pdf.table(rows, {
+          :position => :center,
+          :cell_style => {:border_width => 0},
+          :width => pdf.bounds.width
+        }) do
+          columns([0, 2]).font_style = :bold
+
+        end
+
+        pdf.move_down 10
+
+      end
+
+
+      
+      pdf 
+  end   
+
+  def build_pdf_body_rpt2(pdf)
+    
+    pdf.text "Cuentas por cobrar  : desde "+@fecha1.to_s+ " Hasta: "+@fecha2.to_s , :size => 8 
+    pdf.text ""
+    pdf.font "Helvetica" , :size => 6
+
+      headers = []
+      table_content = []
+
+      Factura::TABLE_HEADERS3.each do |header|
+        cell = pdf.make_cell(:content => header)
+        cell.background_color = "FFFFCC"
+        headers << cell
+      end
+
+      table_content << headers
+
+      nroitem=1
+      lcmonedasoles   = 2
+      lcmonedadolares = 1
+    
+
+      lcDoc='FT'
+
+      
+
+       lcCliente = @facturas_rpt.first.customer_id 
+
+       for  product in @facturas_rpt
+        
+          if lcCliente == product.customer_id
+
+             #if product.payment_id == nil 
+              fechas2 = product.fecha2 
+             #else 
+             # days = product.payment.day 
+             # fechas2 = product.fechas2 + days.days              
+             #end 
+
+            row = []          
+            row << lcDoc
+            row << product.code
+            row << product.fecha.strftime("%d/%m/%Y")
+            row << product.fecha2.strftime("%d/%m/%Y")
+            row << product.customer.name
+            row << product.moneda.symbol  
+
+            if product.moneda_id == 1 
+                row << "0.00 "
+                row << sprintf("%.2f",product.balance.to_s)
+            else
+                row << sprintf("%.2f",product.balance.to_s)
+                row << "0.00 "
+            end 
+            row << product.get_vencido 
+
+            
+            table_content << row
+
+            nroitem = nroitem + 1
+
+          else
+            totals = []            
+            total_cliente_soles = 0
+            total_cliente_soles = @company.get_pendientes_day_customer(@fecha1,@fecha2, lcCliente, lcmonedadolares)
+            total_cliente_dolares = 0
+            total_cliente_dolares = @company.get_pendientes_day_customer(@fecha1,@fecha2, lcCliente, lcmonedasoles)
+            
+            row =[]
+            row << ""
+            row << ""
+            row << ""
+            row << ""          
+            row << "TOTALES POR CLIENTE=> "            
+            row << ""
+            row << sprintf("%.2f",total_cliente_dolares.to_s)
+            row << sprintf("%.2f",total_cliente_soles.to_s)
+            row << " "
+            
+            table_content << row
+
+            lcCliente = product.customer_id
+
+            row = []          
+            row << lcDoc
+            row << product.code
+            row << product.fecha.strftime("%d/%m/%Y")
+            row << product.fecha2.strftime("%d/%m/%Y")
+            row << product.customer.name
+            row << product.moneda.symbol  
+
+            if product.moneda_id == 1 
+                row << "0.00 "
+                row << sprintf("%.2f",product.balance.to_s)
+            else
+                row << sprintf("%.2f",product.balance.to_s)
+                row << "0.00 "
+            end 
+            row << product.observ
+
+            
+            table_content << row
+
+
+
+          end 
+          
+       
+        end
+
+        lcCliente = @facturas_rpt.last.customer_id 
+
+            totals = []            
+            total_cliente = 0
+
+            total_cliente_soles = 0
+            total_cliente_soles = @company.get_pendientes_day_customer(@fecha1,@fecha2, lcCliente, lcmonedadolares)
+            total_cliente_dolares = 0
+            total_cliente_dolares = @company.get_pendientes_day_customer(@fecha1,@fecha2, lcCliente, lcmonedasoles)
+    
+            
+            row =[]
+            row << ""
+            row << ""
+            row << ""
+            row << ""          
+            row << "TOTALES POR CLIENTE=> "            
+            row << ""
+            row << sprintf("%.2f",total_cliente_dolares.to_s)
+            row << sprintf("%.2f",total_cliente_soles.to_s)                      
+            row << " "
+            table_content << row
+              
+          total_soles = @company.get_pendientes_day_value(@fecha1,@fecha2, "total",lcmonedasoles)
+          total_dolares = @company.get_pendientes_day_value(@fecha1,@fecha2, "total",lcmonedadolares)
+      
+           if $lcxCliente == "0" 
+
+          row =[]
+          row << ""
+          row << ""
+          row << ""
+          row << ""
+          row << "TOTALES => "
+          row << ""
+          row << sprintf("%.2f",total_soles.to_s)
+          row << sprintf("%.2f",total_dolares.to_s)                    
+          row << " "
+          table_content << row
+          end 
+
+          result = pdf.table table_content, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width
+                                        } do 
+                                          columns([0]).align=:center
+                                          columns([1]).align=:left
+                                          columns([2]).align=:left
+                                          columns([3]).align=:left
+                                          columns([4]).align=:left
+                                          columns([5]).align=:right  
+                                          columns([6]).align=:right
+                                          columns([7]).align=:right
+                                          columns([8]).align=:right
+                                        end                                          
+                                        
+      pdf.move_down 10      
+
+      #totales 
+
+      pdf 
+
+    end
+
+    def build_pdf_footer_rpt2(pdf)      
+                  
+      pdf.text "" 
+      pdf.bounding_box([0, 20], :width => 535, :height => 40) do
+      pdf.draw_text "Company: #{@company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
+
+    end
+
+    pdf
+      
+  end
+
+
+  # Export serviceorder to PDF
+  def rpt_facturas_all_pdf
+
+    $lcFacturasall = '1'
+
+    @company=Company.find(params[:company_id])          
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]    
+
+
+    @facturas_rpt = @company.get_facturas_day(@fecha1,@fecha2)      
+
+    respond_to do |format|
+      format.html    
+      format.xls # { send_data @products.to_csv(col_sep: "\t") }
+    end 
+
+    Prawn::Document.generate("app/pdf_output/rpt_factura.pdf") do |pdf|
+        pdf.font "Helvetica"
+        pdf = build_pdf_header_rpt(pdf)
+        pdf = build_pdf_body_rpt(pdf)
+        build_pdf_footer_rpt(pdf)
+        $lcFileName =  "app/pdf_output/rpt_factura_all.pdf"              
+    end     
+    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
+    send_file("app/pdf_output/rpt_factura.pdf", :type => 'application/pdf', :disposition => 'inline')
+
+  end
+# Export serviceorder to PDF
+  def rpt_facturas_all2_pdf
+
+    $lcFacturasall = '0'
+    @company=Company.find(params[:company_id])          
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]    
+    @cliente = params[:customer_id]     
+
+    @facturas_rpt = @company.get_facturas_day_cliente(@fecha1,@fecha2,@cliente)  
+
+
+    Prawn::Document.generate("app/pdf_output/rpt_factura.pdf") do |pdf|
+        pdf.font "Helvetica"
+        pdf = build_pdf_header_rpt(pdf)
+        pdf = build_pdf_body_rpt(pdf)
+        build_pdf_footer_rpt(pdf)
+        $lcFileName =  "app/pdf_output/rpt_factura_all.pdf"              
+    end     
+    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
+    send_file("app/pdf_output/rpt_factura.pdf", :type => 'application/pdf', :disposition => 'inline')
+  end
+
+  ###pendientes de pago 
+  def rpt_ccobrar2_pdf
+    $lcxCliente ="0"
+    @company=Company.find(params[:company_id])      
+    
+      @fecha1 = params[:fecha1]
+    
+      @fecha2 = params[:fecha2]
+    
+    @company.actualizar_fecha2
+    @facturas_rpt = @company.get_pendientes_day(@fecha1,@fecha2)  
+      
+    Prawn::Document.generate("app/pdf_output/rpt_pendientes.pdf") do |pdf|
+        pdf.font "Helvetica"
+        pdf = build_pdf_header_rpt2(pdf)
+        pdf = build_pdf_body_rpt2(pdf)
+        build_pdf_footer_rpt2(pdf)
+
+        $lcFileName =  "app/pdf_output/rpt_pendientes.pdf"              
+    end     
+
+    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
+    send_file("app/pdf_output/rpt_pendientes.pdf", :type => 'application/pdf', :disposition => 'inline')
+  
+
+  end
+  
+  ###pendientes de pago 
+  def rpt_ccobrar3_pdf
+
+    $lcxCliente ="1"
+    @company=Company.find(params[:company_id])      
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]
+    @cliente = params[:customer_id]      
+
+    @facturas_rpt = @company.get_pendientes_day_cliente(@fecha1,@fecha2,@cliente)  
+
+
+    if @facturas_rpt.size > 0 
+
+    Prawn::Document.generate("app/pdf_output/rpt_pendientes.pdf") do |pdf|
+        pdf.font "Helvetica"
+        pdf = build_pdf_header_rpt2(pdf)
+        pdf = build_pdf_body_rpt2(pdf)
+        build_pdf_footer_rpt2(pdf)
+
+        $lcFileName =  "app/pdf_output/rpt_pendientes.pdf"              
+    end     
+
+
+    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
+    send_file("app/pdf_output/rpt_pendientes.pdf", :type => 'application/pdf', :disposition => 'inline')
+
+    end 
+
+  end
+  
+  ###pendientes de pago detalle
+
+  def rpt_ccobrar4_pdf
+      $lcxCliente ="0"
+      @company=Company.find(params[:company_id])          
+      @fecha1 = params[:fecha1]  
+      @fecha2 = params[:fecha2]  
+      @facturas_rpt = @company.get_pendientes_day(@fecha1,@fecha2)  
+      
+      Prawn::Document.generate("app/pdf_output/rpt_pendientes4.pdf") do |pdf|
+          pdf.font "Helvetica"
+          pdf = build_pdf_header_rpt4(pdf)
+          pdf = build_pdf_body_rpt4(pdf)
+          build_pdf_footer_rpt4(pdf)
+          $lcFileName =  "app/pdf_output/rpt_pendientes4.pdf"              
+      end     
+      $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
+      send_file("app/pdf_output/rpt_pendientes4.pdf", :type => 'application/pdf', :disposition => 'inline')
+  
+  end
+  
+
+  def client_data_headers_rpt
+      client_headers  = [["Empresa  :", $lcCli ]]
+      client_headers << ["Direccion :", $lcdir1]
+      client_headers
+  end
+
+  def invoice_headers_rpt            
+      invoice_headers  = [["Fecha : ",$lcHora]]    
+      invoice_headers
+  end
+
+
+
   def newfactura  
     @company = Company.find(1)
     @purchaseorder = Purchaseorder.find(params[:id])      
@@ -119,13 +661,6 @@ class PurchasesController < ApplicationController
         #  format.xml  { render :xml => @purchase.errors, :status => :unprocessable_entity }
         #end
       end
-    
-
-
-
-
-
-
   end 
 
   def cargar
@@ -354,10 +889,7 @@ class PurchasesController < ApplicationController
     @pagetitle = "Nueva Factura"
     @action_txt = "search"
     
-    @purchase = Purchase.new
-    
-    
-    
+    @purchase = Purchase.new    
     @company = Company.find(params[:id])
     @purchase.company_id = @company.id
     
@@ -469,12 +1001,10 @@ class PurchasesController < ApplicationController
       @ac_user = curr_seller.username
     end    
     
-
       respond_to do |format|
         if @purchase.save 
           # Create products for kit
-          @purchase.add_products(items)
-          
+          @purchase.add_products(items)          
           # Check if we gotta process the invoice
           @purchase.process()
           
@@ -484,9 +1014,7 @@ class PurchasesController < ApplicationController
           format.html { render :action => "new" }
           format.xml  { render :xml => @purchase.errors, :status => :unprocessable_entity }
         end
-      end
-    
-    
+      end      
   end
   
 
@@ -526,9 +1054,7 @@ class PurchasesController < ApplicationController
         # Create products for kit
         @purchase.delete_products()
         @purchase.add_products(items)
-
-
-        
+      
         # Check if we gotta process the purchase
         @purchase.process()
         

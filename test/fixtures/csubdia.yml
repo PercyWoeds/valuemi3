@@ -1,0 +1,39 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  ccompro: MyString
+  cfeccom: MyString
+  ccodmon: MyString
+  csitua: MyString
+  ctipcam: 1.5
+  cglosa: MyString
+  ctotal: 1.5
+  ctipo: MyString
+  cflag: MyString
+  cdate: 2017-01-23 10:48:45
+  chora: MyString
+  cfeccam: MyString
+  cuser: MyString
+  corig: MyString
+  cform: MyString
+  ctipo: MyString
+  cextor: MyString
+
+two:
+  ccompro: MyString
+  cfeccom: MyString
+  ccodmon: MyString
+  csitua: MyString
+  ctipcam: 1.5
+  cglosa: MyString
+  ctotal: 1.5
+  ctipo: MyString
+  cflag: MyString
+  cdate: 2017-01-23 10:48:45
+  chora: MyString
+  cfeccam: MyString
+  cuser: MyString
+  corig: MyString
+  cform: MyString
+  ctipo: MyString
+  cextor: MyString

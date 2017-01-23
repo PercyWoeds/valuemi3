@@ -1,0 +1,57 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  dcompro: MyString
+  dsecue: MyString
+  dfeccom: MyString
+  dcuenta: MyString
+  dcodane: MyString
+  dcencos: MyString
+  dcodmon: MyString
+  ddh: MyString
+  dimport: 1.5
+  dtipdoc: MyString
+  dnumdoc: MyString
+  dfecdoc: MyString
+  dfecven: MyString
+  darea: MyString
+  dflag: MyString
+  dxglosa: MyString
+  ddate: 2017-01-23 10:55:32
+  dcodane2: MyString
+  dusimpor: 1.5
+  dmnimpor: 1.5
+  dcodarc: MyString
+  dtidref: MyString
+  dndoref: MyString
+  dfecref: 2017-01-23 10:55:32
+  dbimref: 2017-01-23 10:55:32
+  digvref: 1.5
+
+two:
+  dcompro: MyString
+  dsecue: MyString
+  dfeccom: MyString
+  dcuenta: MyString
+  dcodane: MyString
+  dcencos: MyString
+  dcodmon: MyString
+  ddh: MyString
+  dimport: 1.5
+  dtipdoc: MyString
+  dnumdoc: MyString
+  dfecdoc: MyString
+  dfecven: MyString
+  darea: MyString
+  dflag: MyString
+  dxglosa: MyString
+  ddate: 2017-01-23 10:55:32
+  dcodane2: MyString
+  dusimpor: 1.5
+  dmnimpor: 1.5
+  dcodarc: MyString
+  dtidref: MyString
+  dndoref: MyString
+  dfecref: 2017-01-23 10:55:32
+  dbimref: 2017-01-23 10:55:32
+  digvref: 1.5

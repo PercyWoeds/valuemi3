@@ -368,12 +368,19 @@ def get_guias_2(fecha1,fecha2)
     @serviceorder = Serviceorder.where(["company_id = ? AND fecha1 >= ? AND fecha1 <= ?", self.id, "#{year}-#{month}-01 00:00:00", "#{year}-#{month}-31 23:59:59"])
     return @serviceorder
  end 
-## ESTADO DE CUENTA 
+## generar archivo txt
  def get_facturas_year_month_day(fecha1)
     @facturas = Factura.where(["company_id = ? AND fecha >= ? and fecha<= ?", self.id, "#{fecha1} 00:00:00","#{fecha1} 23:59:59"])
-    return @facturas
-    
+    return @facturas    
  end 
+
+ ## generar archivo concar
+ def get_facturas_year_month_day2(fecha1,fecha2)
+    @facturas = Factura.where(["company_id = ? AND fecha >= ? and fecha<= ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59"])
+    return @facturas    
+ end 
+
+
 ## ESTADO DE CUENTA 
  def get_facturas_day(fecha1,fecha2)
 

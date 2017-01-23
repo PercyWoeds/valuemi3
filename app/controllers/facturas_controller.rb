@@ -292,13 +292,39 @@ class FacturasController < ApplicationController
         format.xls # { send_data @products.to_csv(col_sep: "\t") }
     end 
 
-
   end
 
   def export
     @company = Company.find(params[:company_id])
     @facturas  = Factura.all
-  
+  end
+
+  def export3
+    @company = Company.find(params[:company_id])
+     Csubdia.delete_all
+     Dsubdia.delete_all
+     fecha1 =params[:fecha1]
+     fecha2 =params[:fecha2]
+     @facturas = Factura.where(fecha1,fecha2)
+
+      $lcSubdiario='12'
+
+     for f in @facturas
+
+
+#      newsubdia =Csubdia.new(:csubdia=>$lcSubdiario,:ccompro=>factura.code,:ccodmon=>"MN",:csitua=>"F",
+#        :ctipcam=>,:cglosa=>,:ctotal=>,
+#          :ctipo=>"V",:cflag=>,:cdate=>,:chora=>,:cfeccam=>,:cuser=>,:corig=>,:cform,:cextor)
+
+
+       #newsubdia.save
+
+   @invoice = Invoicesunat.all
+    send_data @invoice.to_csv  
+
+
+     end 
+
   end
 
   def export2
@@ -434,7 +460,49 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
     
     
   end
-  
+
+  def generar3
+        
+    @company = Company.find(params[:company_id])
+    @users = @company.get_users()
+    @users_cats = []
+    
+    @pagetitle = "Generar archivo"
+    
+    @f =(params[:fecha1])
+    @f2 =(params[:fecha1])
+
+        parts = @f.split("-")
+        yy = parts[0]
+        mm = parts[1]
+        dd = parts[2]
+
+     @fechadoc=dd+"/"+mm+"/"+yy   
+     @tipodocumento='01'
+    
+    files_to_clean =  Dir.glob("./app/txt_output/*.txt")
+        files_to_clean.each do |file|
+          File.delete(file)
+        end 
+
+    @facturas_all_txt = @company.get_facturas_year_month_day2(@f,@f2)
+
+    if @facturas_all_txt
+      out_file = File.new("#{Dir.pwd}/app/txt_output/20424092941-RF-#{dd}#{mm}#{yy}-01.txt", "w")      
+        for factura in @facturas_all_txt 
+            parts = factura.code.split("-")
+            @serie     =parts[0]
+            @nrodocumento=parts[1]
+
+            out_file.puts("7|#{@fechadoc}|#{@tipodocumento}|#{@serie}|#{@nrodocumento}||6|#{factura.customer.ruc}|#{factura.customer.name}|#{factura.subtotal}|0.00|0.00|0.00|#{factura.tax}|0.00|#{factura.total}||||\n")
+                    
+        end 
+    out_file.close
+    end 
+    
+    
+  end
+    
 
   # GET /invoices/1
   # GET /invoices/1.xml
@@ -606,6 +674,7 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
     end
 
   end
+
 
 # reporte completo
   def build_pdf_header_rpt(pdf)
@@ -1014,10 +1083,10 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
     @fecha2 = params[:fecha2]    
     @facturas_rpt = @company.get_facturas_day(@fecha1,@fecha2)      
 
-    respond_to do |format|
-      format.html    
-      format.xls # { send_data @products.to_csv(col_sep: "\t") }
-    end 
+#    respond_to do |format|
+#      format.html    
+#      format.xls # { send_data @products.to_csv(col_sep: "\t") }
+#    end 
 
     Prawn::Document.generate("app/pdf_output/rpt_factura.pdf") do |pdf|
         pdf.font "Helvetica"

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170123132637) do
+ActiveRecord::Schema.define(version: 20170123173155) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -140,6 +140,28 @@ ActiveRecord::Schema.define(version: 20170123132637) do
     t.string   "code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "csubdia", force: :cascade do |t|
+    t.string   "ccompro"
+    t.string   "cfeccom"
+    t.string   "ccodmon"
+    t.string   "csitua"
+    t.float    "ctipcam"
+    t.string   "cglosa"
+    t.float    "ctotal"
+    t.string   "ctipo"
+    t.string   "cflag"
+    t.datetime "cdate"
+    t.string   "chora"
+    t.string   "cfeccam"
+    t.string   "cuser"
+    t.string   "corig"
+    t.string   "cform"
+    t.string   "cextor"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "csubdia"
   end
 
   create_table "customer_payment_details", force: :cascade do |t|
@@ -301,6 +323,37 @@ ActiveRecord::Schema.define(version: 20170123132637) do
     t.integer  "company_id"
     t.string   "descripshort"
     t.string   "tiposunat"
+  end
+
+  create_table "dsubdia", force: :cascade do |t|
+    t.string   "dcompro"
+    t.string   "dsecue"
+    t.string   "dfeccom"
+    t.string   "dcuenta"
+    t.string   "dcodane"
+    t.string   "dcencos"
+    t.string   "dcodmon"
+    t.string   "ddh"
+    t.float    "dimport"
+    t.string   "dtipdoc"
+    t.string   "dnumdoc"
+    t.string   "dfecdoc"
+    t.string   "dfecven"
+    t.string   "darea"
+    t.string   "dflag"
+    t.string   "dxglosa"
+    t.datetime "ddate"
+    t.string   "dcodane2"
+    t.float    "dusimpor"
+    t.float    "dmnimpor"
+    t.string   "dcodarc"
+    t.string   "dtidref"
+    t.string   "dndoref"
+    t.datetime "dfecref"
+    t.datetime "dbimref"
+    t.float    "digvref"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "employees", force: :cascade do |t|

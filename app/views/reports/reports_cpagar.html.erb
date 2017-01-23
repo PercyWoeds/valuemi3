@@ -14,17 +14,27 @@
   </h3>
   
   <p class="big">
-    <%= link_to "Pendientes de Pago ", "/companies/reports/rpt_purchases_all/#{@company.id}" %>
-  </p>
-
-  <p class="big">
-    <%= link_to "Cancelaciones", "/companies/reports/purchaseorder_all/#{@company.id}" %>
-  </p>
-
-  <p class="big">
-    <%= link_to "Cuentas Bancarias ", "/companies/reports/invoice_all/#{@company.id}" %>
+    <%= link_to "Facturas Emitidas ", "/companies/reports/rpt_cpagar1_all/#{@company.id}" %>
   </p>
   
+  <p class="big">
+    <%= link_to "Pendientes por cobrar general  ", "/companies/reports/rpt_cpagar2_pdf/#{@company.id}" %>
+  </p>
+
+  <p class="big">
+    <%= link_to "Pendientes por cobrar por proveedor ", "/companies/reports/rpt_cpagar3_pdf/#{@company.id}" %>
+  </p>
+
+  <p class="big">
+    <%= link_to "Liquidacion de Cobranzas  ", "/companies/reports/rpt_cpagar4_pdf/#{@company.id}" %>
+  </p>
+
+  <p class="big">
+    <%= link_to "Cuentas x cobrar por vencimiento  ", "/companies/reports/rpt_cpagar5_pdf/#{@company.id}" %>
+  </p>
+
+  
+
 </div>
 
 <div class="mid_box">
