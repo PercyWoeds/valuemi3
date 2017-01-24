@@ -302,8 +302,12 @@ class FacturasController < ApplicationController
     @company = Company.find(params[:company_id])
     @facturas  = Factura.all
   end
+  def export4
+    @company = Company.find(params[:company_id])
+    @facturas  = Factura.all
+  end
 
-  def generar3
+  def generar4
 
     puts "ingreso"
     
@@ -314,7 +318,8 @@ class FacturasController < ApplicationController
 
      fecha1 =params[:fecha1]
      fecha2 =params[:fecha2]
-     @facturas = Factura.where(fecha1,fecha2)
+
+     @facturas = @company.get_facturas_day(fecha1,fecha2)
 
       $lcSubdiario='05'
 
@@ -398,13 +403,27 @@ class FacturasController < ApplicationController
 
       
       end 
-        @invoice = Dsubdiario.all
-      send_data @invoice.to_csv  
-
-       @invoice1 = Csubdiario.all
-      send_data @invoice1.to_csv  
-       
+    
   end
+
+  def generar5
+
+      option =  params[:archivo]
+      puts option
+      
+      if option == "Ventas Cabecera"
+
+        @invoice = Csubdiario.all
+        send_data @invoice.to_csv  , :filename => 'CC0317.csv'
+
+      else
+        @invoice = Dsubdiario.all
+        send_data @invoice.to_csv  , :filename => 'CD0317.csv'
+
+        
+      end 
+       
+  end 
 
   def export2
     Invoicesunat.delete_all

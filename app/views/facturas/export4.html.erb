@@ -1,0 +1,36 @@
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %> &raquo;
+  <%= link_to "Invoices", "/companies/facturas/#{@company.id}" %>
+</div>
+
+<h3>
+  <%= image_tag("invoice_48.png", :class => "vmiddle") %>
+  Generar archivo interface contable
+</h3>
+
+<p>
+  Para crear una nueva factura, por favor llenar el siguiente formulario. Los campos marcados con <strong>*</strong> son obligatorios 
+</p>
+
+<%= hr() %>
+
+<form method="get" action="/facturas/generar5/<%= @company.id %>">
+
+      <strong>Seleccionar archivo :</strong>     
+
+  <%= select_tag "archivo", options_for_select([ "Ventas Cabecera", "Ventas Detalle" ], "Ventas Cabecera") %>
+
+    
+    <input type="submit" value="Generar" class="bold small_btn" />
+
+
+</form>	
+
+<%= hr() %>
+
+<div class="button">
+  <%= link_to 'Back', "/companies/facturas/#{@company.id}" %>
+</div>
+
+
