@@ -70,14 +70,11 @@ class ProductsController < ApplicationController
     @product[:quantity] = 0
     @product[:quantity_transit] = 0
     @product[:company_id] = params[:company_id]
-    @company = Company.find(params[:company_id])
-    @suppliers = @company.get_suppliers()
-    @marcas = @company.get_marcas()
-    @modelos = @company.get_modelos()
+    @company    = Company.find(params[:company_id])
+    @suppliers  = @company.get_suppliers()
+    @marcas     = @company.get_marcas()
+    @modelos    = @company.get_modelos()
     @categories = @company.get_categories()
-
-
-
 
     @product[:tax1_name] = @company.get_last_tax_name(1)
     @product[:tax2_name] = @company.get_last_tax_name(2)
@@ -143,16 +140,11 @@ class ProductsController < ApplicationController
     
     if(@company.can_view(current_user))
       respond_to do |format|
-        if @product.save
-          
-          #@product.add_category(@product[:category])
-          
+         @product.save    
+          #@product.add_category(@product[:category])          
           format.html { redirect_to(@product, :notice => 'Product was successfully created.') }
           format.xml  { render :xml => @product, :status => :created, :location => @product }
-        else
-          format.html { render :action => "new" }
-          format.xml  { render :xml => @product.errors, :status => :unprocessable_entity }
-        end
+        
       end
     else
       errPerms()
@@ -211,7 +203,7 @@ class ProductsController < ApplicationController
   end
   private
   def products_params
-    params.require(:product).permit(:code, :name, :category, :cost,:price,:price2,:tax1_name, :tax1,:tax2_name,:tax2, :tax3_name,:tax3 ,:quantity,:reorder,:description,:comments,:company_id,:marca_id,:modelo_id,:category_id)
+    params.require(:product).permit(:code, :name, :category, :cost,:price,:price2,:tax1_name, :tax1,:tax2_name,:tax2, :tax3_name,:tax3 ,:quantity,:reorder,:description,:comments,:company_id,:marca_id,:modelo_id,:products_category_id)
   end
   
 

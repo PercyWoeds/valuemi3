@@ -1674,13 +1674,14 @@ class CustomerPaymentsController < ApplicationController
         table_content2 << row
 
 
-        @total_general = @total_general  + @total_ajuste 
+        @total_general = @total_general  + @total_ajuste +@total_factory+@total_compen
 
         
           row =[]
           row << " "
           row << "TOTAL GENERAL => "
           row << sprintf("%.2f",@total_general.to_s)
+
           table_content2 << row
           result = pdf.table table_content2, {:position => :center,
                                         :header => true,
