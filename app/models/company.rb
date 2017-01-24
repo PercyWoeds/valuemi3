@@ -459,7 +459,7 @@ def get_facturas_day_value_cliente(fecha1,fecha2,cliente,value = "total")
         ret=0  
         for factura in facturas
 
-          @detail = CustomerPaymentDetail.where(:factura_id => factura.id)
+          @detail = CustomerPaymentDetail.where(:customer_payment_id => factura.id)
 
           for d in @detail 
             if(value == "ajuste")
