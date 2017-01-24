@@ -765,7 +765,7 @@ def list_receive_supplierpayments
 
   def build_pdf_body_rpt(pdf)
     
-    pdf.text "Pendientes de Pago    Emitidas : Año "+@year.to_s+ " Mes : "+@month.to_s , :size => 11 
+    pdf.text "LISTADO DE COMPRAS : Desde "+@fecha1.to_s+ " Hasta : "+@fecha2.to_s , :size => 11 ,:align => :center
     pdf.text ""
     pdf.font "Helvetica" , :size => 6
 
@@ -792,10 +792,7 @@ def list_receive_supplierpayments
             row << product.document.descripshort 
             row << product.documento
             row << product.supplier.name  
-            row << product.total_amount.to_s            
-            row << product.charge.to_s      
-            row << product.pago.to_s      
-            row << product.balance.to_s            
+            row <<  sprintf("%.2f",product.total_amount.to_s)
             table_content << row
 
             nroitem=nroitem + 1
@@ -811,13 +808,11 @@ def list_receive_supplierpayments
                                           columns([1]).align=:left
                                           columns([2]).align=:left
                                           columns([3]).align=:left
-                                          columns([4]).align=:left  
+                                          columns([4]).align=:right  
                                           columns([5]).align=:right
                                           columns([6]).align=:right
-                                          columns([7]).align=:left 
-                                          columns([8]).align=:right
-                                          columns([9]).align=:right
-                                          columns([10]).align=:right
+                                          columns([7]).align=:right
+                                          
                                         end                                          
       pdf.move_down 10      
       pdf
