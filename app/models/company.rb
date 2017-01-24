@@ -463,11 +463,11 @@ def get_facturas_day_value_cliente(fecha1,fecha2,cliente,value = "total")
 
           for d in @detail 
             if(value == "ajuste")
-              ret += @detail.ajuste
+              ret += d.ajuste
             elsif (value == "compen")
-              ret += @detail.compen 
+              ret += d.compen 
             else         
-              ret += @detail.factory
+              ret += d.factory
             end
           end 
 
