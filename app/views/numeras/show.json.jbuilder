@@ -1,0 +1,1 @@
+json.partial! "numeras/numera", numera: @numera

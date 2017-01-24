@@ -1,0 +1,1 @@
+json.array! @numeras, partial: 'numeras/numera', as: :numera

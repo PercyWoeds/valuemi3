@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  subdiario: MyString
+  compro: MyString
+
+two:
+  subdiario: MyString
+  compro: MyString

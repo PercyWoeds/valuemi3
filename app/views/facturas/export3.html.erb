@@ -15,19 +15,21 @@
 
 <%= hr() %>
 
-    <form method="get" action="/companies/facturas/generar3/<%= @company.id %>">
+    <form method="get" action="/facturas/generar3/<%= @company.id %>">
         <strong>Buscar :</strong>
 
-        <input type="date" name="fecha1" value="2017-12-01" style = width: 250px;"  />
-        <input type="date" name="fecha2" value="2017-12-24" style = width: 250px;"  />
+        <input type="date" name="fecha1" value="2017-01-01" style = width: 250px;"  />
+        <input type="date" name="fecha2" value="2017-01-31" style = width: 250px;"  />
 
         <input type="submit" value="Generar" class="bold small_btn" />
+
+  
     </form>	
 
 <%= hr() %>
 
 <div class="button">
-  <%= link_to 'Back', "/companies/facturas3/#{@company.id}" %>
+  <%= link_to 'Back', "/companies/facturas/#{@company.id}" %>
 </div>
 
 

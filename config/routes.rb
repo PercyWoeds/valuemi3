@@ -1,6 +1,7 @@
 Mnygo::Application.routes.draw do
 
 
+  resources :numeras
   resources :concepts
   resources :quotations
   resources :tranportorders
@@ -265,7 +266,7 @@ Mnygo::Application.routes.draw do
   match 'facturas/rpt_ccobrar3_pdf/:company_id' => 'facturas#rpt_ccobrar3_pdf', via: [:get, :post]
 
   match 'companies/facturas/generar/:company_id' => 'facturas#generar', via: [:get, :post]
-  match 'companies/facturas/generar3/:company_id' => 'facturas#generar3', via: [:get, :post]
+  match 'facturas/generar3/:company_id' => 'facturas#generar3', via: [:get, :post]
   #match 'serviceorders/rpt_serviceorder_all_pdf/:id' => 'serviceorders#rpt_serviceorder_all_pdf', via: [:get, :post]
 
   match 'facturas/do_anular/:id' => 'facturas#do_anular', via: [:get, :post]

@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class CsubdiumTest < ActiveSupport::TestCase
+class NumeraTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

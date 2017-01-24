@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Numeras</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Subdiario</th>
+      <th>Compro</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @numeras.each do |numera| %>
+      <tr>
+        <td><%= numera.subdiario %></td>
+        <td><%= numera.compro %></td>
+        <td><%= link_to 'Show', numera %></td>
+        <td><%= link_to 'Edit', edit_numera_path(numera) %></td>
+        <td><%= link_to 'Destroy', numera, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Numera', new_numera_path %>

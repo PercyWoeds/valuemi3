@@ -17,16 +17,16 @@ one:
   darea: MyString
   dflag: MyString
   dxglosa: MyString
-  ddate: 2017-01-23 10:55:32
+  ddate: MyString
   dcodane2: MyString
-  dusimpor: 1.5
-  dmnimpor: 1.5
+  dusimpor: MyString
+  dmnimpor: MyString
   dcodarc: MyString
   dtidref: MyString
   dndoref: MyString
-  dfecref: 2017-01-23 10:55:32
-  dbimref: 2017-01-23 10:55:32
-  digvref: 1.5
+  dfecref: MyString
+  dbimref: MyString
+  digvref: MyString
 
 two:
   dcompro: MyString
@@ -45,13 +45,13 @@ two:
   darea: MyString
   dflag: MyString
   dxglosa: MyString
-  ddate: 2017-01-23 10:55:32
+  ddate: MyString
   dcodane2: MyString
-  dusimpor: 1.5
-  dmnimpor: 1.5
+  dusimpor: MyString
+  dmnimpor: MyString
   dcodarc: MyString
   dtidref: MyString
   dndoref: MyString
-  dfecref: 2017-01-23 10:55:32
-  dbimref: 2017-01-23 10:55:32
-  digvref: 1.5
+  dfecref: MyString
+  dbimref: MyString
+  digvref: MyString

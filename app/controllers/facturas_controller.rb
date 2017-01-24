@@ -298,11 +298,20 @@ class FacturasController < ApplicationController
     @company = Company.find(params[:company_id])
     @facturas  = Factura.all
   end
-
   def export3
     @company = Company.find(params[:company_id])
-     Csubdia.delete_all
-     Dsubdia.delete_all
+    @facturas  = Factura.all
+  end
+
+  def generar3
+
+    puts "ingreso"
+    
+    @company = Company.find(params[:company_id])
+     Csubdiario.delete_all
+     Dsubdiario.delete_all
+
+
      fecha1 =params[:fecha1]
      fecha2 =params[:fecha2]
      @facturas = Factura.where(fecha1,fecha2)
@@ -311,8 +320,8 @@ class FacturasController < ApplicationController
 
      for f in @facturas
 
-      newsubdia =Csubdia.new(:csubdia=>$lcSubdiario,:ccompro=>factura.code,:ccodmon=>"MN",
-        :csitua=>"F",:ctipcam=>"0.00",:cglosa=>"",:ctotal=>factura.total,
+      newsubdia =Csubdiario.new(:csubdia=>$lcSubdiario,:ccompro=>f.code,:ccodmon=>"MN",
+        :csitua=>"F",:ctipcam=>"0.00",:cglosa=>"",:ctotal=>f.total,
         :ctipo=>"V",:cflag=>"N",:cdate=>"",:chora=>"",:cfeccam=>"",:cuser=>"SIST",
         :corig=>"",:cform=>"M",:cextor=>"") 
 
@@ -338,22 +347,63 @@ class FacturasController < ApplicationController
         $lcFechavmto =yy<<mm<<dd
         $lcRuc = f.customer.ruc
 
+        $lcTotal  = f.total
+        $lcVventa = f.subtotal
+        $lcIgv    = f.tax 
+
+        subdiario = Numera.find_by(:subdiario=>'12')
+
+        lastcompro = subdiario.compro.to_i + 1
+        lastcompro1 = lastcompro.to_s.rjust(4, '0')
+
+        if subdiario
+            nrocompro = mm << lastcompro1
+        end
+
+        subdiario.compro = lastcompro1
+        subdiario.save
+
+
       if newsubdia.save
 
-        #newdsubdia =Dsubdia.new(:dsubdia=>$lcSubdiario,:dcompro=>"010001",:dsecue=>"001",
-        #:dfeccom=>$lcFecha,:dcuenta=>"",
-        #:dcodane=>$lcRuc,:dcencos=>,:dcodmon=>"MN",:ddh=>"D",:dimport=>f.total,
-        #:dtipdoc=>"FT",:dnumdoc=>f.code,:dfecdoc=>$lcFecha,:dfecven=>$lcFechavmto,
-        #:darea=>"",:dflag="S",:dxglosa=>"",:ddate=>$lcFecha,:dcodane2=>"",:dusimpor=>"",
-        #:dmnimpor=>"",:dcodarc=>"",:dtidref=>"",:dndoref=>"",:dfecref=>"",:dbimref=>"",
-        #:digvref=>"")    
+        newdsubdia =Dsubdiario.new(:dsubdiario=>$lcSubdiario,:dcompro=>lastcompro1,:dsecue=>"001",
+        :dfeccom=>$lcFecha,:dcuenta=>"",
+        :dcodane=>$lcRuc,:dcencos=>"",:dcodmon=>"MN",:ddh=>"D",:dimport=>$lcTotal,
+        :dtipdoc=>"FT",:dnumdoc=>f.code,:dfecdoc=>$lcFecha,:dfecven=>$lcFechavmto,
+        :darea=>"",:dflag=>"S",:dxglosa=>"",:ddate=>$lcFecha,:dcodane2=>"",:dusimpor=>"",
+        :dmnimpor=>"",:dcodarc=>"",:dtidref=>"",:dndoref=>"",:dfecref=>"",:dbimref=>"",
+        :digvref=>"")    
+        newsubdia.save
+
+
+        newdsubdia =Dsubdiario.new(:dsubdiario=>$lcSubdiario,:dcompro=>"010001",:dsecue=>"002",
+        :dfeccom=>$lcFecha,:dcuenta=>"",
+        :dcodane=>$lcRuc,:dcencos=>"",:dcodmon=>"MN",:ddh=>"D",:dimport=>$lcVventa,
+        :dtipdoc=>"FT",:dnumdoc=>f.code,:dfecdoc=>$lcFecha,:dfecven=>$lcFechavmto,
+        :darea=>"",:dflag=>"S",:dxglosa=>"",:ddate=>$lcFecha,:dcodane2=>"",:dusimpor=>"",
+        :dmnimpor=>"",:dcodarc=>"",:dtidref=>"",:dndoref=>"",:dfecref=>"",:dbimref=>"",
+        :digvref=>"") 
+        newdsubdia.save   
+        
+        newdsubdia =Dsubdiario.new(:dsubdiario=>$lcSubdiario,:dcompro=>"010001",:dsecue=>"003",
+        :dfeccom=>$lcFecha,:dcuenta=>"",
+        :dcodane=>$lcRuc,:dcencos=>"",:dcodmon=>"MN",:ddh=>"D",:dimport=>$lcIgv,
+        :dtipdoc=>"FT",:dnumdoc=>f.code,:dfecdoc=>$lcFecha,:dfecven=>$lcFechavmto,
+        :darea=>"",:dflag=>"S",:dxglosa=>"",:ddate=>$lcFecha,:dcodane2=>"",:dusimpor=>"",
+        :dmnimpor=>"",:dcodarc=>"",:dtidref=>"",:dndoref=>"",:dfecref=>"",:dbimref=>"",
+        :digvref=>"")    
+        newdsubdia.save
 
       end     
 
-      @invoice = Invoicesunat.all
+      
+      end 
+        @invoice = Dsubdiario.all
       send_data @invoice.to_csv  
-     end 
 
+       @invoice1 = Csubdiario.all
+      send_data @invoice1.to_csv  
+       
   end
 
   def export2

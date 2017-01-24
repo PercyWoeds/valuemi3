@@ -390,6 +390,8 @@ class Factura < ActiveRecord::Base
       self.subtotal =0
       self.tax = 0
       self.total = 0
+      self.balance = 0
+      
       self.date_processed = Time.now
       self.save
     end

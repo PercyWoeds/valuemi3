@@ -1,39 +1,35 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  csubdia: MyString
   ccompro: MyString
-  cfeccom: MyString
   ccodmon: MyString
-  csitua: MyString
-  ctipcam: 1.5
+  csitua,ctipcam: MyString
   cglosa: MyString
   ctotal: 1.5
   ctipo: MyString
   cflag: MyString
-  cdate: 2017-01-23 10:48:45
+  cdate: MyString
   chora: MyString
   cfeccam: MyString
   cuser: MyString
   corig: MyString
   cform: MyString
-  ctipo: MyString
   cextor: MyString
 
 two:
+  csubdia: MyString
   ccompro: MyString
-  cfeccom: MyString
   ccodmon: MyString
-  csitua: MyString
-  ctipcam: 1.5
+  csitua,ctipcam: MyString
   cglosa: MyString
   ctotal: 1.5
   ctipo: MyString
   cflag: MyString
-  cdate: 2017-01-23 10:48:45
+  cdate: MyString
   chora: MyString
   cfeccam: MyString
   cuser: MyString
   corig: MyString
   cform: MyString
-  ctipo: MyString
   cextor: MyString

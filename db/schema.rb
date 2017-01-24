@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170123194645) do
+ActiveRecord::Schema.define(version: 20170124152532) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -162,6 +162,27 @@ ActiveRecord::Schema.define(version: 20170123194645) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "csubdia"
+  end
+
+  create_table "csubdiarios", force: :cascade do |t|
+    t.string   "csubdia"
+    t.string   "ccompro"
+    t.string   "ccodmon"
+    t.string   "csitua"
+    t.string   "ctipcam"
+    t.string   "cglosa"
+    t.float    "ctotal"
+    t.string   "ctipo"
+    t.string   "cflag"
+    t.string   "cdate"
+    t.string   "chora"
+    t.string   "cfeccam"
+    t.string   "cuser"
+    t.string   "corig"
+    t.string   "cform"
+    t.string   "cextor"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "customer_payment_details", force: :cascade do |t|
@@ -359,6 +380,38 @@ ActiveRecord::Schema.define(version: 20170123194645) do
     t.string   "dsubdia"
   end
 
+  create_table "dsubdiarios", force: :cascade do |t|
+    t.string   "dcompro"
+    t.string   "dsecue"
+    t.string   "dfeccom"
+    t.string   "dcuenta"
+    t.string   "dcodane"
+    t.string   "dcencos"
+    t.string   "dcodmon"
+    t.string   "ddh"
+    t.float    "dimport"
+    t.string   "dtipdoc"
+    t.string   "dnumdoc"
+    t.string   "dfecdoc"
+    t.string   "dfecven"
+    t.string   "darea"
+    t.string   "dflag"
+    t.string   "dxglosa"
+    t.string   "ddate"
+    t.string   "dcodane2"
+    t.string   "dusimpor"
+    t.string   "dmnimpor"
+    t.string   "dcodarc"
+    t.string   "dtidref"
+    t.string   "dndoref"
+    t.string   "dfecref"
+    t.string   "dbimref"
+    t.string   "digvref"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "dsubdiario"
+  end
+
   create_table "employees", force: :cascade do |t|
     t.string   "firstname"
     t.string   "lastname"
@@ -520,6 +573,7 @@ ActiveRecord::Schema.define(version: 20170123194645) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.float    "preciocigv"
+    t.integer  "factura_id"
   end
 
   create_table "invoiceitems", force: :cascade do |t|
@@ -759,6 +813,13 @@ ActiveRecord::Schema.define(version: 20170123194645) do
     t.integer  "document_id"
     t.string   "documento"
     t.string   "purchaseorder"
+  end
+
+  create_table "numeras", force: :cascade do |t|
+    t.string   "subdiario"
+    t.string   "compro"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "orders", force: :cascade do |t|

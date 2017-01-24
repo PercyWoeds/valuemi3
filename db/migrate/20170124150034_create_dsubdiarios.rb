@@ -1,6 +1,6 @@
-class CreateDsubdia < ActiveRecord::Migration
+class CreateDsubdiarios < ActiveRecord::Migration
   def change
-    create_table :dsubdia do |t|
+    create_table :dsubdiarios do |t|
       t.string :dcompro
       t.string :dsecue
       t.string :dfeccom
@@ -17,16 +17,16 @@ class CreateDsubdia < ActiveRecord::Migration
       t.string :darea
       t.string :dflag
       t.string :dxglosa
-      t.datetime :ddate
+      t.string :ddate
       t.string :dcodane2
-      t.float :dusimpor
-      t.float :dmnimpor
+      t.string :dusimpor
+      t.string :dmnimpor
       t.string :dcodarc
       t.string :dtidref
       t.string :dndoref
-      t.datetime :dfecref
-      t.datetime :dbimref
-      t.float :digvref
+      t.string :dfecref
+      t.string :dbimref
+      t.string :digvref
 
       t.timestamps null: false
     end
