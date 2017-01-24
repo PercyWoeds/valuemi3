@@ -140,11 +140,15 @@ class ProductsController < ApplicationController
     
     if(@company.can_view(current_user))
       respond_to do |format|
-         @product.save    
+      if   @product.save    
           #@product.add_category(@product[:category])          
           format.html { redirect_to(@product, :notice => 'Product was successfully created.') }
           format.xml  { render :xml => @product, :status => :created, :location => @product }
-        
+       else
+        format.html { render :action => "new" }
+        format.xml  { render :xml => @product.errors, :status => :unprocessable_entity }
+      end
+
       end
     else
       errPerms()
