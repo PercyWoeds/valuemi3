@@ -19,7 +19,7 @@ class ProductsController < ApplicationController
   
   # Autocomplete for categories
   def ac_categories
-    @categories = ProductsCategory.where(["company_id = ? AND category LIKE ?", params[:company_id], "%" + params[:q] + "%"])
+    @ac_categoriess = ProductsCategory.where(["company_id = ? AND category LIKE ?", params[:company_id], "%" + params[:q] + "%"])
     render :layout => false
   end 
   
@@ -145,7 +145,7 @@ class ProductsController < ApplicationController
       respond_to do |format|
         if @product.save
           
-          @product.add_category(@product[:category])
+          #@product.add_category(@product[:category])
           
           format.html { redirect_to(@product, :notice => 'Product was successfully created.') }
           format.xml  { render :xml => @product, :status => :created, :location => @product }
@@ -211,7 +211,7 @@ class ProductsController < ApplicationController
   end
   private
   def products_params
-    params.require(:product).permit(:code, :name, :category, :cost,:price,:price2,:tax1_name, :tax1,:tax2_name,:tax2, :tax3_name,:tax3 ,:quantity,:reorder,:description,:comments,:company_id,:marca_id,:modelo_id,:products_category_id)
+    params.require(:product).permit(:code, :name, :category, :cost,:price,:price2,:tax1_name, :tax1,:tax2_name,:tax2, :tax3_name,:tax3 ,:quantity,:reorder,:description,:comments,:company_id,:marca_id,:modelo_id,:category_id)
   end
   
 
