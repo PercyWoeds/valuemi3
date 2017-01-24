@@ -1,0 +1,2 @@
+class AnulaFactura < ApplicationMailer
+end

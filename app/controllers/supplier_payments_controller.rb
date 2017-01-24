@@ -620,20 +620,12 @@ class SupplierPaymentsController < ApplicationController
     @company=Company.find(params[:id])      
     
     
-    if(params[:year] and params[:year].numeric?)
-      @year = params[:year].to_i
-    else
-      @year = Time.now.year
-    end
-    
-    if(params[:month] and params[:month].numeric?)
-      @month = params[:month].to_i
-    else
-      @month = Time.now.month
-    end
-    
+    @fecha1=params[:fecha1]
+    @fecha2=params[:fecha2]
+    @moneda = params[:moneda_id]
+      
 
-    @purchases_all_rpt = @company.get_purchases_year_month(@year,@month)  
+    @purchases_all_rpt = @company.get_purchases_by_day(@fecha1,@fecha2,@moneda)  
     
     @rpt = "rpt_#{generate_guid()}"
 
@@ -843,7 +835,7 @@ def list_receive_supplierpayments
 
 
           
-          total = @company.get_services_year_month_value(@year,@month, "total_amount")
+          total = @company.get_purchases_by_day_value(@fecha1,@fecha2,@moneda,"total_amount")
           totals.push(total)
           services_total += total
         

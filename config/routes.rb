@@ -193,6 +193,8 @@ Mnygo::Application.routes.draw do
   match 'companies/reports/rpt_purchaseorder_all/:company_id' => 'reports#rpt_purchaseorder_all', via: [:get, :post]
 
   match 'companies/reports/reports_ccobrar/:company_id' => 'reports#reports_ccobrar', via: [:get, :post]  
+  match 'companies/reports/rpt_cpagar1_all/:company_id' => 'reports#rpt_cpagar1_all', via: [:get, :post]  
+
   match 'companies/reports/rpt_ccobrar2_pdf/:company_id' => 'reports#rpt_ccobrar2_pdf', via: [:get, :post]  
   match 'companies/reports/rpt_ccobrar3_pdf/:company_id' => 'reports#rpt_ccobrar3_pdf', via: [:get, :post]  
   match 'companies/reports/rpt_ccobrar4_pdf/:company_id' => 'reports#rpt_ccobrar4_pdf', via: [:get, :post]  

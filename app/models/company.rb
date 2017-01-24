@@ -684,7 +684,33 @@ def actualizar_fecha2
     
     return @purchases 
   end
+  def get_purchases_by_day(fecha1,fecha2,moneda)
+  
+    @purchases = Purchase.where([" company_id = ? AND date1 >= ? and date1 <= ? and moneda_id = ? ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda , ]).order(:id,:moneda_id)    
+    return @purchases 
+  end
 
+  def get_purchases_by_day_value(fecha1,fecha2,moneda,value='total_amount')
+  
+    purchases = Purchase.where([" company_id = ? AND date1 >= ? and date1 <= ? and moneda_id = ? ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda , ]).order(:id,:moneda_id)    
+
+    ret = 0
+    for purchase in purchases
+      
+      if(value == "subtotal")
+        ret += purchase.subtotal
+      elsif(value == "tax")
+        ret += purchase.tax
+      else
+        ret += purchase.total_amount
+      end
+    end
+    
+    return ret
+
+
+  end
+  
   
   # Return value for user
   def get_invoices_value_user(user, year, value = "total")
