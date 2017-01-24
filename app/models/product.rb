@@ -3,7 +3,7 @@ class Product < ActiveRecord::Base
   
   
   validates_presence_of :name, :company_id,:products_category_id
-  validates_numericality_of :cost, :price, :tax1, :tax2, :tax3
+  validates_numericality_of  :tax1, :tax2, :tax3
   
   belongs_to :company
   belongs_to :supplier
