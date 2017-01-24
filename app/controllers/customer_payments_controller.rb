@@ -1066,7 +1066,7 @@ class CustomerPaymentsController < ApplicationController
          $lcCompen= @company.get_customer_payments_value_otros(@fecha1,@fecha2,'compen')
          $lcAjuste = @company.get_customer_payments_value_otros(@fecha1,@fecha2,'ajuste')
 
-         @totalgeneral = @totalgeneral + $lcAjuste 
+         @totalgeneral = @totalgeneral + $lcAjuste + $lcFactory +$lcCompen
 
         row = []
         row << nroitem.to_s
@@ -1083,6 +1083,8 @@ class CustomerPaymentsController < ApplicationController
         row << nroitem.to_s
         row << "AJUSTE"
         row << sprintf("%.2f",$lcAjuste.to_s)
+
+
 
         table_content2 << row
         row = []
