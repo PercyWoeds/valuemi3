@@ -1674,7 +1674,7 @@ class CustomerPaymentsController < ApplicationController
         table_content2 << row
 
 
-        @total_general = @total_general  + @total_ajuste +@total_factory+@total_compen
+        @total_general = @total_general  + @total_ajuste + @total_factory + @total_compen
 
         
           row =[]
