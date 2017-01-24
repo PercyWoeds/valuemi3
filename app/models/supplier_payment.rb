@@ -28,10 +28,7 @@ self.per_page = 20
                      "",
                      "DOCUMENTO",
                      "PROVEEDOR",
-                     "IMPORTE  ",
-                     "CARGOS  ",
-                     "PAGOS  ",
-                      "SALDO  "]
+                     "IMPORTE  " ]
 
 
           

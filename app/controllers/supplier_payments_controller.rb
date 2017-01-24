@@ -808,9 +808,9 @@ def list_receive_supplierpayments
                                           columns([1]).align=:left
                                           columns([2]).align=:left
                                           columns([3]).align=:left
-                                          columns([4]).align=:right  
-                                          columns([5]).align=:right
-                                          columns([6]).align=:right
+                                          columns([4]).align=:left 
+                                          columns([5]).align=:left
+                                          columns([6]).align=:left
                                           columns([7]).align=:right
                                           
                                         end                                          
