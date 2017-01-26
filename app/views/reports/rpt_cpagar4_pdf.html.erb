@@ -13,28 +13,30 @@ totals = []
   <%= link_to "Reports", "/companies/reports/#{@company.id}" %>
 </div>
 
-<h3>
+<h4>
   <%= image_tag("reports_48.png", :class => "vmiddle") %>
- Reporte de cuentas clientes 
-</h3	>
+  
+ Reporte de cuentas proveedores - Cancelaciones detalle
 
-<form method="get" action="/facturas/rpt_ccobrar2_pdf/<%= @company.id %>">
+</h4>
+
+<form method="get" action="/supplier_payments/rpt_cpagar4_pdf/<%= @company.id %>">
  	<div class="field">
-      <input type="date" name="fecha1" value="2017-01-02" style = "width: 80px" >
+      <input type="date" name="fecha1" value="2007-10-01" style = "width: 80px" >
 
     </div>
 	<div class="field">
-		<input type="date" name="fecha2" value="2017-01-02" style = "width: 80px" >
+		<input type="date" name="fecha2" value="2017-01-28" style = "width: 80px" >
     </div>
 
     
   <input type="submit" value="Ver" class="small_btn" />
-  <a href="/facturas/rpt_ccobrar2_pdf/<%= @company.id %>" class="small_btn">Hoy</a>
+  <a href="/supplier_payments/rpt_cpagar4_pdf/<%= @company.id %>" class="small_btn">Hoy</a>
 </form>
 
 <br />
 
 
 <div class="button">
-  <%= link_to 'Back', "/companies/ccobrar/#{@company.id}" %>
+  <%= link_to 'Back', "/companies/cpagar/#{@company.id}" %>
 </div>

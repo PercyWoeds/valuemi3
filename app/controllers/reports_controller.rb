@@ -982,8 +982,35 @@ class ReportsController < ApplicationController
     @company = Company.find(params[:company_id])    
     @pagetitle = "Liquidacion Cobranzas "    
     @customers = @company.get_customers()
+  end
+  def rpt_ccobrar7_pdf
+    @company = Company.find(params[:company_id])    
+    @pagetitle = "Liquidacion Cobranzas "    
+    @customers = @company.get_customers()
+  end
+  
+  def rpt_cpagar2_pdf
+    @company = Company.find(params[:company_id])    
+    @pagetitle = "Pendientes por cobrar general"    
+    @customers = @company.get_customers()
+  end
+  def rpt_cpagar3_pdf
+    @company = Company.find(params[:company_id])    
+    @pagetitle = "Pendientes por cobrar por proveedor"    
+    @suppliers = @company.get_suppliers()
 
   end
+  def rpt_cpagar4_pdf
+    @company = Company.find(params[:company_id])    
+    @pagetitle = "Liquidacion de pagos"    
+    @customers = @company.get_customers()
+  end
+  def rpt_cpagar5_pdf
+    @company = Company.find(params[:company_id])    
+    @pagetitle = "Cuentas x pagar por vencimiento"    
+    @customers = @company.get_customers()
+  end
+  
   
   def reports_cventas
     @company = Company.find(params[:company_id])  

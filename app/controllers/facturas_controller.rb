@@ -339,69 +339,16 @@ class FacturasController < ApplicationController
 
 
      for f in @facturas
-
-      newsubdia =Csubdiario.new(:csubdia=>$lcSubdiario,:ccompro=>$lastcompro1,:ccodmon=>"MN",
-        :csitua=>"F",:ctipcam=>"0.00",:cglosa=>f.code,:ctotal=>f.total,
-        :ctipo=>"V",:cflag=>"N",:cdate=>"",:chora=>"",:cfeccam=>"",:cuser=>"SIST",
-        :corig=>"",:cform=>"M",:cextor=>"") 
-
-        item = f.fecha.to_s 
-        parts = item.split("-")        
-        yy    = parts[0]
-        mm    = parts[1]        
-      
-        dd    = parts[2]        
-        $lcFecha =yy<<mm<<dd
-
-        item = f.fecha.to_s 
-        parts = item.split("-")        
-        yy    = parts[0]
-        mm    = parts[1]        
-        dd    = parts[2]        
-        $lcFechaemision =yy<<mm<<dd
-
-        item = f.fecha2.to_s 
-        parts = item.split("-")        
-        yy    = parts[0]
-        mm    = parts[1]        
-        dd    = parts[2]        
-        $lcFechavmto =yy<<mm<<dd
-        $lcRuc = f.customer.ruc
-
-        $lcTotal  = f.total
-        $lcVventa = f.subtotal
-        $lcIgv    = f.tax 
-
-      if newsubdia.save
-
-        newdsubdia =Dsubdiario.new(:dsubdiario=>$lcSubdiario,:dcompro=>$lastcompro1,
-        :dsecue=>"001",:dfeccom=>$lcFecha,:dcuenta=>"",
-        :dcodane=>$lcRuc,:dcencos=>"",:dcodmon=>"MN",:ddh=>"D",:dimport=>$lcTotal,
-        :dtipdoc=>"FT",:dnumdoc=>f.code,:dfecdoc=>$lcFecha,:dfecven=>$lcFechavmto,
-        :darea=>"",:dflag=>"S",:dxglosa=>"",:ddate=>$lcFecha,:dcodane2=>"",:dusimpor=>"",
-        :dmnimpor=>"",:dcodarc=>"",:dtidref=>"",:dndoref=>"",:dfecref=>"",:dbimref=>"",
-        :digvref=>"") 
-        newdsubdia.save   
-
-        newdsubdia =Dsubdiario.new(:dsubdiario=>$lcSubdiario,:dcompro=>$lastcompro1,
-        :dsecue=>"002",:dfeccom=>$lcFecha,:dcuenta=>"",
-        :dcodane=>$lcRuc,:dcencos=>"",:dcodmon=>"MN",:ddh=>"D",:dimport=>$lcVventa,
-        :dtipdoc=>"FT",:dnumdoc=>f.code,:dfecdoc=>$lcFecha,:dfecven=>$lcFechavmto,
-        :darea=>"",:dflag=>"S",:dxglosa=>"",:ddate=>$lcFecha,:dcodane2=>"",:dusimpor=>"",
-        :dmnimpor=>"",:dcodarc=>"",:dtidref=>"",:dndoref=>"",:dfecref=>"",:dbimref=>"",
-        :digvref=>"") 
-        newdsubdia.save   
         
-        newdsubdia =Dsubdiario.new(:dsubdiario=>$lcSubdiario,:dcompro=>$lastcompro1,
-        :dsecue=>"003",:dfeccom=>$lcFecha,:dcuenta=>"",
-        :dcodane=>$lcRuc,:dcencos=>"",:dcodmon=>"MN",:ddh=>"D",:dimport=>$lcIgv,
-        :dtipdoc=>"FT",:dnumdoc=>f.code,:dfecdoc=>$lcFecha,:dfecven=>$lcFechavmto,
-        :darea=>"",:dflag=>"S",:dxglosa=>"",:ddate=>$lcFecha,:dcodane2=>"",:dusimpor=>"",
-        :dmnimpor=>"",:dcodarc=>"",:dtidref=>"",:dndoref=>"",:dfecref=>"",:dbimref=>"",
-        :digvref=>"")    
-        newdsubdia.save
+        $lcFecha =f.fecha.strftime("%Y-%m-%d")   
 
-      end     
+
+      newsubdia =Csubdiario.new(:csubdia=>$lcSubdiario,:ccompro=>$lastcompro1,:cfeccom=>$lcFecha, :ccodmon=>"MN",
+        :csitua=>"F",:ctipcam=>"0.00",:cglosa=>f.code,:csubtotal=>f.subtotal,:ctax=>f.tax,:ctotal=>f.total,
+        :ctipo=>"V",:cflag=>"N",:cdate=>$lcFecha ,:chora=>"",:cfeccam=>"",:cuser=>"SIST",
+        :corig=>"",:cform=>"M",:cextor=>"",:ccodane=>f.customer.ruc ) 
+
+        newsubdia.save
 
       lastcompro = lastcompro + 1
       $lastcompro1 = lastcompro.to_s.rjust(4, '0')      
@@ -411,6 +358,8 @@ class FacturasController < ApplicationController
       subdiario.compro = $lastcompro1
       subdiario.save
 
+      @invoice = Csubdiario.all
+      send_data @invoice.to_csv  , :filename => 'CC0317.csv'
 
     
   end

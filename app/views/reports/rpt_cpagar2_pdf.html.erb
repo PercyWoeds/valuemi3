@@ -15,26 +15,26 @@ totals = []
 
 <h3>
   <%= image_tag("reports_48.png", :class => "vmiddle") %>
- Reporte de cuentas clientes 
+ Reporte de cuentas clientes
 </h3	>
 
-<form method="get" action="/facturas/rpt_ccobrar2_pdf/<%= @company.id %>">
+<form method="get" action="/purchases/rpt_cpagar2_pdf/<%= @company.id %>">
  	<div class="field">
       <input type="date" name="fecha1" value="2017-01-02" style = "width: 80px" >
 
     </div>
 	<div class="field">
-		<input type="date" name="fecha2" value="2017-01-02" style = "width: 80px" >
+		<input type="date" name="fecha2" value="2017-01-25" style = "width: 80px" >
     </div>
 
     
   <input type="submit" value="Ver" class="small_btn" />
-  <a href="/facturas/rpt_ccobrar2_pdf/<%= @company.id %>" class="small_btn">Hoy</a>
+  <a href="/purchases/rpt_cpagar2_pdf/<%= @company.id %>" class="small_btn">Hoy</a>
 </form>
 
 <br />
 
 
 <div class="button">
-  <%= link_to 'Back', "/companies/ccobrar/#{@company.id}" %>
+  <%= link_to 'Back', "/companies/cpagar/#{@company.id}" %>
 </div>

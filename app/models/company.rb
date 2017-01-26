@@ -37,6 +37,23 @@ class Company < ActiveRecord::Base
     end 
   end 
 
+  def actualiza_purchase_monthyear
+    @factura = Factura.where(:year_mounth=> nil)
+    for factura in @factura
+        f = Factura.find(factura.id)
+      if f
+        @fechas =f.fecha2.to_s
+        parts = @fechas.split("-")
+        year = parts[0]
+        mes  = parts[1]
+        dia  = parts[2]      
+        f.year_mounth = year+mes 
+        f.save
+      end 
+    end 
+  end 
+
+
   def own(user)
     if(self.user_id == user.id)
       return true
@@ -453,9 +470,55 @@ def get_facturas_day_value_cliente(fecha1,fecha2,cliente,value = "total")
     end 
     return ret    
  end 
+ #total banco x cliente
+ def get_customer_payments_value_customer(fecha1,fecha2,id,cliente)
+
+    facturas = CustomerPayment.where([" company_id = ? AND fecha1 >= ? and fecha1 <= ? and bank_acount_id = ? and customer_id = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" , id, cliente]).order(:id)
+    ret = 0 
+    if facturas 
+    ret=0  
+      for factura in facturas      
+
+          ret += factura.total
+
+      end
+    end 
+    return ret    
+ end 
+
+ def get_customer_payments_cliente(fecha1,fecha2,cliente)
+
+    @facturas = CustomerPayment.where([" company_id = ? AND fecha1 >= ? and fecha1<= ? and customer_id = ? ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", cliente]).order(:id)
+    return @facturas
+    
+ end 
+
+
 
  def get_customer_payments_value_otros(fecha1,fecha2,value='factory')
     facturas = CustomerPayment.where(["fecha1 >= ? and fecha1 <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])        
+        ret=0  
+        for factura in facturas
+
+          @detail = CustomerPaymentDetail.where(:customer_payment_id => factura.id)
+
+          for d in @detail 
+            if(value == "ajuste")
+              ret += d.ajuste
+            elsif (value == "compen")
+              ret += d.compen 
+            else         
+              ret += d.factory
+            end
+          end 
+
+        end    
+
+    return ret
+ end 
+#soloe clientes 
+def get_customer_payments_value_otros_customer(fecha1,fecha2,value='factory',cliente)
+    facturas = CustomerPayment.where(["fecha1 >= ? and fecha1 <= ? and customer_id = ?", "#{fecha1} 00:00:00","#{fecha2} 23:59:59", cliente ])        
         ret=0  
         for factura in facturas
 
@@ -684,6 +747,13 @@ def actualizar_fecha2
     
     return @purchases 
   end
+  def get_purchases_day(fecha1,fecha2)
+  
+    @purchases = Purchase.where([" company_id = ? AND date1 >= ? and date1 <= ? ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59",  ]).order(:id,:moneda_id)    
+    return @purchases 
+  end
+
+
   def get_purchases_by_day(fecha1,fecha2,moneda)
   
     @purchases = Purchase.where([" company_id = ? AND date1 >= ? and date1 <= ? and moneda_id = ? ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda , ]).order(:id,:moneda_id)    
@@ -711,6 +781,94 @@ def actualizar_fecha2
 
   end
   
+ def get_purchases_pendientes_day(fecha1,fecha2)
+
+    @facturas = Purchase.where(["balance > 0  and  company_id = ? AND date1 >= ? and date1<= ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59"]).order(:supplier_id,:moneda_id,:date1)
+    return @facturas
+    
+ end 
+
+ def get_purchases_pendientes_day_supplier_1(fecha1,fecha2,cliente)
+    @facturas = Purchase.where(["balance > 0  and  company_id = ? AND date1 >= ? and date1<= ? and supplier_id = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", cliente ]).order(:supplier_id,:moneda_id,:date1)
+    return @facturas
+
+
+ end 
+
+ 
+ def get_purchases_pendientes_day_value(fecha1,fecha2,value = "balance",moneda)
+
+    facturas = Purchase.where(["balance>0  and  company_id = ? AND date1 >= ? and date1<= ? and moneda_id = ? ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda ]).order(:supplier_id,:moneda_id)
+    if facturas
+    ret=0  
+    for factura in facturas
+      
+      if(value == "subtotal")
+        ret += factura.subtotal
+      elsif(value == "tax")
+        ret += factura.tax
+      else         
+        ret += factura.balance.round(2)
+      end
+    end
+    end 
+
+    return ret
+    
+ end 
+
+def get_purchases_pendientes_day_supplier(fecha1,fecha2,value,moneda)
+
+    facturas = Purchase.where(["balance>0  and  company_id = ? AND date1 >= ? and date1 <= ? AND customer_id = ? and moneda_id =  ? ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", value , moneda ]).order(:customer_id,:moneda_id)
+
+    if facturas
+    ret=0  
+    for factura in facturas
+      
+      if(value == "subtotal")
+        ret += factura.subtotal
+      elsif(value == "tax")
+        ret += factura.tax
+      else         
+        ret += factura.balance.round(2)
+      end
+    end
+    end 
+
+    return ret    
+ end 
+
+def get_supplier_payments2(moneda)
+
+   @facturas = Purchase.find_by_sql(["
+  SELECT   year_month as year_month,
+   supplier_id,
+   SUM(balance) as balance   
+   FROM purchases
+   WHERE moneda_id = ? and balance>0
+   GROUP BY 2,1
+   ORDER BY 2,1 ", moneda])    
+
+  return @facturas
+    
+ end 
+
+ def get_supplier_payments_value2(fecha1,fecha2)
+
+ #   facturas = Factura.find_by_sql("Select customer_id,month(fecha2) as mes,year(fecha2) as anio from facturas group by month(fecha2),year(fecha2)")
+    ret = 0 
+    if facturas 
+    ret=0  
+      for factura in facturas      
+
+          ret += factura.total
+
+      end
+    end 
+    return ret    
+ end 
+
+
   
   # Return value for user
   def get_invoices_value_user(user, year, value = "total")

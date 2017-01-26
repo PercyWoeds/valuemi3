@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170124210540) do
+ActiveRecord::Schema.define(version: 20170126220547) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -183,6 +183,10 @@ ActiveRecord::Schema.define(version: 20170124210540) do
     t.string   "cextor"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "cfeccom"
+    t.string   "ccodane"
+    t.float    "csubtotal"
+    t.float    "ctax"
   end
 
   create_table "customer_payment_details", force: :cascade do |t|
@@ -1053,6 +1057,7 @@ ActiveRecord::Schema.define(version: 20170124210540) do
     t.datetime "date3"
     t.float    "pago"
     t.integer  "purchaseorder_id"
+    t.string   "yearmonth"
   end
 
   create_table "purchaseships", force: :cascade do |t|

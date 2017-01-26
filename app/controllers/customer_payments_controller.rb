@@ -1039,58 +1039,116 @@ class CustomerPaymentsController < ApplicationController
         table_content2 << headers2
         nroitem = 1
         
+
+
+
         @banks = BankAcount.all
         @totalgeneral = 0
 
-        for banco in @banks
 
-        total1 = @company.get_customer_payments_value(@fecha1,@fecha2,banco.id)  
+        if $lcxCliente == "0"
 
-        if total1>0
-                  
-          row =[]
+          for banco in @banks
+
+          total1 = @company.get_customer_payments_value(@fecha1,@fecha2,banco.id)  
+
+          if total1>0
+                    
+            row =[]
+            row << nroitem.to_s
+            row << banco.number 
+            row << sprintf("%.2f",total1.to_s)
+            @totalgeneral = @totalgeneral + total1 
+            nroitem = nroitem + 1
+            table_content2 << row
+          end   
+
+          end
+          $lcFactory = 0
+          $lcCompen  = 0
+          $lcAjuste  = 0
+
+           $lcFactory = @company.get_customer_payments_value_otros(@fecha1,@fecha2,'factory')      
+           $lcCompen= @company.get_customer_payments_value_otros(@fecha1,@fecha2,'compen')
+           $lcAjuste = @company.get_customer_payments_value_otros(@fecha1,@fecha2,'ajuste')
+
+           @totalgeneral = @totalgeneral + $lcAjuste + $lcFactory +$lcCompen
+
+          row = []
           row << nroitem.to_s
-          row << banco.number 
-          row << sprintf("%.2f",total1.to_s)
-          @totalgeneral = @totalgeneral + total1 
-          nroitem = nroitem + 1
+          row << "FACTORY"
+          row << sprintf("%.2f",$lcFactory.to_s)
           table_content2 << row
-        end   
-
-        end
-        $lcFactory = 0
-        $lcCompen  = 0
-        $lcAjuste  = 0
-
-         $lcFactory = @company.get_customer_payments_value_otros(@fecha1,@fecha2,'factory')      
-         $lcCompen= @company.get_customer_payments_value_otros(@fecha1,@fecha2,'compen')
-         $lcAjuste = @company.get_customer_payments_value_otros(@fecha1,@fecha2,'ajuste')
-
-         @totalgeneral = @totalgeneral + $lcAjuste + $lcFactory +$lcCompen
-
-        row = []
-        row << nroitem.to_s
-        row << "FACTORY"
-        row << sprintf("%.2f",$lcFactory.to_s)
-        table_content2 << row
-        row = []
-        row << nroitem.to_s
-        row << "COMPENSACION:"
-        row << sprintf("%.2f",$lcCompen.to_s)
-        table_content2 << row
-        
-        row = []
-        row << nroitem.to_s
-        row << "AJUSTE"
-        row << sprintf("%.2f",$lcAjuste.to_s)
+          row = []
+          row << nroitem.to_s
+          row << "COMPENSACION:"
+          row << sprintf("%.2f",$lcCompen.to_s)
+          table_content2 << row
+          
+          row = []
+          row << nroitem.to_s
+          row << "AJUSTE"
+          row << sprintf("%.2f",$lcAjuste.to_s)
 
 
 
-        table_content2 << row
-        row = []
-        row << nroitem.to_s
-        row << "TOTAL => "
-        row << sprintf("%.2f",@totalgeneral.to_s)
+          table_content2 << row
+          row = []
+          row << nroitem.to_s
+          row << "TOTAL => "
+          row << sprintf("%.2f",@totalgeneral.to_s)
+
+      else
+          for banco in @banks
+          total1 = @company.get_customer_payments_value_customer(@fecha1,@fecha2,banco.id,@cliente)  
+          if total1>0
+                    
+            row =[]
+            row << nroitem.to_s
+            row << banco.number 
+            row << sprintf("%.2f",total1.to_s)
+            @totalgeneral = @totalgeneral + total1 
+            nroitem = nroitem + 1
+            table_content2 << row
+          end   
+
+          end
+          $lcFactory = 0
+          $lcCompen  = 0
+          $lcAjuste  = 0
+
+           $lcFactory = @company.get_customer_payments_value_otros_customer(@fecha1,@fecha2,'factory',@cliente)      
+           $lcCompen= @company.get_customer_payments_value_otros_customer(@fecha1,@fecha2,'compen',@cliente)
+           $lcAjuste = @company.get_customer_payments_value_otros_customer(@fecha1,@fecha2,'ajuste',@cliente)
+
+           @totalgeneral = @totalgeneral + $lcAjuste + $lcFactory +$lcCompen
+
+          row = []
+          row << nroitem.to_s
+          row << "FACTORY"
+          row << sprintf("%.2f",$lcFactory.to_s)
+          table_content2 << row
+          row = []
+          row << nroitem.to_s
+          row << "COMPENSACION:"
+          row << sprintf("%.2f",$lcCompen.to_s)
+          table_content2 << row
+          
+          row = []
+          row << nroitem.to_s
+          row << "AJUSTE"
+          row << sprintf("%.2f",$lcAjuste.to_s)
+
+
+
+          table_content2 << row
+          row = []
+          row << nroitem.to_s
+          row << "TOTAL => "
+          row << sprintf("%.2f",@totalgeneral.to_s)
+
+
+      end 
 
         table_content2 << row      
 
@@ -1118,16 +1176,12 @@ class CustomerPaymentsController < ApplicationController
   # Export cobrar  to PDF
 
   def rpt_ccobrar4_pdf
-
+    $lcxCliente = "0"
     @company=Company.find(params[:id])      
     @fecha1 = params[:fecha1]
     @fecha2 = params[:fecha2]
 
-
-
     @customerpayment_rpt = @company.get_customer_payments(@fecha1,@fecha2)  
-
-
       
     Prawn::Document.generate("app/pdf_output/rpt_customerpayment.pdf") do |pdf|
         pdf.font "Helvetica"        
@@ -1143,6 +1197,33 @@ class CustomerPaymentsController < ApplicationController
     send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
   
   end
+
+  def rpt_ccobrar7_pdf
+    $lcxCliente = "1"
+    @company=Company.find(params[:id])      
+    @fecha1 = params[:fecha1]
+    @fecha2 = params[:fecha2]
+    @cliente = params[:customer_id]
+
+    @customerpayment_rpt = @company.get_customer_payments_cliente(@fecha1,@fecha2,@cliente)  
+      
+    Prawn::Document.generate("app/pdf_output/rpt_customerpayment.pdf") do |pdf|
+        pdf.font "Helvetica"        
+        pdf = build_pdf_header_rpt1(pdf)
+        pdf = build_pdf_body_rpt1(pdf)
+        build_pdf_footer_rpt1(pdf)
+        $lcFileName =  "app/pdf_output/rpt_customerpayment.pdf"      
+        
+    end     
+
+    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
+                
+    send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
+  
+  end
+
+
+
 
 ##-------------------------------------------------------------------------------------
 ## REPORTE DE ESTADISTICA DE VENTAS
@@ -1541,7 +1622,6 @@ class CustomerPaymentsController < ApplicationController
 
 
   def rpt_ccobrar5_pdf
-
     @company=Company.find(params[:id])      
     @fecha1 = params[:fecha1]
     @fecha2 = params[:fecha2]
@@ -1564,7 +1644,6 @@ class CustomerPaymentsController < ApplicationController
 
     $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName                
     send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
-  
 
   end
 

@@ -29,9 +29,6 @@ self.per_page = 20
                      "DOCUMENTO",
                      "PROVEEDOR",
                      "IMPORTE  " ]
-
-
-          
             
   def get_subtotal(items)
     subtotal = 0

@@ -7,6 +7,7 @@ class PurchasesController < ApplicationController
   before_filter :authenticate_user!, :checkProducts
 
 
+
   # reporte completo
   def build_pdf_header_rpt(pdf)
       pdf.font "Helvetica" , :size => 8
@@ -72,7 +73,7 @@ class PurchasesController < ApplicationController
             row << lcDoc
             row << product.code
             row << product.fecha.strftime("%d/%m/%Y")            
-            row << product.customer.name  
+            row << product.supplier.name  
             row << lcMon
             row << product.subtotal.to_s
             row << product.tax.to_s
@@ -239,18 +240,16 @@ class PurchasesController < ApplicationController
       lcmonedadolares = 1
     
 
-      lcDoc='FT'
+      lcDoc='FT'      
 
-      
-
-       lcCliente = @facturas_rpt.first.customer_id 
+       lcCliente = @facturas_rpt.first.supplier_id
 
        for  product in @facturas_rpt
         
-          if lcCliente == product.customer_id
+          if lcCliente == product.supplier_id
 
              #if product.payment_id == nil 
-              fechas2 = product.fecha2 
+              fechas2 = product.date2 
              #else 
              # days = product.payment.day 
              # fechas2 = product.fechas2 + days.days              
@@ -258,10 +257,10 @@ class PurchasesController < ApplicationController
 
             row = []          
             row << lcDoc
-            row << product.code
-            row << product.fecha.strftime("%d/%m/%Y")
-            row << product.fecha2.strftime("%d/%m/%Y")
-            row << product.customer.name
+            row << product.documento 
+            row << product.date1.strftime("%d/%m/%Y")
+            row << product.date2.strftime("%d/%m/%Y")
+            row << product.supplier.name
             row << product.moneda.symbol  
 
             if product.moneda_id == 1 
@@ -281,16 +280,16 @@ class PurchasesController < ApplicationController
           else
             totals = []            
             total_cliente_soles = 0
-            total_cliente_soles = @company.get_pendientes_day_customer(@fecha1,@fecha2, lcCliente, lcmonedadolares)
+            total_cliente_soles = @company.get_purchases_pendientes_day_value(@fecha1,@fecha2, lcCliente, lcmonedadolares)
             total_cliente_dolares = 0
-            total_cliente_dolares = @company.get_pendientes_day_customer(@fecha1,@fecha2, lcCliente, lcmonedasoles)
+            total_cliente_dolares = @company.get_purchases_pendientes_day_value(@fecha1,@fecha2, lcCliente, lcmonedasoles)
             
             row =[]
             row << ""
             row << ""
             row << ""
             row << ""          
-            row << "TOTALES POR CLIENTE=> "            
+            row << "TOTALES POR PROVEEDOR=> "            
             row << ""
             row << sprintf("%.2f",total_cliente_dolares.to_s)
             row << sprintf("%.2f",total_cliente_soles.to_s)
@@ -298,14 +297,14 @@ class PurchasesController < ApplicationController
             
             table_content << row
 
-            lcCliente = product.customer_id
+            lcCliente = product.supplier_id
 
             row = []          
             row << lcDoc
             row << product.code
             row << product.fecha.strftime("%d/%m/%Y")
             row << product.fecha2.strftime("%d/%m/%Y")
-            row << product.customer.name
+            row << product.supplier.name
             row << product.moneda.symbol  
 
             if product.moneda_id == 1 
@@ -327,15 +326,15 @@ class PurchasesController < ApplicationController
        
         end
 
-        lcCliente = @facturas_rpt.last.customer_id 
+        lcProveedor = @facturas_rpt.last.supplier_id 
 
             totals = []            
             total_cliente = 0
 
             total_cliente_soles = 0
-            total_cliente_soles = @company.get_pendientes_day_customer(@fecha1,@fecha2, lcCliente, lcmonedadolares)
+            total_cliente_soles = @company.get_purchases_pendientes_day_value(@fecha1,@fecha2, lcProveedor, lcmonedadolares)
             total_cliente_dolares = 0
-            total_cliente_dolares = @company.get_pendientes_day_customer(@fecha1,@fecha2, lcCliente, lcmonedasoles)
+            total_cliente_dolares = @company.get_purchases_pendientes_day_value(@fecha1,@fecha2, lcProveedor, lcmonedasoles)
     
             
             row =[]
@@ -414,7 +413,7 @@ class PurchasesController < ApplicationController
     @fecha2 = params[:fecha2]    
 
 
-    @facturas_rpt = @company.get_facturas_day(@fecha1,@fecha2)      
+    @facturas_rpt = @company.get_purchases_day(@fecha1,@fecha2)      
 
     respond_to do |format|
       format.html    
@@ -432,16 +431,17 @@ class PurchasesController < ApplicationController
     send_file("app/pdf_output/rpt_factura.pdf", :type => 'application/pdf', :disposition => 'inline')
 
   end
-# Export serviceorder to PDF
+# pendiente x proveedor 
+
   def rpt_facturas_all2_pdf
 
     $lcFacturasall = '0'
     @company=Company.find(params[:company_id])          
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]    
-    @cliente = params[:customer_id]     
+    @cliente = params[:supplier_id]     
 
-    @facturas_rpt = @company.get_facturas_day_cliente(@fecha1,@fecha2,@cliente)  
+    @facturas_rpt = @company.get_purchase_day_cliente(@fecha1,@fecha2,@cliente)  
 
 
     Prawn::Document.generate("app/pdf_output/rpt_factura.pdf") do |pdf|
@@ -456,7 +456,7 @@ class PurchasesController < ApplicationController
   end
 
   ###pendientes de pago 
-  def rpt_ccobrar2_pdf
+  def rpt_cpagar2_pdf
     $lcxCliente ="0"
     @company=Company.find(params[:company_id])      
     
@@ -465,7 +465,7 @@ class PurchasesController < ApplicationController
       @fecha2 = params[:fecha2]
     
     @company.actualizar_fecha2
-    @facturas_rpt = @company.get_pendientes_day(@fecha1,@fecha2)  
+    @facturas_rpt = @company.get_purchases_pendientes_day(@fecha1,@fecha2)  
       
     Prawn::Document.generate("app/pdf_output/rpt_pendientes.pdf") do |pdf|
         pdf.font "Helvetica"
@@ -483,16 +483,15 @@ class PurchasesController < ApplicationController
   end
   
   ###pendientes de pago 
-  def rpt_ccobrar3_pdf
+  def rpt_cpagar3_pdf
 
     $lcxCliente ="1"
     @company=Company.find(params[:company_id])      
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]
-    @cliente = params[:customer_id]      
+    @cliente = params[:supplier_id]      
 
-    @facturas_rpt = @company.get_pendientes_day_cliente(@fecha1,@fecha2,@cliente)  
-
+    @facturas_rpt = @company.get_purchases_pendientes_day_supplier_1(@fecha1,@fecha2,@cliente)  
 
     if @facturas_rpt.size > 0 
 
@@ -515,12 +514,12 @@ class PurchasesController < ApplicationController
   
   ###pendientes de pago detalle
 
-  def rpt_ccobrar4_pdf
+  def rpt_cpagar4_pdf
       $lcxCliente ="0"
       @company=Company.find(params[:company_id])          
       @fecha1 = params[:fecha1]  
       @fecha2 = params[:fecha2]  
-      @facturas_rpt = @company.get_pendientes_day(@fecha1,@fecha2)  
+      @facturas_rpt = @company.get_purchases_pendientes_day(@fecha1,@fecha2)  
       
       Prawn::Document.generate("app/pdf_output/rpt_pendientes4.pdf") do |pdf|
           pdf.font "Helvetica"
@@ -1007,6 +1006,7 @@ class PurchasesController < ApplicationController
           @purchase.add_products(items)          
           # Check if we gotta process the invoice
           @purchase.process()
+
           
           format.html { redirect_to(@purchase, :notice => 'Factura fue grabada con exito .') }
           format.xml  { render :xml => @purchase, :status => :created, :location => @purchase}

@@ -14,6 +14,17 @@ class Purchase < ActiveRecord::Base
   belongs_to :payment
 
   has_many :purchase_details
+  def get_vencido
+
+      if(self.date3 < Date.today)   
+
+        return "** Vencido ** "
+      else
+        return ""
+      end 
+
+  end 
+
 
 
   def not_purchase_with?()
