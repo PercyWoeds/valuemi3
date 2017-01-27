@@ -471,35 +471,44 @@ def get_facturas_day_value_cliente(fecha1,fecha2,cliente,value = "total")
     return ret    
  end 
  #total banco x cliente
- def get_customer_payments_value_customer(fecha1,fecha2,id,cliente)
+def get_customer_payments_value_customer(fecha1,fecha2,id,cliente,value)
+facturas = CustomerPayment.find_by_sql(['Select customer_payments.id,customer_payments.total,
+facturas.code,facturas.customer_id,facturas.fecha,customer_payment_details.factory from customer_payment_details   
+INNER JOIN facturas ON   customer_payment_details.factura_id = facturas.id
+INNER JOIN customer_payments ON customer_payments.id = customer_payment_details.customer_payment_id    
+WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ?  and customer_payments.bank_acount_id = ?  and facturas.customer_id = ?',
+ "#{fecha1} 00:00:00","#{fecha2} 23:59:59",id,cliente ])
+    ret = 0     
 
-    facturas = CustomerPayment.where([" company_id = ? AND fecha1 >= ? and fecha1 <= ? and bank_acount_id = ? and customer_id = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" , id, cliente]).order(:id)
-    ret = 0 
     if facturas 
     ret=0  
-      for factura in facturas      
-
-          ret += factura.total
-
-      end
-    end 
+      for d in facturas                    
+            if (value == "total")
+              ret += d.total    
+            
+            end
+      end       
+    end     
     return ret    
  end 
 
- def get_customer_payments_cliente(fecha1,fecha2,cliente)
+def get_customer_payments_value_otros_customer(fecha1,fecha2,value,cliente)
 
-    @facturas = CustomerPayment.where([" company_id = ? AND fecha1 >= ? and fecha1<= ? and customer_id = ? ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", cliente]).order(:id)
-    return @facturas
-    
- end 
+  facturas = CustomerPayment.find_by_sql(['Select customer_payments.id,customer_payment_details.total,
+facturas.code,facturas.customer_id,facturas.fecha,customer_payment_details.factory from customer_payment_details   
+INNER JOIN facturas ON   customer_payment_details.factura_id = facturas.id
+INNER JOIN customer_payments ON customer_payments.id = customer_payment_details.customer_payment_id    
+WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? and facturas.customer_id = ?', "#{fecha1} 00:00:00",
+"#{fecha2} 23:59:59",cliente ])
+
+    ret = 0 
 
 
+    if facturas 
+    ret=0  
 
- def get_customer_payments_value_otros(fecha1,fecha2,value='factory')
-    facturas = CustomerPayment.where(["fecha1 >= ? and fecha1 <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])        
-        ret=0  
-        for factura in facturas
-
+      for factura in facturas      
+                
           @detail = CustomerPaymentDetail.where(:customer_payment_id => factura.id)
 
           for d in @detail 
@@ -507,18 +516,37 @@ def get_facturas_day_value_cliente(fecha1,fecha2,cliente,value = "total")
               ret += d.ajuste
             elsif (value == "compen")
               ret += d.compen 
+            elsif (value == "total")
+              ret += d.compen   
             else         
               ret += d.factory
             end
           end 
 
-        end    
-
-    return ret
+      end
+    end 
+    
+    return ret    
  end 
-#soloe clientes 
-def get_customer_payments_value_otros_customer(fecha1,fecha2,value='factory',cliente)
-    facturas = CustomerPayment.where(["fecha1 >= ? and fecha1 <= ? and customer_id = ?", "#{fecha1} 00:00:00","#{fecha2} 23:59:59", cliente ])        
+ 
+ def get_customer_payments_cliente(fecha1,fecha2,cliente)
+
+@facturas =CustomerPayment.find_by_sql(['Select customer_payments.id,customer_payment_details.total,
+facturas.code,facturas.customer_id,facturas.fecha,customer_payment_details.factory from customer_payment_details   
+INNER JOIN facturas ON   customer_payment_details.factura_id = facturas.id
+INNER JOIN customer_payments ON customer_payments.id = customer_payment_details.customer_payment_id    
+WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? and facturas.customer_id = ?', "#{fecha1} 00:00:00",
+"#{fecha2} 23:59:59",cliente ])
+    
+    return @facturas
+    
+ end 
+
+
+
+ def get_customer_payments_value_otros(fecha1,fecha2,value='factory')
+
+    facturas = CustomerPayment.where(["fecha1 >= ? and fecha1 <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])        
         ret=0  
         for factura in facturas
 

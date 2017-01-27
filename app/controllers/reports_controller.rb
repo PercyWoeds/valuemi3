@@ -987,6 +987,7 @@ class ReportsController < ApplicationController
     @company = Company.find(params[:company_id])    
     @pagetitle = "Liquidacion Cobranzas "    
     @customers = @company.get_customers()
+    
   end
   
   def rpt_cpagar2_pdf

@@ -50,9 +50,10 @@ self.per_page = 20
                      "NRO.",
                      "FECHA",
                      "CUENTA",
-                     "BANCO/RUC ",
-                     "",
-                     "",
+                     "FECHA ",
+                     "RUC",
+                     "CLIENTE
+                     ",
                      "",                    
                      "FACTORY  ",
                      "IMPORTE  "]                      

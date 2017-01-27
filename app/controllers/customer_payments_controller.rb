@@ -625,11 +625,13 @@ class CustomerPaymentsController < ApplicationController
     items = CustomerPaymentDetail.where(:customer_payment_id => @customerpayment.id)
     for f in items
           importe = f.total
-          factura = Factura.find(f.factura_id)  
+          ajuste = f.ajuste        
+          compen =  f.compen
+          factura = Factura.find(f.factura_id)            
+          @newbalance= factura.balance + importe +ajuste +compen 
           
-            @newbalance= factura.balance + importe
-            factura.balance = @newbalance
-            factura.save
+          factura.balance = @newbalance
+          factura.save
           
     end 
 
@@ -929,22 +931,24 @@ class CustomerPaymentsController < ApplicationController
 
        for  customerpayment_rpt in @customerpayment_rpt
 
-        @fechacobro = customerpayment_rpt.fecha1
+        #@fechacobro = customerpayment_rpt.fecha1
 
-        row = []
-         row << nroitem.to_s
-         row << customerpayment_rpt.code
-         row << customerpayment_rpt.fecha1.strftime("%d/%m/%Y")         
-         row << customerpayment_rpt.bank_acount.number
-         row << customerpayment_rpt.get_banco(customerpayment_rpt.bank_acount.bank_id)   
-         row << customerpayment_rpt.get_moneda(customerpayment_rpt.bank_acount.moneda_id)  
-         row << customerpayment_rpt.get_document(customerpayment_rpt.document_id)     
-         row << customerpayment_rpt.documento     
-         row << ""          
-         row << customerpayment_rpt.total    
+       # row = []
+       #  row << nroitem.to_s
+       #  row << customerpayment_rpt.code
+       #  row << customerpayment_rpt.fecha1.strftime("%d/%m/%Y")         
+       #  row << customerpayment_rpt.bank_acount.number
+       #  row << customerpayment_rpt.get_banco(customerpayment_rpt.bank_acount.bank_id)   
+       #  row << customerpayment_rpt.get_moneda(customerpayment_rpt.bank_acount.moneda_id)  
+       #  row << customerpayment_rpt.get_document(customerpayment_rpt.document_id)     
+       #  row << customerpayment_rpt.documento     
+       #  row << ""          
+       #  row << customerpayment_rpt.total    
 
          #table_content << row
          lcId = customerpayment_rpt.id 
+         puts 'codigo=>>>'
+         puts lcId
 
         @customerdetails =  customerpayment_rpt.get_payment_dato(lcId)
 
@@ -957,10 +961,11 @@ class CustomerPaymentsController < ApplicationController
                 row << ""
                 row << "FT"
                 row << productItem.code
-                row << productItem.fecha.to_s
+                row << productItem.fecha.strftime("%d/%m/%Y")         
                 row << productItem.customer.ruc       
                 row << productItem.customer.name                 
                 row << " "
+
                 row << productItem.factory.to_s
                 row << productItem.total.to_s      
                 
@@ -1099,8 +1104,10 @@ class CustomerPaymentsController < ApplicationController
           row << sprintf("%.2f",@totalgeneral.to_s)
 
       else
+        
           for banco in @banks
-          total1 = @company.get_customer_payments_value_customer(@fecha1,@fecha2,banco.id,@cliente)  
+          total1 = @company.get_customer_payments_value_customer(@fecha1,@fecha2,banco.id,@cliente,"total")  
+
           if total1>0
                     
             row =[]
@@ -1204,6 +1211,9 @@ class CustomerPaymentsController < ApplicationController
     @fecha1 = params[:fecha1]
     @fecha2 = params[:fecha2]
     @cliente = params[:customer_id]
+
+    puts "cliente"
+    puts @cliente 
 
     @customerpayment_rpt = @company.get_customer_payments_cliente(@fecha1,@fecha2,@cliente)  
       
