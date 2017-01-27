@@ -193,10 +193,21 @@
         Total:
       </td>
       <td class="bordered_bottom bordered_right bold right">
-        <%= money(@customerpayment.total) %>
+         <%= money(@customerpayment.get_customer_payment_value("total") - @customerpayment.get_customer_payment_value("factory")+@customerpayment.get_customer_payment_value("compen")+ @customerpayment.get_customer_payment_value("ajuste")) %>
       </td>
     </tr>
     
+    <tr>
+      <td colspan="5" class="bordered_bottom bordered_right bold">
+        Diferencia:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%=money(@customerpayment.total+ @customerpayment.get_customer_payment_value("factory")-@customerpayment.get_customer_payment_value("compen")-@customerpayment.get_customer_payment_value("ajuste")- @customerpayment.get_customer_payment_value("total")) %>
+      </td>
+    </tr>
+    
+ 
+
   </tbody>
 </table>
 <br />
@@ -229,3 +240,4 @@
   
   <%= link_to 'Regresar', "/companies/customer_payments/#{@customerpayment.company.id}" %>
 </div>
+

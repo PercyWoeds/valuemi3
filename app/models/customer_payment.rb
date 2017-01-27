@@ -95,10 +95,14 @@ self.per_page = 20
     ret = 0
     
     for invoice in invoices
+
       if(value == "factory")
         ret += invoice.factory
       elsif (value == "compen")        
         ret += invoice.compen    
+      elsif (value == "total")        
+        ret += invoice.total
+
       else
         ret += invoice.ajuste
       end
@@ -267,10 +271,6 @@ self.per_page = 20
   end
   
   
-  def get_payments_customer
-    invoice_products = CustomerPaymentDetail.where(customer_payment_id:  self.id)                                                                                                                                                                                                                                                                                        
-    return invoice_products
-  end
   
   def products_lines
     facturas = []
