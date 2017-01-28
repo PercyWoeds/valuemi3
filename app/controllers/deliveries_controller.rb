@@ -169,7 +169,7 @@ end
         product[:peso] = peso.to_i 
         product[:quantity] = quantity.to_i
         product[:price] = price.to_f
-        product[:discount] = discount.to_f
+          product[:discount] = discount.to_f
         
         total = product[:price] * product[:quantity]
         total -= total * (product[:discount] / 100)
@@ -585,8 +585,12 @@ end
             row << product.get_remision
             row << product.code
             row << lcOrigen
-            row << product.customer.name              
-            row << product.tranportorder.code  
+            row << product.customer.name      
+            if    product.tranportorder_id != nil 
+              row << product.tranportorder.code  
+            else
+              row << "No asignado" 
+            end 
             row << product.get_processed
             table_content << row
 

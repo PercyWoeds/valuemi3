@@ -59,7 +59,11 @@
           </td>
 
           <td class="bordered_right bordered_bottom right">
-            <%= delivery.tranportorder.code  %>
+            <% if delivery.tranportorder  %>
+
+            <%= delivery.tranportorder.code  %>          
+
+            <% end %>
           </td>
           
           <td class="bordered_right bordered_bottom <%= delivery.processed_color %>">

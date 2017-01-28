@@ -33,7 +33,15 @@
 
 <p>
   <b>Orden Transporte:</b>
+  <% if @delivery.tranportorder_id != nil %>
+
   <%= @delivery.tranportorder.code %>
+
+  <% else %>
+
+  " No Asignado "
+
+  <% end %>
 </p>
 
 <%= hr() %>
