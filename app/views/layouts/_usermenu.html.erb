@@ -4,9 +4,13 @@ if(isLogged())
 end
 %>
 <div id="usermenu">
+
   <% if user_signed_in? %>
+
     <strong><%= current_user.email   %></strong>:
+
     <%= link_to 'home', '/' %> &#183;
+
     <% if(companies and companies.count > 0) %>
       <%= link_to 'Empresas  <img src="/images/arrow_down_8.png" alt="" />'.html_safe, "/companies", :class => "dropdown", :id => "dropdown_companies" %> &#183;
       <div id="menu_companies" class="dropdown_menu">
@@ -18,59 +22,18 @@ end
             <%= link_to company.name, company %>
           </div>
         <% end %>
-      </div>
-    <% end %>
-    
-    <% if(session_company = get_session_company()) %>
-      <%= link_to (session_company.name + ' <img src="/images/arrow_down_8.png" alt="" />').html_safe, session_company, :class => "dropdown", :id => "dropdown_company" %> &#183;
-      <div id="menu_company" class="dropdown_menu">
-        <div>
-          <%= link_to "Ver empresa", session_company %>
-        </div>
-        <div>
-          <%= link_to "Productos", "/companies/products/#{session_company.id}" %>
-        </div>
-        <div>
-          <%= link_to "Clientes", "/companies/customers/#{session_company.id}" %>
-        </div>
-        <div>
-          <%= link_to "Productos kits", "/companies/products_kits/#{session_company.id}" %>
-        </div>
-        <div>
-          <%= link_to "Proveedores", "/companies/suppliers/#{session_company.id}" %>
-        </div>
-        
-        <div>
-          <%= link_to "Categorias de Productos", "/companies/products_categories/#{session_company.id}" %>
-        </div>
-        <div>
-          <%= link_to "Ubicacion", "/companies/locations/#{session_company.id}" %>
-        </div>
-        <div>
-          <%= link_to "Facturacion ", "/companies/invoices/#{session_company.id}" %>
-        </div>
-        
-        <div>
-          <%= link_to "Punto de Venta ", "/companies/store/#{session_company.id}" %>
-        </div>
-        
-        <div>
-          <%= link_to "Divisiones", "/companies/divisions/#{session_company.id}" %>
-        </div>
-        <div>
-          <%= link_to "Usuarios", "/companies/company_users/#{session_company.id}" %>
-        </div>
-        <div>
-          <%= link_to "Reportes", "/companies/reports/#{session_company.id}" %>
-        </div>
 
       </div>
     <% end %>
+  <% end %>  
+  <% if(session_company = get_session_company()) %>
     <%= link_to 'Cerrar Session ', destroy_user_session_path ,method: :delete %>
   <% else %>
       <%= link_to 'registrar', new_user_registration_path %> &#183;
-    <%= link_to 'Iniciar Sesion ', new_user_session_path  %>
-  <% end -%>
+      <%= link_to 'Iniciar Sesion ', new_user_session_path  %>
+  <% end %>
+
+
   <% if @is_admin %>
     [
       <strong>admin</strong>:
@@ -80,5 +43,6 @@ end
       <%= link_to 'packages', '/packages' %> &#183;
       <%= link_to 'users packages', '/users_packages' %>
     ]
-  <% end -%>
+  <% end %>
+
 </div>

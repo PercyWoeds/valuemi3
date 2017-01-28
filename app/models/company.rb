@@ -365,6 +365,11 @@ class Company < ActiveRecord::Base
     @delivery = Delivery.where(["company_id = ? AND fecha1 >= ? AND fecha1 <= ?", self.id, "#{year}-#{month}-01 00:00:00", "#{year}-#{month}-31 23:59:59"])
     return @delivery
  end 
+ #orden de transporte
+ def get_ordertransporte_day(fecha1,fecha2)
+    @orden = Tranportorder.where(["company_id = ? AND fecha1 >= ? AND fecha1 <= ?", self.id, "#{fecha1} 00:00:00", "#{fecha2} 23:59:59"]).order(:code)
+    return @orden 
+ end 
 
 def get_guias_2(fecha1,fecha2)
     @delivery = Delivery.where(["processed<> '4' and  processed <> '2' and company_id = ? AND fecha1 >= ? AND fecha1 <= ?", self.id, "#{fecha1} 00:00:00", "#{fecha2} 23:59:59"]).order(:code)

@@ -30,6 +30,7 @@
   resources :deliveryships
   resources :declarations 
   resources :inventarios  
+
   resources :deliverymines   
 
     namespace :inventory do
@@ -39,6 +40,12 @@
       resources :receivings
       resources :adjustments
     end
+
+
+resources :tranportorders do
+  collection { get :search   }
+  
+end 
 
 
   resources :serviceorders do 
@@ -416,8 +423,11 @@
   match 'purchases/rpt_cpagar5_pdf/:company_id' => 'purchases#rpt_cpagar5_pdf', via: [:get, :post]
 
   match 'companies/purchases/:company_id' => 'purchases#list_purchases', via: [:get, :post]  
+  
   resources :purchases
 
+  match 'tranportorders/rpt_ost1_pdf/:company_id' => 'tranportorders#rpt_ost1_pdf', via: [:get, :post]
+      
 
   # supplier payments
   

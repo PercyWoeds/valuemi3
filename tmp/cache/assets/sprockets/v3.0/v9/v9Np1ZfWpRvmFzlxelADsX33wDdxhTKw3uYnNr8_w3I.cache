@@ -1,0 +1,31 @@
+{:uriI"~file://app/assets/javascripts/404.html?type=text/html&id=ccdd20920eeab1547b74fcf995dd0edbe4848a8315ee7d4a93c748307a773ef9:ET:load_pathI"app/assets/javascripts;T:filenameI"$app/assets/javascripts/404.html;T:	nameI"404;T:logical_pathI"404.html;T:content_typeI"text/html;T:sourceI"Ø<!DOCTYPE html>
+<html>
+<head>
+  <title>The page you were looking for doesn't exist (404)</title>
+  <style type="text/css">
+    body { background-color: #fff; color: #666; text-align: center; font-family: arial, sans-serif; }
+    div.dialog {
+      width: 25em;
+      padding: 0 4em;
+      margin: 4em auto 0 auto;
+      border: 1px solid #ccc;
+      border-right-color: #999;
+      border-bottom-color: #999;
+    }
+    h1 { font-size: 100%; color: #f00; line-height: 1.5em; }
+  </style>
+</head>
+
+<body>
+  <!-- This file lives in public/404.html -->
+  <div class="dialog">
+    <h1>The page you were looking for doesn't exist.</h1>
+    <p>You may have mistyped the address or the page may have moved.</p>
+  </div>
+</body>
+</html>
+;T:metadata{	:dependencieso:Set:
+@hash}
+I"environment-version;TTI"environment-paths;TTI"rails-env;TTI"2processors:type=text/html&file_type=text/html;TTI"2file-digest://app/assets/javascripts/404.html;TTF:charsetI"
+utf-8;F:digest"%è;«[ÉTãÚMgiaî6‹—sŠ·ÑeÄÓ]T—|oX:lengthiØ:dependencies_digest"%t²½ãş„iP‘Ğò&=Wç5ÌõAèÙŸ5¿£?H:idI"Eccdd20920eeab1547b74fcf995dd0edbe4848a8315ee7d4a93c748307a773ef9;F:
+mtimel+ûRW

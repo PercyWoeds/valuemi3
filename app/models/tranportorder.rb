@@ -5,12 +5,28 @@ class Tranportorder < ActiveRecord::Base
 	belongs_to :company
   	belongs_to :location
   	belongs_to :division 
-  	belongs_to :user
-  
+  	belongs_to :user  
 	belongs_to :customer
 	belongs_to :employee
 	belongs_to :punto 
 	belongs_to :truck
+
+
+ TABLE_HEADERS = ["ITEM",
+                     "CODIGO",
+                     "EMPLEADO",
+                     "PLACA",
+                     "DESDE",
+                     "HASTA",
+                     "FEC.INICIO",
+                     "FEC.FIN",                     
+                     "ESTADO"]
+
+	def self.search(search)
+		  where("code LIKE ?", "%#{search}%") 
+  		  
+	end
+
 
 	 def identifier
 	    return "#{self.code} - #{self.employee.full_name}"
@@ -49,9 +65,26 @@ class Tranportorder < ActiveRecord::Base
 
 
 		def correlativo		
-		numero=Voided.find(8).numero.to_i + 1
-		lcnumero=numero.to_s
-		Voided.where(:id=>'8').update_all(:numero =>lcnumero)        
+			numero=Voided.find(8).numero.to_i + 1
+			lcnumero=numero.to_s
+			Voided.where(:id=>'8').update_all(:numero =>lcnumero)        
 		end
+
+
+	  def get_processed
+	    if(self.processed == "1")
+	      return "Aprobado "
+	    elsif (self.processed == "2")      
+	      return "**Anulado **"
+	    elsif (self.processed == "3")      
+	      return "* Cerrado **"
+	    elsif (self.processed == "4")        
+	      return "* Facturado **"
+	    else 
+	      return "No Aprobado"
+	        
+	  end
+  end
+
 
 end

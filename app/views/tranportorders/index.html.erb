@@ -2,18 +2,24 @@
 
 <h1>Orden de Servicio Transporte  </h1>
 
+
+
+<%= form_tag(tranportorders_path, :method => "get", id: "search-form") do %>
+<%= text_field_tag :search, params[:search], placeholder: "Buscar ordenes" %>
+<%= submit_tag "Search" %>
+<% end %>
+
 <table>
   <thead>
     <tr>
-      <th>Code</th>
-      <th>Employee</th>
-      <th>Truck</th>
-      
-      <th>Truck2</th>
-      <th>Ubication</th>
-      <th>Ubication2</th>
-      <th>Fecha1</th>
-      <th>Fecha2</th>
+      <th>Codigo</th>
+      <th>Empleado</th>
+      <th>Vehiculo</th>      
+      <th>Vehiculo 2</th>
+      <th>Ubicacion</th>
+      <th>Ubicacion2</th>
+      <th>Fecha Inicio </th>
+      <th>Fecha Fin </th>
       
       <th colspan="3"></th>
     </tr>
@@ -28,12 +34,12 @@
         <td><%= tranportorder.get_placa(tranportorder.truck2_id) %></td>
         <td><%= tranportorder.get_punto(tranportorder.ubication_id)  %></td>
         <td><%= tranportorder.get_punto(tranportorder.ubication2_id) %></td>
-        <td><%= doDate(tranportorder.fecha1) %></td>
-        <td><%= doDate(tranportorder.fecha2) %></td>
+        <td><%= tranportorder.fecha1.strftime("%d/%m/%Y") %></td>
+        <td><%= tranportorder.fecha2.strftime("%d/%m/%Y") %></td>
       
-        <td><%= link_to 'Show', tranportorder %></td>
-        <td><%= link_to 'Edit', edit_tranportorder_path(tranportorder) %></td>
-        <td><%= link_to 'Destroy', tranportorder, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Ver', tranportorder %></td>
+        <td><%= link_to 'Editar', edit_tranportorder_path(tranportorder) %></td>
+        <td><%= link_to 'Eliminar', tranportorder, method: :delete, data: { confirm: 'Esta seguro ?' } %></td>
       </tr>
     <% end %>
   </tbody>
