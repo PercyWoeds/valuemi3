@@ -1179,6 +1179,12 @@ class ReportsController < ApplicationController
     
   end
 
+  def rpt_guias_1
+    @company = Company.find(params[:company_id])    
+    @pagetitle = "Listado Guias "    
+    @customers = @company.get_customers()
+
+  end
 
   def rpt_guias_2
     @company = Company.find(params[:company_id])    

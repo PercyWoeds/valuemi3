@@ -184,6 +184,7 @@ end
   match 'companies/reports/monthly_sellers/:company_id' => 'reports#report_monthly_sellers', via: [:get, :post]
   match 'companies/reports/sellers/:company_id' => 'reports#report_sellers', via: [:get, :post]
   match 'companies/reports/monthly_sales/:company_id' => 'reports#report_monthly_sales', via: [:get, :post]
+  match 'companies/reports/rpt_guias_1/:company_id' => 'reports#rpt_guias_1', via: [:get, :post]
   match 'companies/reports/rpt_guias_2/:company_id' => 'reports#rpt_guias_2', via: [:get, :post]
   match 'companies/reports/rpt_guias_3/:company_id' => 'reports#rpt_guias_3', via: [:get, :post]
   match 'companies/reports/rpt_guias_4/:company_id' => 'reports#rpt_guias_4', via: [:get, :post]

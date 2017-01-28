@@ -22,8 +22,13 @@
           Fecha
         </th>
         <th class="bordered_right bordered_bottom">
+          Orden S.T.
+        </th>
+        
+        <th class="bordered_right bordered_bottom">
           Pro.
         </th>
+
         <th class="bordered_right bordered_bottom" colspan="3">
           Opciones 
         </th>
@@ -52,6 +57,11 @@
           <td class="bordered_right bordered_bottom">
             <%= doDate(delivery.created_at) %>
           </td>
+
+          <td class="bordered_right bordered_bottom right">
+            <%= delivery.tranportorder.code  %>
+          </td>
+          
           <td class="bordered_right bordered_bottom <%= delivery.processed_color %>">
             <%= delivery.get_processed_short %>
           </td>

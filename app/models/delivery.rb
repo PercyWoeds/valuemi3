@@ -13,12 +13,15 @@ self.per_page = 20
   belongs_to :employee
   belongs_to :subcontrat
   belongs_to :address
+  belongs_to :tranportorder
   
   has_many :delivery_services
   has_many :declarationdeliveries
 
   has_many :deliverymines
   has_many :mines, through: :deliverymines
+
+  
 
   TABLE_HEADERS = ["ITEM",
                      "Fecha",
@@ -27,7 +30,7 @@ self.per_page = 20
                      "NUMERO",
                      "CLIENTE",
                      "DESTINO",
-                     "DESCRIP",                     
+                     "ORDEN",                     
                      "ESTADO"]
   TABLE_HEADERS1 = ["ITEM",
                      "FECHA",

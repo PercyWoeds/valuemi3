@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170126220547) do
+ActiveRecord::Schema.define(version: 20170128155204) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -773,6 +773,13 @@ ActiveRecord::Schema.define(version: 20170126220547) do
     t.decimal  "original_price", precision: 14, scale: 2, default: 0.0
     t.datetime "created_at",                                            null: false
     t.datetime "updated_at",                                            null: false
+    t.integer  "product_id"
+    t.integer  "stock_inicial"
+    t.integer  "ingreso"
+    t.integer  "salida"
+    t.integer  "stock_final"
+    t.datetime "fecha"
+    t.integer  "user_id"
   end
 
   add_index "movement_details", ["account_id"], name: "index_movement_details_on_account_id", using: :btree
@@ -1211,6 +1218,7 @@ ActiveRecord::Schema.define(version: 20170126220547) do
     t.boolean  "active",                                           default: true
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "product_id"
   end
 
   add_index "stocks", ["item_id"], name: "index_stocks_on_item_id", using: :btree

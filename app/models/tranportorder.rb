@@ -10,6 +10,7 @@ class Tranportorder < ActiveRecord::Base
 	belongs_to :employee
 	belongs_to :punto 
 	belongs_to :truck
+	belongs_to :delivery
 
 
  TABLE_HEADERS = ["ITEM",

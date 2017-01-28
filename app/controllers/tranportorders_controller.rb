@@ -5,12 +5,12 @@ class TranportordersController < ApplicationController
   # GET /tranportorders.json
   def index
 
-  @tranportorders = Tranportorder.all
+  @tranportorders = Tranportorder.all.order(:code)
 
   if params[:search]
-    @tranportorders = Tranportorder.search(params[:search]).order("created_at DESC")
+    @tranportorders = Tranportorder.search(params[:search]).order(:code)
   else
-    @tranportorders = Tranportorder.all.order('created_at DESC')
+    @tranportorders = Tranportorder.all.order(:code)
   end
 
     

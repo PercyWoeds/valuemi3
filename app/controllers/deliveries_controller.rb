@@ -506,11 +506,14 @@ end
   def destroy
     @delivery = Delivery.find(params[:id])
     company_id = @delivery[:company_id]
-    @delivery.destroy
 
-    respond_to do |format|
-      format.html { redirect_to("/companies/deliveries/" + company_id.to_s) }
-    end
+    
+      @delivery.destroy    
+      respond_to do |format|
+        format.html { redirect_to("/companies/deliveries/" + company_id.to_s) }
+      end
+    
+
   end
 ##-----------------------------------------------------------------------------------
 ## REPORTE DE GUIAS EMITIDAS
@@ -583,7 +586,7 @@ end
             row << product.code
             row << lcOrigen
             row << product.customer.name              
-            row << product.description 
+            row << product.tranportorder.code  
             row << product.get_processed
             table_content << row
 
@@ -600,7 +603,7 @@ end
                                           columns([2]).align=:left
                                           columns([3]).align=:left
                                           columns([4]).align=:left  
-                                          columns([5]).align=:left 
+                                          columns([5]).align=:right
                                           columns([6]).align=:right
                                           columns([7]).align=:right
                                         end                                          
@@ -629,21 +632,10 @@ end
   # Export serviceorder to PDF
   def guias1
     @company=Company.find(params[:company_id])      
-    
-    
-    if(params[:year] and params[:year].numeric?)
-      @year = params[:year].to_i
-    else
-      @year = Time.now.year
-    end
-    
-    if(params[:month] and params[:month].numeric?)
-      @month = params[:month].to_i
-    else
-      @month = Time.now.month
-    end
-    
-    @delivery = @company.get_guias_year_month(@year,@month)  
+    @fecha1 =params[:fecha1]
+    @fecha2 =params[:fecha2]
+      
+    @delivery = @company.get_guias_day(@fecha1,@fecha2)  
       
     Prawn::Document.generate("app/pdf_output/guias1.pdf") do |pdf|      
         pdf.font "Helvetica"

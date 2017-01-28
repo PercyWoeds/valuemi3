@@ -192,6 +192,7 @@ class Purchase < ActiveRecord::Base
       end
     end
   end   
+
   def add_products2(items)
     for item in items
         
@@ -201,16 +202,31 @@ class Purchase < ActiveRecord::Base
         
 
         product = Product.find(item.product_id)
-        puts self.id.to_s
-        puts item.product.code 
-        puts lcprice_tax.to_s
-        puts item.price.to_s
-
-
+  
         new_pur_product = PurchaseDetail.new(:purchase_id => self.id, :product_id => product.id,
             :price_with_tax => lcprice_tax,:price_without_tax=>item.price, :quantity => item.quantity, 
             :discount => item.discount, :total => item.total )
-        new_pur_product.save        
+        new_pur_product.save   
+
+        #actualiza stock
+
+        stock_product = Stock.find(item.product_id)
+
+        if stock_product
+          stock_product.quantity += item.quantity
+          stock_product.unitary_cost = item.price
+        
+
+        else
+          stock_product= Stock.new(:store_id=>1,:state=>"Lima",:unitary_cost=> item.price,
+          :quantity=> item.quantity,:user_id=>current_user.id,:product_id=>item.product_id)           
+        end 
+
+        if new_pur_product.save  
+          
+        end  
+
+
     
     end
 
