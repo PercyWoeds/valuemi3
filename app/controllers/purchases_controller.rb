@@ -159,16 +159,13 @@ class PurchasesController < ApplicationController
                                           columns([8]).align=:right
                                         end                                          
       pdf.move_down 10      
-
       #totales 
-
       pdf 
 
     end
 
     def build_pdf_footer_rpt(pdf)
-      
-                  
+                        
       pdf.text "" 
       pdf.bounding_box([0, 20], :width => 535, :height => 40) do
       pdf.draw_text "Company: #{@company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
@@ -323,7 +320,7 @@ class PurchasesController < ApplicationController
 
           end 
           
-       
+         
         end
 
         lcProveedor = @facturas_rpt.last.supplier_id 
@@ -705,9 +702,9 @@ class PurchasesController < ApplicationController
   # Process an purchase
   def do_process
     @purchase = Purchase.find(params[:id])
-    @purchase[:processed] = true
+    @purchase[:processed] = "1"
     @purchase.process
-    
+    @user_id = @current_user.id 
     flash[:notice] = "The purchase order has been processed."
     redirect_to @purchase
   end

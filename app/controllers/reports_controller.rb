@@ -1053,7 +1053,7 @@ class ReportsController < ApplicationController
     @months = monthsArr
     @month_name = @months[@month - 1][0]
     
-    @pagetitle = "Monthly sales report - #{@month_name} #{@year} - #{@company.name}"
+    @pagetitle = ""
     
     while(c_year > Time.now.year - 5)
       @years.push(c_year)
@@ -1220,5 +1220,21 @@ class ReportsController < ApplicationController
     @company = Company.find(params[:company_id])
     @pagetitle = "Ordenes de compra"    
   end
+
+  def reports_calmacen
+    @company = Company.find(params[:company_id])
+    @pagetitle = "Almacen"    
+  end
+  def rpt_calmacen1_pdf
+    @company = Company.find(params[:company_id])    
+    @pagetitle = "Listado de stocks "    
+    @customers = @company.get_customers()
+  end
+  def rpt_calmacen2_pdf
+    @company = Company.find(params[:company_id])    
+    @pagetitle = "Listado de stocks "    
+    @products = @company.get_products()
+  end
+
 
 end

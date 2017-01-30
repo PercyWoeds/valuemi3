@@ -26,7 +26,6 @@ class Purchase < ActiveRecord::Base
   end 
 
 
-
   def not_purchase_with?()
     document_tipo = self.document_id
     document_numero=  self.documento
@@ -189,6 +188,10 @@ class Purchase < ActiveRecord::Base
           new_pur_product.save
         rescue
         end
+
+                
+
+
       end
     end
   end   
@@ -208,26 +211,8 @@ class Purchase < ActiveRecord::Base
             :discount => item.discount, :total => item.total )
         new_pur_product.save   
 
-        #actualiza stock
-
-        stock_product = Stock.find(item.product_id)
-
-        if stock_product
-          stock_product.quantity += item.quantity
-          stock_product.unitary_cost = item.price
-        
-
-        else
-          stock_product= Stock.new(:store_id=>1,:state=>"Lima",:unitary_cost=> item.price,
-          :quantity=> item.quantity,:user_id=>current_user.id,:product_id=>item.product_id)           
-        end 
-
-        if new_pur_product.save  
           
-        end  
-
-
-    
+      
     end
 
   end   
@@ -271,15 +256,15 @@ class Purchase < ActiveRecord::Base
   
   def get_processed
     if(self.processed == "1")
-      return "Processed"
+      return "Procesado"
     else
-      return "Not yet processed"
+      return "No Procesado"
     end
   end
   
   def get_processed_short
     if(self.processed == "1")
-      return "Yes"
+      return "Si"
     else
       return "No"
     end
@@ -303,7 +288,7 @@ class Purchase < ActiveRecord::Base
       for ip in purchase_details
 
         product = ip.product
-        
+      
         if(product.quantity)
           if(self.return == "0")
             ip.product.quantity -= ip.quantity
@@ -311,12 +296,49 @@ class Purchase < ActiveRecord::Base
             ip.product.quantity += ip.quantity
           end
           ip.product.save
+        end        
+        
+        #actualiza stock
+         stock_product =  Stock.find_by(:product_id => ip.product_id)
+
+        if stock_product 
+           $last_stock = stock_product.quantity + ip.quantity
+           stock_product.unitary_cost = ip.price_without_tax   
+           stock_product.quantity = $last_stock
+
+        else
+          $last_stock = 0
+          stock_product= Stock.new(:store_id=>1,:state=>"Lima",:unitary_cost=> ip.price_without_tax,
+          :quantity=> ip.quantity,:minimum=>0,:user_id=>@user_id,:product_id=>ip.product_id,
+          :document_id=>self.document_id,:documento=>self.documento)           
+        end 
+
+        if stock_product.save
+
+           @movement = MovementDetail.where(:product_id=>ip.product_id).last   
+            if @movement  
+
+              stock_final_value = @movement.stock_final + ip.quantity
+              $stock_inicial = @movement.stock_final 
+
+            else
+              $stock_inicial = 0
+              stock_final_value = 0            
+            end             
+
+           new_movement = MovementDetail.new(:product_id=> ip.product_id,:quantity=> ip.quantity,
+            :price=>ip.price_without_tax,:balance=>$last_stock,:original_price=>ip.price_without_tax,
+            :stock_inicial=>$stock_inicial ,:ingreso=>ip.quantity,:salida=>0,
+            :stock_final=> stock_final_value,:fecha=>self.date1,:user_id=>@user_id)  
+           new_movement.save
+
         end
-      end
+        self.date_processed = Time.now
+        self.save
       
-      self.date_processed = Time.now
-      self.save
-    end
+
+      end
+    end   
   end
   
   # Color for processed or not
@@ -326,6 +348,7 @@ class Purchase < ActiveRecord::Base
     else
       return "red"
     end
+
   end
 
 

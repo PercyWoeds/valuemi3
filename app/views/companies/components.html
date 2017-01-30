@@ -1,18 +1,11 @@
 <div class="mid_box bordered_right">
-    <h3>
-    <%= image_tag("invoice_32.png", :class => "vmiddle") %>
-    <%= link_to "Recepcion orden de Compra", "/companies/purchaseorders/receive/#{@company.id}" %>
-  </h3>
-
-  <p>
-    Recepcion de Orden de Compra   
-  </p>
+    
   
   <%= hr() %>
 
   <h3>
     <%= image_tag("invoice_32.png", :class => "vmiddle") %>
-    <%= link_to "Salidas ", "/companies/purchaseorders/#{@company.id}" %>
+    <%= link_to "Registrar Salidas ", "/companies/purchaseorders/#{@company.id}" %>
   </h3>
 
   <p>
@@ -21,24 +14,25 @@
   
   <%= hr() %>
 
-  
-  
-  <h3>
-    <%= image_tag("product_kit_32.png", :class => "vmiddle") %>
-    <%= link_to "Ajustes Inventario", "/companies/products_kits/#{@company.id}" %>
+<h3>
+    <%= image_tag("supplier_32.png", :class => "vmiddle") %>
+    <%= link_to "Consultar productos", "/companies/suppliers/#{@company.id}" %>
   </h3>
 
   <p>
-   Agregar, editar or eliminar kits de productos (grupos of productos).
+     Agregar, editar or eliminar proveedores para tu negocio.
   </p>
-
   <%= hr() %>
 
+  
+  
+  
   
   
 </div>
 
 <div class="mid_box">
+<%= hr() %>
   <h3>
         <div>
     <%= image_tag("clients_32.png", :class => "vmiddle") %>
@@ -53,19 +47,20 @@
 
   
   <h3>
-    <%= image_tag("supplier_32.png", :class => "vmiddle") %>
-    <%= link_to "Consultar productos", "/companies/suppliers/#{@company.id}" %>
+    <%= image_tag("product_kit_32.png", :class => "vmiddle") %>
+    <%= link_to "Ajustes Inventario", "/companies/products_kits/#{@company.id}" %>
   </h3>
 
   <p>
-     Agregar, editar or eliminar proveedores para tu negocio.
+   Agregar, editar or eliminar kits de productos (grupos of productos).
   </p>
+
   <%= hr() %>
 
   
   <h3>
     <%= image_tag("reports_32.png", :class => "vmiddle") %>
-    <%= link_to "Reportes", "/companies/reports/#{@company.id}" %>
+    <%= link_to "Reportes", "/companies/reports/reports_calmacen/#{@company.id}" %>
   </h3>
 
   <p>

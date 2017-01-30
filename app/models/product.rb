@@ -8,7 +8,9 @@ class Product < ActiveRecord::Base
   belongs_to :company
   belongs_to :supplier
   belongs_to :products_category
+  belongs_to :stock 
 
+  has_many :movement_details
   has_many :items
   has_many :kits_products
   has_many :restocks

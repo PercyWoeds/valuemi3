@@ -17,7 +17,7 @@
       <th>V.Venta </th>
       <th>IGV</th>
       <th>Importe</th>
-      <th>Status </th>
+      <th>Procesado </th>
       
       <th>Cargos</th>
       <th>Pagos</th>
@@ -25,7 +25,7 @@
 
       
       <th class="bordered_right bordered_bottom" colspan="3">
-          Options
+          Opciones
         </th>
     </tr>
   </thead>
@@ -53,8 +53,10 @@
         <td><%= money(purchase.pago) %></td> 
         <td><%= money(purchase.balance) %></td>
         <td><%= link_to 'Ver', purchase %></td>
-        
-        <td><%= link_to 'Eliminar', purchase, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+       <% if purchase.processed != "1" %>
+        <td><%= link_to 'Eliminar', purchase, method: :delete, data: { confirm: 'Are you sure?' } %>
+        <% end %> 
+        </td>
       </tr>
     <% end %>
   </tbody>

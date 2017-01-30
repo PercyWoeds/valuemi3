@@ -308,8 +308,6 @@ class FacturasController < ApplicationController
   end
 
   def generar4
-
-    puts "ingreso"
     
     @company = Company.find(params[:company_id])
      Csubdiario.delete_all

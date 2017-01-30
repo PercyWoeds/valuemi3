@@ -1217,5 +1217,15 @@ def get_supplier_payments2(moneda)
     
  end 
 
+ def get_stocks
+    @stocks = Stock.all 
+    return @stocks
+ end
+ def get_movement_stocks(fecha1,fecha2,product)
+    @movements = MovementDetail.where([" fecha >= ? and fecha <= ?  and product_id = ?", "#{fecha1} 00:00:00","#{fecha2} 23:59:59",product ])
+
+    return @movements
+ end
+
 
 end

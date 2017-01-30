@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170128155204) do
+ActiveRecord::Schema.define(version: 20170130170111) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -780,6 +780,8 @@ ActiveRecord::Schema.define(version: 20170128155204) do
     t.integer  "stock_final"
     t.datetime "fecha"
     t.integer  "user_id"
+    t.integer  "document_id"
+    t.string   "documento"
   end
 
   add_index "movement_details", ["account_id"], name: "index_movement_details_on_account_id", using: :btree
@@ -1211,19 +1213,17 @@ ActiveRecord::Schema.define(version: 20170128155204) do
     t.integer  "store_id"
     t.integer  "item_id"
     t.string   "state",        limit: 20
-    t.decimal  "unitary_cost",            precision: 14, scale: 2, default: 0.0
-    t.decimal  "quantity",                precision: 14, scale: 2, default: 0.0
-    t.decimal  "minimum",                 precision: 14, scale: 2, default: 0.0
     t.integer  "user_id"
-    t.boolean  "active",                                           default: true
+    t.boolean  "active",                  default: true
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "product_id"
+    t.float    "unitary_cost"
+    t.float    "quantity"
+    t.float    "minimum"
   end
 
   add_index "stocks", ["item_id"], name: "index_stocks_on_item_id", using: :btree
-  add_index "stocks", ["minimum"], name: "index_stocks_on_minimum", using: :btree
-  add_index "stocks", ["quantity"], name: "index_stocks_on_quantity", using: :btree
   add_index "stocks", ["state"], name: "index_stocks_on_state", using: :btree
   add_index "stocks", ["store_id"], name: "index_stocks_on_store_id", using: :btree
   add_index "stocks", ["user_id"], name: "index_stocks_on_user_id", using: :btree

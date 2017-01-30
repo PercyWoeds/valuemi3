@@ -587,7 +587,7 @@ end
             row << lcOrigen
             row << product.customer.name      
             if    product.tranportorder_id != nil 
-              row << product.tranportorder.code  
+            #  row << product.tranportorder.code  
             else
               row << "No asignado" 
             end 
@@ -595,7 +595,7 @@ end
             table_content << row
 
             nroitem=nroitem + 1
-            puts nroitem 
+             
         end
 
       result = pdf.table table_content, {:position => :center,

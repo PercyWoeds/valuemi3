@@ -1,5 +1,7 @@
 class Document < ActiveRecord::Base
 
+
+  has_many :movement_details
 	has_many :locations
   has_many :suppliers
   has_many :products
@@ -12,7 +14,7 @@ class Document < ActiveRecord::Base
   has_many :customers
   has_many :invoices
   has_many :inventories
-  has_many :company_users
+  has_many :company_users  
 
 
 end

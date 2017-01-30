@@ -195,6 +195,7 @@ end
   match 'companies/reports_compras/:company_id' => 'reports#reports_compras', via: [:get, :post]
   match 'companies/reports/reports_cpagar/:company_id' => 'reports#reports_cpagar', via: [:get, :post]
   match 'companies/reports/reports_cventas/:company_id' => 'reports#reports_cventas', via: [:get, :post]
+  match 'companies/reports/reports_calmacen/:company_id' => 'reports#reports_calmacen', via: [:get, :post]
 
   match 'companies/reports/rpt_serviceorder_all/:company_id' => 'reports#rpt_serviceorder_all', via: [:get, :post]
   match 'companies/reports/rpt_purchases_all/:company_id' => 'reports#rpt_purchases_all', via: [:get, :post]
@@ -215,6 +216,9 @@ end
   match 'companies/reports/rpt_ccobrar6_pdf/:company_id' => 'reports#rpt_ccobrar6_pdf', via: [:get, :post]  
   match 'companies/reports/rpt_ccobrar7_pdf/:company_id' => 'reports#rpt_ccobrar7_pdf', via: [:get, :post]  
 
+
+  match 'companies/reports/rpt_calmacen1_pdf/:company_id' => 'reports#rpt_calmacen1_pdf', via: [:get, :post]  
+  match 'companies/reports/rpt_calmacen2_pdf/:company_id' => 'reports#rpt_calmacen2_pdf', via: [:get, :post]  
 
   match 'companies/reports/rpt_facturas_all/:company_id' => 'reports#rpt_facturas_all', via: [:get, :post]
   match 'companies/reports/rpt_facturas_all2/:company_id' => 'reports#rpt_facturas_all2', via: [:get, :post]
@@ -509,6 +513,11 @@ end
   match 'companies/restocks/:company_id/:product_id' => 'restocks#list_restocks', via: [:get, :post]
   resources :restocks
 
+
+  match '/stocks/rpt_stocks1/:company_id' => 'stocks#rpt_stocks1', via: [:get, :post]
+  match '/stocks/rpt_stocks2/:company_id' => 'stocks#rpt_stocks2', via: [:get, :post]
+  resources :stocks 
+    
   # Products kits
   match 'products_kits/list_items/:company_id' => 'products_kits#list_items', via: [:get, :post]
   match 'products_kits/new/:company_id' => 'products_kits#new', via: [:get, :post]
