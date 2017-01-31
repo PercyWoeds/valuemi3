@@ -339,6 +339,7 @@ class FacturasController < ApplicationController
      for f in @facturas
         
         $lcFecha =f.fecha.strftime("%Y-%m-%d")   
+        
 
 
       newsubdia =Csubdiario.new(:csubdia=>$lcSubdiario,:ccompro=>$lastcompro1,:cfeccom=>$lcFecha, :ccodmon=>"MN",

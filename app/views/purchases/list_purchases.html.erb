@@ -74,6 +74,7 @@
   <%= link_to 'Nueva Factura', "/purchases/new/#{@company.id}" %>
   <%= link_to "Cargar Orden de servicio", "/companies/serviceorders/receive_orderservice/#{@company.id}" %>
   <%= link_to 'Cargar Orden de compra', "/purchases/cargar/#{@company.id}" %>
+  
 </div>
 
 <%= will_paginate @invoices %>

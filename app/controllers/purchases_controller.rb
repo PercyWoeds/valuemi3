@@ -7,6 +7,62 @@ class PurchasesController < ApplicationController
   before_filter :authenticate_user!, :checkProducts
 
 
+  def generar1
+    
+    @company = Company.find(params[:company_id])
+     Csubdiario.delete_all
+     Dsubdiario.delete_all
+
+
+     fecha1 =params[:fecha1]
+     fecha2 =params[:fecha2]
+
+     @facturas = @company.get_facturas_day(fecha1,fecha2)
+
+      $lcSubdiario='05'
+
+      subdiario = Numera.find_by(:subdiario=>'12')
+
+      lastcompro = subdiario.compro.to_i + 1
+      $lastcompro1 = lastcompro.to_s.rjust(4, '0')
+
+        item = fecha1.to_s 
+        parts = item.split("-")        
+        
+        mm    = parts[1]        
+
+      if subdiario
+          nrocompro = mm << $lastcompro1
+      end
+
+
+     for f in @facturas
+        
+        $lcFecha =f.fecha.strftime("%Y-%m-%d")   
+        
+
+
+      newsubdia =Csubdiario.new(:csubdia=>$lcSubdiario,:ccompro=>$lastcompro1,:cfeccom=>$lcFecha, :ccodmon=>"MN",
+        :csitua=>"F",:ctipcam=>"0.00",:cglosa=>f.code,:csubtotal=>f.subtotal,:ctax=>f.tax,:ctotal=>f.total,
+        :ctipo=>"V",:cflag=>"N",:cdate=>$lcFecha ,:chora=>"",:cfeccam=>"",:cuser=>"SIST",
+        :corig=>"",:cform=>"M",:cextor=>"",:ccodane=>f.customer.ruc ) 
+
+        newsubdia.save
+
+      lastcompro = lastcompro + 1
+      $lastcompro1 = lastcompro.to_s.rjust(4, '0')      
+
+      end 
+
+      subdiario.compro = $lastcompro1
+      subdiario.save
+
+      @invoice = Csubdiario.all
+      send_data @invoice.to_csv  , :filename => 'CC0317.csv'
+
+    
+  end
+
 
   # reporte completo
   def build_pdf_header_rpt(pdf)

@@ -468,6 +468,8 @@ end
   match 'customer_payments/email/:id' => 'customer_payments#email', via: [:get, :post]
   match 'customer_payments/pdf/:id' => 'customer_payments#pdf', via: [:get, :post]
   match 'customer_payments/search/:id' => 'customer_payments#search', via: [:get, :post]
+  match 'customer_payments/export/:company_id' => 'customer_payments#export', via: [:get, :post]
+
   match 'customer_payments/rpt_purchases_all/:id' => 'customer_payments#rpt_purchases_all', via: [:get, :post]
   match 'customer_payments/rpt_ccobrar4_pdf/:id' => 'customer_payments#rpt_ccobrar4_pdf', via: [:get, :post]
   match 'customer_payments/rpt_ccobrar5_pdf/:id' => 'customer_payments#rpt_ccobrar5_pdf', via: [:get, :post]
@@ -475,6 +477,7 @@ end
   match 'customer_payments/rpt_ccobrar7_pdf/:id' => 'customer_payments#rpt_ccobrar7_pdf', via: [:get, :post]
 
   match 'companies/customer_payments/:company_id' => 'customer_payments#list_customerpayments', via: [:get, :post]  
+
   resources :customer_payments
 
   match 'inventories_detaisl/additems/:company_id' => 'additems#list', via: [:get, :post]  

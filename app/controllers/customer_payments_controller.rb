@@ -1849,6 +1849,74 @@ class CustomerPaymentsController < ApplicationController
       invoice_headers
   end
 
+  def export 
+    
+    @company = Company.find(params[:company_id])
+     Csubdiario.delete_all
+    
+     fecha1 =params[:fecha1]
+     fecha2 =params[:fecha2]
+
+     @customerpayments = @company.get_customer_payments(fecha1,fecha2)
+
+      $lcSubdiario='21'
+
+      subdiario = Numera.find_by(:subdiario=>'12')
+
+      lastcompro = subdiario.compro.to_i + 1
+      $lastcompro1 = lastcompro.to_s.rjust(4, '0')
+
+        item = fecha1.to_s 
+        parts = item.split("-")        
+        
+        mm    = parts[1]        
+
+      if subdiario
+          nrocompro = mm << $lastcompro1
+      end
+
+4551 7081 7913 4419        
+     for c in @customerpayments 
+        
+        $lcFecha =c.fecha        
+        $lcTotal =c.total
+
+        lcId = customerpayment_rpt.id 
+
+        @customerdetails =  customerpayment_rpt.get_payment_dato(lcId)
+
+        if @customerdetails
+
+           for  f in  @customerdetails
+                              
+            newsubdia =Csubdiario.new(:csubdia=>$lcSubdiario,:ccompro=>$lastcompro1,:cfeccom=>$lcFecha,
+            :ccodmon=>"MN",:csitua=>"F",:ctipcam=>"0.00",:cglosa=>f.code,:total1=> $lcTotal,:csubtotal=>0,
+            :ctax=> 0 ,:factory=>f.factory,:ajuste=>f.ajuste,:compen => f.compen,  :ctotal=>f.total,
+            :ctipo=>"V",:cflag=>"N",:cdate=>f.fecha ,
+            :chora=>"",  :cfeccam=>"",:cuser=>"SIST",
+            :corig=>"",:cform=>"M",:cextor=>"",:ccodane=>f.customer.ruc ) 
+
+            newsubdia.save
+            lastcompro = lastcompro + 1
+            $lastcompro1 = lastcompro.to_s.rjust(4, '0')      
+            subdiario.compro = $lastcompro1
+            subdiario.save
+
+            end
+        end 
+
+       end  
+      
+      
+      end 
+
+      
+      @invoice = Csubdiario.all
+      send_data @invoice.to_csv  , :filename => 'CB0217.csv'
+
+    
+  end
+
  
   private
   def customerpayment_params

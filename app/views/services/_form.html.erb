@@ -36,9 +36,10 @@
     <%= f.text_field :tax1 %>
   </div>
   <div class="field">
-    <%= f.label :quantity %><br>
-    <%= f.number_field :quantity %>
+    <%= f.label :cuenta, "Cuenta Contable " %><br>
+    <%= f.text_field :cuenta  %>
   </div>
+  
   <div class="field">
     <%= f.label :description %><br>
     <%= f.text_area :description %>
@@ -50,14 +51,6 @@
   <div class="field">
     <%= f.label :company_id %><br>
     <%= f.number_field :company_id %>
-  </div>
-  <div class="field">
-    <%= f.label :discount %><br>
-    <%= f.text_field :discount %>
-  </div>
-  <div class="field">
-    <%= f.label :currtotal %><br>
-    <%= f.text_field :currtotal %>
   </div>
   <div class="actions">
     <%= f.submit %>

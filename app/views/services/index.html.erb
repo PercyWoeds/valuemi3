@@ -5,18 +5,12 @@
 <table>
   <thead>
     <tr>
-      <th>Code</th>
-      <th>Name</th>
-      <th>Cost</th>
-      <th>Price</th>
+      <th>Codigo</th>
+      <th>Nombre</th>
       <th>Tax1 name</th>
       <th>Tax1</th>
-      <th>Quantity</th>
-      <th>Description</th>
-      <th>Comments</th>
-      <th>Company</th>
-      <th>Discount</th>
-      <th>Currtotal</th>
+      <th>Cuenta</th>
+      <th>Company</th>      
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -26,19 +20,13 @@
       <tr>
         <td><%= service.code %></td>
         <td><%= service.name %></td>
-        <td><%= service.cost %></td>
-        <td><%= service.price %></td>
         <td><%= service.tax1_name %></td>
         <td><%= service.tax1 %></td>
-        <td><%= service.quantity %></td>
-        <td><%= service.description %></td>
-        <td><%= service.comments %></td>
+        <td><%= service.cuenta %></td>
         <td><%= service.company_id %></td>
-        <td><%= service.discount %></td>
-        <td><%= service.currtotal %></td>
-        <td><%= link_to 'Show', service %></td>
-        <td><%= link_to 'Edit', edit_service_path(service) %></td>
-        <td><%= link_to 'Destroy', service, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Ver', service %></td>
+        <td><%= link_to 'Editar', edit_service_path(service) %></td>
+        <td><%= link_to 'Eliminar', service, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -46,4 +34,4 @@
 
 <br>
 
-<%= link_to 'New Service', new_service_path %>
+<%= link_to 'Nuevo Servicio', new_service_path %>
