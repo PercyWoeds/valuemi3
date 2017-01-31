@@ -1882,6 +1882,15 @@ class CustomerPaymentsController < ApplicationController
 
         lcId = c.id 
 
+      newsubdia =Csubdiario.new(:csubdia=>$lcSubdiario,:ccompro=>$lastcompro1,:cfeccom=>$lcFecha,
+      :ccodmon=>"MN",:csitua=>"F",:ctipcam=>"0.00",:cglosa=>"COBRANZA ",:total1=> $lcTotal,:csubtotal=>0,
+      :ctax=> 0 ,:factory=> 0,:ajuste=>0,:compen => 0,  :ctotal=>0,
+      :ctipo=>"V",:cflag=>"N",:cdate=>"",
+      :chora=>"",  :cfeccam=>"",:cuser=>"SIST",
+      :corig=>"",:cform=>"M",:cextor=>"",:ccodane=>"" ) 
+
+      newsubdia.save
+
         @customerdetails =  c.get_payment_dato(lcId)
 
         if @customerdetails
@@ -1889,7 +1898,7 @@ class CustomerPaymentsController < ApplicationController
            for  f in  @customerdetails
                               
             newsubdia =Csubdiario.new(:csubdia=>$lcSubdiario,:ccompro=>$lastcompro1,:cfeccom=>$lcFecha,
-            :ccodmon=>"MN",:csitua=>"F",:ctipcam=>"0.00",:cglosa=>f.code,:total1=> $lcTotal,:csubtotal=>0,
+            :ccodmon=>"MN",:csitua=>"F",:ctipcam=>"0.00",:cglosa=>f.code,:total1=> 0,:csubtotal=>0,
             :ctax=> 0 ,:factory=>f.factory,:ajuste=>f.ajuste,:compen => f.compen,  :ctotal=>f.total,
             :ctipo=>"V",:cflag=>"N",:cdate=>f.fecha.strftime("%Y-%m-%d") ,
             :chora=>"",  :cfeccam=>"",:cuser=>"SIST",
