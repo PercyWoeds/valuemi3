@@ -1896,12 +1896,16 @@ class CustomerPaymentsController < ApplicationController
             :corig=>"",:cform=>"M",:cextor=>"",:ccodane=>f.customer.ruc ) 
 
             newsubdia.save
+
+            
+            end
+
             lastcompro = lastcompro + 1
+
             $lastcompro1 = lastcompro.to_s.rjust(4, '0')      
             subdiario.compro = $lastcompro1
             subdiario.save
 
-            end
         end 
 
        end  
