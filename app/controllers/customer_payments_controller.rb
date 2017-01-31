@@ -1877,7 +1877,7 @@ class CustomerPaymentsController < ApplicationController
 
      for c in @customerpayments 
         
-        $lcFecha =c.fecha1        
+        $lcFecha =c.fecha1.strftime("%Y-%m-%d")           
         $lcTotal =c.total
 
         lcId = c.id 
