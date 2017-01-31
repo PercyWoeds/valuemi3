@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170131143505) do
+ActiveRecord::Schema.define(version: 20170131150548) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -191,6 +191,10 @@ ActiveRecord::Schema.define(version: 20170131143505) do
     t.string   "ccodane"
     t.float    "csubtotal"
     t.float    "ctax"
+    t.float    "factory"
+    t.float    "ajuste"
+    t.float    "compen"
+    t.float    "total1"
   end
 
   create_table "customer_payment_details", force: :cascade do |t|

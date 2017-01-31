@@ -1849,14 +1849,17 @@ class CustomerPaymentsController < ApplicationController
       invoice_headers
   end
 
-  def export 
+
+
+  def export1 
+
+    fecha1 =params[:fecha1]
+    fecha2 =params[:fecha2]
     
     @company = Company.find(params[:company_id])
      Csubdiario.delete_all
     
-     fecha1 =params[:fecha1]
-     fecha2 =params[:fecha2]
-
+     
      @customerpayments = @company.get_customer_payments(fecha1,fecha2)
 
       $lcSubdiario='21'
@@ -1864,26 +1867,22 @@ class CustomerPaymentsController < ApplicationController
       subdiario = Numera.find_by(:subdiario=>'12')
 
       lastcompro = subdiario.compro.to_i + 1
-      $lastcompro1 = lastcompro.to_s.rjust(4, '0')
+      $lastcompro1 = lastcompro.to_s.rjust(6, '0')
 
-        item = fecha1.to_s 
-        parts = item.split("-")        
-        
-        mm    = parts[1]        
-
+      
       if subdiario
-          nrocompro = mm << $lastcompro1
+          nrocompro =  $lastcompro1
       end
 
-4551 7081 7913 4419        
+
      for c in @customerpayments 
         
-        $lcFecha =c.fecha        
+        $lcFecha =c.fecha1        
         $lcTotal =c.total
 
-        lcId = customerpayment_rpt.id 
+        lcId = c.id 
 
-        @customerdetails =  customerpayment_rpt.get_payment_dato(lcId)
+        @customerdetails =  c.get_payment_dato(lcId)
 
         if @customerdetails
 
@@ -1907,16 +1906,16 @@ class CustomerPaymentsController < ApplicationController
 
        end  
       
-      
-      end 
-
-      
       @invoice = Csubdiario.all
       send_data @invoice.to_csv  , :filename => 'CB0217.csv'
 
     
   end
-
+  def generar1
+    @company = Company.find(params[:company_id])
+    
+  end
+  
  
   private
   def customerpayment_params
