@@ -1885,7 +1885,7 @@ class CustomerPaymentsController < ApplicationController
       newsubdia =Csubdiario.new(:csubdia=>$lcSubdiario,:ccompro=>$lastcompro1,:cfeccom=>$lcFecha,
       :ccodmon=>"MN",:csitua=>"F",:ctipcam=>"0.00",:cglosa=>"COBRANZA ",:total1=> $lcTotal,:csubtotal=>0,
       :ctax=> 0 ,:factory=> 0,:ajuste=>0,:compen => 0,  :ctotal=>0,
-      :ctipo=>"V",:cflag=>"N",:cdate=>"",
+      :ctipo=>"V",:cflag=>"N",:cdate=>$lcFecha,
       :chora=>"",  :cfeccam=>"",:cuser=>"SIST",
       :corig=>"",:cform=>"M",:cextor=>"",:ccodane=>"" ) 
 
@@ -1896,16 +1896,26 @@ class CustomerPaymentsController < ApplicationController
         if @customerdetails
 
            for  f in  @customerdetails
+
+            if f.tipo == "1"
+
+                parts = f.code.split("-")        
+                serie = parts[0]
+                numero   = parts[1]        
+                serie='FF01-'
+
+                f.code = serie<<numero
+                
+            end 
                               
             newsubdia =Csubdiario.new(:csubdia=>$lcSubdiario,:ccompro=>$lastcompro1,:cfeccom=>$lcFecha,
-            :ccodmon=>"MN",:csitua=>"F",:ctipcam=>"0.00",:cglosa=>f.code,:total1=> 0,:csubtotal=>0,
+            :ccodmon=>"MN",:csitua=>"F",:ctipcam=>"0.00",:cglosa=>f.code ,:total1=> 0,:csubtotal=>0,
             :ctax=> 0 ,:factory=>f.factory,:ajuste=>f.ajuste,:compen => f.compen,  :ctotal=>f.total,
             :ctipo=>"V",:cflag=>"N",:cdate=>f.fecha.strftime("%Y-%m-%d") ,
             :chora=>"",  :cfeccam=>"",:cuser=>"SIST",
             :corig=>"",:cform=>"M",:cextor=>"",:ccodane=>f.customer.ruc ) 
 
             newsubdia.save
-
             
             end
 
