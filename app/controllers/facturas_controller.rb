@@ -226,46 +226,15 @@ class FacturasController < ApplicationController
     end
   
     if(@company.can_view(current_user))
-      if(params[:ac_customer] and params[:ac_customer] != "")
-        @customer = Customer.find(:first, :conditions => {:company_id => @company.id, :name => params[:ac_customer].strip})
-        
-        if @customer
-          @invoices = Factura.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :customer_id => @customer.id}, :order => "id DESC")
-        else
-          flash[:error] = "We couldn't find any invoices for that customer."
-          redirect_to "/companies/facturas/#{@company.id}"
-        end
-      elsif(params[:customer] and params[:customer] != "")
-        @customer = Customer.find(params[:customer])
-        
-        if @customer
-          @invoices = Factura.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :customer_id => @customer.id}, :order => "id DESC")
-        else
-          flash[:error] = "We couldn't find any invoices for that customer."
-          redirect_to "/companies/facturas/#{@company.id}"
-        end
-      elsif(params[:location] and params[:location] != "" and params[:division] and params[:division] != "")
-        @invoices = Factura.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :location_id => params[:location], :division_id => params[:division]}, :order => "id DESC")
-      elsif(params[:location] and params[:location] != "")
-        @invoices = Factura.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :location_id => params[:location]}, :order => "id DESC")
-      elsif(params[:division] and params[:division] != "")
-        @invoices = Factura.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :division_id => params[:division]}, :order => "id DESC")
-      else
-        if(params[:q] and params[:q] != "")
-          fields = ["description", "comments", "code"]
 
-          q = params[:q].strip
-          @q_org = q
-
-          query = str_sql_search(q, fields)
-
-          @invoices = Factura.paginate(:page => params[:page], :order => 'id DESC', :conditions => ["company_id = ? AND (#{query})", @company.id])
+         @invoices = Factura.all.order(:id).paginate(:page => params[:page])
+        if params[:search]
+          @invoices = Factura.search(params[:search]).order(:code).paginate(:page => params[:page])
         else
-          lctipo = 1
-          @invoices = Factura.where(company_id:  @company.id, tipo: lctipo ).order("id DESC").paginate(:page => params[:page])
-          @filters_display = "none"
+          @invoices = Factura.all.order(:id).paginate(:page => params[:page]) 
         end
-      end
+
+    
     else
       errPerms()
     end
@@ -281,16 +250,6 @@ class FacturasController < ApplicationController
     @invoicesunat = Invoicesunat.order(:numero)    
 
     @company= Company.find(1)
-
-    @fecha1 = params[:fecha1]
-    @fecha2 = params[:fecha2]
-
-    @facturas_rpt = @company.get_facturas_day(@fecha1,@fecha2)
-
-    respond_to do |format|
-      format.html    
-        format.xls # { send_data @products.to_csv(col_sep: "\t") }
-    end 
 
   end
 

@@ -447,7 +447,10 @@ class CustomerPaymentsController < ApplicationController
 
           @customerpayments = CustomerPayment.paginate(:page => params[:page], :order => 'id DESC', :conditions => ["company_id = ? AND (#{query})", @company.id])
         else
+
           @customerpayments = CustomerPayment.where(company_id:  @company.id).order("id DESC").paginate(:page => params[:page])
+         #@customerpayments = CustomerPayment.find_by_sql("Select * from Customer_Payments ")
+         
           @filters_display = "none"
         end
       end

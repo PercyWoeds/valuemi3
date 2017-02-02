@@ -84,12 +84,29 @@ self.per_page = 20
                     "Dic-2017",
                     "TOTAL   "]
 
+ def get_cliente_customer_payment(id)
 
+    @itemproducts = CustomerPaymentDetail.find_by_sql(['Select customer_payment_details.total,
+      facturas.code,facturas.customer_id,facturas.fecha,customer_payment_details.factory,customer_payment_details.ajuste,
+      customer_payment_details.compen,facturas.tipo  from customer_payment_details   
+      INNER JOIN facturas ON   customer_payment_details.factura_id = facturas.id
+      WHERE  customer_payment_details.customer_payment_id = ?', id ])
+
+      uno =@itemproducts.first 
+
+      puts uno.customer_id
+
+     cliente = Customer.find(uno.customer_id)
+      puts cliente.name 
+     return cliente.name 
+ end 
+ 
  def get_document_short(id)
 
      documento = Document.find(id)
      return documento.descripshort 
- end                      
+ end 
+
  def get_customer_payment_value(value)
     invoices = CustomerPaymentDetail.where(["customer_payment_id = ?", self.id])
     ret = 0

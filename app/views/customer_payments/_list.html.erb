@@ -6,11 +6,15 @@
          Orden
         </th>
         <th class="bordered_right bordered_bottom">
-          Total
+          Cliente 
         </th>
         <th class="bordered_right bordered_bottom">
-          Fecha
+          Total 
         </th>
+        <th class="bordered_right bordered_bottom">
+          Fecha 
+        </th>
+        
         <th class="bordered_right bordered_bottom">
           Aprobado 
         </th>
@@ -26,14 +30,15 @@
           <td class="bordered_right bordered_bottom">
             <%= link_to customerpayment.code, customerpayment, :title => "Ir a factura" %>
           </td>
-
-        
+          <td class="bordered_right bordered_bottom ">
+            <%=  customerpayment.get_cliente_customer_payment(customerpayment.id) %>            
+          </td>
 
           <td class="bordered_right bordered_bottom right">
             <%= money(customerpayment.total) %>
           </td>
           <td class="bordered_right bordered_bottom">
-            <%= doDate(customerpayment.created_at) %>
+            <%= customerpayment.fecha1.strftime("%d/%m/%Y")  %>
           </td>
           <td class="bordered_right bordered_bottom <%= customerpayment.processed_color %>">
             <%= customerpayment.get_processed_short %>

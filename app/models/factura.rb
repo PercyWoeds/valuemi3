@@ -47,6 +47,14 @@ class Factura < ActiveRecord::Base
                      "DOLARES ",
                      "OBSERV"]
   
+
+  def self.search(search)
+      where("code LIKE ?", "%#{search}%") 
+        
+  end
+
+
+
   def self.to_csv(result)
     unless result.nil?
       CSV.generate do |csv|
