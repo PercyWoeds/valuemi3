@@ -227,11 +227,11 @@ class FacturasController < ApplicationController
   
     if(@company.can_view(current_user))
 
-         @invoices = Factura.all.order(:id).paginate(:page => params[:page])
+         @invoices = Factura.all.order('id DESC').paginate(:page => params[:page])
         if params[:search]
-          @invoices = Factura.search(params[:search]).order(:code).paginate(:page => params[:page])
+          @invoices = Factura.search(params[:search]).order('id DESC').paginate(:page => params[:page])
         else
-          @invoices = Factura.all.order(:id).paginate(:page => params[:page]) 
+          @invoices = Factura.all.order('id DESC').paginate(:page => params[:page]) 
         end
 
     

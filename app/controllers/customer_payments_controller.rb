@@ -950,6 +950,8 @@ class CustomerPaymentsController < ApplicationController
 
          #table_content << row
          lcId = customerpayment_rpt.id 
+         $lcCode   = customerpayment_rpt.code
+         $lcFecha1 = customerpayment_rpt.fecha1.strftime("%d/%m/%Y")         
          puts 'codigo=>>>'
          puts lcId
 
@@ -961,14 +963,14 @@ class CustomerPaymentsController < ApplicationController
                 
                 row = []
                 row << nroitem.to_s
-                row << ""
+                row << $lcCode
+                row << $lcFecha1 
                 row << "FT"
                 row << productItem.code
                 row << productItem.fecha.strftime("%d/%m/%Y")         
                 row << productItem.customer.ruc       
                 row << productItem.customer.name                 
-                row << " "
-
+                
                 row << productItem.factory.to_s
                 row << productItem.total.to_s      
                 
@@ -1018,10 +1020,6 @@ class CustomerPaymentsController < ApplicationController
                                           columns([10]).align=:right
                                         end                                          
       pdf.move_down 10      
-
-
-
-
       pdf
 
     end
