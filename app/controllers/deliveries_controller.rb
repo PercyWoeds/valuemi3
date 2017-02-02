@@ -610,7 +610,7 @@ end
                                           columns([3]).align=:left
                                           columns([4]).align=:left  
                                           columns([5]).align=:right
-                                          columns([6]).align=:right
+                                          columns([6]).align=:left 
                                           columns([7]).align=:right
                                         end                                          
       pdf.move_down 10      

@@ -259,10 +259,10 @@ class FacturasController < ApplicationController
 
           query = str_sql_search(q, fields)
 
-          @invoices = Factura.paginate(:page => params[:page], :order => 'code DESC', :conditions => ["company_id = ? AND (#{query})", @company.id])
+          @invoices = Factura.paginate(:page => params[:page], :order => 'id DESC', :conditions => ["company_id = ? AND (#{query})", @company.id])
         else
           lctipo = 1
-          @invoices = Factura.where(company_id:  @company.id, tipo: lctipo ).order("code DESC").paginate(:page => params[:page])
+          @invoices = Factura.where(company_id:  @company.id, tipo: lctipo ).order("id DESC").paginate(:page => params[:page])
           @filters_display = "none"
         end
       end
