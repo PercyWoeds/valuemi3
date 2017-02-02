@@ -38,11 +38,23 @@
 
   <h3>
     <%= image_tag("supplier_32.png", :class => "vmiddle") %>
-    <%= link_to "Cuentas bancarias ", "/companies/bank_acounts/#{@company.id}" %>
+    <%= link_to "Bancos  ", banks_path %>
   </h3>
   <p>
      Agregar, editar or eliminar cuentas por pagar 
   </p>
+  
+  
+  <%= hr() %>  
+
+  <h3>
+    <%= image_tag("supplier_32.png", :class => "vmiddle") %>
+    <%= link_to "Cuentas bancarias ", bank_acounts_path %>
+  </h3>
+  <p>
+     Agregar, editar or eliminar cuentas por pagar 
+  </p>
+
   <%= hr() %>
   <h3>
     <%= image_tag("reports_32.png", :class => "vmiddle") %>

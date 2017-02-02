@@ -586,6 +586,8 @@ end
             row << product.code
             row << lcOrigen
             row << product.customer.name      
+            row << product.description
+            
             if    product.tranportorder_id != nil 
             #  row << product.tranportorder.code  
             else

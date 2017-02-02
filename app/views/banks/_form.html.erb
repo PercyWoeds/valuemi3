@@ -1,0 +1,33 @@
+<%= simple_form_for(@bank) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+
+	<div class="field">
+	    <%= f.label :name,"Banco " %><br>
+	    <%= f.text_field :name %>
+	</div>
+
+	<div class="field">
+    <%= f.label :address1,"Direccion" %><br>  
+    <%= f.text_field :address1 %>
+ 	</div>
+ 	<div class="field">
+    <%= f.label :address2,"Direccion2 " %><br>
+	<%= f.text_field :address2 %>
+ 	</div>
+ 	<div class="field">
+    <%= f.label :phone1,"Telefono" %><br>
+	<%= f.text_field :phone1 %>
+ 	</div>
+
+ 	<div class="field">
+    <%= f.label :email,"e-mail " %><br>
+	<%= f.text_field :email %>    
+ 	</div>
+
+ 	<div class="form-actions">
+    	<%= f.button :submit %>
+	 </div>
+
+<% end %>

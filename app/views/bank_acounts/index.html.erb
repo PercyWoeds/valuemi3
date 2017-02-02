@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listar Cuentas Bancarias</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Banco </th>    
+      <th>Numero </th>    
+      <th>Moneda </th>    
+      <th>Opciones </th>    
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @bank_acounts.each do |bank_acount| %>
+      <tr>
+
+        <td><%= bank_acount.bank.name  %></td>
+        <td><%= bank_acount.number     %></td>
+        <td><%= bank_acount.moneda.description  %></td>
+
+        <td><%= link_to 'Ver', bank_acount %></td>
+        <td><%= link_to 'Editar', edit_bank_acount_path(bank_acount) %></td>
+        <td><%= link_to 'Eliminar', bank_acount, method: :delete, data: { confirm: 'Esta seguro ?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'Nueva Cuenta Bancaria', new_bank_acount_path %>

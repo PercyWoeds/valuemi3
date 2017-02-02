@@ -1,9 +1,11 @@
 class BankAcount < ActiveRecord::Base
 
 	belongs_to :bank
+	belongs_to :moneda 
 
 	has_many :supplier_payments
 	has_many :customer_payments
+	
 
 	def get_banco(id)
 
@@ -11,4 +13,13 @@ class BankAcount < ActiveRecord::Base
 		return @a.name 
 	end
 
+	def get_monedas
+		monedas = Moneda.all 
+    	return monedas		
+	end
+
+	def get_bancos
+		bancos = Bank.all 
+    	return  bancos		
+	end
 end

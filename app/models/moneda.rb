@@ -9,5 +9,7 @@ validates_presence_of :company_id, :description
   has_many :facturas 
   has_many :purchaseorders
   has_many :serviceorders
+  has_many :bank_acounts
+  
 
 end

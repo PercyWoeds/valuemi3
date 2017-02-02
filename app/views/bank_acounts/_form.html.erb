@@ -1,0 +1,39 @@
+<%= simple_form_for(@bank_acount) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+
+
+    <div class="field">
+	    <%= f.label :number,"Banco " %><br>
+	    <%= f.text_field :number %>
+	</div>
+
+	<div class="field">
+    <%= f.label :moneda_id %><br />
+    <%= f.select :moneda_id,options_from_collection_for_select(@monedas,'id','description')%>
+    <div class="small">
+     Moneda
+    </div>
+  </div>
+  
+	<div class="field">
+    <%= f.label :bank_id %><br />
+    <%= f.select :bank_id,options_from_collection_for_select(@bancos,'id','name')  %>
+    <div class="small">
+      bancos
+    </div>
+  </div>
+  
+
+  <div class="field">
+      <%= f.label :cuenta,"Cuenta Contable  " %><br>
+      <%= f.text_field :cuenta %>
+  </div>
+	
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

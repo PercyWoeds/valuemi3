@@ -1,6 +1,9 @@
   Mnygo::Application.routes.draw do
 
 
+  resources :bank_acounts
+  resources :banks
+  resources :bank_acounts
   resources :numeras
   resources :concepts
   resources :quotations
@@ -24,6 +27,7 @@
   resources :pumps
 
   resources :supplier_payments
+
   resources :inventory_details
   resources :inventories
   resources :payment_methods
@@ -288,6 +292,7 @@ end
   match 'facturas/rpt_ccobrar3_pdf/:company_id' => 'facturas#rpt_ccobrar3_pdf', via: [:get, :post]
 
   match 'companies/facturas/generar/:company_id' => 'facturas#generar', via: [:get, :post]
+
   match 'companies/facturas/generar3/:company_id' => 'facturas#generar3', via: [:get, :post]
   match 'facturas/generar4/:company_id' => 'facturas#generar4', via: [:get, :post]
   match 'facturas/generar5/:company_id' => 'facturas#generar5', via: [:get, :post]
@@ -300,6 +305,8 @@ end
   match 'facturas/pdf/:id' => 'facturas#pdf', via: [:get, :post]
   match 'companies/facturas/:company_id' => 'facturas#list_invoices', via: [:get, :post]
   resources :facturas
+
+
 
 # Guias
   
