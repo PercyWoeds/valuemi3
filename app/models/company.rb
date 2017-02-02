@@ -547,7 +547,9 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? and factur
  def get_customer_payments_cliente(fecha1,fecha2,cliente)
 
 @facturas =CustomerPayment.find_by_sql(['Select customer_payments.id,customer_payment_details.total,
-facturas.code,facturas.customer_id,facturas.fecha,customer_payment_details.factory from customer_payment_details   
+facturas.code,facturas.customer_id,facturas.fecha,customer_payment_details.factory,
+customer_payments.fecha1 
+from customer_payment_details   
 INNER JOIN facturas ON   customer_payment_details.factura_id = facturas.id
 INNER JOIN customer_payments ON customer_payments.id = customer_payment_details.customer_payment_id    
 WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? and facturas.customer_id = ?', "#{fecha1} 00:00:00",
