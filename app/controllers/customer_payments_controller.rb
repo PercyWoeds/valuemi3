@@ -952,6 +952,7 @@ class CustomerPaymentsController < ApplicationController
          lcId = customerpayment_rpt.id 
          $lcCode   = customerpayment_rpt.code
          $lcFecha1 = customerpayment_rpt.fecha1.strftime("%d/%m/%Y")         
+         
          puts 'codigo=>>>'
          puts lcId
 

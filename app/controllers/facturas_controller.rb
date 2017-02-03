@@ -362,6 +362,7 @@ class FacturasController < ApplicationController
         lcFormapago = f.payment.descrip
         lcRuc = f.customer.ruc         
         lcDes = f.description
+        lcMoneda = f.moneda_id 
               
         for productItem in f.get_products2(f.id)
 
@@ -419,8 +420,8 @@ class FacturasController < ApplicationController
 new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcTD,
 :serie=>lcSerie,:numero=>lcNumero,:preciocigv => lcPcigv ,:preciosigv=>lcPsigv,:cantidad=>lcCantidad,
 :vventa=>lcVventa,:igv=>lcIGV,:importe => lcImporte,:ruc=>lcRuc,:guia=> lcGuia,:formapago=>lcFormapago,
-:description=>lcDescrip,:comments=> lcComments,:descrip=>lcDes1 )
-          new_invoice_item.save
+:description=>lcDescrip,:comments=> lcComments,:descrip=>lcDes1,:moneda=>lcMoneda )
+new_invoice_item.save
 
        end  
     end 
@@ -546,6 +547,7 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
     @services = @company.get_services()
     @deliveryships = @invoice.my_deliverys 
     @tipofacturas = @company.get_tipofacturas() 
+    @monedas = @company.get_monedas()
 
     @ac_user = getUsername()
     @invoice[:user_id] = getUserId()
@@ -601,7 +603,7 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
     @invoice[:balance] = @invoice[:total]
     @invoice[:pago] = 0
     @invoice[:charge] = 0
-    @invoice[:moneda_id] = 2
+    
 
     
     if(params[:factura][:user_id] and params[:factura][:user_id] != "")
@@ -1231,7 +1233,7 @@ new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcT
 
   private
   def factura_params
-    params.require(:factura).permit(:company_id,:location_id,:division_id,:customer_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:payment_id,:fecha,:preciocigv,:tipo,:observ)
+    params.require(:factura).permit(:company_id,:location_id,:division_id,:customer_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:payment_id,:fecha,:preciocigv,:tipo,:observ,:moneda_id)
   end
 
 end

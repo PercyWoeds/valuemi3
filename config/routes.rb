@@ -88,6 +88,8 @@ end
   end 
 
   resources :facturas do
+    collection { get :search  }
+    
     collection { get :generar  }
     collection { post :import }
     collection { get :excel }

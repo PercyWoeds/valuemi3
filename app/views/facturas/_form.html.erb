@@ -73,6 +73,12 @@
       <%= f.label :code, "Code*", :class => "bold" %><br />
       <%= f.text_field :code, :onclick => "$(this).select();" %>
     </div>
+
+      <div class="field">
+      <%= f.label :moneda_id ,"  "%><br />
+      <%= f.select :moneda_id, options_from_collection_for_select(@monedas,'id','description') %>
+    </div>
+
      
     <div class="field" id="list_items">
       <p class="bold big">Products:</p>
