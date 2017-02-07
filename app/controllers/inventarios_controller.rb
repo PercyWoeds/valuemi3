@@ -1,5 +1,14 @@
 class InventariosController < ApplicationController
 
+
+  def import
+
+    @user_id= @current_user.id
+     Inventario.import(params[:file])
+       redirect_to root_url, notice: "Inventario importadas."
+  end 
+
+
   
   def index
     #page = params[:page] || 1

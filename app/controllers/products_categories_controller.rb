@@ -100,7 +100,7 @@ class ProductsCategoriesController < ApplicationController
     end
   end
   def products_category_params
-    params.require(:products_category).permit(:company_id,:category)
+    params.require(:products_category).permit(:company_id,:category,:code)
   
   end
   

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170203153817) do
+ActiveRecord::Schema.define(version: 20170206230708) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -503,12 +503,13 @@ ActiveRecord::Schema.define(version: 20170203153817) do
   create_table "inventario_detalles", force: :cascade do |t|
     t.integer  "inventario_id"
     t.integer  "item_id"
-    t.decimal  "cantidad",          precision: 10, scale: 2
-    t.decimal  "precio_unitario",   precision: 10, scale: 2
     t.boolean  "activo"
     t.date     "fecha_vencimiento"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "product_id"
+    t.float    "cantidad"
+    t.float    "precio_unitario"
   end
 
   create_table "inventarios", force: :cascade do |t|
@@ -860,6 +861,16 @@ ActiveRecord::Schema.define(version: 20170203153817) do
     t.string   "ruc"
   end
 
+  create_table "output_details", force: :cascade do |t|
+    t.integer  "output_id"
+    t.integer  "product_id"
+    t.float    "price"
+    t.integer  "quantity"
+    t.float    "total"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "outputs", force: :cascade do |t|
     t.integer  "company_id"
     t.integer  "location_id"
@@ -954,6 +965,8 @@ ActiveRecord::Schema.define(version: 20170203153817) do
     t.integer  "modelo_id"
     t.integer  "products_category_id"
     t.integer  "category_id"
+    t.integer  "ubica_id"
+    t.string   "unidad"
   end
 
   create_table "products_categories", force: :cascade do |t|
@@ -961,6 +974,7 @@ ActiveRecord::Schema.define(version: 20170203153817) do
     t.string   "category"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "code"
   end
 
   create_table "products_kits", force: :cascade do |t|
@@ -1250,6 +1264,8 @@ ActiveRecord::Schema.define(version: 20170203153817) do
     t.float    "unitary_cost"
     t.float    "quantity"
     t.float    "minimum"
+    t.integer  "document_id"
+    t.string   "documento"
   end
 
   add_index "stocks", ["item_id"], name: "index_stocks_on_item_id", using: :btree
@@ -1399,6 +1415,13 @@ ActiveRecord::Schema.define(version: 20170203153817) do
     t.string   "propio"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+  end
+
+  create_table "ubicas", force: :cascade do |t|
+    t.string   "descrip"
+    t.text     "comments"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "ubications", force: :cascade do |t|

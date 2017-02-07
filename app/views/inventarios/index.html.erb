@@ -24,3 +24,12 @@ Inventarios
 
 <%= link_to "Nuevo Inventario", new_inventario_path %>
 <%= will_paginate @inventarios %>
+
+
+<% if current_user.level  == "admin" %> 
+<h2>Importar Archivo Facturas "*.csv"</h2>
+<%= form_tag import_inventarios_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Importar " %>
+<% end %>
+<% end %>

@@ -1,0 +1,2 @@
+module UbicasHelper
+end

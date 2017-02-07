@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Descrip:</strong>
+  <%= @ubica.descrip %>
+</p>
+
+<p>
+  <strong>Comments:</strong>
+  <%= @ubica.comments %>
+</p>
+
+<%= link_to 'Edit', edit_ubica_path(@ubica) %> |
+<%= link_to 'Back', ubicas_path %>

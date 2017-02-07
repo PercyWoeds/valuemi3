@@ -1,0 +1,1 @@
+json.array! @ubicas, partial: 'ubicas/ubica', as: :ubica

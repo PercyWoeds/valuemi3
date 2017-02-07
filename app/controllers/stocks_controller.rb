@@ -21,7 +21,9 @@ def client_data_headers
 
 
   def build_pdf_header(pdf)
-      pdf.font "Helvetica" , :size => 8
+
+    pdf.font "Helvetica"
+
      $lcCli  =  @company.name 
      $lcdir1 = @company.address1+@company.address2+@company.city+@company.state
 
@@ -61,7 +63,7 @@ def client_data_headers
     
     pdf.text "Almacen : Central  Stocks  al : "+Date.today.strftime("%d/%m/%Y").to_s , :size => 11 
     pdf.text ""
-    pdf.font "Helvetica" , :size => 6
+    pdf.font "Open Sans",:size =>6
 
       headers = []
       table_content = []
@@ -76,20 +78,37 @@ def client_data_headers
       table_content << headers
 
       nroitem=1
+      @totales = 0
+      importe = 0
 
        for  stock in @stocks           
             row = []
             row << nroitem.to_s
+            row << stock.product.code             
             row << stock.product.name             
             row << stock.quantity
-            row << stock.unitary_cost
-
+            row << sprintf("%.2f",stock.unitary_cost.to_s)
+            importe = stock.unitary_cost.round(2)*stock.quantity.round(2)
+            row << sprintf("%.2f",importe.to_s)
             row << stock.get_estado 
 
+            @totales = @totales +  stock.unitary_cost * stock.quantity
+
             table_content << row
+
             nroitem=nroitem + 1
+
+
            
         end
+            row = []
+            row << ""
+            row <<""
+            row << ""
+            row << "TOTALES GENERAL"
+            row << sprintf("%.2f",@totales.round(2).to_s)
+
+            table_content << row
 
       result = pdf.table table_content, {:position => :center,
                                         :header => true,
@@ -99,7 +118,10 @@ def client_data_headers
                                           columns([1]).align=:left
                                           columns([2]).align=:right
       	                                  columns([3]).align=:left
-                                          columns([4]).align=:left
+                                          columns([4]).align=:right
+                                          columns([4]).align=:right
+                                          columns([5]).align=:right
+                                          columns([6]).align=:left
                                         end                                          
       pdf.move_down 10      
       pdf
@@ -128,7 +150,14 @@ def client_data_headers
     @stocks = @company.get_stocks
       
     Prawn::Document.generate("app/pdf_output/stocks1.pdf") do |pdf|      
-        pdf.font "Helvetica"
+
+        pdf.font_families.update("Open Sans" => {
+          :normal => "app/assets/fonts/OpenSans-Regular.ttf",
+          :italic => "app/assets/fonts/OpenSans-Italic.ttf",
+        })
+
+        pdf.font "Open Sans",:size =>6
+  
         pdf = build_pdf_header(pdf)
         pdf = build_pdf_body(pdf)
         build_pdf_footer(pdf)

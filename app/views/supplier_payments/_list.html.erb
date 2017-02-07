@@ -30,7 +30,7 @@
             <%= link_to supplierpayment.code, supplierpayment, :title => "Ir a factura" %>
           </td>
           <td class="bordered_right bordered_bottom">
-            <%= link_to supplierpayment.bank_acount.number %>
+            <%=  supplierpayment.supplier.name %>
           </td>
           <td class="bordered_right bordered_bottom right">
             <%= money(supplierpayment.total) %>

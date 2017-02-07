@@ -6,9 +6,11 @@ belongs_to :document
 
 
   TABLE_HEADERS = ["ITEM",
+                     "CODIGO",
                      "NOMBRE",
                      "CANTIDAD",                     
                      "COSTO",
+                     "TOTAL",
                      "ESTADO"]
 
 

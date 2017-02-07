@@ -198,6 +198,13 @@ module ApplicationHelper
     return correlative_number
   end
 
+# Supplier payments
+  def generate_guid9
+    @voidedlast = Voided.find(11)
+    correlative_number =@voidedlast.serie + "-"+@voidedlast.numero.to_s
+    return correlative_number
+  end
+
   
   # Regresa extensiones para imagenes
   def imgTypes()

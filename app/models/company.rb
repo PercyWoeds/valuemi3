@@ -14,6 +14,7 @@ class Company < ActiveRecord::Base
   has_many :inventories
   has_many :company_users
 
+
   def to_hash
     hash=[]
 
@@ -652,7 +653,78 @@ def actualizar_fecha2
     end 
 
   end
+#reporte de cancelaciones detallado x proveedor
+
+def get_supplier_payments0(fecha1,fecha2)
+    @vouchers = SupplierPayment.where([" company_id = ? AND fecha1 >= ? and fecha1<= ?  ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ]).order(:id)
+    return @vouchers    
+end 
   
+def get_paymentsD_day_value(fecha1,fecha2,value = "total")
+
+    facturas = SupplierPayment.where(["company_id = ? AND fecha1 >= ? and fecha1<= ?  ", 
+      self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
+    ret = 0
+      for factura in facturas      
+                
+          @detail = SupplierPaymentDetail.where(:supplier_payment_id => factura.id)
+
+          for d in @detail 
+            if(value == "ajuste")
+              ret += d.ajuste
+            elsif (value == "compen")
+              ret += d.compen 
+            else
+              ret += d.total            
+            end
+          end 
+
+      end
+
+      return ret
+ end 
+
+ def get_paymentsC_day_value(fecha1,fecha2,value = "total")
+    ret = 0
+    facturas = SupplierPayment.where(["company_id = ? AND fecha1 >= ? and fecha1<= ? ",
+     self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
+
+      for d in facturas                
+            if(value == "ajuste")
+              ret += d.ajuste
+            elsif (value == "compen")
+              ret += d.compen 
+            else
+              ret += d.total            
+            end          
+      end
+
+      return ret
+ end 
+
+
+def get_payments_detail_value(fecha1,fecha2,value = "total",moneda)
+
+    facturas = SupplierPayment.where(["company_id = ? AND fecha >= ? and fecha<= ? and moneda_id = ? ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda ]).order(:customer_id,:moneda_id)
+
+    if facturas
+    ret=0  
+    
+    for factura in facturas      
+      if(value == "subtotal")
+        ret += factura.subtotal
+      elsif(value == "tax")
+        ret += factura.tax
+      else         
+        ret += factura.total.round(2)
+      end
+    end
+    end 
+
+    return ret    
+ end 
+
+
 
  ## Pendientes 
 
@@ -680,8 +752,7 @@ def actualizar_fecha2
     end
     end 
 
-    return ret
-    
+    return ret    
  end 
 
  def get_facturas_day_cliente(fecha1,fecha2,cliente)

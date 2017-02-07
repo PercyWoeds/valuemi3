@@ -29,7 +29,28 @@ self.per_page = 20
                      "DOCUMENTO",
                      "PROVEEDOR",
                      "IMPORTE  " ]
-            
+
+
+
+  TABLE_HEADERS2 = ["ITEM",
+                     "NRO.",
+                     "FECHA",
+                     "TD",
+                     "DOC.",
+                     "FEC.DOC.",
+                     "RUC",
+                     "CLIENTE",                    
+                     "DEBE  ",
+                     "HABER  "]                      
+
+
+  def correlativo
+        
+        numero = Voided.find(11).numero.to_i + 1
+        lcnumero = numero.to_s
+        Voided.where(:id=>'11').update_all(:numero =>lcnumero)        
+  end
+              
   def get_subtotal(items)
     subtotal = 0
     
@@ -140,8 +161,14 @@ new_purchase = SupplierPaymentDetail.new(:supplier_payment_id => self.id,
 
     a =Supplier.find(id)
     return a.name 
+  end 
+  def get_supplier_ruc(id)
+
+    a =Supplier.find(id)
+    return a.ruc 
 
   end 
+
   def get_document(id)
 
     a = Document.find(id)

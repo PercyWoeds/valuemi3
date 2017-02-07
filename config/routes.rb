@@ -1,6 +1,7 @@
   Mnygo::Application.routes.draw do
 
 
+  resources :ubicas
   resources :bank_acounts
   resources :banks
   resources :bank_acounts
@@ -35,6 +36,10 @@
   resources :declarations 
   resources :inventarios  
 
+
+  resources :inventarios  do
+    collection { post :import }
+  end 
   resources :deliverymines   
 
     namespace :inventory do
@@ -203,6 +208,7 @@ end
   match 'companies/reports/reports_cventas/:company_id' => 'reports#reports_cventas', via: [:get, :post]
   match 'companies/reports/reports_calmacen/:company_id' => 'reports#reports_calmacen', via: [:get, :post]
 
+  match 'companies/reports/product_all/:company_id' => 'reports#product_all', via: [:get, :post]
   match 'companies/reports/rpt_serviceorder_all/:company_id' => 'reports#rpt_serviceorder_all', via: [:get, :post]
   match 'companies/reports/rpt_purchases_all/:company_id' => 'reports#rpt_purchases_all', via: [:get, :post]
   match 'companies/reports/rpt_purchaseorder_all/:company_id' => 'reports#rpt_purchaseorder_all', via: [:get, :post]
@@ -458,6 +464,8 @@ end
   match 'supplier_payments/pdf/:id' => 'supplier_payments#pdf', via: [:get, :post]
   match 'supplier_payments/search/:id' => 'supplier_payments#search', via: [:get, :post]
   match 'supplier_payments/rpt_purchases_all/:id' => 'supplier_payments#rpt_purchases_all', via: [:get, :post]
+  match 'supplier_payments/rpt_cpagar4_pdf/:id' => 'supplier_payments#rpt_cpagar4_pdf', via: [:get, :post]
+
   match 'companies/supplier_payments/:company_id' => 'supplier_payments#list_supplierpayments', via: [:get, :post]  
   resources :supplier_payments
 

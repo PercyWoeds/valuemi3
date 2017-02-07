@@ -57,9 +57,22 @@
 
   <%= hr() %>
 
+  <h3>
+    <%= image_tag("divisions_32.png", :class => "vmiddle") %>
+    <%= link_to "Ubicacion Almacen", ubica_path %>
+  </h3>
+
+  <p>
+     Agregar, editar or eliminar divisiones de tu negocio(tablas, secciones, etc).
+  </p>
+  
+  <%= hr() %>
   
   <h3>
-    <%= image_tag("reports_32.png", :class => "vmiddle") %>
+
+  
+  <h3>
+    <%= image_tag("divisions_32.png", :class => "vmiddle") %>
     <%= link_to "Reportes", "/companies/reports/reports_calmacen/#{@company.id}" %>
   </h3>
 
