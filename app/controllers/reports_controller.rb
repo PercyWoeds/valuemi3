@@ -1039,6 +1039,7 @@ class ReportsController < ApplicationController
 
   def rpt_facturas_all
     @company = Company.find(params[:company_id])
+    @monedas = Moneda.all 
     
     if(params[:year] and params[:year].numeric?)
       @year = params[:year].to_i

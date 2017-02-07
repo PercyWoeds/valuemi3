@@ -77,12 +77,9 @@ class CustomerPaymentsController < ApplicationController
 
  
   def build_pdf_header(pdf)
-
     
-      pdf.image "#{Dir.pwd}/public/images/logo2.png", :width => 270
-        
-      pdf.move_down 6
-        
+      pdf.image "#{Dir.pwd}/public/images/logo2.png", :width => 270        
+      pdf.move_down 6        
       pdf.move_down 4
       #pdf.text customer.street, :size => 10
       #pdf.text customer.district, :size => 10
@@ -631,7 +628,7 @@ class CustomerPaymentsController < ApplicationController
           ajuste = f.ajuste        
           compen =  f.compen
           factura = Factura.find(f.factura_id)            
-          @newbalance= factura.balance + importe +ajuste +compen 
+          @newbalance= factura.balance + importe -ajuste +compen 
           
           factura.balance = @newbalance
           factura.save
@@ -906,6 +903,7 @@ class CustomerPaymentsController < ApplicationController
 
       end
 
+
         pdf.move_down 10
 
       end
@@ -950,7 +948,13 @@ class CustomerPaymentsController < ApplicationController
 
          #table_content << row
          lcId      = customerpayment_rpt.id 
-         $lcCode   = customerpayment_rpt.code
+
+          if $lcxCliente == "0" 
+            $lcCode   = customerpayment_rpt.code
+          else
+            $lcCode   = customerpayment_rpt.code_liq
+          end 
+
          $lcFecha1 = customerpayment_rpt.fecha1.strftime("%d/%m/%Y")                  
          
         @customerdetails =  customerpayment_rpt.get_payment_dato(lcId)

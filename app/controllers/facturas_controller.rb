@@ -1097,7 +1097,8 @@ new_invoice_item.save
     @company=Company.find(params[:company_id])          
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]    
-    @facturas_rpt = @company.get_facturas_day(@fecha1,@fecha2)      
+    @moneda = params[:moneda_id]    
+    @facturas_rpt = @company.get_facturas_day(@fecha1,@fecha2,@moneda)      
 
 #    respond_to do |format|
 #      format.html    

@@ -415,9 +415,9 @@ def get_guias_2(fecha1,fecha2)
 
 
 ## ESTADO DE CUENTA 
- def get_facturas_day(fecha1,fecha2)
+ def get_facturas_day(fecha1,fecha2,moneda)
 
-    @facturas = Factura.where([" company_id = ? AND fecha >= ? and fecha<= ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59"]).order(:id )
+    @facturas = Factura.where([" company_id = ? AND fecha >= ? and fecha<= ? and moneda_id = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59",moneda ]).order(:id )
     return @facturas
     
  end 
@@ -548,7 +548,7 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? and factur
  def get_customer_payments_cliente(fecha1,fecha2,cliente)
 
 @facturas =CustomerPayment.find_by_sql(['Select customer_payments.id,customer_payment_details.total,
-facturas.code,facturas.customer_id,facturas.fecha,customer_payment_details.factory,
+customer_payments as code_liq,facturas.code,facturas.customer_id,facturas.fecha,customer_payment_details.factory,
 customer_payments.fecha1 
 from customer_payment_details   
 INNER JOIN facturas ON   customer_payment_details.factura_id = facturas.id
