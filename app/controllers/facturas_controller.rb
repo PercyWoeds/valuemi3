@@ -724,15 +724,20 @@ new_invoice_item.save
         pdf.move_down 10
 
       end
-
-
-      
+    
       pdf 
   end   
 
   def build_pdf_body_rpt(pdf)
     
-    pdf.text "Facturas  Emitidas : desde "+@fecha1.to_s+ " Hasta: "+@fecha2.to_s , :size => 8 
+    pdf.text "Facturas Moneda" +" Emitidas : desde "+@fecha1.to_s+ " Hasta: "+@fecha2.to_s , :size => 8 
+
+    if @moneda == 2
+      pdf.text "Moneda : SOLES "
+    else 
+      pdf.text "Moneda : DOLARES "
+    end 
+
     pdf.text ""
     pdf.font "Helvetica" , :size => 6
 
@@ -749,7 +754,7 @@ new_invoice_item.save
 
       nroitem=1
       lcDoc='FT'
-      lcMon='S/.'
+      
 
        for  product in @facturas_rpt
 
@@ -758,7 +763,12 @@ new_invoice_item.save
             row << product.code
             row << product.fecha.strftime("%d/%m/%Y")            
             row << product.customer.name  
-            row << lcMon
+            if product.moneda_id == 1
+              row << "USD"
+            else
+              row << "S/."
+            end 
+
             row << product.subtotal.to_s
             row << product.tax.to_s
             row << product.total.to_s
@@ -779,19 +789,19 @@ new_invoice_item.save
       services_total = 0
 
     if $lcFacturasall == '1'    
-      subtotal = @company.get_facturas_day_value(@fecha1,@fecha2, "subtotal")
+      subtotal = @company.get_facturas_day_value(@fecha1,@fecha2, "subtotal",@moneda)
       subtotals.push(subtotal)
       services_subtotal += subtotal          
       #pdf.text subtotal.to_s
     
     
-      tax = @company.get_facturas_day_value(@fecha1,@fecha2, "tax")
+      tax = @company.get_facturas_day_value(@fecha1,@fecha2, "tax",@moneda)
       taxes.push(tax)
       services_tax += tax
     
       #pdf.text tax.to_s
       
-      total = @company.get_facturas_day_value(@fecha1,@fecha2, "total")
+      total = @company.get_facturas_day_value(@fecha1,@fecha2, "total",@moneda)
       totals.push(total)
       services_total += total
       #pdf.text total.to_s

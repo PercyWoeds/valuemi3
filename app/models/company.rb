@@ -422,9 +422,9 @@ def get_guias_2(fecha1,fecha2)
     
  end 
  
- def get_facturas_day_value(fecha1,fecha2,value = "total")
+ def get_facturas_day_value(fecha1,fecha2,value = "total",moneda)
 
-    facturas = Factura.where([" company_id = ? AND fecha >= ? and fecha<= ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59"])
+    facturas = Factura.where([" company_id = ? AND fecha >= ? and fecha<= ? and moneda_id = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59",moneda])
     if facturas
     ret=0  
     for factura in facturas
@@ -442,9 +442,9 @@ def get_guias_2(fecha1,fecha2)
     return ret
   
  end 
-def get_facturas_day_value_cliente(fecha1,fecha2,cliente,value = "total")
+def get_facturas_day_value_cliente(fecha1,fecha2,cliente,value = "total",moneda)
 
-    facturas = Factura.where([" company_id = ? AND fecha >= ? and fecha<= ? and customer_id = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59",cliente ])
+    facturas = Factura.where([" company_id = ? AND fecha >= ? and fecha<= ? and customer_id = ? and moneda_id  = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59",cliente,moneda ])
     if facturas
     ret=0  
     for factura in facturas
