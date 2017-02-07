@@ -949,13 +949,10 @@ class CustomerPaymentsController < ApplicationController
        #  row << customerpayment_rpt.total    
 
          #table_content << row
-         lcId = customerpayment_rpt.id 
+         lcId      = customerpayment_rpt.id 
          $lcCode   = customerpayment_rpt.code
-         $lcFecha1 = customerpayment_rpt.fecha1.strftime("%d/%m/%Y")         
+         $lcFecha1 = customerpayment_rpt.fecha1.strftime("%d/%m/%Y")                  
          
-         puts 'codigo=>>>'
-         puts lcId
-
         @customerdetails =  customerpayment_rpt.get_payment_dato(lcId)
 
         if @customerdetails
@@ -1213,9 +1210,6 @@ class CustomerPaymentsController < ApplicationController
     @fecha1 = params[:fecha1]
     @fecha2 = params[:fecha2]
     @cliente = params[:customer_id]
-
-    puts "cliente"
-    puts @cliente 
 
     @customerpayment_rpt = @company.get_customer_payments_cliente(@fecha1,@fecha2,@cliente)  
       
@@ -1641,7 +1635,7 @@ class CustomerPaymentsController < ApplicationController
 
     @company.actualizar_fecha2
     @company.actualiza_monthyear
-    @customerpayment_rpt = @company.get_customer_payments2(@tipomoneda)
+    @customerpayment_rpt = @company.get_customer_payments2(@tipomoneda,@fecha1,@fecha2)
       
     Prawn::Document.generate("app/pdf_output/rpt_customerpayment2.pdf") do |pdf|        
 

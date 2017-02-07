@@ -1,6 +1,8 @@
 class Employee < ActiveRecord::Base
 
 	before_save :set_full_name
+	has_many :outputs
+	
 
 	private 
 

@@ -45,6 +45,8 @@ class InventariosController < ApplicationController
     @inventario = Inventario.find(params[:id], :include => {:inventario_detalles => {:item => :unidad_medida} })
   end
 
+
+
   def update
     @inventario = Inventario.find(params[:id])
     if @inventario.update_attributes(params[:inventario])
@@ -54,4 +56,19 @@ class InventariosController < ApplicationController
       render :action => "edit"
     end
   end
+
+
+  def do_process
+
+    @inventario = InventarioDetalle.where(:inventario_id=>params[:id])
+
+    for i in @inventario
+
+        product = Product.find(i.product_id)
+        product.cost = i.precio_unitario
+        product.save
+
+    end 
+
+  end 
 end

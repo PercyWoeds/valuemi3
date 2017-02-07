@@ -261,6 +261,21 @@ end
   match 'companies/invoices/:company_id' => 'invoices#list_invoices', via: [:get, :post]
   resources :invoices
 
+# Invoices
+  match 'output/add_kit/:company_id' => 'outputs#add_kit', via: [:get, :post]
+  match 'outputs/list_items/:company_id' => 'outputs#list_items', via: [:get, :post]
+  match 'outputs/ac_kit/:company_id' => 'outputs#ac_kit', via: [:get, :post]
+  match 'outputs/ac_products/:company_id' => 'outputs#ac_products', via: [:get, :post]
+  match 'outputs/ac_user/:company_id' => 'outputs#ac_user', via: [:get, :post]
+  match 'outputs/ac_customers/:company_id' => 'outputs#ac_customers', via: [:get, :post]
+  match 'outputs/new/:company_id' => 'outputs#new', via: [:get, :post]
+  
+  match 'outputs/do_email/:id' => 'outputs#do_email', via: [:get, :post]
+  match 'outputs/do_process/:id' => 'outputs#do_process', via: [:get, :post]
+  match 'outputs/email/:id' => 'outputs#email', via: [:get, :post]
+  match 'outputs/pdf/:id' => 'outputs#pdf', via: [:get, :post]
+  match 'companies/outputs/:company_id' => 'outputs#list_outputs', via: [:get, :post]
+  resources :outputs
 
 # Declarations
   
@@ -649,17 +664,19 @@ end
   match 'inventories/ac_categories/:company_id' => 'inventories#ac_categories', via: [:get, :post]
   match 'inventories/new/:company_id' => 'inventories#new', via: [:get, :post]  
   match 'inventories/do_email/:id' => 'inventories#do_email', via: [:get, :post]
-  match 'inventories/do_process/:id' => 'inventories#do_process', via: [:get, :post]
+  
   match 'inventories/email/:id' => 'inventories#email', via: [:get, :post]
   match 'inventories/pdf/:id' => 'inventories#pdf', via: [:get, :post]
   match 'companies/inventories/:company_id' => 'inventories#list_inventories', via: [:get, :post]
   match 'inventories/addAll/:company_id' => 'inventories#addAll', via: [:get, :post]
   resources :inventories
 
+  
+
   match 'inventories/ac_categories/:company_id' => 'inventories#ac_categories', via: [:get, :post]
   match 'inventories/new/:company_id' => 'inventories#new', via: [:get, :post]  
   match 'inventories/do_email/:id' => 'inventories#do_email', via: [:get, :post]
-  match 'inventories/do_process/:id' => 'inventories#do_process', via: [:get, :post]
+  match 'inventarios/do_process/:id' => 'inventarios#do_process', via: [:get, :post]
   match 'inventories/email/:id' => 'inventories#email', via: [:get, :post]
   match 'inventories/pdf/:id' => 'inventories#pdf', via: [:get, :post]
   match 'companies/inventarios/:company_id' => 'inventarios#index', via: [:get, :post]

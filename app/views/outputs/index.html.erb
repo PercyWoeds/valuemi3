@@ -1,0 +1,14 @@
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %>
+</div>
+
+<h1>
+  <%= image_tag("output_48.png", :class => "vmiddle") %>
+  outputs
+</h1>
+
+<p>
+  Seleccionar una empresa para mostrar las salidas:
+</p>
+
+<%= render "companies/list_select" %>

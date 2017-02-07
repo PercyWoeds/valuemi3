@@ -1,6 +1,8 @@
 class Truck < ActiveRecord::Base
 
 
+has_many :outputs
+
   def get_marcas()
    @marcas = Marca.all
     

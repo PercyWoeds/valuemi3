@@ -10,6 +10,8 @@ class Supplier < ActiveRecord::Base
   has_many :purchases
   has_many :purchaseorders
   has_many :supplier_payments
+  has_many :outputs
+  
   
   def get_taxable
     if(self.taxable == "1")

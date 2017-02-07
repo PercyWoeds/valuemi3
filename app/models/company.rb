@@ -588,16 +588,16 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? and factur
 
 ## REPORTE DE ESTADISTICAS DE PAGOS pivot
 
-def get_customer_payments2(moneda)
+def get_customer_payments2(moneda,fecha1,fecha2)
 
    @facturas = Factura.find_by_sql(["
   SELECT   year_mounth as year_month,
    customer_id,
    SUM(balance) as balance   
    FROM facturas
-   WHERE moneda_id = ? and balance>0
+   WHERE moneda_id = ? and balance>0 and fecha >= ? and fecha  <= ?
    GROUP BY 2,1
-   ORDER BY 2,1 ", moneda])    
+   ORDER BY 2,1 ", moneda,fecha1,fecha2 ])    
 
   return @facturas
     

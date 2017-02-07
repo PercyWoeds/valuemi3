@@ -1,0 +1,175 @@
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @output.company.name, @output.company %> &raquo;
+  <%= link_to "outputs", "/companies/outputs/#{@output.company.id}" %>
+</div>
+
+<h1>
+  <%= image_tag("output_48.png", :class => "vmiddle") %>
+  <%= @output.identifier %>
+</h1>
+
+<%= hr() %>
+
+<% if @output.location %>
+  <p>
+    <b>Location:</b>
+    <%= link_to @output.location.name, @output.location %>
+  </p>
+<% end %>
+
+<% if @output.division %>
+  <p>
+    <b>Division:</b>
+    <%= link_to @output.division.name, @output.division %>
+  </p>
+<% end %>
+
+
+<p>
+  <b>Code:</b>
+  <%= @output.code %>
+</p>
+
+
+<%= hr() %>
+
+<h3>
+  Informacion Proveedor 
+</h3>
+
+<p>
+  <b>Name:</b>
+  <%= link_to @supplier.name, @supplier %>
+</p>
+
+
+<%= hr() %>
+
+<h3>
+  Details
+</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>
+        Producto
+      </th>
+      <th>
+        Costo
+      </th>
+      <th>
+        Cantidad
+      </th>
+      <th>
+        Dscto
+      </th>
+      <th>
+        Total
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <% for productItem in @output.get_products() %>
+      <tr>
+        <td class="bordered_bottom bordered_right">
+          <%= link_to productItem.name   %>
+        </td>
+        <td class="bordered_bottom bordered_right">
+          $<%= money(productItem.price) %>
+        </td>
+        <td class="bordered_bottom bordered_right">
+          <%= productItem.quantity %>
+        </td>
+        <td class="bordered_bottom bordered_right">
+          0.00
+        </td>
+        <td class="bordered_bottom bordered_right">
+          $<%= money(productItem.total) %>
+        </td>
+      </tr>
+    <% end %>
+    <tr>
+      <td colspan="5" class="bordered_bottom bordered_right">
+        &nbsp;
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4" class="bordered_bottom bordered_right bold">
+        Subtotal:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@output.subtotal) %>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4" class="bordered_bottom bordered_right bold">
+        IGV:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@output.tax) %>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4" class="bordered_bottom bordered_right bold">
+        Total:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@output.total) %>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br />
+
+<%= hr() %>
+
+<% if @output.description != "" %>
+  <div>
+    <b>Description:</b>
+    <br />
+    <br />
+    <%= format_text(@output.description) %>
+  </div>
+  <%= hr() %>
+<% end %>
+
+<% if @output.comments != "" %>
+  <div>
+    <b>Comments:</b>
+    <br />
+    <br />
+    <%= format_text(@output.comments) %>
+  </div>
+  <%= hr() %>
+<% end %>
+
+<br />
+
+<div>
+  <strong><%= @output.get_processed %></strong>
+  <% if @output.processed == "1" and @output.date_processed %>
+    <%= doDate(@output.date_processed) %>
+  <% end %>
+</div>
+
+<p>
+  <b>Return:</b>
+  <%= @output.get_return %>
+</p>
+
+<p>
+  <strong>Seller:</strong>
+  <%= link_to @output.user.username, @output.user %>
+</p>
+
+<%= hr() %>
+
+<div class="button">
+  <%= link_to 'Exportar to PDF', "/outputs/pdf/#{@output.id}.pdf" %>
+  <%= link_to 'Send output via email', "/outputs/email/#{@output.id}" %>
+  <%= link_to 'Process output', "/outputs/do_process/#{@output.id}" %>
+  <%= link_to 'Edit', edit_output_path(@output) %>
+  <%= link_to 'Back', "/companies/outputs/#{@output.company.id}" %>
+</div>

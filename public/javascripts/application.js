@@ -1290,6 +1290,90 @@
 
  //............................................................................  
 
+  // Add an item to a product kit
+  function addItemToOutput() {
+    var item = $("#ac_item").val();
+    
+    if(item != "") {
+      var company_id = $("#invoice_company_id").val();
+      var item_id = $("#ac_item_id").val();
+      
+      var quantity = $("#ac_item_quantity").val();
+      var price = $("#ac_item_price").val();
+    
+      var items_arr = $("#items").val().split(",");
+
+      if(quantity == "" || !isNumeric(quantity)) {
+        alert("Please enter a valid quantity");
+      } else if(price == "" || !isNumeric(price)) {
+        alert("Please enter a valid price");
+      } else {
+        var item_line = item_id + "|BRK|" + quantity + "|BRK|" + price ;
+        
+        $("#items").val($("#items").val() + "," + item_line);
+        
+        listItemsOutput();
+        
+        $("#ac_item_id").val("");
+        $("#ac_item").val("");
+        $("#ac_item_quantity").val("1");
+        $("#ac_item_price").val("");
+      
+        updateItemTotalOutput();
+      }
+    } else {
+      alert("Please find a product to add first.");
+    }
+  }
+
+  // List items in a kit
+  function listItemsOutput() {
+    var items = $("#items").val();
+    var company_id = $("#output_company_id").val();
+    
+    $.get('/outputs/list_items/' + company_id, {
+      items: items
+    },
+    function(data) {
+      $("#list_items").html(data);
+      documentReady();
+    });
+  }
+
+// Update price total for invoice
+  function updateItemTotalOutput() {
+    var quantity = $("#ac_item_quantity").val();
+    var price = $("#ac_item_price").val();
+    
+    
+    if(isNumeric(quantity) && isNumeric(price)) {
+      var total = quantity * price;      
+
+      $("#ac_item_total").html(total);
+    } else {
+      $("#ac_item_total").html("0.00");
+    }
+  }
+
+// Removes an item from an invoice
+  function removeItemFromOutput(id) {
+    var items = $("#items").val();
+    var items_arr = items.split(",");
+    var items_final = Array();
+    var i = 0;
+    
+    while(i < items_arr.length) {
+      if(i != id) {
+        items_final[i] = items_arr[i];
+      }
+      i++;
+    }
+    
+    $("#items").val(items_final.join(","));
+    listItemsOutput();
+  }
+ //............................................................................  
+
 
   // On ready
   $(document).ready(function() {
