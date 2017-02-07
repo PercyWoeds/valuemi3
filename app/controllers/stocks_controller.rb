@@ -116,8 +116,8 @@ def client_data_headers
                                         } do 
                                           columns([0]).align=:center
                                           columns([1]).align=:left
-                                          columns([2]).align=:right
-      	                                  columns([3]).align=:left
+                                          columns([2]).align=:left
+      	                                  columns([3]).align=:right
                                           columns([4]).align=:right
                                           columns([4]).align=:right
                                           columns([5]).align=:right
