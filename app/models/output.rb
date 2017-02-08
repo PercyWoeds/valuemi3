@@ -96,10 +96,6 @@ class Output < ActiveRecord::Base
         price = parts[2]                
         total = price.to_f * quantity.to_i        
         
-        puts id
-        puts quantity
-        puts price
-        puts total
 
         begin
           product = Product.find(id.to_i)          
@@ -264,11 +260,11 @@ class Output < ActiveRecord::Base
 
 def correlativo
         
-        numero = Voided.find(12).numero.to_i + 1
-        lcnumero = numero.to_s
-        Voided.where(:id=>'12').update_all(:numero =>lcnumero)        
+    numero = Voided.find(12).numero.to_i + 1
+    lcnumero = numero.to_s
+    Voided.where(:id=>'12').update_all(:numero =>lcnumero)        
 
-  end
+end
 
 
   

@@ -75,9 +75,12 @@ class InventariosController < ApplicationController
 
         product = Product.find(i.product_id)
         if product 
-          product.cost = lcPrecio
-        
+          product.cost = lcPrecio        
           product.save
+
+          if i.product_id == 4242
+            puts lcPrecio.to_s 
+          end 
         end 
     end 
 

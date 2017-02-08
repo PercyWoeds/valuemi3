@@ -15,7 +15,7 @@
 <div class="mid_box bordered_right">
   <%= form_for(@output) do |f| %>
     <h3>
-       Informacion Factura 
+       Informacion Salida
     </h3>
     <div class="field">
       <%= f.label :fecha, "Fecha *", :class => "bold" %><br />
@@ -58,7 +58,7 @@
     <%= hr() %>
     
     <div class="field" id="list_items">
-      <p class="bold big">Products:</p>
+      <p class="bold big">Productos:</p>
     </div>
     
     <%= hr() %>
@@ -117,7 +117,7 @@
 
 <div class="mid_box">
   <h3>
-    Agregar Productos  a la factura 
+    Agregar Productos  
   </h3>
 
 
@@ -137,14 +137,14 @@
 
     <input type="text" name="ac_item_price" id="ac_item_price" value="" class="tf_short" readonly />
     <div class="small">
-      Precio del  producto para agregar una factura.
+      Precio del  producto para agregar una salida.
     </div>
     <br />
     
     <strong>Cantidad:</strong><br />
     <input type="text" name="ac_item_quantity" id="ac_item_quantity" value="1" class="tf_short" />
     <div class="small">
-     Cantidad del producto para agregar una factura.
+     Cantidad del producto para agregar una salida.
     </div>
     <br />
     
@@ -155,7 +155,7 @@
     </div>
     
     <br />
-    <input type="submit" value="Agregar item a Factura" />
+    <input type="submit" value="Agregar item " />
   </form>
   
   <%= hr() %>
