@@ -1119,26 +1119,29 @@ class CustomerPaymentsController < ApplicationController
           row << nroitem.to_s
           row << "FACTORY"
           row << sprintf("%.2f",$lcFactory.to_s)
+          row << " "
           table_content2 << row
+
           row = []
           row << nroitem.to_s
           row << "COMPENSACION:"
           row << sprintf("%.2f",$lcCompen.to_s)
+          row << " "
           table_content2 << row
           
           row = []
           row << nroitem.to_s
           row << "AJUSTE"
           row << sprintf("%.2f",$lcAjuste.to_s)
-
+          row << " "
 
 
           table_content2 << row
           row = []
           row << nroitem.to_s
           row << "TOTAL => "
-          row << sprintf("%.2f",@totalgeneral_dolar.to_s)
           row << sprintf("%.2f",@totalgeneral_soles.to_s)
+          row << sprintf("%.2f",@totalgeneral_dolar.to_s)
 
       else
         
