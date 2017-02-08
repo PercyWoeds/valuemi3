@@ -72,7 +72,7 @@ class InventariosController < ApplicationController
     for i in @inventario
 
         product = Product.find(i.product_id)
-        product.cost = i.precio_unitarios
+        product.cost = i.precio_unitario
         product.save
 
     end 
