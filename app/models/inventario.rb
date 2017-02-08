@@ -104,14 +104,13 @@ class Inventario < ActiveRecord::Base
 
   def self.import2(file)
 
-
           CSV.foreach(file.path, headers: true, encoding:'iso-8859-1:utf-8') do |row|
-
            @product = Product.find_by(:code=>row['code'] )
 
             if @product 
                 @product.unidad    = row['unidad']  
                 @product.ubicacion = row['ubica']  
+                @product.ubicacion = row['descrip']  
                 @product.save
                 
             end 

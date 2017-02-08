@@ -340,14 +340,13 @@ def build_pdf_header(pdf)
         
     end     
 
-    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
-                
+    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName                
     send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
   
 
   end
 
-    def client_data_headers
+ def client_data_headers
 
     #{@purchaseorder.description}
       client_headers  = [["Proveedor: ", $lcCli ]] 

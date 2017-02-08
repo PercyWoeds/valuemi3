@@ -33,16 +33,6 @@
   </p>
     <%= hr() %>  
 
-  <h3>
-    <%= image_tag("invoice_32.png", :class => "vmiddle") %>
-    <%= link_to "Recepcion Orden de servicio ", "/companies/serviceorders/receive_orderservice/#{@company.id}" %>
-  </h3>
-  <p>
-     Registrar facturas de las ordenes de servicio 
-  </p>
-  
-  <%= hr() %>
-
 
   <h3>
     <%= image_tag("products_32.png", :class => "vmiddle") %>
@@ -76,29 +66,7 @@
   </p>
 
 
-  <%= hr() %>
 
-  <h3>
-    <%= image_tag("invoice_32.png", :class => "vmiddle") %>
-    <%= link_to "Inventarios", "/companies/inventories/#{@company.id}" %>
-  </h3>
-
-  <p>
-     Agregar, editar or eliminar facturas para tu negocio.
-  </p>
-
-
-  <%= hr() %>
-
-  
-  <h3>
-    <%= image_tag("employees_32.png", :class => "vmiddle") %>
-    <%= link_to "Usuarios", "/companies/company_users/#{@company.id}" %>
-  </h3>
-
-  <p>
-     Agregar, editar or eliminar usuarios que tienen acceso a tu negocio.
-  </p>
 </div>
 
 <div class="mid_box">
@@ -114,16 +82,6 @@
 
 <%= hr() %>
 
-  <h3>
-    <%= image_tag("clients_32.png", :class => "vmiddle") %>
-    <%= link_to "Clientes", "/companies/customers/#{@company.id}" %>
-  </h3>
-
-  <p>
-     Agregar, editar or eliminar clientes para tu negocio.
-  </p>
-
-  <%= hr() %>
 
   <h3>
     <%= image_tag("supplier_32.png", :class => "vmiddle") %>

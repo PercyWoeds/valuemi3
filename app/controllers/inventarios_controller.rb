@@ -70,11 +70,15 @@ class InventariosController < ApplicationController
     @inventario = InventarioDetalle.where(:inventario_id=>params[:id])
 
     for i in @inventario
+        lcPrecio =i.precio_unitario
+        
 
         product = Product.find(i.product_id)
-        product.cost = i.precio_unitario
-        product.save
-
+        if product 
+          product.cost = lcPrecio
+        
+          product.save
+        end 
     end 
 
   end 
