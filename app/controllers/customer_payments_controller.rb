@@ -1743,7 +1743,8 @@ class CustomerPaymentsController < ApplicationController
 
       headers = []
       table_content = []
-      total_general = 0
+      total_general_soles = 0
+      total_general_dolar = 0
       total_factory = 0
         headers2 = []
         table_content2 = []
@@ -1757,23 +1758,33 @@ class CustomerPaymentsController < ApplicationController
         nroitem = 1
         
         @banks = BankAcount.all
-        @total_general = 0
+
+        @totalgeneral_soles = 0
+        @totalgeneral_dolar = 0
 
         for banco in @banks
 
         total1 = @company.get_customer_payments_value(@fecha1,@fecha2,banco.id)  
 
         if total1>0
-                  
-          row =[]
-          row << nroitem.to_s
-          row << banco.number 
-          row << sprintf("%.2f",total1.to_s)
-          
-          nroitem = nroitem + 1
-          @total_general = @total_general + total1
+              row = []                  
+              row << nroitem.to_s
+              row << banco.number 
 
-          table_content2 << row
+              a = BankAcount.find(banco.id)
+              
+              if a.moneda_id == 1
+                row << " "
+                row << sprintf("%.2f",total1.to_s)
+                @totalgeneral_dolar = @totalgeneral_dolar + total1 
+              else
+                row << sprintf("%.2f",total1.to_s)
+                row << " "
+
+                @totalgeneral_soles = @totalgeneral_soles + total1 
+              end
+              table_content2 << row
+
         end   
 
         end
@@ -1786,27 +1797,34 @@ class CustomerPaymentsController < ApplicationController
         row << nroitem.to_s
         row << "FACTORY :"
         row << sprintf("%.2f",@total_factory.to_s)
+        row << " "
+
         table_content2 << row
         row = []
         row << nroitem.to_s
         row << "AJUSTE  :"
         row << sprintf("%.2f",@total_ajuste.to_s)
+        row << " "
+
         table_content2 << row
 
         row = []
         row << nroitem.to_s
         row << "COMPENSACION :"
         row << sprintf("%.2f",@total_compen.to_s)
+        row << " "
         table_content2 << row
 
 
-        @total_general = @total_general  + @total_ajuste + @total_factory + @total_compen
+        @totalgeneral_soles = @totalgeneral_soles  + @total_ajuste + @total_factory + @total_compen
 
         
-          row =[]
-          row << " "
-          row << "TOTAL GENERAL => "
-          row << sprintf("%.2f",@total_general.to_s)
+          row = []
+          row << nroitem.to_s
+          row << "TOTAL => "
+          row << sprintf("%.2f",@totalgeneral_soles.to_s)
+          row << sprintf("%.2f",@totalgeneral_dolar.to_s)
+
 
           table_content2 << row
           result = pdf.table table_content2, {:position => :center,

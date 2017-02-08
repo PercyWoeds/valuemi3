@@ -68,7 +68,9 @@ self.per_page = 20
 
   TABLE_HEADERS5 = ["ITEM ",
                      "BANCO ",                  
-                    "IMPORTE "]                      
+                    "IMPORTE S/.",
+                    "IMPORTE USD",
+                  ]                      
 
   TABLE_HEADERS6 = ["ITEM",
                      "CLIENTE",   
