@@ -475,6 +475,10 @@ def get_facturas_day_value_cliente(fecha1,fecha2,cliente,value = "total",moneda)
  def get_customer_payments_value(fecha1,fecha2,id)
 
     facturas = CustomerPayment.where([" company_id = ? AND fecha1 >= ? and fecha1 <= ? and bank_acount_id = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" , id]).order(:id)
+
+    
+
+
     ret = 0 
     if facturas 
     ret=0  

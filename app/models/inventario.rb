@@ -105,7 +105,7 @@ class Inventario < ActiveRecord::Base
   def self.import2(file)
 
           CSV.foreach(file.path, headers: true, encoding:'iso-8859-1:utf-8') do |row|
-            
+
            @product = Product.find_by(:code=>row['code'] )
 
             if @product 
@@ -115,6 +115,35 @@ class Inventario < ActiveRecord::Base
                 @product.save
                 
             end 
+
+          end 
+        
+  end      
+
+  def self.import3(file)
+
+          CSV.foreach(file.path, headers: true, encoding:'iso-8859-1:utf-8') do |row|            
+          @product = Product.find_by(:code=>row['code'] )
+
+           puts row['code']
+           puts row['descrip']
+           puts row['unidad']          
+
+            if @product 
+            product_id = @product.id  
+            else 
+            b = Product.new(:name=>row['descrip'], :company_id=> 1 ,:products_category_id=>1,
+              :code=>row['code'],:tax1=> 18,:tax2=>0,:tax3=>0,:tax1_name=>"",:tax2_name=>"",
+              :tax3_name=>"",:unidad=>row['unidad'])
+            b.save                            
+            end 
+
+            if @product.id == 101916
+                  puts row['descrip']
+            end 
+
+
+            
           end 
         
   end      

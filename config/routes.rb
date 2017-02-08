@@ -40,6 +40,7 @@
   resources :inventarios  do
     collection { post :import }
     collection { post :import2 }
+    collection { post :import3 }
   end 
   resources :deliverymines   
 
@@ -151,6 +152,7 @@ end
     resources :addresses
     collection { post :import }
     collection { post :import2 }
+
   end 
   resources :purchases do
      collection { post :datos  }

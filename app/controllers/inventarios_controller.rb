@@ -16,6 +16,13 @@ class InventariosController < ApplicationController
        redirect_to root_url, notice: "Inventario importadas."
   end 
 
+  def import3
+
+    @user_id= @current_user.id
+     Inventario.import2(params[:file])
+       redirect_to root_url, notice: "Inventario importadas."
+  end 
+  
   
   def index
     #page = params[:page] || 1
@@ -72,7 +79,6 @@ class InventariosController < ApplicationController
     for i in @inventario
         lcPrecio =i.precio_unitario
         
-
         product = Product.find(i.product_id)
         if product 
           product.cost = lcPrecio        

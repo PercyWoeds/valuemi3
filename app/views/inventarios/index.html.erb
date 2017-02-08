@@ -42,4 +42,11 @@ Inventarios
   <%= submit_tag "Importar " %>
 <% end %>
 
+<h2>Importar Archivo 3Facturas "*.csv"</h2>
+<%= form_tag import3_inventarios_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Importar 3 " %>
+<% end %>
+
+
 <% end %>

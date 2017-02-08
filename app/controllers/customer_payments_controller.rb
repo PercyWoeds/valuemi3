@@ -919,7 +919,8 @@ class CustomerPaymentsController < ApplicationController
 
       headers = []
       table_content = []
-      total_general = 0
+      total_general_soles = 0
+      total_general_dolar = 0
       total_factory = 0
 
       CustomerPayment::TABLE_HEADERS3.each do |header|
@@ -974,10 +975,25 @@ class CustomerPaymentsController < ApplicationController
                 row << productItem.customer.name                 
                 
                 row << productItem.factory.to_s
-                row << productItem.total.to_s      
-                
-                total_general = total_general +  productItem.total
+                if productItem.moneda_id == 2
+                  
+                  row << productItem.total.to_s
+                  row << " "  
+                else
+                  row << " "  
+                  row << productItem.total.to_s
+                  
+                end
+
+
+
                 total_factory = total_factory +  productItem.factory
+
+                if productItem.moneda_id == 2
+                  total_general_soles = total_general_soles +  productItem.total
+                else
+                  total_general_dolar = total_general_dolar +  productItem.total
+                end 
 
                 table_content << row
 
@@ -988,8 +1004,10 @@ class CustomerPaymentsController < ApplicationController
 
        end  
 
-      @total_soles = total_factory
-    @total_dolares = total_general
+    @total_factory = total_factory
+
+    @total_soles = total_general_soles
+    @total_dolar = total_general_dolar
 
       row =[]
       row << ""
@@ -1000,8 +1018,9 @@ class CustomerPaymentsController < ApplicationController
       row << ""
       row << ""
       row << "TOTALES => "
-      row << sprintf("%.2f",@total_soles.to_s)
-      row << sprintf("%.2f",@total_dolares.to_s)                    
+      row << sprintf("%.2f",@total_factory.to_s)
+      row << sprintf("%.2f",@total_soles.to_s)                    
+      row << sprintf("%.2f",@total_dolar.to_s)                    
       
       table_content << row
 
@@ -1020,6 +1039,7 @@ class CustomerPaymentsController < ApplicationController
                                           columns([8]).align=:right
                                           columns([9]).align=:right
                                           columns([10]).align=:right
+                                          columns([11]).align=:right
                                         end                                          
       pdf.move_down 10      
       pdf
@@ -1051,8 +1071,8 @@ class CustomerPaymentsController < ApplicationController
 
 
         @banks = BankAcount.all
-        @totalgeneral = 0
-
+        @totalgeneral_soles = 0
+        @totalgeneral_dolar = 0
 
         if $lcxCliente == "0"
 
@@ -1065,8 +1085,20 @@ class CustomerPaymentsController < ApplicationController
             row =[]
             row << nroitem.to_s
             row << banco.number 
-            row << sprintf("%.2f",total1.to_s)
-            @totalgeneral = @totalgeneral + total1 
+
+              a = BankAcount.find(banco.id)
+
+              if a.moneda_id == 1
+                row << " "
+                row << sprintf("%.2f",total1.to_s)
+                @totalgeneral_dolar = @totalgeneral_dolar + total1 
+              else
+                row << sprintf("%.2f",total1.to_s)
+                row << " "
+
+                @totalgeneral_soles = @totalgeneral_soles + total1 
+              end
+
             nroitem = nroitem + 1
             table_content2 << row
           end   
@@ -1080,7 +1112,8 @@ class CustomerPaymentsController < ApplicationController
            $lcCompen= @company.get_customer_payments_value_otros(@fecha1,@fecha2,'compen')
            $lcAjuste = @company.get_customer_payments_value_otros(@fecha1,@fecha2,'ajuste')
 
-           @totalgeneral = @totalgeneral + $lcAjuste + $lcFactory +$lcCompen
+           @totalgeneral_soles = @totalgeneral_soles + $lcAjuste + $lcFactory +$lcCompen
+           
 
           row = []
           row << nroitem.to_s
@@ -1104,7 +1137,8 @@ class CustomerPaymentsController < ApplicationController
           row = []
           row << nroitem.to_s
           row << "TOTAL => "
-          row << sprintf("%.2f",@totalgeneral.to_s)
+          row << sprintf("%.2f",@totalgeneral_dolar.to_s)
+          row << sprintf("%.2f",@totalgeneral_soles.to_s)
 
       else
         
@@ -1198,12 +1232,10 @@ class CustomerPaymentsController < ApplicationController
         pdf = build_pdf_header_rpt1(pdf)
         pdf = build_pdf_body_rpt1(pdf)
         build_pdf_footer_rpt1(pdf)
-        $lcFileName =  "app/pdf_output/rpt_customerpayment.pdf"      
-        
+        $lcFileName =  "app/pdf_output/rpt_customerpayment.pdf"              
     end     
 
-    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
-                
+    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName                
     send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
   
   end
