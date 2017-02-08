@@ -2,19 +2,25 @@
   <table>
     <thead>
       <tr>
-        <th class="bordered_right bordered_bottom" style="width: 100px;">
+        <th class="bordered_right bordered_bottom" style="width: 80px;">
           Nro.
         </th>
-        <th class="bordered_right bordered_bottom" style="width: 350px;">
+        <th class="bordered_right bordered_bottom" style="width: 200px;">
           Proveedor
-
         </th>
         <th class="bordered_right bordered_bottom">
-          Total
+          Empleado
+        </th>        
+        <th class="bordered_right bordered_bottom">
+          Vehiculo 
         </th>
         <th class="bordered_right bordered_bottom">
-          Date
+          Importe
         </th>
+        <th class="bordered_right bordered_bottom">
+          Fecha 
+        </th>
+            
         <th class="bordered_right bordered_bottom">
           Processed
         </th>
@@ -31,24 +37,25 @@
             <%= link_to output.code, output, :title => "Ir a factura" %>
           </td>
           <td class="bordered_right bordered_bottom">
-            <%= link_to output.supplier.name  %>
+            <%=  output.supplier.name  %>
           </td>
 
           <td class="bordered_right bordered_bottom">
-            <%= link_to output.employee.full_name %>
+            <%=  output.employee.full_name %>
           </td>
 
           <td class="bordered_right bordered_bottom">
-            <%= link_to output.truck.placa %>
+            <%=  output.truck.placa %>
           </td>
 
 
           <td class="bordered_right bordered_bottom right">
-            $<%= money(output.total) %>
+            <%= money(output.total) %>
           </td>
           <td class="bordered_right bordered_bottom">
             <%= doDate(output.created_at) %>
           </td>
+
           <td class="bordered_right bordered_bottom <%= output.processed_color %>">
             <%= output.get_processed_short %>
           </td>
@@ -58,9 +65,7 @@
           <td class="bordered_right bordered_bottom">
             <%= link_to "Editar", edit_output_path(output) %>
           </td>
-          <td class="bordered_right bordered_bottom">
-            <%= link_to 'Eliminar', output, :confirm => 'Esta seguro ?', :method => :delete %>
-          </td>
+          
         </tr>
       <% end %>
     </tbody>

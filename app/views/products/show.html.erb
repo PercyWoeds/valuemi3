@@ -16,6 +16,19 @@
 </div>
 <br />
 
+<div>
+  <b>Unidad :</b>
+  <%= @product.unidad  %>
+</div>
+<br />
+
+<div>
+  <b>Ubicacion :</b>
+  <%= @product.ubicacion  %>
+</div>
+
+<br />
+
 
 <% if @product.supplier and @product.supplier_id != "" %>
   <div>
@@ -33,18 +46,7 @@
   $<%= money(@product.cost) %>
 </div>
 <br />
-
-<div>
-  <b>Price:</b>
-  $<%= money(@product.price) %>
-</div>
-<br />
-
-<div>
-  <abbr title="Profit = Price - Cost" class="bold">Profit:</abbr>
-  $<%= money(@product.profit) %>
-</div>
-<br />
+  
 
 <% if @product.tax1 and @product.tax1 > 0 %>
   <div>
@@ -130,8 +132,7 @@
 <% end %>
 
 <div class="button">
-  <%= link_to "Restock product", "/restocks/new/#{@product.company.id}/#{@product.id}" %>
-  <%= link_to "View restock orders for product", "/companies/restocks/#{@product.company.id}/#{@product.id}" %>
+
   <%= link_to 'Edit', edit_product_path(@product) %>
   <%= link_to 'Back', "/companies/products/#{@product.company.id}" %>
 </div>

@@ -26,7 +26,8 @@ end
       </div>
     <% end %>
   <% end %>  
-  <% if(session_company = get_session_company()) %>
+  <% if user_signed_in? %>
+  
     <%= link_to 'Cerrar Session ', destroy_user_session_path ,method: :delete %>
   <% else %>
       <%= link_to 'registrar', new_user_registration_path %> &#183;

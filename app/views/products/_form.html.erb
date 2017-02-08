@@ -72,6 +72,7 @@
       The price of the product.
     </div>
   </div>
+
   
   <%= hr() %>
   
@@ -116,24 +117,23 @@
   <%= hr() %>
   
   <div class="field">
-    <strong>Inventory</strong>
+    <strong>Inventario</strong>
   </div>
   
   
   <div class="field">
-    <%= f.label :quantity %><br />
-    <%= f.text_field :quantity %>
+    <%= f.label :unidad %><br />
+    <%= f.text_field :unidad %>
     <div class="small">
-      What quantity of the product do you have in inventory?
+      Unidad del producto 
     </div>
   </div>
   
   <div class="field">
-    <%= f.label :reorder %><br />
-    <%= f.text_field :reorder %>
+    <%= f.label :ubicacion,"Ubicacion" %><br />
+    <%= f.text_field :ubicacion %>
     <div class="small">
-      <%= getAppName() %> will let you know as soon as the quantity of the product reaches<br />
-      the reorder point, so you can order more products.
+      
     </div>
   </div>
   

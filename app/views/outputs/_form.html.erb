@@ -17,7 +17,11 @@
     <h3>
        Informacion Factura 
     </h3>
-
+    <div class="field">
+      <%= f.label :fecha, "Fecha *", :class => "bold" %><br />
+      <%= f.text_field :fecha , value: Time.now.strftime("%d/%m/%Y") %>
+    </div>
+  
     
     <div class="field">
       <%= f.label :code, "Code*", :class => "bold" %><br />

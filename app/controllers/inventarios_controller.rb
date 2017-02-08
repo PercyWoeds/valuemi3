@@ -9,6 +9,13 @@ class InventariosController < ApplicationController
   end 
 
 
+  def import2
+
+    @user_id= @current_user.id
+     Inventario.import2(params[:file])
+       redirect_to root_url, notice: "Inventario importadas."
+  end 
+
   
   def index
     #page = params[:page] || 1
@@ -65,10 +72,11 @@ class InventariosController < ApplicationController
     for i in @inventario
 
         product = Product.find(i.product_id)
-        product.cost = i.precio_unitario
+        product.cost = i.precio_unitarios
         product.save
 
     end 
 
   end 
+
 end

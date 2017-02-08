@@ -39,6 +39,7 @@
 
   resources :inventarios  do
     collection { post :import }
+    collection { post :import2 }
   end 
   resources :deliverymines   
 

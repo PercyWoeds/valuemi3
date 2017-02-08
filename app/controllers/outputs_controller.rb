@@ -5,22 +5,201 @@ include ProductsHelper
 
 class OutputsController < ApplicationController
   before_filter :authenticate_user!, :checkProducts
+
+
  
-  
-  # Export output to PDF
-  def pdf
-    @output = Output.find(params[:id])
-    respond_to do |format|
-      format.html { redirect_to("/outputs/pdf/#{@output.id}.pdf") }
-      format.pdf { render :layout => false }
+def build_pdf_header(pdf)
+
+     $lcCli  =  @purchaseorder.supplier.name
+     $lcdir1 = @purchaseorder.supplier.address1
+     $lcdir2 =@purchaseorder.supplier.address2
+     $lcdis  =@purchaseorder.supplier.city
+     $lcProv = @purchaseorder.supplier.state
+     $lcFecha1= @purchaseorder.fecha1.strftime("%d/%m/%Y") 
+     $lcMon=@purchaseorder.moneda.description     
+     $lcPay= @purchaseorder.payment.descrip
+
+     $lcSubtotal=sprintf("%.2f",(@purchaseorder.subtotal).round(2))
+     $lcIgv=sprintf("%.2f",(@purchaseorder.tax).round(2))
+     $lcTotal=sprintf("%.2f",(@purchaseorder.total).round(2))
+
+     $lcDetracion=@purchaseorder.detraccion
+     $lcAprobado= @purchaseorder.get_processed 
+    
+      pdf.image "#{Dir.pwd}/public/images/logo2.png", :width => 270
+        
+      pdf.move_down 6
+        
+      pdf.move_down 4
+      #pdf.text supplier.street, :size => 10
+      #pdf.text supplier.district, :size => 10
+      #pdf.text supplier.city, :size => 10
+      pdf.move_down 4
+
+      pdf.bounding_box([325, 725], :width => 200, :height => 80) do
+        pdf.stroke_bounds
+        pdf.move_down 15
+        pdf.font "Helvetica", :style => :bold do
+          pdf.text "R.U.C: 20424092941", :align => :center
+          pdf.text "ORDEN DE COMPRA", :align => :center
+          pdf.text "#{@purchaseorder.code}", :align => :center,
+                                 :style => :bold
+          
+        end
+      end
+      pdf.move_down 25
+      pdf 
+  end   
+
+  def build_pdf_body(pdf)
+    
+    pdf.text "__________________________________________________________________________", :size => 13, :spacing => 4
+    pdf.text " ", :size => 13, :spacing => 4
+    pdf.font "Helvetica" , :size => 8
+
+    max_rows = [client_data_headers.length, invoice_headers.length, 0].max
+      rows = []
+      (1..max_rows).each do |row|
+        rows_index = row - 1
+        rows[rows_index] = []
+        rows[rows_index] += (client_data_headers.length >= row ? client_data_headers[rows_index] : ['',''])
+        rows[rows_index] += (invoice_headers.length >= row ? invoice_headers[rows_index] : ['',''])
+      end
+
+      if rows.present?
+
+        pdf.table(rows, {
+          :position => :center,
+          :cell_style => {:border_width => 0},
+          :width => pdf.bounds.width
+        }) do
+          columns([0, 2]).font_style = :bold
+
+        end
+
+        pdf.move_down 20
+
+      end
+
+      headers = []
+      table_content = []
+
+      Purchaseorder::TABLE_HEADERS.each do |header|
+        cell = pdf.make_cell(:content => header)
+        cell.background_color = "FFFFCC"
+        headers << cell
+      end
+
+      table_content << headers
+
+      nroitem=1
+
+       for  product in @purchaseorder.get_products()
+            row = []
+            row << nroitem.to_s      
+            row << product.quantity.to_s
+            row << product.code
+            row << product.name
+            row << product.price.round(2).to_s
+            row << product.discount.round(2).to_s
+            row << product.total.round(2).to_s
+            table_content << row
+
+            nroitem=nroitem + 1
+        end
+
+      result = pdf.table table_content, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width
+                                        } do 
+                                          columns([0]).align=:center
+                                          columns([1]).align=:right
+                                          columns([2]).align=:center
+                                          columns([3]).align=:center
+                                          columns([4]).align=:right
+                                          columns([5]).align=:right
+                                          columns([6]).align=:right
+                                         
+                                        end
+
+      pdf.move_down 10      
+      pdf.table invoice_summary, {
+        :position => :right,
+        :cell_style => {:border_width => 1},
+        :width => pdf.bounds.width/2
+      } do
+        columns([0]).font_style = :bold
+        columns([1]).align = :right
+        
+      end
+      pdf
+
     end
+
+
+    def build_pdf_footer(pdf)
+
+        pdf.text ""
+        pdf.text "" 
+        pdf.text "Descripcion : #{@purchaseorder.description}", :size => 8, :spacing => 4
+        pdf.text "Comentarios : #{@purchaseorder.comments}", :size => 8, :spacing => 4
+        
+        
+
+        data =[[{:content=> $lcEntrega4,:colspan=>2},"" ] ,
+               [$lcEntrega1,{:content=> $lcEntrega3,:rowspan=>2}],
+               [$lcEntrega2]               
+               ]
+
+           {:border_width=>0  }.each do |property,value|
+            pdf.text " Instrucciones: "
+            pdf.table(data,:cell_style=> {property =>value})
+            pdf.move_down 20          
+           end     
+
+        pdf.bounding_box([0, 20], :width => 535, :height => 40) do
+        
+        pdf.text "_________________               _____________________         ____________________      ", :size => 13, :spacing => 4
+        pdf.text ""
+        pdf.text "                  Realizado por                                                 V.B.Jefe Compras                                            V.B.Gerencia           ", :size => 10, :spacing => 4
+        pdf.draw_text "Company: #{@purchaseorder.company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
+
+      end
+      pdf
+      
   end
+
+
+  # Export purchaseorder to PDF
+  def pdf
+    @purchaseorder = Purchaseorder.find(params[:id])
+    company =@purchaseorder.company_id
+    @company =Company.find(company)
+
+    @instrucciones = @company.get_instruccions()
+
+    @lcEntrega =  @instrucciones.find(1)
+    $lcEntrega1 =  @lcEntrega.description1
+    
+    Prawn::Document.generate("app/pdf_output/#{@purchaseorder.id}.pdf") do |pdf|
+        pdf.font "Helvetica"
+        pdf = build_pdf_header(pdf)
+        pdf = build_pdf_body(pdf)
+        build_pdf_footer(pdf)
+        $lcFileName =  "app/pdf_output/#{@purchaseorder.id}.pdf"      
+        
+    end     
+
+    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName            
+    send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
   
+  end
+
   # Process an output
   def do_process
     @output = Output.find(params[:id])
     @output[:processed] = "1"
-    
+    @output[:return] = "0"
     @output.process
     
     flash[:notice] = "The output order has been processed."
@@ -363,7 +542,7 @@ class OutputsController < ApplicationController
 
   private
   def output_params
-    params.require(:output).permit(:company_id,:location_id,:division_id,:supplier_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:employee_id,:truck_id)
+    params.require(:output).permit(:company_id,:location_id,:division_id,:supplier_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:employee_id,:truck_id,:fecha )
   end
 
 end

@@ -1255,7 +1255,6 @@
 
   }
 
-
   // List items in a kit
   function listItemsCustomerPayment() {
     var items = $("#items").val();

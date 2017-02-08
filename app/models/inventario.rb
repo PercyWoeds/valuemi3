@@ -47,9 +47,11 @@ class Inventario < ActiveRecord::Base
                 @product = Product.find_by(:code=>row['code'])
                 product_id = @product.id
             end 
+
             puts row['code']
             puts row['cantidad']
             puts row['precio_unitario']
+
             @cantidad = row['cantidad'].to_i
             
            a = InventarioDetalle.new(:inventario_id=>1,:cantidad=>row['cantidad'].to_i,
@@ -100,6 +102,22 @@ class Inventario < ActiveRecord::Base
         end
   end      
 
+  def self.import2(file)
+
+
+          CSV.foreach(file.path, headers: true, encoding:'iso-8859-1:utf-8') do |row|
+
+           @product = Product.find_by(:code=>row['code'] )
+
+            if @product 
+                @product.unidad    = row['unidad']  
+                @product.ubicacion = row['ubica']  
+                @product.save
+                
+            end 
+          end 
+        
+  end      
 
   protected
 

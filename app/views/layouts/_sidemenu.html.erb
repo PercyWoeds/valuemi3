@@ -62,43 +62,60 @@
         <section class="cards-section text-center">
             <div class="container">
                 <h2 class="title">Módulos del sistema</h2>
+
                 <div id="cards-wrapper" class="cards-wrapper row">
-                    <div class="item item-green col-md-4 col-sm-6 col-xs-6">
-                        <div class="item-inner">
-                            <div class="icon-holder">
-                                <i class="icon fa fa-paper-plane"></i>
-                            </div><!--//icon-holder-->
-                            <h3 class="title">Compras </h3>
-                            <p class="intro">Registro de compras </p>
-                            <%= link_to "", "/companies/start/#{@company.id}", class: "link" %>
-                             <span></span>
 
-                            
-                        </div><!--//item-inner-->
-                    </div><!--//item-->
-                    <div class="item item-pink item-2 col-md-4 col-sm-6 col-xs-6">
-                        <div class="item-inner">
-                            <div class="icon-holder">
-                                <span aria-hidden="true" class="icon icon_puzzle_alt"></span>
-                            </div><!--//icon-holder-->
-                            <h3 class="title">Almacen</h3>
-                            <p class="intro">Almacen de Productos </p>
-                            <%= link_to "", "/companies/components/#{@company.id}", class: "link" %><span></span></a>
-                        </div><!--//item-inner-->
-                    </div><!--//item-->
+                    <%if @current_user.level != "compras" || @current_user.level != "admin"%> 
 
-                    <div class="item item-blue col-md-4 col-sm-6 col-xs-6">
-                        <div class="item-inner">
-                            <div class="icon-holder">
-                                <span aria-hidden="true" class="icon icon_datareport_alt"></span>
-                            </div><!--//icon-holder-->
-                            <h3 class="title">Control de Viajes </h3>
-                            <p class="intro"> Modulo de control de viajes   </p>
-                            <%= link_to "", "/companies/charts/#{@company.id}", class: "link" %><span></span></a>
+                        <div class="item item-green col-md-4 col-sm-6 col-xs-6">
+                            <div class="item-inner">
+                                <div class="icon-holder">
+                                    <i class="icon fa fa-paper-plane"></i>
+                                </div><!--//icon-holder-->
+                                <h3 class="title">Compras </h3>
+                                <p class="intro">Registro de compras </p>
+                                <%= link_to "", "/companies/start/#{@company.id}", class: "link" %>
+                                 <span></span>
+
+                                
+                            </div><!--//item-inner-->
+                        </div><!--//item-->
+
+                    <% end %>
+
+                    <%if @current_user.level == "almacen" || @current_user.level == "admin"%>     
+
+                        <div class="item item-pink item-2 col-md-4 col-sm-6 col-xs-6">
+                            <div class="item-inner">
+                                <div class="icon-holder">
+                                    <span aria-hidden="true" class="icon icon_puzzle_alt"></span>
+                                </div><!--//icon-holder-->
+                                <h3 class="title">Almacen</h3>
+                                <p class="intro">Almacen de Productos </p>
+                                <%= link_to "", "/companies/components/#{@company.id}", class: "link" %><span></span></a>
+                            </div><!--//item-inner-->
+                        </div><!--//item-->
+                    <% end %>
 
 
-                        </div><!--//item-inner-->
-                    </div><!--//item-->
+                    <%if @current_user.level != "guias" || @current_user.level == "admin"%> 
+
+                        <div class="item item-blue col-md-4 col-sm-6 col-xs-6">
+                            <div class="item-inner">
+                                <div class="icon-holder">
+                                    <span aria-hidden="true" class="icon icon_datareport_alt"></span>
+                                </div><!--//icon-holder-->
+                                <h3 class="title">Control de Viajes </h3>
+                                <p class="intro"> Modulo de control de viajes   </p>
+                                <%= link_to "", "/companies/charts/#{@company.id}", class: "link" %><span></span></a>
+
+
+                            </div><!--//item-inner-->
+                        </div><!--//item-->
+                    <% end %>    
+
+                    <%if @current_user.level != "ventas" || @current_user.level == "admin"%> 
+
                     <div class="item item-purple col-md-4 col-sm-6 col-xs-6">
                         <div class="item-inner">
                             <div class="icon-holder">
@@ -109,6 +126,7 @@
                             <%= link_to "", "/companies/faqs/#{@company.id}", class: "link" %><span></span></a>
                         </div><!--//item-inner-->
                     </div><!--//item-->
+
                     <div class="item item-primary col-md-4 col-sm-6 col-xs-6">
                         <div class="item-inner">
                             <div class="icon-holder">
@@ -119,6 +137,7 @@
                             <a class="link" href="showcase.html"><span></span></a>
                         </div><!--//item-inner-->
                     </div><!--//item-->
+
                     <div class="item item-orange col-md-4 col-sm-6 col-xs-6">
                         <div class="item-inner">
                             <div class="icon-holder">
@@ -130,7 +149,11 @@
                         </div><!--//item-inner-->
                     </div><!--//item-->
 
-                   <div class="item item-orange col-md-4 col-sm-6 col-xs-6">
+                    <% end %>
+
+                    <%if @current_user.level != "finanzas" || @current_user.level == "admin"%> 
+
+                     <div class="item item-orange col-md-4 col-sm-6 col-xs-6">
                         <div class="item-inner">
                             <div class="icon-holder">
                                 <span aria-hidden="true" class="icon icon_gift"></span>
@@ -139,9 +162,11 @@
                                 <p class="intro">Cuentas por cobrar cliente </p>
                                 <a><%= link_to "", "/companies/ccobrar/#{@company.id}", class: "link" %><span></span></a>
                         </div><!--//item-inner-->
-                    </div><!--//item-->
+                     </div><!--//item-->
+                    <% end %>
 
 
+                    <%if @current_user.level != "finanzas" || @current_user.level == "admin"%> 
 
                     <div class="item item-purple col-md-4 col-sm-6 col-xs-6">                
                             <div class="item-inner">
@@ -154,6 +179,10 @@
                             </div><!--//item-inner-->
                     </div><!--//item-->
 
+                    <% end %>
+
+                    <%if @current_user.level != "caja" || @current_user.level == "admin"%> 
+
                     <div class="item item-primary col-md-4 col-sm-6 col-xs-6">
                         <div class="item-inner">
                             <div class="icon-holder">
@@ -164,6 +193,8 @@
                             <a class="link" href="showcase.html"><span></span></a>
                         </div><!--//item-inner-->
                     </div><!--//item-->
+
+                    <% end %>
                 </div><!--//cards-->
             </div><!--//cards-->
             </div><!--//container-->

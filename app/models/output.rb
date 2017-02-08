@@ -79,7 +79,7 @@ class Output < ActiveRecord::Base
   end
   
   def delete_products()
-    invoice_products = InvoiceProduct.where(invoice_id: self.id)
+    invoice_products = OutputDetail.where(invoice_id: self.id)
     
     for ip in invoice_products
       ip.destroy
@@ -93,18 +93,19 @@ class Output < ActiveRecord::Base
         
         id = parts[0]
         quantity = parts[1]
-        price = parts[2]        
-        
+        price = parts[2]                
         total = price.to_f * quantity.to_i        
         
-        begin
-          product = Product.find(id.to_i)
-          
-          new_invoice_product = InvoiceProduct.new(:invoice_id => self.id, :product_id => product.id, :price => price.to_f, :quantity => quantity.to_i, :discount => discount.to_f, :total => total.to_f)
-          new_invoice_product.save
+        puts id
+        puts quantity
+        puts price
+        puts total
 
-        rescue
-          
+        begin
+          product = Product.find(id.to_i)          
+          new_invoice_product = OutputDetail.new(:output_id => self.id, :product_id => product.id, 
+          :price => price.to_f, :quantity => quantity.to_i, :total => total.to_f)
+          new_invoice_product.save
         end
       end
     end
@@ -114,20 +115,24 @@ class Output < ActiveRecord::Base
     return "#{self.code}"
   end
   def get_products    
-    @itemproducts = InvoiceProduct.find_by_sql(['Select invoice_products.price,invoice_products.quantity,invoice_products.discount,invoice_products.total,products.name  from invoice_products INNER JOIN products ON invoice_products.product_id = products.id where invoice_products.invoice_id = ?', self.id ])
-    puts self.id
-
+    @itemproducts = OutputDetail.find_by_sql(['Select output_details.price,
+      output_details.quantity,output_details.total,
+      products.name  
+      from output_details INNER JOIN products ON 
+      output_details.product_id = products.id 
+      where output_details.output_id = ?', self.id ])
+    
     return @itemproducts
   end
   
   def get_invoice_products
-    invoice_products = InvoiceProduct.where(invoice_id:  self.id)    
+    invoice_products = OutputDetail.where(output_id:  self.id)    
     return invoice_products
   end
   
   def products_lines
     products = []
-    invoice_products = InvoiceProduct.where(invoice_id:  self.id)
+    invoice_products = OutputDetail.where(output_id:  self.id)
     
     invoice_products.each do | ip |
 
@@ -144,7 +149,7 @@ class Output < ActiveRecord::Base
   
     def get_processed
     if(self.processed == "1")
-      return "Aprobado "
+      return "Procesado "
 
     elsif (self.processed == "2")
       
@@ -178,12 +183,67 @@ class Output < ActiveRecord::Base
   end
   # Process the invoice
   def process
-    if(self.processed == "1" or self.processed == true)          
-      self.processed="1"
-      self.date_processed = Time.now
-      self.save
-    end
-  end
+   if(self.processed == "1" or self.processed == true)
+
+      output_details = OutputDetail.where( output_id: self.id)
+    
+      for ip in output_details
+
+        product = ip.product
+      
+        if(product.quantity)
+          if(self.return == "0")
+            ip.product.quantity -= ip.quantity
+          else
+            ip.product.quantity += ip.quantity
+          end
+          ip.product.save
+        end        
+        
+        #actualiza stock
+         stock_product =  Stock.find_by(:product_id => ip.product_id)
+
+        if stock_product 
+           $last_stock = stock_product.quantity - ip.quantity
+           stock_product.unitary_cost = ip.price   
+           stock_product.quantity = $last_stock
+
+        else
+          $last_stock = 0
+          stock_product= Stock.new(:store_id=>1,:state=>"Lima",:unitary_cost=> ip.price ,
+          :quantity=> ip.quantity,:minimum=>0,:user_id=>@user_id,:product_id=>ip.product_id,
+          :document_id=>self.document_id,:documento=>self.documento)           
+        end 
+
+        if stock_product.save
+
+           @movement = MovementDetail.where(:product_id=>ip.product_id).last   
+            if @movement  
+
+              stock_final_value = @movement.stock_final - ip.quantity
+              $stock_inicial = @movement.stock_final 
+
+            else
+              $stock_inicial = 0
+              stock_final_value = 0            
+            end             
+
+           new_movement = MovementDetail.new(:product_id=> ip.product_id,:quantity=> ip.quantity,
+            :price=>ip.price ,:balance=>$last_stock,:original_price=>ip.price,
+            :stock_inicial=>$stock_inicial ,:ingreso=>0,:salida=>ip.quantity,
+            :stock_final=> stock_final_value,:fecha=>self.fecha,:user_id=>@user_id)  
+           new_movement.save
+        end
+        
+        self.date_processed = Time.now
+        self.save
+      
+
+      end
+    end   
+ end
+
+
   def cerrar
     if(self.processed == "3" )         
       
@@ -207,6 +267,20 @@ def correlativo
         numero = Voided.find(12).numero.to_i + 1
         lcnumero = numero.to_s
         Voided.where(:id=>'12').update_all(:numero =>lcnumero)        
+
   end
+
+
+  
+  # Color for processed or not
+  def processed_color
+    if(self.processed == "1")
+      return "green"
+    else
+      return "red"
+    end
+  end
+
+
 
 end
