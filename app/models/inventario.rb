@@ -132,7 +132,7 @@ class Inventario < ActiveRecord::Base
             if @product                       
               @product.name  = row['descrip']
               @product.ubicacion = row['ubicacion']
-              
+
               @product.save 
             else 
               b = Product.new(:name=>row['descrip'], :company_id=> 1 ,:products_category_id=>1,
@@ -141,10 +141,7 @@ class Inventario < ActiveRecord::Base
               b.save                            
             end 
 
-            if @product.id == 101916
-                  puts row['descrip']
-            end 
-
+          
 
             
           end 
@@ -158,7 +155,7 @@ class Inventario < ActiveRecord::Base
     self.fecha = DateTime.now
   end
 
-  # Metodo que calcula el total de los detalles en este caso (inventario_detalles) antes de salvar
+  # Metodo que ca lcula el total de los detalles en este caso (inventario_detalles) antes de salvar
   # Ver arriba accepts_nested_attributes_for
   def adicionar_total
     sum = 0
