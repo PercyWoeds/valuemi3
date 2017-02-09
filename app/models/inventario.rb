@@ -111,6 +111,12 @@ class Inventario < ActiveRecord::Base
         if @product 
             @product.unidad    = row['unidad']  
             @product.ubicacion = row['ubica']  
+          @product.company_id=1          
+          @product.products_category_id=1
+          @product.tax1=18.00
+          @product.tax2=0
+          @product.tax3=0
+
             
             @product.save
             
@@ -131,6 +137,11 @@ class Inventario < ActiveRecord::Base
 
         if @product                       
           @product.name  = row['descrip']
+          @product.company_id=1          
+          @product.products_category_id=1
+          @product.tax1=18.00
+          @product.tax2=0
+          @product.tax3=0
         
           @product.save 
         else 
