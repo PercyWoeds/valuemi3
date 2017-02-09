@@ -104,46 +104,46 @@ class Inventario < ActiveRecord::Base
 
   def self.import2(file)
 
-          CSV.foreach(file.path, headers: true, encoding:'iso-8859-1:utf-8') do |row|
+      CSV.foreach(file.path, headers: true, encoding:'iso-8859-1:utf-8') do |row|
 
-           @product = Product.find_by(:code=>row['code'] )
+       @product = Product.find_by(:code=>row['code'] )
 
-            if @product 
-                @product.unidad    = row['unidad']  
-                @product.ubicacion = row['ubica']  
-                
-                @product.save
-                
-            end 
+        if @product 
+            @product.unidad    = row['unidad']  
+            @product.ubicacion = row['ubica']  
+            
+            @product.save
+            
+        end 
 
-          end 
-        
+      end 
+      
   end      
 
   def self.import3(file)
 
-          CSV.foreach(file.path, headers: true, encoding:'iso-8859-1:utf-8') do |row|            
+      CSV.foreach(file.path, headers: true, encoding:'iso-8859-1:utf-8') do |row|            
 
-          @product = Product.find_by(:code=>row['code'] )
-           puts row['code']
-           puts row['descrip']
-           puts row['unidad']          
+      @product = Product.find_by(:code=>row['code'] )
+       puts row['code']
+       puts row['descrip']
+       puts row['unidad']          
 
-            if @product                       
-              @product.name  = row['descrip']
-              @product.ubicacion = row['ubicacion']
-              @product.save 
-            else 
-              b = Product.new(:name=>row['descrip'], :company_id=> 1 ,:products_category_id=>1,
-              :code=>row['code'],:tax1=> 18,:tax2=>0,:tax3=>0,:tax1_name=>"",:tax2_name=>"",
-              :tax3_name=>"",:unidad=>row['unidad'])
-              b.save                            
-            end 
+        if @product                       
+          @product.name  = row['descrip']
+        
+          @product.save 
+        else 
+          b = Product.new(:name=>row['descrip'], :company_id=> 1 ,:products_category_id=>1,
+          :code=>row['code'],:tax1=> 18,:tax2=>0,:tax3=>0,:tax1_name=>"",:tax2_name=>"",
+          :tax3_name=>"",:unidad=>row['unidad'])
+          b.save                            
+        end 
 
-          
+      
 
-            
-          end 
+        
+      end 
         
   end      
 
