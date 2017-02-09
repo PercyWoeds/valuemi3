@@ -1,0 +1,203 @@
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @facturas.company.name, @facturas.company %> &raquo;
+  <%= link_to "serviceorders", "/companies/serviceorders/#{@facturas.company.id}" %>
+</div>
+
+<h1>
+  <%= image_tag("invoice_48.png", :class => "vmiddle") %>
+  <%= @facturas.identifier %>
+</h1>
+
+<%= hr() %>
+
+<% if @facturas.location %>
+  <p>
+    <b>Location:</b>
+    <%= link_to @facturas.location.name, @facturas.location %>
+  </p>
+<% end %>
+
+<% if @facturas.division %>
+  <p>
+    <b>Division:</b>
+    <%= link_to @facturas.division.name, @facturas.division %>
+  </p>
+<% end %>
+
+
+<p>
+  <b>Code:</b>
+  <%= @facturas.code %>
+</p>
+
+ <p>
+    <b>Moneda:</b>
+    <%= @facturas.moneda.description %>   
+ </p>
+
+ <p>
+    <b>Forma de pago:</b>
+    <%= @facturas.payment.descrip  %>   
+ </p>
+
+<p>
+    <b>Fecha entrega:</b>
+    <%= @facturas.date1  %>   
+</p>
+ 
+<p>
+    <b>Estado: </b>
+    <%=   @facturas.get_processed   %>   
+</p>
+
+
+<%= hr() %>
+
+<h3>
+  Informacion Proveedor
+</h3>
+
+<p>
+  <b>Name:</b>
+  <%= link_to @supplier.name, @supplier %>
+</p>
+
+<%= render "suppliers/show" %>
+
+<%= hr() %>
+
+<h3>
+  Details
+</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>
+        Product
+      </th>
+      <th>
+        Price
+      </th>
+      <th>
+        Quantity
+      </th>
+      <th>
+        Discount
+      </th>
+      <th>
+        Total
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <% for productItem in @facturas.get_services() %>
+      <tr>
+        <td class="bordered_bottom bordered_right">
+          <%= link_to productItem.name   %>
+        </td>
+        <td class="bordered_bottom bordered_right">
+          <%= money(productItem.price) %>
+        </td>
+        <td class="bordered_bottom bordered_right">
+          <%= productItem.quantity %>
+        </td>
+        <td class="bordered_bottom bordered_right">
+          <%= money(productItem.discount) %>%
+        </td>
+        <td class="bordered_bottom bordered_right">
+          <%= money(productItem.total) %>
+        </td>
+      </tr>
+    <% end %>
+    <tr>
+      <td colspan="6" class="bordered_bottom bordered_right">
+        &nbsp;
+      </td>
+    </tr>
+    <tr>
+      <td colspan="5" class="bordered_bottom bordered_right bold">
+        Subtotal:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@facturas.subtotal) %>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="5" class="bordered_bottom bordered_right bold">
+        Tax:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@facturas.tax) %>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="5" class="bordered_bottom bordered_right bold">
+        Total:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@facturas.total) %>
+      </td>
+    </tr>
+
+        <tr>
+      <td colspan="4" class="bordered_bottom bordered_right bold">
+        Detraccion :
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= @facturas.detraccion  %>
+      </td>
+    </tr>
+
+  </tbody>
+</table>
+<br />
+
+<%= hr() %>
+
+<% if @facturas.description != "" %>
+  <div>
+    <b>Description:</b>
+    <br />
+    <br />
+    <%= format_text(@facturas.description) %>
+  </div>
+  <%= hr() %>
+<% end %>
+
+<% if @facturas.comments != "" %>
+  <div>
+    <b>Comments:</b>
+    <br />
+    <br />
+    <%= format_text(@facturas.comments) %>
+  </div>
+  <%= hr() %>
+<% end %>
+
+<br />
+
+<div>
+  <strong><%= @facturas.get_processed %></strong>
+  <% if @facturas.processed == "1" and @facturas.date_processed %>
+    <%= doDate(@facturas.date_processed) %>
+  <% end %>
+</div>
+
+<p>
+  <b>Return:</b>
+  <%= @facturas.get_return %>
+</p>
+
+<p>
+  <strong>Seller:</strong>
+  <%= link_to @facturas.user.username, @facturas.user %>
+</p>
+
+<%= hr() %>
+
+<div class="button">
+  <%= link_to 'Grabar Factura', "/serviceorders/pdf/#{@facturas.id}.pdf" %>    
+  <%= link_to 'Regresar', "/companies/purchaseorders/#{@facturas.company.id}" %>
+</div>

@@ -455,6 +455,10 @@ end
   match 'purchases/cargar/:id'   => 'purchases#cargar', via: [:get, :post]
   match 'purchases/do_crear/:id'   => 'purchases#do_crear', via: [:get, :post]
 
+  match 'purchases/ingresos/:id'   => 'purchases#ingresos', via: [:get, :post]
+  match 'purchases/buscaringresos/:id'   => 'purchases#buscaringresos', via: [:get, :post]
+  match 'purchases/search_ingresos/:id'   => 'purchases#search_ingresos', via: [:get, :post]
+
   match 'purchases/rpt_cpagar2_pdf/:company_id' => 'purchases#rpt_cpagar2_pdf', via: [:get, :post]
   match 'purchases/rpt_cpagar3_pdf/:company_id' => 'purchases#rpt_cpagar3_pdf', via: [:get, :post]
   match 'purchases/rpt_cpagar4_pdf/:company_id' => 'purchases#rpt_cpagar4_pdf', via: [:get, :post]
@@ -555,6 +559,8 @@ end
 
   match '/stocks/rpt_stocks1/:company_id' => 'stocks#rpt_stocks1', via: [:get, :post]
   match '/stocks/rpt_stocks2/:company_id' => 'stocks#rpt_stocks2', via: [:get, :post]
+  match '/stocks/do_stocks/:company_id' => 'stocks#do_stocks', via: [:get, :post]
+
   resources :stocks 
     
   # Products kits

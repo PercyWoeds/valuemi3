@@ -1,6 +1,5 @@
 class StocksController < ApplicationController
 
-
 ##-----------------------------------------------------------------------------------
 ## REPORTE DE GUIAS EMITIDAS
 ##-----------------------------------------------------------------------------------
@@ -276,10 +275,35 @@ def client_data_headers
         pdf.draw_text "Company: #{@company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
 
       end
-
-      pdf
-      
+      pdf      
   end
+
+  def do_stocks
+
+    @company = Company.find(params[:company_id])
+    @pagetitle = "#{@company.name} - Stocks "
+
+
+        if(params[:search] and params[:search] != "")  
+
+          @stocks = Stock.find_by_sql(['Select stocks.*, products.name from stocks 
+          INNER JOIN products ON stocks.product_id = products.id
+          WHERE products.code like ?  or products.name like ?',
+          params[:search], "%"+ params[:search]+"%"]).paginate(:page => params[:page])
+
+
+#@invoices=Invoice.find_by_sql(['Select invoices.*,clients.vrazon2,mailings.flag1 from invoices 
+#            LEFT JOIN mailings ON invoices.numero = mailings.numero
+#            LEFT  JOIN clients ON invoices.cliente = clients.vcodigo            
+#            order by numero desc where invoices.numero like ?  or clients.vrazon2 like ?',
+ #           params[:search], "%"+ params[:search]+"%"]).paginate(:page => params[:page])          
+
+        else
+          @stocks = Stock.paginate(:page => params[:page]) 
+        end
+
+    
+  end 
 
   # Export serviceorder to PDF
   def rpt_stocks2
@@ -287,7 +311,6 @@ def client_data_headers
     @fecha1 = params[:fecha1] 
     @fecha2 = params[:fecha2] 
     product =params[:product_id]
-
       
     @movements = @company.get_movement_stocks(@fecha1,@fecha2,product)
       
@@ -304,6 +327,13 @@ def client_data_headers
     send_file("app/pdf_output/stocks2.pdf", :type => 'application/pdf', :disposition => 'inline')
   end
 
+  def show
+    @stock = Stock.find(params[:id])
+
+    @product = PurchaseDetail.get_ingresos(@stocks.product_id)
+
+
+  end
 
 
 

@@ -1,9 +1,11 @@
 class Stock < ActiveRecord::Base
 
 
-belongs_to :product
+self.per_page = 20
+
 belongs_to :document 
 
+belongs_to :product
 
   TABLE_HEADERS = ["ITEM",
                      "CODIGO",
@@ -12,8 +14,6 @@ belongs_to :document
                      "COSTO",
                      "TOTAL",
                      "ESTADO"]
-
-
 	
   TABLE_HEADERS2 = ["ITEM",
                      "NOMBRE",
@@ -24,9 +24,7 @@ belongs_to :document
                      "SALIDA",
                      "SALDO "]
 
-
-          
-
+        
 def get_estado
 	if self.active == true
 

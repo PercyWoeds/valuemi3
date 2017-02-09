@@ -1,0 +1,44 @@
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %> &raquo;
+  <%= link_to "Invoices", "/companies/facturas/#{@company.id}" %>
+</div>
+
+<h3>
+  <%= image_tag("invoice_48.png", :class => "vmiddle") %>
+  Buscar producto ingresado por registro de facturas 
+</h3>
+
+<p>
+  Para buscar un producto  por favor llenar el siguiente formulario. Los campos marcados con <strong>*</strong> son obligatorios 
+</p>
+
+<%= hr() %>
+
+    <form method="get" action="/purchases/search_ingresos/<%= @company.id %>">
+        <strong>Buscar :</strong>
+
+        <input type="text" name="code" value="" style = width: 250px;"  />
+
+        <input type="submit" value="Buscar" class="bold small_btn" />
+
+  
+    </form>	
+
+
+
+<%= hr() %>
+
+<br />
+<%= render "purchases/list_ingresos" %>
+
+<br />
+
+
+<%= will_paginate @invoices %>
+
+<%= render 'layouts/autocomplete' %>
+
+<div class="button">
+  <%= link_to 'Back', "/companies/components/#{@company.id}" %>
+</div>

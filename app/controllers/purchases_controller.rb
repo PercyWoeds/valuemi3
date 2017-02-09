@@ -7,6 +7,13 @@ class PurchasesController < ApplicationController
   before_filter :authenticate_user!, :checkProducts
 
 
+  def ingresos
+        @company = Company.find(params[:id])
+        @purchases  = PurchaseDetail.all.paginate(:page => params[:page])
+  end 
+
+
+
   def generar1
     
     @company = Company.find(params[:company_id])
@@ -736,10 +743,16 @@ class PurchasesController < ApplicationController
     end
   end
 
-  def search_serviceorders
-    
+  def search_serviceorders    
     @serviceorders = Serviceorder.search(params[:search_param])
   end
+
+  def buscar_ingresos    
+    @company = Company.find(params[:company_id])
+    @facturas = Purchase.search(params[:search_param])
+
+  end
+
 
   def add_oservice
 

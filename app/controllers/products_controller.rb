@@ -5,7 +5,6 @@ class ProductsController < ApplicationController
   before_filter :authenticate_user!, :checkCompanies
 
 
-
   def import
      Product.import(params[:file])
       redirect_to root_url, notice: "categories importadas."

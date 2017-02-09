@@ -77,18 +77,10 @@
           <td class="bordered_right bordered_bottom right">
             <%= money(product.cost) %>
           </td>
-          <td class="bordered_right bordered_bottom right">
-            <%= money(product.price) %>
-          </td>
-          <td class="bordered_right bordered_bottom">
-            <%= link_to "View", product %>
-          </td>
-          <td class="bordered_right bordered_bottom">
-            <%= link_to "Edit", edit_product_path(product) %>
-          </td>
-          <td class="bordered_right bordered_bottom">
-            <%= link_to 'Delete', product, :confirm => 'Are you sure?', :method => :delete %>
-          </td>
+          <td><%= link_to 'Ver', product %></td>
+        <td><%= link_to 'Editar', edit_product_path(product) %></td>
+        <td><%= link_to 'Eliminar', product, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          
         </tr>
       <% end %>
     </tbody>

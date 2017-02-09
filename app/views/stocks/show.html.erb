@@ -1,0 +1,163 @@
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @purchase.company.name, @purchase.company %> &raquo;
+  <%= link_to "Compras", "/companies/purchases/#{@purchase.company.id}" %>
+</div>
+
+<h1>
+  <%= image_tag("invoice_48.png", :class => "vmiddle") %>
+  <%= @purchase.identifier %>
+</h1>
+
+<%= hr() %>
+
+<% if @purchase.location %>
+  <p>
+    <b>Location:</b>
+    <%= link_to @purchase.location.name, @purchase.location %>
+  </p>
+<% end %>
+
+<% if @purchase.division %>
+  <p>
+    <b>Division:</b>
+    <%= link_to @purchase.division.name, @purchase.division %>
+  </p>
+<% end %> 
+
+<p>
+  <b>Code:</b>
+  <%= @purchase.documento %>
+</p>
+
+<%= hr() %>
+
+<h3>
+  Proveedor informacion
+</h3>
+
+<p>
+  <b>Name:</b>
+  <%= link_to @supplier.name, @supplier %>
+</p>
+
+<%= render "suppliers/show" %>
+
+<%= hr() %>
+
+<h3>
+  Detalles
+</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>
+        Producto
+      </th>
+      <th>
+        Precio
+      </th>
+      <th>
+        Cantidad
+      </th>
+      
+      <th>
+        Descuento
+      </th>
+      <th>
+        Total
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <% for productItem in @purchase.get_products() %>
+      <tr>
+        <td class="bordered_bottom bordered_right">
+          <%= link_to productItem.name   %>
+        </td>
+        <td class="bordered_bottom bordered_right">
+          <%= money(productItem.price) %>
+        </td>
+        <td class="bordered_bottom bordered_right">
+          <%= productItem.quantity %>
+        </td>
+
+
+        <td class="bordered_bottom bordered_right">
+          <%= money(productItem.discount) %>%
+        </td>
+        <td class="bordered_bottom bordered_right">
+          <%= money(productItem.total) %>
+        </td>
+      </tr>
+    <% end %>
+    <tr>
+      <td colspan="5" class="bordered_bottom bordered_right">
+        &nbsp;
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4" class="bordered_bottom bordered_right bold">
+        Subtotal:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@purchase.payable_amount) %>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4" class="bordered_bottom bordered_right bold">
+        Tax:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@purchase.tax_amount) %>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4" class="bordered_bottom bordered_right bold">
+        Total:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@purchase.total_amount) %>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br />
+
+<%= hr() %>
+
+<% if @purchase.comments != "" %>
+  <div>
+    <b>Comments:</b>
+    <br />
+    <br />
+    <%= format_text(@purchase.comments) %>
+  </div>
+  <%= hr() %>
+<% end %>
+
+<br />
+
+<div>
+  <strong><%= @purchase.get_processed %></strong>
+  <% if @purchase.processed == "1" and @purchase.date_processed %>
+    <%= doDate(@purchase.date_processed) %>
+  <% end %>
+</div>
+
+<p>
+  <b>Return:</b>
+  <%= @purchase.get_return %>
+</p>
+
+<p>
+  <strong>Seller:</strong>
+  <%= link_to @purchase.user.username, @purchase.user %>
+</p>
+
+<%= hr() %>
+
+<div class="button">
+  <%= link_to 'Regresar', "/companies/purchases/#{@purchase.company.id}" %>
+</div>
