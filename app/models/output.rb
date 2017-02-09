@@ -2,7 +2,7 @@ class Output < ActiveRecord::Base
 
 
   self.per_page = 20
-
+  validates_uniqueness_of :code
   validates_presence_of :company_id, :supplier_id, :employee_id,:truck_id,:code, :user_id
   
   belongs_to :company
