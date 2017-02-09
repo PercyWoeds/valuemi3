@@ -19,7 +19,7 @@ class InventariosController < ApplicationController
   def import3
 
     @user_id= @current_user.id
-     Inventario.import2(params[:file])
+     Inventario.import3(params[:file])
        redirect_to root_url, notice: "Inventario importadas."
   end 
   
