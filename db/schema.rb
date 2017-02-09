@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170207222613) do
+ActiveRecord::Schema.define(version: 20170209173304) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -776,7 +776,7 @@ ActiveRecord::Schema.define(version: 20170207222613) do
   create_table "movement_details", force: :cascade do |t|
     t.integer  "account_id"
     t.integer  "item_id"
-    t.decimal  "quantity",       precision: 14, scale: 2, default: 0.0
+    t.float    "quantity",                                default: 0.0
     t.decimal  "price",          precision: 14, scale: 2, default: 0.0
     t.string   "description"
     t.decimal  "discount",       precision: 14, scale: 2, default: 0.0
@@ -785,10 +785,10 @@ ActiveRecord::Schema.define(version: 20170207222613) do
     t.datetime "created_at",                                            null: false
     t.datetime "updated_at",                                            null: false
     t.integer  "product_id"
-    t.integer  "stock_inicial"
-    t.integer  "ingreso"
-    t.integer  "salida"
-    t.integer  "stock_final"
+    t.float    "stock_inicial"
+    t.float    "ingreso"
+    t.float    "salida"
+    t.float    "stock_final"
     t.datetime "fecha"
     t.integer  "user_id"
     t.integer  "document_id"
@@ -865,7 +865,7 @@ ActiveRecord::Schema.define(version: 20170207222613) do
     t.integer  "output_id"
     t.integer  "product_id"
     t.float    "price"
-    t.integer  "quantity"
+    t.float    "quantity"
     t.float    "total"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -952,7 +952,6 @@ ActiveRecord::Schema.define(version: 20170207222613) do
     t.float    "tax2"
     t.string   "tax3_name"
     t.float    "tax3"
-    t.integer  "quantity"
     t.integer  "reorder"
     t.text     "description"
     t.text     "comments"
@@ -972,6 +971,7 @@ ActiveRecord::Schema.define(version: 20170207222613) do
     t.integer  "ubica_id"
     t.string   "unidad"
     t.string   "ubicacion"
+    t.float    "quantity"
   end
 
   create_table "products_categories", force: :cascade do |t|

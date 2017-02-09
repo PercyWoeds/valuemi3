@@ -244,7 +244,7 @@ def build_pdf_header(pdf)
         
         product = Product.find(id.to_i)
         product[:i] = i
-        product[:quantity] = quantity.to_i
+        product[:quantity] = quantity.to_f
         product[:price] = price.to_f
                 
         total = product[:price] * product[:quantity]

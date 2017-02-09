@@ -27,7 +27,7 @@ class Output < ActiveRecord::Base
         quantity = parts[1]
         price = parts[2]
                 
-        total = price.to_f * quantity.to_i
+        total = price.to_f * quantity.to_f
                 
         begin
           product = Product.find(id.to_i)
@@ -51,8 +51,8 @@ class Output < ActiveRecord::Base
             id = parts[0]
             quantity = parts[1]
             price = parts[2]        
-        
-            total = price.to_f * quantity.to_i            
+      
+            total = price.to_f * quantity.to_f            
         
             begin
               product = Product.find(id.to_i)
@@ -94,13 +94,13 @@ class Output < ActiveRecord::Base
         id = parts[0]
         quantity = parts[1]
         price = parts[2]                
-        total = price.to_f * quantity.to_i        
+        total = price.to_f * quantity.to_f        
         
 
         begin
           product = Product.find(id.to_i)          
           new_invoice_product = OutputDetail.new(:output_id => self.id, :product_id => product.id, 
-          :price => price.to_f, :quantity => quantity.to_i, :total => total.to_f)
+          :price => price.to_f, :quantity => quantity.to_f, :total => total.to_f)
           new_invoice_product.save
         end
       end
