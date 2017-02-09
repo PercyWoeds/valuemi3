@@ -16,6 +16,9 @@ class TrucksController < ApplicationController
   # GET /trucks/1
   # GET /trucks/1.json
   def show
+    @truck = Truck.new
+    @marcas = @truck.get_marcas() 
+    @modelos = @truck.get_modelos()     
   end
 
   # GET /trucks/new
@@ -27,6 +30,7 @@ class TrucksController < ApplicationController
 
   # GET /trucks/1/edit
   def edit
+    @truck = Truck.find(params[:id])    
     @marcas = @truck.get_marcas() 
     @modelos = @truck.get_modelos()
          
@@ -36,6 +40,9 @@ class TrucksController < ApplicationController
   # POST /trucks.json
   def create
     @truck = Truck.new(truck_params)
+    @marcas = @truck.get_marcas() 
+    @modelos = @truck.get_modelos()
+          
 
     respond_to do |format|
       if @truck.save

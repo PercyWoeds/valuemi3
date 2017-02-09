@@ -132,7 +132,6 @@ class Inventario < ActiveRecord::Base
             if @product                       
               @product.name  = row['descrip']
               @product.ubicacion = row['ubicacion']
-
               @product.save 
             else 
               b = Product.new(:name=>row['descrip'], :company_id=> 1 ,:products_category_id=>1,

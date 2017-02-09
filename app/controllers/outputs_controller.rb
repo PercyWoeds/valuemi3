@@ -533,7 +533,68 @@ def build_pdf_header(pdf)
   def destroy
     @output = Output.find(params[:id])
     company_id = @output[:company_id]
-    @output.destroy
+
+    @outputdetail = OutputDetail.where(:output_id=> @output.id)
+
+    proceso = @output.processed 
+    $fecha  = @output.fecha
+
+    if @output.destroy
+
+
+      if @outputdetail 
+        if proceso == "1"
+
+      for ip in @outputdetail
+
+         stock_product =  Stock.find_by(:product_id => ip.product_id)
+
+        if stock_product 
+           $last_stock = stock_product.quantity + ip.quantity
+           stock_product.unitary_cost = ip.price   
+           stock_product.quantity = $last_stock
+
+        else
+          $last_stock = 0
+          stock_product= Stock.new(:store_id=>1,:state=>"Lima",:unitary_cost=> ip.price ,
+          :quantity=> ip.quantity,:minimum=>0,:user_id=>@user_id,:product_id=>ip.product_id,
+          :document_id=>1,:documento=>"AJUSTE X ELIMINACION")           
+        end 
+
+        if stock_product.save
+
+           @movement = MovementDetail.where(:product_id=>ip.product_id).last   
+            if @movement  
+
+              stock_final_value = @movement.stock_final + ip.quantity
+              $stock_inicial = @movement.stock_final 
+
+            else
+              $stock_inicial = 0
+              stock_final_value = 0            
+            end             
+
+           new_movement = MovementDetail.new(:product_id=> ip.product_id,:quantity=> ip.quantity,
+            :price=>ip.price ,:balance=>$last_stock,:original_price=>ip.price,
+            :stock_inicial=>$stock_inicial ,:ingreso=>0,:salida=>ip.quantity,
+            :stock_final=> stock_final_value,:fecha=>$fecha,:user_id=>@user_id)  
+           new_movement.save
+        end
+
+
+          end  
+
+
+
+        end   
+
+
+      end  
+
+
+    end 
+
+
 
     respond_to do |format|
       format.html { redirect_to("/companies/outputs/" + company_id.to_s) }

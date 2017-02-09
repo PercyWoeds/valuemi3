@@ -1,5 +1,7 @@
 class Truck < ActiveRecord::Base
 
+validates_uniqueness_of :placa 
+
 
 has_many :outputs
 

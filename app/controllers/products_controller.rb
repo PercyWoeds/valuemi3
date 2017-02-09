@@ -34,9 +34,9 @@ class ProductsController < ApplicationController
         @view_restock = true
       else
         if(params[:search] and params[:search] != "")         
-          @products = Product.where(["company_id = ? and (code LIKE ? OR name LIKE ?)", @company.id,"%" + params[:search] + "%", "%" + params[:search] + "%"]).order('name').paginate(:page => params[:page]) 
+          @products = Product.where(["company_id = ? and (code LIKE ? OR name LIKE ?)", @company.id,"%" + params[:search] + "%", "%" + params[:search] + "%"]).order('code').paginate(:page => params[:page]) 
         else
-          @products = Product.where(["company_id = ?",@company.id ]).order('name').paginate(:page => params[:page]) 
+          @products = Product.where(["company_id = ?",@company.id ]).order('code').paginate(:page => params[:page]) 
         end
       end
     else
@@ -68,8 +68,11 @@ class ProductsController < ApplicationController
     @product = Product.new
     @product[:cost] = 0
     @product[:quantity] = 0
+
     @product[:quantity_transit] = 0
     @product[:company_id] = params[:company_id]
+    @product[:price] = 0
+    
     @company    = Company.find(params[:company_id])
     @suppliers  = @company.get_suppliers()
     @marcas     = @company.get_marcas()
