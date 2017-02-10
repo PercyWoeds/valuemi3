@@ -72,7 +72,6 @@ class OutputsController < ApplicationController
        for  product in @facturas_rpt
  
             row = []         
-
             row << nroitem.to_s
             row << product.code
             row << product.fecha.strftime("%d/%m/%Y")            
@@ -98,7 +97,7 @@ class OutputsController < ApplicationController
       row << ""
       row << ""
       row << ""
-      row << 
+      row << ""
       row << ""
       row << "TOTALES => "
       row << " "
