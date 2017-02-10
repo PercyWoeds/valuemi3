@@ -9,6 +9,8 @@ class Inventario < ActiveRecord::Base
 
   # Relaciones
   has_many :inventario_detalles, :dependent => :destroy, :class_name => "InventarioDetalle"
+
+  
   belongs_to :almacen
   
   #default_scope :order => "fecha DESC"

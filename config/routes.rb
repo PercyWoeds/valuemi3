@@ -234,6 +234,7 @@ end
 
   match 'companies/reports/rpt_calmacen1_pdf/:company_id' => 'reports#rpt_calmacen1_pdf', via: [:get, :post]  
   match 'companies/reports/rpt_calmacen2_pdf/:company_id' => 'reports#rpt_calmacen2_pdf', via: [:get, :post]  
+  match 'companies/reports/rpt_calmacen3_pdf/:company_id' => 'reports#rpt_calmacen3_pdf', via: [:get, :post]  
 
   match 'companies/reports/rpt_facturas_all/:company_id' => 'reports#rpt_facturas_all', via: [:get, :post]
   match 'companies/reports/rpt_facturas_all2/:company_id' => 'reports#rpt_facturas_all2', via: [:get, :post]
@@ -277,6 +278,8 @@ end
   match 'outputs/do_process/:id' => 'outputs#do_process', via: [:get, :post]
   match 'outputs/email/:id' => 'outputs#email', via: [:get, :post]
   match 'outputs/pdf/:id' => 'outputs#pdf', via: [:get, :post]
+  match 'outputs/rpt_salidas_all_pdf/:id' => 'outputs#rpt_salidas_all_pdf', via: [:get, :post]
+  
   match 'companies/outputs/:company_id' => 'outputs#list_outputs', via: [:get, :post]
   resources :outputs
 

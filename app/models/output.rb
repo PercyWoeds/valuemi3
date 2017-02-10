@@ -15,6 +15,19 @@ class Output < ActiveRecord::Base
   belongs_to :payment 
   
   has_many :output_details
+
+
+
+   TABLE_HEADERS2 = ["ITEM",
+                      "DOCUMENTO",
+                     "FECHA",
+                     "PROVEEDOR",
+                     "EMPLEADO",
+                     "PLACA",
+                     "COSTO",
+                     "CANTIDAD",
+                     "TOTAL"]
+
   
   def get_subtotal(items)
     subtotal = 0

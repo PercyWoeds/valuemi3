@@ -1028,7 +1028,7 @@ def get_supplier_payments2(moneda)
   
   # Return products for company
   def get_products()
-    products = Product.where(company_id: self.id)
+    products = Product.where(company_id: self.id).order('name')
     
     return products
   end
@@ -1300,19 +1300,69 @@ def get_supplier_payments2(moneda)
     
  end 
 
- def get_stocks
-    @stocks = Stock.all
-
+ def get_stocks2
     
+      @stocks = Inventario.where()
+    
+      for ip in purchase_details
 
+        product = ip.product
+      
+        if(product.quantity)
+          if(self.return == "0")
+            ip.product.quantity -= ip.quantity
+          else
+            ip.product.quantity += ip.quantity
+          end
+          ip.product.save
+        end        
+        
+        #actualiza stock
+         stock_product =  Stock.find_by(:product_id => ip.product_id)
+
+        if stock_product 
+           $last_stock = stock_product.quantity + ip.quantity
+           stock_product.unitary_cost = ip.price_without_tax   
+           stock_product.quantity = $last_stock
+
+        else
+          $last_stock = 0
+          stock_product= Stock.new(:store_id=>1,:state=>"Lima",:unitary_cost=> ip.price_without_tax,
+          :quantity=> ip.quantity,:minimum=>0,:user_id=>@user_id,:product_id=>ip.product_id,
+          :document_id=>self.document_id,:documento=>self.documento)           
+        end 
+
+        stock_product.save
+
+        self.date_processed = Time.now
+        self.save
+      
+
+      end
 
     return @stocks
  end
+
+ def get_stocks
+  @stocks = Stock.all 
+  return @stocks 
+
+ end 
  def get_movement_stocks(fecha1,fecha2,product)
     @movements = MovementDetail.where([" fecha >= ? and fecha <= ?  and product_id = ?", "#{fecha1} 00:00:00","#{fecha2} 23:59:59",product ])
 
     return @movements
  end
+def get_salidas_day(fecha1,fecha2,product)
+  
+    @purchases = Output.find_by_sql(['Select outputs.*,output_details.quantity,
+    output_details.price,output_details.total  from output_details   
+INNER JOIN outputs ON output_details.output_id = outputs.id
+WHERE output_details.product_id = ?  and outputs.fecha > ? and outputs.fecha < ?',product, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
+ 
+    return @purchases 
+
+end
 
 
 end

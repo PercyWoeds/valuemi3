@@ -470,6 +470,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
   end
 
 
+
   # Export serviceorder to PDF
   def rpt_facturas_all_pdf
 
