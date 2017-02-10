@@ -111,7 +111,7 @@ class Inventario < ActiveRecord::Base
         if @product 
             @product.unidad    = row['unidad']  
             @product.ubicacion = row['ubica']  
-            @product.cost = row['price']  
+            @product.cost      = row['price']  
             
             @product.company_id=1          
             @product.products_category_id=1
