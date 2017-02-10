@@ -4,7 +4,6 @@ class Stock < ActiveRecord::Base
 self.per_page = 20
 
 belongs_to :document 
-
 belongs_to :product
 
   TABLE_HEADERS = ["ITEM",

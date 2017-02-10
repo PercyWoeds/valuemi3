@@ -83,8 +83,10 @@ def client_data_headers
        for  stock in @stocks           
             row = []
             row << nroitem.to_s
-            row << stock.product.code             
-            row << stock.product.name             
+            if stock.product != nil   
+            row << stock.product.code
+            row << stock.product.name
+            end 
             row << stock.quantity
             row << sprintf("%.2f",stock.unitary_cost.to_s)
             importe = stock.unitary_cost.round(2)*stock.quantity.round(2)
