@@ -1299,14 +1299,18 @@
       
       var quantity = $("#ac_item_quantity").val();
       var price = $("#ac_item_price").val();
+      var stock = $("#ac_item_stock").val();
     
       var items_arr = $("#items").val().split(",");
 
       if(quantity == "" || !isNumeric(quantity)) {
-        alert("Please enter a valid quantity");
+        alert("Por favor ingrese una cantidad valida");
       } else if(price == "" || !isNumeric(price)) {
-        alert("Please enter a valid price");
-      } else {
+        alert("Por favor ingrese un precio valido");
+
+      } else if( quantity > stock ) {
+        alert("Por favor ingrese una cantidad igual o menor al stock ");
+      }  else {
         var item_line = item_id + "|BRK|" + quantity + "|BRK|" + price ;
         
         $("#items").val($("#items").val() + "," + item_line);
@@ -1321,7 +1325,7 @@
         updateItemTotalOutput();
       }
     } else {
-      alert("Please find a product to add first.");
+      alert("Por favor agregue un item .");
     }
   }
 
