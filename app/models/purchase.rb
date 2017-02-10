@@ -313,26 +313,8 @@ class Purchase < ActiveRecord::Base
           :document_id=>self.document_id,:documento=>self.documento)           
         end 
 
-        if stock_product.save
+        stock_product.save
 
-           @movement = MovementDetail.where(:product_id=>ip.product_id).last   
-            if @movement  
-
-              stock_final_value = @movement.stock_final + ip.quantity
-              $stock_inicial = @movement.stock_final 
-
-            else
-              $stock_inicial = 0
-              stock_final_value = 0            
-            end             
-
-           new_movement = MovementDetail.new(:product_id=> ip.product_id,:quantity=> ip.quantity,
-            :price=>ip.price_without_tax,:balance=>$last_stock,:original_price=>ip.price_without_tax,
-            :stock_inicial=>$stock_inicial ,:ingreso=>ip.quantity,:salida=>0,
-            :stock_final=> stock_final_value,:fecha=>self.date1,:user_id=>@user_id)  
-           new_movement.save
-
-        end
         self.date_processed = Time.now
         self.save
       
@@ -350,6 +332,8 @@ class Purchase < ActiveRecord::Base
     end
 
   end
+
+  
 
 
 end

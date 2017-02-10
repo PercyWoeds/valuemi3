@@ -330,8 +330,7 @@ def client_data_headers
   def show
     @stock = Stock.find(params[:id])
 
-    @product = PurchaseDetail.get_ingresos(@stocks.product_id)
-
+    @product = @stock.get_ingresos(@stock.product_id)
 
   end
 

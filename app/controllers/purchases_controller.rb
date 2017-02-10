@@ -11,8 +11,8 @@ class PurchasesController < ApplicationController
         @company = Company.find(params[:id])
         @purchases  = PurchaseDetail.all.paginate(:page => params[:page])
   end 
-
-
+  
+  
 
   def generar1
     

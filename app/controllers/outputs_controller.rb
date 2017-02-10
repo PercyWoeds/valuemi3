@@ -559,35 +559,10 @@ def build_pdf_header(pdf)
           :quantity=> ip.quantity,:minimum=>0,:user_id=>@user_id,:product_id=>ip.product_id,
           :document_id=>1,:documento=>"AJUSTE X ELIMINACION")           
         end 
-
-        if stock_product.save
-
-           @movement = MovementDetail.where(:product_id=>ip.product_id).last   
-            if @movement  
-
-              stock_final_value = @movement.stock_final + ip.quantity
-              $stock_inicial = @movement.stock_final 
-
-            else
-              $stock_inicial = 0
-              stock_final_value = 0            
-            end             
-
-           new_movement = MovementDetail.new(:product_id=> ip.product_id,:quantity=> ip.quantity,
-            :price=>ip.price ,:balance=>$last_stock,:original_price=>ip.price,
-            :stock_inicial=>$stock_inicial ,:ingreso=>0,:salida=>ip.quantity,
-            :stock_final=> stock_final_value,:fecha=>$fecha,:user_id=>@user_id)  
-           new_movement.save
-        end
-
-
-          end  
-
-
-
-        end   
-
-
+         stock_product.save      
+      end 
+      end   
+      @outputdetail.destroy       
       end  
 
 
