@@ -559,9 +559,11 @@ def build_pdf_header(pdf)
               :document_id=>1,:documento=>"AJUSTE X ELIMINACION")           
             end 
              stock_product.save      
+             @outputdetail.destroy(ip.id)       
+
           end 
 
-          @outputdetail.destroy(ip.id)    
+          
 
         end         
         
