@@ -1294,7 +1294,7 @@
     var item = $("#ac_item").val();
     
     if(item != "") {
-      var company_id = $("#invoice_company_id").val();
+      var company_id = $("#output_company_id").val();
       var item_id = $("#ac_item_id").val();
       
       var quantity = $("#ac_item_quantity").val();
@@ -1318,6 +1318,7 @@
         $("#ac_item").val("");
         $("#ac_item_quantity").val("1");
         $("#ac_item_price").val("");
+        $("#ac_item_stock").val("");
       
         updateItemTotalOutput();
       }
