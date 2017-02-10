@@ -1305,7 +1305,7 @@
 
       if(quantity == "" || !isNumeric(quantity)) {
         alert("Por favor ingrese una cantidad valida");
-      }  else if( quantity > stock ) {
+      }  else if( Number(quantity) > Number(stock) ) {
         alert("Por favor ingrese una cantidad igual o menor al stock ");
       }  else {
         var item_line = item_id + "|BRK|" + quantity + "|BRK|" + price ;
