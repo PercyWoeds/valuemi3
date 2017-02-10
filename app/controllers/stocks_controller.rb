@@ -94,9 +94,7 @@ def client_data_headers
             row << stock.get_estado 
 
             @totales = @totales +  stock.unitary_cost * stock.quantity
-
             table_content << row
-
             nroitem=nroitem + 1
 
 

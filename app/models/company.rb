@@ -1301,7 +1301,7 @@ def get_supplier_payments2(moneda)
  end 
 
  def get_stocks
-    @stocks = Stock.all 
+    @stocks = Stock.all
     return @stocks
  end
  def get_movement_stocks(fecha1,fecha2,product)

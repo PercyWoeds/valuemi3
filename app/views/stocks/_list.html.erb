@@ -24,7 +24,9 @@
         <tr>
           <td class="bordered_right bordered_bottom">
             <% if product.product.code and product.product.code != "" %>
-              <%= link_to product.product.code, product  %>
+
+              <%= link_to product.product.code, "/purchases/list_ingresos/#{product.product.id}"   %>
+
             <% else %>
               &nbsp;
             <% end %>

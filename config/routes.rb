@@ -456,6 +456,8 @@ end
   match 'purchases/do_crear/:id'   => 'purchases#do_crear', via: [:get, :post]
 
   match 'purchases/ingresos/:id'   => 'purchases#ingresos', via: [:get, :post]
+  match 'purchases/list_ingresos/:id'   => 'purchases#list_ingresos', via: [:get, :post]
+
   match 'purchases/buscaringresos/:id'   => 'purchases#buscaringresos', via: [:get, :post]
   match 'purchases/search_ingresos/:id'   => 'purchases#search_ingresos', via: [:get, :post]
 

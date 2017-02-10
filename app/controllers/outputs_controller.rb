@@ -263,8 +263,16 @@ def build_pdf_header(pdf)
   
   # Autocomplete for products
   def ac_products
-    @products = Product.where(["company_id = ? AND (code LIKE ? OR name LIKE ?)", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])
-   
+   # @products = Product.where(["company_id = ? AND (code LIKE ? OR name LIKE ?)", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])
+   @products = Product.find_by_sql(['Select products.code,products.name, products.id ,products.cost,
+    products.tax1,  products.tax2,products.tax3,stocks.quantity 
+    from products   
+    INNER JOIN stocks ON   products.id = stocks.product_id
+    WHERE stocks.quantity > 0 and products.company_id = ? 
+    AND (products.code LIKE ? OR products.name LIKE ?)',
+    params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"]) 
+
+#    ["company_id = ? AND (code LIKE ? OR name LIKE ?)", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])
     render :layout => false
   end
   

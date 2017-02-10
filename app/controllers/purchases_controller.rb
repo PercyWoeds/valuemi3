@@ -12,8 +12,15 @@ class PurchasesController < ApplicationController
         @purchases  = PurchaseDetail.all.paginate(:page => params[:page])
   end 
   
-  
+  def list_ingresos
+        @company = Company.find(1)
+        @purchases  = Purchase.find_by_sql(['Select purchases.* from purchase_details   
+INNER JOIN purchases ON purchase_details.purchase_id = purchases.id
+WHERE purchase_details.product_id = ?',params[:id] ])
+        
 
+  end 
+  
   def generar1
     
     @company = Company.find(params[:company_id])

@@ -132,8 +132,15 @@
     </div>
     <br />
 
+    <strong>Stock actual:</strong><br />
+
+    <input type="text" name="ac_item_stock" id="ac_item_stock" value="" class="tf_short" readonly />
+    <div class="small">
+      Stock del  producto para agregar una salida.
+    </div>
+    <br />
     
-    <strong>Precio:</strong><br />
+    <strong>Costo:</strong><br />
 
     <input type="text" name="ac_item_price" id="ac_item_price" value="" class="tf_short" readonly />
     <div class="small">
@@ -208,6 +215,7 @@
     $("#ac_item").result(function(event, data, formatted) {
       $("#ac_item_id").val(data[2]);
       $("#ac_item_price").val(data[4]);      
+      $("#ac_item_stock").val(data[12]);      
       updateItemTotalOutput();
     });
     
