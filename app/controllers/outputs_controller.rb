@@ -37,18 +37,14 @@ class OutputsController < ApplicationController
         end
 
         pdf.move_down 10
-
-      end
-
-
-      
+      end      
       pdf 
   end   
 
   def build_pdf_body_rpt(pdf)
     
     pdf.text "Listado de Salidas desde "+@fecha1.to_s+ " Hasta: "+@fecha2.to_s , :size => 8 
-    pdf.text ""
+  
     pdf.font "Helvetica" , :size => 6
 
       headers = []
@@ -67,6 +63,7 @@ class OutputsController < ApplicationController
       lcMon='S/.'
 
       @totales = 0
+      @cantidad = 0
       nroitem = 1
 
        for  product in @facturas_rpt
@@ -74,24 +71,25 @@ class OutputsController < ApplicationController
             row = []         
             row << nroitem.to_s
             row << product.code
-            row << product.fecha.strftime("%d/%m/%Y")            
+            row << product.fecha.strftime("%d/%m/%Y")
+            row << product.product.code  
+            row << product.product.name 
+            row << product.product.unidad 
             row << product.supplier.name  
             row << product.employee.full_name
-            row << product.truck.placa
-            row << product.price.to_s
-            row << product.quantity.to_s          
-            row << product.total.to_s
+            row << product.truck.placa            
+            row << sprintf("%.2f",product.quantity.to_s)
+            row << sprintf("%.2f",product.price.to_s)
+            row << sprintf("%.2f",product.total.to_s)
           
             table_content << row
 
             @totales += product.total 
+            @cantidad += product.quantity
 
             nroitem=nroitem + 1
        
         end
-
-
-
       
       row =[]
       row << ""
@@ -100,9 +98,11 @@ class OutputsController < ApplicationController
       row << ""
       row << ""
       row << "TOTALES => "
+      row << sprintf("%.2f",@cantidad.to_s)
       row << " "
-      row << " "
-      row << @totales 
+      row << sprintf("%.2f",@totales.to_s)
+
+
       table_content << row
       
       result = pdf.table table_content, {:position => :center,
@@ -114,7 +114,7 @@ class OutputsController < ApplicationController
                                           columns([2]).align=:left
                                           columns([3]).align=:left
                                           columns([4]).align=:left
-                                          columns([5]).align=:right  
+                                          columns([5]).align=:center  
                                           columns([6]).align=:right
                                           columns([7]).align=:right
                                           columns([8]).align=:right
@@ -126,9 +126,19 @@ class OutputsController < ApplicationController
     end
 
     def build_pdf_footer_rpt(pdf)
+            data =[ ["Procesado por Almacen ","V.B.Almacen","V.B.Compras ","V.B. Gerente ."],
+               [":",":",":",":"],
+               [":",":",":",":"],
+               ["Fecha:","Fecha:","Fecha:","Fecha:"] ]
+
+           
+            pdf.text " "
+            pdf.table(data,:cell_style=> {:border_width=>1} , :width => pdf.bounds.width)
+            pdf.move_down 10          
+
                         
       pdf.text "" 
-      pdf.bounding_box([0, 20], :width => 535, :height => 40) do
+      pdf.bounding_box([0, 30], :width => 535, :height => 40) do
       pdf.draw_text "Company: #{@company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
 
       end
@@ -147,6 +157,8 @@ class OutputsController < ApplicationController
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]    
     @product = params[:product_id]    
+
+    @products = @company.get_products_dato(@product)        
 
     @facturas_rpt = @company.get_salidas_day(@fecha1,@fecha2,@product)
 

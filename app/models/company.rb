@@ -1032,6 +1032,11 @@ def get_supplier_payments2(moneda)
     
     return products
   end
+  # Return products for company
+  def get_products_dato(id)
+    products = Product.find_by(company_id: self.id,id: id)    
+    return products.name + " - "+products.unidad 
+  end
   
   # Return value for product
   def get_invoices_value_product(product, year, value)
