@@ -72,9 +72,9 @@ class OutputsController < ApplicationController
             row << nroitem.to_s
             row << product.code
             row << product.fecha.strftime("%d/%m/%Y")
-            row << product.product.code  
-            row << product.product.name 
-            row << product.product.unidad 
+            row << product.codigo
+            row << product.nameproducto
+            row << product.unidad 
             row << product.supplier.name  
             row << product.employee.full_name
             row << product.truck.placa            
@@ -97,6 +97,10 @@ class OutputsController < ApplicationController
       row << ""
       row << ""
       row << ""
+      row << ""
+      row << ""
+      row << ""
+      
       row << "TOTALES => "
       row << sprintf("%.2f",@cantidad.to_s)
       row << " "
