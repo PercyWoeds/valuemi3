@@ -1302,6 +1302,8 @@ def get_supplier_payments2(moneda)
 
  def get_stocks
     @stocks = Stock.all
+
+    
     return @stocks
  end
  def get_movement_stocks(fecha1,fecha2,product)
