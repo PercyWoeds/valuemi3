@@ -540,31 +540,34 @@ def build_pdf_header(pdf)
 
     if @output.destroy
 
-
       if @outputdetail 
         if proceso == "1"
 
-      for ip in @outputdetail
+          for ip in @outputdetail
 
-         stock_product =  Stock.find_by(:product_id => ip.product_id)
+             stock_product =  Stock.find_by(:product_id => ip.product_id)
 
-        if stock_product 
-           $last_stock = stock_product.quantity + ip.quantity
-           stock_product.unitary_cost = ip.price   
-           stock_product.quantity = $last_stock
+            if stock_product 
+               $last_stock = stock_product.quantity + ip.quantity
+               stock_product.unitary_cost = ip.price   
+               stock_product.quantity = $last_stock
 
-        else
-          $last_stock = 0
-          stock_product= Stock.new(:store_id=>1,:state=>"Lima",:unitary_cost=> ip.price ,
-          :quantity=> ip.quantity,:minimum=>0,:user_id=>@user_id,:product_id=>ip.product_id,
-          :document_id=>1,:documento=>"AJUSTE X ELIMINACION")           
-        end 
-         stock_product.save      
-      end 
-      end   
-      @outputdetail.destroy       
+            else
+              $last_stock = 0
+              stock_product= Stock.new(:store_id=>1,:state=>"Lima",:unitary_cost=> ip.price ,
+              :quantity=> ip.quantity,:minimum=>0,:user_id=>@user_id,:product_id=>ip.product_id,
+              :document_id=>1,:documento=>"AJUSTE X ELIMINACION")           
+            end 
+             stock_product.save      
+          end 
+
+          @outputdetail.destroy(ip.id)    
+
+        end         
+        
       end  
 
+      
 
     end 
 
