@@ -80,6 +80,7 @@ class InventariosController < ApplicationController
         lcPrecio =i.precio_unitario
         
         product = Product.find(i.product_id)
+        
         if product 
           product.cost = lcPrecio        
           product.save

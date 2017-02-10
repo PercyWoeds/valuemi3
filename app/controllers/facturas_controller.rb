@@ -85,9 +85,7 @@ class FacturasController < ApplicationController
     
     @invoice.anular 
     @invoice.delete_guias()
-
-
-    
+  
     flash[:notice] = "Documento a sido anulado."
     redirect_to @invoice 
   end
@@ -116,7 +114,7 @@ class FacturasController < ApplicationController
         
         product = Service.find(id.to_i)
         product[:i] = i
-        product[:quantity] = quantity.to_i
+        product[:quantity] = quantity.to_f
         product[:price] = price.to_f
         product[:discount] = discount.to_f
         
