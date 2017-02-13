@@ -148,7 +148,7 @@ class Inventario < ActiveRecord::Base
 
           costo =row['costo']
 
-          b = OutputDetail.where(:product_id=>@product.id).update_all(:price=>cost)
+          b = OutputDetail.where(:product_id=>@product.id).update_all(:price=>costo)
 
           
 
