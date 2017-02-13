@@ -333,16 +333,16 @@ class OutputsController < ApplicationController
 # Export serviceorder to PDF
   def rpt_salidas2_all_pdf
 
-    $lcFacturasall = '1'
+
 
     @company=Company.find(params[:id])          
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]    
-    @product = params[:products_category_id]    
+    @categoria = params[:products_category_id]    
 
+    @facturas_rpt = @company.get_salidas_day2(@fecha1,@fecha2,@categoria)
 
-    @facturas_rpt = @company.get_salidas_day2(@fecha1,@fecha2,@product)
-
+    puts @categoria
 
     Prawn::Document.generate("app/pdf_output/rpt_factura.pdf") do |pdf|
         pdf.font "Helvetica"
