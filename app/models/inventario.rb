@@ -138,13 +138,19 @@ class Inventario < ActiveRecord::Base
           #@product.name  = row['descrip']
           #@product.unidad  = row['unidad']
           cate   = row['category']
-            a =  ProductsCategory.find_by(:code=>cate)
-
+            a =  ProductsCategory.find_by(:code => cate)
+            
           @product.company_id=1          
 
           if a 
             @product.products_category_id=a.id 
           end 
+
+          costo =row['costo']
+
+          b = OutputDetail.where(:product_id=>@product.id).update_all(:price=>cost)
+
+          
 
           @product.tax1=18.00
           @product.tax2=0

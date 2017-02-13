@@ -338,7 +338,7 @@ class OutputsController < ApplicationController
     @company=Company.find(params[:id])          
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]    
-    @product = params[:product_category_id]    
+    @product = params[:products_category_id]    
 
 
     @facturas_rpt = @company.get_salidas_day(@fecha1,@fecha2,@product)
