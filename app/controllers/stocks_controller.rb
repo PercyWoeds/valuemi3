@@ -80,7 +80,7 @@ def client_data_headers
       @totales = 0
       importe = 0
 
-       for  stock in @stocks           
+       for  stock in @stocks1           
             row = []
             row << nroitem.to_s
             if stock.product != nil   
@@ -145,8 +145,11 @@ def client_data_headers
   # Export serviceorder to PDF
   def rpt_stocks1
     @company=Company.find(params[:company_id])      
+
+    @fecha = params[:fecha1]
       
-    @stocks = @company.get_stocks
+    @stocks1 = @company.get_stocks
+
       
     Prawn::Document.generate("app/pdf_output/stocks1.pdf") do |pdf|      
 
@@ -229,13 +232,18 @@ def client_data_headers
       table_content << headers
 
       nroitem=1
+      
 
        for  stock in @movements 
+
+
             row = []
             row << nroitem.to_s
+            row << stock.product.code
             row << stock.product.name
-            row << stock.document.description
-            row << stock.documento              
+            row << stock.product.unidad
+            row << stock.product.ubicacion 
+            row << stock.price 
             row << stock.stock_inicial
             row << stock.ingreso
             row << stock.salida
@@ -310,9 +318,33 @@ def client_data_headers
     @company=Company.find(params[:company_id])      
     @fecha1 = params[:fecha1] 
     @fecha2 = params[:fecha2] 
-    product =params[:product_id]
+    @product =params[:products_category_id]
       
-    @movements = @company.get_movement_stocks(@fecha1,@fecha2,product)
+    @movements = @company.get_stocks_inventarios2(@fecha1,@fecha2,@product)
+      
+    Prawn::Document.generate("app/pdf_output/stocks2.pdf") do |pdf|      
+        pdf.font "Helvetica"
+        pdf = build_pdf_header2(pdf)
+        pdf = build_pdf_body2(pdf)
+        build_pdf_footer2(pdf)
+        $lcFileName =  "app/pdf_output/stocks2.pdf"      
+        
+    end     
+
+    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName    
+    send_file("app/pdf_output/stocks2.pdf", :type => 'application/pdf', :disposition => 'inline')
+  #  MovementDetail.delete_all 
+  end
+
+
+  # Export serviceorder to PDF
+  def rpt_stocks3
+    @company=Company.find(params[:company_id])      
+    @fecha1 = params[:fecha1] 
+    @fecha2 = params[:fecha2]   
+
+      
+    @movements = @company.get_movement_stocks(@fecha1,@fecha2) 
       
     Prawn::Document.generate("app/pdf_output/stocks2.pdf") do |pdf|      
         pdf.font "Helvetica"

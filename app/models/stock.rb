@@ -14,14 +14,17 @@ belongs_to :product
                      "TOTAL",
                      "ESTADO"]
 	
+            
   TABLE_HEADERS2 = ["ITEM",
+                     "CODE ",
                      "NOMBRE",
-                     "TD",
-                     "DOCUMENTO",
+                     "UND",
+                     "UBICA",
+                     "COSTO",
                      "INICIAL",                     
                      "INGRESO",
                      "SALIDA",
-                     "SALDO "]
+                     "STOCK  "]
 
         
 def get_estado

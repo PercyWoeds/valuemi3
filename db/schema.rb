@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170210184937) do
+ActiveRecord::Schema.define(version: 20170213162444) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -793,6 +793,7 @@ ActiveRecord::Schema.define(version: 20170210184937) do
     t.integer  "user_id"
     t.integer  "document_id"
     t.string   "documento"
+    t.string   "tm"
   end
 
   add_index "movement_details", ["account_id"], name: "index_movement_details_on_account_id", using: :btree

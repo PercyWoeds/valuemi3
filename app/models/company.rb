@@ -1296,57 +1296,149 @@ def get_supplier_payments2(moneda)
 
  def get_purchaseorder_detail(fecha1,fecha2)
     @purchaseorders = Purchaseorder.where([" fecha1 >= ? and fecha1 <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ]).order(:fecha1)
-    return @purchaseorders
-    
+    return @purchaseorders    
  end 
+
  def get_orden_detalle(id)
     @purchaseorders = PurchaseorderDetail.where(:purchaseorder_id=>id)
     return @purchaseorders
     
  end 
 
- def get_stocks2
-    
-      @stocks = Inventario.where()
-    
-      for ip in purchase_details
+ def get_stocks_inventarios2 (fecha1,fecha2,product1)
 
-        product = ip.product
-      
-        if(product.quantity)
-          if(self.return == "0")
-            ip.product.quantity -= ip.quantity
-          else
-            ip.product.quantity += ip.quantity
-          end
-          ip.product.save
-        end        
-        
-        #actualiza stock
-         stock_product =  Stock.find_by(:product_id => ip.product_id)
+    MovementDetail.delete_all
 
-        if stock_product 
-           $last_stock = stock_product.quantity + ip.quantity
-           stock_product.unitary_cost = ip.price_without_tax   
-           stock_product.quantity = $last_stock
+     @inv = Inventario.where('fecha <= ?',fecha2)  
 
+     for inv in @inv 
+
+        $lcFecha =inv.fecha 
+
+        @invdetail=  InventarioDetalle.where(:inventario_id=>inv.id)
+
+        for invdetail in @invdetail 
+
+           movdetail  = MovementDetail.find_by(:product_id=>invdetail.product_id)          
+
+        if movdetail   
+            movdetail.ingreso += invdetail.cantidad
+            movdetail.price = invdetail.precio_unitario
+            movdetail.save 
         else
-          $last_stock = 0
-          stock_product= Stock.new(:store_id=>1,:state=>"Lima",:unitary_cost=> ip.price_without_tax,
-          :quantity=> ip.quantity,:minimum=>0,:user_id=>@user_id,:product_id=>ip.product_id,
-          :document_id=>self.document_id,:documento=>self.documento)           
+          detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>invdetail.cantidad,
+            :salida => 0,
+          :price=>invdetail.precio_unitario,:product_id=> invdetail.product_id,:tm=>"1")
+          detail.save 
+        end   
+
         end 
+      end 
+      #ingresos
+     @ing = Purchase.where('date1 <= ?',fecha2)
 
-        stock_product.save
+     for ing in @ing
+      $lcFecha = ing.date1
 
-        self.date_processed = Time.now
-        self.save
-      
+        @ingdetail=  PurchaseDetail.where(:purchase_id=>ing.id)
 
-      end
+        for detail in @ingdetail 
 
-    return @stocks
+
+          movdetail  = MovementDetail.find_by(:product_id=>detail.product_id)          
+
+          if movdetail
+            movdetail.ingreso += detail.quantity
+            movdetail.price = detail.price_without_tax
+            movdetail.save           
+          else     
+          detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>detail.quantity,:salida => 0,
+            :price=>detail.price_without_tax,:product_id=> detail.product_id,:tm =>"2")
+          detail.save 
+          end
+
+        end 
+     end 
+
+     #salidas 
+    @sal  = Output.where('fecha <= ?',fecha2)
+     for sal in @sal 
+      $lcFecha = sal.fecha 
+
+        @saldetail=  OutputDetail.where(:output_id=>sal.id)
+
+        for detail in @saldetail 
+
+          movdetail  = MovementDetail.find_by(:product_id=>detail.product_id)          
+
+          if movdetail
+            movdetail.salida += detail.quantity
+            movdetail.price = detail.price
+            movdetail.save           
+          else     
+          
+            detail  = MovementDetail.new(:fecha=>$lcFecha ,:salida =>detail.quantity,:salida => 0,
+            :price=>detail.price,:product_id=> detail.product_id,:tm=>"3")
+            detail.save 
+          end   
+        end 
+     end 
+
+     @inv= MovementDetail.all.order(:product_id,:fecha,:tm)
+     
+     wkey1 = @inv.first.product_id
+     wvar = 0
+     #calculo stock 
+
+     for inv in @inv
+       if wkey1 ==  inv.product_id 
+          inicial = wvar 
+          saldo   = wvar + inv.ingreso - inv.salida 
+          wvar = saldo 
+
+          @inv.update(inv.id,:stock_inicial=> inicial)
+          @inv.update(inv.id,:stock_final => saldo )          
+          
+       else
+          inicial = 0
+          saldo   = wvar  +inv.ingreso - inv.salida
+          @inv.update(inv.id,:stock_inicial=> inicial,:stock_final => saldo )          
+
+          wkey1 =inv.product_id
+          wvar = saldo
+          
+       end    
+
+     end 
+
+     if product1
+      puts product1.to_s
+
+        @inv = MovementDetail.find_by_sql(['Select movement_details.*,products.category_id    
+    from movement_details 
+INNER JOIN products ON movement_details.product_id = products.id
+WHERE products.category_id = ?  and movement_details.fecha > ? and movement_details.fecha < ?',product1,"#{fecha1} 00:00:00","#{fecha2} 23:59:59"])
+
+     else 
+        @inv = MovementDetail.where([" fecha >= ? and fecha <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ]).order(:product_id,:fecha,:tm)
+     end  
+
+
+
+    return @inv 
+
  end
+
+def get_stocks_ingresos2   
+
+    return @ing 
+ end
+
+def get_stocks_salidas2   
+     
+    return @sal 
+ end
+ 
 
  def get_stocks
   @stocks = Stock.all 
@@ -1366,6 +1458,19 @@ def get_salidas_day(fecha1,fecha2,product)
 INNER JOIN outputs ON output_details.output_id = outputs.id
 INNER JOIN products ON output_details.product_id = products.id
 WHERE output_details.product_id = ?  and outputs.fecha > ? and outputs.fecha < ?',product, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
+ 
+    return @purchases 
+
+end
+
+def get_salidas_day(fecha1,fecha2,product)
+  
+    @purchases = Output.find_by_sql(['Select outputs.*,output_details.quantity,
+    output_details.price,output_details.total,products.name as nameproducto,products.code as codigo,products.unidad
+    from output_details   
+INNER JOIN outputs ON output_details.output_id = outputs.id
+INNER JOIN products ON output_details.product_id = products.id
+WHERE products.products_category_id = ?  and outputs.fecha > ? and outputs.fecha < ?',product, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
  
     return @purchases 
 

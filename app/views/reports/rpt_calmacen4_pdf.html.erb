@@ -15,16 +15,16 @@ totals = []
 
 <h1>
   <%= image_tag("reports_48.png", :class => "vmiddle") %>
-  Reporte de movimiento de stocks 
+  Reporte de Salidas por familia 
 </h1>
 
-<form method="get" action="/stocks/rpt_stocks2/<%= @company.id %>" >   
+<form method="get" action="/outputs/rpt_salidas2_all_pdf/<%= @company.id %>" >   
   <div class="field">
-      <input type="date" name="fecha1" value="2007-10-01" style = "width: 80px" >
+      <input type="date" name="fecha1" value="2017-01-01" style = "width: 80px" >
     </div>
 
 	<div class="field">
-		<input type="date" name="fecha2" value="2017-01-18" style = "width: 80px" >
+		<input type="date" name="fecha2" value="2017-01-31" style = "width: 80px" >
   </div>
 
   <div class="field">

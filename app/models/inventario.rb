@@ -133,15 +133,19 @@ class Inventario < ActiveRecord::Base
       CSV.foreach(file.path, headers: true, encoding:'iso-8859-1:utf-8') do |row|            
 
       @product = Product.find_by(:code=>row['code'] )
-       puts row['code']
-       puts row['descrip']
-       puts row['unidad']          
-
+       
         if @product                       
-          @product.name  = row['descrip']
-          @product.unidad  = row['unidad']
+          #@product.name  = row['descrip']
+          #@product.unidad  = row['unidad']
+          cate   = row['category']
+            a =  ProductsCategory.find_by(:code=>cate)
+
           @product.company_id=1          
-          @product.products_category_id=1
+
+          if a 
+            @product.products_category_id=a.id 
+          end 
+
           @product.tax1=18.00
           @product.tax2=0
           @product.tax3=0
