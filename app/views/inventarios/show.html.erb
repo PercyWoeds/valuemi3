@@ -21,7 +21,10 @@ Ver Inventario
 <% @inventario.inventario_detalles.each do |inv| %>
   <tr>
     <td><%= inv.product.code  %></td>
+    <% if inv.product != nil %>
     <td><%= inv.product.name  %></td>
+    <% end %>
+
     <td><%= inv.cantidad %></td>
     <td><%= inv.precio_unitario %></td>   
     <td><%= inv.total.round(2)  %></td>

@@ -23,12 +23,11 @@ class Output < ActiveRecord::Base
                      "FECHA",
                      "CODE",
                      "PRODUCTO",
-                     "UNIDAD",                     
-                     "PROVEEDOR",
+                     "UNIDAD",                                          
                      "EMPLEADO",
                      "PLACA",
-                     "COSTO",
                      "CANTIDAD",
+                     "COSTO ",
                      "TOTAL"]
 
   
@@ -129,7 +128,7 @@ class Output < ActiveRecord::Base
   def get_products    
     @itemproducts = OutputDetail.find_by_sql(['Select output_details.price,
       output_details.quantity,output_details.total,
-      products.name  
+      products.name,products.unidad  
       from output_details INNER JOIN products ON 
       output_details.product_id = products.id 
       where output_details.output_id = ?', self.id ])

@@ -53,7 +53,6 @@ def client_data_headers
 
       end
 
-
       pdf.move_down 15
       pdf 
   end   
@@ -95,10 +94,7 @@ def client_data_headers
 
             @totales = @totales +  stock.unitary_cost * stock.quantity
             table_content << row
-            nroitem=nroitem + 1
-
-
-           
+            nroitem=nroitem + 1           
         end
             row = []
             row << ""
@@ -215,7 +211,7 @@ def client_data_headers
 
   def build_pdf_body2(pdf)
     
-    pdf.text "Movimiento de Productos :" +" Desde : "+@fecha1.to_s + " Hasta: "+@fecha2.to_s   , :size => 11 
+    pdf.text "Movimiento  de Productos :" +" Desde : "+@fecha1.to_s + " Hasta: "+@fecha2.to_s   , :size => 11 
     pdf.text ""
     pdf.font "Helvetica" , :size => 6
 
@@ -232,26 +228,40 @@ def client_data_headers
       table_content << headers
 
       nroitem=1
+      totingreso = 0
+      totsalida  = 0
       
+      
+       lcProducto = @movements.first.product_id 
 
        for  stock in @movements 
 
+          if lcProducto == stock.product.id 
 
-            row = []
-            row << nroitem.to_s
-            row << stock.product.code
-            row << stock.product.name
-            row << stock.product.unidad
-            row << stock.product.ubicacion 
-            row << stock.price 
-            row << stock.stock_inicial
-            row << stock.ingreso
-            row << stock.salida
-            row << stock.stock_final 
+              totingreso += stock.ingreso
+              totsalida  += stock.salida
 
-            table_content << row
-            nroitem=nroitem + 1
-           
+          else 
+
+              row = []
+              row << nroitem.to_s
+              row << stock.product.code
+              row << stock.product.name
+              row << stock.product.unidad
+              row << stock.product.ubicacion 
+              row << stock.price
+              row << stock.product.CurrTotal        
+              row << totingreso
+              row << totsalida 
+              saldo = stock.product.CurrTotal  + totingreso - totsalida       
+              row << stock.saldo 
+
+              table_content << row
+              nroitem=nroitem + 1
+              lcProducto = stock.product_id
+              
+          end   
+
         end
 
       result = pdf.table table_content, {:position => :center,
@@ -298,14 +308,6 @@ def client_data_headers
           INNER JOIN products ON stocks.product_id = products.id
           WHERE products.code like ?  or products.name like ?',
           params[:search], "%"+ params[:search]+"%"]).paginate(:page => params[:page])
-
-
-#@invoices=Invoice.find_by_sql(['Select invoices.*,clients.vrazon2,mailings.flag1 from invoices 
-#            LEFT JOIN mailings ON invoices.numero = mailings.numero
-#            LEFT  JOIN clients ON invoices.cliente = clients.vcodigo            
-#            order by numero desc where invoices.numero like ?  or clients.vrazon2 like ?',
- #           params[:search], "%"+ params[:search]+"%"]).paginate(:page => params[:page])          
-
         else
           @stocks = Stock.paginate(:page => params[:page]) 
         end
@@ -318,9 +320,9 @@ def client_data_headers
     @company=Company.find(params[:company_id])      
     @fecha1 = params[:fecha1] 
     @fecha2 = params[:fecha2] 
-    @product =params[:products_category_id]
+    @categoria =params[:products_category_id]
       
-    @movements = @company.get_stocks_inventarios2(@fecha1,@fecha2,@product)
+    @movements = @company.get_stocks_inventarios2(@fecha1,@fecha2,@categoria)   
       
     Prawn::Document.generate("app/pdf_output/stocks2.pdf") do |pdf|      
         pdf.font "Helvetica"
@@ -342,7 +344,6 @@ def client_data_headers
     @company=Company.find(params[:company_id])      
     @fecha1 = params[:fecha1] 
     @fecha2 = params[:fecha2]   
-
       
     @movements = @company.get_movement_stocks(@fecha1,@fecha2) 
       

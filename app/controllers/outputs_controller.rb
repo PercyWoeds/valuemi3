@@ -253,16 +253,19 @@ class OutputsController < ApplicationController
             row << product.codigo
             row << product.nameproducto
             row << product.unidad 
-            row << product.supplier.name  
+            
             row << product.employee.full_name
             row << product.truck.placa            
             row << sprintf("%.2f",product.quantity.to_s)
             row << sprintf("%.2f",product.price.to_s)
-            row << sprintf("%.2f",product.total.to_s)
+
+            calculartotal =product.price*product.quantity
+
+            row << sprintf("%.2f",calculartotal.to_s)
           
             table_content << row
 
-            @totales += product.total 
+            @totales += calculartotal 
             @cantidad += product.quantity
 
             nroitem=nroitem + 1
@@ -275,7 +278,7 @@ class OutputsController < ApplicationController
       row << ""
       row << ""
       row << ""
-      row << ""
+      
       row << ""
       row << ""
       
@@ -308,10 +311,10 @@ class OutputsController < ApplicationController
     end
 
     def build_pdf_footer_rpt2(pdf)
-            data =[ ["Procesado por Almacen ","V.B.Almacen","V.B.Compras ","V.B. Gerente ."],
-               [":",":",":",":"],
-               [":",":",":",":"],
-               ["Fecha:","Fecha:","Fecha:","Fecha:"] ]
+            data =[ ["Procesado por Almacen ","V.B.Compras ","V.B. Gerente ."],
+               [":",":",":"],
+               [":",":",":"],
+               ["Fecha:","Fecha:","Fecha:"] ]
 
            
             pdf.text " "
@@ -330,10 +333,9 @@ class OutputsController < ApplicationController
   end
 
 
+
 # Export serviceorder to PDF
   def rpt_salidas2_all_pdf
-
-
 
     @company=Company.find(params[:id])          
     @fecha1 = params[:fecha1]    
@@ -641,12 +643,10 @@ def build_pdf_header(pdf)
     
     for user in @users
       alr_ids.push(user.id)
-    end
-    
+    end    
     if(not alr_ids.include?(getUserId()))
       @users.push(current_user)
-    end
-   
+    end   
     render :layout => false
   end
   
