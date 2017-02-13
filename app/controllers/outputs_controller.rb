@@ -341,7 +341,7 @@ class OutputsController < ApplicationController
     @product = params[:products_category_id]    
 
 
-    @facturas_rpt = @company.get_salidas_day(@fecha1,@fecha2,@product)
+    @facturas_rpt = @company.get_salidas_day2(@fecha1,@fecha2,@product)
 
 
     Prawn::Document.generate("app/pdf_output/rpt_factura.pdf") do |pdf|

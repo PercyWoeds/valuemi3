@@ -1391,6 +1391,8 @@ def get_supplier_payments2(moneda)
      #calculo stock 
 
      for inv in @inv
+
+
        if wkey1 ==  inv.product_id 
           inicial = wvar 
           saldo   = wvar + inv.ingreso - inv.salida 
@@ -1463,7 +1465,7 @@ WHERE output_details.product_id = ?  and outputs.fecha > ? and outputs.fecha < ?
 
 end
 
-def get_salidas_day(fecha1,fecha2,product)
+def get_salidas_day2(fecha1,fecha2,product)
   
     @purchases = Output.find_by_sql(['Select outputs.*,output_details.quantity,
     output_details.price,output_details.total,products.name as nameproducto,products.code as codigo,products.unidad
