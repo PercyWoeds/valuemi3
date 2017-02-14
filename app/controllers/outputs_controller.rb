@@ -6,7 +6,6 @@ include ProductsHelper
 class OutputsController < ApplicationController
   before_filter :authenticate_user!, :checkProducts
 
-
   
   # reporte completo
   def build_pdf_header_rpt(pdf)

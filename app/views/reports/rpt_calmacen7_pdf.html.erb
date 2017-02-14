@@ -1,0 +1,37 @@
+<%= render 'layouts/charts' %>
+<%
+invoices_subtotal = 0
+invoices_tax = 0
+invoices_total = 0
+subtotals = []
+taxes = []
+totals = []
+%>
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %> &raquo;
+  <%= link_to "Reports", "/companies/reports/#{@company.id}" %>
+</div>
+
+<h3>
+  <%= image_tag("reports_48.png", :class => "vmiddle") %>
+  Reporte de ordenes de compra pendienes de factura 
+</h3>
+
+<form method="get" action="/purchases/rpt_ingresos3_all_pdf/<%= @company.id %>" >   
+  <div class="field">
+      <input type="date" name="fecha1" value="2017-01-01" style = "width: 80px" >
+    </div>
+
+	<div class="field">
+		<input type="date" name="fecha2" value="2017-01-31" style = "width: 80px" >
+  </div>
+
+  
+
+  <input type="submit" value="Ver Reporte " />
+  
+</form>
+
+<br />
+

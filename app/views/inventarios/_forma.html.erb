@@ -1,9 +1,9 @@
 <% if @inventario.errors.any? %>
   <div id="error_explanation">
-    <h2><%= pluralize(@invoice.errors.count, "error") %> prohibited this invoice from being saved:</h2>
+    <h2><%= pluralize(@inventario.errors.count, "error") %> prohibited this inventario from being saved:</h2>
 
     <ul>
-    <% @invoice.errors.full_messages.each do |msg| %>
+    <% @inventario.errors.full_messages.each do |msg| %>
       <li><%= msg %></li>
     <% end %>
     </ul>
@@ -13,7 +13,7 @@
 <%= hr() %>
 
 <div class="mid_box bordered_right">
-  <%= form_for(@invoice) do |f| %>
+  <%= form_for(@inventario) do |f| %>
     <h3>
        Informacion Factura 
     </h3>
@@ -25,7 +25,7 @@
       <input type="text" name="ac_customer" id="ac_customer" value="<% if @ac_customer %><%= @ac_customer %><% end %>" />
       
       <div class="small">
-        <a href="#" onclick="createCustomerInvoice(); return false;">+ Crear nuevo cliente</a>
+        <a href="#" onclick="createCustomerinventario(); return false;">+ Crear nuevo cliente</a>
       </div>
 
       <div class="small">
@@ -67,9 +67,9 @@
   
     <div class="field">
       <%= f.check_box :processed %>
-      <%= f.label :processed, "Process invoice", :class => "bold" %>
+      <%= f.label :processed, "Process inventario", :class => "bold" %>
       <div class="small">
-        Marks wether or not this invoice has been payed and we can deduct the product quantities and count it towards the month's total.
+        Marks wether or not this inventario has been payed and we can deduct the product quantities and count it towards the month's total.
       </div>
     </div>
   
@@ -113,7 +113,7 @@
     </div>
     
     <div class="small">
-      Once you're done adding products, don't forget to <strong><%= @action_txt %></strong> your invoice.
+      Once you're done adding products, don't forget to <strong><%= @action_txt %></strong> your inventario.
     </div>
   <% end %>
 </div>

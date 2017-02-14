@@ -24,7 +24,7 @@
    Ingresos 
   </h3>
 
-<p class="big">
+  <p class="big">
     <%= link_to "Listado de Ingresos por producto ", "/companies/reports/rpt_calmacen5_pdf/#{@company.id}" %>
   </p>
   
@@ -32,7 +32,10 @@
     <%= link_to "Listado de Ingresos  por familia", "/companies/reports/rpt_calmacen6_pdf/#{@company.id}" %>
   </p>
 
-
+  <p class="big">
+    <%= link_to "Listado de ordenes de compra pendientes de factura detallado ", "/companies/reports/rpt_calmacen7_pdf/#{@company.id}" %>
+  </p>
+  
 
 <h3>
    Salidas 

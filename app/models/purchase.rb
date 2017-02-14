@@ -15,6 +15,16 @@ class Purchase < ActiveRecord::Base
 
   has_many :purchase_details
 
+TABLE_HEADERS  = ["ITEM ",
+                      "PROVEEDOR",
+                     "ORDEN",
+                     "FECHA ",
+                     "CANTIDAD",
+                     "CODIGO",
+                     "PRODUCTO",
+                     "COSTO",
+                     "TOTAL "]
+
 
 
 TABLE_HEADERS2  = ["ITEM ",
