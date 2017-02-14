@@ -345,7 +345,8 @@ def client_data_headers
     @fecha1 = params[:fecha1] 
     @fecha2 = params[:fecha2] 
     @categoria =params[:products_category_id]
-      
+    
+    @namecategoria= @company.get_categoria_name(@categoria)            
     @movements = @company.get_stocks_inventarios2(@fecha1,@fecha2,@categoria)   
       
 
