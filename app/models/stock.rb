@@ -25,7 +25,8 @@ belongs_to :product
                      "INICIAL",                     
                      "INGRESO",
                      "SALIDA",
-                     "STOCK  "]
+                     "STOCK  ",
+                     "TOTAL  "  ]
 
         
 def get_estado

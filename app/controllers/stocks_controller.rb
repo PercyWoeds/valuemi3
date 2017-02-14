@@ -53,7 +53,7 @@ def client_data_headers
 
       end
 
-      pdf.move_down 15
+      pdf.move_down 5
       pdf 
   end   
 
@@ -88,8 +88,7 @@ def client_data_headers
               row << stock.product.code
               row << stock.product.name
               row << stock.product.unidad
-              row << stock.product.ubicacion 
-              
+              row << stock.product.ubicacion               
               saldo = stock.stock_inicial  + stock.ingreso - stock.salida       
               row << saldo 
               row << stock.price
@@ -121,11 +120,12 @@ def client_data_headers
                                           columns([0]).align=:center
                                           columns([1]).align=:left
                                           columns([2]).align=:left
-      	                                  columns([3]).align=:right
-                                          columns([4]).align=:right
+      	                                  columns([3]).align=:left
+                                          columns([4]).align=:left 
                                           columns([4]).align=:right
                                           columns([5]).align=:right
-                                          columns([6]).align=:left
+                                          columns([6]).align=:right
+                                          columns([7]).align=:right 
                                         end                                          
       pdf.move_down 10      
       pdf
@@ -223,7 +223,7 @@ def client_data_headers
   def build_pdf_body2(pdf)
     
     pdf.text "Movimiento  de Productos :" +" Desde : "+@fecha1.to_s + " Hasta: "+@fecha2.to_s   , :size => 11 
-    pdf.text ""
+    pdf.text " Categoria : " + @namecategoria , :size => 11 
     pdf.font "Helvetica" , :size => 6
 
       headers = []
@@ -239,8 +239,8 @@ def client_data_headers
       table_content << headers
 
       nroitem=1
-      totingreso = 0
-      totsalida  = 0
+      @cantidad = 0
+      @totales  = 0
         
 
        for  stock in @movements 
@@ -257,13 +257,34 @@ def client_data_headers
               row << stock.salida  
               saldo = stock.stock_inicial  + stock.ingreso - stock.salida       
               row << saldo 
-              totingreso += stock.ingreso
-              totsalida  += stock.salida
+              @total = saldo * stock.price                         
+              row << sprintf("%.2f",@total.round(2).to_s)
+
+              @cantidad += saldo 
+              @totales  += @total 
+
               table_content << row
               nroitem=nroitem + 1
               
 
         end
+
+           row = []
+            row << ""
+            row <<""          
+            row << "TOTALES GENERAL"
+            row << ""            
+            row << ""            
+            row <<""          
+            row << ""            
+            row << ""                        
+            
+            row << sprintf("%.2f",@cantidad.round(2).to_s)
+            row << " "
+            row << sprintf("%.2f",@totales.round(2).to_s)
+            
+            table_content << row
+
 
       result = pdf.table table_content, {:position => :center,
                                         :header => true,
@@ -279,7 +300,7 @@ def client_data_headers
                                           columns([7]).align=:right
                                           columns([8]).align=:right
                                           columns([9]).align=:right
-
+                                          columns([10]).align=:right
                                         end                                          
       pdf.move_down 10      
       pdf
