@@ -11,6 +11,13 @@
           Descrip
         </th>
         <th class="bordered_right bordered_bottom">
+          Unidad
+        </th>
+        <th class="bordered_right bordered_bottom">
+          Ubicacion
+        </th>
+        
+        <th class="bordered_right bordered_bottom">
           Stock
         </th>
         <th class="bordered_right bordered_bottom">
@@ -35,6 +42,14 @@
           <td class="bordered_right bordered_bottom">
             <%=  product.product.name  %>
           </td>
+          <td class="bordered_right bordered_bottom right">
+            <%= product.product.unidad %>
+          </td>
+
+          <td class="bordered_right bordered_bottom ">
+              <%= product.product.ubicacion %>
+          </td>
+
           <td class="bordered_right bordered_bottom">
             <% if product.quantity %>
               <%= product.quantity %>
@@ -46,6 +61,8 @@
           <td class="bordered_right bordered_bottom right">
             <%= money(product.unitary_cost) %>
           </td>
+
+
           
         </tr>
       <% end %>

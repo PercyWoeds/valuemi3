@@ -1309,7 +1309,7 @@ def get_supplier_payments2(moneda)
     
  end 
 ###INVENTARIO  
- def get_stocks_inventarios2 (fecha1,fecha2,product1)
+ def get_stocks_inventarios2(fecha1,fecha2,product1)
 
     MovementDetail.delete_all
 
@@ -1397,17 +1397,16 @@ def get_supplier_payments2(moneda)
         @saldetail=  OutputDetail.where(:output_id=>sal.id)
 
         for detail in @saldetail 
-          puts detail.product_id
-          puts "salida "
 
-          movdetail  = MovementDetail.find_by(:product_id=>detail.product_id)          
+
+          movdetail  = MovementDetail.find_by(:product_id=>detail.product_id)
 
           if movdetail
 
             if detail.quantity == nil
-            movdetail.salida = 0   
+              movdetail.salida = 0   
             else
-            movdetail.salida += detail.quantity
+              movdetail.salida += detail.quantity
             end
 
             if detail.price == 0
@@ -1428,8 +1427,9 @@ def get_supplier_payments2(moneda)
         end 
      end 
 
+     ######################################################################3
      ##saldo inicial
-
+     ######################################################################3 
 
      @inv = Inventario.where('fecha < ?',fecha1)  
 
@@ -1451,7 +1451,7 @@ def get_supplier_payments2(moneda)
             if invdetail.cantidad == nil
             movdetail.stock_inicial = 0   
             else
-            movdetail.stock_inicial = invdetail.cantidad
+            movdetail.stock_inicial += invdetail.cantidad
             end
 
             if invdetail.precio_unitario == nil
@@ -1526,7 +1526,7 @@ def get_supplier_payments2(moneda)
             if detail.quantity == nil
               movdetail.salida = 0   
             else
-              movdetail.salida += detail.quantity
+              movdetail.salida -= detail.quantity
             end
 
             if detail.price == 0
@@ -1551,7 +1551,7 @@ def get_supplier_payments2(moneda)
      # AGREGA LOS QUE NO TIENEN MOVIMIENTO 
 
     
-      @inv = MovementDetail.all
+      @inv = MovementDetail.all.order(:product_id,:fecha)
      
 
 

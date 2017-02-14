@@ -247,18 +247,9 @@ def client_data_headers
       nroitem=1
       totingreso = 0
       totsalida  = 0
-
-      
-       lcProducto = @movements.first.product_id 
+        
 
        for  stock in @movements 
-
-          if lcProducto == stock.product_id 
-
-              totingreso += stock.ingreso
-              totsalida  += stock.salida
-
-          else 
 
               row = []
               row << nroitem.to_s
@@ -268,16 +259,15 @@ def client_data_headers
               row << stock.product.ubicacion 
               row << stock.price
               row << stock.stock_inicial        
-              row << totingreso
-              row << totsalida 
-              saldo = stock.stock_inicial  + totingreso - totsalida       
+              row << stock.ingreso 
+              row << stock.salida  
+              saldo = stock.stock_inicial  + stock.ingreso - stock.salida       
               row << saldo 
-
+              totingreso += stock.ingreso
+              totsalida  += stock.salida
               table_content << row
               nroitem=nroitem + 1
-              lcProducto = stock.product_id
               
-          end   
 
         end
 
@@ -293,6 +283,8 @@ def client_data_headers
                                           columns([5]).align=:right 
                                           columns([6]).align=:right
                                           columns([7]).align=:right
+                                          columns([8]).align=:right
+                                          columns([9]).align=:right
 
                                         end                                          
       pdf.move_down 10      
@@ -341,6 +333,7 @@ def client_data_headers
       
     @movements = @company.get_stocks_inventarios2(@fecha1,@fecha2,@categoria)   
       
+
     Prawn::Document.generate("app/pdf_output/stocks2.pdf") do |pdf|            
         pdf.font_families.update("Open Sans" => {
           :normal => "app/assets/fonts/OpenSans-Regular.ttf",
