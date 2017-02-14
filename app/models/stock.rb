@@ -9,10 +9,11 @@ belongs_to :product
   TABLE_HEADERS = ["ITEM",
                      "CODIGO",
                      "NOMBRE",
-                     "CANTIDAD",                     
+                     "UNIDAD",
+                     "UBICACION",
+                     "STOCK",                     
                      "COSTO",
-                     "TOTAL",
-                     "ESTADO"]
+                     "TOTAL" ]
 	
             
   TABLE_HEADERS2 = ["ITEM",
