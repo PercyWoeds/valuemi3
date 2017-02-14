@@ -189,6 +189,10 @@ class Company < ActiveRecord::Base
      return category
   end 
 
+def get_categoria_name(id)
+     category = ProductsCategory.find(id)
+     return category.category
+  end 
   
   def get_last_tax_name(tax_number)
     product = Product.where(company_id: self.id)
@@ -1309,6 +1313,22 @@ def get_supplier_payments2(moneda)
 
     MovementDetail.delete_all
 
+
+    @productExiste = Product.where(:products_category_id=> product1) 
+
+     for existe in @productExiste
+
+        product =  MovementDetail.find_by(:product_id => existe.id)
+        if product 
+        else   
+          detail  = MovementDetail.new(:fecha=>fecha1 ,:stock_inicial=>0,:ingreso=>0,:salida =>0,
+         :price=> existe.price ,:product_id=> existe.id,:tm=>"4")
+          detail.save       
+        end         
+
+     end    
+
+
      @inv = Inventario.where('fecha>= ? and  fecha <= ?',fecha1,fecha2)  
 
      for inv in @inv 
@@ -1326,10 +1346,10 @@ def get_supplier_payments2(moneda)
             movdetail.price = invdetail.precio_unitario
             movdetail.save 
         else
-          detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>invdetail.cantidad,
-            :salida => 0,
-          :price=>invdetail.precio_unitario,:product_id=> invdetail.product_id,:tm=>"1")
-          detail.save 
+        #  detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>invdetail.cantidad,
+        #    :salida => 0,
+        #  :price=>invdetail.precio_unitario,:product_id=> invdetail.product_id,:tm=>"1")
+        #  detail.save 
         end   
 
         end 
@@ -1348,13 +1368,22 @@ def get_supplier_payments2(moneda)
           puts detail.product_id 
 
           if movdetail
-            movdetail.ingreso += detail.quantity
-            movdetail.price = detail.price_without_tax
+
+            if detail.quantity == nil 
+              movdetail.ingreso = 0
+            else 
+              movdetail.ingreso += detail.quantity
+            end 
+            if detail.price_without_tax == nil
+             movdetail.price = 0 
+            else
+             movdetail.price = detail.price_without_tax  
+            end 
             movdetail.save           
           else     
-          detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>detail.quantity,:salida => 0,
-            :price=>detail.price_without_tax,:product_id=> detail.product_id,:tm =>"2")
-          detail.save 
+         # detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>detail.quantity,:salida => 0,
+         #   :price=>detail.price_without_tax,:product_id=> detail.product_id,:tm =>"2")
+         # detail.save 
           end
 
         end 
@@ -1374,14 +1403,27 @@ def get_supplier_payments2(moneda)
           movdetail  = MovementDetail.find_by(:product_id=>detail.product_id)          
 
           if movdetail
+
+            if detail.quantity == nil
+            movdetail.salida = 0   
+            else
             movdetail.salida += detail.quantity
-            movdetail.price = detail.price
+            end
+
+            if detail.price == 0
+              movdetail.price = 0  
+            else 
+              movdetail.price = detail.price
+            end
+
             movdetail.save           
+
           else     
           
-            detail  = MovementDetail.new(:fecha=>$lcFecha ,:salida =>detail.quantity,:salida => 0,
-            :price=>detail.price,:product_id=> detail.product_id,:tm=>"3")
-            detail.save 
+            #detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>0,:salida =>detail.quantity,
+            #:price=>detail.price,:product_id=> detail.product_id,:tm=>"3")
+            #detail.save 
+
           end   
         end 
      end 
@@ -1391,15 +1433,42 @@ def get_supplier_payments2(moneda)
 
      @inv = Inventario.where('fecha < ?',fecha1)  
 
+     if @inv 
+        puts "existe inventario "
+    end 
+
      for inv in @inv       
-        @invdetail=  InventarioDetalle.where(:inventario_id=>inv.id)
+
+        @invdetail = InventarioDetalle.where(:inventario_id=>inv.id)
+
         for invdetail in @invdetail 
-          product  =  Product.find_by(:id=> invdetail.product_id)
-          if product           
-              product.CurrTotal += invdetail.cantidad 
-              product.save 
-          end 
-      
+
+          
+           movdetail  = MovementDetail.find_by(:product_id=>invdetail.product_id)          
+
+          if movdetail
+
+            if invdetail.cantidad == nil
+            movdetail.stock_inicial = 0   
+            else
+            movdetail.stock_inicial = invdetail.cantidad
+            end
+
+            if invdetail.precio_unitario == nil
+              movdetail.price = 0  
+            else 
+              movdetail.price = invdetail.precio_unitario
+            end
+
+            movdetail.save           
+
+          else     
+          
+            #detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>0,:salida =>detail.quantity,
+            #:price=>detail.price,:product_id=> detail.product_id,:tm=>"3")
+            #detail.save 
+
+          end
         
         end 
       end 
@@ -1413,12 +1482,32 @@ def get_supplier_payments2(moneda)
 
         for detail in @ingdetail 
 
-          product  =  Product.find_by(:id=> detail.product_id)
+         movdetail  = MovementDetail.find_by(:product_id=>detail.product_id)          
 
-          if product           
-              product.CurrTotal += detail.quantity 
-              product.save 
-          end 
+          if movdetail
+
+            if detail.quantity == nil
+              movdetail.stock_inicial = 0   
+            else
+              movdetail.stock_inicial += detail.quantity
+            end
+
+            if detail.price_without_tax == 0
+              movdetail.price = 0  
+            else 
+              movdetail.price = detail.price_without_tax
+            end
+
+            movdetail.save           
+
+          else     
+          
+            #detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>0,:salida =>detail.quantity,
+            #:price=>detail.price,:product_id=> detail.product_id,:tm=>"3")
+            #detail.save 
+
+          end
+        
                 
         end 
      end 
@@ -1427,29 +1516,44 @@ def get_supplier_payments2(moneda)
     @sal  = Output.where('fecha <  ?',fecha1)
      for sal in @sal     
         @saldetail=  OutputDetail.where(:output_id=>sal.id)
+
         for detail in @saldetail 
+        
+          movdetail  = MovementDetail.find_by(:product_id=>detail.product_id)          
 
-          product  =  Product.find_by(:id=> detail.product_id)
+          if movdetail
 
-          if product           
-              product.CurrTotal -= detail.cantidad 
-              product.save 
-          end 
+            if detail.quantity == nil
+              movdetail.salida = 0   
+            else
+              movdetail.salida += detail.quantity
+            end
+
+            if detail.price == 0
+              movdetail.price = 0  
+            else 
+              movdetail.price = detail.price 
+            end
+
+            movdetail.save           
+
+          else     
+          
+            #detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>0,:salida =>detail.quantity,
+            #:price=>detail.price,:product_id=> detail.product_id,:tm=>"3")
+            #detail.save 
+
+          end
+        
         end 
      end 
 
-     @inv= MovementDetail.all.order(:product_id,:fecha,:tm)          
+     # AGREGA LOS QUE NO TIENEN MOVIMIENTO 
 
-     if product1
-      
-      @inv = MovementDetail.find_by_sql(['Select movement_details.*,products.category_id    
-      from movement_details 
-      INNER JOIN products ON movement_details.product_id = products.id
-      WHERE products.category_id = ?  and movement_details.fecha > ? and movement_details.fecha < ?',product1,"#{fecha1} 00:00:00","#{fecha2} 23:59:59"])
+    
+      @inv = MovementDetail.all
+     
 
-     else 
-        @inv = MovementDetail.where([" fecha >= ? and fecha <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ]).order(:product_id,:fecha,:tm)
-     end  
 
 
 
@@ -1468,8 +1572,11 @@ def get_stocks_salidas2
  end
  
 
- def get_stocks
-  @stocks = Stock.all 
+ def get_stocks(categoria)
+  @stocks = Stock.find_by_sql(['Select stocks.*
+    from stocks 
+RIGHT JOIN products ON stocks.product_id = products.id
+WHERE products.products_category_id = ? ORDER BY products.code  ',categoria ]) 
   return @stocks 
 
  end 

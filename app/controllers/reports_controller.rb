@@ -1243,12 +1243,15 @@ class ReportsController < ApplicationController
     @company = Company.find(params[:company_id])    
     @pagetitle = "Listado de stocks "    
     @customers = @company.get_customers()
+        @categories = ProductsCategory.all 
+    
   end
   def rpt_calmacen2_pdf
     @company = Company.find(params[:company_id])    
     @pagetitle = "Listado de stocks "    
     @products = @company.get_products()
     @categories = ProductsCategory.all 
+    
   end
   def rpt_calmacen3_pdf
       @company = Company.find(params[:company_id])    

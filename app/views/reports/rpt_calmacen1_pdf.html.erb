@@ -23,7 +23,10 @@ totals = []
 	<div class="field">
      Hasta el dia 	 <input type="date" name="fecha1" value="2017-02-09" style = "width: 80px" >
   </div>
-
+ <div class="field">
+    <%= select_tag(:products_category_id,options_from_collection_for_select(@categories,'id','category') ) %>
+  </div>
+  
 
   <input type="submit" value="Generar Reporte "  />
   
