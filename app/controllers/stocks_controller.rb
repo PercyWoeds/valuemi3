@@ -266,11 +266,11 @@ def client_data_headers
               row << stock.product.name
               row << stock.product.unidad
               row << stock.product.ubicacion 
-              row << stocs.price
+              row << stock.price
               row << stock.stock_inicial        
               row << totingreso
               row << totsalida 
-              saldo = stock.CurrTotal  + totingreso - totsalida       
+              saldo = stock.stock_inicial  + totingreso - totsalida       
               row << saldo 
 
               table_content << row
@@ -341,8 +341,14 @@ def client_data_headers
       
     @movements = @company.get_stocks_inventarios2(@fecha1,@fecha2,@categoria)   
       
-    Prawn::Document.generate("app/pdf_output/stocks2.pdf") do |pdf|      
-        pdf.font "Helvetica"
+    Prawn::Document.generate("app/pdf_output/stocks2.pdf") do |pdf|            
+        pdf.font_families.update("Open Sans" => {
+          :normal => "app/assets/fonts/OpenSans-Regular.ttf",
+          :italic => "app/assets/fonts/OpenSans-Italic.ttf",
+        })
+
+        pdf.font "Open Sans",:size =>6
+  
         pdf = build_pdf_header2(pdf)
         pdf = build_pdf_body2(pdf)
         build_pdf_footer2(pdf)
@@ -352,7 +358,7 @@ def client_data_headers
 
     $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName    
     send_file("app/pdf_output/stocks2.pdf", :type => 'application/pdf', :disposition => 'inline')
-  #  MovementDetail.delete_all 
+    MovementDetail.delete_all 
   end
 
 
