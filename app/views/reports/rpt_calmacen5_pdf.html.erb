@@ -15,10 +15,10 @@ totals = []
 
 <h1>
   <%= image_tag("reports_48.png", :class => "vmiddle") %>
-  Reporte de Salidas 
+  Reporte de Ingresos 
 </h1>
 
-<form method="get" action="/outputs/rpt_salidas_all_pdf/<%= @company.id %>" >   
+<form method="get" action="/purchases/rpt_ingresos_all_pdf/<%= @company.id %>" >   
 
   <div class="field">
       <input type="date" name="fecha1" value="2017-01-01" style = "width: 80px" >
@@ -37,11 +37,8 @@ totals = []
       Ingrese un termino de busqueda para encontrar un producto.
     </div>
   
-
     <br />
     
-
-
   <input type="submit" value="Ver Reporte " />
   
 </form>

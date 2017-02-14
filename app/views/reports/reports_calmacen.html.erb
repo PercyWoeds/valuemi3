@@ -20,7 +20,24 @@
   <p class="big">
   <%= link_to "Listado de Movimiento de Stocks", "/companies/reports/rpt_calmacen2_pdf/#{@company.id}" %>
   </p>
+<h3>
+   Ingresos 
+  </h3>
 
+<p class="big">
+    <%= link_to "Listado de Ingresos por producto ", "/companies/reports/rpt_calmacen5_pdf/#{@company.id}" %>
+  </p>
+  
+  <p class="big">
+    <%= link_to "Listado de Ingresos  por familia", "/companies/reports/rpt_calmacen6_pdf/#{@company.id}" %>
+  </p>
+
+
+
+<h3>
+   Salidas 
+  </h3>
+  
   <p class="big">
     <%= link_to "Listado de Salidas por producto ", "/companies/reports/rpt_calmacen3_pdf/#{@company.id}" %>
   </p>

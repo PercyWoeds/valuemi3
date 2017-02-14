@@ -236,6 +236,8 @@ end
   match 'companies/reports/rpt_calmacen2_pdf/:company_id' => 'reports#rpt_calmacen2_pdf', via: [:get, :post]  
   match 'companies/reports/rpt_calmacen3_pdf/:company_id' => 'reports#rpt_calmacen3_pdf', via: [:get, :post]  
   match 'companies/reports/rpt_calmacen4_pdf/:company_id' => 'reports#rpt_calmacen4_pdf', via: [:get, :post]  
+  match 'companies/reports/rpt_calmacen5_pdf/:company_id' => 'reports#rpt_calmacen5_pdf', via: [:get, :post]  
+  match 'companies/reports/rpt_calmacen6_pdf/:company_id' => 'reports#rpt_calmacen6_pdf', via: [:get, :post]  
 
   match 'companies/reports/rpt_facturas_all/:company_id' => 'reports#rpt_facturas_all', via: [:get, :post]
   match 'companies/reports/rpt_facturas_all2/:company_id' => 'reports#rpt_facturas_all2', via: [:get, :post]
@@ -282,6 +284,8 @@ end
   match 'outputs/rpt_salidas_all_pdf/:id' => 'outputs#rpt_salidas_all_pdf', via: [:get, :post]
   match 'outputs/rpt_salidas2_all_pdf/:id' => 'outputs#rpt_salidas2_all_pdf', via: [:get, :post]
 
+
+  
   match 'companies/outputs/:company_id' => 'outputs#list_outputs', via: [:get, :post]
   resources :outputs
 
@@ -329,6 +333,7 @@ end
   match 'facturas/generar5/:company_id' => 'facturas#generar5', via: [:get, :post]
   #match 'serviceorders/rpt_serviceorder_all_pdf/:id' => 'serviceorders#rpt_serviceorder_all_pdf', via: [:get, :post]
 
+  
   match 'facturas/do_anular/:id' => 'facturas#do_anular', via: [:get, :post]
   match 'facturas/do_email/:id' => 'facturas#do_email', via: [:get, :post]
   match 'facturas/do_process/:id' => 'facturas#do_process', via: [:get, :post]
@@ -470,6 +475,9 @@ end
   match 'purchases/rpt_cpagar3_pdf/:company_id' => 'purchases#rpt_cpagar3_pdf', via: [:get, :post]
   match 'purchases/rpt_cpagar4_pdf/:company_id' => 'purchases#rpt_cpagar4_pdf', via: [:get, :post]
   match 'purchases/rpt_cpagar5_pdf/:company_id' => 'purchases#rpt_cpagar5_pdf', via: [:get, :post]
+
+  match 'purchases/rpt_ingresos_all_pdf/:id' => 'purchases#rpt_ingresos_all_pdf', via: [:get, :post]
+  match 'purchases/rpt_ingresos2_all_pdf/:id' => 'purchases#rpt_ingresos2_all_pdf', via: [:get, :post]
 
   match 'companies/purchases/:company_id' => 'purchases#list_purchases', via: [:get, :post]  
   

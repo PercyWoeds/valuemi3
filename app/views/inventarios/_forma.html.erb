@@ -1,134 +1,119 @@
-<style type="text/css">
-#item_flexselect{width: 500px;}
-</style>
-<% form_for(@inventario) do |inv| %>
+<% if @inventario.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@invoice.errors.count, "error") %> prohibited this invoice from being saved:</h2>
 
-  <% if @inventario.errors.any? %>
-    <div id="error_explanation">
-    <h2><%= pluralize(@inventario.errors.count, "error") %> prohibited this purchase_order from being saved:</h2>
     <ul>
-    <% @inventario.errors.full_messages.each do |msg| %>
+    <% @invoice.errors.full_messages.each do |msg| %>
       <li><%= msg %></li>
     <% end %>
     </ul>
   </div>
 <% end %>
 
-  <p>
-    <%= inv.label :almacen_id, "Almacen" %>
-    <%= select_tag :almacen_id, options_from_collection_for_select(@almacen,'id','nombre') %>    
-  </p>
-  <p>
-    <%= inv.label :descripcion, "Descripción" %>
-    <%= inv.text_area :descripcion, :rows => 10 %>
-  </p>
+<%= hr() %>
 
-  <br/><br/><br/>
+<div class="mid_box bordered_right">
+  <%= form_for(@invoice) do |f| %>
+    <h3>
+       Informacion Factura 
+    </h3>
 
-  <div class="input buscar">
-  <label>Buscar Item: </label>
-   
-  <% @items = Product.all.order("name ASC") %>
-  <%= select_tag "item", "<option></option>"+ @items.map{|v| "<option value=\"#{v.id}\">#{v.name}</option>" }.join("")  %>  
-  </div>
-
-  <br/><br/>
-
-  <h3>Items</h3>
-  <table id="inventarioDetalles">
-  <tr>
-    <th class="ui-state-default" style="width:200px">Item</th>
-    <th class="ui-state-default" style="width:200px">Unidad medida</th>
-    <th col="precio" class="ui-state-default">Precio</th>
-    <th col="cantidad" class="ui-state-default">Cantidad</th>
-    <th col="subtotal" formula="precio*cantidad" class="ui-state-default" summary="sum">Subtotal</th>
-
+    <div class="field">
     
-    <!-- <th class="ui-state-default">Precio</th> -->
-  </tr>
-
-  <% inv.fields_for :inventario_detalles do |det| %>
-    <tr>
-      <td>
-        <%= det.hidden_field :item_id %>
-        <% unless det.object.item_id.nil? %>
-          <% @item = @items.select{|i| i.id == det.object.item_id}[0] %>
-          <%= @item %>
-        <% end %>
-      </td>
-      <td>
-        
-      </td>
-      <td><%= det.text_field :precio_unitario, :class => 'num' %></td>
-      <td>
-        <%= det.text_field :cantidad, :class => 'num' %>
-      </td>
-      <td class="num"></td>
-    </tr>
-  <% end %>
-
-  </table>
-  <p>
-    <%= inv.submit 'Salvar', :class => 'ui-corner-all' %>
-  </p>
-<% end %>
-
-
-<script type="text/javascript">
-$(document).ready(function() {
-  <% @json = {} %>
-  <% @items.each{|v| @json[v.id] = " "} %>
-
-  var itemUnidades = <%= @json.to_json %>;
-
-  $('#inventarioDetalles').grider({addRowWithTab: false})
-  .find("caption").hide();
-  $('#inventarioDetalles').find("tr.noedit:last td:eq(4)").addClass("num bold");
-
- 
-  $('#item').flexselect()
-  val = $('#item').val();
-  // Sirve para poder saber si es edicion o creacion de un inventario
-  var init = <%= @inventario.inventario_detalles.first.item_id.nil? ? false : true %>;
-  // En esta variable se almacena todos los ids para la cadena JSON de "elementos"
-  <% @elementos = {} %>
-  <% @inventario.inventario_detalles.map{|v| @elementos[v.id] = true } unless @inventario.id.nil? %>
-  // Variable que permite almacenar todos los items seleccionados, para no repetir la seleccion
-  elementos = <%= @elementos.to_json %>;
-  selected = [];
-  // Es necesario borrar los items de "elementos" cuando se borrar de la tabla
-  $('#item_flexselect').focus(function() {
-    var tmp = $('#item').val();
-    if(val != tmp  && !elementos[tmp + ""]) {
-      val = tmp;
-      elementos[tmp + ""] = true;
-      if(init) {
-        $('#inventarioDetalles caption a').click();
-      }
-      var num = $('#inventarioDetalles tr:not(.noedit):last input:text').attr("name").replace(/^.*([0-9]+).*$/,"$1");
-      var html = "<input type='hidden' name='inventario[inventario_detalles_attributes]["+ num +"][item_id]' value='" + tmp + "' />";
-      html += this.value;
-      $('#inventarioDetalles').find("tr:not(.noedit):last td:eq(0)").html(html);
-      $('#inventarioDetalles').find("tr:not(.noedit):last td:eq(1)").html(itemUnidades[tmp + ""]);
-
-      init = true;
-      selected.push([$('#item_flexselect').val(), $('#item_flexselect option').attr('value')]);
-      $('#item_flexselect').val('');
+      <label for="ac_customer" class="bold">Cliente*</label><br />
       
-    }/*else if(elementos[tmp + ""]) 
-      this.value = '';
-      alert("Usted ya selecciono este ítem");
-      }*/
-    });
+      <input type="text" name="ac_customer" id="ac_customer" value="<% if @ac_customer %><%= @ac_customer %><% end %>" />
+      
+      <div class="small">
+        <a href="#" onclick="createCustomerInvoice(); return false;">+ Crear nuevo cliente</a>
+      </div>
 
-  // Esto permite capturar el evento cuando se hace click en a.delete de la tabla "inventarioDetalles"
-  $('#inventarioDetalles a.delete').live("click", function() {
-    //Buscar parent y despues buscar dentro del parent el campo hidden
-      var item_id = $(this).parents("tr").find("input:hidden").val();
-      //Borrar el item de elementos
-      delete elementos[item_id];
-  });
+      <div class="small">
+        Ingrese una termino de busqueda para encontrar un cliente.
+      </div>
+      <br />
 
-});
+      <div class="small">
+        <strong>Seleccionar cliente:</strong>
+        <span id="selected_customer"><% if @ac_customer %><%= @ac_customer %><% else %><!-- i --><% end %></span>
+      </div>
+    </div>
+    
+    <div class="field">
+      <%= f.label :code, "Code*", :class => "bold" %><br />
+      <%= f.text_field :code, :onclick => "$(this).select();" %>
+    </div>
+  
+    <div class="field">
+      <%= f.label :location_id ,"Local"%><br />
+      <%= f.select :location_id, options_from_collection_for_select(@locations,'id','name') %>
+    
+        
+    </div>
+    <div class="field">
+      <%= f.label :division_id %><br />
+      <%= f.select :division_id,options_from_collection_for_select(@divisions,'id','name') %>
+    </div>
+    
 
-</script>
+  
+    <%= hr() %>
+    
+    <div class="field" id="list_items">
+      <p class="bold big">Products:</p>
+    </div>
+    
+    <%= hr() %>
+  
+    <div class="field">
+      <%= f.check_box :processed %>
+      <%= f.label :processed, "Process invoice", :class => "bold" %>
+      <div class="small">
+        Marks wether or not this invoice has been payed and we can deduct the product quantities and count it towards the month's total.
+      </div>
+    </div>
+  
+    <div class="field">
+      <%= f.check_box :return %>
+      <%= f.label :return, :class => "bold" %>
+      <div class="small">
+        Is it a return order?
+      </div>
+    </div>
+    
+    <%= hr() %>
+    
+    <div class="field">
+      <label for="ac_user" class="bold">Seller*</label><br />
+      <input type="text" name="ac_user" id="ac_user" value="<% if @ac_user %><%= @ac_user %><% end %>" />
+
+      <div class="small">
+        Enter a search term to find a user.
+      </div>
+      <br />
+
+      <div class="small">
+        <strong>Selected seller:</strong>
+        <span id="selected_seller"><% if @ac_user %><%= @ac_user %><% else %><!-- i --><% end %></span>
+      </div>
+    </div>
+  
+    <%= hr() %>
+  
+  
+    
+    <%= hr() %>
+  
+    <div class="actions">
+      <input type="hidden" name="items" id="items" value="<% if @products_lines %><%= @products_lines %><% end %>" />
+      <%= f.hidden_field :user_id, :id => "ac_user_id" %>
+      <%= f.hidden_field :customer_id, :id => "ac_customer_id" %>
+      <%= f.hidden_field :company_id %>
+      <%= f.submit %>
+    </div>
+    
+    <div class="small">
+      Once you're done adding products, don't forget to <strong><%= @action_txt %></strong> your invoice.
+    </div>
+  <% end %>
+</div>

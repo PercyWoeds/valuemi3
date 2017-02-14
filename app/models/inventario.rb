@@ -1,6 +1,8 @@
 class Inventario < ActiveRecord::Base
   # Callbacks, son metodos que llaman a funciones cuando se realiza alguna de las acciones
   # descritas en el modelo ej: before_save (Antes de salvar), after_create (Despues de crear)
+  self.per_page = 20
+  
   before_create :adicionar_fecha
   before_save :adicionar_total
   before_save :actualizar_inventario
@@ -49,57 +51,13 @@ class Inventario < ActiveRecord::Base
                 @product = Product.find_by(:code=>row['code'])
                 product_id = @product.id
             end 
-
-            puts row['code']
-            puts row['cantidad']
-            puts row['precio_unitario']
-
+            
             @cantidad = row['cantidad'].to_i
             
-           a = InventarioDetalle.new(:inventario_id=>1,:cantidad=>row['cantidad'].to_i,
+           a = InventarioDetalle.new(:inventario_id=>2,:cantidad=>row['cantidad'].to_i,
              :precio_unitario=> row['precio_unitario'].to_f.round(2),:activo=> true,:product_id=> product_id,
               :item_id=> product_id)
-           a.save            
-
-#actualiza stock
-         stock_product =  Stock.find_by(:product_id => @product.id)
-
-        if stock_product 
-           $last_stock = stock_product.quantity + @cantidad
-           stock_product.unitary_cost = row['precio_unitario'].to_f.round(2)
-           stock_product.quantity = $last_stock
-
-        else
-          $last_stock = 0
-          stock_product= Stock.new(:store_id=>1,:state=>"Lima",:unitary_cost=> row['precio_unitario'].to_f.round(2),
-          :quantity=> @cantidad ,:minimum=>0,:user_id=>@user_id,:product_id=>@product.id,
-          :document_id=>1,:documento=>"INVENTARIO")           
-        end 
-
-        if stock_product.save
-
-           @movement = MovementDetail.where(:product_id=>@product.id).last   
-            if @movement  
-
-              stock_final_value = @movement.stock_final +  @cantidad
-              $stock_inicial = @movement.stock_final 
-
-            else
-              $stock_inicial = 0
-              stock_final_value = 0            
-            end             
-
-           new_movement = MovementDetail.new(:product_id=> @product.id,:quantity=>  @cantidad,
-            :price=> row['precio_unitario'].to_f,:balance=>$last_stock,:original_price=>row['precio_unitario'].to_f,
-            :stock_inicial=>$stock_inicial ,:ingreso=>@cantidad,:salida=>0,
-            :stock_final=> stock_final_value,:fecha=>"2016-12-31 00:00:00",:user_id=>@user_id)  
-           new_movement.save
-
-        end
-        
-        
-      
-
+           a.save           
 
         end
   end      

@@ -7,6 +7,7 @@ class OutputsController < ApplicationController
   before_filter :authenticate_user!, :checkProducts
 
 
+  
   # reporte completo
   def build_pdf_header_rpt(pdf)
       pdf.font "Helvetica" , :size => 8
@@ -160,7 +161,7 @@ class OutputsController < ApplicationController
     @company=Company.find(params[:id])          
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]    
-    @product = params[:product_id]    
+    @product = params[:ac_item_id]    
 
     @products = @company.get_products_dato(@product)        
 

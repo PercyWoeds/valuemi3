@@ -14,6 +14,25 @@ class Purchase < ActiveRecord::Base
   belongs_to :payment
 
   has_many :purchase_details
+
+
+
+TABLE_HEADERS2  = ["ITEM ",
+                      "DOCUMENTO",
+                     "FECHA",
+                     "CODIGO",
+                     "PRODUCTO",
+                     "UNIDAD",
+                     "PROVEEDOR",
+                     " ",
+                     " ",
+                     "CANTIDAD",
+                     "COSTO",
+                     "TOTAL "]
+
+
+
+
   def get_vencido
 
       if(self.date3 < Date.today)   
