@@ -1407,58 +1407,16 @@ WHERE purchase_details.product_id = ?',params[:id] ])
     @locations = Location.where(company_id: @company.id).order("name ASC")
     @divisions = Division.where(company_id: @company.id).order("name ASC")
     
-    if(params[:location] and params[:location] != "")
-      @sel_location = params[:location]
-    end
-    
-    if(params[:division] and params[:division] != "")
-      @sel_division = params[:division]
-    end
+
+    if(params[:search] and params[:search] != "")         
   
-    if(@company.can_view(current_user))
-      if(params[:ac_supplier] and params[:ac_supplier] != "")
-        @supplier = Supplier.find(:first, :conditions => {:company_id => @company.id, :name => params[:ac_supplier].strip})
-        
-        if @supplier 
-          @purchases = Purchase.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :supplier_id => @supplier.id}, :order => "id DESC")
-        else
-          flash[:error] = "We couldn't find any purchases for that supplier."
-          redirect_to "/companies/purchases/#{@company.id}"
-        end
-      elsif(params[:supplier] and params[:supplier] != "")
-        @supplier = Supplier.find(params[:supplier])
-        
-        if @supplier
-          @purchases = Purchase.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :supplier_id => @supplier.id}, :order => "id DESC")
-        else
+        @purchases = Purchase.where(["company_id = ? and (documento LIKE  ?)", @company.id,"%" + params[:search] + "%"]).order('id').paginate(:page => params[:page]) 
        
-          flash[:error] = "We couldn't find any purchases for that supplier."
-          redirect_to "/companies/purchases/#{@company.id}"
-        end
-      elsif(params[:location] and params[:location] != "" and params[:division] and params[:division] != "")
-        @purchases = Purchase.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :location_id => params[:location], :division_id => params[:division]}, :order => "id DESC")
-      elsif(params[:location] and params[:location] != "")
-        @purchases = Purchase.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :location_id => params[:location]}, :order => "id DESC")
-      elsif(params[:division] and params[:division] != "")
-        @purchases = Purchase.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :division_id => params[:division]}, :order => "id DESC")
-      else
-        if(params[:q] and params[:q] != "")
-          fields = ["description", "comments", "documento"]
-
-          q = params[:q].strip
-          @q_org = q
-
-          query = str_sql_search(q, fields)
-
-          @purchases = Purchase.paginate(:page => params[:page], :order => 'id DESC', :conditions => ["company_id = ? AND (#{query})", @company.id])
         else
           @purchases = Purchase.where(company_id:  @company.id).order("id DESC").paginate(:page => params[:page])
           @filters_display = "none"
         end
-      end
-    else
-      errPerms()
-    end
+
   end
   
   # GET /purchases
