@@ -106,9 +106,7 @@ class Inventario < ActiveRecord::Base
 
           costo =row['costo']
 
-          b = OutputDetail.where(:product_id=>@product.id).update_all(:price=>costo)
-
-          
+          b = OutputDetail.where(:product_id=>@product.id).update_all(:price=>costo)          
 
           @product.tax1=18.00
           @product.tax2=0
@@ -128,6 +126,39 @@ class Inventario < ActiveRecord::Base
       end 
         
   end      
+
+  def self.import4
+  
+      @ing = Purchase.all 
+
+     for ing in @ing
+        $lcFecha = ing.date1
+        $lcmoneda = ing.moneda_id
+        @ingdetail=  PurchaseDetail.where(:purchase_id=>ing.id)
+    
+        for detail in @ingdetail 
+                  puts detail.code
+          if $lcmoneda == 2
+              costo = detail.price_without_tax  
+          else
+             dolar = Tipocambio.find_by('dia = ?',$lcFecha)
+             if dolar 
+               costo = detail.price_without_tax * dolar.compra  
+             else 
+               costo = detail.price_without_tax  
+             end 
+          end
+        
+          b = OutputDetail.where(:product_id=>detail.product.id).update_all(:price=>costo)          
+                
+
+        end 
+     end 
+
+        
+  end      
+  
+
 
   protected
 

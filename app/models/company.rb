@@ -2,6 +2,7 @@ class Company < ActiveRecord::Base
   validates_presence_of :user_id, :name
   
   belongs_to :user
+
   
   has_many :locations
   has_many :suppliers
@@ -1308,7 +1309,9 @@ def get_supplier_payments2(moneda)
     return @purchaseorders
     
  end 
-###INVENTARIO  
+
+ ###INVENTARIO  STOCKS 
+
  def get_stocks_inventarios2(fecha1,fecha2,product1)
 
     MovementDetail.delete_all
@@ -1319,6 +1322,7 @@ def get_supplier_payments2(moneda)
      for existe in @productExiste
 
         product =  MovementDetail.find_by(:product_id => existe.id)
+
         if product 
         else   
           detail  = MovementDetail.new(:fecha=>fecha1 ,:stock_inicial=>0,:ingreso=>0,:salida =>0,
@@ -1332,15 +1336,10 @@ def get_supplier_payments2(moneda)
      @inv = Inventario.where('fecha>= ? and  fecha <= ?',fecha1,fecha2)  
 
      for inv in @inv 
-
         $lcFecha =inv.fecha 
-
         @invdetail=  InventarioDetalle.where(:inventario_id=>inv.id)
-
         for invdetail in @invdetail 
-
            movdetail  = MovementDetail.find_by(:product_id=>invdetail.product_id)          
-
         if movdetail   
             movdetail.ingreso += invdetail.cantidad
             movdetail.price = invdetail.precio_unitario
@@ -1358,17 +1357,16 @@ def get_supplier_payments2(moneda)
      @ing = Purchase.where('date1>= ? and date1 <= ?',fecha1,fecha2)
 
      for ing in @ing
-      $lcFecha = ing.date1
+        $lcFecha = ing.date1
+        $lcmoneda = ing.moneda_id
 
         @ingdetail=  PurchaseDetail.where(:purchase_id=>ing.id)
-
+    
         for detail in @ingdetail 
-
+          
           movdetail  = MovementDetail.find_by(:product_id=>detail.product_id)          
-          puts detail.product_id 
-
+        
           if movdetail
-
             if detail.quantity == nil 
               movdetail.ingreso = 0
             else 
@@ -1377,7 +1375,19 @@ def get_supplier_payments2(moneda)
             if detail.price_without_tax == nil
              movdetail.price = 0 
             else
-             movdetail.price = detail.price_without_tax  
+              if $lcmoneda != nil
+                if $lcmoneda == 2
+                 movdetail.price = detail.price_without_tax  
+                else
+                 dolar = Tipocambio.find_by('dia = ?',$lcFecha)
+
+                 if dolar 
+                    movdetail.price = detail.price_without_tax * dolar.compra  
+                 else 
+                    movdetail.price = 0
+                 end 
+                end    
+              end 
             end 
             movdetail.save           
           else     
@@ -1391,13 +1401,13 @@ def get_supplier_payments2(moneda)
 
      #salidas 
     @sal  = Output.where('fecha>= ? and fecha <= ?',fecha1,fecha2)
+
      for sal in @sal 
-      $lcFecha = sal.fecha 
+        $lcFecha = sal.fecha 
 
         @saldetail=  OutputDetail.where(:output_id=>sal.id)
 
         for detail in @saldetail 
-
 
           movdetail  = MovementDetail.find_by(:product_id=>detail.product_id)
 
@@ -1433,10 +1443,7 @@ def get_supplier_payments2(moneda)
 
      @inv = Inventario.where('fecha < ?',fecha1)  
 
-     if @inv 
-        puts "existe inventario "
-    end 
-
+    
      for inv in @inv       
 
         @invdetail = InventarioDetalle.where(:inventario_id=>inv.id)
@@ -1459,15 +1466,12 @@ def get_supplier_payments2(moneda)
             else 
               movdetail.price = invdetail.precio_unitario
             end
-
             movdetail.save           
-
           else     
           
             #detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>0,:salida =>detail.quantity,
             #:price=>detail.price,:product_id=> detail.product_id,:tm=>"3")
             #detail.save 
-
           end
         
         end 
@@ -1644,9 +1648,7 @@ end
 
 def get_ingresos_day3(fecha1,fecha2)
   
-   @purchases = Purchaseorder.where(['fecha1 > ? and fecha1 < ? ',
- "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
- 
+    @purchases = Purchaseorder.where(["fecha1 >= ? and fecha1 <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
     return @purchases 
 
 end

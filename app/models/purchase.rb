@@ -315,29 +315,39 @@ TABLE_HEADERS2  = ["ITEM ",
       purchase_details =PurchaseDetail.where(purchase_id: self.id)
     
       for ip in purchase_details
-
-        product = ip.product
-      
-        if(product.quantity)
-          if(self.return == "0")
-            ip.product.quantity -= ip.quantity
-          else
-            ip.product.quantity += ip.quantity
-          end
-          ip.product.save
-        end        
-        
+                
         #actualiza stock
          stock_product =  Stock.find_by(:product_id => ip.product_id)
 
         if stock_product 
-           $last_stock = stock_product.quantity + ip.quantity
-           stock_product.unitary_cost = ip.price_without_tax   
+           $last_stock = stock_product.quantity + ip.quantity      
            stock_product.quantity = $last_stock
-
+          if (self.moneda_id == 2)  
+              stock_product.unitary_cost = ip.price_without_tax   
+          else        
+              dolar = Tipocambio.find_by('dia = ?',self.date1)
+               if dolar 
+                   stock_product.unitary_cost = ip.price_without_tax * dolar.compra  
+               else 
+                   stock_product.unitary_cost = ip.price_without_tax   
+               end 
+          end   
         else
+
           $last_stock = 0
-          stock_product= Stock.new(:store_id=>1,:state=>"Lima",:unitary_cost=> ip.price_without_tax,
+
+          if (self.moneda_id == 2)  
+               $lcprice_tax = ip.price_without_tax   
+          else        
+               dolar = Tipocambio.find_by('dia = ?',self.date1)
+               if dolar 
+                   $lcprice_tax = ip.price_without_tax * dolar.compra  
+               else 
+                   $lcprice_tax = ip.price_without_tax   
+               end 
+          end   
+
+          stock_product= Stock.new(:store_id=>1,:state=>"Lima",:unitary_cost=> $lcprice_tax,
           :quantity=> ip.quantity,:minimum=>0,:user_id=>@user_id,:product_id=>ip.product_id,
           :document_id=>self.document_id,:documento=>self.documento)           
         end 

@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Tipocambios</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Dia</th>
+      <th>Compra</th>
+      <th>Venta</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @tipocambios.each do |tipocambio| %>
+      <tr>
+        <td><%= tipocambio.dia %></td>
+        <td><%= tipocambio.compra %></td>
+        <td><%= tipocambio.venta %></td>
+        <td><%= link_to 'Show', tipocambio %></td>
+        <td><%= link_to 'Edit', edit_tipocambio_path(tipocambio) %></td>
+        <td><%= link_to 'Destroy', tipocambio, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Tipocambio', new_tipocambio_path %>

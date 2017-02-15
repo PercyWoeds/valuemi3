@@ -617,7 +617,8 @@ def build_pdf_header(pdf)
   # Autocomplete for products
   def ac_products
    # @products = Product.where(["company_id = ? AND (code LIKE ? OR name LIKE ?)", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])
-   @products = Product.find_by_sql(['Select products.code,products.name, products.id ,products.cost,
+   @products = Product.find_by_sql(['Select products.code,products.name, products.id,
+    stocks.unitary_cost as cost,
     products.tax1, products.tax2,products.tax3,stocks.quantity 
     from products   
     INNER JOIN stocks ON   products.id = stocks.product_id

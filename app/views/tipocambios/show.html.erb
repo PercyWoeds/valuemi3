@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Dia:</strong>
+  <%= @tipocambio.dia %>
+</p>
+
+<p>
+  <strong>Compra:</strong>
+  <%= @tipocambio.compra %>
+</p>
+
+<p>
+  <strong>Venta:</strong>
+  <%= @tipocambio.venta %>
+</p>
+
+<%= link_to 'Edit', edit_tipocambio_path(@tipocambio) %> |
+<%= link_to 'Back', tipocambios_path %>

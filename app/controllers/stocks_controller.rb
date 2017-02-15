@@ -257,7 +257,11 @@ def client_data_headers
               row << stock.salida  
               saldo = stock.stock_inicial  + stock.ingreso - stock.salida       
               row << saldo 
+              if stock.price 
               @total = saldo * stock.price                         
+              else
+              @total = 0  
+              end
               row << sprintf("%.2f",@total.round(2).to_s)
 
               @cantidad += saldo 

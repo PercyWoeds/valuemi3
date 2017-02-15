@@ -5,13 +5,13 @@
     <thead>
       <tr>
         <th class="bordered_right bordered_bottom" style="width: 250px;">
-          Name
+          Nombre
         </th>
         <th class="bordered_right bordered_bottom" style="width: 130px;">
           Code
         </th>
         <th class="bordered_right bordered_bottom">
-          Category
+          Categoria
         </th>
         <th class="bordered_right bordered_bottom">
           Supplier
@@ -21,9 +21,6 @@
         </th>
         <th class="bordered_right bordered_bottom">
           Reorder
-        </th>
-        <th class="bordered_right bordered_bottom">
-          Cost
         </th>
         <th class="bordered_right bordered_bottom">
           Price
@@ -74,12 +71,12 @@
               &nbsp;
             <% end %>
           </td>
-          <td class="bordered_right bordered_bottom right">
-            <%= money(product.cost) %>
-          </td>
           <td><%= link_to 'Ver', product %></td>
         <td><%= link_to 'Editar', edit_product_path(product) %></td>
-        <td><%= link_to 'Eliminar', product, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <% if @current_user.level == "admin"%>
+        <td><%= link_to 'Eliminar', product, method: :delete, data: { confirm: 'Are you sure?' }
+         %></td>
+         <% end %>
           
         </tr>
       <% end %>

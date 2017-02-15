@@ -142,19 +142,21 @@ WHERE purchase_details.product_id = ?',params[:id] ])
 
        for  ordencompra  in @facturas_rpt 
 
-             $lcNumero = ordencompra.code    
-             $lcFecha = ordencompra.fecha1
-             if ordencompra.supplier != nil
-             $lcProveedor = ordencompra.supplier.name 
-            end
+         $lcNumero = ordencompra.code    
+         $lcFecha = ordencompra.fecha1
 
-         @orden_compra1  = Purchase.where(:purchaseorder_id=>ordencompra.id)
+         if ordencompra.supplier != nil
+          $lcProveedor = ordencompra.supplier.name 
+         end
+
+         @orden_compra1  = Purchase.where(:purchaseorder_id => ordencompra.id)
 
          if @order_compra1 
 
          else
-           @orden_compra1  = PurchaseorderDetail.where(:purchaseorder_id=>ordencompra.id)          
-            for  orden in @orden_compra1
+           @orden_compra2  = PurchaseorderDetail.where(:purchaseorder_id=>ordencompra.id)
+
+            for  orden in @orden_compra2
             row = []  
             row << nroitem.to_s
             row << $lcProveedor 
@@ -168,17 +170,9 @@ WHERE purchase_details.product_id = ?',params[:id] ])
             table_content << row
             
             nroitem=nroitem + 1
-        end
-
-
-
+         end
          end 
-          
-
-          
-
-
-      
+                
         end
       
       result = pdf.table table_content, {:position => :center,
@@ -191,7 +185,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
                                           columns([3]).align=:left
                                           columns([4]).align=:left
                                           columns([5]).align=:center  
-                                          columns([6]).align=:right
+                                          columns([6]).align=:left 
                                           columns([7]).align=:right
                                           columns([8]).align=:right
                                         end                                          
@@ -230,9 +224,6 @@ WHERE purchase_details.product_id = ?',params[:id] ])
     @fecha2 = params[:fecha2]    
     
     @facturas_rpt = @company.get_ingresos_day3(@fecha1,@fecha2)
-
-
-
 
     Prawn::Document.generate("app/pdf_output/rpt_factura.pdf") do |pdf|
         pdf.font "Helvetica"

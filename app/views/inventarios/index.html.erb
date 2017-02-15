@@ -22,9 +22,12 @@ Inventarios
 <% end %>
 </table>
 
+
 <%= link_to "Nuevo Inventario", new_inventario_path %>
 
+<% if current_user.level  == "admin" %> 
 
+<%end %>
 
 <%= will_paginate @inventarios %>
 

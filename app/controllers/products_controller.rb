@@ -114,6 +114,7 @@ class ProductsController < ApplicationController
     @suppliers = @company.get_suppliers()
     @marcas = @company.get_marcas()
     @modelos = @company.get_modelos()
+
     @categories = @company.get_categories()
   end
 

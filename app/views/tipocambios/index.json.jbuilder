@@ -1,0 +1,1 @@
+json.array! @tipocambios, partial: 'tipocambios/tipocambio', as: :tipocambio

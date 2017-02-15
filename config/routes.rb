@@ -1,6 +1,7 @@
   Mnygo::Application.routes.draw do
 
 
+  resources :tipocambios
   resources :ubicas
   resources :bank_acounts
   resources :banks
@@ -41,6 +42,8 @@
     collection { post :import }
     collection { post :import2 }
     collection { post :import3 }
+
+    
   end 
   resources :deliverymines   
 
@@ -697,12 +700,12 @@ end
   match 'inventories/addAll/:company_id' => 'inventories#addAll', via: [:get, :post]
   resources :inventories
 
-  
-
   match 'inventories/ac_categories/:company_id' => 'inventories#ac_categories', via: [:get, :post]
   match 'inventories/new/:company_id' => 'inventories#new', via: [:get, :post]  
   match 'inventories/do_email/:id' => 'inventories#do_email', via: [:get, :post]
   match 'inventarios/do_process/:id' => 'inventarios#do_process', via: [:get, :post]
+  match 'inventarios/import4/:id' => 'inventarios#impor4', via: [:get, :post]
+
   match 'inventories/email/:id' => 'inventories#email', via: [:get, :post]
   match 'inventories/pdf/:id' => 'inventories#pdf', via: [:get, :post]
   match 'companies/inventarios/:company_id' => 'inventarios#index', via: [:get, :post]

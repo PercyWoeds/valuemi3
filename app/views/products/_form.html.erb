@@ -18,14 +18,14 @@
   </div>
 
   <div class="field">
-    <%= f.label :name, "Product name*", :class => "bold" %><br />
+    <%= f.label :name, "Nombre Producto*", :class => "bold" %><br />
     <%= f.text_field :name %>
     <div class="small">
       The name of the product.
     </div>
   </div>
   <div class="field">
-    <%= f.label :code, "Product code (UPC/EAN/ISBN)" %><br />
+    <%= f.label :code, "Codigo Producto (UPC/EAN/ISBN)" %><br />
     <%= f.text_field :code %>
     <div class="small">
       If your product has a unique code, for example ISBN, enter it here.
@@ -58,7 +58,7 @@
   </div>
   
   <div class="field">
-    <%= f.label :cost, "Cost*", :class => "bold" %><br />
+    <%= f.label :cost, "Costo*", :class => "bold" %><br />
     <%= f.text_field :cost %>
     <div class="small">
       How much does the product cost you?  If it doesn't cost you anything, you<br />
@@ -66,7 +66,7 @@
     </div>
   </div>
   <div class="field">
-    <%= f.label :price, "Price*", :class => "bold" %><br />
+    <%= f.label :price, "Precio *", :class => "bold" %><br />
     <%= f.text_field :price %>
     <div class="small">
       The price of the product.
@@ -77,30 +77,32 @@
   <%= hr() %>
   
   <div class="field">
-    <strong>Taxes</strong>
+    <strong>Impuestos</strong>
     <div class="small">
-      Optional fields regarding the product taxing.
+      Campos opcionales para el control de impuestos       
     </div>
   </div>
   
   <div class="field">
-    <%= f.label :tax1_name, "Tax 1 name:" %>
+    <%= f.label :tax1_name, "Impuesto 1 nombre:" %>
     <%= f.text_field :tax1_name, :class => "tf_short" %>
-    <%= f.label :tax1, "Tax 1 %" %>
+    <%= f.label :tax1, "Impuesto  1 %" %>
     <%= f.text_field :tax1, :class => "tf_short" %>
     <div class="small">
+
       Usually the sales tax.  For example: "Sales tax" : "7"<br />
       Enter the percentage of the tax without the "%" sign.
     </div>
   </div>
   
   <div class="field">
-    <%= f.label :tax2_name, "Tax 2 name:" %>
+    <%= f.label :tax2_name, "Impuesto 2 nombre:" %>
     <%= f.text_field :tax2_name, :class => "tf_short" %>
-    <%= f.label :tax2, "Tax 2 %" %>
+    <%= f.label :tax2, "Impuesto 2 %" %>
     <%= f.text_field :tax2, :class => "tf_short" %>
     <div class="small">
-      Additional taxes your product may have.
+      Impuesto adicional para el producto
+      
     </div>
   </div>
   
@@ -110,7 +112,7 @@
     <%= f.label :tax3, "Tax 3 %" %>
     <%= f.text_field :tax3, :class => "tf_short" %>
     <div class="small">
-      Additional taxes your product may have.
+      Impuesto adicional para el producto
     </div>
   </div>
   
@@ -140,7 +142,7 @@
   <%= hr() %>
   
   <div class="field">
-    <strong>Additional information</strong>
+    <strong>Informacion adicional </strong>
   </div>
   
   <div class="field">
