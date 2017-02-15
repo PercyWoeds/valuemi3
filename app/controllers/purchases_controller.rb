@@ -143,7 +143,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
        for  ordencompra  in @facturas_rpt 
 
          $lcNumero = ordencompra.code    
-         $lcFecha = ordencompra.fecha1
+         $lcFecha  = ordencompra.fecha1
 
          if ordencompra.supplier != nil
           $lcProveedor = ordencompra.supplier.name 
@@ -151,7 +151,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
 
          @orden_compra1  = Purchase.where(:purchaseorder_id => ordencompra.id)
 
-         if @order_compra1 
+         if @orden_compra1 
 
          else
            @orden_compra2  = PurchaseorderDetail.where(:purchaseorder_id=>ordencompra.id)
