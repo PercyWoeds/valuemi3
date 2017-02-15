@@ -1040,7 +1040,11 @@ def get_supplier_payments2(moneda)
   # Return products for company
   def get_products_dato(id)
     products = Product.find_by(company_id: self.id,id: id)    
+    if products.unidad == nil
+    return products.name + " - "   
+    else     
     return products.name + " - "+products.unidad 
+    end 
   end
   
   # Return value for product

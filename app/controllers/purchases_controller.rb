@@ -396,7 +396,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]    
     @product = params[:ac_item_id]    
-
+    
     @products = @company.get_products_dato(@product)        
 
     @facturas_rpt = @company.get_ingresos_day(@fecha1,@fecha2,@product)
@@ -1384,7 +1384,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
   
   # Autocomplete for suppliers
   def ac_suppliers
-    @suppliers =  Supplier.where(["company_id = ? AND (email LIKE ? OR name LIKE ?)", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])
+    @suppliers =  Supplier.where(["company_id = ? AND (ruc LIKE ? OR name LIKE ?)", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])
    
     render :layout => false
   end

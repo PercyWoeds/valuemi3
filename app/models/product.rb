@@ -4,7 +4,8 @@ class Product < ActiveRecord::Base
   
   validates_presence_of :name, :company_id,:products_category_id
   validates_numericality_of  :tax1, :tax2, :tax3
-  
+  validates_uniqueness_of :code
+
   belongs_to :company
   belongs_to :supplier
   belongs_to :products_category
