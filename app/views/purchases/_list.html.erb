@@ -6,6 +6,7 @@
     <tr>
       <th>Tipo</th>
       <th>Documento</th>
+      <th>Proveedor </th>
       <th>Fec.Emision</th>
       <th>Fec.Vmto </th>
     
@@ -18,10 +19,7 @@
       <th>Importe</th>
       <th>Procesado </th>
       
-      <th>Cargos</th>
-      <th>Pagos</th>
-      <th>Saldo</th>
-
+      <th>Orden Compra</th>
       
       <th class="bordered_right bordered_bottom" colspan="3">
           Opciones
@@ -34,23 +32,24 @@
       <tr>
         <td><%= purchase.document.description %></td>
         <td><%= purchase.documento %></td>
+        <td><%= purchase.supplier.name  %></td>         
         <td><%= purchase.date1.strftime("%d/%m/%Y") %></td>
         <td><%= purchase.date2.strftime("%d/%m/%Y") %></td>
         <td><%= purchase.moneda.symbol %></td>            
 
         <td><%= money(purchase.discount) %></td>      
-        <td><%= money(purchase.payable_amount) %></td>
-        
+        <td><%= money(purchase.payable_amount) %></td>      
         <td><%= money(purchase.tax_amount) %></td>
         <td><%= money(purchase.total_amount) %></td>
 
-               <td class="bordered_right bordered_bottom <%= purchase.processed_color %>">
+        <td class="bordered_right bordered_bottom <%= purchase.processed_color %>">
             <%= purchase.get_processed_short %>
-          </td>
+        </td>
+        <td class="bordered_right bordered_bottom ">
+            <%= purchase.get_purchaseorder %>
+        </td>
+            
     
-        <td><%= money(purchase.charge) %></td>
-        <td><%= money(purchase.pago) %></td> 
-        <td><%= money(purchase.balance) %></td>
         <td><%= link_to 'Ver', purchase %></td>
        <% if purchase.processed != "1" %>
         <td><%= link_to 'Eliminar', purchase, method: :delete, data: { confirm: 'Are you sure?' } %>

@@ -12,6 +12,7 @@ class Purchase < ActiveRecord::Base
   belongs_to :document
   belongs_to :moneda
   belongs_to :payment
+  belongs_to :purchaseorder
 
   has_many :purchase_details
 
@@ -304,6 +305,15 @@ TABLE_HEADERS2  = ["ITEM ",
       return "Yes"
     else
       return "No"
+    end
+  end
+  
+  def get_purchaseorder
+    if(self.purchaseorder_id == nil)
+      return ""
+    else
+      return self.purchaseorder.code
+
     end
   end
   
