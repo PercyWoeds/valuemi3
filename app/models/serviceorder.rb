@@ -25,6 +25,18 @@ class Serviceorder < ActiveRecord::Base
                      "DSCTO",
                      "VALOR TOTAL"]
 
+
+        
+
+ TABLE_HEADERS2   = ["ITEM",
+                     "FECHA",
+                     "FORMA PAGO",
+                     "CODIGO",
+                     "PROVEEDOR",
+                     "SUBTOTAL",
+                     "TAX",
+                     "TOTAL",
+                     "ESTADO"     ]
 def not_serviceorders_with?(serviceorder_id)
 
   purchaseships.where(serviceorder_id: serviceorder_id).count < 1

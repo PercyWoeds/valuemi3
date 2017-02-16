@@ -15,21 +15,19 @@ totals = []
 
 <h3>
   <%= image_tag("reports_48.png", :class => "vmiddle") %>
-  Reporte de ordenes de compra pendienes de factura 
-</h3>
+ Reporte de Facturas emitidas 
+</h3	>
 
-<form method="get" action="/purchases/rpt_ingresos3_all_pdf/<%= @company.id %>" >   
+<form method="get" action="/purchases/rpt_purchase_all/<%= @company.id %>">
+
   <div class="field">
-      <input type="date" name="fecha1" value="2017-01-01" style = "width: 150px" >
+      <input type="date" name="fecha1" value="2017-01-01" style = "width: 80px" >
+
     </div>
-
 	<div class="field">
-		<input type="date" name="fecha2" value="2017-01-31" style = "width: 150px" >
+		<input type="date" name="fecha2" value="2017-01-31" style = "width: 80px" >
   </div>
-
-  
-
-  <input type="submit" value="Ver Reporte " />
+  <input type="submit" value="Generar"  />
   
 </form>
 

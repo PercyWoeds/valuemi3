@@ -549,7 +549,8 @@ class ReportsController < ApplicationController
   # Report products yearly
   def report_products
     @company = Company.find(params[:company_id])
-    @products = @company.get_products()
+
+    @products = @company.get_products2()
     @products_cats = []
     
     for product in @products
@@ -562,7 +563,7 @@ class ReportsController < ApplicationController
       @year = Time.now.year
     end
     
-    @pagetitle = "Yearly products report - #{@year} - #{@company.name}"
+    @pagetitle = "Reporte productos  - #{@year} - #{@company.name}"
     
     curr_year = Time.now.year
     c_year = curr_year
@@ -574,6 +575,7 @@ class ReportsController < ApplicationController
       c_year -= 1
     end
   end
+
   def product_all
 
     @company = Company.find(params[:company_id])
@@ -1290,4 +1292,13 @@ class ReportsController < ApplicationController
     @products = @company.get_products()
     @categories = ProductsCategory.all 
   end
+
+
+  def rpt_product_all
+      @company = Company.find(params[:company_id])    
+    @pagetitle = "Listado de Productos "    
+    @products = @company.get_products()
+    
+  end
+
 end

@@ -25,19 +25,16 @@
       </div>
       <br />
     </div>
-    
-            
+          
     <div class="small">
         <strong>Seleccionar proveedor:</strong>
         <span id="selected_supplierr"><% if @ac_supplier %><%= @ac_supplier %><% else %><!-- i --><% end %></span>
     </div>
-    
-    
+        
     <div class="field">
       <%= f.label :fecha1, "Fecha Entrega*", :class => "bold" %><br />
       <%= f.date_field :fecha1, value: Time.now.strftime("%d/%m/%Y") %>
     </div>
-
 
     <div class="field">
       <%= f.label  :payment_id,"Forma de Pago " %><br />
@@ -53,13 +50,11 @@
       <%= f.label :code, "Code*", :class => "bold" %><br />
       <%= f.text_field :code, :onclick => "$(this).select();" %>
     </div>
-
   
     <div class="field">
       <%= f.label :location_id ,"Local"%><br />
       <%= f.select :location_id, options_from_collection_for_select(@locations,'id','name') %>
-    
-        
+          
     </div>
     <div class="field">
       <%= f.label :division_id %><br />
@@ -79,9 +74,7 @@
       <%= f.label :description %><br />
       <%= f.text_area :description %>
     </div>  
-
-
-    
+  
     <div class="field">
       <label for="ac_user" class="bold">Seller*</label><br />
       <input type="text" name="ac_user" id="ac_user" value="<% if @ac_user %><%= @ac_user %><% end %>" />

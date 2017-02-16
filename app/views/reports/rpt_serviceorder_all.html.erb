@@ -19,11 +19,19 @@ totals = []
 </h1>
 
 <form method="get" action="/serviceorders/rpt_serviceorder_all_pdf/<%= @company.id %>">
-  <%= select_tag(:year, options_for_select(@years, @year)) %>
-  <%= select_tag(:month, options_for_select(@months, @month)) %>
 
-  <input type="submit" value="Ver" class="small_btn" />
-  <a href="/serviceorders/rpt_serviceorder_all_pdf/<%= @company.id %>" class="small_btn">Today</a>
+  <div class="field">
+      <input type="date" name="fecha1" value="2017-01-01" style = "width: 120px" >
+  </div>
+
+  <div class="field">
+		<input type="date" name="fecha2" value="2017-01-31" style = "width: 120px" >
+  </div>
+
+
+
+  <input type="submit" value="Generar" />
+  <a href="/serviceorders/rpt_serviceorder_all_pdf/<%= @company.id %>" </a>
 </form>
 
 <br />
@@ -99,92 +107,5 @@ totals = []
 <br />
 
 <div class="button">
-  <%= link_to "Back", "/companies/reports/#{@company.id}" %>
+  <%= link_to "Regresar", "/companies/reports/#{@company.id}" %>
 </div>
-
-<script type="text/javascript"> 
-$(document).ready(function() {
-	var chart = new Highcharts.Chart({
-		chart: {
-			renderTo: 'container_chart',
-			defaultSeriesType: 'line',
-			margin: [50, 40, 70, 70]
-		},
-		title: {
-			text: 'Monthly sales report',
-			style: {
-				margin: '10px 100px 0 0' // center it
-			}
-		},
-		subtitle: {
-			text: '<%= @month_name %> <%= @year %>',
-			style: {
-				margin: '0 100px 0 0' // center it
-			}
-		},
-		xAxis: {
-			categories: [
-			  <%= @date_cats.join(",") %>
-			],
-			title: {
-				text: 'Day'
-			},
-			labels: {
-				rotation: -90, 
-				y: 34, 
-				style: {
-					fontSize: '6pt'
-				}
-			}
-		},
-		yAxis: {
-			title: {
-				text: 'Sales'
-			},
-			plotLines: [{
-				value: 0,
-				width: 1,
-				color: '#808080'
-			}]
-		},
-		tooltip: {
-			formatter: function() {
-				return '<b>'+ this.series.name +'</b><br/>'+
-				this.x +': '+ this.y;
-			}
-		},
-		legend: {
-			layout: 'vertical',
-			style: {
-				left: 'auto',
-				bottom: 'auto',
-				right: '10px',
-				top: '100px'
-			}
-		},
-		credits: {
-			enabled: false
-		},
-		series: [
-			{
-				name: 'Subtotal',
-				data: [
-					<%= subtotals.join(",") %>
-				]
-			},
-			{
-				name: 'Tax',
-				data: [
-					<%= taxes.join(",") %>
-				]
-			},
-			{
-				name: 'Total',
-				data: [
-					<%= totals.join(",") %>
-				]
-			}
-		]
-	});
-});
-</script>

@@ -406,6 +406,11 @@ def get_guias_2(fecha1,fecha2)
     @serviceorder = Serviceorder.where(["company_id = ? AND fecha1 >= ? AND fecha1 <= ?", self.id, "#{year}-#{month}-01 00:00:00", "#{year}-#{month}-31 23:59:59"])
     return @serviceorder
  end 
+ def get_services_day(fecha1,fecha2)
+    @serviceorder = Serviceorder.where(["company_id = ? AND fecha1 >= ? AND fecha1 <= ?", self.id, "#{fecha1} 00:00:00", "#{fecha2} 23:59:59"])
+    return @serviceorder
+ end 
+
 ## generar archivo txt
  def get_facturas_year_month_day(fecha1)
     @facturas = Factura.where(["company_id = ? AND fecha >= ? and fecha<= ?", self.id, "#{fecha1} 00:00:00","#{fecha1} 23:59:59"])
@@ -821,8 +826,30 @@ def get_payments_detail_value(fecha1,fecha2,value = "total",moneda)
     return ret    
  end 
 
+ def get_services_day2( fecha1,fecha2, value = "total")
+  
+    services = Serviceorder.where([" company_id = ?  AND fecha1 >= ? AND fecha1 <= ?", self.id,"#{fecha1} 00:00:00", "#{fecha2} 23:59:59"]).order("id desc")
+    ret = 0
+    
+    for service in services
+      puts service.code 
 
- 
+      if(value == "subtotal")
+        ret += service.subtotal
+      elsif(value == "tax")
+        ret += service.tax
+      elsif(value == "detraccion")
+      ret += service.detraccion
+      else 
+        
+        ret += service.total
+      end
+    end
+    
+    return ret
+  end
+ # Return value 
+
  # Return value for user
  def get_services_year_month_value( year,month, value = "total")
   
@@ -906,6 +933,26 @@ def get_payments_detail_value(fecha1,fecha2,value = "total",moneda)
 
   end
   
+ def get_purchases_by_day_value_supplier(fecha1,fecha2,moneda,value='total_amount',supplier)
+  
+    purchases = Purchase.where([" company_id = ? AND date1 >= ? and date1 <= ? and moneda_id = ? and supplier_id = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda , supplier ]).order(:id,:moneda_id)    
+
+    ret = 0
+    for purchase in purchases
+      
+      if(value == "subtotal")
+        ret += purchase.subtotal
+      elsif(value == "tax")
+        ret += purchase.tax
+      else
+        ret += purchase.total_amount
+      end
+    end
+    
+    return ret
+
+
+  end 
  def get_purchases_pendientes_day(fecha1,fecha2)
 
     @facturas = Purchase.where(["balance > 0  and  company_id = ? AND date1 >= ? and date1<= ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59"]).order(:supplier_id,:moneda_id,:date1)
@@ -1037,6 +1084,14 @@ def get_supplier_payments2(moneda)
     
     return products
   end
+
+  # Return products for company
+  def get_products2()
+    products = Product.where(company_id: self.id).order(:products_category_id,:code)
+    
+    return products
+  end
+  
   # Return products for company
   def get_products_dato(id)
     products = Product.find_by(company_id: self.id,id: id)    
@@ -1309,7 +1364,14 @@ def get_supplier_payments2(moneda)
  end 
 
  def get_orden_detalle(id)
+    
     @purchaseorders = PurchaseorderDetail.where(:purchaseorder_id=>id)
+    return @purchaseorders
+    
+ end 
+ def get_orden_detalle2(id)
+    
+    @purchaseorders = ServiceorderService.where(:serviceorder_id=>id)
     return @purchaseorders
     
  end 

@@ -197,6 +197,8 @@ end
   match 'companies/reports/view_monthly_products/:company_id/:product_id' => 'reports#report_view_monthly_products', via: [:get, :post]
   match 'companies/reports/monthly_products/:company_id' => 'reports#report_monthly_products', via: [:get, :post]
   match 'companies/reports/products/:company_id' => 'reports#report_products', via: [:get, :post]
+  match 'companies/reports/report_products/:company_id' => 'reports#report_products', via: [:get, :post]
+
   match 'companies/reports/view_monthly_sellers/:company_id/:user_id' => 'reports#report_view_monthly_sellers', via: [:get, :post]
   match 'companies/reports/monthly_sellers/:company_id' => 'reports#report_monthly_sellers', via: [:get, :post]
   match 'companies/reports/sellers/:company_id' => 'reports#report_sellers', via: [:get, :post]
@@ -247,6 +249,7 @@ end
   match 'companies/reports/rpt_facturas_all2/:company_id' => 'reports#rpt_facturas_all2', via: [:get, :post]
 
   match 'companies/reports/rpt_purchase_all/:company_id' => 'reports#rpt_purchase_all', via: [:get, :post]
+  match 'companies/reports/rpt_product_all/:company_id' => 'reports#rpt_product_all', via: [:get, :post]
 
   match 'companies/reports/sales/:company_id' => 'reports#report_sales', via: [:get, :post]
   match 'companies/reports/:company_id' => 'reports#reports', via: [:get, :post]
@@ -462,6 +465,7 @@ end
   match 'purchases/ac_suppliers/:company_id' => 'purchases#ac_suppliers', via: [:get, :post]
   match 'purchases/new/:company_id' => 'purchases#new', via: [:get, :post]  
   match 'purchases/newfactura/:id' => 'purchases#newfactura', via: [:get, :post]  
+  match 'purchases/newfactura2/:id' => 'purchases#newfactura2', via: [:get, :post]  
 
   match 'purchases/do_email/:id' => 'purchases#do_email', via: [:get, :post]
   match 'purchases/do_process/:id' => 'purchases#do_process', via: [:get, :post]
@@ -469,6 +473,8 @@ end
   match 'purchases/pdf/:id' => 'purchases#pdf', via: [:get, :post]
   match 'purchases/search/:id' => 'purchases#search', via: [:get, :post]
   match 'purchases/cargar/:id'   => 'purchases#cargar', via: [:get, :post]
+  match 'purchases/cargar2/:id'   => 'purchases#cargar2', via: [:get, :post]
+
   match 'purchases/do_crear/:id'   => 'purchases#do_crear', via: [:get, :post]
 
   match 'purchases/ingresos/:id'   => 'purchases#ingresos', via: [:get, :post]
@@ -485,6 +491,7 @@ end
   match 'purchases/rpt_ingresos_all_pdf/:id' => 'purchases#rpt_ingresos_all_pdf', via: [:get, :post]
   match 'purchases/rpt_ingresos2_all_pdf/:id' => 'purchases#rpt_ingresos2_all_pdf', via: [:get, :post]
   match 'purchases/rpt_ingresos3_all_pdf/:id' => 'purchases#rpt_ingresos3_all_pdf', via: [:get, :post]
+  match 'purchases/rpt_purchase_all/:id' => 'purchases#rpt_purchase_all', via: [:get, :post]
 
   match 'companies/purchases/:company_id' => 'purchases#list_purchases', via: [:get, :post]  
   

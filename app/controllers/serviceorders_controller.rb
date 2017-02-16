@@ -740,7 +740,7 @@ class ServiceordersController < ApplicationController
       headers = []
       table_content = []
 
-      Delivery::TABLE_HEADERS.each do |header|
+      Serviceorder::TABLE_HEADERS2.each do |header|
         cell = pdf.make_cell(:content => header)
         cell.background_color = "FFFFCC"
         headers << cell
@@ -765,8 +765,63 @@ class ServiceordersController < ApplicationController
             table_content << row
 
             nroitem=nroitem + 1
-            puts nroitem 
+        
         end
+
+
+  ## TOTALES  PIE DE PAGINA 
+      subtotals = []
+      taxes = []
+      totals = []
+      detraccions =[]
+
+      services_subtotal = 0
+      services_tax = 0
+      services_total = 0
+      services_detraccion = 0
+
+          subtotal = @company.get_services_day2(@fecha1,@fecha2, "subtotal")
+          subtotals.push(subtotal)
+          services_subtotal += subtotal          
+
+      
+        
+        
+          tax = @company.get_services_day2(@fecha1,@fecha2, "tax")
+          taxes.push(tax)
+          services_tax += tax
+        
+      
+          
+          total = @company.get_services_day2(@fecha1,@fecha2, "total")
+          totals.push(total)
+          services_total += total
+        
+      
+
+          detraccion = @company.get_services_day2(@fecha1,@fecha2, "detraccion")
+          detraccions.push(detraccion)
+          services_detraccion += detraccion
+        
+        
+      
+            row = []
+            row << " "
+            row << " "
+            row << " "
+            row << " "
+            row << " "
+            row << subtotal.to_s
+            row << tax.to_s
+            row << total.to_s
+            row << " "
+
+            table_content << row
+
+  ## TOTAL PIE DE PAGINA 
+
+
+
 
       result = pdf.table table_content, {:position => :center,
                                         :header => true,
@@ -788,41 +843,7 @@ class ServiceordersController < ApplicationController
 
 
     def build_pdf_footer_rpt(pdf)
-      subtotals = []
-      taxes = []
-      totals = []
-      services_subtotal = 0
-      services_tax = 0
-      services_total = 0
-
-
-          subtotal = @company.get_services_year_month_value(@year,@month, "subtotal")
-          subtotals.push(subtotal)
-          services_subtotal += subtotal          
-          pdf.text subtotal.to_s
-        
-        
-          tax = @company.get_services_year_month_value(@year,@month, "tax")
-          taxes.push(tax)
-          services_tax += tax
-        
-          pdf.text tax.to_s
-          
-          total = @company.get_services_year_month_value(@year,@month, "total")
-          totals.push(total)
-          services_total += total
-        
-          pdf.text total.to_s
-
-          detraccion = @company.get_services_year_month_value(@year,@month, "detraccion")
-          detraccions.push(detraccion)
-          services_detraccion += detraccion
-        
-          pdf.text detraccion.to_s
-            
-        
-        
-        pdf.text "" 
+                  
 
         pdf.bounding_box([0, 20], :width => 535, :height => 40) do
         pdf.draw_text "Company: #{@company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
@@ -840,20 +861,13 @@ class ServiceordersController < ApplicationController
     @company=Company.find(params[:id])      
     
     
-    if(params[:year] and params[:year].numeric?)
-      @year = params[:year].to_i
-    else
-      @year = Time.now.year
-    end
     
-    if(params[:month] and params[:month].numeric?)
-      @month = params[:month].to_i
-    else
-      @month = Time.now.month
-    end
+      @fecha1 = params[:fecha1]
+      @fecha2 = params[:fecha2]
+    
     
 
-    @serviceorder_rpt = @company.get_services_year_month(@year,@month)  
+    @serviceorder_rpt = @company.get_services_day(@fecha1,@fecha2)  
       
     Prawn::Document.generate("app/pdf_output/rpt_serviceall.pdf") do |pdf|
         pdf.font "Helvetica"

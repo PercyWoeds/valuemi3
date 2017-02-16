@@ -470,7 +470,6 @@ class CustomerPaymentsController < ApplicationController
     @customerpayment = CustomerPayment.find(params[:id])
 
     @company = Company.find(@customerpayment.company_id)
-
     
     @bank_acounts = @company.get_bank_acounts()        
     @monedas  = @company.get_monedas()

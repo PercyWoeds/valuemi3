@@ -21,7 +21,7 @@ totals = []
 <form method="get" action="/stocks/rpt_stocks1/<%= @company.id %>">
   
 	<div class="field">
-     Hasta el dia 	 <input type="date" name="fecha1" value="2017-02-09" style = "width: 120px" >
+     Hasta el dia 	 <input type="date" name="fecha1" value="2017-02-09" style = "width: 150px" >
   </div>
  <div class="field">
     <%= select_tag(:products_category_id,options_from_collection_for_select(@categories,'id','category') ) %>

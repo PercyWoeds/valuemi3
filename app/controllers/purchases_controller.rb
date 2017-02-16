@@ -81,6 +81,244 @@ WHERE purchase_details.product_id = ?',params[:id] ])
 
 ## Reporte de productos pendientes de ingreso
 
+##### reporte de factura emitidas
+
+  def build_pdf_header_rpt8(pdf)
+      pdf.font "Helvetica" , :size => 8
+     $lcCli  =  @company.name 
+     $lcdir1 = @company.address1+@company.address2+@company.city+@company.state
+
+     $lcFecha1= Date.today.strftime("%d/%m/%Y").to_s
+     $lcHora  = Time.now.to_s
+
+    max_rows = [client_data_headers_rpt.length, invoice_headers_rpt.length, 0].max
+      rows = []
+      (1..max_rows).each do |row|
+        rows_index = row - 1
+        rows[rows_index] = []
+        rows[rows_index] += (client_data_headers_rpt.length >= row ? client_data_headers_rpt[rows_index] : ['',''])
+        rows[rows_index] += (invoice_headers_rpt.length >= row ? invoice_headers_rpt[rows_index] : ['',''])
+      end
+
+      if rows.present?
+
+        pdf.table(rows, {
+          :position => :center,
+          :cell_style => {:border_width => 0},
+          :width => pdf.bounds.width
+        }) do
+          columns([0, 2]).font_style = :bold
+        end
+        pdf.move_down 10
+
+      end
+
+
+      
+      pdf 
+  end   
+
+  def build_pdf_body_rpt8(pdf)
+    
+    pdf.text "Facturas de compra : desde "+@fecha1.to_s+ " Hasta: "+@fecha2.to_s , :size => 8 
+    pdf.text ""
+    pdf.font "Helvetica" , :size => 6
+
+      headers = []
+      table_content = []
+
+      Factura::TABLE_HEADERS3.each do |header|
+        cell = pdf.make_cell(:content => header)
+        cell.background_color = "FFFFCC"
+        headers << cell
+      end
+
+      table_content << headers
+
+      nroitem=1
+      lcmonedasoles   = 2
+      lcmonedadolares = 1
+    
+
+      lcDoc='FT'      
+
+       lcCliente = @facturas_rpt.first.supplier_id
+
+       for  product in @facturas_rpt
+        
+          if lcCliente == product.supplier_id
+
+             #if product.payment_id == nil 
+              fechas2 = product.date2 
+             #else 
+             # days = product.payment.day 
+             # fechas2 = product.fechas2 + days.days              
+             #end 
+
+            row = []          
+            row << lcDoc
+            row << product.documento 
+            row << product.date1.strftime("%d/%m/%Y")
+            row << product.date2.strftime("%d/%m/%Y")
+            row << product.supplier.name
+            row << product.moneda.symbol  
+
+            if product.moneda_id == 1 
+                row << "0.00 "
+                row << sprintf("%.2f",product.total_amount.to_s)
+            else
+                row << sprintf("%.2f",product.total_amount.to_s)
+                row << "0.00 "
+            end 
+            row << " "
+            
+            table_content << row
+
+            nroitem = nroitem + 1
+
+          else
+            totals = []            
+            total_cliente_soles = 0
+            total_cliente_soles = @company.get_purchases_by_day_value_supplier(@fecha1,@fecha2,lcmonedadolares,lcCliente)
+            total_cliente_dolares = 0
+            total_cliente_dolares = @company.get_purchases_by_day_value_supplier(@fecha1,@fecha2, lcmonedasoles,lcCliente)
+            
+            row =[]
+            row << ""
+            row << ""
+            row << ""
+            row << ""          
+            row << "TOTALES POR PROVEEDOR=> "            
+            row << ""
+            row << sprintf("%.2f",total_cliente_dolares.to_s)
+            row << sprintf("%.2f",total_cliente_soles.to_s)
+            row << " "
+            
+            table_content << row
+
+            lcCliente = product.supplier_id
+
+            row = []          
+            row << lcDoc
+            row << product.code
+            row << product.fecha.strftime("%d/%m/%Y")
+            row << product.fecha2.strftime("%d/%m/%Y")
+            row << product.supplier.name
+            row << product.moneda.symbol  
+
+            if product.moneda_id == 1 
+                row << "0.00 "
+                row << sprintf("%.2f",product.balance.to_s)
+            else
+                row << sprintf("%.2f",product.balance.to_s)
+                row << "0.00 "
+            end 
+            row << product.observ
+
+            
+            table_content << row
+
+
+
+          end 
+          
+         
+        end
+
+        lcProveedor = @facturas_rpt.last.supplier_id 
+
+            totals = []            
+            total_cliente = 0
+
+            total_cliente_soles = 0
+            total_cliente_soles = @company.get_purchases_pendientes_day_value(@fecha1,@fecha2, lcProveedor, lcmonedadolares)
+            total_cliente_dolares = 0
+            total_cliente_dolares = @company.get_purchases_pendientes_day_value(@fecha1,@fecha2, lcProveedor, lcmonedasoles)
+    
+            
+            row =[]
+            row << ""
+            row << ""
+            row << ""
+            row << ""          
+            row << "TOTALES POR CLIENTE=> "            
+            row << ""
+            row << sprintf("%.2f",total_cliente_dolares.to_s)
+            row << sprintf("%.2f",total_cliente_soles.to_s)                      
+            row << " "
+            table_content << row
+              
+          total_soles = @company.get_pendientes_day_value(@fecha1,@fecha2, "total",lcmonedasoles)
+          total_dolares = @company.get_pendientes_day_value(@fecha1,@fecha2, "total",lcmonedadolares)
+      
+           if $lcxCliente == "0" 
+
+          row =[]
+          row << ""
+          row << ""
+          row << ""
+          row << ""
+          row << "TOTALES => "
+          row << ""
+          row << sprintf("%.2f",total_soles.to_s)
+          row << sprintf("%.2f",total_dolares.to_s)                    
+          row << " "
+          table_content << row
+          end 
+
+          result = pdf.table table_content, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width
+                                        } do 
+                                          columns([0]).align=:center
+                                          columns([1]).align=:left
+                                          columns([2]).align=:left
+                                          columns([3]).align=:left
+                                          columns([4]).align=:left
+                                          columns([5]).align=:right  
+                                          columns([6]).align=:right
+                                          columns([7]).align=:right
+                                          columns([8]).align=:right
+                                        end                                          
+                                        
+      pdf.move_down 10      
+
+      #totales 
+
+      pdf 
+
+    end
+
+    def build_pdf_footer_rpt8(pdf)      
+                  
+      pdf.text "" 
+      pdf.bounding_box([0, 20], :width => 535, :height => 40) do
+      pdf.draw_text "Company: #{@company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
+    end
+    pdf      
+  end
+
+  # Export serviceorder to PDF
+  def rpt_purchase_all
+
+    @company=Company.find(params[:id])          
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]    
+    @facturas_rpt = @company.get_purchases_day(@fecha1,@fecha2)
+    
+    Prawn::Document.generate("app/pdf_output/rpt_factura.pdf") do |pdf|
+        pdf.font "Helvetica"
+        pdf = build_pdf_header_rpt8(pdf)
+        pdf = build_pdf_body_rpt8(pdf)
+        build_pdf_footer_rpt8(pdf)
+        $lcFileName =  "app/pdf_output/rpt_factura_all.pdf"              
+    end     
+    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
+    send_file("app/pdf_output/rpt_factura.pdf", :type => 'application/pdf', :disposition => 'inline')
+
+  end
+
+
 # reporte de ingresos x producto x familia 
 
 # reporte completo
@@ -1157,6 +1395,38 @@ WHERE purchase_details.product_id = ?',params[:id] ])
     @suppliers = @company.get_suppliers()      
 
   end 
+def newfactura2
+    @company = Company.find(1)
+    @purchaseorder = Serviceorder.find(params[:id])      
+
+    $lcPurchaseOrderId = @purchaseorder.id
+    $lcProveedorId  = @purchaseorder.supplier_id
+    $lcProveedorName =@purchaseorder.supplier.name 
+    $lcFechaEmision = @purchaseorder.fecha1
+    $lcFormaPagoId  = @purchaseorder.payment_id
+    $lcFormaPago    = @purchaseorder.payment.descrip
+    $lcFormaPagoDias =@purchaseorder.payment.day
+    $lcMonedaId   = @purchaseorder.moneda_id
+    $lcMoneda  = @purchaseorder.moneda.description
+    $lcLocationId = @purchaseorder.location_id
+    $lcDivisionId = @purchaseorder.division_id
+
+
+    @detalleitems =  @company.get_orden_detalle2(@purchaseorder.id)
+
+    @purchase = Purchase.new 
+
+    
+    @locations = @company.get_locations()
+    @divisions = @company.get_divisions()
+
+    @documents = @company.get_documents()    
+    @servicebuys  = @company.get_servicebuys()
+    @monedas  = @company.get_monedas()
+    @payments  = @company.get_payments()
+    @suppliers = @company.get_suppliers()      
+
+  end 
 
   def do_crear
     @action_txt = "do_crear"
@@ -1247,6 +1517,14 @@ WHERE purchase_details.product_id = ?',params[:id] ])
     return @purchaseorders
 
   end   
+  def cargar2
+    lcProcesado='1'
+    @company = Company.find(1)
+    @purchaseorders = Serviceorder.where(["processed =  ? ",lcProcesado])
+    return @purchaseorders
+
+  end   
+
 
   def datos
     nrodocumento =params[:documento]    
@@ -1390,6 +1668,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
   
   # Show purchases for a company
   def list_purchases
+
     @company = Company.find(params[:company_id])
     @pagetitle = "#{@company.name} - Purchases"
     @filters_display = "block"
@@ -1543,10 +1822,8 @@ WHERE purchase_details.product_id = ?',params[:id] ])
     end    
     
       respond_to do |format|
-        if @purchase.save 
-          # Create products for kit
+        if @purchase.save     
           @purchase.add_products(items)          
-          # Check if we gotta process the invoice
           @purchase.process()
 
           
