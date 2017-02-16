@@ -514,7 +514,7 @@ def build_pdf_header(pdf)
   
   # Autocomplete for suppliers
   def ac_suppliers
-    @suppliers = supplier.where(["company_id = ? AND (email LIKE ? OR name LIKE ?)", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])
+    @suppliers = Supplier.where(["company_id = ? AND (ruc  LIKE ? OR name LIKE ?)", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])
    
     render :layout => false
   end

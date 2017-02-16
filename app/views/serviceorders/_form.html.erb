@@ -17,14 +17,13 @@
        Informacion Order de Servicio 
     </h3>
 
-    <div class="field">  
-      <label for="ac_supplier" class="bold"> PROVEEDOR *</label><br />
-      <%= f.select :supplier_id,options_from_collection_for_select(@suppliers,'id','name') %>
+    <label for="ac_supplier" class="bold">Proveedor*</label><br />
+<input type="text" name="ac_supplier" id="ac_supplier" value="<% if @ac_supplier %><%= @ac_supplier %><% end %>" />
+      
       <div class="small">
-        Ingrese una termino de busqueda para encontrar un proveedor.
+      <a href="#" onclick="createSupplierPurchase(); return false;">+ Crear nuevo proveedor</a>
       </div>
-      <br />
-    </div>
+              
           
     <div class="small">
         <strong>Seleccionar proveedor:</strong>
@@ -92,13 +91,13 @@
   
     <%= hr() %>
   
-  
     
     <%= hr() %>
   
     <div class="actions">
       <input type="hidden" name="items" id="items" value="<% if @suppliers_lines %><%= @suppliers_lines %><% end %>" />
       <%= f.hidden_field :user_id, :id => "ac_user_id" %>
+      <%= f.hidden_field :supplier_id, :id => "ac_supplier_id" %>
       <%= f.hidden_field :company_id %>
       <%= f.submit %>
     </div>

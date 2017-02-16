@@ -385,6 +385,8 @@ end
   match 'serviceorders/ac_unidads/:company_id' => 'serviceorders#ac_unidads', via: [:get, :post]
   match 'serviceorders/ac_user/:company_id' => 'serviceorders#ac_user', via: [:get, :post]
   match 'serviceorders/ac_customers/:company_id' => 'serviceorders#ac_customers', via: [:get, :post]
+  match 'serviceorders/ac_suppliers/:company_id' => 'serviceorders#ac_suppliers', via: [:get, :post]
+
   match 'serviceorders/new/:company_id' => 'serviceorders#new', via: [:get, :post]
   match 'serviceorders/do_grabar_ins/:id' => 'serviceorders#do_grabar_ins', via: [:get, :post]
 
@@ -407,6 +409,8 @@ end
   match 'purchaseorders/ac_unidads/:company_id' => 'purchaseorders#ac_unidads', via: [:get, :post]
   match 'purchaseorders/ac_user/:company_id' => 'purchaseorders#ac_user', via: [:get, :post]
   match 'purchaseorders/ac_purchases/:company_id' => 'purchaseorders#ac_purchases', via: [:get, :post]
+  match 'purchaseorders/ac_suppliers/:company_id' => 'purchaseorders#ac_suppliers', via: [:get, :post]
+
   match 'purchaseorders/new/:company_id' => 'purchaseorders#new', via: [:get, :post]
   match 'purchaseorders/newfactura/:company_id' => 'purchaseorders#newfactura', via: [:get, :post]  
 

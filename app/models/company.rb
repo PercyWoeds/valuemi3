@@ -1087,8 +1087,7 @@ def get_supplier_payments2(moneda)
 
   # Return products for company
   def get_products2()
-    products = Product.where(company_id: self.id).order(:products_category_id,:code)
-    
+    products = Product.where(company_id: self.id).order(:products_category_id,:code)    
     return products
   end
   

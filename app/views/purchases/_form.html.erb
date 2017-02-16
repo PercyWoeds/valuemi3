@@ -6,7 +6,6 @@
 
     <div class="field">
     
-
       <label for="ac_supplier" class="bold">Proveedor*</label><br />
       <input type="text" name="ac_supplier" id="ac_supplier" value="<% if @ac_supplier %><%= @ac_supplier %><% end %>" />
       
@@ -15,14 +14,16 @@
       </div>
 
       <div class="small">
-        Ingrese una termino de busqueda para encontrar un cliente.
+        Ingrese una termino de busqueda para encontrar un proveedor
       </div>
 
       <br />
 
       <div class="small">
         <strong>Seleccionar proveedor:</strong>
+
         <span id="selected supplier"><% if @ac_supplier %><%= @ac_supplier %><% else %><!-- i --><% end %></span>
+
       </div>
     </div>
     <div class="field">
