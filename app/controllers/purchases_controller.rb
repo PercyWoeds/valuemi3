@@ -175,7 +175,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
                 
         end
       
-      result = pdf.table table_content, {:position => :center,
+       result = pdf.table table_content, {:position => :center,
                                         :header => true,
                                         :width => pdf.bounds.width
                                         } do 
@@ -1146,7 +1146,6 @@ WHERE purchase_details.product_id = ?',params[:id] ])
 
     @purchase = Purchase.new 
 
-    puts @purchaseorder.code 
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
@@ -1334,7 +1333,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
               
         product = Product.find(id.to_i)
         product[:i] = i
-        product[:quantity] = quantity.to_i
+        product[:quantity] = quantity.to_f
         product[:price]    = price.to_f
         product[:discount] = discount.to_f
         product[:price2]   = price2.round(2)
