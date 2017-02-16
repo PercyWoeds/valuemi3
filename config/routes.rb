@@ -246,6 +246,8 @@ end
   match 'companies/reports/rpt_facturas_all/:company_id' => 'reports#rpt_facturas_all', via: [:get, :post]
   match 'companies/reports/rpt_facturas_all2/:company_id' => 'reports#rpt_facturas_all2', via: [:get, :post]
 
+  match 'companies/reports/rpt_purchase_all/:company_id' => 'reports#rpt_purchase_all', via: [:get, :post]
+
   match 'companies/reports/sales/:company_id' => 'reports#report_sales', via: [:get, :post]
   match 'companies/reports/:company_id' => 'reports#reports', via: [:get, :post]
 

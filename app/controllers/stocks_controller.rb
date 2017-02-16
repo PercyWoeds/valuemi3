@@ -222,7 +222,7 @@ def client_data_headers
 
   def build_pdf_body2(pdf)
     
-    pdf.text "Movimiento  de Productos :" +" Desde : "+@fecha1.to_s + " Hasta: "+@fecha2.to_s   , :size => 11 
+    pdf.text "Stocks de Productos :" +" Desde : "+@fecha1.to_s + " Hasta: "+@fecha2.to_s   , :size => 11 
     pdf.text " Categoria : " + @namecategoria , :size => 11 
     pdf.font "Helvetica" , :size => 6
 
@@ -239,7 +239,9 @@ def client_data_headers
       table_content << headers
 
       nroitem=1
+      @cantidad1 = 0
       @cantidad = 0
+
       @totales  = 0
         
 
@@ -263,7 +265,7 @@ def client_data_headers
               @total = 0  
               end
               row << sprintf("%.2f",@total.round(2).to_s)
-
+              @cantidad1 += stock.stock_inicial 
               @cantidad += saldo 
               @totales  += @total 
 
@@ -280,9 +282,8 @@ def client_data_headers
             row << ""            
             row << ""            
             row <<""          
-            row << ""            
-            row << ""                        
-            
+            row << sprintf("%.2f",@cantidad1.round(2).to_s)
+            row << ""                                  
             row << sprintf("%.2f",@cantidad.round(2).to_s)
             row << " "
             row << sprintf("%.2f",@totales.round(2).to_s)
