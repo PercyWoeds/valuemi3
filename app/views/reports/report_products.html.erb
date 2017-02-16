@@ -49,16 +49,27 @@ totals = []
     <% for product in @products %>
 
       <tr>
-       <% if product.products_category %>
+
         <td class="bordered_bottom ">
+        
+        <% if product.products_category %>
           <%=  product.products_category.code   %>
+
+          <% else %>
+          <p > No category </p>
+          <% end %>
         </td>
       
         <td class="bordered_bottom ">
-          <%=  product.products_category.category   %>
+          <% if product.products_category %>
+            <%=  product.products_category.category   %>
+          <% else %>
+            <p > No category </p>
+          <% end %>
+
         </td>
         
-      <% end %>
+      
 
         <td class="bordered_bottom ">
           <%=  product.code  %>
