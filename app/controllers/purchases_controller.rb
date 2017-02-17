@@ -353,7 +353,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
 
             row = []          
             row << lcDoc
-            row << product.code
+            row << product.documento 
             row << product.date1.strftime("%d/%m/%Y")
             row << product.date2.strftime("%d/%m/%Y")
             row << product.supplier.name

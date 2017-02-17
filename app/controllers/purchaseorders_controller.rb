@@ -950,7 +950,7 @@ def build_pdf_header(pdf)
             row = []          
             row << lcDoc
             row << product.code
-            row << product.fecha.strftime("%d/%m/%Y")
+            row << product.fecha1.strftime("%d/%m/%Y")
             row << product.fecha2.strftime("%d/%m/%Y")
             row << product.supplier.name
             row << product.moneda.symbol  
