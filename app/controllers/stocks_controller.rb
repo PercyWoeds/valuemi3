@@ -173,9 +173,7 @@ class StocksController < ApplicationController
     @fecha2 = params[:fecha1]
     @categoria = params[:products_category_id]
     @namecategoria= @company.get_categoria_name(@categoria)      
-
-    @movements = @company.get_stocks_inventarios2(@fecha1,@fecha2,@categoria)   
-
+    @movements = @company.get_stocks_inventarios2(@fecha1,@fecha2,@categoria)
       
     Prawn::Document.generate("app/pdf_output/stocks1.pdf") do |pdf|      
 
@@ -349,9 +347,7 @@ class StocksController < ApplicationController
     @company = Company.find(params[:company_id])
     @pagetitle = "#{@company.name} - Stocks "
 
-
         if(params[:search] and params[:search] != "")  
-
           @stocks = Stock.find_by_sql(['Select stocks.*, products.name from stocks 
           INNER JOIN products ON stocks.product_id = products.id
           WHERE products.code like ?  or products.name like ?',
@@ -403,18 +399,20 @@ class StocksController < ApplicationController
       
     @movements = @company.get_movement_stocks(@fecha1,@fecha2) 
       
-    Prawn::Document.generate("app/pdf_output/stocks2.pdf") do |pdf|      
+    Prawn::Document.generate("app/pdf_output/stocks3.pdf") do |pdf|      
         pdf.font "Helvetica"
         pdf = build_pdf_header2(pdf)
         pdf = build_pdf_body2(pdf)
         build_pdf_footer2(pdf)
-        $lcFileName =  "app/pdf_output/stocks2.pdf"      
+        $lcFileName =  "app/pdf_output/stocks3.pdf"      
         
     end     
 
     $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName    
-    send_file("app/pdf_output/stocks2.pdf", :type => 'application/pdf', :disposition => 'inline')
+    send_file("app/pdf_output/stocks3.pdf", :type => 'application/pdf', :disposition => 'inline')
   end
+
+
 
   def show
     @stock = Stock.find(params[:id])

@@ -1077,9 +1077,7 @@ def build_pdf_header(pdf)
 ##
 
   #fin reporte de orden de compra 
-
-
-  
+ 
   private
   def purchaseorder_params
     params.require(:purchaseorder).permit(:company_id,:location_id,:division_id,:supplier_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:moneda_id,:fecha1,:fecha2,:payment_id)

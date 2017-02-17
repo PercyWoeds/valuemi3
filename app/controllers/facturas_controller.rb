@@ -730,11 +730,6 @@ new_invoice_item.save
     
     pdf.text "Facturas Moneda" +" Emitidas : desde "+@fecha1.to_s+ " Hasta: "+@fecha2.to_s , :size => 8 
 
-    if @moneda == 2
-      pdf.text "Moneda : SOLES "
-    else 
-      pdf.text "Moneda : DOLARES "
-    end 
 
     pdf.text ""
     pdf.font "Helvetica" , :size => 6
@@ -1106,6 +1101,7 @@ new_invoice_item.save
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]    
     @moneda = params[:moneda_id]    
+
     @facturas_rpt = @company.get_facturas_day(@fecha1,@fecha2,@moneda)      
 
 #    respond_to do |format|
