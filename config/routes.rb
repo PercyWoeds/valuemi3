@@ -219,6 +219,8 @@ end
   match 'companies/reports/product_all/:company_id' => 'reports#product_all', via: [:get, :post]
   match 'companies/reports/rpt_serviceorder_all/:company_id' => 'reports#rpt_serviceorder_all', via: [:get, :post]
   match 'companies/reports/rpt_purchases_all/:company_id' => 'reports#rpt_purchases_all', via: [:get, :post]
+  match 'companies/reports/rpt_purchase2_all/:company_id' => 'reports#rpt_purchase2_all', via: [:get, :post]
+
   match 'companies/reports/rpt_purchaseorder_all/:company_id' => 'reports#rpt_purchaseorder_all', via: [:get, :post]
   match 'companies/reports/rpt_purchaseorder2_all/:company_id' => 'reports#rpt_purchaseorder2_all', via: [:get, :post]
 
@@ -498,6 +500,7 @@ end
   match 'purchases/rpt_ingresos2_all_pdf/:id' => 'purchases#rpt_ingresos2_all_pdf', via: [:get, :post]
   match 'purchases/rpt_ingresos3_all_pdf/:id' => 'purchases#rpt_ingresos3_all_pdf', via: [:get, :post]
   match 'purchases/rpt_purchase_all/:id' => 'purchases#rpt_purchase_all', via: [:get, :post]
+  match 'purchases/rpt_purchase2_all/:id' => 'purchases#rpt_purchase2_all', via: [:get, :post]
 
   match 'companies/purchases/:company_id' => 'purchases#list_purchases', via: [:get, :post]  
   

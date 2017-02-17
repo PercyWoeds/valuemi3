@@ -1108,7 +1108,7 @@ class ReportsController < ApplicationController
       @year = Time.now.year
     end
     
-    @pagetitle = "Yearly sales report - #{@year} - #{@company.name}"
+    @pagetitle = "Compras  - #{@year} - #{@company.name}"
     
     curr_year = Time.now.year
     c_year = curr_year
@@ -1297,8 +1297,21 @@ class ReportsController < ApplicationController
     @categories = ProductsCategory.all 
   end
 
+  def rpt_purchaseorder2_all_all
+      @company = Company.find(params[:company_id])    
+    @pagetitle = "Listado de Compras  "    
+    @products = @company.get_products()
+    @categories = ProductsCategory.all 
+  end
+
 
   def rpt_product_all
+      @company = Company.find(params[:company_id])    
+    @pagetitle = "Listado de Productos "    
+    @products = @company.get_products()
+    
+  end
+  def rpt_purchase2_all
       @company = Company.find(params[:company_id])    
     @pagetitle = "Listado de Productos "    
     @products = @company.get_products()

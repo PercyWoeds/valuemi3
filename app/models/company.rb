@@ -1402,6 +1402,12 @@ def get_purchaseorder_detail2(fecha1,fecha2)
     
  end 
 
+ def get_purchase_detalle(id)    
+    @purchases = PurchaseDetail.where(:purchase_id=>id)
+    return @purchases
+    
+ end 
+
 
   def get_purchaseorders_day_value(fecha1,fecha2,value = "balance",moneda)
 
