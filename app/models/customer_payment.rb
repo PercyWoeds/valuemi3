@@ -98,12 +98,13 @@ self.per_page = 20
       WHERE  customer_payment_details.customer_payment_id = ?', id ])
 
       uno =@itemproducts.first 
-
-      puts uno.customer_id
-
+  
+    if uno != nil  
      cliente = Customer.find(uno.customer_id)
-      puts cliente.name 
      return cliente.name 
+    else
+      return "."
+    end 
  end 
  
  def get_document_short(id)
