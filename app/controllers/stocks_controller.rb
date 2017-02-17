@@ -79,7 +79,7 @@ def client_data_headers
       nroitem=1
       @cantidad = 0
       @totales  = 0
-        
+      saldo = 0  
 
        for  stock in @movements 
 
@@ -100,9 +100,16 @@ def client_data_headers
               end 
               
               saldo = stock.stock_inicial  + stock.ingreso - stock.salida       
+
               row << saldo 
               row << stock.price
 
+              if stock.price == nil  
+                stock.price = 0
+              end 
+              if saldo == nil
+                saldo = 0
+              end 
               @total = (stock.price * saldo)
 
               row << sprintf("%.2f",@total.round(2).to_s)
