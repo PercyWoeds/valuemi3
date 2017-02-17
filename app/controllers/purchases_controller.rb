@@ -201,8 +201,8 @@ WHERE purchase_details.product_id = ?',params[:id] ])
             row = []          
             row << lcDoc
             row << product.code
-            row << product.fecha.strftime("%d/%m/%Y")
-            row << product.fecha2.strftime("%d/%m/%Y")
+            row << product.date1.strftime("%d/%m/%Y")
+            row << product.date2.strftime("%d/%m/%Y")
             row << product.supplier.name
             row << product.moneda.symbol  
 
@@ -248,8 +248,8 @@ WHERE purchase_details.product_id = ?',params[:id] ])
             row << " "
             table_content << row
               
-          total_soles = @company.get_pendientes_day_value(@fecha1,@fecha2, "total",lcmonedasoles)
-          total_dolares = @company.get_pendientes_day_value(@fecha1,@fecha2, "total",lcmonedadolares)
+          total_soles = @company.get_purchases_by_day_value(@fecha1,@fecha2, lcmonedasoles,"total_amount")
+          total_dolares = @company.get_purchases_by_day_value(@fecha1,@fecha2, lcmonedadolares,"total_amount")
       
            if $lcxCliente == "0" 
 

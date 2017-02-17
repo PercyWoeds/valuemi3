@@ -901,7 +901,7 @@ def get_payments_detail_value(fecha1,fecha2,value = "total",moneda)
   end
   def get_purchases_day(fecha1,fecha2)
   
-    @purchases = Purchase.where([" company_id = ? AND date1 >= ? and date1 <= ? ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59",  ]).order(:id,:moneda_id)    
+    @purchases = Purchase.where([" company_id = ? AND date1 >= ? and date1 <= ? ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59",  ]).order(:supplier_id,:moneda_id,:date1)    
     return @purchases 
   end
 
@@ -953,9 +953,9 @@ def get_payments_detail_value(fecha1,fecha2,value = "total",moneda)
 
   end 
 
- def get_purchase_day_value2(fecha1,fecha2,supplier,moneda,value )
+ def get_purchase_day_value2(fecha1,fecha2,supplier,moneda,value="total")
 
-    facturas = Purchase.where(["company_id = ? AND fecha1 >= ? and fecha1<= ? and supplier_id = ? and moneda_id = ? ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59",supplier, moneda ]).order(:supplier_id,:moneda_id)
+    facturas = Purchase.where(["company_id = ? AND date1 >= ? and date1<= ? and supplier_id = ? and moneda_id = ? ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59",supplier, moneda ]).order(:supplier_id,:moneda_id)
     if facturas
     ret=0  
     for factura in facturas
