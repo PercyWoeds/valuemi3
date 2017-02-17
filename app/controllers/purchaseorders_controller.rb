@@ -962,7 +962,7 @@ def build_pdf_header(pdf)
                 row << sprintf("%.2f",product.total.to_s)
                 row << "0.00 "
             end 
-            row << product.observ
+            row << " "
 
             
             table_content << row

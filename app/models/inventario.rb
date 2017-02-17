@@ -93,14 +93,15 @@ class Inventario < ActiveRecord::Base
             a =  ProductsCategory.find_by(:code => cate)
             
           @product.company_id=1          
-
+          lccategory = 1  
           if a 
             @product.products_category_id=a.id 
+            lccategory= a.id 
           end 
 
           costo =row['costo']
 
-          b = OutputDetail.where(:product_id=>@product.id).update_all(:price=>costo)          
+          #b = OutputDetail.where(:product_id=>@product.id).update_all(:price=>costo)          
 
           @product.tax1=18.00
           @product.tax2=0
@@ -108,7 +109,7 @@ class Inventario < ActiveRecord::Base
         
           @product.save 
         else 
-          b = Product.new(:name=>row['descrip'], :company_id=> 1 ,:products_category_id=>1,
+          b = Product.new(:name=>row['descrip'], :company_id=> 1 ,:products_category_id=>lccategory ,
           :code=>row['code'],:tax1=> 18,:tax2=>0,:tax3=>0,:tax1_name=>"",:tax2_name=>"",
           :tax3_name=>"",:unidad=>row['unidad'])
           b.save                            
