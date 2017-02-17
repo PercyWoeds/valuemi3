@@ -92,10 +92,10 @@ def client_data_headers
               if stock.stock_inicial == nil
                   stock.stock_inicial = 0                  
               end 
-              if stock.stock_ingreso == nil
+              if stock.ingreso == nil
                   stock.ingreso = 0                  
               end 
-              if stock.stock_salida  == nil
+              if stock.salida  == nil
                   stock.salida   = 0                  
               end 
               
