@@ -90,13 +90,13 @@ def client_data_headers
               row << stock.product.unidad
               row << stock.product.ubicacion               
               if stock.stock_inicial == nil
-                  stock_inicial = 0                  
+                  stock.stock_inicial = 0                  
               end 
               if stock.stock_ingreso == nil
-                  stock_ingreso = 0                  
+                  stock.ingreso = 0                  
               end 
               if stock.stock_salida  == nil
-                  stock_salida   = 0                  
+                  stock.salida   = 0                  
               end 
               
               saldo = stock.stock_inicial  + stock.ingreso - stock.salida       
