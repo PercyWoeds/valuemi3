@@ -384,12 +384,12 @@ WHERE purchase_details.product_id = ?',params[:id] ])
          $lcFecha  = ordencompra.fecha1
 
          if ordencompra.supplier != nil
-          $lcProveedor = ordencompra.supplier.name 
+            $lcProveedor = ordencompra.supplier.name 
          end
 
          @orden_compra1  = Purchase.where(:purchaseorder_id => ordencompra.id)
 
-         if @orden_compra1 
+         if @orden_compra1.count()>0 
 
          else
            @orden_compra2  = PurchaseorderDetail.where(:purchaseorder_id=>ordencompra.id)
@@ -472,9 +472,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
     end     
     $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
     send_file("app/pdf_output/rpt_factura.pdf", :type => 'application/pdf', :disposition => 'inline')
-
   end
-
 
 #fin reporte de ingresos x producto 
 

@@ -1711,8 +1711,7 @@ ORDER BY products.code  ',product, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
 end
 
 
-def get_ingresos_day3(fecha1,fecha2)
-  
+def get_ingresos_day3(fecha1,fecha2)  
     @purchases = Purchaseorder.where(["fecha1 >= ? and fecha1 <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
     return @purchases 
 
