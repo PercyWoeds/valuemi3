@@ -366,16 +366,9 @@ WHERE purchase_details.product_id = ?',params[:id] ])
                 row << sprintf("%.2f",product.balance.to_s)
                 row << "0.00 "
             end 
-            row << product.observ
-
-            
+            row << " "          
             table_content << row
-
-
-
-          end 
-          
-         
+          end                   
         end
 
         lcProveedor = @facturas_rpt.last.supplier_id 

@@ -4,7 +4,7 @@ class StocksController < ApplicationController
 ## REPORTE DE GUIAS EMITIDAS
 ##-----------------------------------------------------------------------------------
 
-def client_data_headers
+  def client_data_headers
 
     #{@serviceorder.description}
       client_headers  = [["Empresa  :", $lcCli ]]
