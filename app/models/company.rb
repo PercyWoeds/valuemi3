@@ -965,7 +965,7 @@ def get_payments_detail_value(fecha1,fecha2,value = "total",moneda)
       elsif(value == "tax")
         ret += factura.tax
       else         
-        ret += factura.total.round(2)
+        ret += factura.total_amount.round(2)
       end
     end
     end 
