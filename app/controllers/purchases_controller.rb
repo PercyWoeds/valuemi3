@@ -231,9 +231,9 @@ WHERE purchase_details.product_id = ?',params[:id] ])
             total_cliente = 0
 
             total_cliente_soles = 0
-            total_cliente_soles = @company.get_purchases_pendientes_day_value(@fecha1,@fecha2, lcProveedor, lcmonedadolares)
+            total_cliente_soles = @company.get_purchase_day_value2(@fecha1,@fecha2, lcProveedor, lcmonedadolares)
             total_cliente_dolares = 0
-            total_cliente_dolares = @company.get_purchases_pendientes_day_value(@fecha1,@fecha2, lcProveedor, lcmonedasoles)
+            total_cliente_dolares = @company.get_purchase_day_value2(@fecha1,@fecha2, lcProveedor, lcmonedasoles)
     
             
             row =[]

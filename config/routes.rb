@@ -220,6 +220,7 @@ end
   match 'companies/reports/rpt_serviceorder_all/:company_id' => 'reports#rpt_serviceorder_all', via: [:get, :post]
   match 'companies/reports/rpt_purchases_all/:company_id' => 'reports#rpt_purchases_all', via: [:get, :post]
   match 'companies/reports/rpt_purchaseorder_all/:company_id' => 'reports#rpt_purchaseorder_all', via: [:get, :post]
+  match 'companies/reports/rpt_purchaseorder2_all/:company_id' => 'reports#rpt_purchaseorder2_all', via: [:get, :post]
 
   match 'companies/reports/reports_ccobrar/:company_id' => 'reports#reports_ccobrar', via: [:get, :post]  
 
@@ -423,6 +424,7 @@ end
   match 'purchaseorders/email/:id' => 'purchaseorders#email', via: [:get, :post]
   match 'purchaseorders/pdf/:id' => 'purchaseorders#pdf', via: [:get, :post]
   match 'purchaseorders/rpt_purchaseorder_all/:id' => 'purchaseorders#rpt_purchaseorder_all', via: [:get, :post]
+  match 'purchaseorders/rpt_purchaseorder2_all/:id' => 'purchaseorders#rpt_purchaseorder2_all', via: [:get, :post]
   
   match 'companies/purchaseorders/receive/:company_id' => 'purchaseorders#list_receiveorders', via: [:get, :post]
   match 'companies/purchaseorders/:company_id' => 'purchaseorders#list_purchaseorders', via: [:get, :post]

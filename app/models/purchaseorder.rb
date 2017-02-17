@@ -23,6 +23,7 @@ class Purchaseorder < ActiveRecord::Base
                      "PRECIO UNITARIO",
                      "DSCTO",
                      "VALOR TOTAL"]
+
   TABLE_HEADERS1 = ["ITEM",
                      "PROVEEDOR",
                      "ORDEN",
@@ -32,6 +33,16 @@ class Purchaseorder < ActiveRecord::Base
                      "DESCRIPCION",
                      "PRE.COSTO",
                      "DSCTO.",
+                     "TOTAL" ]
+
+ TABLE_HEADERS2 = ["ITEM",
+                     "ORDEN",
+                     "FECHA1",
+                     "FECHA2",
+                     "PROVEEDOR",
+                     "MONEDA ",
+                     "S/.",
+                     "USD",                     
                      "TOTAL" ]
 
     def correlativo

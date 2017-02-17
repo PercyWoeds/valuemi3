@@ -1236,6 +1236,10 @@ class ReportsController < ApplicationController
     @company = Company.find(params[:company_id])
     @pagetitle = "Ordenes de compra"    
   end
+  def rpt_purchaseorder2_all
+    @company = Company.find(params[:company_id])
+    @pagetitle = "Ordenes de compra"    
+  end
 
   def reports_calmacen
     @company = Company.find(params[:company_id])

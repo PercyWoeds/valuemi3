@@ -21,11 +21,11 @@ totals = []
 <form method="get" action="/purchaseorders/rpt_purchaseorder_all/<%= @company.id %>">
 
   <div class="field">
-      <input type="date" name="fecha1" value="2017-01-01" style = "width: 80px" >
+      <input type="date" name="fecha1" value="2017-01-01" style = "width: 150px" >
 
     </div>
 	<div class="field">
-		<input type="date" name="fecha2" value="2017-01-20" style = "width: 80px" >
+		<input type="date" name="fecha2" value="2017-01-20" style = "width: 150px" >
   </div>
   <input type="submit" value="Ver" class="small_btn" />
   <a href="/purchaseorders/rpt_purchaseorder_all/<%= @company.id %>" class="small_btn">Today</a>

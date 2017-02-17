@@ -89,10 +89,22 @@ def client_data_headers
               row << stock.product.name
               row << stock.product.unidad
               row << stock.product.ubicacion               
+              if stock.stock_inicial == nil
+                  stock_inicial = 0                  
+              end 
+              if stock.stock_ingreso == nil
+                  stock_ingreso = 0                  
+              end 
+              if stock.stock_salida  == nil
+                  stock_salida   = 0                  
+              end 
+              
               saldo = stock.stock_inicial  + stock.ingreso - stock.salida       
               row << saldo 
               row << stock.price
-              @total = (stock.price * saldo)   
+
+              @total = (stock.price * saldo)
+
               row << sprintf("%.2f",@total.round(2).to_s)
 
               table_content << row

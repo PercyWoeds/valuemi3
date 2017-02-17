@@ -13,21 +13,22 @@ totals = []
   <%= link_to "Reports", "/companies/reports/#{@company.id}" %>
 </div>
 
-<h1>
+<h3>
   <%= image_tag("reports_48.png", :class => "vmiddle") %>
-  Guias ingresadas al sistema por fecha ingreso
-</h1>
+ Reporte de cuentas proveedores - <%= @month_name %> <%= @year %>
+</h3	>
 
-<form method="get" action="/deliveries/guias4/<%= @company.id %>">
+<form method="get" action="/purchaseorders/rpt_purchaseorder2_all/<%= @company.id %>">
+
   <div class="field">
-      <input type="date" name="fecha1" value="2007-10-01" style = "width: 150px" >
+      <input type="date" name="fecha1" value="2017-01-01" style = "width: 120px" >
+
     </div>
 	<div class="field">
-		<input type="date" name="fecha2" value="2017-01-18" style = "width: 150px" >
+		<input type="date" name="fecha2" value="2017-01-31" style = "width: 120px" >
   </div>
-
-  <input type="submit" value="Ver" class="small_btn" />
-  <a href="/deliveries/guias4/<%= @company.id %>" class="small_btn">Today</a>
+  <input type="submit" value="Generar" />
+  
 </form>
 
 <br />

@@ -951,8 +951,29 @@ def get_payments_detail_value(fecha1,fecha2,value = "total",moneda)
     
     return ret
 
-
   end 
+
+ def get_purchase_day_value2(fecha1,fecha2,supplier,moneda,value )
+
+    facturas = Purchase.where(["company_id = ? AND fecha1 >= ? and fecha1<= ? and supplier_id = ? and moneda_id = ? ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59",supplier, moneda ]).order(:supplier_id,:moneda_id)
+    if facturas
+    ret=0  
+    for factura in facturas
+      
+      if(value == "subtotal")
+        ret += factura.subtotal
+      elsif(value == "tax")
+        ret += factura.tax
+      else         
+        ret += factura.total.round(2)
+      end
+    end
+    end 
+
+    return ret
+    
+ end 
+
  def get_purchases_pendientes_day(fecha1,fecha2)
 
     @facturas = Purchase.where(["balance > 0  and  company_id = ? AND date1 >= ? and date1<= ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59"]).order(:supplier_id,:moneda_id,:date1)
@@ -968,9 +989,9 @@ def get_payments_detail_value(fecha1,fecha2,value = "total",moneda)
  end 
 
  
- def get_purchases_pendientes_day_value(fecha1,fecha2,value = "balance",moneda)
+ def get_purchaseorders_day_value2(fecha1,fecha2,supplier,moneda,value )
 
-    facturas = Purchase.where(["balance>0  and  company_id = ? AND date1 >= ? and date1<= ? and moneda_id = ? ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda ]).order(:supplier_id,:moneda_id)
+    facturas = Purchaseorder.where(["company_id = ? AND fecha1 >= ? and fecha1<= ? and supplier_id = ? and moneda_id = ? ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59",supplier, moneda ]).order(:supplier_id,:moneda_id)
     if facturas
     ret=0  
     for factura in facturas
@@ -980,7 +1001,7 @@ def get_payments_detail_value(fecha1,fecha2,value = "total",moneda)
       elsif(value == "tax")
         ret += factura.tax
       else         
-        ret += factura.balance.round(2)
+        ret += factura.total.round(2)
       end
     end
     end 
@@ -1357,6 +1378,12 @@ def get_supplier_payments2(moneda)
   "#{self[0...stop]}#{options[:omission]}"
   end
 
+def get_purchaseorder_detail2(fecha1,fecha2)
+    @purchaseorders = Purchaseorder.where([" fecha1 >= ? and fecha1 <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ]).order(:supplier_id,:moneda_id,:fecha1)
+    return @purchaseorders    
+ end 
+  
+
  def get_purchaseorder_detail(fecha1,fecha2)
     @purchaseorders = Purchaseorder.where([" fecha1 >= ? and fecha1 <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ]).order(:fecha1)
     return @purchaseorders    
@@ -1374,6 +1401,48 @@ def get_supplier_payments2(moneda)
     return @purchaseorders
     
  end 
+
+
+  def get_purchaseorders_day_value(fecha1,fecha2,value = "balance",moneda)
+
+    facturas = Purchaseorder.where(["balance>0  and  company_id = ? AND date1 >= ? and date1<= ? and moneda_id = ? ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda ]).order(:supplier_id,:moneda_id)
+    if facturas
+    ret=0  
+    for factura in facturas
+      
+      if(value == "subtotal")
+        ret += factura.subtotal
+      elsif(value == "tax")
+        ret += factura.tax
+      else         
+        ret += factura.balance.round(2)
+      end
+    end
+    end 
+
+    return ret
+    
+ end 
+ def get_purchaseorders_totalday_value(fecha1,fecha2,value = "total",moneda)
+
+    facturas = Purchaseorder.where(["company_id = ? AND fecha1 >= ? and fecha1<= ? and moneda_id = ? ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda ]).order(:supplier_id,:moneda_id)
+    if facturas
+    ret=0  
+    for factura in facturas
+      
+      if(value == "subtotal")
+        ret += factura.subtotal
+      elsif(value == "tax")
+        ret += factura.tax
+      else         
+        ret += factura.total.round(2)
+      end
+    end
+    end 
+
+    return ret    
+ end 
+
 
  ###INVENTARIO  STOCKS 
 
@@ -1398,7 +1467,7 @@ def get_supplier_payments2(moneda)
      end    
 
 
-     @inv = Inventario.where('fecha>= ? and  fecha <= ?',fecha1,fecha2)  
+     @inv = Inventario.where('fecha >= ? and  fecha <= ?',fecha1,fecha2)  
 
      for inv in @inv 
         $lcFecha =inv.fecha 
@@ -1487,6 +1556,7 @@ def get_supplier_payments2(moneda)
             if detail.price == 0
               movdetail.price = 0  
             else 
+              #para las salidas toma el precio de costo ya validado en soles 
               movdetail.price = detail.price
             end
 
@@ -1528,9 +1598,10 @@ def get_supplier_payments2(moneda)
 
             if invdetail.precio_unitario == nil
               movdetail.price = 0  
-            else 
+           else 
               movdetail.price = invdetail.precio_unitario
             end
+
             movdetail.save           
           else     
           
@@ -1564,7 +1635,20 @@ def get_supplier_payments2(moneda)
             if detail.price_without_tax == 0
               movdetail.price = 0  
             else 
-              movdetail.price = detail.price_without_tax
+              if $lcmoneda != nil
+                if $lcmoneda == 2
+                 movdetail.price = detail.price_without_tax  
+                else
+                 dolar = Tipocambio.find_by('dia = ?',$lcFecha)
+
+                 if dolar 
+                    movdetail.price = detail.price_without_tax * dolar.compra  
+                 else 
+                    movdetail.price = 0
+                 end 
+                end    
+              end 
+
             end
 
             movdetail.save           
@@ -1601,6 +1685,7 @@ def get_supplier_payments2(moneda)
             if detail.price == 0
               movdetail.price = 0  
             else 
+              #para las salidas toma el precio de costo ya validado en soles 
               movdetail.price = detail.price 
             end
 
