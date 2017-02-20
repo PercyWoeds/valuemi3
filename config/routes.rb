@@ -1,6 +1,7 @@
   Mnygo::Application.routes.draw do
 
 
+  resources :notacredits
   resources :tipocambios
   resources :ubicas
   resources :bank_acounts

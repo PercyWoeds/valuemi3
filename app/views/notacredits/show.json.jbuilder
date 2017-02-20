@@ -1,0 +1,1 @@
+json.partial! "notacredits/notacredit", notacredit: @notacredit

@@ -1,0 +1,24 @@
+<%= simple_form_for(@notacredit) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :fecha %>
+    <%= f.input :code %>
+    <%= f.input :nota_id %>
+    <%= f.input :motivo %>
+    <%= f.input :subtotal %>
+    <%= f.input :tax %>
+    <%= f.input :total %>
+    <%= f.input :moneda_id %>
+    <%= f.input :mod_factura %>
+    <%= f.input :mod_tipo %>
+    <%= f.input :processed %>
+    <%= f.input :tipo %>
+    <%= f.input :description %>
+    <%= f.input :customer_id %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>
