@@ -257,6 +257,8 @@ class StocksController < ApplicationController
 
       nroitem=1
       @cantidad1 = 0
+      @cantidad2 = 0
+      @cantidad3 = 0
       @cantidad = 0
 
       @totales  = 0
@@ -283,7 +285,10 @@ class StocksController < ApplicationController
               end
               row << sprintf("%.2f",@total.round(2).to_s)
               @cantidad1 += stock.stock_inicial 
+              @cantidad2 += stock.ingreso 
+              @cantidad3 += stock.salida  
               @cantidad += saldo 
+
               @totales  += @total 
 
               table_content << row
@@ -300,9 +305,9 @@ class StocksController < ApplicationController
             row << ""            
             row <<""          
             row << sprintf("%.2f",@cantidad1.round(2).to_s)
-            row << ""                                  
+            row << sprintf("%.2f",@cantidad2.round(2).to_s)                                  
+            row << sprintf("%.2f",@cantidad3.round(2).to_s)
             row << sprintf("%.2f",@cantidad.round(2).to_s)
-            row << " "
             row << sprintf("%.2f",@totales.round(2).to_s)
             
             table_content << row
