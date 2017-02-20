@@ -39,19 +39,23 @@ class Inventario < ActiveRecord::Base
            @product = Product.find_by(:code=>row['code'] )
             if @product 
                 product_id = @product.id  
-            else 
-                b = Product.new(:name=>row['descrip'], :company_id=> 1 ,:products_category_id=>1,
-                  :code=>row['code'],:tax1=> 18,:tax2=>0,:tax3=>0,:tax1_name=>"",:tax2_name=>"",
-                  :tax3_name=>"")
-                b.save
-                @product = Product.find_by(:code=>row['code'])
-                product_id = @product.id
-            end             
-            @cantidad = row['cantidad'].to_i            
-           a = InventarioDetalle.new(:inventario_id=>2,:cantidad=>row['cantidad'].to_i,
+
+                  end             
+            @cantidad = row['cantidad'].to_f            
+
+           a = InventarioDetalle.new(:inventario_id=>2,:cantidad=>row['cantidad'].to_f,
              :precio_unitario=> row['precio_unitario'].to_f.round(2),:activo=> true,:product_id=> product_id,
               :item_id=> product_id)
-           a.save           
+           a.save  
+           
+            else 
+#                b = Product.new(:name=>row['descrip'], :company_id=> 1 ,:products_category_id=>1,
+ #                 :code=>row['code'],:tax1=> 18,:tax2=>0,:tax3=>0,:tax1_name=>"",:tax2_name=>"",
+ #                 :tax3_name=>"")
+ #               b.save
+ #               @product = Product.find_by(:code=>row['code'])
+ #               product_id = @product.id
+                   
 
         end
   end      
