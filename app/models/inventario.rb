@@ -38,16 +38,13 @@ class Inventario < ActiveRecord::Base
           CSV.foreach(file.path, headers: true, encoding:'iso-8859-1:utf-8') do |row|
            @product = Product.find_by(:code=>row['code'] )
             if @product 
-                product_id = @product.id  
-
-                  end             
+                product_id = @product.id              
             @cantidad = row['cantidad'].to_f            
-
            a = InventarioDetalle.new(:inventario_id=>2,:cantidad=>row['cantidad'].to_f,
              :precio_unitario=> row['precio_unitario'].to_f.round(2),:activo=> true,:product_id=> product_id,
               :item_id=> product_id)
            a.save  
-           
+
             else 
 #                b = Product.new(:name=>row['descrip'], :company_id=> 1 ,:products_category_id=>1,
  #                 :code=>row['code'],:tax1=> 18,:tax2=>0,:tax3=>0,:tax1_name=>"",:tax2_name=>"",
@@ -58,6 +55,8 @@ class Inventario < ActiveRecord::Base
                    
 
         end
+      end 
+      
   end      
 
   def self.import2(file)
