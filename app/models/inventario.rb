@@ -39,9 +39,9 @@ class Inventario < ActiveRecord::Base
            @product = Product.find_by(:code=>row['code'] )
             if @product 
                 product_id = @product.id              
-            @cantidad = row['cantidad'].to_f         
+                @cantidad = row['cantidad'].to_f         
 
-            @inv = InventarioDetalle.find_by(:product_id=>row['code'])
+                @inv = InventarioDetalle.find_by(:product_id=>product_id)
 
             if @inv
 
