@@ -42,20 +42,25 @@ class Inventario < ActiveRecord::Base
             @cantidad = row['cantidad'].to_f         
 
             @inv = InventarioDetalle.find_by(:product_id=>row['code'])
+
+            if @inv
+
             @inv.cantidad = @cantidad 
             @inv.save 
 
       
             else 
+              puts row['code']
+
 #                b = Product.new(:name=>row['descrip'], :company_id=> 1 ,:products_category_id=>1,
- #                 :code=>row['code'],:tax1=> 18,:tax2=>0,:tax3=>0,:tax1_name=>"",:tax2_name=>"",
+#                 :code=>row['code'],:tax1=> 18,:tax2=>0,:tax3=>0,:tax1_name=>"",:tax2_name=>"",
  #                 :tax3_name=>"")
  #               b.save
  #               @product = Product.find_by(:code=>row['code'])
  #               product_id = @product.id
-                   
+            end                   
 
-        end
+          end
       end 
 
   end      
