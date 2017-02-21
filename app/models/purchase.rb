@@ -314,10 +314,10 @@ TABLE_HEADERS2  = ["ITEM ",
     if(self.purchaseorder_id == nil)
       return ""
     else
-      if    self.purchaseorder.code  != nil
-      return self.purchaseorder.code 
-      else
+      if    self.purchaseorder  == nil
         return ""
+      else        
+        return self.purchaseorder.code 
       end 
     end
   end

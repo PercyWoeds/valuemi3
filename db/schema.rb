@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170216161545) do
+ActiveRecord::Schema.define(version: 20170221144403) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -86,6 +86,13 @@ ActiveRecord::Schema.define(version: 20170216161545) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "avisodetails", force: :cascade do |t|
+    t.string   "descrip"
+    t.string   "comments"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "bank_acounts", force: :cascade do |t|
     t.string   "number"
     t.integer  "moneda_id"
@@ -105,7 +112,21 @@ ActiveRecord::Schema.define(version: 20170216161545) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "campania", force: :cascade do |t|
+    t.string   "descrip"
+    t.string   "comments"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "carts", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "ciudads", force: :cascade do |t|
+    t.string   "descrip"
+    t.string   "comments"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -141,6 +162,36 @@ ActiveRecord::Schema.define(version: 20170216161545) do
     t.string   "code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "contrato_cuota", force: :cascade do |t|
+    t.integer  "nro"
+    t.datetime "fecha"
+    t.float    "cuota"
+    t.float    "vventa"
+    t.float    "comision1"
+    t.float    "comision2"
+    t.float    "total"
+    t.string   "facturacanal"
+    t.string   "factura1"
+    t.string   "factura2"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  create_table "contratos", force: :cascade do |t|
+    t.string   "code"
+    t.datetime "fecha"
+    t.integer  "customer_id"
+    t.integer  "medio_id"
+    t.float    "importe"
+    t.integer  "moneda_id"
+    t.integer  "tipocontrato_id"
+    t.float    "nrocuotas"
+    t.float    "comision1"
+    t.float    "comision2"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
   create_table "csubdia", force: :cascade do |t|
@@ -758,6 +809,13 @@ ActiveRecord::Schema.define(version: 20170216161545) do
     t.integer  "company_id"
   end
 
+  create_table "medios", force: :cascade do |t|
+    t.string   "descrip"
+    t.text     "comments"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "modelos", force: :cascade do |t|
     t.string   "descrip"
     t.datetime "created_at", null: false
@@ -771,6 +829,13 @@ ActiveRecord::Schema.define(version: 20170216161545) do
     t.string   "description"
     t.string   "symbol"
     t.integer  "company_id"
+  end
+
+  create_table "motivos", force: :cascade do |t|
+    t.string   "descrip"
+    t.text     "comments"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "movement_details", force: :cascade do |t|
@@ -838,6 +903,25 @@ ActiveRecord::Schema.define(version: 20170216161545) do
     t.integer  "document_id"
     t.string   "documento"
     t.string   "purchaseorder"
+  end
+
+  create_table "notacredits", force: :cascade do |t|
+    t.datetime "fecha"
+    t.string   "code"
+    t.integer  "nota_id"
+    t.string   "motivo"
+    t.float    "subtotal"
+    t.float    "tax"
+    t.float    "total"
+    t.integer  "moneda_id"
+    t.string   "mod_factura"
+    t.integer  "mod_tipo"
+    t.string   "processed"
+    t.string   "tipo"
+    t.string   "description"
+    t.integer  "customer_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "numeras", force: :cascade do |t|
@@ -938,6 +1022,13 @@ ActiveRecord::Schema.define(version: 20170216161545) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "company_id"
+  end
+
+  create_table "periodos", force: :cascade do |t|
+    t.string   "descrip"
+    t.text     "comments"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "products", force: :cascade do |t|
@@ -1222,6 +1313,7 @@ ActiveRecord::Schema.define(version: 20170216161545) do
     t.datetime "fecha3"
     t.datetime "fecha4"
     t.string   "documento"
+    t.integer  "purchase_id"
   end
 
   create_table "services", force: :cascade do |t|
@@ -1359,6 +1451,13 @@ ActiveRecord::Schema.define(version: 20170216161545) do
   add_index "tanks", ["company_id"], name: "index_tanks_on_company_id", using: :btree
   add_index "tanks", ["product_id"], name: "index_tanks_on_product_id", using: :btree
 
+  create_table "tipoavisos", force: :cascade do |t|
+    t.string   "descrip"
+    t.text     "comments"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "tipocambios", force: :cascade do |t|
     t.datetime "dia"
     t.float    "compra"
@@ -1486,6 +1585,13 @@ ActiveRecord::Schema.define(version: 20170216161545) do
     t.integer  "companies"
     t.integer  "locations"
     t.integer  "users"
+  end
+
+  create_table "versions", force: :cascade do |t|
+    t.string   "descrip"
+    t.text     "comments"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "voideds", force: :cascade do |t|
