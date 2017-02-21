@@ -268,6 +268,7 @@ TABLE_HEADERS2  = ["ITEM ",
     return purchase_details
   end
   
+
   def products_lines
     products = []
     purchase_details = PurchaseDetail.where(purchase_id:  self.id)   
@@ -309,11 +310,15 @@ TABLE_HEADERS2  = ["ITEM ",
   end
   
   def get_purchaseorder
+
     if(self.purchaseorder_id == nil)
       return ""
     else
-      return self.purchaseorder.code
-
+      if    self.purchaseorder.code  != nil
+      return self.purchaseorder.code 
+      else
+        return ""
+      end 
     end
   end
   
