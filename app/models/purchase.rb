@@ -3,7 +3,7 @@ class Purchase < ActiveRecord::Base
   
   validates_presence_of :company_id, :supplier_id, :documento,:document_id,:date1,:date2,:date3
         
-    
+
   belongs_to :company
   belongs_to :location
   belongs_to :division

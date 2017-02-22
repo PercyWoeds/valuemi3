@@ -1,5 +1,7 @@
 class Address < ActiveRecord::Base
   validates_presence_of  :address 
+
+  
   before_save :set_full_address
   belongs_to :company 	 
   belongs_to :customer 

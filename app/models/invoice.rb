@@ -9,6 +9,8 @@ class Invoice < ActiveRecord::Base
   belongs_to :customer
   belongs_to :user
   belongs_to :payment 
+
+  
   
   has_many :invoice_products
   

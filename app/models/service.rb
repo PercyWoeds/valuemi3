@@ -2,6 +2,9 @@ class Service < ActiveRecord::Base
 
   validates_presence_of :name, :cost, :price, :company_id
   validates_numericality_of :cost, :price, :tax1 
+
+  validates_uniqueness_of :code  
+
   
   belongs_to :company
   belongs_to :supplier

@@ -5,7 +5,6 @@ include PurchasesHelper
 
 class PurchasesController < ApplicationController
   before_filter :authenticate_user!, :checkProducts
-
             
 
     

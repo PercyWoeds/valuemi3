@@ -7,6 +7,8 @@ class Serviceorder < ActiveRecord::Base
 
   validates_presence_of :company_id, :supplier_id, :code, :user_id,:moneda_id
   
+  validates_uniqueness_of :code
+
   belongs_to :company
   belongs_to :location
   belongs_to :division
