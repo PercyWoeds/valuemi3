@@ -207,8 +207,9 @@ WHERE purchase_details.product_id = ?',params[:id] ])
     @company =Company.find(1)
     @fecha1 =params[:fecha1]
     @fecha2 =params[:fecha2]
+    @tiporeporte =params[:tiporeporte]
 
-    @rpt_detalle_purchase = @company.get_purchases_day(@fecha1,@fecha2)
+    @rpt_detalle_purchase = @company.get_purchases_day_tipo(@fecha1,@fecha2,@tiporeporte)
 
     Prawn::Document.generate("app/pdf_output/orden_1.pdf") do |pdf|
         pdf.font "Helvetica"
@@ -1517,7 +1518,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
     $lcMoneda  = @purchaseorder.moneda.description
     $lcLocationId = @purchaseorder.location_id
     $lcDivisionId = @purchaseorder.division_id
-
+    $lcTipoFacturaCompra = "0"
 
     @detalleitems =  @company.get_orden_detalle(@purchaseorder.id)
 
@@ -1550,7 +1551,7 @@ def newfactura2
     $lcLocationId = @purchaseorder.location_id
     $lcDivisionId = @purchaseorder.division_id
 
-
+    $lcTipoFacturaCompra= "1"
     @detalleitems =  @company.get_orden_detalle2(@purchaseorder.id)
 
     @purchase = Purchase.new 
@@ -1578,11 +1579,7 @@ def newfactura2
 
     $lcFechaVmto     =  fechas2
     $lcDocumento     =  params[:documento]
-
-    puts "documentos"
-    puts $lcDocumentId
-    puts $lcFechaVmto
-    puts $lcPurchaseOrderId
+    
 
 @purchase = Purchase.new(:company_id=>1,:supplier_id=>$lcProveedorId,:date1=>$lcFechaEmision,:date2=>$lcFechaEmision,:payment_id=>$lcFormaPagoId,:document_id=>$lcDocumentId,:documento=>$lcDocumento,
 :date3 => $lcFechaVmto,:moneda_id => $lcMonedaId,:user_id =>@current_user.id,:purchaseorder_id=>$lcPurchaseOrderId)
@@ -1596,8 +1593,18 @@ def newfactura2
     @servicebuys  = @company.get_servicebuys()
     @monedas      = @company.get_monedas()
     @payments     = @company.get_payments()
-    @tipodocumento = @purchase[:document_id]
-    @detalleitems =  @company.get_orden_detalle($lcPurchaseOrderId)
+    @tipodocumento = @purchase[:document_id]  
+
+    @purchase[:tipo] = $lcTipoFacturaCompra
+
+    if $lcTipoFacturaCompra =="1"
+      @detalleitems =  @company.get_orden_detalle2($lcPurchaseOrderId)
+    else
+      @detalleitems =  @company.get_orden_detalle($lcPurchaseOrderId)
+    end 
+
+    puts "tipo "
+    puts $lcTipoFacturaCompra
 
     
     if @tipodocumento == 3
@@ -1633,11 +1640,18 @@ def newfactura2
           @purchase.add_products2(@detalleitems)
           # Check if we gotta process the invoice
           @purchase.process()
-
-          order_process = Purchaseorder.find($lcPurchaseOrderId)
-          if order_process
-            order_process.processed ='3'
-            order_process.save
+          if $lcTipoFacturaCompra == "0"
+            order_process = Purchaseorder.find($lcPurchaseOrderId)
+            if order_process
+              order_process.processed ='3'
+              order_process.save
+            end 
+          else
+            order_process = Serviceorder.find($lcPurchaseOrderId)
+            if order_process
+              order_process.processed ='3'
+              order_process.save
+            end 
           end 
 
           format.html { redirect_to(@purchase, :notice => 'Factura fue grabada con exito .') }
@@ -1952,6 +1966,7 @@ def newfactura2
     @purchase[:charge]  = 0
     @purchase[:pago] = 0
     @purchase[:balance] =   @purchase[:total_amount]
+    @purchase[:tipo]    = 0
     
     
     if(params[:purchase][:user_id] and params[:purchase][:user_id] != "")
@@ -1962,8 +1977,12 @@ def newfactura2
     
       respond_to do |format|
         if @purchase.save     
-          @purchase.add_products(items)          
+
+          @purchase.add_products(items)                    
+
           @purchase.process()
+
+
 
           
           format.html { redirect_to(@purchase, :notice => 'Factura fue grabada con exito .') }

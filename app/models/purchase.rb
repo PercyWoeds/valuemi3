@@ -227,14 +227,18 @@ TABLE_HEADERS2  = ["ITEM ",
   end   
 
   def add_products2(items)
-    for item in items
-        
+
+    for item in items      
         total = item.price * item.quantity
         total -= total * (item.discount / 100)
         lcprice_tax = item.price*1.18      
         
+        if $lcTipoFacturaCompra == "1"
+          product = Servicebuy.find(item.servicebuy_id)
+        else
+          product = Product.find(item.product_id)
+        end
 
-        product = Product.find(item.product_id)
   
         new_pur_product = PurchaseDetail.new(:purchase_id => self.id, :product_id => product.id,
             :price_with_tax => lcprice_tax,:price_without_tax=>item.price, :quantity => item.quantity, 
@@ -254,11 +258,23 @@ TABLE_HEADERS2  = ["ITEM ",
   end
   
   def get_products    
+    puts self.tipo
+
+    if self.tipo == "1"
+      @itemproducts = PurchaseDetail.find_by_sql(['Select purchase_details.price_with_tax as price,purchase_details.quantity,
+      purchase_details.discount,purchase_details.price_without_tax as price2,purchase_details.total,
+      servicebuys.name  from purchase_details INNER JOIN servicebuys ON 
+      purchase_details.product_id = servicebuys.id where purchase_details.purchase_id = ?', self.id ])
+
+    else
+
     @itemproducts = PurchaseDetail.find_by_sql(['Select purchase_details.price_with_tax as price,purchase_details.quantity,
       purchase_details.discount,purchase_details.price_without_tax as price2,purchase_details.total,
       products.name  from purchase_details INNER JOIN products ON 
       purchase_details.product_id = products.id where purchase_details.purchase_id = ?', self.id ])
-    puts self.id
+      
+    
+    end
 
     return @itemproducts
   end
@@ -325,7 +341,9 @@ TABLE_HEADERS2  = ["ITEM ",
   # Process the purchase
   def process
 
-    if(self.processed == "1" or self.processed == true)
+    if self.tipo =="0"
+
+    if(self.processed == "1" or self.processed == true  )
 
       purchase_details =PurchaseDetail.where(purchase_id: self.id)
     
@@ -375,6 +393,7 @@ TABLE_HEADERS2  = ["ITEM ",
 
       end
     end   
+  end 
   end
   
   # Color for processed or not
