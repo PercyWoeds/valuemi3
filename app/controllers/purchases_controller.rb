@@ -1618,6 +1618,7 @@ def newfactura2
     
     if $lcTipoFacturaCompra =="1"
 
+
       begin
            if @tipodocumento == 3
             @purchase[:tax_amount] = @purchase.get_tax3(@detalleitems, @purchase[:supplier_id])*-1
@@ -1625,10 +1626,15 @@ def newfactura2
            else
             @purchase[:tax_amount] = @purchase.get_tax3(@detalleitems, @purchase[:supplier_id])
            end 
-        rescue
-          @purchase[:tax_amount] = 0
-          
-        end
+           x = @purchase[:tax_amount]
+                 puts "servicio"
+                  puts x.to_s 
+                  puts $lcPurchaseOrderId
+
+
+      rescue
+          @purchase[:tax_amount] = 0        
+      end
   
 
     else 

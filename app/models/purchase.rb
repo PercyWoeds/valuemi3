@@ -121,7 +121,7 @@ def get_tax3(items, supplier_id)
     tax = 0
     
     supplier = Supplier.find(supplier_id)
-    
+      
     if(supplier)
       if(supplier.taxable == "1")
         for item in items
@@ -131,7 +131,7 @@ def get_tax3(items, supplier_id)
             total -= total * (item.discount / 100)
         
             begin
-              product = Servicebuy.find(item.product_id)
+              product = Servicebuy.find(item.servicebuy_id)
               
               if(product)
                 if(product.tax1 and product.tax1 > 0)
