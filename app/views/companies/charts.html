@@ -49,6 +49,19 @@
 
 <div class="mid_box">
   <h3>
+    <%= image_tag("clients_32.png", :class => "vmiddle") %>
+    <%= link_to "Clientes", "/companies/customers/#{@company.id}" %>
+  </h3>
+
+  <p>
+     Agregar, editar or eliminar clientes para tu negocio.
+  </p>
+
+  <%= hr() %>
+
+
+
+  <h3>
         <div>
           <%= image_tag("clients_32.png", :class => "vmiddle") %>
           <%= link_to "Vehiculos", "/companies/trucks/#{@company.id}" %>

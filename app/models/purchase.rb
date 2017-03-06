@@ -116,6 +116,46 @@ TABLE_HEADERS2  = ["ITEM ",
     return tax
   end
 
+
+def get_tax3(items, supplier_id)
+    tax = 0
+    
+    supplier = Supplier.find(supplier_id)
+    
+    if(supplier)
+      if(supplier.taxable == "1")
+        for item in items
+          if(item and item != "")
+
+            total = item.price * item.quantity
+            total -= total * (item.discount / 100)
+        
+            begin
+              product = Servicebuy.find(item.product_id)
+              
+              if(product)
+                if(product.tax1 and product.tax1 > 0)
+                  tax += total * (product.tax1 / 100)
+                end
+
+                if(product.tax2 and product.tax2 > 0)
+                  tax += total * (product.tax2 / 100)
+                end
+
+                if(product.tax3 and product.tax3 > 0)
+                  tax += total * (product.tax3 / 100)
+                end
+              end
+            rescue
+            end
+          end
+        end
+      end
+    end
+    return tax
+  end
+
+  
   
   def get_subtotal(items)
     subtotal = 0
@@ -338,6 +378,14 @@ TABLE_HEADERS2  = ["ITEM ",
     end
   end
   
+  def process2
+
+    if(self.processed == "1" or self.processed == true  )
+        self.date_processed = Time.now
+        self.save
+    end 
+
+  end 
   # Process the purchase
   def process
 

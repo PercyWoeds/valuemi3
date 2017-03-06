@@ -1608,27 +1608,47 @@ def newfactura2
       @detalleitems =  @company.get_orden_detalle($lcPurchaseOrderId)
     end 
 
-    puts "tipo "
-    puts $lcTipoFacturaCompra
-
-    
+  
     if @tipodocumento == 3
       @purchase[:payable_amount] = @purchase.get_subtotal2(@detalleitems)*-1
     else
       @purchase[:payable_amount] = @purchase.get_subtotal2(@detalleitems)
     end    
     
+    
+    if $lcTipoFacturaCompra =="1"
 
-    begin
-       if @tipodocumento == 3
-        @purchase[:tax_amount] = @purchase.get_tax2(@detalleitems, @purchase[:supplier_id])*-1
-       else
-        @purchase[:tax_amount] = @purchase.get_tax2(@detalleitems, @purchase[:supplier_id])
-       end 
-    rescue
-      @purchase[:tax_amount] = 0
-      
-    end
+      begin
+           if @tipodocumento == 3
+            @purchase[:tax_amount] = @purchase.get_tax3(@detalleitems, @purchase[:supplier_id])*-1
+
+           else
+            @purchase[:tax_amount] = @purchase.get_tax3(@detalleitems, @purchase[:supplier_id])
+           end 
+        rescue
+          @purchase[:tax_amount] = 0
+          
+        end
+  
+
+    else 
+        begin
+           if @tipodocumento == 3
+            @purchase[:tax_amount] = @purchase.get_tax2(@detalleitems, @purchase[:supplier_id])*-1
+
+           else
+            @purchase[:tax_amount] = @purchase.get_tax2(@detalleitems, @purchase[:supplier_id])
+           end 
+        rescue
+          @purchase[:tax_amount] = 0
+          
+        end
+  
+
+    end 
+
+
+
     
     @purchase[:total_amount] = @purchase[:payable_amount] + @purchase[:tax_amount]
     @purchase[:charge]  = 0
@@ -1645,6 +1665,7 @@ def newfactura2
           @purchase.add_products2(@detalleitems)
           # Check if we gotta process the invoice
           @purchase.process()
+
           if $lcTipoFacturaCompra == "0"
             order_process = Purchaseorder.find($lcPurchaseOrderId)
             if order_process
@@ -1726,7 +1747,13 @@ def newfactura2
   def do_process
     @purchase = Purchase.find(params[:id])
     @purchase[:processed] = "1"
-    @purchase.process
+
+    if @purchase.tipo == "0"    
+        @purchase.process
+    else 
+        @purchase.process2
+    end 
+
     @user_id = @current_user.id 
     flash[:notice] = "The purchase order has been processed."
     redirect_to @purchase

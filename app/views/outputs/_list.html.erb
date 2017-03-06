@@ -65,10 +65,13 @@
           <td class="bordered_right bordered_bottom">
             <%= link_to "Editar", edit_output_path(output) %>
           </td>
-          <%if @current_user.level == 'admin' %>
+
+          <%if @current_user.level == 'admin' || @current_user.level=='almacen'%>
+          
             <td class="bordered_right bordered_bottom">
-          <%= link_to "Eiminar", output , method: :delete, data: { confirm: 'Are you sure?' } %>
+          <%= link_to "Eiminar", output , method: :delete, data: { confirm: 'Esta seguro ?' } %>
             </td>
+
           <% end %>
           
         </tr>
