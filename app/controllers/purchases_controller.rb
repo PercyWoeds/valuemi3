@@ -872,7 +872,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
             row << product.fecha.strftime("%d/%m/%Y")
             row << product.codigo
             row << product.product.name
-            row << product.unidad 
+            row << product.product.unidad 
             row << product.supplier.name  
             row << ""
             row << ""

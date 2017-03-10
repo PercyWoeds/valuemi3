@@ -2052,7 +2052,7 @@ def get_ingresos_day2(fecha1,fecha2,product)
   
    @purchases = Purchase.find_by_sql(['Select purchases.*,purchase_details.quantity,
     purchase_details.price_without_tax as price,purchases.date1 as fecha,
-    products.code as codigo ,purchases.documento as code ,products.unidad,purchase_details.total 
+    purchases.documento as code,purchase_details.total 
     from purchase_details   
 INNER JOIN purchases ON purchase_details.purchase_id = purchases.id
 WHERE  purchases.date1 > ? and purchases.date1 < ?', "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
