@@ -82,9 +82,13 @@ end
   resources :deliveries do
     collection { get :search   }
     collection { post :import }
+    
+
     collection do 
-      put :discontinue 
+      put :editmultiple      
+      put :updatemultiple      
     end 
+
   end 
   
   resources :suppliers do

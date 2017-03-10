@@ -1,0 +1,19 @@
+
+
+
+
+<% if params[:field].blank? || params[:field] == "fecha3" %>
+<p>
+    <%= f.label :fecha3, "Fecha Operaciones *", :class => "bold" %><br />
+     <%= f.date_field :fecha3, value: Time.now.strftime("%d/%m/%Y") %>
+    
+</p>
+<% end %>
+
+<% if params[:field].blank? || params[:field] == "fecha4" %>
+<p>
+  <%= f.label :fecha4, "Fecha contabilidad *", :class => "bold" %><br />
+     <%= f.date_field :fecha4, value: Time.now.strftime("%d/%m/%Y") %>
+    
+</p>
+<% end %>

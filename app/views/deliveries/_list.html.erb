@@ -1,3 +1,6 @@
+
+<%= form_tag  editmultiple_deliveries_path, method: :put do %>
+
 <% if @deliveries.count > 0 %>
   <table>
     <thead>
@@ -22,11 +25,22 @@
           Fecha
         </th>
         <th class="bordered_right bordered_bottom">
+          Fec.Oper
+        </th>
+        <th class="bordered_right bordered_bottom">
+          Fec.Cont.
+        </th>
+        
+        <th class="bordered_right bordered_bottom">
           Orden S.T.
         </th>
         
         <th class="bordered_right bordered_bottom">
           Pro.
+        </th>
+
+        <th class="bordered_right bordered_bottom">
+          Selección
         </th>
 
         <th class="bordered_right bordered_bottom" colspan="3">
@@ -55,8 +69,31 @@
             <%= money(delivery.total) %>
           </td>
           <td class="bordered_right bordered_bottom">
-            <%= doDate(delivery.created_at) %>
+            <%= delivery.created_at.strftime("%d/%m/%Y")  %>
           </td>
+
+          <% if delivery.fecha3 != nil %>
+          <td class="bordered_right bordered_bottom">
+            <%= delivery.fecha3.strftime("%d/%m/%Y")  %>
+          </td>
+          <%else%>
+          <td class="bordered_right bordered_bottom">
+          
+          </td>
+            
+          <% end %>
+
+          <% if delivery.fecha4 != nil %>
+          
+            <td class="bordered_right bordered_bottom">
+              <%= delivery.fecha4.strftime("%d/%m/%Y")    %>
+            </td>
+           <%else%>
+            <td class="bordered_right bordered_bottom">
+            
+            </td>            
+           <% end %>
+          
 
           <td class="bordered_right bordered_bottom right">
             <% if delivery.tranportorder  %>
@@ -69,6 +106,11 @@
           <td class="bordered_right bordered_bottom <%= delivery.processed_color %>">
             <%= delivery.get_processed_short %>
           </td>
+
+          <td class="bordered_right bordered_bottom right">
+            <%= check_box_tag "products_ids[]", delivery.id  %>
+          </td>          
+
           <td class="bordered_right bordered_bottom">
           
           <%= link_to "Ver",delivery %>                        
@@ -85,16 +127,22 @@
           
           <% elsif delivery.processed =="0"%>            
           <%= link_to "Edit", edit_delivery_path(delivery) %>
-
           <%= link_to 'Eliminar', delivery,:data=> {:confirm => 'Esta seguro ?'}, :method => :delete %>          
           </tr>
           <%end%>
-
       <% end %>
+
     </tbody>
   </table>
+
+ <%= select_tag :field, options_for_select([["All Fields", ""], ["Fecha Operaciones", "fecha3"], ["Fecha Contab.", "fecha4"]]) %>
+    <%= submit_tag "Editar solo marcados" %>
+
+
 <% else %>
   <p class="error">
-    We couldn't find any deliveries.
+    No existen guias 
   </p>
 <% end %>
+<% end %>
+

@@ -1,0 +1,63 @@
+	<table>
+		<thead>
+		  <tr>
+		      <th>
+		       Numero
+		      </th>
+		      <th>
+		        TD
+		      </th>
+		      <th>
+		        Cliente Origen
+		      </th>
+		      <th>
+		        Cliente Destino
+		      </th>
+		      <th>
+		        Fec.Ingreso
+		      </th>
+		      
+		      <th>
+		        OST
+		      </th>
+		      
+		   </tr>		 
+		</thead>
+
+	    <tbody>		
+
+	      <tr>
+	        <td class="bordered_bottom bordered_right">
+	        	<%= delivery.code %>
+	        </td>
+	        <td class="bordered_bottom bordered_right">
+	        	<%= delivery.get_remision %>
+	        </td>
+	        <td class="bordered_bottom bordered_right">	          	           
+	            <%= delivery.get_origen(delivery.remite_id) %>
+	        </td>	        
+			<td class="bordered_bottom bordered_right">	          	           
+	        <%= delivery.customer.name  %>
+	        </td>	        
+
+			<td class="bordered_right bordered_bottom">
+            	<%= doDate(delivery.created_at) %>
+          	</td>
+
+          	<td class="bordered_right bordered_bottom right">
+            <% if delivery.tranportorder  %>
+            	<%= delivery.tranportorder.code  %>          
+            <% end %>            
+          	</td>          
+	      </tr>
+
+
+
+		
+
+	 <%= hr() %>
+	
+	</tbody>
+
+	</table>
+

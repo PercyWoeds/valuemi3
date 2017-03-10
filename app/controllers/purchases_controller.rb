@@ -871,11 +871,12 @@ WHERE purchase_details.product_id = ?',params[:id] ])
             row << product.code
             row << product.fecha.strftime("%d/%m/%Y")
             row << product.codigo
-            row << product.nameproducto
+            row << product.product.name cd 
             row << product.unidad 
             row << product.supplier.name  
             row << ""
             row << ""
+            
             row << sprintf("%.2f",product.quantity.to_s)
             row << sprintf("%.2f",product.price.to_s)
             row << sprintf("%.2f",product.total.to_s)

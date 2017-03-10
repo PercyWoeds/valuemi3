@@ -25,7 +25,6 @@ def unir
 end
       
 def search
-  
   if params[:search].blank?
   
   else
@@ -1076,7 +1075,7 @@ end
   def client_data_headers
 
     #{@serviceorder.description}
-      client_headers  = [["Empresa  :", $lcCli ]]
+        client_headers  = [["Empresa  :", $lcCli ]]
       client_headers << ["Direccion :", $lcdir1]
       client_headers
   end
@@ -1086,6 +1085,7 @@ end
     
       invoice_headers
   end
+
 
 
 
@@ -1109,9 +1109,27 @@ end
 
   end 
 
+  
+  def editmultiple
+
+    if params[:products_ids] != nil 
+
+        @guiasselect = Delivery.find(params[:products_ids])      
+    end     
+  end
+
+  def updatemultiple
+ 
+       Delivery.where(id: params[:products_ids]).update_all(params[:delivery])
+        
+      flash[:notice] = "Guias modificadas"
+      redirect_to  "/companies/deliveries/1" 
+      
+  end
+
   private
   def delivery_params
-    params.require(:delivery).permit(:company_id,:location_id,:division_id,:customer_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:fecha1,:fecha2,:employee_id,:empsub_id,:subcontrat_id,:truck_id,:truck2_id,:address_id,:remision,:remite_id,:address2_id,:tranportorder_id)
+    params.require(:delivery).permit(:company_id,:location_id,:division_id,:customer_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:fecha1,:fecha2,:employee_id,:empsub_id,:subcontrat_id,:truck_id,:truck2_id,:address_id,:remision,:remite_id,:address2_id,:tranportorder_id,:fecha3,:fecha4)
   end
 
 end
