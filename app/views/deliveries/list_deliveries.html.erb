@@ -25,6 +25,8 @@
 <br />
 <%= render "deliveries/list" %>
 
+<%= will_paginate @deliveries %>
+
 <br />
 
 <div class="button">
@@ -35,12 +37,6 @@
 </div>
 
 
-<h2>Importar Archivo  "*.csv"</h2>
-
-<%= form_tag import_deliveries_path, multipart: true do %>
-  <%= file_field_tag :file %>
-  <%= submit_tag "Importar " %>
-<% end %>
 
 <div class="button">
   <%= link_to 'Regresar', "/companies/charts/#{@company.id}" %>
@@ -48,7 +44,7 @@
 
 
 
-<%= will_paginate @deliveries %>
+
 
 <%= render 'layouts/autocomplete' %>
 

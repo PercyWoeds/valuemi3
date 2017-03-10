@@ -2055,8 +2055,7 @@ def get_ingresos_day2(fecha1,fecha2,product)
     products.code as codigo ,purchases.documento as code ,products.unidad,purchase_details.total 
     from purchase_details   
 INNER JOIN purchases ON purchase_details.purchase_id = purchases.id
-WHERE  purchases.date1 > ? and purchases.date1 < ?
- ',product, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
+WHERE  purchases.date1 > ? and purchases.date1 < ?', "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
  
     return @purchases.where(:products_category_id => product)
 
