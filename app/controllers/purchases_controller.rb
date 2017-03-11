@@ -158,14 +158,15 @@ WHERE purchase_details.product_id = ?',params[:id] ])
               row << orden.product.code
               row << orden.product.name
             else
-              row << orden.product_id 
-              row << ""
+              a = orden.get_products()
+              row << a.code 
+              row << a.name 
             end 
 
             if orden.price_without_tax != nil
             row << orden.price_without_tax.round(2).to_s
             else 
-            row << "0.00" 
+            row << a.price2
             end  
             row << " "
             row << orden.total.round(2).to_s
