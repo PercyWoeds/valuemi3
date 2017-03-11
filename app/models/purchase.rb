@@ -327,9 +327,11 @@ def get_tax3(items, supplier_id)
   def identifier
     return "#{self.documento} - #{self.supplier.name}"
   end
+
+
   
   def get_products    
-    puts self.tipo
+    
 
     if self.tipo == "1"
       @itemproducts = PurchaseDetail.find_by_sql(['Select purchase_details.price_with_tax as price,purchase_details.quantity,

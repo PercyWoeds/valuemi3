@@ -70,4 +70,17 @@ class PurchaseDetail < ActiveRecord::Base
   end
 
 
+def get_products    
+    
+    
+      @itemproducts = PurchaseDetail.find_by_sql(['Select purchase_details.price_with_tax as price,purchase_details.quantity,
+      purchase_details.discount,purchase_details.price_without_tax as price2,purchase_details.total,
+      servicebuys.name  from purchase_details INNER JOIN servicebuys ON 
+      purchase_details.product_id = servicebuys.id where purchase_details.purchase_id = ?', self.id ])
+    
+    
+
+    return @itemproducts
+  end
+
 end
