@@ -350,4 +350,3 @@ class ViaticosController < ApplicationController
 
 end
 
-end
