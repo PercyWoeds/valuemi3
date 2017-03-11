@@ -158,7 +158,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
               row << orden.product.code
               row << orden.product.name
             else
-              a = orden.get_products(orden.product_id)
+              a = orden.get_service(orden.product_id)
               row << a.code 
               row << a.name 
             end 
