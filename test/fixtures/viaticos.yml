@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  code: MyString
+  fecha1: 2017-03-10 17:07:30
+  inicial: 1.5
+  total_ing: 1.5
+  total_egreso: 1.5
+  saldo: 1.5
+
+two:
+  code: MyString
+  fecha1: 2017-03-10 17:07:30
+  inicial: 1.5
+  total_ing: 1.5
+  total_egreso: 1.5
+  saldo: 1.5

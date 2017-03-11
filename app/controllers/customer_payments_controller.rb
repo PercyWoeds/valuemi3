@@ -1147,15 +1147,20 @@ class CustomerPaymentsController < ApplicationController
           for banco in @banks
           total1 = @company.get_customer_payments_value_customer(@fecha1,@fecha2,banco.id,@cliente,"total")  
 
-          if total1>0
+          if total1>0 and total1 != nil
                     
             row =[]
             row << nroitem.to_s
             row << banco.number 
             row << sprintf("%.2f",total1.to_s)
+
             @totalgeneral = @totalgeneral + total1 
+
             nroitem = nroitem + 1
             table_content2 << row
+          else
+            total1 = 0
+            @totalgeneral = @totalgeneral + total1 
           end   
 
           end

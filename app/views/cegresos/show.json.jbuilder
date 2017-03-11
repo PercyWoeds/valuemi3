@@ -1,0 +1,1 @@
+json.partial! "cegresos/cegreso", cegreso: @cegreso

@@ -500,13 +500,15 @@ def get_facturas_day_value_cliente(fecha1,fecha2,cliente,value = "total",moneda)
     end 
     return ret    
  end 
+
  #total banco x cliente
 def get_customer_payments_value_customer(fecha1,fecha2,id,cliente,value)
 facturas = CustomerPayment.find_by_sql(['Select customer_payments.id,customer_payments.total,
 facturas.code,facturas.customer_id,facturas.fecha,customer_payment_details.factory from customer_payment_details   
 INNER JOIN facturas ON   customer_payment_details.factura_id = facturas.id
 INNER JOIN customer_payments ON customer_payments.id = customer_payment_details.customer_payment_id    
-WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ?  and customer_payments.bank_acount_id = ?  and facturas.customer_id = ?',
+WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ?  and 
+customer_payments.bank_acount_id = ?  and facturas.customer_id = ?',
  "#{fecha1} 00:00:00","#{fecha2} 23:59:59",id,cliente ])
     ret = 0     
 
@@ -2047,17 +2049,19 @@ WHERE purchase_details.product_id = ?  and purchases.date1 > ? and purchases.dat
 end
 
 
+
 def get_ingresos_day2(fecha1,fecha2,product)
 
-  
    @purchases = Purchase.find_by_sql(['Select purchases.*,purchase_details.quantity,
-    purchase_details.price_without_tax as price,purchases.date1 as fecha,
-    purchases.documento as code,purchase_details.total 
+    purchase_details.price_without_tax as price,purchases.date1 as fecha, products.name as nameproducto,
+    products.code as codigo ,purchases.documento as code ,products.unidad,purchase_details.total 
     from purchase_details   
 INNER JOIN purchases ON purchase_details.purchase_id = purchases.id
-WHERE  purchases.date1 > ? and purchases.date1 < ?', "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
+INNER JOIN products ON purchase_details.product_id = products.id
+WHERE products.products_category_id = ?  and purchases.date1 > ? and purchases.date1 < ?
+ORDER BY products.code  ',product, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
  
-    return @purchases.where(:products_category_id => product)
+    return @purchases 
 
 end
 

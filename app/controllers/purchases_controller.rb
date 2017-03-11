@@ -153,8 +153,15 @@ WHERE purchase_details.product_id = ?',params[:id] ])
             row << $lcNumero 
             row << $lcFecha.strftime("%d/%m/%Y")        
             row << orden.quantity.to_s
-            row << orden.product.code
-            row << orden.product.name
+
+            if orden.product 
+              row << orden.product.code
+              row << orden.product.name
+            else
+              row << orden.product_id 
+              row << ""
+            end 
+
             if orden.price_without_tax != nil
             row << orden.price_without_tax.round(2).to_s
             else 
@@ -871,14 +878,19 @@ WHERE purchase_details.product_id = ?',params[:id] ])
             row << product.code
             row << product.fecha.strftime("%d/%m/%Y")
             row << product.codigo
-            row << product.product.name
-            row << product.product.unidad 
+            row << product.nameproducto
+            row << product.unidad 
             row << product.supplier.name  
             row << ""
             row << ""
             
             row << sprintf("%.2f",product.quantity.to_s)
+
+            if product.price != nil 
             row << sprintf("%.2f",product.price.to_s)
+            else
+             row << "0.00"
+            end 
             row << sprintf("%.2f",product.total.to_s)
           
             table_content << row
@@ -1650,11 +1662,8 @@ def newfactura2
           @purchase[:tax_amount] = 0
           
         end
-  
 
     end 
-
-
 
     
     @purchase[:total_amount] = @purchase[:payable_amount] + @purchase[:tax_amount]
@@ -1983,16 +1992,16 @@ def newfactura2
 
     @tipodocumento = @purchase[:document_id]
     
-    if @tipodocumento == 3
-      @purchase[:payable_amount] = @purchase.get_subtotal(items)*-1
+    if @tipodocumento == 2
+      @purchase[:payable_amount] = @purchase.get_subtotal(items) * -1
     else
       @purchase[:payable_amount] = @purchase.get_subtotal(items)
     end    
     
 
     begin
-       if @tipodocumento == 3
-        @purchase[:tax_amount] = @purchase.get_tax(items, @purchase[:supplier_id])*-1
+       if @tipodocumento == 2
+        @purchase[:tax_amount] = @purchase.get_tax(items, @purchase[:supplier_id]) * -1
        else
         @purchase[:tax_amount] = @purchase.get_tax(items, @purchase[:supplier_id])
        end 
@@ -2017,10 +2026,13 @@ def newfactura2
       respond_to do |format|
         if @purchase.save     
 
-          @purchase.add_products(items)                    
+          if @tipodocumento == 2
+            @purchase.add_products_menos(items)                    
+          else
+            @purchase.add_products(items)                    
+          end 
 
           @purchase.process()
-
 
 
           

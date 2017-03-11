@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Cegresos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Employee</th>
+      <th>Transportorder</th>
+      <th>Fecha1</th>
+      <th>Fecha2</th>
+      <th>Observa</th>
+      <th>Descrip</th>
+      <th>Importe</th>
+      <th>Moneda</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @cegresos.each do |cegreso| %>
+      <tr>
+        <td><%= cegreso.employee_id %></td>
+        <td><%= cegreso.transportorder_id %></td>
+        <td><%= cegreso.fecha1 %></td>
+        <td><%= cegreso.fecha2 %></td>
+        <td><%= cegreso.observa %></td>
+        <td><%= cegreso.descrip %></td>
+        <td><%= cegreso.importe %></td>
+        <td><%= cegreso.moneda_id %></td>
+        <td><%= link_to 'Show', cegreso %></td>
+        <td><%= link_to 'Edit', edit_cegreso_path(cegreso) %></td>
+        <td><%= link_to 'Destroy', cegreso, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Cegreso', new_cegreso_path %>

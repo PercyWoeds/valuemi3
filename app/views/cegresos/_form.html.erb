@@ -1,0 +1,18 @@
+<%= simple_form_for(@cegreso) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :employee_id %>
+    <%= f.input :transportorder_id %>
+    <%= f.input :fecha1 %>
+    <%= f.input :fecha2 %>
+    <%= f.input :observa %>
+    <%= f.input :descrip %>
+    <%= f.input :importe %>
+    <%= f.input :moneda_id %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

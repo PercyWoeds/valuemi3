@@ -1,0 +1,1 @@
+json.array! @cegresos, partial: 'cegresos/cegreso', as: :cegreso

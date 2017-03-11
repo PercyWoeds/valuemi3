@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170307200152) do
+ActiveRecord::Schema.define(version: 20170310222238) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -130,6 +130,19 @@ ActiveRecord::Schema.define(version: 20170307200152) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "cegresos", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.integer  "transportorder_id"
+    t.datetime "fecha1"
+    t.datetime "fecha2"
+    t.text     "observa"
+    t.text     "descrip"
+    t.float    "importe"
+    t.integer  "moneda_id"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
   create_table "ciudads", force: :cascade do |t|
     t.string   "descrip"
     t.string   "comments"
@@ -199,6 +212,8 @@ ActiveRecord::Schema.define(version: 20170307200152) do
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
     t.integer  "contrato_cuota_id"
+    t.string   "description"
+    t.string   "codigointerno"
   end
 
   create_table "csubdia", force: :cascade do |t|
@@ -747,6 +762,31 @@ ActiveRecord::Schema.define(version: 20170307200152) do
     t.integer  "quantity"
   end
 
+  create_table "lgv_details", force: :cascade do |t|
+    t.datetime "fecha"
+    t.integer  "gasto_id"
+    t.integer  "document_id"
+    t.string   "documento"
+    t.float    "total"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "lgvs", force: :cascade do |t|
+    t.string   "code"
+    t.integer  "tranportorderd_id"
+    t.datetime "fecha"
+    t.integer  "viatico_id"
+    t.float    "total"
+    t.string   "devuelto_texto"
+    t.float    "devuelto"
+    t.float    "reembolso"
+    t.float    "descuento"
+    t.text     "observa"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
   create_table "line_items", force: :cascade do |t|
     t.integer  "product_id"
     t.integer  "cart_id"
@@ -974,6 +1014,7 @@ ActiveRecord::Schema.define(version: 20170307200152) do
     t.string   "processed"
     t.integer  "customer_id"
     t.text     "description"
+    t.string   "rating"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -1654,6 +1695,30 @@ ActiveRecord::Schema.define(version: 20170307200152) do
     t.text     "comments"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "viatico_details", force: :cascade do |t|
+    t.integer  "viatico_id"
+    t.datetime "fecha"
+    t.text     "descrip"
+    t.integer  "document_id"
+    t.string   "numero"
+    t.float    "importe"
+    t.text     "detalle"
+    t.string   "tm"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "viaticos", force: :cascade do |t|
+    t.string   "code"
+    t.datetime "fecha1"
+    t.float    "inicial"
+    t.float    "total_ing"
+    t.float    "total_egreso"
+    t.float    "saldo"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   create_table "voideds", force: :cascade do |t|

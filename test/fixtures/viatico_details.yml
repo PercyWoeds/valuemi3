@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  viatico_id: 1
+  fecha: 2017-03-10 17:10:31
+  descrip: MyText
+  document_id: 1
+  numero: MyString
+  importe: 1.5
+  detalle: MyText
+  tm: MyString
+
+two:
+  viatico_id: 1
+  fecha: 2017-03-10 17:10:31
+  descrip: MyText
+  document_id: 1
+  numero: MyString
+  importe: 1.5
+  detalle: MyText
+  tm: MyString

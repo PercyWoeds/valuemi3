@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  fecha: 2017-03-10 17:22:38
+  gasto_id: 1
+  document_id: 1
+  documento: MyString
+  total: 1.5
+
+two:
+  fecha: 2017-03-10 17:22:38
+  gasto_id: 1
+  document_id: 1
+  documento: MyString
+  total: 1.5

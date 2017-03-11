@@ -1,0 +1,2 @@
+module LgvsHelper
+end

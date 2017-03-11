@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  employee_id: 1
+  transportorder_id: 1
+  fecha1: 2017-03-10 16:57:21
+  fecha2: 2017-03-10 16:57:21
+  observa: MyText
+  descrip: MyText
+  importe: 1.5
+  moneda_id: 1
+
+two:
+  employee_id: 1
+  transportorder_id: 1
+  fecha1: 2017-03-10 16:57:21
+  fecha2: 2017-03-10 16:57:21
+  observa: MyText
+  descrip: MyText
+  importe: 1.5
+  moneda_id: 1

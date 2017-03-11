@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Employee:</strong>
+  <%= @cegreso.employee_id %>
+</p>
+
+<p>
+  <strong>Transportorder:</strong>
+  <%= @cegreso.transportorder_id %>
+</p>
+
+<p>
+  <strong>Fecha1:</strong>
+  <%= @cegreso.fecha1 %>
+</p>
+
+<p>
+  <strong>Fecha2:</strong>
+  <%= @cegreso.fecha2 %>
+</p>
+
+<p>
+  <strong>Observa:</strong>
+  <%= @cegreso.observa %>
+</p>
+
+<p>
+  <strong>Descrip:</strong>
+  <%= @cegreso.descrip %>
+</p>
+
+<p>
+  <strong>Importe:</strong>
+  <%= @cegreso.importe %>
+</p>
+
+<p>
+  <strong>Moneda:</strong>
+  <%= @cegreso.moneda_id %>
+</p>
+
+<%= link_to 'Edit', edit_cegreso_path(@cegreso) %> |
+<%= link_to 'Back', cegresos_path %>
