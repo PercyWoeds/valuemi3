@@ -1822,7 +1822,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
 
           if movdetail        
              detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>0, :salida=>detail.quantity,
-            :price=>detail.price,:product_id=> detail.product_id,:document_id=>detail.document_id=>"1",
+            :price=>detail.price,:product_id=> detail.product_id,:document_id=>detail.document_id,
             :documento=>$lcdocumento,:tm =>"3")
              detail.save 
           else     
