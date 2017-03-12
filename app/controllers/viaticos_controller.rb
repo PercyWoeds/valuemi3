@@ -313,7 +313,6 @@ class ViaticosController < ApplicationController
     @viatico[:total] = @viatico[:subtotal] + @viatico[:tax]
 
 
-
     respond_to do |format|
       if @viatico.update_attributes(params[:viatico])
         # Create products for kit
