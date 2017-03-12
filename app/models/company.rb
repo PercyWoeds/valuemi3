@@ -1693,7 +1693,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
             if detail.quantity == nil
               movdetail.stock_inicial += 0   
             else
-              movdetail.stock_inicial -= detail.cantidad
+              movdetail.stock_inicial -= detail.quantity
             end
 
             if detail.price == 0
