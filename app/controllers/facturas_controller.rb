@@ -379,20 +379,20 @@ class FacturasController < ApplicationController
 
         begin
 
-          a << " GT: "
+          a << " "
 
             for guia in f.get_guias2(f.id)
 
-              a <<  guia.code << " "
+              a << " GT: " << guia.code << " "
               if guia.description == nil
                 
               else  
 
-
                   a << " " << guia.description                   
 
-
               end   
+
+
               existe1 = f.get_guias_remision(guia.id)
 
               if existe1.size > 0 
@@ -407,7 +407,7 @@ class FacturasController < ApplicationController
               if existe2.size > 0
               a << "\n GR : "
                 for guia in f.get_guiasremision2(f.id)
-                  a << guia.code << " "            
+                  a << guia.code << "  "            
                 end
               end 
 
