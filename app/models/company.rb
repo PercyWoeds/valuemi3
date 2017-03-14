@@ -1567,7 +1567,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
             else
               movdetail.salida += detail.quantity
             end
-
+              movdetail.save           
           else     
           
             #detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>0,:salida =>detail.quantity,
