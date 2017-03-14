@@ -396,8 +396,7 @@ def build_pdf_header(pdf)
           pdf.text "R.U.C: 20424092941", :align => :center
           pdf.text "ORDEN DE COMPRA", :align => :center
           pdf.text "#{@purchaseorder.code}", :align => :center,
-                                 :style => :bold
-          
+                                 :style => :bold          
         end
       end
       pdf.move_down 25
@@ -804,6 +803,7 @@ def build_pdf_header(pdf)
     @employees = @company.get_employees()
     @trucks = @company.get_trucks()    
     
+
     
     @output[:subtotal] = @output.get_subtotal(items)
     

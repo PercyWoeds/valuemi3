@@ -109,6 +109,7 @@ class Output < ActiveRecord::Base
         id = parts[0]
         quantity = parts[1]
         price = parts[2]                
+
         total = price.to_f * quantity.to_f        
         
 

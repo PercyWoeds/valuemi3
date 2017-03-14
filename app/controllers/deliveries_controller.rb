@@ -581,6 +581,8 @@ end
             row << nroitem.to_s
             row << product.fecha1.strftime("%d/%m/%Y")
             row << product.created_at.strftime("%d/%m/%Y")
+            row << product.fecha3.strftime("%d/%m/%Y")
+            row << product.fecha4.strftime("%d/%m/%Y")
             row << product.get_remision
             row << product.code
             row << lcOrigen
@@ -1007,8 +1009,10 @@ end
             lcOrigen = product.get_origen(product.remite_id)
             row = []
             row << nroitem.to_s
-            row << product.fecha1.strftime("%d/%m/%Y")
+            row << product.fecha1.strftime("%d/%m/%Y")            
             row << product.created_at.strftime("%d/%m/%Y")
+            row << product.fecha3.strftime("%d/%m/%Y")
+            row << product.fecha4.strftime("%d/%m/%Y")
             row << product.get_remision
             row << product.code
             row << lcOrigen

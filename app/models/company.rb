@@ -1464,6 +1464,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
  def get_stocks_inventarios2(fecha1,fecha2,product1)
 
     MovementDetail.delete_all
+  #actualiza  el costo de la salida
 
 
     @productExiste = Product.where(:products_category_id=> product1) 
@@ -1519,6 +1520,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
             else 
               movdetail.ingreso += detail.quantity
             end 
+
             if detail.price_without_tax == nil
              movdetail.price = 0 
             else
@@ -1565,15 +1567,6 @@ def get_purchaseorder_detail2(fecha1,fecha2)
             else
               movdetail.salida += detail.quantity
             end
-
-            if detail.price == 0
-              movdetail.price = 0  
-            else 
-              #para las salidas toma el precio de costo ya validado en soles 
-              movdetail.price = detail.price
-            end
-
-            movdetail.save           
 
           else     
           
@@ -1652,8 +1645,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
                 if $lcmoneda == 2
                  movdetail.price = detail.price_without_tax  
                 else
-                 dolar = Tipocambio.find_by('dia = ?',$lcFecha)
-
+                 dolar = Tipocambio.find_by('dia = ?',$lcFecha)#
                  if dolar 
                     movdetail.price = detail.price_without_tax * dolar.compra  
                  else 
@@ -1661,7 +1653,6 @@ def get_purchaseorder_detail2(fecha1,fecha2)
                  end 
                 end    
               end 
-
             end
 
             movdetail.save           
@@ -1696,13 +1687,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
               movdetail.stock_inicial -= detail.quantity
             end
 
-            if detail.price == 0
-              movdetail.price = 0  
-            else 
-              #para las salidas toma el precio de costo ya validado en soles 
-              movdetail.price = detail.price 
-            end
-
+ 
             movdetail.save           
 
           else     
