@@ -621,9 +621,12 @@ end
                                         :width => pdf.bounds.width
                                         } do 
                                           columns([0]).align=:center
-                                          columns([1]).align=:left                                          
+                                          columns([1]).align=:left
+                                          columns([1]).width= 30    
                                           columns([2]).align=:left
+                                          columns([2]).width= 30    
                                           columns([3]).align=:left
+                                          columns([3]).width= 30    
                                           columns([4]).align=:left  
                                           columns([5]).align=:right
                                           columns([6]).align=:left 
