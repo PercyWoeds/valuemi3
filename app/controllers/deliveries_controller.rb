@@ -581,12 +581,12 @@ end
             row << nroitem.to_s
             row << product.fecha1.strftime("%d/%m/%Y")
             row << product.created_at.strftime("%d/%m/%Y")
-            if product.fecha3 = nil
+            if product.fecha3 == nil
               row << " "
             else 
               row << product.fecha3.strftime("%d/%m/%Y")
             end
-            if product.fecha4 = nil
+            if product.fecha4 == nil
               row << " "
             else
               row << product.fecha4.strftime("%d/%m/%Y")
