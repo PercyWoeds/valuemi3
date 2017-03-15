@@ -582,12 +582,12 @@ end
             row << product.fecha1.strftime("%d/%m/%Y")
             row << product.created_at.strftime("%d/%m/%Y")
             if product.fecha3 == nil
-              row << " "
+              row << "-"
             else 
               row << product.fecha3.strftime("%d/%m/%Y")
             end
             if product.fecha4 == nil
-              row << " "
+              row << "-"
             else
               row << product.fecha4.strftime("%d/%m/%Y")
             end 
@@ -651,9 +651,17 @@ end
     @fecha2 =params[:fecha2]
       
     @delivery = @company.get_guias_day(@fecha1,@fecha2)  
+
       
     Prawn::Document.generate("app/pdf_output/guias1.pdf") do |pdf|      
-        pdf.font "Helvetica"
+
+              pdf.font_families.update("Open Sans" => {
+          :normal => "app/assets/fonts/OpenSans-Regular.ttf",
+          :italic => "app/assets/fonts/OpenSans-Italic.ttf",
+        })
+
+        pdf.font "Open Sans",:size =>6
+  
         pdf = build_pdf_header(pdf)
         pdf = build_pdf_body(pdf)
         build_pdf_footer(pdf)
