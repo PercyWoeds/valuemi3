@@ -622,11 +622,11 @@ end
                                         } do 
                                           columns([0]).align=:center
                                           columns([1]).align=:left
-                                          columns([1]).width= 30    
+                                          columns([1]).width= 40    
                                           columns([2]).align=:left
-                                          columns([2]).width= 30    
+                                          columns([2]).width= 40    
                                           columns([3]).align=:left
-                                          columns([3]).width= 30    
+                                          columns([3]).width= 40    
                                           columns([4]).align=:left  
                                           columns([5]).align=:right
                                           columns([6]).align=:left 
@@ -635,6 +635,7 @@ end
                                           columns([9]).align=:left 
                                           columns([9]).width= 100 
                                           columns([10]).align=:left
+                                          columns([10]).width= 80
                                           columns([11]).align=:left
                                           columns([12]).align=:left
                                           columns([13]).align=:left
