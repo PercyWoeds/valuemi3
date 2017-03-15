@@ -556,7 +556,7 @@ end
 
   def build_pdf_body(pdf)
     
-    pdf.text "Guias Emitidas : Año "+@year.to_s , :size => 11 
+    pdf.text "Guias EMITIDAS  : Desde "+@fecha1.to_s  + "Hasta : "+ @fecha2.to_s, :size => 11 
     pdf.text ""
     pdf.font "Helvetica" , :size => 6
 
@@ -576,7 +576,6 @@ end
        for  product in @delivery
 
             lcOrigen = product.get_origen(product.remite_id)
-
             row = []
             row << nroitem.to_s
             row << product.fecha1.strftime("%d/%m/%Y")
@@ -598,9 +597,16 @@ end
             row << product.description
             
             if    product.tranportorder_id != nil 
-            #  row << product.tranportorder.code  
+              row << product.tranportorder.code
+              @ost= product.get_ost(product.tranportorder.id)
+
+              row << product.get_punto(@ost.ubication_id)
+              row << product.get_punto(@ost.ubication2_id)
+
             else
               row << "No asignado" 
+              row << " "
+              row << " "
             end 
             row << product.get_processed
             table_content << row
@@ -655,7 +661,8 @@ end
       
     Prawn::Document.generate("app/pdf_output/guias1.pdf") do |pdf|      
 
-              pdf.font_families.update("Open Sans" => {
+        pdf.start_new_page(:size => "A4", :layout => :landscape)
+        pdf.font_families.update("Open Sans" => {
           :normal => "app/assets/fonts/OpenSans-Regular.ttf",
           :italic => "app/assets/fonts/OpenSans-Italic.ttf",
         })

@@ -374,7 +374,6 @@ class StocksController < ApplicationController
     @namecategoria= @company.get_categoria_name(@categoria)            
     @movements = @company.get_stocks_inventarios2(@fecha1,@fecha2,@categoria)   
       
-
     Prawn::Document.generate("app/pdf_output/stocks2.pdf") do |pdf|            
         pdf.font_families.update("Open Sans" => {
           :normal => "app/assets/fonts/OpenSans-Regular.ttf",

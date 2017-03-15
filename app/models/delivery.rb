@@ -34,7 +34,10 @@ self.per_page = 20
                      "NUMERO",
                      "CLIENTE",
                      "DESTINO",
+                     "DESCRIP",
                      "ORDEN",                     
+                     "ORIGEN",                     
+                     "DESTINO",                     
                      "ESTADO"]
   TABLE_HEADERS1 = ["ITEM",
                      "FECHA",
@@ -234,6 +237,15 @@ end
   
   def identifier
     return "#{self.code} - #{self.customer.name}"
+  end
+
+  def get_ost(id) 
+    @punto =Tranportorder.find(id)
+    return @punto
+  end 
+  def get_punto(id) 
+    @punto = Punto.find(id)
+    return @punto.name 
   end
 
   
