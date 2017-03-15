@@ -557,7 +557,19 @@ end
   def build_pdf_body(pdf)
     
     pdf.text "Guias EMITIDAS  : Desde "+@fecha1.to_s  + "Hasta : "+ @fecha2.to_s, :size => 11 
-    pdf.text ""
+    if @tiporeporte == "0"  
+      pdf.text "POR FECHA DE GUIA"
+    end 
+    if @tiporeporte == "1"  
+          pdf.text "POR FECHA DE INGRESO"
+        end 
+    if @tiporeporte == "2"  
+          pdf.text "POR FECHA DE OPERACIONES"
+        end 
+    if @tiporeporte == "3"  
+          pdf.text "POR FECHA DE CONTABILIDAD"
+    end 
+
     pdf.font "Helvetica" , :size => 6
 
       headers = []
@@ -669,18 +681,19 @@ end
     @fecha2 =params[:fecha2]
     @tiporeporte = params[:tiporeporte]
       
-    if @tiporeporte == 0  
+    if @tiporeporte == "0"  
       @delivery = @company.get_guias_day(@fecha1,@fecha2)  
     end 
-    if @tiporeporte == 1  
+    if @tiporeporte == "1"  
       @delivery = @company.get_guias_day1(@fecha1,@fecha2)  
     end 
-    if @tiporeporte == 2
+    if @tiporeporte == "2"
       @delivery = @company.get_guias_day2(@fecha1,@fecha2)  
     end 
-    if @tiporeporte == 3
+    if @tiporeporte == "3"
       @delivery = @company.get_guias_day3(@fecha1,@fecha2)  
     end 
+    
     
       
     Prawn::Document.generate("app/pdf_output/guias1.pdf") do |pdf|      
@@ -703,6 +716,7 @@ end
     $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
     #send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
     send_file("app/pdf_output/guias1.pdf", :type => 'application/pdf', :disposition => 'inline')
+  
 
   end
 
