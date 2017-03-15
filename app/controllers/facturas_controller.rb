@@ -383,7 +383,7 @@ class FacturasController < ApplicationController
 
             for guia in f.get_guias2(f.id)
 
-              a << " GT: " << guia.code << " "
+              a << " GT: " <<  guia.code << " "
               if guia.description == nil
                 
               else  
