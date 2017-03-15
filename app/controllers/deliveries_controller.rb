@@ -594,6 +594,7 @@ end
             row << product.code
             row << lcOrigen
             row << product.customer.name      
+
             row << product.description
             
             if    product.tranportorder_id != nil 
@@ -620,13 +621,20 @@ end
                                         :width => pdf.bounds.width
                                         } do 
                                           columns([0]).align=:center
-                                          columns([1]).align=:left
+                                          columns([1]).align=:left                                          
                                           columns([2]).align=:left
                                           columns([3]).align=:left
                                           columns([4]).align=:left  
                                           columns([5]).align=:right
                                           columns([6]).align=:left 
-                                          columns([7]).align=:right
+                                          columns([7]).align=:left
+                                          columns([8]).align=:left
+                                          columns([9]).align=:left 
+                                          columns([9]).width= 100 
+                                          columns([10]).align=:left
+                                          columns([11]).align=:left
+                                          columns([12]).align=:left
+                                          columns([13]).align=:left
                                         end                                          
       pdf.move_down 10      
       pdf
