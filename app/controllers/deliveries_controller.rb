@@ -660,6 +660,24 @@ end
 
     def build_pdf_footer(pdf)
 
+      if @tiporeporte == "2" 
+
+       data =[ ["RECEPCION Y DES.","IVAN ALBITEZ","IRMA LOBO ","VILMA VEGA","ASIS.GERENCIA","RUTH VEGA","PAUL PEREDA"],
+               [" "],
+               [" "],
+               ["Fecha:"] ]
+      else
+          data =[ ["RECEPCION Y DES.","IRMA LOBO ","VILMA VEGA","ASIS.GERENCIA","RUTH VEGA","PAUL PEREDA"],
+               [" "],
+               [" "],
+               ["Fecha:"] ]
+      end          
+           
+            pdf.text " "
+            pdf.table(data,:cell_style=> {:border_width=>0} , :width => pdf.bounds.width)
+            pdf.move_down 10          
+
+
         pdf.text ""
         pdf.text "" 
 
