@@ -428,53 +428,42 @@ class StocksController < ApplicationController
 
      $lcFecha1= Date.today.strftime("%d/%m/%Y").to_s
      $lcHora  = Time.now.to_s
+    pdf.text "FORMATO 13.1: REGISTRO DE INVENTARIO PERMANENTE VALORIZADO - DETALLE DEL INVENTARIO VALORIZADO "
+    pdf.text "PERIODO : " +@fecha1.to_s+ " Hasta: "+@fecha2.to_s   , :size => 11 
+    pdf.text "RUC : 2010010010101"  
+    pdf.text "APELLIDOS Y NOMBRES, DENOMINACION O RAZON SOCIAL : TRANSPORTES PEREDA SRL"
+    pdf.text "ESTABLECIMIENTO : ALMACEN"
 
-    max_rows = [client_data_headers.length, invoice_headers.length, 0].max
-      rows = []
-      (1..max_rows).each do |row|
-        rows_index = row - 1
-        rows[rows_index] = []
-        rows[rows_index] += (client_data_headers.length >= row ? client_data_headers[rows_index] : ['',''])
-        rows[rows_index] += (invoice_headers.length >= row ? invoice_headers[rows_index] : ['',''])
-      end
-
-      if rows.present?
-
-        pdf.table(rows, {
-          :position => :center,
-          :cell_style => {:border_width => 0},
-          :width => pdf.bounds.width
-        }) do
-          columns([0, 2]).font_style = :bold
-
-        end
-
-        pdf.move_down 10
-
-      end
-
-
-      pdf.move_down 15
       pdf 
   end   
 
   def build_pdf_body4(pdf)
     
-    pdf.text "FORMATO 13.1: REGISTRO DE INVENTARIO PERMANENTE VALORIZADO - DETALLE DEL INVENTARIO VALORIZADO "
-    pdf.text "PERIODO : " +@fecha1.to_s+ " Hasta: "+@fecha2.to_s   , :size => 11 
     
-    pdf.text " Categoria : " + @namecategoria , :size => 11 
     pdf.font "Helvetica" , :size => 6
 
       headers = []
       table_content = []
 
-      Stock::TABLE_HEADERS2.each do |header|
-        cell = pdf.make_cell(:content => header)
-        cell.background_color = "FFFFCC"
-        headers << cell
-      end
+ inner_table0 = make_table([["DOCUMENTO DE TRASLADO, COMPROBANTE DE PAGO"],
+                            ["DOCUMENTO INTERNO O SIMILAR"]])
 
+ inner_table1 = make_table([["TIPO DE "],
+                            ["OPERACION"],
+                            ["(TABLA 12)"]])
+
+
+
+     data = [[inner_table0,inner_table0,"ENTRADAS","SALIDAS ","SALDO FINAL" ],
+             ["FECHA ","TIPO ","SERIE ","NUMERO","CANTIDAD","COSTO UNITARIO","COSTO TOTAL","CANTIDAD","COSTO UNITARIO","COSTO TOTAL"]]
+
+            
+        pdf.move_down 150
+        pdf.text " "
+        pdf.table(data,:cell_style=> {:border_width=>0, :width=> pdf.bounds.width,:height => 20 })
+            
+
+      
 
       table_content << headers
 
@@ -486,54 +475,90 @@ class StocksController < ApplicationController
 
       @totales  = 0
         
+      lcCli = @movements.first.product_id
+            
+
+              pdf.text  "CODIGO DE LA EXISTENCIA :" <<stock.product.name
+              pdf.text  "TIPO : 05 SUMINISTROS"
+              pdf.text  "DESCRIPCION : "<<stock.product.name 
+              pdf.text  "CODIGO DE LA UNIDAD DE MEDIDAD : " << stock.product.unidad  
+              pdf.text  "METODO DE VALUACION : ULTIMO PRECIO"
+              
 
        for  stock in @movements 
 
+
+        if lcCli == stock.product_id 
+
               row = []
-              row << nroitem.to_s
-              row << stock.product.code
-              row << stock.product.name
-              row << stock.product.unidad
-              row << stock.product.ubicacion 
+              row << stock.fecha 
+
+              row << stock.document.tiposunat 
+
+              parts  = stock.product.code.split("-")
+              serie  = parts[0]
+              numero = parts[1]        
+
+              row << serie
+              row << numero 
+              row << stock.tm
+
+              if stock.ingreso != 0
+                row << stock.ingreso
+                row << stock.price
+                row << stock.ingreso*stock.price
+              end 
+
+              if stock.salida != 0
+                row << stock.salida
+                row << stock.price
+                row << stock.salida*price  
+              end 
+
+              #saldo = stock.stock_inicial  + stock.ingreso - stock.salida       
+
+  
+              row << stock.saldo 
               row << stock.price
-              row << stock.stock_inicial        
-              row << stock.ingreso 
-              row << stock.salida  
-              saldo = stock.stock_inicial  + stock.ingreso - stock.salida       
-              row << saldo 
-              if stock.price 
-              @total = saldo * stock.price                         
-              else
-              @total = 0  
-              end
-              row << sprintf("%.2f",@total.round(2).to_s)
+              row << stock.salida*stock.price  
+              
+
               @cantidad1 += stock.stock_inicial 
               @cantidad2 += stock.ingreso 
               @cantidad3 += stock.salida  
-              @cantidad  += saldo 
+              @cantidad  += stock.saldo 
 
-              @totales  += @total 
+              
 
               table_content << row
               nroitem=nroitem + 1
-              
 
-        end
-
-           row = []
-            row << ""
-            row <<""          
-            row << "TOTALES GENERAL"
-            row << ""            
-            row << ""            
-            row <<""          
-            row << sprintf("%.2f",@cantidad1.round(2).to_s)
-            row << sprintf("%.2f",@cantidad2.round(2).to_s)                                  
-            row << sprintf("%.2f",@cantidad3.round(2).to_s)
-            row << sprintf("%.2f",@cantidad.round(2).to_s)
-            row << sprintf("%.2f",@totales.round(2).to_s)
+          else
+          
             
-            table_content << row
+            row = []
+            row << nroitem.to_s        
+            
+            row << sprintf("%.2f",@cantidad1.to_s)
+            row << sprintf("%.2f",@cantidad2.to_s)
+            row << sprintf("%.2f",@cantidad3.to_s)
+            row << sprintf("%.2f",@cantidad.to_s)
+
+            table_content << row            
+              pdf.text  "CODIGO DE LA EXISTENCIA :" <<stock.product.name
+              pdf.text  "TIPO : 05 SUMINISTROS"
+              pdf.text  "DESCRIPCION : "<<stock.product.name 
+              pdf.text  "CODIGO DE LA UNIDAD DE MEDIDAD : " << stock.product.unidad  
+              pdf.text  "METODO DE VALUACION : ULTIMO PRECIO"            
+            
+            $lcCliName = stock.product.name
+            lcCli = stock.product_id
+          
+        end 
+         
+       end   
+            
+       table_content << row
 
 
       result = pdf.table table_content, {:position => :center,
@@ -551,6 +576,11 @@ class StocksController < ApplicationController
                                           columns([8]).align=:right
                                           columns([9]).align=:right
                                           columns([10]).align=:right
+                                          columns([11]).align=:right
+                                          columns([12]).align=:right
+                                          columns([13]).align=:right
+                                          columns([14]).align=:right
+                                          
                                         end                                          
       pdf.move_down 10      
       pdf
@@ -582,6 +612,7 @@ class StocksController < ApplicationController
     @movements = @company.get_stocks_inventarios3(@fecha1,@fecha2,@categoria)   
       
     Prawn::Document.generate("app/pdf_output/stocks4.pdf") do |pdf|            
+
         pdf.font_families.update("Open Sans" => {
           :normal => "app/assets/fonts/OpenSans-Regular.ttf",
           :italic => "app/assets/fonts/OpenSans-Italic.ttf",
@@ -592,7 +623,7 @@ class StocksController < ApplicationController
         pdf = build_pdf_header4(pdf)
         pdf = build_pdf_body4(pdf)
         build_pdf_footer4(pdf)
-        $lcFileName =  "app/pdf_output/stocks2.pdf"      
+        $lcFileName =  "app/pdf_output/stocks4.pdf"      
         
     end     
 

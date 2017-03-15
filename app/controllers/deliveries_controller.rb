@@ -667,9 +667,21 @@ end
     @company=Company.find(params[:company_id])      
     @fecha1 =params[:fecha1]
     @fecha2 =params[:fecha2]
+    @tiporeporte = params[:tiporeporte]
       
-    @delivery = @company.get_guias_day(@fecha1,@fecha2)  
-
+    if @tiporeporte == 0  
+      @delivery = @company.get_guias_day(@fecha1,@fecha2)  
+    end 
+    if @tiporeporte == 1  
+      @delivery = @company.get_guias_day1(@fecha1,@fecha2)  
+    end 
+    if @tiporeporte == 2
+      @delivery = @company.get_guias_day2(@fecha1,@fecha2)  
+    end 
+    if @tiporeporte == 3
+      @delivery = @company.get_guias_day3(@fecha1,@fecha2)  
+    end 
+    
       
     Prawn::Document.generate("app/pdf_output/guias1.pdf") do |pdf|      
 

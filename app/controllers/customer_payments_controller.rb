@@ -1495,7 +1495,7 @@ class CustomerPaymentsController < ApplicationController
             @total_mes12 = 0
             @total_cliente = 0 
 
-            if customerpayment_rpt.year_month.to_f <= 201612
+          if customerpayment_rpt.year_month.to_f <= 201612
             @total_anterior = @total_anterior + customerpayment_rpt.balance.round(2)          
           end             
 

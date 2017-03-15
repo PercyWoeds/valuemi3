@@ -19,16 +19,33 @@ totals = []
 </h1>
 
 <form method="get" action="/deliveries/guias1/<%= @company.id %>">
-  <div class="field">
-      <input type="date" name="fecha1" value="2007-10-01" style = "width: 150px" >
 
-    </div>
-	<div class="field">
-		<input type="date" name="fecha2" value="2017-01-18" style = "width: 150px" >
+<p>
+  <label for="tiporeporte"> Tipo de Reporte:</label><br>
+  <select id="tiporeporte" name="tiporeporte" >
+
+
+    <option value="0" selected> FECHA GUIA </option>
+    <option value="1" selected> FECHA INGRESO </option>
+    <option value="2" selected> FECHA OPERACIONES </option>
+    <option value="3" selected> FECHA CONTABILIDAD </option>
+    
+  </select>
+</p>
+
+
+
+  <div class="field">
+      <input type="date" name="fecha1" value="2017-03-01" style = "width: 150px" >
   </div>
 
-  <input type="submit" value="Ver" class="small_btn" />
+	<div class="field">
+		<input type="date" name="fecha2" value="2017-03-15" style = "width: 150px" >
+  </div>
+
+  <input type="submit" value="Ver"  />
   <a href="/deliveries/guias1/<%= @company.id %>" class="small_btn">Today</a>
+
 </form>
 
 <br />

@@ -383,10 +383,23 @@ def get_categoria_name(id)
     @orden = Tranportorder.where(["company_id = ? AND fecha1 >= ? AND fecha1 <= ?", self.id, "#{fecha1} 00:00:00", "#{fecha2} 23:59:59"]).order(:code)
     return @orden 
  end 
-def get_guias_day(fecha1,fecha2)
+ def get_guias_day(fecha1,fecha2)
     @delivery = Delivery.where(["company_id = ? AND fecha1 >= ? AND fecha1 <= ?", self.id, "#{fecha1} 00:00:00", "#{fecha2} 23:59:59"]).order(:code)
     return @delivery
  end 
+ def get_guias_day1(fecha1,fecha2)
+    @delivery = Delivery.where(["company_id = ? AND created_at >= ? AND created_at <= ?", self.id, "#{fecha1} 00:00:00", "#{fecha2} 23:59:59"]).order(:code)
+    return @delivery
+ end 
+ def get_guias_day2(fecha1,fecha2)
+    @delivery = Delivery.where(["company_id = ? AND fecha3 >= ? AND fecha3 <= ?", self.id, "#{fecha1} 00:00:00", "#{fecha2} 23:59:59"]).order(:code)
+    return @delivery
+ end 
+ def get_guias_day3(fecha1,fecha2)
+    @delivery = Delivery.where(["company_id = ? AND fecha4 >= ? AND fecha4 <= ?", self.id, "#{fecha1} 00:00:00", "#{fecha2} 23:59:59"]).order(:code)
+    return @delivery
+ end 
+
 
 def get_guias_2(fecha1,fecha2)
     @delivery = Delivery.where(["processed<> '4' and  processed <> '2' and company_id = ? AND fecha1 >= ? AND fecha1 <= ?", self.id, "#{fecha1} 00:00:00", "#{fecha2} 23:59:59"]).order(:code)
@@ -1740,7 +1753,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
 
           if movdetail                 
             detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>invdetail.cantidad,
- :salida => 0,:price=>invdetail.precio_unitario,:product_id=> invdetail.product_id,:tm=>"1",:documento=>"INVENTARIO")
+ :salida => 0,:price=>invdetail.precio_unitario,:product_id=> invdetail.product_id,:tm=>"16",:documento=>"INVENTARIO")
             detail.save 
           end   
         end 
@@ -1752,7 +1765,8 @@ def get_purchaseorder_detail2(fecha1,fecha2)
      for ing in @ing
         $lcFecha = ing.date1
         $lcmoneda = ing.moneda_id
-
+        $lcDocumentid = ing.document_id
+        $lcDocumento = ing.documento
         @ingdetail=  PurchaseDetail.where(:purchase_id=>ing.id)
     
         for detail in @ingdetail 
@@ -1781,8 +1795,8 @@ def get_purchaseorder_detail2(fecha1,fecha2)
             end 
 
       detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>detail.quantity,:salida => 0,
-      :price=>$lcprice,:product_id=> detail.product_id,:document_id=>detail.document_id,
-      :documento=>detail.documento,:tm =>"2")
+      :price=>$lcprice,:product_id=> detail.product_id,:document_id=>$lcDocuemntid,
+      :documento=>$lcDocumento,:tm =>"02")
       detail.save 
          
         
@@ -1798,6 +1812,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
      for sal in @sal 
         $lcFecha     = sal.fecha 
         $lcDocumento = sal.code 
+        $lcDocumentId = 3
 
         @saldetail=  OutputDetail.where(:output_id=>sal.id)
 
@@ -1807,8 +1822,8 @@ def get_purchaseorder_detail2(fecha1,fecha2)
 
           if movdetail        
              detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>0, :salida=>detail.quantity,
-            :price=>detail.price,:product_id=> detail.product_id,:document_id=>detail.document_id,
-            :documento=>$lcdocumento,:tm =>"3")
+            :price=>detail.price,:product_id=> detail.product_id,:document_id=> $lcDocumentId,
+            :documento=>$lcdocumento,:tm =>"10")
              detail.save 
           else     
           
@@ -1953,6 +1968,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
      # AGREGA LOS QUE NO TIENEN MOVIMIENTO 
     
       @inv = MovementDetail.all.order(:product_id,:fecha)
+
     return @inv 
 
  end
@@ -1962,7 +1978,7 @@ def get_stocks_ingresos2
     return @ing 
  end
 
-def get_stocks_salidas2   
+ def get_stocks_salidas2   
      
     return @sal 
  end

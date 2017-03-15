@@ -61,7 +61,7 @@ class OutputsController < ApplicationController
       nroitem=1
       lcDoc='FT'
       lcMon='S/.'
-
+      @total = 0
       @totales = 0
       @cantidad = 0
       nroitem = 1
@@ -80,11 +80,12 @@ class OutputsController < ApplicationController
             row << product.truck.placa            
             row << sprintf("%.2f",product.quantity.to_s)
             row << sprintf("%.2f",product.price.to_s)
-            row << sprintf("%.2f",product.total.to_s)
+            @total = product.quantity * product.price
+            row << sprintf("%.2f",@total.to_s)
           
             table_content << row
 
-            @totales += product.total 
+            @totales += @total  
             @cantidad += product.quantity
 
             nroitem=nroitem + 1
