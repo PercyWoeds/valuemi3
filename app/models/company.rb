@@ -1479,6 +1479,19 @@ def get_purchaseorder_detail2(fecha1,fecha2)
 
     MovementDetail.delete_all
 
+    @productExiste = Product.where(:products_category_id=> product1) 
+
+     for existe in @productExiste
+
+        product =  MovementDetail.find_by(:product_id => existe.id)
+
+        if product 
+        else   
+          detail  = MovementDetail.new(:fecha=>fecha1 ,:stock_inicial=>0,:ingreso=>0,:salida =>0,
+         :price=> existe.price ,:product_id=> existe.id,:tm=>"4")
+          detail.save       
+        end         
+     end    
 
 
      ######################################################################3
@@ -1595,19 +1608,6 @@ def get_purchaseorder_detail2(fecha1,fecha2)
 
 
 
-    @productExiste = Product.where(:products_category_id=> product1) 
-
-     for existe in @productExiste
-
-        product =  MovementDetail.find_by(:product_id => existe.id)
-
-        if product 
-        else   
-          detail  = MovementDetail.new(:fecha=>fecha1 ,:stock_inicial=>0,:ingreso=>0,:salida =>0,
-         :price=> existe.price ,:product_id=> existe.id,:tm=>"4")
-          detail.save       
-        end         
-     end    
 
      @inv = Inventario.where('fecha >= ? and  fecha <= ?',fecha1,fecha2)  
 
