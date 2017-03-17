@@ -247,16 +247,16 @@ def get_tax3(items, supplier_id)
         quantity = parts[1]
         price = parts[2]
         discount = parts[3]
-        lcprice_tax = item.price.to_f*1.18      
+        lcprice_tax = price.to_f  * 1.18      
 
-        total = price.to_f * quantity.to_f
+        total = lcprice_tax.to_f * quantity.to_f
         total -= total * (discount.to_f / 100)
         
         begin
 
           product = Product.find(id.to_i)          
           new_pur_product = PurchaseDetail.new(:purchase_id => self.id, :product_id => product.id,
-          :price_with_tax => lcprice_tax, :price_without_tax=>item.price.to_f, :quantity => quantity.to_f, :discount => discount.to_f,
+          :price_with_tax => lcprice_tax, :price_without_tax=>price.to_f, :quantity => quantity.to_f, :discount => discount.to_f,
           :total => total.to_f)
           new_pur_product.save
         rescue

@@ -266,6 +266,8 @@ class StocksController < ApplicationController
 
        for  stock in @movements 
 
+
+
               row = []
               row << nroitem.to_s
               row << stock.product.code
@@ -293,9 +295,9 @@ class StocksController < ApplicationController
 
               table_content << row
               nroitem=nroitem + 1
-              
+              end 
 
-        end
+
 
            row = []
             row << ""
