@@ -617,7 +617,7 @@ end
             if    product.tranportorder_id != nil 
 
               if   product.tranportorder.code 
-                row << "-"
+                row << product.tranportorder_id.to_s
               else
                 row << product.tranportorder.code
               end 
