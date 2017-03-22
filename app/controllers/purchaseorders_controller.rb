@@ -293,8 +293,7 @@ def build_pdf_header(pdf)
         pdf.text "" 
         pdf.text "Descripcion : #{@purchaseorder.description}", :size => 8, :spacing => 4
         pdf.text "Comentarios : #{@purchaseorder.comments}", :size => 8, :spacing => 4
-        
-        
+                
 
         data =[[{:content=> $lcEntrega4,:colspan=>2},"" ] ,
                [$lcEntrega1,{:content=> $lcEntrega3,:rowspan=>2}],

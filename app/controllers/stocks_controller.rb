@@ -13,8 +13,7 @@ class StocksController < ApplicationController
   end
 
   def invoice_headers            
-      invoice_headers  = [["Fecha : ",$lcHora]]
-    
+      invoice_headers  = [["Fecha : ",$lcHora]]    
       invoice_headers
   end
 
@@ -265,9 +264,6 @@ class StocksController < ApplicationController
         
 
        for  stock in @movements 
-
-
-
               row = []
               row << nroitem.to_s
               row << stock.product.code
@@ -441,152 +437,171 @@ class StocksController < ApplicationController
 
   def build_pdf_body4(pdf)
     
-    
-    pdf.font "Helvetica" , :size => 6
+        pdf.font "Helvetica" , :size => 6
 
-      headers = []
-      table_content = []
+        headers = []
+        headers1 = []
+        table_content = []
 
- inner_table0 = make_table([["DOCUMENTO DE TRASLADO, COMPROBANTE DE PAGO"],
-                            ["DOCUMENTO INTERNO O SIMILAR"]])
+       inner_table0 = "DOCUMENTO DE TRASLADO, COMPROBANTE DE PAGO"
+       inner_table1 = "DOCUMENTO INTERNO O SIMILAR"
+       inner_table3 = "TIPO DE "
+       inner_table4 = "OPERACION "
+       inner_table5 = "TABLA 12"
 
- inner_table1 = make_table([["TIPO DE "],
-                            ["OPERACION"],
-                            ["(TABLA 12)"]])
+        data =[[{:content=> inner_table0,:colspan=>4}, inner_table3,{:content=>"ENTRADAS",:colspan=>3},{:content=>"SALIDAS",:colspan=>3},"SALDO" ] ,
+               [{:content=> inner_table1,:colspan=>4},inner_table4,"CANTIDAD","COSTO UNIT.","COSTO TOTAL","CANTIDAD","COSTO UNIT.","COSTO TOTAL","CANTIDAD","COSTO UNIT.","COSTO TOTAL"],
+               ["FECHA","TIPO","SERIE","NUMERO"]       ]
 
-
-
-     data = [[inner_table0,inner_table0,"ENTRADAS","SALIDAS ","SALDO FINAL" ],
-             ["FECHA ","TIPO ","SERIE ","NUMERO","CANTIDAD","COSTO UNITARIO","COSTO TOTAL","CANTIDAD","COSTO UNITARIO","COSTO TOTAL"]]
-
-            
-        pdf.move_down 150
-        pdf.text " "
-        pdf.table(data,:cell_style=> {:border_width=>0, :width=> pdf.bounds.width,:height => 20 })
-            
-
-      
-
-      table_content << headers
-
+                    
       nroitem=1
       @cantidad1 = 0
       @cantidad2 = 0
       @cantidad3 = 0
       @cantidad = 0
-
       @totales  = 0
         
-      lcCli = @movements.first.product_id
-            
+      lcCli = @movements.first.product_id    
+      lcDatos = @movements.first      
 
-              pdf.text  "CODIGO DE LA EXISTENCIA :" <<stock.product.name
+              pdf.text  "CODIGO DE LA EXISTENCIA :" << lcDatos.product.code 
               pdf.text  "TIPO : 05 SUMINISTROS"
-              pdf.text  "DESCRIPCION : "<<stock.product.name 
-              pdf.text  "CODIGO DE LA UNIDAD DE MEDIDAD : " << stock.product.unidad  
+              pdf.text  "DESCRIPCION : "<<lcDatos.product.name 
+              pdf.text  "CODIGO DE LA UNIDAD DE MEDIDAD : " << lcDatos.product.unidad  
               pdf.text  "METODO DE VALUACION : ULTIMO PRECIO"
-              
 
-       for  stock in @movements 
+      #{:border_width=>1  }.each do |property,value|
+      #       pdf.text " Instrucciones: "
+      #       pdf.table(data,:cell_style=> {property =>value})
+      #       pdf.move_down 20          
+      #      end 
+    Stock::TABLE_HEADERS41.each do |header|
+        cell = pdf.make_cell(:content => header)
+        cell.background_color = "FFFFCC"
+        headers1 << cell
+      end
+    Stock::TABLE_HEADERS4.each do |header|
+        cell = pdf.make_cell(:content => header)
+        cell.background_color = "FFFFCC"
+        headers << cell
+      end
 
+      table_content << headers1
+      table_content << headers
+
+      if @movements
+        for  stock in @movements 
 
         if lcCli == stock.product_id 
 
-              row = []
-              row << stock.fecha 
+               row = []
 
-              row << stock.document.tiposunat 
+               row << stock.fecha.strftime("%d%m%Y")                
+               row << stock.document.tiposunat 
 
-              parts  = stock.product.code.split("-")
-              serie  = parts[0]
-              numero = parts[1]        
+               if stock.documento != nil   
+               parts  = stock.documento.split("-")
+               serie  = parts[0]
+               numero = parts[1]        
 
-              row << serie
-              row << numero 
-              row << stock.tm
+               row << serie
+               row << numero 
+               
+               else 
+               row << " "
+               row << " "
+                
+               end 
 
-              if stock.ingreso != 0
-                row << stock.ingreso
-                row << stock.price
-                row << stock.ingreso*stock.price
-              end 
+               row << stock.tm
+               if stock.ingreso != 0
+                 row << stock.ingreso.to_s
+                row << stock.price.to_s
+                total1 = stock.ingreso*stock.price
+                row << total1.to_s 
+               else
+                row << "0.00"                
+                row << "0.00"
+                row << "0.00"
+               end 
 
-              if stock.salida != 0
-                row << stock.salida
-                row << stock.price
-                row << stock.salida*price  
-              end 
+               if stock.salida != 0
+                row << stock.salida.to_s
+                row << stock.price.to_s
+                total2 = stock.salida*stock.price  
+                row << total2.to_s
+               else
+                row << "0.00"                
+                row << "0.00"
+                row << "0.00"              
+               end 
 
               #saldo = stock.stock_inicial  + stock.ingreso - stock.salida       
-
-  
-              row << stock.saldo 
-              row << stock.price
-              row << stock.salida*stock.price  
-              
-
-              @cantidad1 += stock.stock_inicial 
-              @cantidad2 += stock.ingreso 
-              @cantidad3 += stock.salida  
-              @cantidad  += stock.saldo 
-
-              
+              row << ""
+              row << stock.price.to_s
+              total3 = stock.salida*stock.price 
+              row << total3.to_s 
 
               table_content << row
+
+              @cantidad1 += 0
+              @cantidad2 += stock.ingreso 
+              @cantidad3 += stock.salida
+              @cantidad  += 0                          
               nroitem=nroitem + 1
+        else      
 
-          else
-          
-            
-            row = []
-            row << nroitem.to_s        
-            
-            row << sprintf("%.2f",@cantidad1.to_s)
-            row << sprintf("%.2f",@cantidad2.to_s)
-            row << sprintf("%.2f",@cantidad3.to_s)
-            row << sprintf("%.2f",@cantidad.to_s)
+             row = []
+             row << ""
+             row << ""
+             row << ""
+             row << stock.product.name 
+             row << "TOTALES"
+             row << sprintf("%.2f",@cantidad1.to_s)
+             row << " "
+             row << sprintf("%.2f",@cantidad2.to_s)
+             row << sprintf("%.2f",@cantidad3.to_s)
+             row << " "
+             row << sprintf("%.2f",@cantidad.to_s)
 
-            table_content << row            
-              pdf.text  "CODIGO DE LA EXISTENCIA :" <<stock.product.name
-              pdf.text  "TIPO : 05 SUMINISTROS"
-              pdf.text  "DESCRIPCION : "<<stock.product.name 
-              pdf.text  "CODIGO DE LA UNIDAD DE MEDIDAD : " << stock.product.unidad  
-              pdf.text  "METODO DE VALUACION : ULTIMO PRECIO"            
-            
-            $lcCliName = stock.product.name
-            lcCli = stock.product_id
-          
-        end 
-         
-       end   
-            
-       table_content << row
+              table_content << row            
+              result = pdf.table table_content, {:position => :center,
+                                                :header => true,
+                                                :width => pdf.bounds.width
+                                                } do 
+                                                  columns([0]).align=:center
+                                                  columns([1]).align=:left
+                                                  columns([2]).align=:left                                                                                             
+                                                  columns([3]).align=:left  
+                                                  columns([4]).align=:right
+                                                  columns([5]).align=:right 
+                                                  columns([6]).align=:right
+                                                  columns([7]).align=:right
+                                                  columns([8]).align=:right
+                                                  columns([9]).align=:right
+                                                  columns([10]).align=:right
+                                                  columns([11]).align=:right
+                                                  columns([12]).align=:right
+                                                  columns([13]).align=:right
+                                                  columns([14]).align=:right
+                                                end                                          
+                pdf.move_down 10      
+              
+              @cantidad1 = 0
+              @cantidad2 = 0
+              @cantidad3 = 0
+              @cantidad  = 0                          
+
+              pdf.start_new_page 
 
 
-      result = pdf.table table_content, {:position => :center,
-                                        :header => true,
-                                        :width => pdf.bounds.width
-                                        } do 
-                                          columns([0]).align=:center
-                                          columns([1]).align=:left
-                                          columns([2]).align=:left  
-                                          columns([3]).align=:left  
-                                          columns([4]).align=:right
-                                          columns([5]).align=:right 
-                                          columns([6]).align=:right
-                                          columns([7]).align=:right
-                                          columns([8]).align=:right
-                                          columns([9]).align=:right
-                                          columns([10]).align=:right
-                                          columns([11]).align=:right
-                                          columns([12]).align=:right
-                                          columns([13]).align=:right
-                                          columns([14]).align=:right
-                                          
-                                        end                                          
-      pdf.move_down 10      
-      pdf
+             $lcCliName = stock.product.name
+             lcCli = stock.product_id          
 
+        end          
+      end   
+      pdf 
+      end 
     end
 
 

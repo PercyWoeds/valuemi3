@@ -590,7 +590,12 @@ end
             lcOrigen = product.get_origen(product.remite_id)
             row = []
             row << nroitem.to_s
+
+            if product.fecha1 == nil
+              row << "-"
+            else
             row << product.fecha1.strftime("%d/%m/%Y")
+            end 
             row << product.created_at.strftime("%d/%m/%Y")
             if product.fecha3 == nil
               row << "-"

@@ -1479,6 +1479,9 @@ def get_purchaseorder_detail2(fecha1,fecha2)
 
     MovementDetail.delete_all
 
+
+
+
     @productExiste = Product.where(:products_category_id=> product1) 
 
      for existe in @productExiste
@@ -1734,106 +1737,6 @@ def get_purchaseorder_detail2(fecha1,fecha2)
         end        
      end    
 
-     @inv = Inventario.where('fecha >= ? and  fecha <= ?',fecha1,fecha2)  
-
-     for inv in @inv 
-
-        $lcFecha =inv.fecha 
-
-        @invdetail=  InventarioDetalle.where(:inventario_id=>inv.id)
-
-        for invdetail in @invdetail 
-           movdetail  = MovementDetail.find_by(:product_id=>invdetail.product_id)          
-
-          if movdetail                 
-            detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>invdetail.cantidad,
- :salida => 0,:price=>invdetail.precio_unitario,:product_id=> invdetail.product_id,:tm=>"16",:documento=>"INVENTARIO")
-            detail.save 
-            end   
-        end 
-      end 
-
-      #ingresos
-     @ing = Purchase.where('date1>= ? and date1 <= ?',fecha1,fecha2)
-
-     for ing in @ing
-        $lcFecha = ing.date1
-        $lcmoneda = ing.moneda_id
-        $lcDocumentid = ing.document_id
-        $lcDocumento = ing.documento
-        @ingdetail=  PurchaseDetail.where(:purchase_id=>ing.id)
-    
-        for detail in @ingdetail 
-          
-          movdetail  = MovementDetail.find_by(:product_id=>detail.product_id)          
-        
-          if movdetail
-                      
-            
-            if detail.price_without_tax == nil
-              $lcprice = 0 
-            else
-              if $lcmoneda != nil
-                if $lcmoneda == 2
-                 $lcprice = detail.price_without_tax
-                else
-                # dolar = Tipocambio.find_by('dia = ?',$lcFecha)
-
-                selected_date = Date.parse($lcFecha)
-
-                dolar = Tipocambio.where(
-                :created_at => selected_date.beginning_of_day..selected_date.end_of_day)
-
-                 if dolar 
-                    $lcprice = detail.price_without_tax * dolar.compra  
-                 else 
-                    $lcprice = 0
-                 end 
-                end    
-              end 
-            end 
-
-      detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>detail.quantity,:salida => 0,
-      :price=>$lcprice,:product_id=> detail.product_id,:document_id=>$lcDocuemntid,
-      :documento=>$lcDocumento,:tm =>"02")
-      detail.save 
-         
-        
-          else     
-          end
-
-        end 
-     end 
-
-     #salidas 
-    @sal  = Output.where('fecha>= ? and fecha <= ?',fecha1,fecha2)
-
-     for sal in @sal 
-        $lcFecha     = sal.fecha 
-        $lcDocumento = sal.code 
-        $lcDocumentId = 3
-
-        @saldetail=  OutputDetail.where(:output_id=>sal.id)
-
-        for detail in @saldetail 
-
-          movdetail  = MovementDetail.find_by(:product_id=>detail.product_id)
-
-          if movdetail        
-             detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>0, :salida=>detail.quantity,
-            :price=>detail.price,:product_id=> detail.product_id,:document_id=> $lcDocumentId,
-            :documento=>$lcdocumento,:tm =>"10")
-             detail.save 
-          else     
-          
-            #detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>0,:salida =>detail.quantity,
-            #:price=>detail.price,:product_id=> detail.product_id,:tm=>"3")
-            #detail.save 
-
-          end   
-        end 
-     end 
-
      ######################################################################3
      ##saldo inicial
      ######################################################################3 
@@ -1878,6 +1781,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
      @ing = Purchase.where('date1 <  ? ',fecha1)
 
      for ing in @ing    
+
 
         @ingdetail=  PurchaseDetail.where(:purchase_id=>ing.id)
 
@@ -1963,9 +1867,123 @@ def get_purchaseorder_detail2(fecha1,fecha2)
         end 
      end 
 
-     # AGREGA LOS QUE NO TIENEN MOVIMIENTO 
+#*******************************************************************************
+# detalle 
+#*******************************************************************************
+
+     @inv = Inventario.where('fecha >= ? and  fecha <= ?',fecha1,fecha2)  
+
+     for inv in @inv 
+
+        $lcFecha =inv.fecha 
+
+        @invdetail=  InventarioDetalle.where(:inventario_id=>inv.id)
+
+        for invdetail in @invdetail 
+           movdetail  = MovementDetail.find_by(:product_id=>invdetail.product_id)          
+
+          if movdetail                 
+            detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>invdetail.cantidad,
+ :salida => 0,:price=>invdetail.precio_unitario,:product_id=> invdetail.product_id,:tm=>"16",:document_id=>1,:documento=>"INVENTARIO")
+            detail.save 
+            end   
+        end 
+      end 
+
+      #ingresos
+     @ing = Purchase.where('date1>= ? and date1 <= ?',fecha1,fecha2)
+
+     for ing in @ing
+        $lcFecha  = ing.date1.strftime("%F")
+
+        $lcmoneda = ing.moneda_id
+        $lcDocumentid = ing.document_id
+
+        $lcDocumento = ing.documento
+
+        @ingdetail=  PurchaseDetail.where(:purchase_id=>ing.id)
     
-      @inv = MovementDetail.all.order(:product_id,:fecha)
+        for detail in @ingdetail 
+
+          $lcPreciosinigv = detail.price_without_tax
+
+          movdetail  = MovementDetail.find_by(:product_id=>detail.product_id)          
+        
+          if movdetail
+                      
+            
+            if detail.price_without_tax == nil
+              $lcprice = 0 
+            else
+              if $lcmoneda != nil
+                if $lcmoneda == 2
+                 $lcprice = detail.price_without_tax
+                else
+
+                  @dolar = Tipocambio.find_by(["dia  >= ? and dia <= ? ", "#{$lcFecha} 00:00:00","#{$lcFecha} 23:59:59" ])
+                  if @dolar 
+                    movdetail.price = $lcPreciosinigv * @dolar.compra
+                  else
+                    movedetail.price = 0                  
+                  end 
+
+                end    
+              end 
+            end 
+
+      detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>detail.quantity,:salida => 0,
+      :price=>$lcprice,:product_id=> detail.product_id,:document_id=>$lcDocuemntid,
+      :documento=>$lcDocumento,:tm =>"02")
+      detail.save 
+         
+        
+          else     
+          end
+
+        end 
+     end 
+
+     #salidas 
+    @sal  = Output.where('fecha>= ? and fecha <= ?',fecha1,fecha2)
+
+     for sal in @sal 
+        $lcFecha     = sal.fecha 
+        $lcDocumento = sal.code 
+        $lcDocumentId = 3
+
+        @saldetail=  OutputDetail.where(:output_id=>sal.id)
+
+        for detail in @saldetail 
+
+          movdetail  = MovementDetail.find_by(:product_id=>detail.product_id)
+
+          if movdetail        
+             detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>0, :salida=>detail.quantity,
+            :price=>detail.price,:product_id=> detail.product_id,:document_id=> $lcDocumentId,
+            :documento=>$lcdocumento,:tm =>"10")
+             detail.save 
+          else     
+          
+            #detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>0,:salida =>detail.quantity,
+            #:price=>detail.price,:product_id=> detail.product_id,:tm=>"3")
+            #detail.save 
+
+          end   
+        end 
+     end 
+
+     # AGREGA LOS QUE NO TIENEN MOVIMIENTO 
+      MovementDetail.where(:document_id=>nil).update_all(:document_id=>1)    
+      @inv = MovementDetail.all.order(:product_id,:fecha,:tm)
+
+     # CALCULANDO SALDO - STOCK 
+
+     
+
+
+     
+
+
 
     return @inv 
 

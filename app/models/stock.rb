@@ -28,6 +28,35 @@ belongs_to :product
                      "STOCK  ",
                      "TOTAL  "  ]
 
+  TABLE_HEADERS41 = ["",
+                     "DOCUMENTO INTERNO O SIMILAR ",
+                     "",
+                     "",
+                     "OPERACION",
+                     "",
+                     "",                     
+                     "",
+                     "",
+                     "",                     
+                     "",                     
+                     "",
+                     "",
+                     ""  ]
+
+  TABLE_HEADERS4 = ["FECHA",
+                     "TIPO ",
+                     "SERIE",
+                     "NUMERO",
+                     "TABLA12",
+                     "CANTIDAD",
+                     "UNITARIO",                     
+                     "TOTAL",
+                     "CANTIDAD",
+                     "UNITARIO",                     
+                     "TOTAL",                     
+                     "CANTIDAD",
+                     "UNITARIO ",
+                     "TOTAL  "  ]
         
 def get_estado
 	if self.active == true
