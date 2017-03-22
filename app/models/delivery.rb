@@ -4,7 +4,7 @@ self.per_page = 20
 
   validates_uniqueness_of :code
   
-  validates_presence_of :company_id, :customer_id, :code, :user_id
+  validates_presence_of :company_id, :customer_id, :code, :user_id,:fecha1,:fecha2
   
   belongs_to :company
   belongs_to :location
