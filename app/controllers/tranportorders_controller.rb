@@ -91,11 +91,18 @@ class TranportordersController < ApplicationController
   # DELETE /tranportorders/1
   # DELETE /tranportorders/1.json
   def destroy
-    @tranportorder.destroy
-    respond_to do |format|
+   respond_to do |format|
+   a = Delivery.find_by(:tranportorder_id=> params[:id])
+   if a 
+        format.html { redirect_to tranportorders_url, notice: 'Orden tiene guias asignadas no se puede eliminar' }
+        format.json { render json: a.errors, status: :unprocessable_entity }
+   else 
+      @tranportorder.destroy
+
       format.html { redirect_to tranportorders_url, notice: 'Tranportorder was successfully destroyed.' }
       format.json { head :no_content }
     end
+   end 
   end
 
 

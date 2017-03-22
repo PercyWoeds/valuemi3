@@ -503,7 +503,10 @@ end
   # DELETE /deliverys/1,a
   # DELETE /deliverys/1.xml
   def destroy
+
+
     @delivery = Delivery.find(params[:id])
+    
     company_id = @delivery[:company_id]
 
     
