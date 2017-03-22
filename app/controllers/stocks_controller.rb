@@ -618,7 +618,12 @@ class StocksController < ApplicationController
               pdf.text  "CODIGO DE LA EXISTENCIA :" << stock.product.code 
               pdf.text  "TIPO : 05 SUMINISTROS"
               pdf.text  "DESCRIPCION : "<< stock.product.name 
-              pdf.text  "CODIGO DE LA UNIDAD DE MEDIDAD : " << stock.product.unidad  
+              
+              if stock.product.unidad == nil
+                pdf.text  "CODIGO DE LA UNIDAD DE MEDIDAD : "
+              else 
+                pdf.text  "CODIGO DE LA UNIDAD DE MEDIDAD : " << stock.product.unidad  
+              end
               pdf.text  "METODO DE VALUACION : ULTIMO PRECIO"
 
               Stock::TABLE_HEADERS41.each do |header|
