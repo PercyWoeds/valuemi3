@@ -454,12 +454,15 @@ class StocksController < ApplicationController
                ["FECHA","TIPO","SERIE","NUMERO"]       ]
 
                     
-      nroitem=1
+      nroitem = 1
       @cantidad1 = 0
       @cantidad2 = 0
       @cantidad3 = 0
-      @cantidad = 0
+      @cantidad4 = 0
       @totales  = 0
+
+      total1 = 0
+      total2 = 0 
         
       lcCli = @movements.first.product_id    
       lcDatos = @movements.first      
@@ -494,6 +497,7 @@ class StocksController < ApplicationController
 
         if lcCli == stock.product_id 
 
+               lcname = stock.product.name 
                row = []
 
                row << stock.fecha.strftime("%d%m%Y")                
@@ -514,40 +518,42 @@ class StocksController < ApplicationController
                end 
 
                row << stock.tm
-               if stock.ingreso != 0
-                 row << stock.ingreso.to_s
-                row << stock.price.to_s
+
+               if stock.ingreso != 0                
+                row << sprintf("%.2f",stock.ingreso.to_s)
+                row << sprintf("%.2f",stock.price.to_s)
                 total1 = stock.ingreso*stock.price
-                row << total1.to_s 
+                row << sprintf("%.2f",total1.to_s)
                else
-                row << "0.00"                
-                row << "0.00"
-                row << "0.00"
+                row << " "                
+                row << " "
+                row << " "
                end 
 
                if stock.salida != 0
-                row << stock.salida.to_s
-                row << stock.price.to_s
-                total2 = stock.salida*stock.price  
-                row << total2.to_s
+                row << sprintf("%.2f",stock.salida.to_s)
+                row << sprintf("%.2f",stock.price.to_s)
+                total2 = stock.salida*stock.price
+                row << sprintf("%.2f",total2.to_s)
                else
-                row << "0.00"                
-                row << "0.00"
-                row << "0.00"              
+                row << " "                
+                row << " "
+                row << " "              
                end 
 
               #saldo = stock.stock_inicial  + stock.ingreso - stock.salida       
               row << ""
-              row << stock.price.to_s
+              row << sprintf("%.2f",stock.price.to_s)
               total3 = stock.salida*stock.price 
-              row << total3.to_s 
+              row << sprintf("%.2f",total3.to_s) 
 
               table_content << row
 
-              @cantidad1 += 0
-              @cantidad2 += stock.ingreso 
+              @cantidad1 += stock.ingreso 
+              @cantidad2 += total1
               @cantidad3 += stock.salida
-              @cantidad  += 0                          
+              @cantidad4 += total2
+
               nroitem=nroitem + 1
         else      
 
@@ -555,48 +561,81 @@ class StocksController < ApplicationController
              row << ""
              row << ""
              row << ""
-             row << stock.product.name 
+             row << " "
              row << "TOTALES"
              row << sprintf("%.2f",@cantidad1.to_s)
              row << " "
              row << sprintf("%.2f",@cantidad2.to_s)
              row << sprintf("%.2f",@cantidad3.to_s)
              row << " "
-             row << sprintf("%.2f",@cantidad.to_s)
+             row << sprintf("%.2f",@cantidad4.to_s)
 
               table_content << row            
               result = pdf.table table_content, {:position => :center,
                                                 :header => true,
                                                 :width => pdf.bounds.width
                                                 } do 
-                                                  columns([0]).align=:center
-                                                  columns([1]).align=:left
-                                                  columns([2]).align=:left                                                                                             
-                                                  columns([3]).align=:left  
-                                                  columns([4]).align=:right
-                                                  columns([5]).align=:right 
-                                                  columns([6]).align=:right
-                                                  columns([7]).align=:right
-                                                  columns([8]).align=:right
-                                                  columns([9]).align=:right
-                                                  columns([10]).align=:right
-                                                  columns([11]).align=:right
-                                                  columns([12]).align=:right
-                                                  columns([13]).align=:right
-                                                  columns([14]).align=:right
+                                                  columns([0]).align =:center
+                                                  columns([0]).width = 40 
+                                                  columns([1]).align =:left
+                                                  columns([1]).width = 30 
+                                                  columns([2]).align =:left                                                                                             
+                                                  columns([3]).align =:left  
+                                                  columns([4]).align =:right
+                                                  columns([5]).align =:right 
+                                                  columns([5]).width = 40 
+                                                  columns([6]).align =:right
+                                                  columns([7]).align =:right
+                                                  columns([8]).align =:right
+                                                  columns([8]).width = 40 
+                                                  columns([9]).align =:right
+                                                  columns([10]).align =:right
+                                                  columns([11]).align =:right
+                                                  columns([11]).width = 40 
+                                                  columns([12]).align =:right
+                                                  columns([13]).align =:right
+                                                  columns([14]).align =:right
                                                 end                                          
-                pdf.move_down 10      
+                pdf.move_down 10
+
               
               @cantidad1 = 0
               @cantidad2 = 0
               @cantidad3 = 0
-              @cantidad  = 0                          
+              @cantidad4 = 0
+              total1 = 0
+              total2 = 0                
 
-              pdf.start_new_page 
-
+              pdf.start_new_page
 
              $lcCliName = stock.product.name
-             lcCli = stock.product_id          
+             lcCli = stock.product_id 
+
+             headers = []
+             headers1 = []
+             table_content = []
+
+              pdf.text  "CODIGO DE LA EXISTENCIA :" << stock.product.code 
+              pdf.text  "TIPO : 05 SUMINISTROS"
+              pdf.text  "DESCRIPCION : "<< stock.product.name 
+              pdf.text  "CODIGO DE LA UNIDAD DE MEDIDAD : " << stock.product.unidad  
+              pdf.text  "METODO DE VALUACION : ULTIMO PRECIO"
+
+              Stock::TABLE_HEADERS41.each do |header|
+                cell = pdf.make_cell(:content => header)
+                cell.background_color = "FFFFCC"
+                headers1 << cell
+              end
+              Stock::TABLE_HEADERS4.each do |header|
+                cell = pdf.make_cell(:content => header)
+                cell.background_color = "FFFFCC"
+                headers << cell
+              end
+
+              table_content << headers1
+              table_content << headers
+
+                 
 
         end          
       end   

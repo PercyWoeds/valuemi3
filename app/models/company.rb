@@ -1884,7 +1884,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
 
           if movdetail                 
             detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>invdetail.cantidad,
- :salida => 0,:price=>invdetail.precio_unitario,:product_id=> invdetail.product_id,:tm=>"16",:document_id=>1,:documento=>"INVENTARIO")
+ :salida => 0,:price=>invdetail.precio_unitario,:product_id=> invdetail.product_id,:tm=>"16",:document_id=>1,:documento=>"-INVENTARIO")
             detail.save 
             end   
         end 
@@ -1977,6 +1977,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
       @inv = MovementDetail.all.order(:product_id,:fecha,:tm)
 
      # CALCULANDO SALDO - STOCK 
+
 
      
 

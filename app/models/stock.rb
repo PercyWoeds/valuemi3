@@ -29,34 +29,34 @@ belongs_to :product
                      "TOTAL  "  ]
 
   TABLE_HEADERS41 = ["",
-                     "DOCUMENTO INTERNO O SIMILAR ",
+                     "",   
+                     " ",
+                     "DOCUMENTO INTERNO O SIMILAR",
+                     "TIPO DE OPERACION ",
                      "",
+                     "ENTRADA",
+                     "",                                                    
                      "",
-                     "OPERACION",
-                     "",
+                     "SALIDA ",                     
                      "",                     
                      "",
-                     "",
-                     "",                     
-                     "",                     
-                     "",
-                     "",
+                     "SALDO FINAL ",
                      ""  ]
 
   TABLE_HEADERS4 = ["FECHA",
                      "TIPO ",
                      "SERIE",
                      "NUMERO",
-                     "TABLA12",
-                     "CANTIDAD",
-                     "UNITARIO",                     
-                     "TOTAL",
-                     "CANTIDAD",
-                     "UNITARIO",                     
-                     "TOTAL",                     
-                     "CANTIDAD",
-                     "UNITARIO ",
-                     "TOTAL  "  ]
+                     "TABLA 12",
+                     "CANTIDAD ...",
+                     "COSTO UNITARIO",                     
+                     "TOTAL         ",
+                     "CANTIDAD ...      ",
+                     "COSTO UNITARIO",                     
+                     "TOTAL         " ,                     
+                     "CANTIDAD ...      ",
+                     "COSTO UNITARIO ",
+                     "TOTAL          "  ]
         
 def get_estado
 	if self.active == true
