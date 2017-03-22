@@ -621,10 +621,16 @@ end
               else
                 row << product.tranportorder.code
               end 
+
+              if product.tranportorder != nil  
               @ost= product.get_ost(product.tranportorder.id)
 
               row << product.get_punto(@ost.ubication_id)
               row << product.get_punto(@ost.ubication2_id)
+              else
+                row << " "
+                row << " "
+              end 
 
             else
               row << "No asignado" 
