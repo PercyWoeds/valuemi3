@@ -615,7 +615,12 @@ end
             row << product.description
             
             if    product.tranportorder_id != nil 
-              row << product.tranportorder.code
+
+              if   product.tranportorder.code != nil
+                row << "-"
+              else
+                row << product.tranportorder.code
+              end 
               @ost= product.get_ost(product.tranportorder.id)
 
               row << product.get_punto(@ost.ubication_id)
