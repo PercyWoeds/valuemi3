@@ -623,6 +623,8 @@ end
 
   # Products
   match 'products/ac_products/:company_id' => 'products#ac_products', via: [:get, :post]
+  match 'products/rpt_product_all/:company_id' => 'products#rpt_product_all', via: [:get, :post]
+
   match 'products/ac_categories/:company_id' => 'products#ac_categories', via: [:get, :post]
   match 'products/new/:company_id' => 'products#new', via: [:get, :post]
   match 'companies/products/:company_id' => 'products#list_products', via: [:get, :post]

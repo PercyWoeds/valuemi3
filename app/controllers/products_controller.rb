@@ -208,6 +208,178 @@ class ProductsController < ApplicationController
   format.atom
   end
   end
+
+################# REPORTE DE PRODUCTOS #########################
+
+def build_pdf_header(pdf)
+
+    pdf.font "Helvetica"
+
+     $lcCli  = @company.name 
+     $lcdir1 = @company.address1+@company.address2+@company.city+@company.state
+
+     $lcFecha1= Date.today.strftime("%d/%m/%Y").to_s
+     $lcHora  = Time.now.to_s
+
+    max_rows = [client_data_headers.length, invoice_headers.length, 0].max
+      rows = []
+      (1..max_rows).each do |row|
+        rows_index = row - 1
+        rows[rows_index] = []
+        rows[rows_index] += (client_data_headers.length >= row ? client_data_headers[rows_index] : ['',''])
+        rows[rows_index] += (invoice_headers.length >= row ? invoice_headers[rows_index] : ['',''])
+      end
+
+      if rows.present?
+
+        pdf.table(rows, {
+          :position => :center,
+          :cell_style => {:border_width => 0},
+          :width => pdf.bounds.width
+        }) do
+          columns([0, 2]).font_style = :bold
+
+        end
+
+        pdf.move_down 10
+
+      end
+
+      pdf.move_down 5
+      pdf 
+  end   
+
+  def build_pdf_body(pdf)
+    
+    pdf.text "Productos : " , :size => 11 
+
+    pdf.font "Open Sans",:size =>6
+
+      headers = []
+      table_content = []
+
+      Product::TABLE_HEADERS.each do |header|
+        cell = pdf.make_cell(:content => header)
+        cell.background_color = "FFFFCC"
+        headers << cell
+      end
+
+
+
+     table_content << headers
+
+      nroitem = 1
+      @cantidad = 0
+      @totales  = 0
+      saldo = 0  
+
+      lcCli = @products.first.products_category.id
+      $lcCliName = @products.first.products_category.category
+
+            row = []
+            row << nroitem.to_s        
+            row << $lcCliName 
+            table_content << row      
+
+       for  product  in @products 
+
+          if lcCli == product.products_category.id  
+
+              $lcCliName = product.products_category.category 
+              row = []
+              row << nroitem.to_s
+              row << product.code
+              row << product.name
+              row << product.unidad
+              row << product.ubicacion               
+              
+              table_content << row
+              nroitem=nroitem + 1
+          else
+
+            row = []
+            row << nroitem.to_s        
+            row << product.products_category.category  
+            table_content << row      
+
+            $lcCliName = product.products_category.category
+            lcCli = product.products_category.id  
+
+
+          end 
+              
+        end
+            
+      result = pdf.table table_content, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width
+                                        } do 
+                                          columns([0]).align=:center
+                                          columns([4]).align=:right
+                                          columns([5]).align=:right
+                                          columns([6]).align=:right
+                                          columns([7]).align=:right   
+                                        end                                          
+      pdf.move_down 10      
+      pdf
+
+    end
+
+
+    def build_pdf_footer(pdf)
+
+        pdf.text ""
+        pdf.text "" 
+
+        pdf.bounding_box([0, 20], :width => 535, :height => 40) do
+        pdf.draw_text "Company: #{@company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
+
+      end
+
+      pdf
+      
+  end
+
+  # Export serviceorder to PDF
+  def rpt_product_all
+    @company=Company.find(params[:company_id])      
+    @products = @company.get_products2
+      
+    Prawn::Document.generate("app/pdf_output/stocks1.pdf") do |pdf|      
+
+        pdf.font_families.update("Open Sans" => {
+          :normal => "app/assets/fonts/OpenSans-Regular.ttf",
+          :italic => "app/assets/fonts/OpenSans-Italic.ttf",
+        })
+
+        pdf.font "Open Sans",:size =>6
+  
+        pdf = build_pdf_header(pdf)
+        pdf = build_pdf_body(pdf)
+        build_pdf_footer(pdf)
+        $lcFileName =  "app/pdf_output/stocks1.pdf"      
+        
+    end     
+
+    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
+    #send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
+    send_file("app/pdf_output/stocks1.pdf", :type => 'application/pdf', :disposition => 'inline')
+  end
+
+  def client_data_headers
+
+    #{@serviceorder.description}
+      client_headers  = [["Empresa  :", $lcCli ]]
+      client_headers << ["Direccion :", $lcdir1]
+      client_headers
+  end
+
+  def invoice_headers            
+      invoice_headers  = [["Fecha : ",$lcHora]]    
+      invoice_headers
+  end
+
+
   private
   def products_params
     params.require(:product).permit(:code, :name, :category, :cost,:price,:price2,:tax1_name, :tax1,:tax2_name,:tax2, :tax3_name,:tax3 ,:quantity,:reorder,:description,:comments,:company_id,:marca_id,:modelo_id,:products_category_id,:unidad,:ubicacion)

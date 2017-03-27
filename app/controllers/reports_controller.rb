@@ -579,15 +579,8 @@ class ReportsController < ApplicationController
   def product_all
 
     @company = Company.find(params[:company_id])
-    @products = @company.get_products()
-    @products_cats = []
     
-    
-    for product in @products      
-
-    end
-    
-    
+       
   end
   
   # Report sellers monthly

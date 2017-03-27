@@ -1124,7 +1124,7 @@ def get_supplier_payments2(moneda)
   
   # Return products for company
   def get_products()
-    products = Product.where(company_id: self.id).order('name')
+    products = Product.where(company_id: self.id).order(:name)
     
     return products
   end
@@ -1742,7 +1742,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
      ######################################################################3 
 
      @inv = Inventario.where('fecha < ?',fecha1)  
-
+     lcstock_inicial = 0
     
      for inv in @inv       
 
@@ -1755,23 +1755,25 @@ def get_purchaseorder_detail2(fecha1,fecha2)
           if movdetail
 
             if invdetail.cantidad == nil
-            movdetail.stock_inicial = 0   
+            lcstock_inicial = 0   
             else
-            movdetail.stock_inicial += invdetail.cantidad
+            lcstock_inicial += invdetail.cantidad
             end
 
             if invdetail.precio_unitario == nil
-              movdetail.price = 0  
+              lcprice = 0  
            else 
-              movdetail.price = invdetail.precio_unitario
+              lcprice = invdetail.precio_unitario
             end
-
+            movdetail.tm = '01'                    
+            movdetail.price = lcprice
+            movdetail.ingreso += lcstock_inicial
             movdetail.save           
           else     
           
-            #detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>0,:salida =>detail.quantity,
-            #:price=>detail.price,:product_id=> detail.product_id,:tm=>"3")
-            #detail.save 
+            detail  = MovementDetail.new(:fecha=>fecha1 ,:ingreso=>invdetail.cantidad,:salida => 0 ,
+            :price=>invdetail.precio_unitario,:product_id=> invdetail.product_id,:tm=>"01",:documento=>"-SALDO INICIAL")
+            detail.save 
           end
         
         end 
@@ -1781,49 +1783,65 @@ def get_purchaseorder_detail2(fecha1,fecha2)
      @ing = Purchase.where('date1 <  ? ',fecha1)
 
      for ing in @ing    
-
+        $lcFecha  = ing.date1.strftime("%F") 
+        $lcmoneda = ing.moneda_id
 
         @ingdetail=  PurchaseDetail.where(:purchase_id=>ing.id)
 
         for detail in @ingdetail 
+        
 
          movdetail  = MovementDetail.find_by(:product_id=>detail.product_id)          
 
           if movdetail
 
             if detail.quantity == nil
-              movdetail.stock_inicial = 0   
+              lcstock_inicial = 0   
             else
-              movdetail.stock_inicial += detail.quantity
+              lcstock_inicial += detail.quantity
             end
 
             if detail.price_without_tax == 0
-              movdetail.price = 0  
+              lcprice = 0  
             else 
               if $lcmoneda != nil
                 if $lcmoneda == 2
-                 movdetail.price = detail.price_without_tax  
+                 lcprice = detail.price_without_tax  
                 else
                  dolar = Tipocambio.find_by('dia = ?',$lcFecha)
 
                  if dolar 
-                    movdetail.price = detail.price_without_tax * dolar.compra  
+                   lcprice = detail.price_without_tax * dolar.compra  
                  else 
-                    movdetail.price = 0
+                    lcprice = 0
                  end 
                 end    
               end 
 
             end
-
+            movdetail.tm = '01'                      
+            movdetail.price = lcprice
+            movdetail.ingreso += lcstock_inicial            
             movdetail.save           
 
-          else     
-          
-            #detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>0,:salida =>detail.quantity,
-            #:price=>detail.price,:product_id=> detail.product_id,:tm=>"3")
-            #detail.save 
+          else               
+              if $lcmoneda != nil
+                if $lcmoneda == 2
+                 lcprice = detail.price_without_tax  
+                else
+                 dolar = Tipocambio.find_by('dia = ?',$lcFecha)
 
+                 if dolar 
+                   lcprice = detail.price_without_tax * dolar.compra  
+                 else 
+                    lcprice = 0
+                 end 
+                end    
+              end 
+
+            detail  = MovementDetail.new(:fecha=>fecha1 ,:ingreso=>detail.quantity,:salida => 0 ,
+            :price=>lcprice , :product_id=> detail.product_id,:tm=>"01",:documento=>"-SALDO INICIAL")
+            detail.save 
           end
         
                 
@@ -1842,25 +1860,21 @@ def get_purchaseorder_detail2(fecha1,fecha2)
           if movdetail
 
             if detail.quantity == nil
-              movdetail.salida = 0   
+              lcstock_inicial = 0   
             else
-              movdetail.salida -= detail.quantity
+              lcstock_inicial -= detail.quantity
             end
 
-            if detail.price == 0
-              movdetail.price = 0  
-            else 
-              #para las salidas toma el precio de costo ya validado en soles 
-              movdetail.price = detail.price 
-            end
-
+            movdetail.tm = '01'                    
+            movdetail.ingreso -= lcstock_inicial                        
             movdetail.save           
 
           else     
-          
-            #detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>0,:salida =>detail.quantity,
-            #:price=>detail.price,:product_id=> detail.product_id,:tm=>"3")
-            #detail.save 
+            lcprice = 0
+            lcsalida = detail.quantity * -1
+            detail  = MovementDetail.new(:fecha=>fecha1 ,:ingreso=>lcsalida,:salida => 0 ,
+            :price=>lcprice , :product_id=> detail.product_id,:tm=>"01",:documento=>"-SALDO INICIAL ** ")
+            detail.save 
 
           end
         
@@ -1977,6 +1991,9 @@ def get_purchaseorder_detail2(fecha1,fecha2)
       @inv = MovementDetail.all.order(:product_id,:fecha,:tm)
 
      # CALCULANDO SALDO - STOCK 
+     
+
+     
 
 
      
