@@ -281,7 +281,9 @@ def build_pdf_header(pdf)
             row << $lcCliName 
             table_content << row      
 
-       for  product  in @products 
+       for  product in @products
+
+        if  product 
 
           if lcCli == product.products_category.id  
 
@@ -307,7 +309,7 @@ def build_pdf_header(pdf)
 
 
           end 
-              
+        end 
         end
             
       result = pdf.table table_content, {:position => :center,
