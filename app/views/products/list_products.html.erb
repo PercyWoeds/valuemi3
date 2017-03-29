@@ -28,18 +28,11 @@
 
 <%= render "products/list"%>
 
-<br />
-
-
-  <%= form_tag import_products_path, multipart: true do %>
-  <%= file_field_tag :file %>
-  <%= submit_tag "Importar " %>  
-  <% end %>
-  
 <div class="button">
-  <%= link_to 'Agregar Producto ', "/products/new/#{@company.id}" %>
+<%= link_to "Excel", products_path(format: "xls") %>
   
 </div>
+
 
 <br />
 

@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell><Data ss:Type="String">ID</Data></Cell>
+        <Cell><Data ss:Type="String">Nombre</Data></Cell>
+        <Cell><Data ss:Type="String">Unidad</Data></Cell>
+        <Cell><Data ss:Type="String">Ubicacion</Data></Cell>
+      </Row>
+    <%  lcCli = @products.first.products_category.id %>
+    <%  $lcCliName = @products.first.products_category.category %>
+  
+    <% @products.each do |product| %>
+
+     <% if  product.products_category != nil  %>
+
+       <%if lcCli == product.products_category.id   %>
+
+            <%  $lcCliName = product.products_category.category %>
+
+          <Row>
+            <Cell><Data ss:Type="String"><%= product.code %></Data></Cell>
+            <Cell><Data ss:Type="String"><%= product.name %></Data></Cell>
+            <Cell><Data ss:Type="String"><%= product.unidad %></Data></Cell>
+            <Cell><Data ss:Type="String"><%= product.ubicacion  %></Data></Cell>
+          </Row>
+      <%else%>
+         <Row>
+          <Cell><Data ss:Type="String"><% product.products_category.category   %></Data></Cell>
+         </Row>   
+            
+
+           <% $lcCliName = product.products_category.category %>
+           <% lcCli = product.products_category.id  %>
+
+
+     <% end %> 
+
+     <% end %> 
+
+    <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>
