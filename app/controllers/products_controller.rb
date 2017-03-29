@@ -283,7 +283,7 @@ def build_pdf_header(pdf)
 
        for  product in @products
 
-        if  product 
+        if  product.products_category != nil  
 
           if lcCli == product.products_category.id  
 
