@@ -282,6 +282,7 @@ def build_pdf_header(pdf)
       @cantidad = 0
       @totales  = 0
       saldo = 0  
+      
 
       lcCli = @products.first.products_category.id
       $lcCliName = @products.first.products_category.category

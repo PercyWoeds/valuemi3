@@ -14,7 +14,9 @@
       </Row>
     <%  lcCli = @products.first.products_category.id %>
     <%  $lcCliName = @products.first.products_category.category %>
-  
+      <Row>
+    <Cell><Data ss:Type="String"><%= $lcCliName   %></Data></Cell>
+      </Row> 
     <% @products.each do |product| %>
 
      <% if  product.products_category != nil  %>
@@ -31,7 +33,7 @@
           </Row>
       <%else%>
          <Row>
-          <Cell><Data ss:Type="String"><% product.products_category.category   %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= product.products_category.category   %></Data></Cell>
          </Row>   
             
 
