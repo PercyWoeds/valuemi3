@@ -28,8 +28,12 @@
 
 <%= render "products/list"%>
 
+
 <div class="button">
-<%= link_to "Excel", products_path(format: "xls") %>
+
+<%= link_to 'Nueva Producto', "/products/new/#{@company.id}" %>
+
+<%= link_to "Descargar Excel", products_path(format: "xls") %>
   
 </div>
 
