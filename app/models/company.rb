@@ -1666,7 +1666,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
                   if @dolar 
                     movdetail.price = $lcPreciosinigv * @dolar.compra
                   else
-                    movedetail.price = 0                  
+                    movdetail.price = 0                  
                   end 
                 end    
               end 
