@@ -1492,7 +1492,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
         if product 
         else   
           detail  = MovementDetail.new(:fecha=>fecha1 ,:stock_inicial=>0,:ingreso=>0,:salida =>0,
-         :price=> existe.price ,:product_id=> existe.id,:tm=>"4")
+         :price=> 0 ,:product_id=> existe.id,:tm=>"4")
           detail.save       
         end         
      end    
@@ -1625,13 +1625,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
 
 
   #actualiza  el costo de la salida
-
-
-
-
-
      @inv = Inventario.where('fecha >= ? and  fecha <= ?',fecha1,fecha2)  
-
      for inv in @inv 
         $lcFecha =inv.fecha 
 
