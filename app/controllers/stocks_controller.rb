@@ -270,12 +270,12 @@ class StocksController < ApplicationController
               row << stock.product.name
               row << stock.product.unidad
               row << stock.product.ubicacion 
-              row << stock.price
-              row << stock.stock_inicial        
-              row << stock.ingreso 
-              row << stock.salida  
+              row << sprintf("%.2f",stock.price.round(2).to_s)
+              row << sprintf("%.2f",stock.stock_inicial.round(2).to_s)         
+              row << sprintf("%.2f",stock.ingreso.round(2).to_s)
+              row << sprintf("%.2f",stock.salida.round(2).to_s)
               saldo = stock.stock_inicial  + stock.ingreso - stock.salida       
-              row << saldo 
+              row << sprintf("%.2f",saldo.round(2).to_s)
               if stock.price 
               @total = saldo * stock.price                         
               else
