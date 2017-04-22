@@ -1543,9 +1543,9 @@ def get_purchaseorder_detail2(fecha1,fecha2)
      @ing = Purchase.where('date1 <  ? ',fecha1)
 
      for ing in @ing    
-          $lcFecha = ing.date1.to_date 
-          $lcmoneda = ing.moneda_id  
-          
+          $lcFecha = ing.date1.to_date
+          $lcmoneda = ing.moneda_id
+
         @ingdetail=  PurchaseDetail.where(:purchase_id=>ing.id)
 
         for detail in @ingdetail 
@@ -1554,9 +1554,9 @@ def get_purchaseorder_detail2(fecha1,fecha2)
 
           if movdetail
             if detail.quantity == nil
-              movdetail.ingreso = 0
+              movdetail.stock_inicial += 0   
             else 
-              movdetail.ingreso += detail.quantity
+              movdetail.stock_inicial +=  detail.quantity
             end 
 
             if detail.price_without_tax == nil
