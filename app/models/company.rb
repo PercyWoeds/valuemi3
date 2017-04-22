@@ -1544,15 +1544,16 @@ def get_purchaseorder_detail2(fecha1,fecha2)
 
      for ing in @ing    
           $lcFecha = ing.date1.to_date 
-
+          $lcmoneda = ing.moneda_id  
+          
         @ingdetail=  PurchaseDetail.where(:purchase_id=>ing.id)
 
         for detail in @ingdetail 
 
-         movdetail  = MovementDetail.find_by(:product_id=>detail.product_id)          
+          movdetail  = MovementDetail.find_by(:product_id=>detail.product_id)
 
           if movdetail
-            if detail.quantity == nil 
+            if detail.quantity == nil
               movdetail.ingreso = 0
             else 
               movdetail.ingreso += detail.quantity
