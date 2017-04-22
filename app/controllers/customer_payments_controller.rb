@@ -1072,6 +1072,7 @@ class CustomerPaymentsController < ApplicationController
         @banks = BankAcount.all
         @totalgeneral_soles = 0
         @totalgeneral_dolar = 0
+        @totalgeneral  = 0
 
         if $lcxCliente == "0"
 
