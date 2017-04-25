@@ -270,7 +270,7 @@ class StocksController < ApplicationController
               row << stock.product.name
               row << stock.product.unidad
               row << stock.product.ubicacion 
-              row << sprintf("%.2f",stock.price.round(2).to_s)
+              row << sprintf("%.2f",stock.price.round(3).to_s)
               row << sprintf("%.2f",stock.stock_inicial.round(2).to_s)         
               row << sprintf("%.2f",stock.ingreso.round(2).to_s)
               row << sprintf("%.2f",stock.salida.round(2).to_s)
