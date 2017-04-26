@@ -51,7 +51,13 @@
     <b>Estado: </b>
     <%=   @serviceorder.get_processed   %>   
 </p>
-
+    
+<% if @serviceorder.dolar != nil %>
+<p>
+    <b>TipoCambio: </b>
+    <%=   @serviceorder.dolar   %>   
+</p>
+<% end %>
 
 <%= hr() %>
 

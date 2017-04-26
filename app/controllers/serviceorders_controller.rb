@@ -23,6 +23,7 @@ class ServiceordersController < ApplicationController
      $lcTotal=sprintf("%.2f",@serviceorder.total)
 
      $lcDetracion=sprintf("%.2f",@serviceorder.detraccion)
+
      $lcTotal0 = @serviceorder.total   - @serviceorder.detraccion 
      $lcTotal2 = sprintf("%.2f",$lcTotal0)
 
@@ -104,11 +105,11 @@ class ServiceordersController < ApplicationController
             row << product.price.round(2).to_s
             row << product.discount.round(2).to_s
             row << product.total.round(2).to_s
-              table_content << row
+            table_content << row
 
             nroitem=nroitem + 1
         end
-##agrego description para orden de servicio                                     
+      ##agrego description para orden de servicio                                     
       row=[]
       row<<nroitem.to_s
       row<<""
@@ -154,9 +155,7 @@ class ServiceordersController < ApplicationController
 
         pdf.text ""
         pdf.text ""     
-        pdf.text "Comentarios : #{@serviceorder.comments}", :size => 8, :spacing => 4
-        
-        
+        pdf.text "Comentarios : #{@serviceorder.comments}", :size => 8, :spacing => 4          
 
         data =[[{:content=> $lcEntrega4,:colspan=>2},"" ] ,
                [$lcEntrega1,{:content=> $lcEntrega3,:rowspan=>2}],
@@ -524,12 +523,32 @@ class ServiceordersController < ApplicationController
     
     @serviceorder[:total] = @serviceorder[:subtotal] + @serviceorder[:tax]
 
-    if @serviceorder[:total] >= 700.00
+    @serviceorder[:dolar] = 0 
 
-      @serviceorder[:detraccion] = @serviceorder[:total] * 10/100
+
+    if @serviceorder[:moneda_id] == 2
+
+      if @serviceorder[:total] >= 700.00
+
+        @serviceorder[:detraccion] = @serviceorder[:total] * 10/100
+      else
+        @serviceorder[:detraccion] = 0
+      end 
+
     else
 
-      @serviceorder[:detraccion] = 0
+      @dolar1 = @company.get_dolar(@serviceorder[:fecha1].to_date )
+
+      if @dolar1.compra != nil 
+        if @serviceorder[:total]*@dolar1.compra >= 700.00
+
+          @serviceorder[:detraccion] = @serviceorder[:total] * 10/100
+
+          @serviceorder[:dolar] = @dolar1.compra 
+        else
+          @serviceorder[:detraccion] = 0
+        end 
+      end 
 
     end 
 
@@ -791,8 +810,7 @@ class ServiceordersController < ApplicationController
           taxes.push(tax)
           services_tax += tax
         
-      
-          
+                
           total = @company.get_services_day2(@fecha1,@fecha2, "total")
           totals.push(total)
           services_total += total
@@ -802,9 +820,7 @@ class ServiceordersController < ApplicationController
           detraccion = @company.get_services_day2(@fecha1,@fecha2, "detraccion")
           detraccions.push(detraccion)
           services_detraccion += detraccion
-        
-        
-      
+                    
             row = []
             row << " "
             row << " "
@@ -819,9 +835,6 @@ class ServiceordersController < ApplicationController
             table_content << row
 
   ## TOTAL PIE DE PAGINA 
-
-
-
 
       result = pdf.table table_content, {:position => :center,
                                         :header => true,
@@ -977,7 +990,7 @@ def list_receive_serviceorders
   
   private
   def serviceorder_params
-    params.require(:serviceorder).permit(:company_id,:location_id,:division_id,:supplier_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:detraccion,:payment_id,:moneda_id,:fecha1,:fecha2,:fecha3,:fecha4,:document_id,:documento)
+    params.require(:serviceorder).permit(:company_id,:location_id,:division_id,:supplier_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:detraccion,:payment_id,:moneda_id,:fecha1,:fecha2,:fecha3,:fecha4,:document_id,:documento,:dolar)
   end
 
 end

@@ -2108,6 +2108,12 @@ def get_ingresos_day3(fecha1,fecha2)
 
 end
 
+def get_dolar(fecha1) 
+  @dolar = Tipocambio.find_by(["dia  >= ? and dia <= ? ", "#{fecha1} 00:00:00","#{fecha1} 23:59:59" ])
+  return @dolar 
+end 
+
+
 
 
 end
