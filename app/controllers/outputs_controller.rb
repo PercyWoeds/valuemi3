@@ -741,7 +741,7 @@ def build_pdf_header(pdf)
   # GET /outputs/new.xml
 
   
-  
+
   def new
     @pagetitle = "New output"
     @action_txt = "Create"

@@ -89,6 +89,16 @@ self.per_page = 20
                     "Dic-2017",
                     "TOTAL   "]
 
+ TABLE_HEADERS7 = ["ITEM ",
+                     "CUENTA",                  
+                     "BANCO ", 
+                     "FECHA",        
+                     "FACTURA ",             
+                    "CLIENTE ",   
+                    "IMPORTE",
+                  ]                      
+                   
+
  def get_cliente_customer_payment(id)
 
     @itemproducts = CustomerPaymentDetail.find_by_sql(['Select customer_payment_details.total,
@@ -334,6 +344,7 @@ self.per_page = 20
     end
   end
   
+
   # Process the invoice
   def process
 

@@ -74,6 +74,7 @@ class Company < ActiveRecord::Base
       end
     end
   end
+  
   def get_banks()
      banks = Bank.all      
     return banks
@@ -118,8 +119,7 @@ class Company < ActiveRecord::Base
   
   
   def get_suppliers()
-     suppliers = Supplier.where(company_id: self.id).order(:name)
-       
+     suppliers = Supplier.where(company_id: self.id).order(:name)       
     return suppliers
   end
   
@@ -140,6 +140,9 @@ class Company < ActiveRecord::Base
     
     return payments
   end
+
+ 
+  
   def get_services()
      services = Service.where(company_id: self.id).order(:name)
      return services
@@ -496,13 +499,11 @@ def get_facturas_day_value_cliente(fecha1,fecha2,cliente,value = "total",moneda)
     return @facturas
     
  end 
+#total ingresos x banco 
 
  def get_customer_payments_value(fecha1,fecha2,id)
 
     facturas = CustomerPayment.where([" company_id = ? AND fecha1 >= ? and fecha1 <= ? and bank_acount_id = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" , id]).order(:id)
-
-    
-
 
     ret = 0 
     if facturas 
@@ -515,6 +516,21 @@ def get_facturas_day_value_cliente(fecha1,fecha2,cliente,value = "total",moneda)
     end 
     return ret    
  end 
+
+#total ingreos x banco abierto por cliente 
+def get_customer_payments_value_customer2(fecha1,fecha2,id)
+facturas = CustomerPayment.find_by_sql(['Select customer_payments.id,customer_payments.total,
+facturas.code,facturas.customer_id,facturas.fecha,customer_payment_details.factory,customer_payments.bank_acount_id from customer_payment_details   
+INNER JOIN facturas ON   customer_payment_details.factura_id = facturas.id
+INNER JOIN customer_payments ON customer_payments.id = customer_payment_details.customer_payment_id    
+WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ?  and 
+customer_payments.bank_acount_id = ?',
+ "#{fecha1} 00:00:00","#{fecha2} 23:59:59",id ])
+    ret = 0     
+
+    return facturas 
+ end 
+
 
  #total banco x cliente
 def get_customer_payments_value_customer(fecha1,fecha2,id,cliente,value)

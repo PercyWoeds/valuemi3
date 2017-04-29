@@ -244,7 +244,7 @@ end
   match 'companies/reports/rpt_ccobrar5_pdf/:company_id' => 'reports#rpt_ccobrar5_pdf', via: [:get, :post]  
   match 'companies/reports/rpt_ccobrar6_pdf/:company_id' => 'reports#rpt_ccobrar6_pdf', via: [:get, :post]  
   match 'companies/reports/rpt_ccobrar7_pdf/:company_id' => 'reports#rpt_ccobrar7_pdf', via: [:get, :post]  
-
+  match 'companies/reports/rpt_ccobrar8_pdf/:company_id' => 'reports#rpt_ccobrar8_pdf', via: [:get, :post]  
 
   match 'companies/reports/rpt_calmacen1_pdf/:company_id' => 'reports#rpt_calmacen1_pdf', via: [:get, :post]  
   match 'companies/reports/rpt_calmacen2_pdf/:company_id' => 'reports#rpt_calmacen2_pdf', via: [:get, :post]  
@@ -560,6 +560,8 @@ end
   match 'customer_payments/rpt_ccobrar5_pdf/:id' => 'customer_payments#rpt_ccobrar5_pdf', via: [:get, :post]
   match 'customer_payments/rpt_ccobrar6_pdf/:id' => 'customer_payments#rpt_ccobrar6_pdf', via: [:get, :post]
   match 'customer_payments/rpt_ccobrar7_pdf/:id' => 'customer_payments#rpt_ccobrar7_pdf', via: [:get, :post]
+  match 'customer_payments/rpt_ccobrar8_pdf/:id' => 'customer_payments#rpt_ccobrar8_pdf', via: [:get, :post]
+  
 
   match 'companies/customer_payments/:company_id' => 'customer_payments#list_customerpayments', via: [:get, :post]  
 
