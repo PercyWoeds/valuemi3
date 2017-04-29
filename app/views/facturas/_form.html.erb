@@ -226,7 +226,7 @@
 
 <script type="text/javascript">
   $(document).ready(function() {
-    $("#ac_customer").autocomplete("/facturas/ac_customers/<%= @company.id %>", {
+    $("#ac_customer").autocomplete("/facturas/ac_facturas/<%= @company.id %>", {
 			matchSubset: 1,
 			matchContains: 1,
       selectFirst: false
@@ -248,7 +248,6 @@
       $("#selected_seller").html(data[0]);
     });
     
-
 
     $("#ac_item3").autocomplete("/facturas/ac_guias/<%= @company.id %>", {
       matchSubset: 1,
