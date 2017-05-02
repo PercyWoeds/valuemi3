@@ -224,9 +224,10 @@
 
 <%= render 'layouts/autocomplete' %>
 
+
 <script type="text/javascript">
   $(document).ready(function() {
-    $("#ac_customer").autocomplete("/facturas/ac_facturas/<%= @company.id %>", {
+    $("#ac_customer").autocomplete("/facturas/ac_customers/<%= @company.id %>", {
 			matchSubset: 1,
 			matchContains: 1,
       selectFirst: false
