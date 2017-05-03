@@ -428,6 +428,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
                                           columns([1]).align=:left
                                           columns([2]).align=:left
                                           columns([3]).align=:left
+         
                                           columns([4]).align=:left
                                           columns([5]).align=:right  
                                           columns([6]).align=:right
@@ -458,14 +459,11 @@ WHERE purchase_details.product_id = ?',params[:id] ])
     @company=Company.find(params[:id])          
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]    
-
     @tiporeporte =params[:tiporeporte]
 
     @facturas_rpt = @company.get_purchases_day_tipo(@fecha1,@fecha2,@tiporeporte)
 
-
-
-     if   @facturas_rpt != nil 
+     if   @facturas_rpt.first.supplier_id != nil 
 
         Prawn::Document.generate("app/pdf_output/rpt_factura.pdf") do |pdf|
             pdf.font "Helvetica"
