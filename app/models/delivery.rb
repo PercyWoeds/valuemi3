@@ -305,9 +305,8 @@ where delivery_services.delivery_id = ?', self.id ])
   end
   
   def get_remision
-    if(self.remision == "1")
-      return "GR"
-    
+    if(self.remision == 1)
+      return "GR"    
     else 
       return "GT"
         
