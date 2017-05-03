@@ -463,7 +463,10 @@ WHERE purchase_details.product_id = ?',params[:id] ])
 
     @facturas_rpt = @company.get_purchases_day_tipo(@fecha1,@fecha2,@tiporeporte)
 
-    if @facturas_rpt != nil 
+    respond_to do |format|
+
+     if   @facturas_rpt != nil 
+
         Prawn::Document.generate("app/pdf_output/rpt_factura.pdf") do |pdf|
             pdf.font "Helvetica"
             pdf = build_pdf_header_rpt8(pdf)
@@ -478,7 +481,8 @@ WHERE purchase_details.product_id = ?',params[:id] ])
         
         format.xml  { render :xml => @purchase.errors, :status => :unprocessable_entity }
       end
-
+     end 
+      
   end
 
 
