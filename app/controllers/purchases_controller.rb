@@ -463,18 +463,17 @@ WHERE purchase_details.product_id = ?',params[:id] ])
 
     @facturas_rpt = @company.get_purchases_day_tipo(@fecha1,@fecha2,@tiporeporte)
 
-  
-    
-    Prawn::Document.generate("app/pdf_output/rpt_factura.pdf") do |pdf|
-        pdf.font "Helvetica"
-        pdf = build_pdf_header_rpt8(pdf)
-        pdf = build_pdf_body_rpt8(pdf)
-        build_pdf_footer_rpt8(pdf)
-        $lcFileName =  "app/pdf_output/rpt_factura_all.pdf"              
-    end     
-    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
-    send_file("app/pdf_output/rpt_factura.pdf", :type => 'application/pdf', :disposition => 'inline')
-
+    if @factura_rpt != nil 
+      Prawn::Document.generate("app/pdf_output/rpt_factura.pdf") do |pdf|
+          pdf.font "Helvetica"
+          pdf = build_pdf_header_rpt8(pdf)
+          pdf = build_pdf_body_rpt8(pdf)
+          build_pdf_footer_rpt8(pdf)
+          $lcFileName =  "app/pdf_output/rpt_factura_all.pdf"              
+      end     
+      $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
+      send_file("app/pdf_output/rpt_factura.pdf", :type => 'application/pdf', :disposition => 'inline')
+      end
   end
 
 

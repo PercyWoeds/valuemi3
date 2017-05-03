@@ -932,8 +932,9 @@
     var quantity = $("#ac_item_quantity").val();
     var price = $("#ac_item_price").val();
     var discount = $("#ac_item_discount").val();
-    
+    alert("update item total5  ");
     if(isNumeric(quantity) && isNumeric(price) && isNumeric(discount)) {
+
       var total = quantity * price;
       total -= total * (discount / 100);
 
@@ -1240,12 +1241,8 @@
 
     if( isNumeric(price) && isNumeric(factory) && isNumeric(ajuste) && isNumeric(saldooriginal) && isNumeric(compen))  {
       
-      var total = price+factory + ajuste ;
+      var total = price + factory + ajuste ;
 
-      if (total > saldooriginal) {
-     
-
-      }
       
     } else {
 
