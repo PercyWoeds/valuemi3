@@ -463,17 +463,22 @@ WHERE purchase_details.product_id = ?',params[:id] ])
 
     @facturas_rpt = @company.get_purchases_day_tipo(@fecha1,@fecha2,@tiporeporte)
 
-    if @factura_rpt != nil 
-      Prawn::Document.generate("app/pdf_output/rpt_factura.pdf") do |pdf|
-          pdf.font "Helvetica"
-          pdf = build_pdf_header_rpt8(pdf)
-          pdf = build_pdf_body_rpt8(pdf)
-          build_pdf_footer_rpt8(pdf)
-          $lcFileName =  "app/pdf_output/rpt_factura_all.pdf"              
-      end     
-      $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
-      send_file("app/pdf_output/rpt_factura.pdf", :type => 'application/pdf', :disposition => 'inline')
+    if @facturas_rpt != nil 
+        Prawn::Document.generate("app/pdf_output/rpt_factura.pdf") do |pdf|
+            pdf.font "Helvetica"
+            pdf = build_pdf_header_rpt8(pdf)
+            pdf = build_pdf_body_rpt8(pdf)
+            build_pdf_footer_rpt8(pdf)
+            $lcFileName =  "app/pdf_output/rpt_factura_all.pdf"              
+        end     
+        $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
+        send_file("app/pdf_output/rpt_factura.pdf", :type => 'application/pdf', :disposition => 'inline')    
+
+      else
+        
+        format.xml  { render :xml => @purchase.errors, :status => :unprocessable_entity }
       end
+
   end
 
 
@@ -2025,16 +2030,13 @@ def newfactura2
     
       respond_to do |format|
         if @purchase.save     
-
           if @tipodocumento == 2
             @purchase.add_products_menos(items)                    
           else
             @purchase.add_products(items)                    
           end 
 
-          @purchase.process()
-
-
+          @purchase.process(
           
           format.html { redirect_to(@purchase, :notice => 'Factura fue grabada con exito .') }
           format.xml  { render :xml => @purchase, :status => :created, :location => @purchase}
@@ -2081,8 +2083,7 @@ def newfactura2
       if @purchase.update_attributes(params[:purchase])
         # Create products for kit
         @purchase.delete_products()
-        @purchase.add_products(items)
-      
+        @purchase.add_products(items)      
         # Check if we gotta process the purchase
         @purchase.process()
         
