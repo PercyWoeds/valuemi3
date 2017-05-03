@@ -2029,6 +2029,7 @@ def newfactura2
     end    
     
       respond_to do |format|
+
         if @purchase.save     
           if @tipodocumento == 2
             @purchase.add_products_menos(items)                    
@@ -2036,7 +2037,7 @@ def newfactura2
             @purchase.add_products(items)                    
           end 
 
-          @purchase.process(
+          @purchase.process()
           
           format.html { redirect_to(@purchase, :notice => 'Factura fue grabada con exito .') }
           format.xml  { render :xml => @purchase, :status => :created, :location => @purchase}
