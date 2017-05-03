@@ -463,7 +463,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
 
     @facturas_rpt = @company.get_purchases_day_tipo(@fecha1,@fecha2,@tiporeporte)
 
-     if   @facturas_rpt.first.supplier_id != nil 
+     unless    @facturas_rpt.empty? 
 
         Prawn::Document.generate("app/pdf_output/rpt_factura.pdf") do |pdf|
             pdf.font "Helvetica"
