@@ -1193,7 +1193,7 @@ new_invoice_item.save
 
     if @facturas_rpt.size > 0 
 
-    Prawn::Document.generate("app/pdf_output/rpt_pendientes.pdf") do |pdf|
+        Prawn::Document.generate("app/pdf_output/rpt_pendientes.pdf") do |pdf|
         pdf.font "Helvetica"
         pdf = build_pdf_header_rpt2(pdf)
         pdf = build_pdf_body_rpt2(pdf)
@@ -1201,7 +1201,6 @@ new_invoice_item.save
 
         $lcFileName =  "app/pdf_output/rpt_pendientes.pdf"              
     end     
-
 
     $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
     send_file("app/pdf_output/rpt_pendientes.pdf", :type => 'application/pdf', :disposition => 'inline')

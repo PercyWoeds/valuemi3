@@ -2133,7 +2133,9 @@ class CustomerPaymentsController < ApplicationController
         
 
               row = []                  
+
               row << nroitem.to_s              
+              row << d.code 
               row << d.bank_acount.number
               row << d.get_banco(d.bank_acount.bank_id)  
               row << d.fecha.strftime("%d/%m/%Y") 
@@ -2155,6 +2157,7 @@ class CustomerPaymentsController < ApplicationController
           row = []
           row << nroitem.to_s          
           row << " "        
+          row << " "        
           row << " "
           row << " "        
           row << " "          
@@ -2171,10 +2174,11 @@ class CustomerPaymentsController < ApplicationController
                                           columns([0]).align=:center
                                           columns([1]).align=:left
                                           columns([2]).align=:left
-                                          columns([3]).align=:right
+                                          columns([3]).align=:left
                                           columns([4]).align=:right
-                                          columns([5]).align=:left                                           
-                                          columns([6]).align=:right                                          
+                                          columns([5]).align=:right
+                                          columns([6]).align=:left                                           
+                                          columns([7]).align=:right                                          
                                         end
           pdf.text "" 
           pdf 
@@ -2195,6 +2199,7 @@ class CustomerPaymentsController < ApplicationController
       pdf
       
   end
+
 
   # Export cobrar  to PDF
   def rpt_ccobrar9_pdf
