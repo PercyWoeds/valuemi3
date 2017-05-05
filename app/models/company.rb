@@ -17,6 +17,7 @@ class Company < ActiveRecord::Base
 
 
 
+
   def to_hash
     hash=[]
 
@@ -25,11 +26,11 @@ class Company < ActiveRecord::Base
   end
   
   def actualiza_monthyear
-    @factura = Factura.where(:year_mounth=> nil)
+    @factura = Factura.all 
     for factura in @factura
         f = Factura.find(factura.id)
       if f
-        @fechas =f.fecha2.to_s
+        @fechas =f.fecha.to_s
         parts = @fechas.split("-")
         year = parts[0]
         mes  = parts[1]
@@ -698,7 +699,6 @@ def get_customer_payments_detail_value(fecha1,fecha2,value="total")
       end
     end
     end 
-
     return ret
    
     
@@ -706,7 +706,6 @@ def get_customer_payments_detail_value(fecha1,fecha2,value="total")
 def actualizar_fecha2
 
     facturas = Factura.where(:fecha2 => nil )
-
     for factura in facturas
         fact =  Factura.find(factura.id)
         days = fact.payment.day 
