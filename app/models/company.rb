@@ -28,11 +28,11 @@ class Company < ActiveRecord::Base
   def actualiza_monthyear
 
     @factura = Factura.where(:year_mounth=> nil)
-    
+
     for factura in @factura
         f = Factura.find(factura.id)
       if f
-        @fechas =f.fecha.to_s
+        @fechas =f.fecha2.to_s
         parts = @fechas.split("-")
         year = parts[0]
         mes  = parts[1]
