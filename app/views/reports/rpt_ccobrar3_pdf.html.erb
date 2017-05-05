@@ -19,12 +19,13 @@ totals = []
 </h3	>
 
 <form method="get" action="/facturas/rpt_ccobrar3_pdf/<%= @company.id %>">
- 	<div class="field">
-      <input type="date" name="fecha1" value="2017-01-02" style = "width: 150px" >
 
-    </div>
+ 	<div class="field">
+    <input type="date" name="fecha1" value="2017-01-01" style = "width: 150px" >
+  </div>
+
 	<div class="field">
-		<input type="date" name="fecha2" value="2017-01-02" style = "width: 150px" >
+		<input type="date" name="fecha2" value="2017-01-30" style = "width: 150px" >
   </div>
 
   <div class="field">
@@ -36,7 +37,6 @@ totals = []
 </form>
 
 <br />
-
 
 <div class="button">
   <%= link_to "Excel", products_path(format: "xls") %>

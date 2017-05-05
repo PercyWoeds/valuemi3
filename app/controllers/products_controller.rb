@@ -53,7 +53,6 @@ class ProductsController < ApplicationController
     @company = Company.find_by(user_id: current_user.id)
     @products = @company.get_products2
     
-
   respond_to do |format|
     format.html
     format.xls # { send_data @products.to_csv(col_sep: "\t") }

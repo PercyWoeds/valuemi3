@@ -38,6 +38,7 @@
   resources :deliveryships
   resources :declarations 
   resources :inventarios  
+  resources :customer_payments
 
 
   resources :inventarios  do
@@ -177,7 +178,6 @@ end
 
   get 'search_mines', to: 'deliveries#search'
   post 'add_mine', to: 'delliveries#add_mine'
-
 
   get 'my_declarations', to: 'declarations#my_deliveries'
  # get 'search_friends', to: 'deliveries#search'

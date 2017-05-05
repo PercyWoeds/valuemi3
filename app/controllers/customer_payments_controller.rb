@@ -459,9 +459,12 @@ class CustomerPaymentsController < ApplicationController
   # GET /customerpayments
   # GET /customerpayments.xml
   def index
+
     @companies = Company.where(user_id: current_user.id).order("name")
     @path = 'customerpayments'
     @pagetitle = "customerpayments"
+
+
   end
 
   # GET /customerpayments/1
@@ -2139,7 +2142,7 @@ class CustomerPaymentsController < ApplicationController
               row << d.bank_acount.number
               row << d.get_banco(d.bank_acount.bank_id)  
               row << d.fecha.strftime("%d/%m/%Y") 
-              row << d.code
+              row << d.nrofactura 
               row << d.customer.name 
               
               row << sprintf("%.2f",d.total.to_s)

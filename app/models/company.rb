@@ -536,7 +536,7 @@ customer_payments.bank_acount_id = ?',
 def get_customer_payments_value_customer3(code)
 
 facturas = CustomerPayment.find_by_sql(['Select customer_payments.id,customer_payment_details.total,
-facturas.code,facturas.customer_id,facturas.fecha,customer_payment_details.factory,
+facturas.code as nrofactura,facturas.customer_id,facturas.fecha,customer_payment_details.factory,
 customer_payments.bank_acount_id,customer_payments.code  
 FROM  customer_payment_details   
 INNER JOIN facturas ON   customer_payment_details.factura_id = facturas.id
