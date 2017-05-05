@@ -1137,7 +1137,7 @@ new_invoice_item.save
     @fecha2 = params[:fecha2]    
     @cliente = params[:customer_id]     
     @moneda = params[:moneda_id]    
-    
+
     @facturas_rpt = @company.get_facturas_day_cliente(@fecha1,@fecha2,@cliente)  
 
 
