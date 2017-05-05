@@ -1680,8 +1680,7 @@ class CustomerPaymentsController < ApplicationController
     @fecha2 = params[:fecha2]
     @tipomoneda = params[:moneda_id]
 
-  #  @company.actualizar_fecha2
-
+    @company.actualizar_fecha2
     @company.actualiza_monthyear
     @customerpayment_rpt = @company.get_customer_payments2(@tipomoneda,@fecha1,@fecha2)
       

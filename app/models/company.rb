@@ -26,7 +26,9 @@ class Company < ActiveRecord::Base
   end
   
   def actualiza_monthyear
-    @factura = Factura.all 
+
+    @factura = Factura.where(:year_mounth=> nil)
+    
     for factura in @factura
         f = Factura.find(factura.id)
       if f
