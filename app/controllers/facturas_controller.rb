@@ -809,19 +809,19 @@ new_invoice_item.save
 
     else
         #total x cliente 
-      subtotal = @company.get_facturas_day_value_cliente(@fecha1,@fecha2,@cliente, "subtotal")
+      subtotal = @company.get_facturas_day_value_cliente(@fecha1,@fecha2,@cliente, "subtotal",@moneda)
       subtotals.push(subtotal)
       services_subtotal += subtotal          
       #pdf.text subtotal.to_s
     
     
-      tax = @company.get_facturas_day_value_cliente(@fecha1,@fecha2,@cliente, "tax")
+      tax = @company.get_facturas_day_value_cliente(@fecha1,@fecha2,@cliente, "tax",@moneda,)
       taxes.push(tax)
       services_tax += tax
     
       #pdf.text tax.to_s
       
-      total = @company.get_facturas_day_value_cliente(@fecha1,@fecha2,@cliente, "total")
+      total = @company.get_facturas_day_value_cliente(@fecha1,@fecha2,@cliente,"total",@moneda,)
       totals.push(total)
       services_total += total
     
@@ -1136,7 +1136,8 @@ new_invoice_item.save
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]    
     @cliente = params[:customer_id]     
-
+    @moneda = params[:moneda_id]    
+    
     @facturas_rpt = @company.get_facturas_day_cliente(@fecha1,@fecha2,@cliente)  
 
 

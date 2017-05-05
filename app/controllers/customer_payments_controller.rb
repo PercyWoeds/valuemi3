@@ -2191,6 +2191,7 @@ class CustomerPaymentsController < ApplicationController
 
       end
 
+
       pdf
       
   end
