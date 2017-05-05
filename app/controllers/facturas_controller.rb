@@ -917,7 +917,7 @@ new_invoice_item.save
     
     pdf.text "Cuentas por cobrar  : desde "+@fecha1.to_s+ " Hasta: "+@fecha2.to_s , :size => 8 
     pdf.text ""
-    pdf.font "Helvetica" , :size => 8
+    pdf.font "Helvetica" , :size => 7
 
       headers = []
       table_content = []
