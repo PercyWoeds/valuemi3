@@ -1044,7 +1044,7 @@ class ReportsController < ApplicationController
     @company = Company.find(params[:company_id])
     @pagetitle = "Facturas por Cliente"    
     @customers = @company.get_customers()
-
+    @monedas = Moneda.all 
   end 
 
   def rpt_facturas_all
