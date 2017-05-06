@@ -48,6 +48,7 @@ class Factura < ActiveRecord::Base
                      "Moneda",                                         
                      "SOLES",
                      "DOLARES ",
+                     "DETRACCION",
                      "OBSERV"]
   
 

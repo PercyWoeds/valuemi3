@@ -16,9 +16,7 @@ class Company < ActiveRecord::Base
   has_many :company_users
 
 
-
-
-  def to_hash
+ def to_hash
     hash=[]
 
     instance_variables_each{ |var| hash[var.to_s.delete('@')]= instance_variables_get(var)}
@@ -498,28 +496,25 @@ def get_facturas_day_value_cliente(fecha1,fecha2,cliente,value = "total",moneda)
 ## REPORTES DE LIQUIDACION  DE COBRANZA
 
  def get_customer_payments(fecha1,fecha2)
-
     @facturas = CustomerPayment.where([" company_id = ? AND fecha1 >= ? and fecha1<= ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59"]).order(:id)
-    return @facturas
-    
- end 
+    return @facturas   
+ end
+
 #total ingresos x banco 
 
  def get_customer_payments_value(fecha1,fecha2,id)
 
     facturas = CustomerPayment.where([" company_id = ? AND fecha1 >= ? and fecha1 <= ? and bank_acount_id = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" , id]).order(:id)
-
     ret = 0 
     if facturas 
     ret=0  
       for factura in facturas      
-
           ret += factura.total
-
       end
     end 
     return ret    
  end 
+
 
 #total ingreos x banco abierto por cliente 
 def get_customer_payments_value_customer2(fecha1,fecha2,id)
@@ -705,7 +700,8 @@ def get_customer_payments_detail_value(fecha1,fecha2,value="total")
    
     
  end 
-def actualizar_fecha2
+
+ def actualizar_fecha2
 
     facturas = Factura.where(:fecha2 => nil )
     for factura in facturas
@@ -715,7 +711,33 @@ def actualizar_fecha2
         fact.update_attributes(:fecha2=>fechas2)   
     end 
 
-  end
+ end
+ def actualizar_detraccion
+    
+    det = 0
+
+    Factura.update_all(:detraccion=>0)
+
+    pagonacion = CustomerPayment.where(:bank_acount_id => 6 )
+
+    for f in pagonacion 
+        fact =  f.get_payment_dato(f.id)
+    
+        for f2 in fact  
+            det =  f2.total 
+            begin 
+            a  =  Factura.find(f2.factura_id)            
+            a.detraccion = det            
+            a.save 
+        
+            end 
+        end       
+
+    end 
+
+ end
+
+
 #reporte de cancelaciones detallado x proveedor
 
 def get_supplier_payments0(fecha1,fecha2)
@@ -2113,9 +2135,7 @@ INNER JOIN products ON purchase_details.product_id = products.id
 WHERE purchase_details.product_id = ?  and purchases.date1 > ? and purchases.date1 < ? ' ,product, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
  
     return @purchases 
-
 end
-
 
 
 def get_ingresos_day2(fecha1,fecha2,product)

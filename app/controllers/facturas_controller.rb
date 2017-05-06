@@ -933,13 +933,9 @@ new_invoice_item.save
       nroitem=1
       lcmonedasoles   = 2
       lcmonedadolares = 1
-    
-
-      lcDoc='FT'
-
-      
-
-       lcCliente = @facturas_rpt.first.customer_id 
+  
+      lcDoc='FT'    
+      lcCliente = @facturas_rpt.first.customer_id 
 
        for  product in @facturas_rpt
         
@@ -963,12 +959,16 @@ new_invoice_item.save
             if product.moneda_id == 1 
                 row << "0.00 "
                 row << sprintf("%.2f",product.balance.to_s)
+
             else
                 row << sprintf("%.2f",product.balance.to_s)
                 row << "0.00 "
             end 
-            row << product.get_vencido 
 
+            
+            row << sprintf("%.2f",product.detraccion.to_s)
+
+            row << product.get_vencido 
             
             table_content << row
 
@@ -990,6 +990,7 @@ new_invoice_item.save
             row << ""
             row << sprintf("%.2f",total_cliente_dolares.to_s)
             row << sprintf("%.2f",total_cliente_soles.to_s)
+            row << " "
             row << " "
             
             table_content << row
@@ -1157,12 +1158,14 @@ new_invoice_item.save
     $lcxCliente ="0"
     @company=Company.find(params[:company_id])      
     
-      @fecha1 = params[:fecha1]
-    
+      @fecha1 = params[:fecha1]  
       @fecha2 = params[:fecha2]
-    
+
     @company.actualizar_fecha2
+    @company.actualizar_detraccion 
+
     @facturas_rpt = @company.get_pendientes_day(@fecha1,@fecha2)  
+
       
     Prawn::Document.generate("app/pdf_output/rpt_pendientes.pdf") do |pdf|
         pdf.font "Helvetica"
@@ -1246,7 +1249,7 @@ new_invoice_item.save
 
   private
   def factura_params
-    params.require(:factura).permit(:company_id,:location_id,:division_id,:customer_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:payment_id,:fecha,:preciocigv,:tipo,:observ,:moneda_id)
+    params.require(:factura).permit(:company_id,:location_id,:division_id,:customer_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:payment_id,:fecha,:preciocigv,:tipo,:observ,:moneda_id,:detraccion)
   end
 
 end

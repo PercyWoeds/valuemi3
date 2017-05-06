@@ -296,7 +296,7 @@ self.per_page = 20
 
   def get_payment_dato(id)    
 
- @itemproducts = CustomerPaymentDetail.find_by_sql(['Select customer_payment_details.total,
+ @itemproducts = CustomerPaymentDetail.find_by_sql(['Select customer_payment_details.total,facturas.id as factura_id,
       facturas.code,facturas.customer_id,facturas.fecha,customer_payment_details.factory,customer_payment_details.ajuste,
       customer_payment_details.compen,facturas.tipo,facturas.moneda_id  from customer_payment_details   
       INNER JOIN facturas ON   customer_payment_details.factura_id = facturas.id
