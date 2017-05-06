@@ -965,7 +965,7 @@ new_invoice_item.save
                 row << "0.00 "
             end 
 
-            
+
             row << sprintf("%.2f",product.detraccion.to_s)
 
             row << product.get_vencido 
@@ -1012,6 +1012,7 @@ new_invoice_item.save
                 row << sprintf("%.2f",product.balance.to_s)
                 row << "0.00 "
             end 
+            row << "0.00 "
             row << product.observ
 
             
