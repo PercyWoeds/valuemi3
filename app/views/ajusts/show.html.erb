@@ -1,0 +1,162 @@
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @ajust.company.name, @ajust.company %> &raquo;
+  <%= link_to "ajusts", "/companies/ajusts/#{@ajust.company.id}" %>
+</div>
+
+<h1>
+  <%= image_tag("invoice_48.png", :class => "vmiddle") %>
+ 
+</h1>
+
+<%= hr() %>
+
+<% if @ajust.location %>
+  <p>
+    <b>Location:</b>
+    <%= link_to @ajust.location.name, @ajust.location %>
+  </p>
+<% end %>
+
+<% if @ajust.division %>
+  <p>
+    <b>Division:</b>
+    <%= link_to @ajust.division.name, @ajust.division %>
+  </p>
+<% end %>
+
+
+    
+<p>
+    <b>Fecha Emision:</b>
+    <%= @ajust.fecha1 %>   
+</p>
+
+
+<%= hr() %>
+  
+<h3>
+  Details
+</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>
+        Codigo
+      </th>
+    
+      <th>
+        Producto
+      </th>
+      <th>
+        Precio
+      </th>
+      <th>
+        Cantidad
+      </th>
+      <th>
+        Dscto
+      </th>
+      <th>
+        Total
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <% for productItem in @ajust.get_products() %>
+      <tr>
+        <td class="bordered_bottom bordered_right">
+          <%=  productItem.code   %>
+        </td>
+
+
+        <td class="bordered_bottom bordered_right">
+          <%= link_to productItem.name   %>
+        </td>
+
+        <td class="bordered_bottom bordered_right">
+         
+        </td>
+        <td class="bordered_bottom bordered_right">
+          <%= productItem.quantity %>
+        </td>
+        <td class="bordered_bottom bordered_right">
+         
+        </td>
+        <td class="bordered_bottom bordered_right">
+          <%= money(productItem.quantity) %>
+        </td>
+      </tr>
+    <% end %>
+    <tr>
+      <td colspan="6" class="bordered_bottom bordered_right">
+        &nbsp;
+      </td>
+    </tr>
+    <tr>
+      <td colspan="5" class="bordered_bottom bordered_right bold">
+        Subtotal:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@ajust.subtotal) %>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="5" class="bordered_bottom bordered_right bold">
+        Tax:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@ajust.tax) %>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="5" class="bordered_bottom bordered_right bold">
+        Total:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@ajust.total) %>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br />
+
+<%= hr() %>
+
+<% if @ajust.description != "" %>
+  <div>
+    <b>Description:</b>
+    <br />
+    <br />
+    <%= format_text(@ajust.description) %>
+  </div>
+  <%= hr() %>
+<% end %>
+
+
+<br />
+
+<div>
+  <strong><%= @ajust.get_processed %></strong>
+  <% if @ajust.processed == "1" and @ajust.date_processed %>
+    <%= doDate(@ajust.date_processed) %>
+  <% end %>
+</div>
+
+
+<p>
+  <strong>Seller:</strong>
+  <%= link_to @ajust.user.username, @ajust.user %>
+</p>
+
+<%= hr() %>
+
+<div class="button">
+  <%= link_to 'Exportar a PDF', "/ajusts/pdf/#{@ajust.id}.pdf" %>
+  
+  <%= link_to 'Regresar', "/companies/ajusts/#{@ajust.company.id}" %>
+</div>
+
+

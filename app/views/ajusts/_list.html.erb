@@ -1,0 +1,65 @@
+<% if @ajusts.count > 0 %>
+  <table>
+    <thead>
+      <tr>
+        <th class="bordered_right bordered_bottom" style="width: 100px;">
+          Cod.Interno 
+        </th>
+        <th class="bordered_right bordered_bottom" style="width: 350px;">
+          Fecha 
+        </th>
+           
+        <th class="bordered_right bordered_bottom">
+          Total
+        </th>
+        <th class="bordered_right bordered_bottom">
+          Date
+        </th>
+        <th class="bordered_right bordered_bottom">
+          Processed
+        </th>
+        <th class="bordered_right bordered_bottom" colspan="3">
+          Options
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <% for ajust in @ajusts %>
+        <tr>
+          <td class="bordered_right bordered_bottom">
+            <%= link_to ajust.id, ajust, :title => "Ir a factura" %>
+          </td>
+          <td class="bordered_right bordered_bottom">
+          <%= doDate(ajust.fecha1) %>
+          </td>
+          <td class="bordered_right bordered_bottom right">
+         
+          </td>
+          
+          <td class="bordered_right bordered_bottom right">
+            <%= money(ajust.total) %>
+          </td>
+          <td class="bordered_right bordered_bottom">
+            <%= doDate(ajust.created_at) %>
+          </td>
+          <td class="bordered_right bordered_bottom <%= ajust.processed_color %>">
+            <%= ajust.get_processed_short %>
+          </td>
+          <td class="bordered_right bordered_bottom">
+            <%= link_to "Ver...", ajust %>
+          </td>
+         
+          <td class="bordered_right bordered_bottom">
+            <%= link_to 'Delete', ajust, :data=> {:confirm => 'Esta seguro ?'}, :method => :delete  %> 
+          </td>
+
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p class="error">
+    We couldn't find any ajusts.
+  </p>
+<% end %>

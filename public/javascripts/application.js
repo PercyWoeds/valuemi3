@@ -1372,6 +1372,94 @@
   }
  //............................................................................  
 
+//****************************************************************************
+
+ //............................................................................  
+  // Add an item to a product kit
+  function addItemToAjust() {
+    var item = $("#ac_item").val();
+   
+    
+    if(item != "") {
+      var company_id = $("#ajust_company_id").val();
+      var item_id = $("#ac_item_id").val();
+      
+      var quantity = $("#ac_item_quantity").val();
+    
+    
+      var items_arr = $("#items").val().split(",");
+
+      if(quantity == "" || !isNumeric(quantity)) {
+        alert("Por favor ingrese una cantidad valida");
+      }  else {
+        var item_line = item_id + "|BRK|" + quantity ;
+        
+        $("#items").val($("#items").val() + "," + item_line);
+        
+        listItemsAjust();
+        
+        $("#ac_item_id").val("");
+        $("#ac_item").val("");
+        $("#ac_item_quantity").val("1");
+        
+        updateItemTotalAjust();
+      }
+    } else {
+      alert("Por favor agregue un item ajuste.");
+    }
+  }
+
+
+  // List items in a kit
+  function listItemsAjust() {
+    var items = $("#items").val();
+    var company_id = $("#ajust_company_id").val();
+    
+    $.get('/ajusts/list_items/' + company_id, {
+      items: items
+    },
+    function(data) {
+      $("#list_items").html(data);
+      documentReady();
+    });
+  }
+
+// Update price total for invoice
+  function updateItemTotalAjust() {
+    var quantity = $("#ac_item_quantity").val();
+    
+    
+    
+    if(isNumeric(quantity)) {
+      var total = quantity;      
+
+      $("#ac_item_total").html(total);
+    } else {
+      $("#ac_item_total").html("0.00");
+    }
+  }
+
+// Removes an item from an invoice
+  function removeItemFromAjust(id) {
+    var items = $("#items").val();
+    var items_arr = items.split(",");
+    var items_final = Array();
+    var i = 0;
+    
+    while(i < items_arr.length) {
+      if(i != id) {
+        items_final[i] = items_arr[i];
+      }
+      i++;
+    }
+    
+    $("#items").val(items_final.join(","));
+    listItemsAjust();
+  }
+ //............................................................................  
+
+
+
 
   // On ready
   $(document).ready(function() {

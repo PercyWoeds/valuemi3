@@ -14,9 +14,9 @@ class Company < ActiveRecord::Base
   has_many :invoices
   has_many :inventories
   has_many :company_users
+  has_many :ajusts 
 
-
- def to_hash
+  def to_hash
     hash=[]
 
     instance_variables_each{ |var| hash[var.to_s.delete('@')]= instance_variables_get(var)}
@@ -1534,9 +1534,6 @@ def get_purchaseorder_detail2(fecha1,fecha2)
 
     MovementDetail.delete_all
 
-
-
-
     @productExiste = Product.where(:products_category_id=> product1) 
 
      for existe in @productExiste
@@ -1677,7 +1674,48 @@ def get_purchaseorder_detail2(fecha1,fecha2)
         end 
      end 
 
+   #actualiza ajustes de inventarios
+   
+   
+     @ajuste  = Ajust.where('fecha1 <  ?',fecha1)
 
+     for ajuste  in @ajuste
+        @ajustedetail= AjustDetail.where(:ajust_id=>ajuste.id)
+
+        for detail in @ajustedetail 
+        
+          movdetail  = MovementDetail.find_by(:product_id=>detail.product_id)          
+
+          if movdetail
+
+            if detail.quantity == nil
+            
+              movdetail.stock_inicial += 0   
+            else
+              if detail.quantity > 0
+              movdetail.stock_inicial += detail.quantity
+            else
+              movdetail.stock_inicial -= detail.quantity
+            end     
+              
+            end
+        
+ 
+            movdetail.save           
+
+          else     
+          
+            #detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>0,:salida =>detail.quantity,
+            #:price=>detail.price,:product_id=> detail.product_id,:tm=>"3")
+            #detail.save 
+
+          end
+        
+        end 
+     end 
+
+
+   
   #actualiza  el costo de la salida
      @inv = Inventario.where('fecha >= ? and  fecha <= ?',fecha1,fecha2)  
      for inv in @inv 
@@ -1764,6 +1802,43 @@ def get_purchaseorder_detail2(fecha1,fecha2)
               movdetail.salida = 0   
             else
               movdetail.salida += detail.quantity
+            end
+              movdetail.save           
+          else     
+          
+            #detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>0,:salida =>detail.quantity,
+            #:price=>detail.price,:product_id=> detail.product_id,:tm=>"3")
+            #detail.save 
+
+          end   
+        end 
+     end 
+# ajustes de inventarios
+
+
+    @ajuste = Ajust.where('fecha1>= ? and fecha1 <= ?',fecha1,fecha2)
+
+     for sal in @ajuste
+        $lcFecha = sal.fecha1 
+
+        @ajustedetail=  AjustDetail.where(:ajust_id=>sal.id)
+
+        for detail in @ajustedetail 
+
+          movdetail  = MovementDetail.find_by(:product_id=>detail.product_id)
+
+          if movdetail
+
+            if detail.quantity == nil
+              movdetail.salida += 0  
+              movdetail.ingreso += 0  
+            else
+              if detail.quantity > 0
+                movdetail.ingreso += detail.quantity
+              else
+                movdetail.salida  -= detail.quantity
+              end     
+                
             end
               movdetail.save           
           else     

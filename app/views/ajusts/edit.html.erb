@@ -1,0 +1,24 @@
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %> &raquo;
+  <%= link_to "ajusts", "/companies/ajusts/#{@company.id}" %> &raquo;
+  <%= link_to @ajust.identifier, @ajust %>
+</div>
+
+<h1>
+  <%= image_tag("invoice_48.png", :class => "vmiddle") %>
+  Editar ajuste 
+</h1>
+
+<p>
+  To modify the ajust, please fill out the following form.  Fields marked with <strong>*</strong> are required.
+</p>
+
+<%= render 'form' %>
+
+<%= hr() %>
+
+<div class="button">
+  <%= link_to 'Show', @ajust %>
+  <%= link_to 'Back', "/companies/ajusts/#{@company.id}" %>
+</div>

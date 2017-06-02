@@ -1,0 +1,5 @@
+<% if @suppliers %>
+  <% for supplier in @suppliers %>
+    <%= supplier.name %>|BRK|<%= supplier.id %>
+  <% end %>
+<% end %>

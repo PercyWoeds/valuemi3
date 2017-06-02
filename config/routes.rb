@@ -25,6 +25,7 @@
   resources :subcontrats
   resources :unidads
   resources :payments
+  resources :ajusts
 
   resources :tanks
   resources :employees
@@ -441,6 +442,21 @@ end
   match 'companies/purchaseorders/:company_id' => 'purchaseorders#list_purchaseorders', via: [:get, :post]
 
   resources :purchaseorders
+
+  match 'ajusts/list_items/:company_id' => 'ajusts#list_items', via: [:get, :post]
+  match 'ajusts/ac_products/:company_id' => 'ajusts#ac_products', via: [:get, :post]
+  match 'ajusts/ac_unidads/:company_id' => 'ajusts#ac_unidads', via: [:get, :post]
+  match 'ajusts/ac_user/:company_id' => 'ajusts#ac_user', via: [:get, :post]
+  match 'ajusts/ac_purchases/:company_id' => 'ajusts#ac_purchases', via: [:get, :post]
+  match 'ajusts/ac_suppliers/:company_id' => 'ajusts#ac_suppliers', via: [:get, :post]
+
+  match 'ajusts/new/:company_id' => 'ajusts#new', via: [:get, :post]
+  match 'ajusts/do_email/:id' => 'ajusts#do_email', via: [:get, :post]
+  match 'ajusts/email/:id' => 'ajusts#email', via: [:get, :post]
+  match 'ajusts/pdf/:id' => 'ajusts#pdf', via: [:get, :post]
+  match 'companies/ajusts/:company_id' => 'ajusts#list_ajusts', via: [:get, :post]
+  resources :ajusts 
+
 
   match 'receiveorders/list_items/:company_id' => 'receiveorders#list_items', via: [:get, :post]
   match 'receiveorders/ac_products/:company_id' => 'receiveorders#ac_products', via: [:get, :post]
