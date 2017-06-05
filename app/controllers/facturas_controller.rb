@@ -377,29 +377,21 @@ class FacturasController < ApplicationController
         lcPcigv = lcPsigv1.round(2)
         lcCantidad= productItem.quantity
         lcDescrip = ""
-
         lcDescrip << productItem.name + "\n"
-
         lcDescrip << lcDes
-
         a = ""        
         lcDes1 = ""
 
         begin
-
           a << " "
-
             for guia in f.get_guias2(f.id)
 
               a << " GT: " <<  guia.code << " "
               if guia.description == nil
                 
               else  
-
                   a << " " << guia.description                   
-
               end   
-
 
               existe1 = f.get_guias_remision(guia.id)
 
@@ -418,20 +410,19 @@ class FacturasController < ApplicationController
                   a << guia.code << "  "            
                 end
               end 
-
             lcDes1 << a
             lcComments = ""
-          
         end
-new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcTD,
-:serie=>lcSerie,:numero=>lcNumero,:preciocigv => lcPcigv ,:preciosigv=>lcPsigv,:cantidad=>lcCantidad,
-:vventa=>lcVventa,:igv=>lcIGV,:importe => lcImporte,:ruc=>lcRuc,:guia=> lcGuia,:formapago=>lcFormapago,
-:description=>lcDescrip,:comments=> lcComments,:descrip=>lcDes1,:moneda=>lcMoneda )
-new_invoice_item.save
+        new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcTD,
+        :serie=>lcSerie,:numero=>lcNumero,:preciocigv => lcPcigv ,:preciosigv=>lcPsigv,:cantidad=>lcCantidad,
+        :vventa=>lcVventa,:igv=>lcIGV,:importe => lcImporte,:ruc=>lcRuc,:guia=> lcGuia,:formapago=>lcFormapago,
+        :description=>lcDescrip,:comments=> lcComments,:descrip=>lcDes1,:moneda=>lcMoneda )
+        new_invoice_item.save
 
        end  
     end 
 
+  
   
     @invoice = Invoicesunat.all
     send_data @invoice.to_csv  
@@ -990,6 +981,7 @@ new_invoice_item.save
             table_content << row
 
             lcCliente = product.customer_id
+
 
             row = []          
             row << lcDoc

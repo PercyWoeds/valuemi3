@@ -23,8 +23,8 @@ gem 'pivot_table'
 gem 'protected_attributes'
  
 gem 'activerecord-session_store', github: 'rails/activerecord-session_store'
-
-gem 'sass-rails', '~> 5.0'
+gem 'sass-rails', '>= 3.2'
+#gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views

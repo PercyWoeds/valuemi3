@@ -230,7 +230,7 @@ DEPENDENCIES
   rails_12factor (= 0.0.2)
   rails_autolink (~> 1.1, >= 1.1.6)
   rmagick (~> 2.15, >= 2.15.4)
-  sass-rails (~> 5.0)
+  sass-rails (>= 3.2)
   sdoc (~> 0.4.0)
   simple_form (~> 3.3, >= 3.3.1)
   spring
@@ -243,4 +243,4 @@ DEPENDENCIES
   will_paginate
 
 BUNDLED WITH
-   1.13.6
+   1.14.4
