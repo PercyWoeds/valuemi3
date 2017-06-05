@@ -401,7 +401,8 @@ end
         @delivery.add_services(items)
         # Check if we gotta process the delivery
         @delivery.process()
-        @delivery.correlativo()              
+        @delivery.correlativo()
+        
         format.html { redirect_to(@delivery, :notice => 'delivery was successfully created.') }
         format.xml  { render :xml => @delivery, :status => :created, :location => @delivery }
       else

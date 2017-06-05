@@ -720,11 +720,14 @@ def get_customer_payments_detail_value(fecha1,fecha2,value="total")
 
     pagonacion = CustomerPayment.where(:bank_acount_id => 6 )
 
+
     for f in pagonacion 
+    
         fact =  f.get_payment_dato(f.id)
     
         for f2 in fact  
             det =  f2.total 
+            
             begin 
             a  =  Factura.find(f2.factura_id)            
             a.detraccion = det            

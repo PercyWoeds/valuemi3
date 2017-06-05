@@ -45,16 +45,23 @@
 
           <% if invoice.processed =="0" %>
           <%= link_to "Ver", invoice %>                      
-          <%= link_to "Edit", edit_factura_path(invoice) %>                      
-          <%= link_to 'Eliminar', invoice, :data=> {:confirm => 'Esta seguro ?'}, :method => :delete %>            
-
+          <%= link_to "Edit", edit_factura_path(invoice) %>         
+            
+            <% if @current_user.level == "admin" %>
+              <%= link_to 'Eliminar', invoice, :data=> {:confirm => 'Esta seguro ?'}, :method => :delete %>            
+            <% end %>
+          
           <% elsif invoice.processed =="1"%>    
         
-          <%= link_to "Ver", invoice %>                      
-          <%= link_to 'Eliminar', invoice,:data=> {:confirm => 'Esta seguro ?'}, :method => :delete %>            
+          <%= link_to "Ver", invoice %>         
+              <% if @current_user.level == "admin" %>
+              <%= link_to 'Eliminar', invoice,:data=> {:confirm => 'Esta seguro ?'}, :method => :delete %>            
+              <% end %>
           <% elsif invoice.processed =="2"%>  
           <%= "** Anulado **" %>
-          <%= link_to 'Eliminar', invoice,:data=> {:confirm => 'Esta seguro ?'}, :method => :delete %>            
+            <% if @current_user.level == "admin" %>
+            <%= link_to 'Eliminar', invoice,:data=> {:confirm => 'Esta seguro ?'}, :method => :delete %>            
+            <% end %>
           <% elsif invoice.processed =="3"%>  
           <%= "** Cerrado **" %>                      
           <% end %> 

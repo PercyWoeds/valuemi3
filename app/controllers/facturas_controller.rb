@@ -172,7 +172,7 @@ class FacturasController < ApplicationController
   def ac_guias
     procesado='4'
 
-    @guias = Delivery.where(["company_id = ? AND (code LIKE ?)", params[:company_id], "%" + params[:q] + "%"])   
+    @guias = Delivery.where(["company_id = ? AND (code LIKE ?) AND (processed <> ?)  ", params[:company_id], "%" + params[:q] + "%"],procesado)   
     render :layout => false
   end
 
@@ -941,12 +941,7 @@ new_invoice_item.save
         
           if lcCliente == product.customer_id
 
-             #if product.payment_id == nil 
-              fechas2 = product.fecha2 
-             #else 
-             # days = product.payment.day 
-             # fechas2 = product.fechas2 + days.days              
-             #end 
+            fechas2 = product.fecha2 
 
             row = []          
             row << lcDoc
@@ -963,9 +958,8 @@ new_invoice_item.save
             else
                 row << sprintf("%.2f",product.balance.to_s)
                 row << "0.00 "
-            end 
-
-
+            end
+            
             row << sprintf("%.2f",product.detraccion.to_s)
 
             row << product.get_vencido 
@@ -1012,7 +1006,7 @@ new_invoice_item.save
                 row << sprintf("%.2f",product.balance.to_s)
                 row << "0.00 "
             end 
-            row << "0.00 "
+            row << sprintf("%.2f",product.detraccion.to_s)
             row << product.observ
 
             
