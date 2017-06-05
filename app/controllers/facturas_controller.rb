@@ -431,7 +431,7 @@ class FacturasController < ApplicationController
     lcRuc='20100082391'
     
 
-     new_invoice_item= Invoicesunat.new(:cliente =>lcRuc, :fecha => lcFecha :td =>lcTD,
+     new_invoice_item= Invoicesunat.new(:cliente =>lcRuc, :fecha => lcFecha ,:td =>lcTD,
         :serie => lcSerie,:numero => lcNumero,:preciocigv => 0.00 ,:preciosigv =>0.00,:cantidad =>0.00,
         :vventa => 0.00 ,:igv => 0.00,:importe => 0.00 ,:ruc =>lcRuc,:guia => "",:formapago => "",
         :description => "",:comments =>"",:descrip =>"",:moneda =>"2" )
@@ -444,7 +444,7 @@ class FacturasController < ApplicationController
     lcRuc='20600373863'
     
 
-     new_invoice_item= Invoicesunat.new(:cliente =>lcRuc, :fecha => lcFecha :td =>lcTD,
+     new_invoice_item= Invoicesunat.new(:cliente =>lcRuc, :fecha => lcFecha,:td =>lcTD,
         :serie => lcSerie,:numero => lcNumero,:preciocigv => 0.00 ,:preciosigv =>0.00,:cantidad =>0.00,
         :vventa => 0.00 ,:igv => 0.00,:importe => 0.00 ,:ruc =>lcRuc,:guia => "",:formapago => "",
         :description => "",:comments =>"",:descrip =>"",:moneda =>"2" )
