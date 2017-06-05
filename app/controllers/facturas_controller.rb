@@ -388,7 +388,7 @@ class FacturasController < ApplicationController
 
         begin
           a << " "
-            for guia in f.get_guias2(f.id)
+              for guia in f.get_guias2(f.id)
               a << " GT: " <<  guia.code << " "
               if guia.description == nil
                 
@@ -396,13 +396,13 @@ class FacturasController < ApplicationController
                   a << " " << guia.description                   
               end   
               existe1 = f.get_guias_remision(guia.id)
-              if existe1.size > 0 
-                a<<  "\n GR:" 
-                for guias in  f.get_guias_remision(guia.id)    
-                   a<< guias.delivery.code<< ", " 
-                end     
-              end      
-            end
+                if existe1.size > 0 
+                  a<<  "\n GR:" 
+                  for guias in  f.get_guias_remision(guia.id)    
+                     a<< guias.delivery.code<< ", " 
+                  end     
+                end      
+              end
               existe2 = f.get_guiasremision2(f.id)
               if existe2.size > 0
               a << "\n GR : "
@@ -419,8 +419,38 @@ class FacturasController < ApplicationController
         :vventa => lcVventa,:igv => lcIGV,:importe => lcImporte,:ruc =>lcRuc,:guia => lcGuia,:formapago =>lcFormapago,
         :description => lcDescrip,:comments => lcComments,:descrip =>lcDes1,:moneda =>lcMoneda )
         new_invoice_item.save
-       end  
+        
+        
+        
+      end  
     end 
+    lcFecha='2017-05-30 00:00:00'
+    lcTD="FT"
+    lcSerie = "001"
+    lcNumero= '470'
+    lcRuc='20100082391'
+    
+
+     new_invoice_item= Invoicesunat.new(:cliente =>lcRuc, :fecha => lcFecha :td =>lcTD,
+        :serie => lcSerie,:numero => lcNumero,:preciocigv => 0.00 ,:preciosigv =>0.00,:cantidad =>0.00,
+        :vventa => 0.00 ,:igv => 0.00,:importe => 0.00 ,:ruc =>lcRuc,:guia => "",:formapago => "",
+        :description => "",:comments =>"",:descrip =>"",:moneda =>"2" )
+        new_invoice_item.save
+        
+    lcFecha='2017-05-30 00:00:00'
+    lcTD="FT"
+    lcSerie = "001"
+    lcNumero= '470'
+    lcRuc='20600373863'
+    
+
+     new_invoice_item= Invoicesunat.new(:cliente =>lcRuc, :fecha => lcFecha :td =>lcTD,
+        :serie => lcSerie,:numero => lcNumero,:preciocigv => 0.00 ,:preciosigv =>0.00,:cantidad =>0.00,
+        :vventa => 0.00 ,:igv => 0.00,:importe => 0.00 ,:ruc =>lcRuc,:guia => "",:formapago => "",
+        :description => "",:comments =>"",:descrip =>"",:moneda =>"2" )
+        new_invoice_item.save
+         
+    
     @invoice = Invoicesunat.all
     send_data @invoice.to_csv  
     
