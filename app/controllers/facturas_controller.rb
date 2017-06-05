@@ -341,16 +341,13 @@ class FacturasController < ApplicationController
       else
         @invoice = Dsubdiario.all
         send_data @invoice.to_csv  , :filename => 'CD0317.csv'
-
-        
       end 
-       
   end 
 
   def export2
     Invoicesunat.delete_all
-
     @company = Company.find(params[:company_id])
+    
     @facturas  = Factura.where(:tipo => 1)
      a = ""
      
@@ -369,7 +366,14 @@ class FacturasController < ApplicationController
         lcRuc = f.customer.ruc         
         lcDes = f.description
         lcMoneda = f.moneda_id 
-              
+        lcDescrip=""
+        lcPsigv = 0 
+        lcPcigv = 0
+        lcCantidad = 0
+        lcGuia = ""
+        lcComments = ""
+        lcDes1 = ""
+        
         for productItem in f.get_products2(f.id)
 
         lcPsigv= productItem.price
@@ -385,23 +389,19 @@ class FacturasController < ApplicationController
         begin
           a << " "
             for guia in f.get_guias2(f.id)
-
               a << " GT: " <<  guia.code << " "
               if guia.description == nil
                 
               else  
                   a << " " << guia.description                   
               end   
-
               existe1 = f.get_guias_remision(guia.id)
-
               if existe1.size > 0 
                 a<<  "\n GR:" 
                 for guias in  f.get_guias_remision(guia.id)    
                    a<< guias.delivery.code<< ", " 
                 end     
               end      
-
             end
               existe2 = f.get_guiasremision2(f.id)
               if existe2.size > 0
@@ -413,17 +413,14 @@ class FacturasController < ApplicationController
             lcDes1 << a
             lcComments = ""
         end
-        new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td=>lcTD,
-        :serie=>lcSerie,:numero=>lcNumero,:preciocigv => lcPcigv ,:preciosigv=>lcPsigv,:cantidad=>lcCantidad,
-        :vventa=>lcVventa,:igv=>lcIGV,:importe => lcImporte,:ruc=>lcRuc,:guia=> lcGuia,:formapago=>lcFormapago,
-        :description=>lcDescrip,:comments=> lcComments,:descrip=>lcDes1,:moneda=>lcMoneda )
+        
+        new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td =>lcTD,
+        :serie => lcSerie,:numero => lcNumero,:preciocigv => lcPcigv ,:preciosigv =>lcPsigv,:cantidad =>lcCantidad,
+        :vventa => lcVventa,:igv => lcIGV,:importe => lcImporte,:ruc =>lcRuc,:guia => lcGuia,:formapago =>lcFormapago,
+        :description => lcDescrip,:comments => lcComments,:descrip =>lcDes1,:moneda =>lcMoneda )
         new_invoice_item.save
-
        end  
     end 
-
-  
-  
     @invoice = Invoicesunat.all
     send_data @invoice.to_csv  
     
@@ -451,11 +448,8 @@ class FacturasController < ApplicationController
         files_to_clean.each do |file|
           File.delete(file)
         end 
-  
 
     @facturas_all_txt = @company.get_facturas_year_month_day(@f)
-
-
 
     if @facturas_all_txt
       out_file = File.new("#{Dir.pwd}/app/txt_output/20424092941-RF-#{dd}#{mm}#{yy}-01.txt", "w")      
