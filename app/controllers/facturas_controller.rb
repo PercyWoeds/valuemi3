@@ -91,8 +91,6 @@ class FacturasController < ApplicationController
   end
   
   
-
-  
   # List items
   def list_items
     
@@ -168,11 +166,11 @@ class FacturasController < ApplicationController
     render :layout => false
   end
   
+  
   # Autocomplete for products
   def ac_guias
-    procesado='4'
-
-    @guias = Delivery.where(["company_id = ? AND (code LIKE ?) AND (processed <> ?)  ", params[:company_id], "%" + params[:q] + "%"],procesado)   
+    procesado = '4'
+    @guias = Delivery.where(["company_id = ? AND (code LIKE ?) AND (processed <> ?)  ", params[:company_id], "%" + params[:q] + "%" ,procesado])   
     render :layout => false
   end
 
@@ -252,6 +250,7 @@ class FacturasController < ApplicationController
     @companies = Company.where(user_id: current_user.id).order("name")
     @path = 'factura'
     @pagetitle = "Facturas"
+    
 
     @invoicesunat = Invoicesunat.order(:numero)    
 
@@ -648,13 +647,17 @@ class FacturasController < ApplicationController
     @invoice[:pago] = 0
     @invoice[:charge] = 0
     
-
     
+     parts = (@invoice[:code]).split("-")
+     id = parts[0]
+     numero2 = parts[1]
+     
     if(params[:factura][:user_id] and params[:factura][:user_id] != "")
       curr_seller = User.find(params[:factura][:user_id])
       @ac_user = curr_seller.username
     end
-
+    @invoice[:numero2] = numero2
+  
     respond_to do |format|
       if @invoice.save
         # Create products for kit
