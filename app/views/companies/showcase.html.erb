@@ -1,0 +1,80 @@
+<div class="mid_box bordered_right">
+  <h3>
+    <%= image_tag("products_32.png", :class => "vmiddle") %>
+    <%= link_to "Registro de viaticos","/companies/marcas/#{@company.id}" %>
+  </h3>
+
+  <p>
+    Agregar, editar or eliminar viaticos.
+  </p>
+
+  <%= hr() %>
+
+  
+  <h3>
+    <%= image_tag("products_32.png", :class => "vmiddle") %>
+    <%= link_to "Arqueo de Liquidacion de viaticos","/companies/marcas/#{@company.id}" %>
+  </h3>
+
+  <p>
+    Agregar, editar or eliminar liquidacion de viaticos que tu negocio ofrece.
+  </p>
+
+  <%= hr() %>
+
+  <h3>
+    <%= image_tag("product_kit_32.png", :class => "vmiddle") %>
+    <%= link_to "Liquidacion de viaje por conductor ", "/companies/modelos/#{@company.id}" %>
+  </h3>
+
+  <p>
+   Agregar, editar or eliminar Liquidacion de viaje por conductor
+  </p>
+
+  <%= hr() %>
+
+  <h3>
+    <%= image_tag("product_category_32.png", :class => "vmiddle") %>
+    <%= link_to "Arqueo de caja chica", "/companies/unidads/#{@company.id}" %>
+  </h3>
+
+  <p>
+     Agregar, editar or eliminar los arqueos de caja chica
+  </p>
+
+
+  
+</div>
+
+<div class="mid_box">
+  <h3>
+        <div>
+          <%= image_tag("locations_32.png", :class => "vmiddle") %>
+          <%= link_to "Reporte de gastos ", "/companies/locations/#{@company.id}" %>
+        </div>
+  </h3>
+  <p>
+    Reporte de gastos 
+  </p>
+
+<%= hr() %>
+  <h3>
+        <div>
+          <%= image_tag("divisions_32.png", :class => "vmiddle") %>
+          <%= link_to "Reporte de vueltos y fletes ", "/companies/divisions/#{@company.id}" %>
+        </div>
+  </h3>
+  <p>
+    Reporte de vueltos y fletes 
+  </p>
+<%= hr() %>
+  <h3>
+        <div>
+          <%= image_tag("divisions_32.png", :class => "vmiddle") %>
+          <%= link_to "Reporte de viaticos en provincia  ", "/companies/employees/#{@company.id}" %>
+        </div>
+  </h3>
+  <p>
+     Reporte de viaticos en provincia 
+  </p>
+

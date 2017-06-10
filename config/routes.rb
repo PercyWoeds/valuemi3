@@ -701,6 +701,7 @@ end
   match 'companies/components/:id' => 'companies#components', via: [:get, :post]
   match 'companies/cpagar/:id' => 'companies#cpagar', via: [:get, :post]
   match 'companies/ccobrar/:id' => 'companies#ccobrar', via: [:get, :post]
+  match 'companies/showcase/:id' => 'companies#showcase', via: [:get, :post]
   resources :companies
 
   # Users packages

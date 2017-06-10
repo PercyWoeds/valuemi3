@@ -169,8 +169,8 @@ class FacturasController < ApplicationController
   
   # Autocomplete for products
   def ac_guias
-    procesado = '4'
-    @guias = Delivery.where(["company_id = ? AND (code LIKE ?)   ", params[:company_id], "%" + params[:q] + "%" ])   
+    procesado = '1'
+    @guias = Delivery.where(["company_id = ? AND (code LIKE ?)  and processed = ?  ", params[:company_id], "%" + params[:q] + "%", procesado ])   
     render :layout => false
   end
 
