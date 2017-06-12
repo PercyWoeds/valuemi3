@@ -176,7 +176,7 @@ class ViaticosController < ApplicationController
     
     @viatico = Viatico.new
     @viatico[:code] = "I_#{generate_guid()}"
-    @viatico[:processed] = false
+    @viatico[:processed] = "0"
     
     @company = Company.find(params[:company_id])
     @viatico.company_id = @company.id
