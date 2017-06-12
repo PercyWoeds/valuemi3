@@ -10,6 +10,7 @@
   </div>
 <% end %>
 
+
 <%= hr() %>
 
 <div class="mid_box bordered_right">
@@ -135,7 +136,6 @@
   
     <div class="actions">
       <input type="hidden" name="items" id="items" value="<% if @products_lines %><%= @products_lines %><% end %>" />
-
       <input type="hidden" name="items2" id="items2" value="<% if @guias_lines %><%= @guias_lines %><% end %>" />
       
       <%= f.hidden_field :user_id, :id => "ac_user_id" %>

@@ -26,6 +26,7 @@
   resources :unidads
   resources :payments
   resources :ajusts
+  resources :viaticos 
 
   resources :tanks
   resources :employees
@@ -327,8 +328,8 @@ end
 # Viaticos
   
   match 'viaticos/list_items/:company_id' => 'viaticos#list_items', via: [:get, :post]
-  match 'viaticos/ac_kit/:company_id' => 'viaticos#ac_kit', via: [:get, :post]
-  match 'viaticos/ac_products/:company_id' => 'viaticos#ac_products', via: [:get, :post]
+  
+  match 'viaticos/ac_documentos/:company_id' => 'viaticos#ac_documentos', via: [:get, :post]
   match 'viaticos/ac_user/:company_id' => 'viaticos#ac_user', via: [:get, :post]
   match 'viaticos/ac_customers/:company_id' => 'viaticos#ac_customers', via: [:get, :post]
   match 'viaticos/new/:company_id' => 'viaticos#new', via: [:get, :post]

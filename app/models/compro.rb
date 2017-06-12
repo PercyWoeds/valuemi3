@@ -2,7 +2,7 @@ class Compro < ActiveRecord::Base
     
     validates_uniqueness_of :numero 
   
-  validates_presence_of :company_id, :location_id, :numero, :importe,:fecha
+  validates_presence_of :company_id, :location_id, :code, :importe,:fecha
   
   belongs_to :company
   belongs_to :location

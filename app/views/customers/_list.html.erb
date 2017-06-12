@@ -8,8 +8,12 @@
         <div class="metadata">
           <%= link_to "Invoices for customer", "/companies/invoices/#{customer.company.id}?customer=#{customer.id}" %> &#183;
           <%= link_to "View", customer %> &#183;
+          
+         <% if @current_user.level == "admin" %>
           <%= link_to "Edit", edit_customer_path(customer) %> &#183;
           <%= link_to 'Delete', customer, :confirm => 'Are you sure?', :method => :delete %>
+          <% end %>
+          
         </div>
       </div>
     <% end %>

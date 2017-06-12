@@ -46,9 +46,12 @@
 
           <% if invoice.processed =="0" %>
           <%= link_to "Ver", invoice %>                      
-          <%= link_to "Edit", edit_factura_path(invoice) %>         
+          
             
+          
             <% if @current_user.level == "admin" %>
+            
+            <%= link_to "Edit", edit_factura_path(invoice) %>         
               <%= link_to 'Eliminar', invoice, :data=> {:confirm => 'Esta seguro ?'}, :method => :delete %>            
             <% end %>
           

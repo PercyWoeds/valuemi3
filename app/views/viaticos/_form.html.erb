@@ -34,14 +34,14 @@
   
         <div class="field">
           <%= f.label  :inicial,"Inicial:  " , :class => "bold"%><br />
-            <%= f.text_field :code  %>
+            <%= f.text_field :inicial  %>
         </div>
    
         <%= hr() %>
       
         <div class="field">
           <%= f.label  :comments,"Comentarios  " , :class => "bold"%><br />
-          <%= f.text_field :comments  %>
+          <%= f.text_area :comments  %>
         </div>
    
         <%= hr() %>
@@ -66,11 +66,9 @@
     </div>
   
     <%= hr() %>
-  
-  
     <div class="actions">
-      <input type="hidden" name="items" id="items" value="<% if @customers_lines %><%= @customers_lines %><% end %>" />
-  
+      <input type="hidden" name="items" id="items" value="<% if @viaticos_lines %><%= @viaticos_lines %><% end %>" />
+      <%= f.hidden_field :user_id, :id => "ac_user_id" %>
       <%= f.hidden_field :company_id %>
 
       <%= f.submit %>
@@ -111,7 +109,7 @@
     </div>
 
     <div class="small">
-     Cantidad del producto para agregar una guia.
+     Importe 
     </div>
     <br />
     <input type="submit" value="Agregar item a Comprobante" />
@@ -172,8 +170,8 @@
       updateItemTotalCP();
     });
     
-    <% if @customers_lines %>
-    alert 'holas customers_lines';
+    <% if @viaticos_lines %>
+    alert 'holas viaticos_lines';
       listItemsviaticos();
     <% end %>
   });
