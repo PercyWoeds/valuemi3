@@ -676,45 +676,13 @@ def build_pdf_header(pdf)
     end
   
     if(@company.can_view(current_user))
-      if(params[:ac_customer] and params[:ac_customer] != "")
-        @customer = Customer.find(:first, :conditions => {:company_id => @company.id, :name => params[:ac_customer].strip})
-        
-        if @customer
-          @outputs = Output.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :customer_id => @customer.id}, :order => "id DESC")
+      
+       @outputs = Output.all.order('id DESC').paginate(:page => params[:page])
+        if params[:search]
+          @outputs = Output.search(params[:search]).order('id DESC').paginate(:page => params[:page])
         else
-          flash[:error] = "We couldn't find any outputs for that customer."
-          redirect_to "/companies/outputs/#{@company.id}"
+          @outputs = Output.all.order('id DESC').paginate(:page => params[:page]) 
         end
-      elsif(params[:customer] and params[:customer] != "")
-        @customer = Customer.find(params[:customer])
-        
-        if @customer
-          @outputs = Output.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :customer_id => @customer.id}, :order => "id DESC")
-        else
-          flash[:error] = "We couldn't find any outputs for that customer."
-          redirect_to "/companies/outputs/#{@company.id}"
-        end
-      elsif(params[:location] and params[:location] != "" and params[:division] and params[:division] != "")
-        @outputs = Output.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :location_id => params[:location], :division_id => params[:division]}, :order => "id DESC")
-      elsif(params[:location] and params[:location] != "")
-        @outputs = Output.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :location_id => params[:location]}, :order => "id DESC")
-      elsif(params[:division] and params[:division] != "")
-        @outputs = Output.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :division_id => params[:division]}, :order => "id DESC")
-      else
-        if(params[:q] and params[:q] != "")
-          fields = ["description", "comments", "code"]
-
-          q = params[:q].strip
-          @q_org = q
-
-          query = str_sql_search(q, fields)
-
-          @outputs = Output.paginate(:page => params[:page], :order => 'id DESC', :conditions => ["company_id = ? AND (#{query})", @company.id])
-        else
-          @outputs = Output.where(company_id:  @company.id).order("id DESC").paginate(:page => params[:page])
-          @filters_display = "none"
-        end
-      end
     else
       errPerms()
     end

@@ -93,6 +93,9 @@ end
     end 
 
   end 
+  resources :compros do
+    collection { post :import  }
+  end 
   
   resources :suppliers do
     collection { post :import  }
@@ -272,6 +275,20 @@ end
   match 'new_company_use', to: 'company_users#new', via: [:get]
   match 'company_list', to: 'company_users#list_users', via: [:get, :post] 
   resources :company_users
+  
+  match 'compros/list_items/:company_id' => 'compros#list_items', via: [:get, :post]
+  match 'compros/ac_products/:company_id' => 'compros#ac_products', via: [:get, :post]
+  match 'compros/ac_unidads/:company_id' => 'compros#ac_unidads', via: [:get, :post]
+  match 'compros/ac_user/:company_id' => 'compros#ac_user', via: [:get, :post]
+  match 'compros/ac_purchases/:company_id' => 'compros#ac_purchases', via: [:get, :post]
+  match 'compros/ac_suppliers/:company_id' => 'compros#ac_suppliers', via: [:get, :post]
+
+  match 'compros/new/:company_id' => 'compros#new', via: [:get, :post]
+  match 'compros/do_email/:id' => 'compros#do_email', via: [:get, :post]
+  match 'compros/email/:id' => 'compros#email', via: [:get, :post]
+  match 'compros/pdf/:id' => 'compros#pdf', via: [:get, :post]
+  match 'companies/compros/:company_id' => 'compros#list_compros', via: [:get, :post]
+  resources :compros 
 
   # Invoices
   match 'invoice/add_kit/:company_id' => 'invoices#add_kit', via: [:get, :post]
@@ -304,10 +321,23 @@ end
   match 'outputs/pdf/:id' => 'outputs#pdf', via: [:get, :post]
   match 'outputs/rpt_salidas_all_pdf/:id' => 'outputs#rpt_salidas_all_pdf', via: [:get, :post]
   match 'outputs/rpt_salidas2_all_pdf/:id' => 'outputs#rpt_salidas2_all_pdf', via: [:get, :post]
-
-
-  
   match 'companies/outputs/:company_id' => 'outputs#list_outputs', via: [:get, :post]
+  resources :outputs
+
+# Viaticos
+  
+  match 'viaticos/list_items/:company_id' => 'viaticos#list_items', via: [:get, :post]
+  match 'viaticos/ac_kit/:company_id' => 'viaticos#ac_kit', via: [:get, :post]
+  match 'viaticos/ac_products/:company_id' => 'viaticos#ac_products', via: [:get, :post]
+  match 'viaticos/ac_user/:company_id' => 'viaticos#ac_user', via: [:get, :post]
+  match 'viaticos/ac_customers/:company_id' => 'viaticos#ac_customers', via: [:get, :post]
+  match 'viaticos/new/:company_id' => 'viaticos#new', via: [:get, :post]
+  
+  match 'viaticos/do_email/:id' => 'viaticos#do_email', via: [:get, :post]
+  match 'viaticos/do_process/:id' => 'viaticos#do_process', via: [:get, :post]
+  match 'viaticos/email/:id' => 'viaticos#email', via: [:get, :post]
+  match 'viaticos/pdf/:id' => 'viaticos#pdf', via: [:get, :post]
+  match 'companies/viaticos/:company_id' => 'viaticos#list_viaticos', via: [:get, :post]
   resources :outputs
 
 # Declarations

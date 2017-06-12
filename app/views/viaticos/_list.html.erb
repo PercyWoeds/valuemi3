@@ -1,54 +1,55 @@
-<% if @invoices.count > 0 %>
+<% if @viatico.count > 0 %>
   <table>
     <thead>
       <tr>
         <th class="bordered_right bordered_bottom" style="width: 100px;">
-          Invoice
-        </th>
-        <th class="bordered_right bordered_bottom" style="width: 350px;">
-          Customer
+         Orden
         </th>
         <th class="bordered_right bordered_bottom">
-          Total
+          Cliente 
         </th>
         <th class="bordered_right bordered_bottom">
-          Date
+          Total 
         </th>
         <th class="bordered_right bordered_bottom">
-          Processed
+          Fecha 
+        </th>
+        
+        <th class="bordered_right bordered_bottom">
+          Aprobado 
         </th>
         <th class="bordered_right bordered_bottom" colspan="3">
-          Options
+          Opciones 
         </th>
       </tr>
     </thead>
     <tbody>
     
-      <% for invoice in @invoices %>
+      <% for viatico  in @viatico %>
         <tr>
           <td class="bordered_right bordered_bottom">
-            <%= link_to invoice.code, invoice, :title => "Ir a factura" %>
+            <%= link_to viatico.code, viatico, :title => "Ir a factura" %>
           </td>
-          <td class="bordered_right bordered_bottom">
-            <%= link_to invoice.customer.name, invoice.customer, :title => "Go to customer" %>
+          <td class="bordered_right bordered_bottom ">
+            <%=  viatico.get_cliente_customer_payment(viatico.id) %>            
           </td>
+
           <td class="bordered_right bordered_bottom right">
-            $<%= money(invoice.total) %>
+            <%= money(viatico.total) %>
           </td>
           <td class="bordered_right bordered_bottom">
-            <%= doDate(invoice.created_at) %>
+            <%= viatico.fecha1.strftime("%d/%m/%Y")  %>
           </td>
-          <td class="bordered_right bordered_bottom <%= invoice.processed_color %>">
-            <%= invoice.get_processed_short %>
-          </td>
-          <td class="bordered_right bordered_bottom">
-            <%= link_to "View", invoice %>
+          <td class="bordered_right bordered_bottom <%= viatico.processed_color %>">
+            <%= viatico.get_processed_short %>
           </td>
           <td class="bordered_right bordered_bottom">
-            <%= link_to "Edit", edit_invoice_path(invoice) %>
+            <%= link_to "Ver", viatico %>
           </td>
-          <td class="bordered_right bordered_bottom">
-            <%= link_to 'Delete', invoice, :confirm => 'Are you sure?', :method => :delete %>
+          <td class="bordered_right bordered_bottom">  
+            
+          <%= link_to 'Eliminar', viatico, :data=> {:confirm => 'Esta seguro ?'}, :method => :delete  %>           
+                  
           </td>
         </tr>
       <% end %>
@@ -56,6 +57,6 @@
   </table>
 <% else %>
   <p class="error">
-    We couldn't find any invoices.
+    We couldn't find any viatico.
   </p>
 <% end %>

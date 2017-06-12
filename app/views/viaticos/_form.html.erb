@@ -1,9 +1,8 @@
-<% if @invoice.errors.any? %>
+<% if @viatico.errors.any? %>
   <div id="error_explanation">
-    <h2><%= pluralize(@invoice.errors.count, "error") %> prohibited this invoice from being saved:</h2>
-
+    <h2><%= pluralize(@viatico.errors.count, "error") %> prohibited this viatico from being saved:</h2>
     <ul>
-    <% @invoice.errors.full_messages.each do |msg| %>
+    <% @viatico.errors.full_messages.each do |msg| %>
       <li><%= msg %></li>
     <% end %>
     </ul>
@@ -13,82 +12,49 @@
 <%= hr() %>
 
 <div class="mid_box bordered_right">
-  <%= form_for(@invoice) do |f| %>
-    <h3>
-       Informacion Factura 
-    </h3>
 
-    <div class="field">
-    
-      <label for="ac_customer" class="bold">Cliente*</label><br />
-      
-      <input type="text" name="ac_customer" id="ac_customer" value="<% if @ac_customer %><%= @ac_customer %><% end %>" />
-      
-      <div class="small">
-        <a href="#" onclick="createCustomerInvoice(); return false;">+ Crear nuevo cliente</a>
-      </div>
+  <%= form_for(@viatico) do |f| %>
+    <h4>
+       Informacion Viaticos
+    </h4>
+        <td>
+        <div class="field">
+          <%= f.label :fecha1, "Fecha*", :class => "bold" %><br />
+          <%= f.date_field :fecha1, value: Time.now.strftime("%d/%m/%Y") ,:class => "input.tf_short" %>
+        </div>
 
-      <div class="small">
-        Ingrese una termino de busqueda para encontrar un cliente.
-      </div>
-      <br />
-
-      <div class="small">
-        <strong>Seleccionar cliente:</strong>
-        <span id="selected_customer"><% if @ac_customer %><%= @ac_customer %><% else %><!-- i --><% end %></span>
-      </div>
-    </div>
-    
-    <div class="field">
-      <%= f.label :code, "Code*", :class => "bold" %><br />
-      <%= f.text_field :code, :onclick => "$(this).select();" %>
-    </div>
-  
-    <div class="field">
-      <%= f.label :location_id ,"Local"%><br />
-      <%= f.select :location_id, options_from_collection_for_select(@locations,'id','name') %>
-    
+        </td>
         
-    </div>
-    <div class="field">
-      <%= f.label :division_id %><br />
-      <%= f.select :division_id,options_from_collection_for_select(@divisions,'id','name') %>
-    </div>
-    
+        <td>
+        <div class="field">
+          <%= f.label :code, "Code*", :class => "bold" %><br />
+          <%= f.text_field :code, :onclick => "$(this).select();" %>
+        </div>
+        </td>
+  
+        <div class="field">
+          <%= f.label  :inicial,"Inicial:  " , :class => "bold"%><br />
+            <%= f.text_field :code  %>
+        </div>
+   
+        <%= hr() %>
+      
+        <div class="field">
+          <%= f.label  :comments,"Comentarios  " , :class => "bold"%><br />
+          <%= f.text_field :comments  %>
+        </div>
+   
+        <%= hr() %>
+      
+   
 
-  
-    <%= hr() %>
-    
-    <div class="field" id="list_items">
-      <p class="bold big">Products:</p>
-    </div>
-    
-    <%= hr() %>
-  
-    <div class="field">
-      <%= f.check_box :processed %>
-      <%= f.label :processed, "Process invoice", :class => "bold" %>
-      <div class="small">
-        Marks wether or not this invoice has been payed and we can deduct the product quantities and count it towards the month's total.
-      </div>
-    </div>
-  
-    <div class="field">
-      <%= f.check_box :return %>
-      <%= f.label :return, :class => "bold" %>
-      <div class="small">
-        Is it a return order?
-      </div>
-    </div>
-    
-    <%= hr() %>
-    
+
     <div class="field">
       <label for="ac_user" class="bold">Seller*</label><br />
       <input type="text" name="ac_user" id="ac_user" value="<% if @ac_user %><%= @ac_user %><% end %>" />
 
       <div class="small">
-        Enter a search term to find a user.
+      
       </div>
       <br />
 
@@ -96,98 +62,65 @@
         <strong>Selected seller:</strong>
         <span id="selected_seller"><% if @ac_user %><%= @ac_user %><% else %><!-- i --><% end %></span>
       </div>
+
     </div>
   
     <%= hr() %>
   
   
-    
-    <%= hr() %>
-  
     <div class="actions">
-      <input type="hidden" name="items" id="items" value="<% if @products_lines %><%= @products_lines %><% end %>" />
-      <%= f.hidden_field :user_id, :id => "ac_user_id" %>
-      <%= f.hidden_field :customer_id, :id => "ac_customer_id" %>
+      <input type="hidden" name="items" id="items" value="<% if @customers_lines %><%= @customers_lines %><% end %>" />
+  
       <%= f.hidden_field :company_id %>
+
       <%= f.submit %>
     </div>
     
     <div class="small">
-      Once you're done adding products, don't forget to <strong><%= @action_txt %></strong> your invoice.
+      Once you're done adding customers, don't forget to <strong><%= @action_txt %></strong> your viatico.
     </div>
+
   <% end %>
 </div>
 
+
 <div class="mid_box">
-  <h3>
-    Agregar Productos  a la factura 
-  </h3>
+  <h5>
+    Agregar informacion comprobante 
+  </h5>
   
-  <form method="get" action="/products" onsubmit="addItemToInvoice(); return false;">
-    <input type="hidden" name="ac_item_id" id="ac_item_id" value="" />
-    
-    <strong>Product:</strong><br />
+
+  <form method="get" action="/viaticos" onsubmit="addItemToViatico(); return false;">   
+  
+  <input type="hidden" name="ac_item_id" id="ac_item_id" value="" />  
+
+    <strong>Documento :</strong><br />
     <input type="text" name="ac_item" id="ac_item" value="" />
     <div class="small">
-      Ingrese un termino de busqueda para encontrar un producto.
+      Ingrese un termino de busqueda para encontrar un documento 
     </div>
-    <br />
-    
-    <strong>Price:</strong><br />
-    <input type="text" name="ac_item_price" id="ac_item_price" value="" class="tf_short" />
-    <div class="small">
-      Precio del  producto para agregar una factura.
-    </div>
-    <br />
-    
-    <strong>Cantidad:</strong><br />
-    <input type="text" name="ac_item_quantity" id="ac_item_quantity" value="1" class="tf_short" />
-    <div class="small">
-     Cantidad del producto para agregar una factura.
-    </div>
-    <br />
-    
-    <strong>Discount %:</strong><br />
-    <input type="text" name="ac_item_discount" id="ac_item_discount" value="0" class="tf_short" />
-    <div class="small">
-      Descuento % del producto para agregar una factura.
-    </div>
-    <br />
-    
+    <br />  
     <div>
-      <strong>Total:</strong><br />
-      <span id="ac_item_total">$0.00</span>
+      <strong>Importe:</strong><br />
+      <span id="ac_item_total2">0.00</span>
     </div>
-    
+
+    <div >
+      <strong>Total:</strong><br />    
+    <input type="text" name="ac_item_total" id="ac_item_total" value="0.00" class="tf_short" />
+    </div>
+
+    <div class="small">
+     Cantidad del producto para agregar una guia.
+    </div>
     <br />
-    <input type="submit" value="Agregar item a Factura" />
+    <input type="submit" value="Agregar item a Comprobante" />
+      
   </form>
   
   <%= hr() %>
   
-  <h3>
-    Agregar Productos Kit a Factura
-  </h3>
   
-  <form method="get" action="/products_kits" onsubmit="addKitToInvoice(); return false;">
-    <input type="hidden" name="ac_kit_id" id="ac_kit_id" value="" />
-    
-    <strong>Product kit:</strong><br />
-    <input type="text" name="ac_kit" id="ac_kit" value="" />
-    <div class="small">      
-      Ingrese un termino de busqueda para encontrar un producto Kit.
-    </div>
-    <br />
-    
-    <strong>Discount %:</strong><br />
-    <input type="text" name="ac_kit_discount" id="ac_kit_discount" value="0" class="tf_short" />
-    <div class="small">
-      Descuento % del producto Kit  para agregar una factura.
-    </div>
-    <br />
-    
-    <input type="submit" value="Add product kit to invoice" />
-  </form>
 </div>
 
 <%= br() %>
@@ -197,25 +130,33 @@
 
 <script type="text/javascript">
   $(document).ready(function() {
-    $("#ac_customer").autocomplete("/invoices/ac_customers/<%= @company.id %>", {
-			matchSubset: 1,
-			matchContains: 1,
+
+    $("#ac_item").autocomplete("/viaticos/ac_documentos/<%= @company.id %>", {
+      matchSubset: 1,
+      matchContains: 1,
+      selectFirst: false
+    });
+    
+    $("#ac_item").result(function(event, data, formatted) {
+      $("#ac_item_id").val(data[2]);
+      $("#ac_item_total").val(data[4]);  
+      
+      updateItemTotalCP();
+    });
+    
+    $("#ac_customer").autocomplete("/viaticos/ac_customers/<%= @company.id %>", {
+      matchSubset: 1,
+      matchContains: 1,
       selectFirst: false
     });
     
     $("#ac_customer").result(function(event, data, formatted) {
       $("#ac_customer_id").val(data[2]);
-      $("#selected_customer").html(data[0]);
-    });
-    
-    $("#ac_kit").autocomplete("/invoices/ac_kit/<%= @company.id %>", {
-			matchSubset: 1,
-			matchContains: 1,
-      selectFirst: false
-    });
+      $("#selected_seller").html(data[0]);
+    });    
     
     
-    $("#ac_user").autocomplete("/invoices/ac_user/<%= @company.id %>", {
+    $("#ac_user").autocomplete("/viaticos/ac_user/<%= @company.id %>", {
 			matchSubset: 1,
 			matchContains: 1,
       selectFirst: false
@@ -224,36 +165,16 @@
     $("#ac_user").result(function(event, data, formatted) {
       $("#ac_user_id").val(data[2]);
       $("#selected_seller").html(data[0]);
+    });    
+    
+    
+    $("#ac_item_total").bind("keyup", function() {
+      updateItemTotalCP();
     });
     
-    $("#ac_item").autocomplete("/invoices/ac_products/<%= @company.id %>", {
-			matchSubset: 1,
-			matchContains: 1,
-      selectFirst: false
-    });
-    
-    $("#ac_item").result(function(event, data, formatted) {
-      $("#ac_item_id").val(data[2]);
-      $("#ac_item_price").val(data[4]);
-      
-      updateItemTotal();
-    });
-    
-    $("#ac_item_quantity").bind("keyup", function() {
-      updateItemTotal();
-    });
-    
-    $("#ac_item_price").bind("keyup", function() {
-      updateItemTotal();
-    });
-    
-    $("#ac_item_discount").bind("keyup", function() {
-      updateItemTotal();
-    });
-    
-    <% if @products_lines %>
-    alert 'holas products_lines';
-      listItemsInvoice();
+    <% if @customers_lines %>
+    alert 'holas customers_lines';
+      listItemsviaticos();
     <% end %>
   });
 </script>

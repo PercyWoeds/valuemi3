@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  ost_id: 1
+  fecha: 2017-06-10 14:17:36
+  descrip: MyString
+  document_id: 1
+  numero: MyString
+  importe: 1.5
+  detalle: MyText
+
+two:
+  ost_id: 1
+  fecha: 2017-06-10 14:17:36
+  descrip: MyString
+  document_id: 1
+  numero: MyString
+  importe: 1.5
+  detalle: MyText

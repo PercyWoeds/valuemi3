@@ -1,17 +1,17 @@
 <div class="breadcrumbs">
   <%= link_to "My companies", "/companies" %> &raquo;
   <%= link_to @company.name, @company %> &raquo;
-  <%= link_to "Invoices", "/companies/invoices/#{@company.id}" %> &raquo;
-  <%= link_to @invoice.identifier, @invoice %>
+  <%= link_to "viaticos", "/companies/viaticos/#{@company.id}" %> &raquo;
+  <%= link_to @viatico.identifier, @viatico %>
 </div>
 
 <h1>
-  <%= image_tag("invoice_48.png", :class => "vmiddle") %>
-  Editing invoice
+  <%= image_tag("viatico_48.png", :class => "vmiddle") %>
+  Editing viatico
 </h1>
 
 <p>
-  To modify the invoice, please fill out the following form.  Fields marked with <strong>*</strong> are required.
+  To modify the viatico, please fill out the following form.  Fields marked with <strong>*</strong> are required.
 </p>
 
 <%= render 'form' %>
@@ -19,6 +19,6 @@
 <%= hr() %>
 
 <div class="button">
-  <%= link_to 'Show', @invoice %>
-  <%= link_to 'Back', "/companies/invoices/#{@company.id}" %>
+  <%= link_to 'Show', @viatico %>
+  <%= link_to 'Back', "/companies/viaticos/#{@company.id}" %>
 </div>

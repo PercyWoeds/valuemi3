@@ -1,0 +1,63 @@
+<%= form_for(@compro) do |f| %>
+  <% if @compro.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@compro.errors.count, "error") %> prohibited this compro from being saved:</h2>
+
+      <ul>
+      <% @compro.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+    <%= hr() %>
+    <div class="field">
+      <%= f.label :location_id ,"Local"%><br />
+      <%= f.select :location_id, options_from_collection_for_select(@locations,'id','name') %>    
+    </div>
+
+    <div class="field">
+      <%= f.label :division_id %><br />
+      <%= f.select :division_id,options_from_collection_for_select(@divisions,'id','name') %>
+    </div>
+    
+    <%= hr() %>
+  
+  
+  <div class="field">
+      <%= f.label :tranportorder_id ,"ORDEN SERVICIO TRANSPORTE "%><br />
+      <%= f.select :tranportorder_id, options_from_collection_for_select(@transports,'id','code') %>
+  </div>
+    
+  <div class="field">
+    <%= f.label :fecha, "Fecha *", :class => "bold" %><br />
+    <%= f.text_field :fecha, value: Time.now.strftime("%d/%m/%Y") %>
+    
+  </div>
+  
+  
+  <div class="field">
+    <%= f.label :numero, "Numero*", :class => "bold" %><br />
+    <%= f.text_field :numero %>
+  </div>
+
+  <div class="field">
+    <%= f.label :importe %><br />
+    <%= f.number_field :importe %>
+  </div>
+  <div class="field">
+    <%= f.label :detalle %><br />
+    <%= f.text_area :detalle %>
+  </div>
+  
+  
+  
+ 
+    
+  <div class="actions">
+    <%= f.hidden_field :company_id %>
+    <%= f.submit %>
+  </div>
+<% end %>
+

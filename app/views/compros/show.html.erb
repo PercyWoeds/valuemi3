@@ -1,0 +1,18 @@
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @compro.company.name, @compro.company %> &raquo;
+  <%= link_to "compros", "/companies/compros/#{@compro.company.id}" %>
+</div>
+
+<h1>
+  <%= image_tag("clients_48.png", :class => "vmiddle") %>
+  <%= @compro.numero  %>
+</h1>
+
+<%= render "compros/show" %>
+
+<div class="button">
+  }  
+  <%= link_to 'Edit', edit_compro_path(@compro) %>
+  <%= link_to 'Back', "/companies/compros/#{@compro.company.id}" %>
+</div>

@@ -83,11 +83,9 @@ class ViaticosController < ApplicationController
     render :layout => false
   end
   
-  
-  # Autocomplete for products
-  def ac_cegresos
-    @products = Cegreso.where(["company_id = ? AND (code LIKE ? OR name LIKE ?)", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])
-   
+  # Autocomplete for documento
+  def ac_documentos
+    @products = Viatico.where(["company_id = ? AND (numero LIKE ? OR comments LIKE ?)", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])
     render :layout => false
   end
   

@@ -1,49 +1,66 @@
 <div class="breadcrumbs">
   <%= link_to "My companies", "/companies" %> &raquo;
-  <%= link_to @invoice.company.name, @invoice.company %> &raquo;
-  <%= link_to "Invoices", "/companies/invoices/#{@invoice.company.id}" %>
+  <%= link_to @viatico.company.name, @viatico.company %> &raquo;
+  <%= link_to "viaticos", "/companies/customer_payments/#{@viatico.company.id}" %>
 </div>
 
 <h1>
   <%= image_tag("invoice_48.png", :class => "vmiddle") %>
-  <%= @invoice.identifier %>
+  <%= @viatico.identifier %>
 </h1>
 
 <%= hr() %>
 
-<% if @invoice.location %>
+<% if @viatico.location %>
   <p>
     <b>Location:</b>
-    <%= link_to @invoice.location.name, @invoice.location %>
+    <%= link_to @viatico.location.name, @viatico.location %>
   </p>
 <% end %>
 
-<% if @invoice.division %>
+<% if @viatico.division %>
   <p>
     <b>Division:</b>
-    <%= link_to @invoice.division.name, @invoice.division %>
+    <%= link_to @viatico.division.name, @viatico.division %>
   </p>
 <% end %>
-
 
 <p>
   <b>Code:</b>
-  <%= @invoice.code %>
+  <%= @viatico.code %>
+</p>
+
+<p>
+    <b>Fecha entrega:</b>
+    <%= @viatico.fecha1.strftime("%d/%m/%Y") %>   
+</p>
+ 
+<p>
+    <b>Estado: </b>
+    <%= @viatico.get_processed   %>   
 </p>
 
 
 <%= hr() %>
 
 <h3>
-  Customer information
+  Informacion Pago
 </h3>
 
 <p>
-  <b>Name:</b>
-  <%= link_to @customer.name, @customer %>
+  <b>Cuenta </b>  
+  <%= link_to @viatico.bank_acount.number %>
 </p>
 
-<%= render "customers/show" %>
+<p>
+  <b>Banco : </b>  
+  <%=  @viatico.get_banco(@viatico.bank_acount.bank_id)   %>
+</p>  
+
+<b>Moneda : </b>  
+  <%=  @viatico.get_moneda(@viatico.bank_acount.moneda_id)   %>
+</p>
+
 
 <%= hr() %>
 
@@ -55,122 +72,172 @@
   <thead>
     <tr>
       <th>
-        Product
+        Tipo  
       </th>
       <th>
-        Price
+        Documento
+      </th>
+      <th>    
+        Operacion
       </th>
       <th>
-        Quantity
+        Factory  
       </th>
       <th>
-        Discount
+        Ajuste 
       </th>
+
       <th>
         Total
       </th>
+
     </tr>
   </thead>
   <tbody>
-    <% for productItem in @invoice.get_products() %>
       <tr>
         <td class="bordered_bottom bordered_right">
-          <%= link_to productItem.name   %>
+           <%=  @viatico.get_document (@viatico.document_id)     %>
         </td>
+        
+              
         <td class="bordered_bottom bordered_right">
-          $<%= money(productItem.price) %>
+          <%=  @viatico.documento     %>
         </td>
+
         <td class="bordered_bottom bordered_right">
-          <%= productItem.quantity %>
+          <%=  @viatico.nrooperacion  %>
         </td>
+        
+         <td class="bordered_bottom bordered_right">
+          <%=  @viatico.operacion    %>
+        </td>
+
+          <td class="bordered_bottom bordered_right">
+        
+        </td>
+        
         <td class="bordered_bottom bordered_right">
-          <%= money(productItem.discount) %>%
+            <%=  @viatico.total     %>
         </td>
+
+      </tr>
+    
+
+    <% for productItem in @viatico.get_payments() %>
+      <tr>
         <td class="bordered_bottom bordered_right">
-          $<%= money(productItem.total) %>
+          
         </td>
+        
+              
+        <td class="bordered_bottom bordered_right">
+          <%=  productItem.code   %>
+        </td>
+
+        <td class="bordered_bottom bordered_right">
+          <%=  productItem.get_customer(productItem.customer_id) %>
+        </td>
+        
+         <td class="bordered_bottom bordered_right">
+       <%=  productItem.factory   %>
+        </td>
+         <td class="bordered_bottom bordered_right">
+       <%=  productItem.ajuste    %>
+        </td>
+
+        <td class="bordered_bottom bordered_right">
+          <%= money(productItem.total) %>
+        </td>
+
       </tr>
     <% end %>
     <tr>
-      <td colspan="5" class="bordered_bottom bordered_right">
+      <td colspan="6" class="bordered_bottom bordered_right">
         &nbsp;
       </td>
     </tr>
     <tr>
-      <td colspan="4" class="bordered_bottom bordered_right bold">
-        Subtotal:
+      <td colspan="5" class="bordered_bottom bordered_right bold">
+        Factory:
       </td>
+
       <td class="bordered_bottom bordered_right bold right">
-        $<%= money(@invoice.subtotal) %>
+        <%= money(@viatico.get_customer_payment_value("factory")) %>
       </td>
+
+    </tr>
+   
+    <tr>
+      <td colspan="5" class="bordered_bottom bordered_right bold">
+        Compensación:
+      </td>
+
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@viatico.get_customer_payment_value("compen")) %>
+      </td>
+      
+    </tr>
+
+    <tr>
+      <td colspan="5" class="bordered_bottom bordered_right bold">
+        Ajuste:
+      </td>
+
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@viatico.get_customer_payment_value("ajuste")) %>
+      </td>
+      
     </tr>
     <tr>
-      <td colspan="4" class="bordered_bottom bordered_right bold">
-        Tax:
-      </td>
-      <td class="bordered_bottom bordered_right bold right">
-        $<%= money(@invoice.tax) %>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="4" class="bordered_bottom bordered_right bold">
+      <td colspan="5" class="bordered_bottom bordered_right bold">
         Total:
       </td>
       <td class="bordered_bottom bordered_right bold right">
-        $<%= money(@invoice.total) %>
+         <%= money(@viatico.get_customer_payment_value("total") - @viatico.get_customer_payment_value("factory")+@viatico.get_customer_payment_value("compen")+ @viatico.get_customer_payment_value("ajuste")) %>
       </td>
     </tr>
+    
+    <tr>
+      <td colspan="5" class="bordered_bottom bordered_right bold">
+        Diferencia:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%=money(@viatico.total+ @viatico.get_customer_payment_value("factory")-@viatico.get_customer_payment_value("compen")-@viatico.get_customer_payment_value("ajuste")- @viatico.get_customer_payment_value("total")) %>
+      </td>
+    </tr>
+    
+ 
+
   </tbody>
 </table>
 <br />
 
 <%= hr() %>
 
-<% if @invoice.description != "" %>
-  <div>
-    <b>Description:</b>
-    <br />
-    <br />
-    <%= format_text(@invoice.description) %>
-  </div>
-  <%= hr() %>
-<% end %>
-
-<% if @invoice.comments != "" %>
-  <div>
-    <b>Comments:</b>
-    <br />
-    <br />
-    <%= format_text(@invoice.comments) %>
-  </div>
-  <%= hr() %>
-<% end %>
 
 <br />
 
-<div>
-  <strong><%= @invoice.get_processed %></strong>
-  <% if @invoice.processed == "1" and @invoice.date_processed %>
-    <%= doDate(@invoice.date_processed) %>
-  <% end %>
-</div>
-
-<p>
-  <b>Return:</b>
-  <%= @invoice.get_return %>
-</p>
 
 <p>
   <strong>Seller:</strong>
-  <%= link_to @invoice.user.username, @invoice.user %>
+  <%= link_to @viatico.user.username, @viatico.user %>
 </p>
 
 <%= hr() %>
 
 <div class="button">
-  <%= link_to 'Export to PDF', "/invoices/pdf/#{@invoice.id}.pdf" %>
-  <%= link_to 'Send invoice via email', "/invoices/email/#{@invoice.id}" %>
-  <%= link_to 'Process invoice', "/invoices/do_process/#{@invoice.id}" %>
-  <%= link_to 'Edit', edit_invoice_path(@invoice) %>
-  <%= link_to 'Back', "/companies/invoices/#{@invoice.company.id}" %>
+  <%= link_to 'Exportar to PDF', "/customer_payments/pdf/#{@viatico.id}.pdf" %>  
+  
+ <% if @viatico.processed == "1" %> 
+
+ <% %>
+
+ <% else %>
+
+  <%= link_to 'Procesar', "/customer_payments/do_process/#{@viatico.id}" %>
+
+ <% end %> 
+  
+  <%= link_to 'Regresar', "/companies/customer_payments/#{@viatico.company.id}" %>
 </div>
+

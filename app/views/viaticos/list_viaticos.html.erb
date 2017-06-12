@@ -4,8 +4,9 @@
 </div>
 
 <h1>
-  <%= image_tag("invoice_48.png", :class => "vmiddle") %>
-  Invoices
+  <%= image_tag("orders_48.png", :class => "vmiddle") %>
+  Registrar Cancelaciones  
+  
   <% if @customer %>
     for customer: <%= @customer.name %>
   <% end %>
@@ -15,10 +16,10 @@
   <a href="#" onclick="toggle('filters'); return false;">Filters</a>
 </div>
 
-<div id="filters" class="filters" style="display: <%= @filters_display %>;">
+<div id="filters" class="filters" style=" display: <%= @filters_display %>;">
   <div>
     <div class="small">
-      <form method="get" action="/companies/invoices/<%= @company.id %>">
+      <form method="get" action="/companies/viaticos/<%= @company.id %>">
         <strong>Search:</strong>
         <input type="text" name="q" value="<% if @q_org %><%= @q_org %><% end %>" class="small" style="width: 250px;" onclick="$(this).select();" />
         <input type="submit" value="Find" class="bold small_btn" />
@@ -27,7 +28,7 @@
   </div>
 
   <div>
-    <form method="get" action="/companies/invoices/<%= @company.id %>">
+    <form method="get" action="/companies/viaticos/<%= @company.id %>">
       <div class="small">
         <strong>Location:</strong>
         <select name="location" class="small">
@@ -51,7 +52,7 @@
   </div>
   
   <div>
-    <form method="get" action="/companies/invoices/<%= @company.id %>">
+    <form method="get" action="/companies/viaticos/<%= @company.id %>">
       <div class="small">
         <strong>Customer:</strong>
         <input type="text" name="ac_customer" id="ac_customer" value="<% if @customer %><%= @customer.name %><% end %>" class="small" style="width: 235px;" />
@@ -61,26 +62,27 @@
   </div>
   
   <div class="button">
-    <a href="/companies/invoices/<%= @company.id %>" class="small_btn">Clear filters</a>
+    <a href="/companies/customer_payments/<%= @company.id %>" class="small_btn">Clear filters</a>
   </div>
 </div>
 
 <br />
-<%= render "invoices/list" %>
+<%= render "customer_payments/list" %>
 
 <br />
 
 <div class="button">
-  <%= link_to 'New Invoice', "/invoices/new/#{@company.id}" %>
+  <%= link_to 'Nueva Cancelacion', "/customer_payments/new/#{@company.id}" %>
+  <%= link_to 'Export Concar', "/customer_payments/generar1/#{@company.id}" %>
 </div>
 
-<%= will_paginate @invoices %>
+<%= will_paginate @viaticos %>
 
 <%= render 'layouts/autocomplete' %>
 
 <script type="text/javascript">
   $(document).ready(function() {
-    $("#ac_customer").autocomplete("/invoices/ac_customers/<%= @company.id %>", {
+    $("#ac_customer").autocomplete("/customer_payments/ac_customers/<%= @company.id %>", {
 			matchSubset: 1,
 			matchContains: 1,
       selectFirst: false

@@ -1,0 +1,27 @@
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %>
+</div>
+
+<h1>
+  <%= image_tag("supplier_48.png", :class => "vmiddle") %>
+  Comprobantes 
+</h1>
+
+<div class="small">
+  <form method="get" action="/companies/compros/<%= @company.id %>">
+    <strong>Search:</strong>
+    <input type="text" name="search" value="<% if @q_org %><%= @q_org %><% end %>" class="small" style="width: 250px;" onclick="$(this).select();" />
+    <input type="submit" value="Find" class="bold small_btn" />
+    <a href="/companies/compros/<%= @company.id %>" class="small_btn">Clear</a>
+  </form>
+</div>
+
+<%= render "compros/list" %>
+<br />
+
+<div class="button">
+  <%= link_to 'Nuevo comprobante', "/compros/new/#{@company.id}" %>
+</div>
+
+<%= will_paginate @compros %>

@@ -111,12 +111,12 @@ class ServiceordersController < ApplicationController
         end
       ##agrego description para orden de servicio                                     
       row=[]
-      row<<nroitem.to_s
-      row<<""
-      row<<@serviceorder.description
-      row<<""                                  
-      row<<""                                  
-      row<<""                                  
+      row << nroitem.to_s
+      row << ""
+      row << @serviceorder.description
+      row << ""                                  
+      row << ""                                  
+      row << ""                                  
       
       table_content<<row
 

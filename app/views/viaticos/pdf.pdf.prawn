@@ -1,70 +1,62 @@
+
+
 pdf.font "Helvetica"
 
-pdf.text "Company: #{@invoice.company.name}", :size => 18, :style => :bold, :spacing => 4
 
 pdf.text "______________________________________________________________________", :size => 13, :spacing => 4
 pdf.text " ", :size => 13, :spacing => 4
 
-pdf.text "Invoice: #{@invoice.identifier}", :size => 18, :style => :bold, :spacing => 4
+pdf.text "Subtotal: #{money(@viatico.subtotal)}", :size => 15, :style => :bold, :spacing => 4
+pdf.text "Tax: #{money(@viatico.tax)}", :size => 15, :style => :bold, :spacing => 4
+pdf.text "Total: #{money(@viatico.total)}", :size => 15, :style => :bold, :spacing => 4
+pdf.text "Detraccion: #{money(@viatico.detraccion)}", :size => 15, :style => :bold, :spacing => 4
 
 pdf.text "______________________________________________________________________", :size => 13, :spacing => 4
 pdf.text " ", :size => 13, :spacing => 4
 
-pdf.text "Code: #{@invoice.code}", :size => 13, :spacing => 4
-
-pdf.text "______________________________________________________________________", :size => 13, :spacing => 4
+pdf.text "Informacion proveedor ", :size => 15, :style => :bold, :spacing => 4
 pdf.text " ", :size => 13, :spacing => 4
 
-pdf.text "Subtotal: $#{money(@invoice.subtotal)}", :size => 15, :style => :bold, :spacing => 4
-pdf.text "Tax: $#{money(@invoice.tax)}", :size => 15, :style => :bold, :spacing => 4
-pdf.text "Total: $#{money(@invoice.total)}", :size => 15, :style => :bold, :spacing => 4
+pdf.text "Name: #{@viatico.supplier.name}", :size => 13, :spacing => 4
 
-pdf.text "______________________________________________________________________", :size => 13, :spacing => 4
-pdf.text " ", :size => 13, :spacing => 4
-
-pdf.text "Customer information", :size => 15, :style => :bold, :spacing => 4
-pdf.text " ", :size => 13, :spacing => 4
-
-pdf.text "Name: #{@invoice.customer.name}", :size => 13, :spacing => 4
-
-if @invoice.customer.email and @invoice.customer.email != ""
-  pdf.text "Email: #{@invoice.customer.email}", :size => 13, :spacing => 4
+if @viatico.supplier.email and @viatico.supplier.email != ""
+  pdf.text "Email: #{@viatico.supplier.email}", :size => 13, :spacing => 4
 end
 
-if @invoice.customer.account and @invoice.customer.account != ""
-  pdf.text "Account: #{@invoice.customer.account}", :size => 13, :spacing => 4
+if @viatico.supplier.account and @viatico.supplier.account != ""
+  pdf.text "Account: #{@viatico.supplier.account}", :size => 13, :spacing => 4
 end
 
-if @invoice.customer.phone1 and @invoice.customer.phone1 != ""
-  pdf.text "Phone 1: #{@invoice.customer.phone1}", :size => 13, :spacing => 4
+if @viatico.supplier.phone1 and @viatico.supplier.phone1 != ""
+  pdf.text "Phone 1: #{@viatico.supplier.phone1}", :size => 13, :spacing => 4
 end
 
-if @invoice.customer.phone2 and @invoice.customer.phone2 != ""
-  pdf.text "Phone 2: #{@invoice.customer.phone2}", :size => 13, :spacing => 4
+if @viatico.supplier.phone2 and @viatico.supplier.phone2 != ""
+  pdf.text "Phone 2: #{@viatico.supplier.phone2}", :size => 13, :spacing => 4
 end
 
-if @invoice.customer.address1 and @invoice.customer.address1 != ""
-  pdf.text "Address 1: #{@invoice.customer.address1}", :size => 13, :spacing => 4
+if @viatico.supplier.address1 and @viatico.supplier.address1 != ""
+  pdf.text "Address 1: #{@viatico.supplier.address1}", :size => 13, :spacing => 4
 end
 
-if @invoice.customer.address2 and @invoice.customer.address2 != ""
-  pdf.text "Address 2: #{@invoice.customer.address2}", :size => 13, :spacing => 4
+if @viatico.supplier.address2 and @viatico.supplier.address2 != ""
+  pdf.text "Address 2: #{@viatico.supplier.address2}", :size => 13, :spacing => 4
 end
 
-if @invoice.customer.city and @invoice.customer.city != ""
-  pdf.text "City: #{@invoice.customer.city}", :size => 13, :spacing => 4
+if @viatico.supplier.city and @viatico.supplier.city != ""
+  pdf.text "City: #{@viatico.supplier.city}", :size => 13, :spacing => 4
 end
 
-if @invoice.customer.state and @invoice.customer.state != ""
-  pdf.text "State: #{@invoice.customer.state}", :size => 13, :spacing => 4
+if @viatico.supplier.state and @viatico.supplier.state != ""
+  pdf.text "State: #{@viatico.supplier.state}", :size => 13, :spacing => 4
 end
 
-if @invoice.customer.zip and @invoice.customer.zip != ""
-  pdf.text "ZIP: #{@invoice.customer.zip}", :size => 13, :spacing => 4
+if @viatico.supplier.zip and @viatico.supplier.zip != ""
+  pdf.text "ZIP: #{@viatico.supplier.zip}", :size => 13, :spacing => 4
 end
 
-if @invoice.customer.country and @invoice.customer.country != ""
-  pdf.text "Country: #{@invoice.customer.country}", :size => 13, :spacing => 4
+if @viatico.supplier.country and @viatico.supplier.country != ""
+  pdf.text "Country: #{@viatico.supplier.country}", :size => 13, :spacing => 4
 end
 
 pdf.text "______________________________________________________________________", :size => 13, :spacing => 4
@@ -73,14 +65,19 @@ pdf.text " ", :size => 13, :spacing => 4
 pdf.text "Details", :size => 15, :style => :bold, :spacing => 4
 pdf.text " ", :size => 13, :spacing => 4
 
-for product in @invoice.get_products()
-  pdf.text "#{product.name} - Price: $#{money(product.price)} - Quantity: #{product.quantity} - Discount: #{money(product.discount)} - Total: $#{money(product.total)}", :size => 13, :spacing => 4
+for product in @viatico.get_services()
+  pdf.text "#{product.name} - Price: #{money(product.price)} - Quantity: #{product.quantity} - Discount: #{money(product.discount)} - Total: #{money(product.total)}", :size => 13, :spacing => 4
 end
 
 pdf.text " ", :size => 13, :spacing => 4
 
-pdf.text "Subtotal: $#{money(@invoice.subtotal)}", :size => 13, :spacing => 4
-pdf.text "Tax: $#{money(@invoice.tax)}", :size => 13, :spacing => 4
-pdf.text "Total: $#{money(@invoice.total)}", :size => 13, :spacing => 4
+pdf.text "Subtotal: #{money(@viatico.subtotal)}", :size => 13, :spacing => 4
+pdf.text "Tax: #{money(@viatico.tax)}", :size => 13, :spacing => 4
+pdf.text "Total: #{money(@viatico.total)}", :size => 13, :spacing => 4
+pdf.text "Detraccion : #{money(@viatico.detraccion)}", :size => 13, :spacing => 4
+pdf.draw_text "Company: #{@viatico.company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
 
-pdf.draw_text "Company: #{@invoice.company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
+
+
+
+    

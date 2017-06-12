@@ -1,22 +1,25 @@
 <p class="bold big">
-  Products:
+  Documentos a cancelar
 </p>
-
 
   <table>
     <thead>
       <tr>
         <th class="small bordered_bottom bordered_right">
-          Product
+          Nro.Documento
         </th>
         <th class="small bordered_bottom bordered_right">
-          Price
+          Proveedor
         </th>
         <th class="small bordered_bottom bordered_right">
-          Quantity
+          Contribucion
+        </th>
+        
+        <th class="small bordered_bottom bordered_right">
+          Factory
         </th>
         <th class="small bordered_bottom bordered_right">
-          Discount
+          Ajuste 
         </th>
         <th class="small bordered_bottom bordered_right">
           Total
@@ -26,23 +29,52 @@
     <tbody>
       <% for product in @products %>
         <tr>
-          <td class="small bordered_bottom bordered_right" style="width: 220px;">
-            <a href="#" onclick="removeItemFromInvoice(<%= product.i %>); return false;" title="Remove product from invoice"><%= product.full_name %></a>
-            [<a href="#" onclick="removeItemFromInvoice(<%= product.i %>); return false;" title="Remove product from invoice">X</a>]
+          <td class="small bordered_bottom bordered_right" style="width: 100px;">
+            <a href="#" onclick="removeItemFromviatico(<%= product.tax%>); return false;" title="Remove product from invoice"><%= product.code %></a>
+            [<a href="#" onclick="removeItemFromviatico(<%= product.tax   %>); return false;" title="Remove product from invoice">X</a>]
           </td>
           <td class="small bordered_bottom bordered_right">
-            $<%= money(product.price) %>
+            <%= product.customer.name %>
           </td>
           <td class="small bordered_bottom bordered_right">
-            <%= product.quantity %>
+            <%= money(product.balance) %>
+          </td>
+          
+          <td class="small bordered_bottom bordered_right">
+            <%= money(product.pago) %>
           </td>
           <td class="small bordered_bottom bordered_right">
-            <%= money(product.discount) %>%
+              <%= money(product.charge) %>
           </td>
           <td class="small bordered_bottom bordered_right">
-            $<%= money(product.CurrTotal) %>
-          </td>
+            <%= money(product.total) %>
+    
+            </td>
         </tr>
       <% end %>
+    
+    <tr>
+      <td colspan="5" class="bordered_bottom bordered_right bold">
+        Total:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@total_pago) %>    
+      </td>      
+    </tr>
+
+  
+      <tr>
+      <td colspan="5" class="bordered_bottom bordered_right bold">
+        Diferencia :
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+    
+      </td>
+      
+    </tr>
+
     </tbody>
   </table>
+
+
+
