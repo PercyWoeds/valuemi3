@@ -260,7 +260,10 @@ def correlativo
 
 end
 
-
+  def self.search(search)
+      where("code LIKE ?", "%#{search}%") 
+        
+  end
   
   # Color for processed or not
   def processed_color
