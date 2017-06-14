@@ -1963,19 +1963,15 @@ class CustomerPaymentsController < ApplicationController
                 
         @totalgeneral_soles = 0
         @totalgeneral_dolar = 0
-
-
-
         @detalle_bancos = @company.get_customer_payments_value_customer2(@fecha1,@fecha2,@bank_id)  
         row  = []
         
-         @detalle_bancos2 =  customerpayment_rpt.get_payment_dato(lcId)
-
-        if @detalle_bancos2
-
-          
+        
+        if @detalle_bancos
                 
-        for d in @detalle_bancos2 
+        for d in @detalle_bancos
+        
+          
               row = []                  
               row << nroitem.to_s              
               row << d.bank_acount.number
