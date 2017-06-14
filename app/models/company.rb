@@ -518,7 +518,7 @@ def get_facturas_day_value_cliente(fecha1,fecha2,cliente,value = "total",moneda)
 
 #total ingreos x banco abierto por cliente 
 def get_customer_payments_value_customer2(fecha1,fecha2,id)
-facturas = CustomerPayment.find_by_sql(['Select customer_payments.id,customer_payments_details.total,
+facturas = CustomerPayment.find_by_sql(['Select customer_payments.id,customer_payment_details.total,
 facturas.code,facturas.customer_id,facturas.fecha,customer_payment_details.factory,customer_payments.bank_acount_id from customer_payment_details   
 INNER JOIN facturas ON   customer_payment_details.factura_id = facturas.id
 INNER JOIN customer_payments ON customer_payments.id = customer_payment_details.customer_payment_id    
