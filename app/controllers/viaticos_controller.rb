@@ -63,7 +63,7 @@ class ViaticosController < ApplicationController
         detalle = parts[2]
         
         
-        product = ViaticoDetail.find(id.to_i)
+        product = Compro.find(id.to_i)
         product[:i] = i
         product[:importe] = quantity.to_f
         product[:detalle] = detalle
