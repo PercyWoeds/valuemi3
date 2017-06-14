@@ -156,6 +156,7 @@
       alert("Please find a product to add first.");
     }
   }
+  
 
   // List items in a kit
   function listItemsKit() {
@@ -1456,6 +1457,94 @@
     $("#items").val(items_final.join(","));
     listItemsAjust();
   }
+  
+  // Add an item to a product kit
+  
+  function addItemToViatico() {
+    
+    var item = $("#ac_item").val();
+    alert("viaticoo");
+    
+    if(item != "") {
+      var company_id = $("#viatico_company_id").val();
+      var item_id = $("#ac_item_id").val();
+      
+      var quantity = $("#ac_item_total").val();
+      var detalle= $("#ac_item_detalle").val();
+      
+      var items_arr = $("#items").val().split(",");
+
+      if(quantity == "" || !isNumeric(quantity)) {
+        alert("Por favor ingrese un importe valido");
+      } else {
+      
+        var item_line = item_id + "|BRK|" + quantity + "|BRK|" +detalle ;
+        
+        $("#items").val($("#items").val() + "," + item_line);
+        listItemsViatico();
+        
+        $("#ac_item_id").val("");
+        $("#ac_item").val("");
+        $("#ac_item_total").val("0.00");
+        
+        updateItemTotalViatico();
+      }
+    } else {
+      alert("Por favor ingrese un detalle primero.");    
+    }
+  }
+
+  // List items in a kit
+  function listItemsViatico() {
+    var items = $("#items").val();
+    var company_id = $("#viatico_company_id").val();
+    
+    $.get('/viaticos/list_items/' + company_id, {
+      items: items
+    },
+    function(data) {
+      $("#list_items").html(data);
+      documentReady();
+    });
+  }
+
+
+  // Update price total for invoice
+  function updateItemTotalViatico() {
+    var quantity = $("#ac_item_quantity").val();
+  
+    
+    if(isNumeric(quantity) ) {
+      var total = quantity ;
+      
+
+      $("#ac_item_total").html(total);
+    } else {
+      $("#ac_item_total").html("0.00");
+    }
+  }
+
+  // Removes an item from an invoice
+  function removeItemFromViatico(id) {
+    var items = $("#items").val();
+    var items_arr = items.split(",");
+    var items_final = Array();
+    var i = 0;
+    
+    while(i < items_arr.length) {
+      if(i != id) {
+        items_final[i] = items_arr[i];
+      }
+      i++;
+    }
+    
+    $("#items").val(items_final.join(","));
+    listItemsViatico();
+  }
+
+
+  
+  
  //............................................................................  
 
   // On ready

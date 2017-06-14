@@ -3,6 +3,9 @@ self.per_page = 20
    
   validates_presence_of :company_id, :total,:user_id,:fecha1 
   
+  
+  validates_uniqueness_of :code
+  
   belongs_to :company
   belongs_to :location
   belongs_to :division

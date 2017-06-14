@@ -88,6 +88,7 @@
   </h5>
   
 
+                                                  
   <form method="get" action="/viaticos" onsubmit="addItemToViatico(); return false;">   
   
   <input type="hidden" name="ac_item_id" id="ac_item_id" value="" />  
@@ -97,21 +98,34 @@
     <div class="small">
       Ingrese un termino de busqueda para encontrar un documento 
     </div>
+    
     <br />  
     <div>
       <strong>Importe:</strong><br />
       <span id="ac_item_total2">0.00</span>
     </div>
+    <div class="small">
+     Importe 
+    </div>
+  
 
     <div >
       <strong>Total:</strong><br />    
     <input type="text" name="ac_item_total" id="ac_item_total" value="0.00" class="tf_short" />
     </div>
-
     <div class="small">
-     Importe 
+     Total 
     </div>
+
     <br />
+    
+    <strong>Detalle :</strong><br />
+    <input type="text" name="ac_item_detalle" id="ac_item_detalle" value="" />
+    <div class="small">
+      Ingrese un termino de busqueda para encontrar un documento 
+    </div>
+    <br />  
+    
     <input type="submit" value="Agregar item a Comprobante" />
       
   </form>
@@ -139,7 +153,7 @@
       $("#ac_item_id").val(data[2]);
       $("#ac_item_total").val(data[4]);  
       
-      updateItemTotalCP();
+      updateItemTotalViaticos();
     });
     
     $("#ac_customer").autocomplete("/viaticos/ac_customers/<%= @company.id %>", {

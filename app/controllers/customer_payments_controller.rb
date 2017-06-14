@@ -913,6 +913,7 @@ class CustomerPaymentsController < ApplicationController
       pdf 
   end   
 
+
   def build_pdf_body_rpt1(pdf)
     
     pdf.text "Listado de Cobranza Emitidas : Fecha "+@fecha1.to_s+ " Mes : "+@fecha2.to_s , :size => 11 
@@ -1964,12 +1965,17 @@ class CustomerPaymentsController < ApplicationController
         @totalgeneral_dolar = 0
 
 
+
         @detalle_bancos = @company.get_customer_payments_value_customer2(@fecha1,@fecha2,@bank_id)  
         row  = []
-
-        for d in @detalle_bancos 
         
+         @detalle_bancos2 =  customerpayment_rpt.get_payment_dato(lcId)
 
+        if @detalle_bancos2
+
+          
+                
+        for d in @detalle_bancos2 
               row = []                  
               row << nroitem.to_s              
               row << d.bank_acount.number
@@ -1977,10 +1983,8 @@ class CustomerPaymentsController < ApplicationController
               row << d.fecha.strftime("%d/%m/%Y") 
               row << d.code
               row << d.customer.name 
-              
               row << sprintf("%.2f",d.total.to_s)
               
-            
               table_content2 << row
 
               @totalgeneral_soles = @totalgeneral_soles + d.total          
@@ -2032,6 +2036,7 @@ class CustomerPaymentsController < ApplicationController
       pdf
       
   end
+  
 
   # Export cobrar  to PDF
   def rpt_ccobrar8_pdf

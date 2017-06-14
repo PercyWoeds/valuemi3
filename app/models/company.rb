@@ -605,6 +605,7 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? and factur
     return ret    
  end 
  
+ 
  def get_customer_payments_cliente(fecha1,fecha2,cliente)
 
 @facturas =CustomerPayment.find_by_sql(['Select customer_payments.id,customer_payment_details.total,

@@ -60,17 +60,16 @@ class ViaticosController < ApplicationController
         
         id = parts[0]
         quantity = parts[1]
-        price = parts[2]
-        discount = parts[3]
+        detalle = parts[2]
         
-        product = Cegreso.find(id.to_i)
+        
+        product = ViaticoDetail.find(id.to_i)
         product[:i] = i
-        product[:quantity] = quantity.to_i
-        product[:price] = price.to_f
-        product[:discount] = discount.to_f
+        product[:importe] = quantity.to_f
+        product[:detalle] = detalle
         
-        total = product[:price] * product[:quantity]
-        total -= total * (product[:discount] / 100)
+        total += product[:importe]
+        
         
         product[:CurrTotal] = total
         
@@ -122,7 +121,7 @@ class ViaticosController < ApplicationController
   # Show viaticos for a company
   def list_viaticos
     @company = Company.find(params[:company_id])
-    @pagetitle = "#{@company.name} - viaticos"
+    @pagetitle = "#{@company.name} - Viaticos"
     @filters_display = "block"
     
     @locations = Location.where(company_id: @company.id).order("name ASC")
@@ -311,7 +310,7 @@ class ViaticosController < ApplicationController
   end
   private
   def viatico_params
-    params.require(:viatico).permit(:company_id,:location_id,:division_id,:customer_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id)
+    params.require(:viatico).permit(:company_id,:location_id,:division_id,:description,:comments,:code,:subtotal,:total,:processed,:date_processed,:user_id)
   end
 
 end

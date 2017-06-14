@@ -35,9 +35,13 @@ module Mnygo
     # config.action_view.javascript_expansions[:defaults] = %w(jquery rails)
 
     # Configure the default encoding used in templates for Ruby 1.9.
+    
+    config.assets.precompile += %w( *.js *.css )
+    
     config.encoding = "utf-8"
     config.assets.initialize_on_precompile = false
     config.serve_static_files = true
+    
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
   end

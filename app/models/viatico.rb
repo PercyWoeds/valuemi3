@@ -107,14 +107,12 @@ self.per_page = 20
         
         id = parts[0]
         quantity = parts[1]
-        price = parts[2]
-        discount = parts[3]
         
-        total = price.to_f * quantity.to_f
-        total -= total * (discount.to_f / 100)
+        total =  quantity.to_f
+        
         
         begin
-          product = Service.find(id.to_i)
+          
           subtotal += total
         rescue
         end
@@ -124,44 +122,7 @@ self.per_page = 20
     return subtotal
   end
   
-  def get_tax(items, customer_id)
-    tax = 0
-    
-    customer = Customer.find(customer_id)
-    
-    if(customer)
-      if(customer.taxable == "1")
-        for item in items
-          if(item and item != "")
-            parts = item.split("|BRK|")
-        
-            id = parts[0]
-            quantity = parts[1]
-            price = parts[2]
-            discount = parts[3]
-        
-            total = price.to_f * quantity.to_f
-            total -= total * (discount.to_f / 100)
-        
-            begin
-              product = Service.find(id.to_i)
-              
-              if(product)
-                if(product.tax1 and product.tax1 > 0)
-                  tax += total * (product.tax1 / 100)
-                end
-                
-              end
-            rescue
-            end
-          end
-        end
-      end
-    end
-    
-    return tax
-  end
-
+  
   
   def delete_products()
     invoice_services = InvoiceService.where(factura_id: self.id)
@@ -178,16 +139,16 @@ self.per_page = 20
         
         id = parts[0]
         quantity = parts[1]
-        price = parts[2]
-        discount = parts[3]
+        detalle = parts[2]
         
-        total = price.to_f * quantity.to_f
-        total -= total * (discount.to_f / 100)
+        
+        total =  quantity.to_f
+        
         
         begin
-          product = Service.find(id.to_i)
+          product = Compro.find(id.to_i)
           
-          new_invoice_product = InvoiceService.new(:factura_id => self.id, :service_id => product.id, :price => price.to_f, :quantity => quantity.to_f, :discount => discount.to_f, :total => total.to_f)
+          new_invoice_product = ViaticoDetail.new(:viatico_id => self.id, :compro_id => product.id, :detalle => detalle.to_f, :quantity => detalle.to_f, :total => total.to_f)
 
           new_invoice_product.save
 
