@@ -53,7 +53,7 @@ class ViaticosController < ApplicationController
     items_arr = []
     @products = []
     i = 0
-
+    total = 0 
     for item in items
       if item != ""
         parts = item.split("|BRK|")
@@ -61,7 +61,6 @@ class ViaticosController < ApplicationController
         id = parts[0]
         quantity = parts[1]
         detalle = parts[2]
-        
         
         product = Compro.find(id.to_i)
         product[:i] = i
