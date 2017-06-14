@@ -2224,7 +2224,7 @@ def get_ingresos_day2(fecha1,fecha2,product)
     from purchase_details   
 INNER JOIN purchases ON purchase_details.purchase_id = purchases.id
 INNER JOIN products ON purchase_details.product_id = products.id
-WHERE products.products_category_id = ?  and purchases.date1 >= ? and purchases.date1 =< ? and purchases.processed = ?
+WHERE products.products_category_id = ?  and purchases.date1 >= ? and purchases.date1 <= ? and purchases.processed = ?
 ORDER BY products.code  ',product, "#{fecha1} 00:00:00","#{fecha2} 23:59:59","1" ])
   
     return @purchases 
