@@ -1991,7 +1991,7 @@ class CustomerPaymentsController < ApplicationController
 
               nroitem = nroitem + 1      
         end   
-
+    end 
           nroitem = nroitem + 1      
 
           row = []
@@ -2243,10 +2243,6 @@ class CustomerPaymentsController < ApplicationController
 ##
 ##FIN RESUMEN INGRESO A BANCOS 
 ##
-
-
-
-
 
 
   def client_data_headers_rpt
