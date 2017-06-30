@@ -30,26 +30,23 @@
       <% for product in @products %>
         <tr>
           <td class="small bordered_bottom bordered_right" style="width: 100px;">
-            <a href="#" onclick="removeItemFromviatico(<%= product.tax%>); return false;" title="Remove product from invoice"><%= product.code %></a>
-            [<a href="#" onclick="removeItemFromviatico(<%= product.tax   %>); return false;" title="Remove product from invoice">X</a>]
+            <a href="#" onclick="removeItemFromviatico(<%= product.id%>); return false;" title="Remove product from invoice"><%= product.code %></a>
+            [<a href="#" onclick="removeItemFromviatico(<%= product.id   %>); return false;" title="Remove product from invoice">X</a>]
           </td>
           <td class="small bordered_bottom bordered_right">
-            <%= product.customer.name %>
+            <%= product.compro.code %>
           </td>
           <td class="small bordered_bottom bordered_right">
-            <%= money(product.balance) %>
+            
           </td>
           
           <td class="small bordered_bottom bordered_right">
-            <%= money(product.pago) %>
+            <%= money(product.importe) %>
           </td>
           <td class="small bordered_bottom bordered_right">
-              <%= money(product.charge) %>
+              <%=product.detalle %>
           </td>
-          <td class="small bordered_bottom bordered_right">
-            <%= money(product.total) %>
-    
-            </td>
+          
         </tr>
       <% end %>
     
