@@ -29,9 +29,9 @@
       <%= f.label :fecha , "Fecha *", :class => "bold" %><br />
 
       <% if @current_user.level = "admin" %>
-        <%= f.text_field :fecha, value: Time.now.strftime("%d/%m/%Y") %>
+        <%= f.text_field :fecha, value: Time.zone.now.strftime("%d/%m/%Y") %>
       <% else %>
-        <%= f.text_field :fecha, value: Time.now.strftime("%d/%m/%Y"), :readonly => true %>
+        <%= f.text_field :fecha, value: Time.zone.now.strftime("%d/%m/%Y"), :readonly => true %>
       <% end %>
       </div>
 
