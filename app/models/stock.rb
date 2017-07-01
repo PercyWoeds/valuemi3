@@ -1,6 +1,8 @@
 class Stock < ActiveRecord::Base
 
-
+validates_uniqueness_of :product_id 
+validates_presence_of :store_id, :product_id
+ 
 self.per_page = 20
 
 belongs_to :document 

@@ -1536,6 +1536,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
 
  def get_stocks_inventarios2(fecha1,fecha2,product1)
 
+
     MovementDetail.delete_all
 
     @productExiste = Product.where(:products_category_id=> product1) 
@@ -1854,7 +1855,30 @@ def get_purchaseorder_detail2(fecha1,fecha2)
           end   
         end 
      end 
-
+    
+     if estado=="1"
+        @inv1 = MovementDetail.all.order(:product_id,:fecha)
+        
+        for stock1 in @inv1
+            a0= stock1.product_id 
+            a1= stock1.stock_inicial
+            a2= stocks1.ingreso
+            a3= stocks1.salida
+            a4= a1+a2-a3
+            
+            a5=Stock.find_by(:product_id=> stocks.product_id)
+            if a5
+              a5.quantity = a4
+              a5.save
+            else
+              
+              a6= Stock.new(:store_id =>"1",:state=>"Lima",:product_id=>a0,:quantity=>a4)
+              a6.save 
+              
+            end 
+            
+        end 
+     end 
 
      # AGREGA LOS QUE NO TIENEN MOVIMIENTO 
     
