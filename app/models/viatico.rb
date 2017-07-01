@@ -15,7 +15,6 @@ self.per_page = 20
   
   belongs_to :user
   
-  
 
   has_many   :viatico_details
   

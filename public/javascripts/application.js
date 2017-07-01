@@ -1463,7 +1463,7 @@
   function addItemToViatico() {
     
     var item = $("#ac_item").val();
-    alert("viaticoo");
+
     
     if(item != "") {
       var company_id = $("#viatico_company_id").val();
