@@ -368,9 +368,10 @@ class StocksController < ApplicationController
     @fecha1 = params[:fecha1] 
     @fecha2 = params[:fecha2] 
     @categoria =params[:products_category_id]
+    @estado = params[:estado]
     
     @namecategoria= @company.get_categoria_name(@categoria)            
-    @movements = @company.get_stocks_inventarios2(@fecha1,@fecha2,@categoria)   
+    @movements = @company.get_stocks_inventarios2(@fecha1,@fecha2,@categoria,@estado)   
       
     Prawn::Document.generate("app/pdf_output/stocks2.pdf") do |pdf|            
         pdf.font_families.update("Open Sans" => {

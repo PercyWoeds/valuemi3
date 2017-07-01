@@ -1534,7 +1534,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
 
  ###INVENTARIO  STOCKS 
 
- def get_stocks_inventarios2(fecha1,fecha2,product1)
+ def get_stocks_inventarios2(fecha1,fecha2,product1,estado)
 
 
     MovementDetail.delete_all
