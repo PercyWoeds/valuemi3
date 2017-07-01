@@ -31,10 +31,11 @@ totals = []
     <%= select_tag(:products_category_id,options_from_collection_for_select(@categories,'id','category') ) %>
   </div>
   
+  <%if @current_user.level == "admin"  %>
   <div class="fied">
     <input type="checkbox" name="estado" value="1" >
   </div>
-  
+  <%end %>
   
   <input type="submit" value="Ver Reporte " />
   

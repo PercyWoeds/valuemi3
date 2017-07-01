@@ -1862,11 +1862,11 @@ def get_purchaseorder_detail2(fecha1,fecha2)
         for stock1 in @inv1
             a0= stock1.product_id 
             a1= stock1.stock_inicial
-            a2= stocks1.ingreso
-            a3= stocks1.salida
+            a2= stock1.ingreso
+            a3= stock1.salida
             a4= a1+a2-a3
             
-            a5=Stock.find_by(:product_id=> stocks.product_id)
+            a5=Stock.find_by(:product_id=> a0)
             if a5
               a5.quantity = a4
               a5.save
