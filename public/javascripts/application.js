@@ -1373,8 +1373,6 @@
   }
  //............................................................................  
 
-//****************************************************************************
-
  //............................................................................  
   // Add an item to a product kit
   function addItemToAjust() {
@@ -1459,12 +1457,11 @@
   }
   
   // Add an item to a product kit
-  
+
   function addItemToViatico() {
     
     var item = $("#ac_item").val();
 
-    
     if(item != "") {
       var company_id = $("#viatico_company_id").val();
       var item_id = $("#ac_item_id").val();
