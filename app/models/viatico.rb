@@ -187,25 +187,23 @@ def get_total_inicial(items)
       if(item and item != "")
         parts = item.split("|BRK|")
         
-        id = parts[0]
+        id       = parts[0]
         quantity = parts[1]
-        detalle = parts[2]
-        tm  = parts[3]
-
-        
-        total =  quantity.to_f
+        detalle1 = parts[2]
+        tm1      = parts[3]
+        total    =  quantity.to_f
         
         
-        begin
+    
           product = Compro.find(id.to_i)
           
-          new_invoice_product = ViaticoDetail.new(:viatico_id => self.id, :compro_id => product.id, :detalle => detalle.to_f, :quantity => detalle.to_f, :total => total.to_f)
+          new_invoice_product = ViaticoDetail.new(:viatico_id => self.id,:descrip=> detalle1,:importe=> total ,:detalle=> detalle1,:tm=>tm1)
 
           new_invoice_product.save
 
-        rescue
+      
           
-        end
+    
       end
     end
   end
@@ -396,7 +394,7 @@ def get_total_inicial(items)
   def process
     if(self.processed == "1" or self.processed == true)          
       self.processed="1"
-      self.date_processed = Time.now
+      self.date_processed = Time.zone.now
       self.save
     end
   end

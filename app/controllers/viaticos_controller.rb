@@ -241,7 +241,7 @@ class ViaticosController < ApplicationController
     rescue 
       @viatico[:total_egreso]= 0 
     end 
-    @viatico[:saldo] = @viatico[:total_ing] + @viatico[:total_egreso]
+    @viatico[:saldo] = @viatico[:inicial] +  @viatico[:total_ing] - @viatico[:total_egreso]
     
     if(params[:viatico][:user_id] and params[:viatico][:user_id] != "")
       curr_seller = User.find(params[:viatico][:user_id])

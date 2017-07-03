@@ -1458,6 +1458,7 @@
   
   // Add an item to a product
   function addItemToViatico() {
+  
     
     var item = $("#ac_item").val();
 
@@ -1509,7 +1510,6 @@
     function(data) {
       $("#list_items").html(data);
       documentReady();
-      alert("abc");
     });
   }
 

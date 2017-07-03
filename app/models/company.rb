@@ -1596,7 +1596,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
       end 
 
       #ingresos
-     @ing = Purchase.where('date1 <  ?  and processed = ?',fecha1, "1")
+     @ing = Purchase.where('date1 <  ?',fecha1)
 
      for ing in @ing    
           $lcFecha = ing.date1.to_date
@@ -1743,7 +1743,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
         end 
       end 
       #ingresos0 
-     @ing = Purchase.where('date1>= ? and date1 <= ? and processed = ? ',fecha1,fecha2,"1")
+     @ing = Purchase.where('date1>= ? and date1 <= ?  ',fecha1,fecha2)
 
      for ing in @ing
 
@@ -1949,7 +1949,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
       end 
 
       #ingresos
-     @ing = Purchase.where('date1 <  ?  and processed = ? ',fecha1,"1")
+     @ing = Purchase.where('date1 <  ?',fecha1)
 
      for ing in @ing    
         $lcFecha  = ing.date1.strftime("%F") 
@@ -2074,7 +2074,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
       end 
 
       #ingresos
-     @ing = Purchase.where('date1>= ? and date1 <= ? and processed = ?',fecha1,fecha2, "1")
+     @ing = Purchase.where('date1>= ? and date1 <= ?',fecha1,fecha2)
 
      for ing in @ing
         $lcFecha  = ing.date1.strftime("%F")
@@ -2163,15 +2163,6 @@ def get_purchaseorder_detail2(fecha1,fecha2)
      
 
      
-
-
-     
-
-
-     
-
-
-
     return @inv 
 
  end
