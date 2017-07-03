@@ -48,106 +48,47 @@
 </h3>
 
 <p>
-  <b>Cuenta </b>  
-  <%= link_to @viatico.bank_acount.number %>
+  <b>Inicial </b>  
+  <%= link_to @viatico.inicial %>
 </p>
 
 <p>
-  <b>Banco : </b>  
-  <%=  @viatico.get_banco(@viatico.bank_acount.bank_id)   %>
+  <b>Ingreso: </b>  
+  <%=  @viatico.total_ing   %>
 </p>  
 
-<b>Moneda : </b>  
-  <%=  @viatico.get_moneda(@viatico.bank_acount.moneda_id)   %>
+<b> _Egreso </b>  
+  <%=  @viatico.total_egreso   %>
 </p>
 
+<b> Saldo </b>  
+  <%=  @viatico.saldo   %>
+</p>
 
 <%= hr() %>
 
-<h3>
-  Details
-</h3>
-
-<table>
-  <thead>
-    <tr>
-      <th>
-        Tipo  
-      </th>
-      <th>
-        Documento
-      </th>
-      <th>    
-        Operacion
-      </th>
-      <th>
-        Factory  
-      </th>
-      <th>
-        Ajuste 
-      </th>
-
-      <th>
-        Total
-      </th>
-
-    </tr>
-  </thead>
-  <tbody>
+    <% for product in @viatico.get_viaticos() %>
       <tr>
-        <td class="bordered_bottom bordered_right">
-           <%=  @viatico.get_document (@viatico.document_id)     %>
-        </td>
-        
-              
-        <td class="bordered_bottom bordered_right">
-          <%=  @viatico.documento     %>
-        </td>
-
-        <td class="bordered_bottom bordered_right">
-          <%=  @viatico.nrooperacion  %>
-        </td>
-        
-         <td class="bordered_bottom bordered_right">
-          <%=  @viatico.operacion    %>
-        </td>
-
-          <td class="bordered_bottom bordered_right">
-        
-        </td>
-        
-        <td class="bordered_bottom bordered_right">
-            <%=  @viatico.total     %>
-        </td>
-
-      </tr>
-    
-
-    <% for productItem in @viatico.get_payments() %>
-      <tr>
-        <td class="bordered_bottom bordered_right">
+       <td class="small bordered_bottom bordered_right">
+            <%= product.tranportorder.employee.full_name %>
+          </td>
           
-        </td>
-        
-              
-        <td class="bordered_bottom bordered_right">
-          <%=  productItem.code   %>
-        </td>
+         <td class="small bordered_bottom bordered_right">
+            <%= product.tranportorder.truck.placa %>
+          </td>
+         <td class="small bordered_bottom bordered_right">
+            <%= product.tranportorder.code %>
+          </td>
 
-        <td class="bordered_bottom bordered_right">
-          <%=  productItem.get_customer(productItem.customer_id) %>
-        </td>
-        
-         <td class="bordered_bottom bordered_right">
-       <%=  productItem.factory   %>
-        </td>
-         <td class="bordered_bottom bordered_right">
-       <%=  productItem.ajuste    %>
-        </td>
-
-        <td class="bordered_bottom bordered_right">
-          <%= money(productItem.total) %>
-        </td>
+         <td class="small bordered_bottom bordered_right">
+            <%= product.tranportorder.ubication_id %>
+          </td>
+           <td class="small bordered_bottom bordered_right">
+              <%=product.detalle %>
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= money(product.importe) %>
+          </td>
 
       </tr>
     <% end %>
@@ -156,58 +97,9 @@
         &nbsp;
       </td>
     </tr>
-    <tr>
-      <td colspan="5" class="bordered_bottom bordered_right bold">
-        Factory:
-      </td>
-
-      <td class="bordered_bottom bordered_right bold right">
-        <%= money(@viatico.get_customer_payment_value("factory")) %>
-      </td>
-
-    </tr>
+    
    
-    <tr>
-      <td colspan="5" class="bordered_bottom bordered_right bold">
-        Compensación:
-      </td>
-
-      <td class="bordered_bottom bordered_right bold right">
-        <%= money(@viatico.get_customer_payment_value("compen")) %>
-      </td>
-      
-    </tr>
-
-    <tr>
-      <td colspan="5" class="bordered_bottom bordered_right bold">
-        Ajuste:
-      </td>
-
-      <td class="bordered_bottom bordered_right bold right">
-        <%= money(@viatico.get_customer_payment_value("ajuste")) %>
-      </td>
-      
-    </tr>
-    <tr>
-      <td colspan="5" class="bordered_bottom bordered_right bold">
-        Total:
-      </td>
-      <td class="bordered_bottom bordered_right bold right">
-         <%= money(@viatico.get_customer_payment_value("total") - @viatico.get_customer_payment_value("factory")+@viatico.get_customer_payment_value("compen")+ @viatico.get_customer_payment_value("ajuste")) %>
-      </td>
-    </tr>
-    
-    <tr>
-      <td colspan="5" class="bordered_bottom bordered_right bold">
-        Diferencia:
-      </td>
-      <td class="bordered_bottom bordered_right bold right">
-        <%=money(@viatico.total+ @viatico.get_customer_payment_value("factory")-@viatico.get_customer_payment_value("compen")-@viatico.get_customer_payment_value("ajuste")- @viatico.get_customer_payment_value("total")) %>
-      </td>
-    </tr>
-    
- 
-
+   
   </tbody>
 </table>
 <br />

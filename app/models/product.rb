@@ -1,6 +1,7 @@
 class Product < ActiveRecord::Base
   self.per_page = 20
   
+
   
   validates_presence_of :name, :company_id,:products_category_id
   validates_numericality_of  :tax1, :tax2, :tax3

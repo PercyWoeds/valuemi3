@@ -1456,14 +1456,15 @@
     listItemsAjust();
   }
   
-  // Add an item to a product kit
-
+  // Add an item to a product
   function addItemToViatico() {
     
     var item = $("#ac_item").val();
 
     if(item != "") {
       var company_id = $("#viatico_company_id").val();
+      var inicial = $("#viatico_inicial").val();
+      var tm = $("#tm").val();
       var item_id = $("#ac_item_id").val();
       
       var quantity = $("#ac_item_total").val();
@@ -1475,11 +1476,12 @@
         alert("Por favor ingrese un importe valido");
       } else {
       
-        var item_line = item_id + "|BRK|" + quantity + "|BRK|" +detalle ;
+        var item_line = item_id + "|BRK|" + quantity + "|BRK|" +detalle + "|BRK|" +tm + "|BRK|"+inicial  ;
         
         $("#items").val($("#items").val() + "," + item_line);
         listItemsViatico();
         
+        $("#tm").val("");
         $("#ac_item_id").val("");
         $("#ac_item").val("");
         $("#ac_item_total").val("0.00");
@@ -1492,7 +1494,12 @@
   }
 
   // List items in a kit
+ 
+
+
+  // List items in a kit
   function listItemsViatico() {
+    
     var items = $("#items").val();
     var company_id = $("#viatico_company_id").val();
     
@@ -1502,14 +1509,13 @@
     function(data) {
       $("#list_items").html(data);
       documentReady();
+      alert("abc");
     });
   }
-
 
   // Update price total for invoice
   function updateItemTotalViatico() {
     var quantity = $("#ac_item_quantity").val();
-  
     
     if(isNumeric(quantity) ) {
       var total = quantity ;

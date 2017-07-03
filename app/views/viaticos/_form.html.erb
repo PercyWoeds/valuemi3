@@ -38,6 +38,13 @@
         </div>
    
         <%= hr() %>
+  
+    
+    <div class="field" id="list_items">
+      <p class="bold big">Productos:</p>
+    </div>
+    
+    <%= hr() %>
       
         <div class="field">
           <%= f.label  :comments,"Comentarios  " , :class => "bold"%><br />
@@ -92,7 +99,18 @@
   <form method="get" action="/viaticos" onsubmit="addItemToViatico(); return false;">   
   
   <input type="hidden" name="ac_item_id" id="ac_item_id" value="" />  
+  
+    <div class="field">
+      
+    <select id="tm" name = "tm" >
+      
+    <option value="">Select an option&hellip;</option>
+    <option value="1">Ingreso</option>
+    <option value="0">Salida </option>
+    </select>
 
+     </div>
+    
     <strong>Documento :</strong><br />
     <input type="text" name="ac_item" id="ac_item" value="" />
     <div class="small">
@@ -185,8 +203,7 @@
     });
     
     <% if @viaticos_lines %>
-    alert 'holas viaticos_lines';
-      listItemsviaticos();
+      listItemsViatico();
     <% end %>
   });
 </script>

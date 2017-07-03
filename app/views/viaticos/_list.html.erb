@@ -25,19 +25,26 @@
     </thead>
     <tbody>
     
-      <% for viatico  in @viatico %>
+      <% for viatico  in @viaticos %>
         <tr>
           <td class="bordered_right bordered_bottom">
             <%= link_to viatico.code, viatico, :title => "Ir a factura" %>
           </td>
-          <td class="bordered_right bordered_bottom ">
-            <%=  viatico.get_cliente_customer_payment(viatico.id) %>            
+       
+          <td class="small bordered_bottom bordered_right">
+            <%= money(viatico.inicial) %>
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= money(viatico.total_ing) %>
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= money(viatico.total_egreso) %>
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= money(viatico.saldo) %>
           </td>
 
-
-          <td class="bordered_right bordered_bottom right">
-            <%= money(viatico.total) %>
-          </td>
+          
           <td class="bordered_right bordered_bottom">
             <%= viatico.fecha1.strftime("%d/%m/%Y")  %>
           </td>
@@ -48,6 +55,7 @@
             <%= link_to "Ver", viatico %>
           </td>
           <td class="bordered_right bordered_bottom">  
+          
             
           <%= link_to 'Eliminar', viatico, :data=> {:confirm => 'Esta seguro ?'}, :method => :delete  %>           
                   

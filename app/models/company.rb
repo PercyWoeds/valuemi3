@@ -1596,7 +1596,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
       end 
 
       #ingresos
-     @ing = Purchase.where('date1 <  ? ',fecha1)
+     @ing = Purchase.where('date1 <  ?  and processed = ?',fecha1, "1")
 
      for ing in @ing    
           $lcFecha = ing.date1.to_date
@@ -1742,8 +1742,8 @@ def get_purchaseorder_detail2(fecha1,fecha2)
 
         end 
       end 
-      #ingresos
-     @ing = Purchase.where('date1>= ? and date1 <= ?',fecha1,fecha2)
+      #ingresos0 
+     @ing = Purchase.where('date1>= ? and date1 <= ? and processed = ? ',fecha1,fecha2,"1")
 
      for ing in @ing
 
@@ -1949,7 +1949,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
       end 
 
       #ingresos
-     @ing = Purchase.where('date1 <  ? ',fecha1)
+     @ing = Purchase.where('date1 <  ?  and processed = ? ',fecha1,"1")
 
      for ing in @ing    
         $lcFecha  = ing.date1.strftime("%F") 
@@ -2074,7 +2074,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
       end 
 
       #ingresos
-     @ing = Purchase.where('date1>= ? and date1 <= ?',fecha1,fecha2)
+     @ing = Purchase.where('date1>= ? and date1 <= ? and processed = ?',fecha1,fecha2, "1")
 
      for ing in @ing
         $lcFecha  = ing.date1.strftime("%F")
@@ -2262,6 +2262,33 @@ def get_ingresos_day3(fecha1,fecha2)
     return @purchases 
 
 end
+
+
+def get_trazabilidad_day(fecha1,fecha2,product)
+
+   @purchases1 = Purchase.find_by_sql(['Select purchases.*,purchase_details.quantity,
+    purchase_details.price_without_tax as price,purchases.date1 as fecha, products.name as nameproducto,
+    products.code as codigo ,purchases.documento as code ,products.unidad,purchase_details.total 
+    from purchase_details   
+INNER JOIN purchases ON purchase_details.purchase_id = purchases.id
+INNER JOIN products ON purchase_details.product_id = products.id
+WHERE products.products_category_id = ?  and purchases.date1 >= ? and purchases.date1 <= ? and purchases.processed = ?
+ORDER BY products.code  ',product, "#{fecha1} 00:00:00","#{fecha2} 23:59:59","1" ])
+
+ @purchases2 = Output.find_by_sql(['Select outputs.*,output_details.quantity,
+    output_details.price,output_details.total,products.name as nameproducto,products.code as codigo,products.unidad
+    from output_details   
+INNER JOIN outputs ON output_details.output_id = outputs.id
+INNER JOIN products ON output_details.product_id = products.id
+WHERE products.products_category_id = ?  and outputs.fecha >= ? and outputs.fecha <= ?',product, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
+
+
+
+ 
+    return @purchases 
+
+end
+
 
 def get_dolar(fecha1) 
   @dolar = Tipocambio.find_by(["dia  >= ? and dia <= ? ", "#{fecha1} 00:00:00","#{fecha1} 23:59:59" ])

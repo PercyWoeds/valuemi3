@@ -4,7 +4,7 @@ class Viatico < ActiveRecord::Base
 self.per_page = 20
 
 
-  validates_presence_of :company_id,  :code, :user_id
+  validates_presence_of :company_id,  :code, :user_id,:inicial,:fecha1
 
   validates_uniqueness_of :code
   
@@ -96,8 +96,32 @@ self.per_page = 20
         Voided.where(:id=>'2').update_all(:numero =>lcnumero)        
   end
 
-
-  def get_subtotal(items)
+def get_total_inicial(items)
+    subtotal = 0
+    
+    for item in items
+      if(item and item != "")
+        parts = item.split("|BRK|")
+        
+         id = parts[0]
+         quantity = parts[1]
+         tm  = parts[3]
+         inicial  = parts[4]
+         
+        
+            total =  inicial.to_f
+         
+        begin
+          subtotal = total
+        rescue
+        end
+      end
+    end
+    
+    return subtotal
+  end
+  
+  def get_total_ing(items)
     subtotal = 0
     
     for item in items
@@ -106,12 +130,14 @@ self.per_page = 20
         
         id = parts[0]
         quantity = parts[1]
-        
-        total =  quantity.to_f
-        
+         tm  = parts[3]
+         if tm == "1"
+            total =  quantity.to_f
+          else
+            total = 0
+          end 
         
         begin
-          
           subtotal += total
         rescue
         end
@@ -121,6 +147,31 @@ self.per_page = 20
     return subtotal
   end
   
+  def get_total_sal(items)
+    subtotal = 0
+    
+    for item in items
+      if(item and item != "")
+        parts = item.split("|BRK|")
+        
+        id = parts[0]
+        quantity = parts[1]
+         tm  = parts[3]
+         if tm == "0"
+            total =  quantity.to_f
+          else
+            total = 0
+          end 
+        
+        begin
+          subtotal += total
+        rescue
+        end
+      end
+    end
+    
+    return subtotal
+  end
   
   
   def delete_products()
@@ -139,7 +190,8 @@ self.per_page = 20
         id = parts[0]
         quantity = parts[1]
         detalle = parts[2]
-        
+        tm  = parts[3]
+
         
         total =  quantity.to_f
         
@@ -192,7 +244,10 @@ self.per_page = 20
   end
 
   def identifier
-    return "#{self.code} - #{self.customer.name}"
+    return "#{self.code} "
+  end
+  def get_viaticos
+      @viaticos = ViaticoDetail.where(:id=> self.id)
   end
 
   def get_invoices

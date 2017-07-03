@@ -52,8 +52,10 @@ class ViaticosController < ApplicationController
     items = items.split(",")
     items_arr = []
     @products = []
+    @total_pago1= 0
     i = 0
     total = 0 
+    
     for item in items
       if item != ""
         parts = item.split("|BRK|")
@@ -61,6 +63,9 @@ class ViaticosController < ApplicationController
         id = parts[0]
         quantity = parts[1]
         detalle = parts[2]
+        inicial = parts[4]
+        puts  "inicial"
+        puts inicial  
         
         product = Compro.find(id.to_i)
         product[:i] = i
@@ -69,10 +74,12 @@ class ViaticosController < ApplicationController
         
         total += product[:importe]
         
-        
         product[:CurrTotal] = total
         
+        @total_pago1  = total     
+        
         @products.push(product)
+        
       end
       
       i += 1
@@ -84,6 +91,7 @@ class ViaticosController < ApplicationController
   # Autocomplete for documento
   def ac_documentos
     @products = Compro.where(["company_id = ? AND code LIKE ? ", params[:company_id], "%" + params[:q] + "%"])
+    
     render :layout => false
   end
   
@@ -160,7 +168,6 @@ class ViaticosController < ApplicationController
   # GET /viaticos/1.xml
   def show
     @viatico = Viatico.find(params[:id])
-    @customer = @viatico.customer
   end
 
   # GET /viaticos/new
@@ -218,16 +225,23 @@ class ViaticosController < ApplicationController
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
-    
-    @viatico[:subtotal] = @viatico.get_subtotal(items)
+    begin
+      @viatico[:inicial] = @viatico.get_total_inicial(items)
+    rescue
+      @viatico[:inicial] = 0
+    end 
     
     begin
-      @viatico[:tax] = @viatico.get_tax(items, @viatico[:customer_id])
-    rescue
-      @viatico[:tax] = 0
-    end
-    
-    @viatico[:total] = @viatico[:subtotal] + @viatico[:tax]
+      @viatico[:total_ing] = @viatico.get_total_ing(items)
+    rescue 
+      @viatico[:total_ing] = 0
+    end 
+    begin 
+      @viatico[:total_egreso]=  @viatico.get_total_sal(items)
+    rescue 
+      @viatico[:total_egreso]= 0 
+    end 
+    @viatico[:saldo] = @viatico[:total_ing] + @viatico[:total_egreso]
     
     if(params[:viatico][:user_id] and params[:viatico][:user_id] != "")
       curr_seller = User.find(params[:viatico][:user_id])
@@ -309,7 +323,7 @@ class ViaticosController < ApplicationController
   end
   private
   def viatico_params
-    params.require(:viatico).permit(:company_id,:location_id,:division_id,:description,:comments,:code,:subtotal,:total,:processed,:date_processed,:user_id)
+    params.require(:viatico).permit(:company_id,:code,:fecha1,:inicial,:total_ing,:total_egreso,:saldo,:comments,:user_id,:company_id,:processed,:compro_id)
   end
 
 end

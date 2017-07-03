@@ -56,21 +56,26 @@
   </p>
   
 </div>
-<div class="mid_box bordered_right">
-  <h3>
-   Productos
-  </h3>
-  
-  
-  <p class="big">
-  <%= link_to "Listado de Productos", "/companies/reports/product_all/#{@company.id}" %>
-  </p>
+
+  <div class="mid_box bordered_right">
+    <h3>
+     Trazabilidad
+    </h3>
+    
+    <p class="big">
+    <%= link_to "Trazabilidad por familia ", "/companies/reports/rpt_calmacen9/#{@company.id}" %>
+    </p>
+    
+    <h3>
+     Productos
+    </h3>
+    
+    <p class="big">
+    <%= link_to "Listado de Productos", "/companies/reports/product_all/#{@company.id}" %>
+    </p>
+    
+  </div>
 
 
-</div>
-
-
-<div class="mid_box">
-</div>
 
 <%= br() %>

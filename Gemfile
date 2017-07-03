@@ -49,6 +49,7 @@ gem 'simple_form', '~> 3.3', '>= 3.3.1'
 
 gem 'rails_autolink', '~> 1.1', '>= 1.1.6'
 
+
 # Use unicorn as the web server
 # gem 'unicorn'
 
@@ -69,9 +70,9 @@ gem 'rails_autolink', '~> 1.1', '>= 1.1.6'
 # put test-only gems in this group so their generators
 # and rake tasks are available in development mode:
 # group :development, :test do
-#   gem 'webrat'
-# end
- gem 'pg', '~> 0.18.4'
+#   gem 'w
+
+  gem 'pg', '~> 0.18.4'
  
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

@@ -11,7 +11,7 @@ class Tranportorder < ActiveRecord::Base
 	belongs_to :punto 
 	belongs_to :truck
 	belongs_to :delivery
-
+	belongs_to :ubication 
 
  TABLE_HEADERS = ["ITEM",
                      "CODIGO",
