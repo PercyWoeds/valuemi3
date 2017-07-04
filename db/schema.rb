@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170614215032) do
+ActiveRecord::Schema.define(version: 20170704225719) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -493,6 +493,15 @@ ActiveRecord::Schema.define(version: 20170614215032) do
     t.integer  "numero2"
   end
 
+  create_table "gastos", force: :cascade do |t|
+    t.integer  "codigo"
+    t.string   "code"
+    t.string   "descrip"
+    t.string   "cuenta"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "histories", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "historiable_id"
@@ -711,6 +720,7 @@ ActiveRecord::Schema.define(version: 20170614215032) do
     t.float    "total"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "supplier_id"
   end
 
   create_table "lgvs", force: :cascade do |t|
@@ -724,8 +734,14 @@ ActiveRecord::Schema.define(version: 20170614215032) do
     t.float    "reembolso"
     t.float    "descuento"
     t.text     "observa"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.integer  "company_id"
+    t.string   "processed"
+    t.integer  "user_id"
+    t.integer  "tranporterorder_id"
+    t.integer  "tranportorder_id"
+    t.text     "comments"
   end
 
   create_table "line_items", force: :cascade do |t|

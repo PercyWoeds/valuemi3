@@ -1,17 +1,22 @@
-class Lgv < ActiveRecord::Base
-   
+class Viatico < ActiveRecord::Base
     
-  self.per_page = 20
-  validates_presence_of :company_id,  :code, :user_id,:fecha,:tranportorder_id
+    
+self.per_page = 20
+
+
+  validates_presence_of :company_id,  :code, :user_id,:inicial,:fecha1
+
   validates_uniqueness_of :code
+  
   
   belongs_to :company
   belongs_to :location
   belongs_to :division
+  
   belongs_to :user
   
 
-  has_many   :lgv_details
+  has_many   :viatico_details
   
    TABLE_HEADERS = ["TD",
                       "Documento",
@@ -65,7 +70,7 @@ class Lgv < ActiveRecord::Base
 
   def self.import(file)
           CSV.foreach(file.path, headers: true, encoding:'iso-8859-1:utf-8') do |row|
-          Lgv.create! row.to_hash 
+          Factura.create! row.to_hash 
         end
   end      
 
@@ -80,7 +85,11 @@ class Lgv < ActiveRecord::Base
 
   end 
 
-  
+  def my_deliverys
+        @deliveryships = Delivery.all 
+        return @deliveryships
+  end 
+
   def correlativo      
         numero = Voided.find(2).numero.to_i + 1
         lcnumero = numero.to_s
@@ -188,19 +197,55 @@ def get_total_inicial(items)
     
           product = Compro.find(id.to_i)
           
-          new_invoice_product = lgvDetail.new(:lgv_id => self.id,:descrip=> detalle1,:importe=> total ,:detalle=> detalle1,:tm=>tm1)
+          new_invoice_product = ViaticoDetail.new(:viatico_id => self.id,:descrip=> detalle1,:importe=> total ,:detalle=> detalle1,:tm=>tm1)
 
           new_invoice_product.save
+
+      
           
     
-     end
+      end
     end
   end
+
+  
+  def add_guias(items)
+    for item in items
+      if(item and item != "")
+        parts = item.split("|BRK|")
+        
+        id = parts[0]
+        
+        begin
+          @guia = Delivery.find(id.to_i)
+
+          @guia.processed='4'
+          @guia.facturar 
+          
+          new_invoice_guia = Deliveryship.new(:factura_id => self.id, :delivery_id => @guia.id)          
+          new_invoice_guia.save
+           
+        rescue
+          
+        end
+      end
+    end
+  end
+  
+
+ def delete_guias()
+    invoice_guias = Deliveryship.where(factura_id: self.id)
+    
+    for ip in invoice_guias
+      ip.destroy
+    end
+  end
+
   def identifier
     return "#{self.code} "
   end
-  def get_lgvs
-      @lgvs = lgvDetail.where(:id=> self.id)
+  def get_viaticos
+      @viaticos = ViaticoDetail.where(:id=> self.id)
   end
 
   def get_invoices
@@ -240,8 +285,44 @@ def get_total_inicial(items)
     
     return @itemproducts
   end
- 
-# modificacion lines
+  
+  def get_guias    
+    @itemguias = Deliveryship.find_by_sql(['Select deliveries.id,deliveries.code,deliveries.description 
+     from deliveryships INNER JOIN deliveries ON deliveryships.delivery_id =  deliveries.id where deliveries.remision=2 and  deliveryships.factura_id = ?', self.id ])
+    return @itemguias
+  end
+
+  def get_guiasremision 
+    @itemguias1 = Deliveryship.find_by_sql(['Select deliveries.code 
+     from deliveryships INNER JOIN deliveries ON deliveryships.delivery_id =  deliveries.id where deliveries.remision=1 and  deliveryships.factura_id = ?', self.id ])
+    return @itemguias1
+  end
+  def get_guias2(id)    
+    @itemguias = Deliveryship.find_by_sql(['Select deliveries.id,deliveries.code,deliveries.description,deliveries.processed
+     from deliveryships INNER JOIN deliveries ON deliveryships.delivery_id =  deliveries.id where deliveries.remision=2 and  deliveryships.factura_id = ?', id ])
+    return @itemguias
+  end
+
+  def get_guiasremision2(id)
+    @itemguias1 = Deliveryship.find_by_sql(['Select deliveries.code 
+     from deliveryships INNER JOIN deliveries ON deliveryships.delivery_id =  deliveries.id where deliveries.remision=1 and  deliveryships.factura_id = ?', id ])
+    return @itemguias1
+  end
+
+  def get_guias_remision(id)    
+        
+    guias = []
+    invoice_guias = Deliverymine.where(:mine_id => id)
+    return invoice_guias
+        
+  end
+  
+
+  def get_invoice_products
+    invoice_products = InvoiceService.where(factura_id:  self.id)    
+    return invoice_products
+  end
+  
   def products_lines
     services = []
     invoice_products = InvoiceService.where(factura_id:  self.id)
@@ -258,7 +339,17 @@ def get_total_inicial(items)
 
     return services.join(",")
   end
+  
+  def guias_lines
+    guias = []
+    invoice_guias = DeliveryShip.where(factura_id:  self.id)
+    
+    invoice_guias.each do | ip |
+      guias.push("#{ip.delivery.id}|BRK|")
+    end    
 
+    return guias.join(",")
+  end
   
     def get_processed
     if(self.processed == "1")
@@ -340,4 +431,3 @@ def get_total_inicial(items)
  
   
 end
-

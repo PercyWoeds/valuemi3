@@ -1,0 +1,32 @@
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %> &raquo;
+  <%= link_to "lgvs", "/companies/customer_payments/#{@company.id}" %> &raquo;
+  <%= link_to @lgv.identifier, @lgv %>
+</div>
+
+<h1>
+  <%= image_tag("lgv_48.png", :class => "vmiddle") %>
+  Send lgv via email
+</h1>
+
+<%= hr() %>
+
+<h3>
+  <%= link_to @lgv.identifier, @lgv %>
+</h3>
+
+<%= hr() %>
+
+<form method="post" action="/customer_payments/do_email/<%= @lgv.id %>">
+  <strong>Email:</strong>
+  <input type="text" name="email" value="<%= @lgv.customer.email %>" onclick="$(this).select();" />
+  <input type="submit" value="Send" class="bold" />
+</form>
+
+<%= hr() %>
+
+<div class="button">
+  <%= link_to 'Ver', @lgv %>
+  <%= link_to 'Regresa', "/companies/customer_payments/#{@company.id}" %>
+</div>

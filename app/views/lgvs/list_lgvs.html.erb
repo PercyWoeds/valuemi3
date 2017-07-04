@@ -1,0 +1,40 @@
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %>
+</div>
+
+<h1>
+  <%= image_tag("orders_48.png", :class => "vmiddle") %>
+  
+  Arqueo de Liquidacion de viajes 
+  
+  <% if @customer %>
+    for customer: <%= @customer.name %>
+  <% end %>
+</h1>
+
+
+
+<br />
+<%= render "lgvs/list" %>
+
+<br />
+
+<div class="button">
+  <%= link_to 'Nueva Comprobante', "/lgvs/new/#{@company.id}" %>
+  
+</div>
+
+<%= will_paginate @lgvs %>
+
+<%= render 'layouts/autocomplete' %>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("#ac_customer").autocomplete("/lgvs/ac_customers/<%= @company.id %>", {
+			matchSubset: 1,
+			matchContains: 1,
+      selectFirst: false
+    });
+  });
+</script>

@@ -1,0 +1,5 @@
+<% if @servicebuys %>
+  <% for service in @servicebuys %>
+    <%= service.name %>|BRK|<%= service.id %>|BRK|<%= service.price %>|BRK|<%= service.tax1 %>|BRK|<%= service.tax2 %>|BRK|<%= service.tax3 %>
+  <% end %>
+<% end %>

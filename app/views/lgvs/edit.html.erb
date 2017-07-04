@@ -1,0 +1,24 @@
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %> &raquo;
+  <%= link_to "lgvs", "/companies/lgvs/#{@company.id}" %> &raquo;
+  <%= link_to @lgv.identifier, @lgv %>
+</div>
+
+<h1>
+  <%= image_tag("lgv_48.png", :class => "vmiddle") %>
+  Editing lgv
+</h1>
+
+<p>
+  To modify the lgv, please fill out the following form.  Fields marked with <strong>*</strong> are required.
+</p>
+
+<%= render 'form' %>
+
+<%= hr() %>
+
+<div class="button">
+  <%= link_to 'Show', @lgv %>
+  <%= link_to 'Back', "/companies/lgvs/#{@company.id}" %>
+</div>

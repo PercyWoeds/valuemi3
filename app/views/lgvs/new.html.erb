@@ -1,0 +1,22 @@
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %> &raquo;
+  <%= link_to "lgvs", "/companies/lgvs/#{@company.id}" %>
+</div>
+
+<h1>
+  <%= image_tag("orders_48.png", :class => "vmiddle") %>
+  Nueva Liquidacion </h1>
+
+<p>
+  Para crear una nueva factura, por favor llenar el siguiente formulario. Los campos marcados con <strong>*</strong> son obligatorios
+  
+</p>
+
+<%= render 'form' %>
+
+<%= hr() %>
+
+<div class="button">
+  <%= link_to 'Back', "/companies/lgvs/#{@company.id}" %>
+</div>

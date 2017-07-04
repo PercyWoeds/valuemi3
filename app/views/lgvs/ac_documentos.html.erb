@@ -1,0 +1,5 @@
+<% if @products %>
+  <% for factura in @products %>
+    <%= factura.code %>|BRK|<%= factura.id %>|BRK| <%= factura.importe.round(2) %>
+  <% end %>
+<% end %>

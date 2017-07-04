@@ -1,0 +1,223 @@
+<% if @lgv.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@lgv.errors.count, "error") %> prohibited this lgv from being saved:</h2>
+    <ul>
+    <% @lgv.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= hr() %>
+
+<div class="mid_box bordered_right">
+
+  <%= form_for(@lgv) do |f| %>
+    <h4>
+       Informacion Liquidacion de Gastos
+    </h4>
+    
+        <td>
+        <div class="field">
+          <%= f.label :tranportorder_id ,"ORDEN SERVICIO TRANSPORTE "%><br />
+          <%= f.select :tranportorder_id, options_from_collection_for_select(@transports,'id','code') %>
+        </div>
+        </td>
+        
+        <td>
+        <div class="field">
+          <%= f.label :fecha1, "Fecha*", :class => "bold" %><br />
+          <%= f.date_field :fecha1, value: Time.now.strftime("%d/%m/%Y") ,:class => "input.tf_short" %>
+        </div>
+
+        </td>
+        
+        <td>
+        <div class="field">
+          <%= f.label :code, "Code*", :class => "bold" %><br />
+          <%= f.text_field :code, :onclick => "$(this).select();" %>
+        </div>
+        </td>
+  
+      
+   
+        <%= hr() %>
+  
+    
+    <div class="field" id="list_items">
+      <p class="bold big">Productos:</p>
+    </div>
+    
+    <%= hr() %>
+      
+        <div class="field">
+          <%= f.label  :comments,"Comentarios  " , :class => "bold"%><br />
+          <%= f.text_area :comments  %>
+        </div>
+   
+        <%= hr() %>
+      
+   
+
+
+    <div class="field">
+      <label for="ac_user" class="bold">Seller*</label><br />
+      <input type="text" name="ac_user" id="ac_user" value="<% if @ac_user %><%= @ac_user %><% end %>" />
+
+      <div class="small">
+      
+      </div>
+      <br />
+
+      <div class="small">
+        <strong>Selected seller:</strong>
+        <span id="selected_seller"><% if @ac_user %><%= @ac_user %><% else %><!-- i --><% end %></span>
+      </div>
+
+    </div>
+  
+    <%= hr() %>
+    <div class="actions">
+      <input type="hidden" name="items" id="items" value="<% if @lgvs_lines %><%= @lgvs_lines %><% end %>" />
+      <%= f.hidden_field :user_id, :id => "ac_user_id" %>
+      <%= f.hidden_field :company_id %>
+
+      <%= f.submit %>
+    </div>
+    
+    <div class="small">
+      Once you're done adding customers, don't forget to <strong><%= @action_txt %></strong> your lgv.
+    </div>
+
+  <% end %>
+</div>
+
+
+<div class="mid_box">
+  <h5>
+    Agregar informacion comprobante 
+  </h5>
+  
+
+                                                  
+  <form method="get" action="/lgvs" onsubmit="addItemTolgv(); return false;">   
+  
+  <input type="hidden" name="ac_item_id" id="ac_item_id" value="" />  
+  
+    <div class="field">
+      
+    <select id="tm" name = "tm" >
+      
+    <option value="">Select an option&hellip;</option>
+    <option value="1">Ingreso</option>
+    <option value="0">Salida </option>
+    
+    </select>
+
+    </div>
+    
+    <strong> TD :</strong><br />
+    <input type="text" name="ac_td" id="ac_td" value="" />
+    <div class="small">
+      Tipo de documento 
+    </div>
+    
+     </div>
+    
+    <strong>Documento :</strong><br />
+    <input type="text" name="ac_documento" id="ac_documento" value="" />
+    <div class="small">
+      Ingrese un termino de busqueda para encontrar un documento 
+    </div>
+    
+    <br />  
+    <div>
+      <strong>Importe:</strong><br />
+      <span id="ac_item_total2">0.00</span>
+    </div>
+    <div class="small">
+     Importe 
+    </div>
+  
+
+    <div >
+      <strong>Total:</strong><br />    
+    <input type="text" name="ac_item_total" id="ac_item_total" value="0.00" class="tf_short" />
+    </div>
+    <div class="small">
+     Total 
+    </div>
+
+    <br />
+    
+    <strong>Detalle :</strong><br />
+    <input type="text" name="ac_item_detalle" id="ac_item_detalle" value="" />
+    <div class="small">
+      Ingrese un termino de busqueda para encontrar un documento 
+    </div>
+    <br />  
+    
+    <input type="submit" value="Agregar item a Comprobante" />
+      
+  </form>
+  
+  <%= hr() %>
+  
+  
+</div>
+
+<%= br() %>
+<br />
+
+<%= render 'layouts/autocomplete' %>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+
+    $("#ac_item").autocomplete("/lgvs/ac_documentos/<%= @company.id %>", {
+      matchSubset: 1,
+      matchContains: 1,
+      selectFirst: false
+    });
+    
+    $("#ac_item").result(function(event, data, formatted) {
+      $("#ac_item_id").val(data[2]);
+      $("#ac_item_total").val(data[4]);  
+      
+      updateItemTotallgvs();
+    });
+    
+    $("#ac_customer").autocomplete("/lgvs/ac_customers/<%= @company.id %>", {
+      matchSubset: 1,
+      matchContains: 1,
+      selectFirst: false
+    });
+    
+    $("#ac_customer").result(function(event, data, formatted) {
+      $("#ac_customer_id").val(data[2]);
+      $("#selected_seller").html(data[0]);
+    });    
+    
+    
+    $("#ac_user").autocomplete("/lgvs/ac_user/<%= @company.id %>", {
+			matchSubset: 1,
+			matchContains: 1,
+      selectFirst: false
+    });
+    
+    $("#ac_user").result(function(event, data, formatted) {
+      $("#ac_user_id").val(data[2]);
+      $("#selected_seller").html(data[0]);
+    });    
+    
+    
+    $("#ac_item_total").bind("keyup", function() {
+      updateItemTotalCP();
+    });
+    
+    <% if @lgvs_lines %>
+      listItemslgv();
+    <% end %>
+  });
+</script>

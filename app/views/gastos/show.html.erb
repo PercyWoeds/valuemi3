@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Codigo:</strong>
+  <%= @gasto.codigo %>
+</p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @gasto.code %>
+</p>
+
+<p>
+  <strong>Descrip:</strong>
+  <%= @gasto.descrip %>
+</p>
+
+<p>
+  <strong>Cuenta:</strong>
+  <%= @gasto.cuenta %>
+</p>
+
+<%= link_to 'Edit', edit_gasto_path(@gasto) %> |
+<%= link_to 'Back', gastos_path %>

@@ -3,46 +3,45 @@ include UsersHelper
 include CustomersHelper
 include ProductsHelper
 
-class LgvsController < ApplicationController
-    
-    before_filter :authenticate_user!, :checkProducts
+class ViaticosController < ApplicationController
+  before_filter :authenticate_user!, :checkProducts
      
-  # Export lgv to PDF
+  # Export viatico to PDF
   def pdf
-    @lgv = Lgv.find(params[:id])
+    @viatico = Viatico.find(params[:id])
     respond_to do |format|
-      format.html { redirect_to("/lgvs/pdf/#{@lgv.id}.pdf") }
+      format.html { redirect_to("/viaticos/pdf/#{@viatico.id}.pdf") }
       format.pdf { render :layout => false }
     end
   end
   
-  # Process an lgv
+  # Process an viatico
   def do_process
-    @lgv = Lgv.find(params[:id])
-    @lgv[:processed] = "1"
+    @viatico = Viatico.find(params[:id])
+    @viatico[:processed] = "1"
     
-    @lgv.process
+    @viatico.process
     
-    flash[:notice] = "The lgv order has been processed."
-    redirect_to @lgv
+    flash[:notice] = "The viatico order has been processed."
+    redirect_to @viatico
   end
   
-  # Do send lgv via email
+  # Do send viatico via email
   def do_email
-    @lgv = Lgv.find(params[:id])
+    @viatico = Viatico.find(params[:id])
     @email = params[:email]
     
-    Notifier.lgv(@email, @lgv).deliver
+    Notifier.viatico(@email, @viatico).deliver
     
-    flash[:notice] = "The lgv has been sent successfully."
-    redirect_to "/lgvs/#{@lgv.id}"
+    flash[:notice] = "The viatico has been sent successfully."
+    redirect_to "/viaticos/#{@viatico.id}"
   end
 
   
-  # Send lgv via email
+  # Send viatico via email
   def email
-    @lgv = Lgv.find(params[:id])
-    @company = @lgv.company
+    @viatico = Viatico.find(params[:id])
+    @company = @viatico.company
   end
   
   # List items
@@ -126,10 +125,10 @@ class LgvsController < ApplicationController
     render :layout => false
   end
   
-  # Show lgvs for a company
-  def list_lgvs
+  # Show viaticos for a company
+  def list_viaticos
     @company = Company.find(params[:company_id])
-    @pagetitle = "#{@company.name} - lgvs"
+    @pagetitle = "#{@company.name} - Viaticos"
     @filters_display = "block"
     
     @locations = Location.where(company_id: @company.id).order("name ASC")
@@ -145,11 +144,11 @@ class LgvsController < ApplicationController
     end
   
     if(@company.can_view(current_user))
-         @lgvs = Lgv.all.order('id DESC').paginate(:page => params[:page])
+         @viaticos = Viatico.all.order('id DESC').paginate(:page => params[:page])
         if params[:search]
-          @lgvs = Lgv.search(params[:search]).order('id DESC').paginate(:page => params[:page])
+          @viaticos = Viatico.search(params[:search]).order('id DESC').paginate(:page => params[:page])
         else
-          @lgvs = Lgv.all.order('id DESC').paginate(:page => params[:page]) 
+          @viaticos = Viatico.all.order('id DESC').paginate(:page => params[:page]) 
         end
     
     else
@@ -157,178 +156,175 @@ class LgvsController < ApplicationController
     end
   end
   
-  # GET /lgvs
-  # GET /lgvs.xml
+  # GET /viaticos
+  # GET /viaticos.xml
   def index
     @companies = Company.where(user_id: current_user.id).order("name")
-    @path = 'lgvs'
-    @pagetitle = "lgvs"
+    @path = 'viaticos'
+    @pagetitle = "viaticos"
   end
 
-  # GET /lgvs/1
-  # GET /lgvs/1.xml
+  # GET /viaticos/1
+  # GET /viaticos/1.xml
   def show
-    @lgv = Lgv.find(params[:id])
+    @viatico = Viatico.find(params[:id])
   end
 
-  # GET /lgvs/new
-  # GET /lgvs/new.xml
+  # GET /viaticos/new
+  # GET /viaticos/new.xml
 
   
   
   def new
-    @pagetitle = "New lgv"
+    @pagetitle = "New viatico"
     @action_txt = "Create"
     
-    @lgv = Lgv.new
-    @lgv[:code] = "I_#{generate_guid()}"
-    @lgv[:processed] = "0"
+    @viatico = Viatico.new
+    @viatico[:code] = "I_#{generate_guid()}"
+    @viatico[:processed] = "0"
     
     @company = Company.find(params[:company_id])
-    @lgv.company_id = @company.id
+    @viatico.company_id = @company.id
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
     
-     @transports = @company.get_transports()
-      
+    
     @ac_user = getUsername()
-    @lgv[:user_id] = getUserId()
+    @viatico[:user_id] = getUserId()
   end
 
 
-  # GET /lgvs/1/edit
+  # GET /viaticos/1/edit
   def edit
-    @pagetitle = "Edit lgv"
+    @pagetitle = "Edit viatico"
     @action_txt = "Update"
     
-    @lgv = Lgv.find(params[:id])
-    @company = @lgv.company
-    @ac_customer = @lgv.customer.name
-    @ac_user = @lgv.user.username
+    @viatico = Viatico.find(params[:id])
+    @company = @viatico.company
+    @ac_customer = @viatico.customer.name
+    @ac_user = @viatico.user.username
     
-    @products_lines = @lgv.products_lines
+    @products_lines = @viatico.products_lines
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
   end
 
-  # POST /lgvs
-  # POST /lgvs.xml
+  # POST /viaticos
+  # POST /viaticos.xml
   def create
-    @pagetitle = "New lgv"
+    @pagetitle = "New viatico"
     @action_txt = "Create"
     
     items = params[:items].split(",")
     
-    @lgv = Lgv.new(lgv_params)
+    @viatico = Viatico.new(viatico_params)
     
-    @company = Company.find(params[:lgv][:company_id])
+    @company = Company.find(params[:viatico][:company_id])
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
     begin
-      @lgv[:inicial] = @lgv.get_total_inicial(items)
+      @viatico[:inicial] = @viatico.get_total_inicial(items)
     rescue
-      @lgv[:inicial] = 0
+      @viatico[:inicial] = 0
     end 
     
     begin
-      @lgv[:total_ing] = @lgv.get_total_ing(items)
+      @viatico[:total_ing] = @viatico.get_total_ing(items)
     rescue 
-      @lgv[:total_ing] = 0
+      @viatico[:total_ing] = 0
     end 
     begin 
-      @lgv[:total_egreso]=  @lgv.get_total_sal(items)
+      @viatico[:total_egreso]=  @viatico.get_total_sal(items)
     rescue 
-      @lgv[:total_egreso]= 0 
+      @viatico[:total_egreso]= 0 
     end 
-    @lgv[:saldo] = @lgv[:inicial] +  @lgv[:total_ing] - @lgv[:total_egreso]
+    @viatico[:saldo] = @viatico[:inicial] +  @viatico[:total_ing] - @viatico[:total_egreso]
     
-    if(params[:lgv][:user_id] and params[:lgv][:user_id] != "")
-      curr_seller = User.find(params[:lgv][:user_id])
+    if(params[:viatico][:user_id] and params[:viatico][:user_id] != "")
+      curr_seller = User.find(params[:viatico][:user_id])
       @ac_user = curr_seller.username
     end
 
     respond_to do |format|
-      if @lgv.save
+      if @viatico.save
         # Create products for kit
-        @lgv.add_products(items)        
-        # Check if we gotta process the lgv
-        @lgv.process()
+        @viatico.add_products(items)        
+        # Check if we gotta process the viatico
+        @viatico.process()
         
-        format.html { redirect_to(@lgv, :notice => 'lgv was successfully created.') }
-        format.xml  { render :xml => @lgv, :status => :created, :location => @lgv }
+        format.html { redirect_to(@viatico, :notice => 'viatico was successfully created.') }
+        format.xml  { render :xml => @viatico, :status => :created, :location => @viatico }
       else
         format.html { render :action => "new" }
-        format.xml  { render :xml => @lgv.errors, :status => :unprocessable_entity }
+        format.xml  { render :xml => @viatico.errors, :status => :unprocessable_entity }
       end
     end
   end
   
 
-  # PUT /lgvs/1
-  # PUT /lgvs/1.xml
+  # PUT /viaticos/1
+  # PUT /viaticos/1.xml
   def update
-    @pagetitle = "Edit lgv"
+    @pagetitle = "Edit viatico"
     @action_txt = "Update"
     
     items = params[:items].split(",")
     
-    @lgv = Lgv.find(params[:id1])
-    @company = @lgv.company
+    @viatico = Viatico.find(params[:id])
+    @company = @viatico.company
     
     if(params[:ac_customer] and params[:ac_customer] != "")
       @ac_customer = params[:ac_customer]
     else
-      @ac_customer = @lgv.customer.name
+      @ac_customer = @viatico.customer.name
     end
     
-    @products_lines = @lgv.products_lines
+    @products_lines = @viatico.products_lines
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
     
-    @lgv[:subtotal] = @lgv.get_subtotal(items)
-    @lgv[:tax] = @lgv.get_tax(items, @lgv[:customer_id])
-    @lgv[:total] = @lgv[:subtotal] + @lgv[:tax]
+    @viatico[:subtotal] = @viatico.get_subtotal(items)
+    @viatico[:tax] = @viatico.get_tax(items, @viatico[:customer_id])
+    @viatico[:total] = @viatico[:subtotal] + @viatico[:tax]
 
 
     respond_to do |format|
-      if @lgv.update_attributes(params[:lgv])
+      if @viatico.update_attributes(params[:viatico])
         # Create products for kit
-        @lgv.delete_products()
-        @lgv.add_products(items)
+        @viatico.delete_products()
+        @viatico.add_products(items)
         
-        # Check if we gotta process the lgv
-        @lgv.process()
+        # Check if we gotta process the viatico
+        @viatico.process()
         
-        format.html { redirect_to(@lgv, :notice => 'lgv was successfully updated.') }
+        format.html { redirect_to(@viatico, :notice => 'viatico was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
-        format.xml  { render :xml => @lgv.errors, :status => :unprocessable_entity }
+        format.xml  { render :xml => @viatico.errors, :status => :unprocessable_entity }
       end
     end
   end
 
-  # DELETE /lgvs/1
-  # DELETE /lgvs/1.xml
+  # DELETE /viaticos/1
+  # DELETE /viaticos/1.xml
   def destroy
-    @lgv = Lgv.find(params[:id])
-    company_id = @lgv[:company_id]
-    @lgv.destroy
+    @viatico = Viatico.find(params[:id])
+    company_id = @viatico[:company_id]
+    @viatico.destroy
 
     respond_to do |format|
-      format.html { redirect_to("/companies/lgvs/" + company_id.to_s) }
+      format.html { redirect_to("/companies/viaticos/" + company_id.to_s) }
     end
   end
-  
   private
-  def lgv_params
-    params.require(:lgv).permit(:company_id,:code,:tranportorder_id,:fecha,:viatico_id,:total,:devuelto_texto,:devuelto,:reembolso,:descuento,:observa)
+  def viatico_params
+    params.require(:viatico).permit(:company_id,:code,:fecha1,:inicial,:total_ing,:total_egreso,:saldo,:comments,:user_id,:company_id,:processed,:compro_id)
   end
 
 end
-
 

@@ -1,6 +1,7 @@
   Mnygo::Application.routes.draw do
 
 
+  resources :gastos
   resources :cegresos
   resources :notacredits
   resources :tipocambios
@@ -41,7 +42,7 @@
   resources :declarations 
   resources :inventarios  
   resources :customer_payments
-
+  resources :gastos 
 
   resources :inventarios  do
     collection { post :import }
@@ -339,7 +340,22 @@ end
   match 'viaticos/email/:id' => 'viaticos#email', via: [:get, :post]
   match 'viaticos/pdf/:id' => 'viaticos#pdf', via: [:get, :post]
   match 'companies/viaticos/:company_id' => 'viaticos#list_viaticos', via: [:get, :post]
-  resources :outputs
+  resources :viaticos 
+# lgv
+  
+  match 'lgvs/list_items/:company_id' => 'lgvs#list_items', via: [:get, :post]
+  
+  match 'lgvs/ac_documentos/:company_id' => 'lgvs#ac_documentos', via: [:get, :post]
+  match 'lgvs/ac_user/:company_id' => 'lgvs#ac_user', via: [:get, :post]
+  match 'lgvs/ac_customers/:company_id' => 'lgvs#ac_customers', via: [:get, :post]
+  match 'lgvs/new/:company_id' => 'lgvs#new', via: [:get, :post]
+  
+  match 'lgvs/do_email/:id' => 'lgvs#do_email', via: [:get, :post]
+  match 'lgvs/do_process/:id' => 'lgvs#do_process', via: [:get, :post]
+  match 'lgvs/email/:id' => 'lgvs#email', via: [:get, :post]
+  match 'lgvs/pdf/:id' => 'lgvs#pdf', via: [:get, :post]
+  match 'companies/lgvs/:company_id' => 'lgvs#list_lgvs', via: [:get, :post]
+  resources :lgvs 
 
 # Declarations
   
@@ -716,7 +732,11 @@ end
   match 'suppliers/new/:company_id' => 'suppliers#new', via: [:get, :post]
   match 'companies/suppliers/:company_id' => 'suppliers#list_suppliers', via: [:get, :post]
   resources :suppliers
-
+  # Gastos
+  match 'gastos/new/:company_id' => 'gastos#new', via: [:get, :post]
+  match 'companies/gastos/:company_id' => 'gastos#list_gastos', via: [:get, :post]
+  resources :gastos
+  
   # Locations
   match 'locations/new/:company_id' => 'locations#new', via: [:get, :post]
   match 'companies/locations/:company_id' => 'locations#list_locations', via: [:get, :post]
