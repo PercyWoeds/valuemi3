@@ -100,58 +100,49 @@
     Agregar informacion comprobante 
   </h5>
   
-
-                                                  
   <form method="get" action="/lgvs" onsubmit="addItemTolgv(); return false;">   
   
-  <input type="hidden" name="ac_item_id" id="ac_item_id" value="" />  
+    <input type="hidden" name="ac_item_id" id="ac_item_id" value="" />  
   
-    <div class="field">
-      
-    <select id="tm" name = "tm" >
-      
-    <option value="">Select an option&hellip;</option>
-    <option value="1">Ingreso</option>
-    <option value="0">Salida1 </option>
-    
-    </select>
-
-    </div>
+    <br />
     
     <td>
-    <strong> Gasto :</strong><br />
-    
-    <options_from_collection_for_select(@gastos, 'id', 'descrip') >
-    
-    </td>
-        
-    <strong> TD :</strong><br />
-    <input type="text" name="ac_td" id="ac_td" value="" />
+      
+     <strong>Documento :</strong><br />
+    <input type="text" name="ac_item" id="ac_item" value="" />
     <div class="small">
-      Tipo de documento 
+      Ingrese un termino de busqueda para encontrar un documento 
     </div>
     
-     </div>
+      <br />
+    <td>
+      <strong> Fecha :</strong><br />
+      <input type="date" name="ac_item_fecha" min="2017-01-01"><br> 
+    </td>
     
+     <br />
+    <td>
+      <strong> TD :</strong><br />
+      <input type="text" name="ac_item_td" value="" />
+      <div class="small">
+        Tipo de documento 
+      </div>
+    </td>
+        
+     <br />
     <strong>Documento :</strong><br />
-    <input type="text" name="ac_documento" id="ac_documento" value="" />
+    <input type="text" name="ac_item_documento" id="ac_item_documento" value="" />
     <div class="small">
       Ingrese un termino de busqueda para encontrar un documento 
     </div>
     
     <br />  
-    <div>
-      <strong>Importe:</strong><br />
-      <span id="ac_item_total2">0.00</span>
-    </div>
-    <div class="small">
-     Importe 
-    </div>
+  
   
 
     <div >
       <strong>Total:</strong><br />    
-    <input type="text" name="ac_item_total" id="ac_item_total" value="0.00" class="tf_short" />
+    <input type="text" name="ac_item_importe" id="ac_item_importe" value="0.00" class="tf_short" />
     </div>
     <div class="small">
      Total 
@@ -159,12 +150,7 @@
 
     <br />
     
-    <strong>Detalle :</strong><br />
-    <input type="text" name="ac_item_detalle" id="ac_item_detalle" value="" />
-    <div class="small">
-      Ingrese un termino de busqueda para encontrar un documento 
-    </div>
-    <br />  
+  
     
     <input type="submit" value="Agregar item a Comprobante" />
       
@@ -191,23 +177,9 @@
     
     $("#ac_item").result(function(event, data, formatted) {
       $("#ac_item_id").val(data[2]);
-      $("#ac_item_total").val(data[4]);  
-      
-      updateItemTotallgvs();
+    
     });
-    
-    $("#ac_customer").autocomplete("/lgvs/ac_customers/<%= @company.id %>", {
-      matchSubset: 1,
-      matchContains: 1,
-      selectFirst: false
-    });
-    
-    $("#ac_customer").result(function(event, data, formatted) {
-      $("#ac_customer_id").val(data[2]);
-      $("#selected_seller").html(data[0]);
-    });    
-    
-    
+   
     $("#ac_user").autocomplete("/lgvs/ac_user/<%= @company.id %>", {
 			matchSubset: 1,
 			matchContains: 1,
@@ -218,11 +190,6 @@
       $("#ac_user_id").val(data[2]);
       $("#selected_seller").html(data[0]);
     });    
-    
-    
-    $("#ac_item_total").bind("keyup", function() {
-      updateItemTotalCP();
-    });
     
     <% if @lgvs_lines %>
       listItemslgv();

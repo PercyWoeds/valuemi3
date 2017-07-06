@@ -25,8 +25,8 @@ class GastosController < ApplicationController
   # POST /gastos.json
   def create
     @gasto = Gasto.new(gasto_params)
-
-    respond_to do |format|
+    @gasto.company_id = 1
+      respond_to do |format|
       if @gasto.save
         format.html { redirect_to @gasto, notice: 'Gasto was successfully created.' }
         format.json { render :show, status: :created, location: @gasto }
@@ -40,6 +40,8 @@ class GastosController < ApplicationController
   # PATCH/PUT /gastos/1
   # PATCH/PUT /gastos/1.json
   def update
+    @gasto.company_id = 1
+    
     respond_to do |format|
       if @gasto.update(gasto_params)
         format.html { redirect_to @gasto, notice: 'Gasto was successfully updated.' }
@@ -69,6 +71,6 @@ class GastosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def gasto_params
-      params.require(:gasto).permit(:codigo, :code, :descrip, :cuenta)
+      params.require(:gasto).permit( :code, :descrip, :cuenta,:company_id)
     end
 end

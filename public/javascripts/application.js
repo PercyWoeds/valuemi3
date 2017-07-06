@@ -1547,7 +1547,82 @@
 
 
   
+  // Add an item to a LGV.
   
+  function addItemTolgv() {
+    alert("lgv");
+    
+    var item = $("#ac_item").val();
+
+    if(item != "") {
+      var company_id = $("#lgv_company_id").val();
+      
+      var item_id = $("#ac_item_id").val();
+      var ac_item_fecha = $("#ac_item_fecha").val();
+      
+      var td        = $("#ac_item_td").val();
+      var documento = $("#ac_item_documento").val();
+      var importe   = $("#ac_item_importe").val();
+      
+      var items_arr = $("#items").val().split(",");
+
+      if(importe == "" || !isNumeric(importe)) {
+        alert("Por favor ingrese un importe valido");
+      } else {
+      
+        var item_line = item_id + "|BRK|" +ac_item_fecha + "|BRK|" +td + "|BRK|"+documento + "|BRK|"+ importe  ;
+        
+        $("#items").val($("#items").val() + "," + item_line);
+        listItemslgv();
+        
+        $("#ac_item_id").val("");        
+        $("#ac_td").val("");
+        $("#ac_documento").val("");
+        $("#ac_item_total").val("0.00");
+        
+    
+      }
+    } else {
+      alert("Por favor ingrese un detalle primero.");    
+    }
+  }
+
+  // List items in a kit
+  function listItemslgv() {
+    
+    var items = $("#items").val();
+    var company_id = $("#lgv_company_id").val();
+    
+    $.get('/lgvs/list_items/' + company_id, {
+      items: items
+    },
+    function(data) {
+      $("#list_items").html(data);
+      documentReady();
+    });
+  }
+
+  
+
+  // Removes an item from an invoice
+  function removeItemFromlgv(id) {
+    var items = $("#items").val();
+    var items_arr = items.split(",");
+    var items_final = Array();
+    var i = 0;
+    
+    while(i < items_arr.length) {
+      if(i != id) {
+        items_final[i] = items_arr[i];
+      }
+      i++;
+    }
+    
+    $("#items").val(items_final.join(","));
+    listItemslgv();
+  }
+
+
  //............................................................................  
 
   // On ready

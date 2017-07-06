@@ -61,21 +61,27 @@ class LgvsController < ApplicationController
       if item != ""
         parts = item.split("|BRK|")
         
+        # item_id + "|BRK|" +ac_item_fecha + "|BRK|" +td + "|BRK|"+documento + "|BRK|"+ importe  ;
+         
         id = parts[0]
-        quantity = parts[1]
-        detalle = parts[2]
-        inicial = parts[4]
-        puts  "inicial"
-        puts inicial  
+        fecha = parts[1]
+        td = parts[2]
+        documento = parts[3]
+        importe  = parts[4]
         
-        product = Compro.find(id.to_i)
+        puts  "inicial"
+        puts id  
+        
+        product = Gasto.find(id.to_i)
         product[:i] = i
-        product[:importe] = quantity.to_f
-        product[:detalle] = detalle
+        product[:fecha] = fecha
+        product[:td] = td
+        product[:documento] = documento
+        product[:importe] = importe.to_f
         
         total += product[:importe]
         
-        product[:CurrTotal] = total
+        product[:currtotal] = total
         
         @total_pago1  = total     
         
@@ -91,7 +97,7 @@ class LgvsController < ApplicationController
   
   # Autocomplete for documento
   def ac_documentos
-    @products = Compro.where(["company_id = ? AND code LIKE ? ", params[:company_id], "%" + params[:q] + "%"])
+    @products = Gasto.where(["company_id = ? AND code LIKE ?", params[:company_id], "%" + params[:q] + "%"])
     
     render :layout => false
   end

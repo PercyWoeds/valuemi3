@@ -37,25 +37,25 @@
       <% for product in @products %>
         <tr>
           <td class="small bordered_bottom bordered_right" style="width: 100px;">
-            <a href="#" onclick="removeItemFromlgv(<%= product.id%>); return false;" title="Remove product from invoice"><%= product.code %></a>
+            <a href="#" onclick="removeItemFromlgv(<%= product.id%>); return false;" title="Remove product from invoice"><%= product.id %></a>
             [<a href="#" onclick="removeItemFromlgv(<%= product.id   %>); return false;" title="Remove product from invoice">X</a>]
           </td>
           <td class="small bordered_bottom bordered_right">
-            <%= product.tranportorder.employee.full_name %>
+            <%= product.fecha %>
           </td>
           
          <td class="small bordered_bottom bordered_right">
-            <%= product.tranportorder.truck.placa %>
+            <%= product.gasto.code %>
           </td>
          <td class="small bordered_bottom bordered_right">
-            <%= product.tranportorder.code %>
+            <%= product.gasto.descrip %>
           </td>
 
          <td class="small bordered_bottom bordered_right">
-            <%= product.tranportorder.ubication_id %>
+            <%= product.td %>
           </td>
            <td class="small bordered_bottom bordered_right">
-              <%=product.detalle %>
+              <%=product.documento  %>
           </td>
           <td class="small bordered_bottom bordered_right">
             <%= money(product.importe) %>
