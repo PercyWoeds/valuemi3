@@ -191,7 +191,8 @@ class LgvsController < ApplicationController
     @divisions = @company.get_divisions()
     
      @transports = @company.get_transports()
-      
+    @gastos = Gasto.all 
+    
     @ac_user = getUsername()
     @lgv[:user_id] = getUserId()
   end

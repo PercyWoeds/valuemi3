@@ -24,6 +24,7 @@
           <%= f.select :tranportorder_id, options_from_collection_for_select(@transports,'id','code') %>
         </div>
         </td>
+      
         
         <td>
         <div class="field">
@@ -111,12 +112,19 @@
       
     <option value="">Select an option&hellip;</option>
     <option value="1">Ingreso</option>
-    <option value="0">Salida </option>
+    <option value="0">Salida1 </option>
     
     </select>
 
     </div>
     
+    <td>
+    <strong> Gasto :</strong><br />
+    
+    <options_from_collection_for_select(@gastos, 'id', 'descrip') >
+    
+    </td>
+        
     <strong> TD :</strong><br />
     <input type="text" name="ac_td" id="ac_td" value="" />
     <div class="small">

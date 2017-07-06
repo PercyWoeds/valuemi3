@@ -1700,7 +1700,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
               if detail.quantity > 0
                 movdetail.stock_inicial += detail.quantity
               else
-                movdetail.stock_inicial -= detail.quantity
+                movdetail.stock_inicial -= detail.quantity*-1
               end     
               
             end
@@ -1841,7 +1841,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
               if detail.quantity > 0
                 movdetail.ingreso += detail.quantity
               else
-                movdetail.salida  += detail.quantity
+                movdetail.salida  += detail.quantity*-1
               end     
                 
             end
