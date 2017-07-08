@@ -1,0 +1,20 @@
+<%= simple_form_for(@cierre) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+       <div class="field">
+           <%= f.label :fecha, "Fecha Emision*", :class => "bold" %><br />
+           <%= f.date_field :fecha, value: Time.now.strftime("%d/%m/%Y") %>
+      </div>
+      
+       <div class="field">
+          <%= f.label :descrip,"Descripcion " %><br />
+          <%= f.text_area :descrip %>
+    </div>
+       
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

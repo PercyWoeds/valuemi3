@@ -38,12 +38,12 @@
     </div>
     <div class="field">
       <%= f.label :date1, "Fecha Emision*", :class => "bold" %><br />
-      <%= f.date_field :date1, value: Time.now.strftime("%d/%m/%Y") %>
+      <%= f.date_field :date1 , value: Date.today.strftime("%d/%m/%Y") , min: Date.new($yy, $mm, $dd) %>
     </div>
 
     <div class="field">
       <%= f.label :date2, "Fecha Entrega*", :class => "bold" %><br />
-      <%= f.date_field :date2, value: Time.now.strftime("%d/%m/%Y") %>
+      <%= f.date_field :date2, value: Date.today.strftime("%d/%m/%Y") %>
     </div>
 
 

@@ -727,6 +727,18 @@ def build_pdf_header(pdf)
     @suppliers = @company.get_suppliers()
     @employees = @company.get_employees()
     @trucks = @company.get_trucks()    
+   
+    @cierre = Cierre.last 
+    parts0 = @cierre.fecha.strftime("%Y-%m-%d") 
+    parts =parts0.split("-")
+    
+    $yy = parts[0].to_i
+    $mm = parts[1].to_i
+    $dd = parts[2].to_i 
+    
+    puts $yy
+    puts $mm
+    puts $dd
     
     @ac_user = getUsername()
     @output[:user_id] = getUserId()
@@ -788,9 +800,10 @@ def build_pdf_header(pdf)
       curr_seller = User.find(params[:output][:user_id])
       @ac_user = curr_seller.username
     end
-
+    
+    
     respond_to do |format|
-      if @output.save
+      if @output.save 
         # Create products for kit
         @output.add_products(items)
         

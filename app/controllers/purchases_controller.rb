@@ -2125,6 +2125,13 @@ def newfactura2
     @monedas  = @company.get_monedas()
     @payments  = @company.get_payments()
 
+    @cierre = Cierre.last 
+    parts0 = @cierre.fecha.strftime("%Y-%m-%d") 
+    parts =parts0.split("-")
+    
+    $yy = parts[0].to_i
+    $mm = parts[1].to_i
+    $dd = parts[2].to_i 
     
     @ac_user = getUsername()
     @purchase[:user_id] = getUserId()

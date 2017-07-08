@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Cierres</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Fecha</th>
+      <th>Comments</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @cierres.each do |cierre| %>
+      <tr>
+        <td><%= cierre.fecha %></td>
+        <td><%= cierre.descrip %></td>
+        <td><%= link_to 'Show', cierre %></td>
+        <td><%= link_to 'Edit', edit_cierre_path(cierre) %></td>
+        <td><%= link_to 'Destroy', cierre, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Cierre', new_cierre_path %>

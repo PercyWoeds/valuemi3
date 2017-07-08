@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Fecha:</strong>
+  <%= @cierre.fecha %>
+</p>
+
+<p>
+  <strong>Comments:</strong>
+  <%= @cierre.descrip %>
+</p>
+
+<%= link_to 'Edit', edit_cierre_path(@cierre) %> |
+<%= link_to 'Back', cierres_path %>

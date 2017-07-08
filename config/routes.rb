@@ -1,6 +1,7 @@
   Mnygo::Application.routes.draw do
 
 
+  resources :cierres
   resources :gastos
   resources :cegresos
   resources :notacredits
@@ -43,6 +44,7 @@
   resources :inventarios  
   resources :customer_payments
   resources :gastos 
+  resources :cierres 
 
   resources :inventarios  do
     collection { post :import }

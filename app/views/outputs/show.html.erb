@@ -184,12 +184,15 @@
   
   <%= link_to 'Exportar to PDF', "/outputs/pdf/#{@output.id}.pdf" %>
   
+ 
   <% if @output.processed == "1"%>
-    
-  <% else %>
-    <%= link_to 'Procesar', "/outputs/do_process/#{@output.id}" %>
+      
+    <% else %>
+      <% if @current_user.level = "admin" and  @output.fecha > @cierre.fecha %>
+       <%= link_to 'Procesar', "/outputs/do_process/#{@output.id}" %>
+      
+      <% end %>
   <% end %>
-
 
   <%= link_to 'Back', "/companies/outputs/#{@output.company.id}" %>
 </div>

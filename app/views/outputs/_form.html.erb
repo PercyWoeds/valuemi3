@@ -18,11 +18,12 @@
        Informacion Salida
     </h3>
     <div class="field">
+      
       <%= f.label :fecha, "Fecha *", :class => "bold" %><br />
-      <%= f.text_field :fecha , value: Time.now.strftime("%d/%m/%Y") %>
+      <%= f.date_field :fecha , value: Date.today.strftime("%d/%m/%Y") , min: Date.new($yy, $mm, $dd) %>
     </div>
   
-    
+   
     <div class="field">
       <%= f.label :code, "Code*", :class => "bold" %><br />
       <%= f.text_field :code, :onclick => "$(this).select();" %>
