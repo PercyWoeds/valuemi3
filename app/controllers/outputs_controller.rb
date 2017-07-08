@@ -703,6 +703,13 @@ def build_pdf_header(pdf)
     @supplier = @output.supplier
     @employee = @output.employee
     @truck  = @output.truck
+    @cierre = Cierre.last 
+    parts0 = @cierre.fecha.strftime("%Y-%m-%d") 
+    parts =parts0.split("-")
+    
+    $yy = parts[0].to_i
+    $mm = parts[1].to_i
+    $dd = parts[2].to_i 
   end
 
   # GET /outputs/new
