@@ -1716,7 +1716,15 @@ WHERE purchase_details.product_id = ?',params[:id] ])
     $lcTipoFacturaCompra = "0"
 
     @detalleitems =  @company.get_orden_detalle(@purchaseorder.id)
-
+    
+     @cierre = Cierre.last 
+    parts0 = @cierre.fecha.strftime("%Y-%m-%d") 
+    parts =parts0.split("-")
+    
+    $yy = parts[0]
+    $mm = parts[1]
+    $dd = parts[2]
+    $fecha_min = $yy <<'-'<< $mm <<'-'<< $dd
     @purchase = Purchase.new 
 
     
@@ -1748,6 +1756,13 @@ def newfactura2
 
     $lcTipoFacturaCompra= "1"
     @detalleitems =  @company.get_orden_detalle2(@purchaseorder.id)
+     @cierre = Cierre.last 
+    parts0 = @cierre.fecha.strftime("%Y-%m-%d") 
+    parts =parts0.split("-")
+    
+    $yy = parts[0].to_i
+    $mm = parts[1].to_i
+    $dd = parts[2].to_i 
 
     @purchase = Purchase.new 
 
@@ -1817,10 +1832,6 @@ def newfactura2
             @purchase[:tax_amount] = @purchase.get_tax3(@detalleitems, @purchase[:supplier_id])
            end 
            x = @purchase[:tax_amount]
-                 puts "servicio"
-                  puts x.to_s 
-                  puts $lcPurchaseOrderId
-
 
       rescue
           @purchase[:tax_amount] = 0        

@@ -163,7 +163,7 @@
   <%= link_to 'Exportar a PDF', "/purchases/pdf/#{@purchase.id}.pdf" %>
   <%= link_to 'Enviar factura via email', "/purchases/email/#{@purchase.id}" %>
   
-  <% if @purchase.fecha > @cierre.fecha %>
+  <% if @purchase.date1 > @cierre.fecha %>
     <% if @purchase.processed != "1"  %>
     <%= link_to 'Procesar factura', "/purchases/do_process/#{@purchase.id}" %>
     <%end %>
