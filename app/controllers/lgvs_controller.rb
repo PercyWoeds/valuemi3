@@ -102,6 +102,12 @@ class LgvsController < ApplicationController
     
     render :layout => false
   end
+  # Autocomplete for compro
+  def ac_compros
+    @products = Compro.where(["company_id = ? AND code LIKE ?", params[:company_id], "%" + params[:q] + "%"])
+    
+    render :layout => false
+  end
   
   # Autocomplete for users
   def ac_user

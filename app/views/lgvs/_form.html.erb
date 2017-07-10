@@ -12,7 +12,7 @@
 <%= hr() %>
 
 <div class="mid_box bordered_right">
-
+44
   <%= form_for(@lgv) do |f| %>
     <h4>
        Informacion Liquidacion de Gastos
@@ -23,7 +23,7 @@
           
           <%= f.label :compro_id ,"LIQUIDACION DE VIAJE "%><br />
           <%= f.select :compro_id, options_from_collection_for_select(@compros,'id','code') %>
-        </div>
+          
         
         </td>      
          
@@ -175,7 +175,18 @@
       $("#ac_item_id").val(data[2]);
     
     });
-   
+    
+   $("#ac_item_compro").autocomplete("/lgvs/ac_compros/<%= @company.id %>", {
+      matchSubset: 1,
+      matchContains: 1,
+      selectFirst: false
+    });
+    
+    $("#ac_item_compro").result(function(event, data, formatted) {
+      $("#ac_item_inicial").val(data[2]);
+    
+    });
+    
     $("#ac_user").autocomplete("/lgvs/ac_user/<%= @company.id %>", {
 			matchSubset: 1,
 			matchContains: 1,

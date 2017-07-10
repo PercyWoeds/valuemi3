@@ -29,7 +29,9 @@
     <% @tranportorders.each do |tranportorder| %>
       <tr>
         <td><%= tranportorder.code %></td>
-        <td><%= tranportorder.employee.full_name  %></td>
+        <%if tranportorder.employee != nil %></td> %>
+        <td><%= tranportorder.employee.full_name %></td>
+        <%end %>
         <td><%= tranportorder.truck.placa %></td>
         <td><%= tranportorder.get_placa(tranportorder.truck2_id) %></td>
         <td><%= tranportorder.get_punto(tranportorder.ubication_id)  %></td>
