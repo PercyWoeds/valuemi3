@@ -20,11 +20,14 @@
     
         <td>
         <div class="field">
-          <%= f.label :tranportorder_id ,"ORDEN SERVICIO TRANSPORTE "%><br />
-          <%= f.select :tranportorder_id, options_from_collection_for_select(@transports,'id','code') %>
+          
+          <%= f.label :compro_id ,"LIQUIDACION DE VIAJE "%><br />
+          <%= f.select :compro_id, options_from_collection_for_select(@compros,'id','code') %>
         </div>
-        </td>
-      
+        
+        </td>      
+         
+        <br />
         
         <td>
         <div class="field">
@@ -41,15 +44,12 @@
         </div>
         </td>
   
-      
-   
         <%= hr() %>
   
-    
-    <div class="field" id="list_items">
-      <p class="bold big">Productos:</p>
-    </div>
-    
+      <div class="field" id="list_items">
+        <p class="bold big">Productos:</p>
+      </div>
+      
     <%= hr() %>
       
         <div class="field">
@@ -59,15 +59,11 @@
    
         <%= hr() %>
       
-   
-
-
-    <div class="field">
+     <div class="field">
       <label for="ac_user" class="bold">Seller*</label><br />
       <input type="text" name="ac_user" id="ac_user" value="<% if @ac_user %><%= @ac_user %><% end %>" />
 
       <div class="small">
-      
       </div>
       <br />
 
@@ -117,13 +113,13 @@
       <br />
     <td>
       <strong> Fecha :</strong><br />
-      <input type="date" name="ac_item_fecha" min="2017-01-01"><br> 
+      <input type="date" name="ac_item_fecha" id="ac_item_fecha" min="2017-01-01"><br> 
     </td>
     
      <br />
     <td>
       <strong> TD :</strong><br />
-      <input type="text" name="ac_item_td" value="" />
+      <input type="text" name="ac_item_td" id ="ac_item_td" value="" />
       <div class="small">
         Tipo de documento 
       </div>

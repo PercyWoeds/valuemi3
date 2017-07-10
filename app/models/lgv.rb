@@ -9,7 +9,7 @@ class Lgv < ActiveRecord::Base
   belongs_to :location
   belongs_to :division
   belongs_to :user
-  
+  belongs_to :gasto 
 
   has_many   :lgv_details
   

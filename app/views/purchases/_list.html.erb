@@ -49,12 +49,16 @@
             <%= purchase.get_purchaseorder %>
         </td>
             
-    
         <td><%= link_to 'Ver', purchase %></td>
+         <%if @current_user.level == 'admin' %>
+          
        <% if purchase.processed != "1" %>
-        <td><%= link_to 'Eliminar', purchase, method: :delete, data: { confirm: 'Are you sure?' } %>
-        <% end %> 
+        <td>
+          <%= link_to 'Eliminar', purchase, method: :delete, data: { confirm: 'Are you sure?' } %>
         </td>
+        <% end %> 
+        <% end %> 
+        
       </tr>
     <% end %>
   </tbody>

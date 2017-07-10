@@ -70,7 +70,8 @@ class LgvsController < ApplicationController
         importe  = parts[4]
         
         puts  "inicial"
-        puts id  
+        puts td
+        puts fecha 
         
         product = Gasto.find(id.to_i)
         product[:i] = i
@@ -197,6 +198,7 @@ class LgvsController < ApplicationController
     @divisions = @company.get_divisions()
     
      @transports = @company.get_transports()
+     @compros = Compro.all 
     @gastos = Gasto.all 
     
     @ac_user = getUsername()

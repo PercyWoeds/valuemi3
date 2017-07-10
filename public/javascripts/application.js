@@ -1550,16 +1550,15 @@
   // Add an item to a LGV.
   
   function addItemTolgv() {
-    alert("lgv");
+
     
     var item = $("#ac_item").val();
-
     if(item != "") {
       var company_id = $("#lgv_company_id").val();
       
       var item_id = $("#ac_item_id").val();
       var ac_item_fecha = $("#ac_item_fecha").val();
-      
+    
       var td        = $("#ac_item_td").val();
       var documento = $("#ac_item_documento").val();
       var importe   = $("#ac_item_importe").val();
@@ -1570,7 +1569,7 @@
         alert("Por favor ingrese un importe valido");
       } else {
       
-        var item_line = item_id + "|BRK|" +ac_item_fecha + "|BRK|" +td + "|BRK|"+documento + "|BRK|"+ importe  ;
+        var item_line = item_id + "|BRK|" +ac_item_fecha + "|BRK|" + td + "|BRK|"+documento + "|BRK|"+ importe  ;
         
         $("#items").val($("#items").val() + "," + item_line);
         listItemslgv();
