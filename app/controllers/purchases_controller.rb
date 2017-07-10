@@ -709,9 +709,8 @@ WHERE purchase_details.product_id = ?',params[:id] ])
             row << product.codigo
             row << product.nameproducto
             row << product.unidad 
-            row << product.supplier.name  
-            row << ""
-            row << ""
+            row << product.supplier.name 
+            row << product.moneda_id 
             row << sprintf("%.2f",product.quantity.to_s)
             row << sprintf("%.2f",product.price.to_s)
             row << sprintf("%.2f",product.total.to_s)

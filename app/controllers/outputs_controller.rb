@@ -78,6 +78,7 @@ class OutputsController < ApplicationController
             row << product.supplier.name  
             row << product.employee.full_name
             row << product.truck.placa            
+            row << product.moneda_id
             row << sprintf("%.2f",product.quantity.to_s)
             row << sprintf("%.2f",product.price.to_s)
             @total = product.quantity * product.price
