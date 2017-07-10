@@ -1574,6 +1574,7 @@
         $("#items").val($("#items").val() + "," + item_line);
         listItemslgv();
         
+        $("#ac_item").val("");
         $("#ac_item_id").val("");        
         $("#ac_td").val("");
         $("#ac_documento").val("");
