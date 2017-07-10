@@ -29,7 +29,7 @@
     <% @tranportorders.each do |tranportorder| %>
       <tr>
         <td><%= tranportorder.code %></td>
-        <%if tranportorder.employee != nil %></td> %>
+        <%if tranportorder.employee != nil %></td>
         <td><%= tranportorder.employee.full_name %></td>
         <%end %>
         <td><%= tranportorder.truck.placa %></td>
