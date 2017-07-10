@@ -1,4 +1,5 @@
 class Tranportorder < ActiveRecord::Base
+self.per_page = 20
 
 	validates_presence_of :fecha1,:fecha2
 

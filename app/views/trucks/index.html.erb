@@ -42,7 +42,9 @@
         <td><%= truck.propio %></td>
         <td><%= link_to 'Show', truck %></td>
         <td><%= link_to 'Edit', edit_truck_path(truck) %></td>
+         <%if @current_user.level == 'admin' %>
         <td><%= link_to 'Destroy', truck, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
