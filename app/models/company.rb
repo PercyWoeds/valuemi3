@@ -2220,7 +2220,7 @@ end
 
 def get_ingresos_day(fecha1,fecha2,product)
   
-    @purchases = Purchase.find_by_sql(['Select purchases.*,purchase_details.quantity,purchase.moneda_id,
+    @purchases = Purchase.find_by_sql(['Select purchases.*,purchase_details.quantity,purchases.moneda_id,
     purchase_details.price_without_tax as price,purchases.date1 as fecha, products.name as nameproducto,
     products.code as codigo ,purchases.documento as code ,products.unidad,purchase_details.total 
     from purchase_details   
