@@ -178,17 +178,21 @@ def get_total_inicial(items)
       if(item and item != "")
         parts = item.split("|BRK|")
         
-        id       = parts[0]
-        quantity = parts[1]
-        detalle1 = parts[2]
-        tm1      = parts[3]
-        total    =  quantity.to_f
+    var item_line = item_id + "|BRK|" +ac_item_fecha + "|BRK|" + td + "|BRK|"+documento + "|BRK|"+ importe  ;
+        
+        id        = parts[0]
+        fecha     = parts[1]
+        td        = parts[2]
+        documento = parts[3]
+        importe   = parts[4]
+        
+        total     =  importe.to_f
         
         
     
           product = Compro.find(id.to_i)
           
-          new_invoice_product = lgvDetail.new(:lgv_id => self.id,:descrip=> detalle1,:importe=> total ,:detalle=> detalle1,:tm=>tm1)
+          new_invoice_product = LgvDetail.new(:lgv_id => self.id,:gasto_id=>id,:fecha=> fecha ,:td=> td,:documento=> documento,:importe=> total )
 
           new_invoice_product.save
           
