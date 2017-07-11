@@ -31,3 +31,10 @@
 <br>
 
 <%= link_to 'New Gasto', new_gasto_path %>
+
+<h2>Importar Archivo "*.csv"</h2>
+
+<%= form_tag import_gastos_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Importar " %>
+<% end %>

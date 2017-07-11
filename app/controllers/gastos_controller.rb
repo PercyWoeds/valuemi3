@@ -1,6 +1,11 @@
 class GastosController < ApplicationController
   before_action :set_gasto, only: [:show, :edit, :update, :destroy]
 
+
+  def import
+      Gasto.import(params[:file])
+       redirect_to root_url, notice: "Clientes importadas."
+  end 
   # GET /gastos
   # GET /gastos.json
   def index

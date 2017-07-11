@@ -46,6 +46,11 @@
   resources :gastos 
   resources :cierres 
 
+resources :gastos  do
+    collection { post :import }
+    
+    
+  end 
   resources :inventarios  do
     collection { post :import }
     collection { post :import2 }
