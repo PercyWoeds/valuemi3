@@ -89,7 +89,13 @@ class ComprosController < ApplicationController
     
     @company = Company.find(params[:compro][:company_id])
     @compro = Compro.new(compro_params)
-
+  
+    
+    @locations = @company.get_locations()
+    @divisions = @company.get_divisions()
+    @transports = @company.get_transports()
+    
+    
     respond_to do |format|
       if @compro.save
         format.html { redirect_to(@compro, :notice => 'compro was successfully created.') }
