@@ -3,14 +3,16 @@ class Lgv < ActiveRecord::Base
     
   self.per_page = 20
   
-  validates_presence_of :company_id,  :code, :fecha,:compro_id 
+  validates_presence_of :company_id,  :code, :fecha,:compro_id,:peaje ,:inicial,:peaje 
   validates_uniqueness_of :code
+  
   
   belongs_to :company
   belongs_to :location
   belongs_to :division
   belongs_to :user
-  belongs_to :gasto 
+  belongs_to :compro  
+  
 
   has_many   :lgv_details
   
@@ -98,10 +100,10 @@ def get_total_inicial(items)
          id = parts[0]
          quantity = parts[1]
          tm  = parts[3]
-         inicial  = parts[4]
+         inicial  = parts[6]
          
-        
-            total =  inicial.to_f
+  
+          total =  inicial.to_f
          
         begin
           subtotal = total
@@ -121,13 +123,11 @@ def get_total_inicial(items)
         parts = item.split("|BRK|")
         
         id = parts[0]
-        quantity = parts[1]
-         tm  = parts[3]
-         if tm == "1"
+        quantity = parts[4]
+      
+        
             total =  quantity.to_f
-          else
-            total = 0
-          end 
+         
         
         begin
           subtotal += total
@@ -147,13 +147,10 @@ def get_total_inicial(items)
         parts = item.split("|BRK|")
         
         id = parts[0]
-        quantity = parts[1]
-         tm  = parts[3]
-         if tm == "0"
-            total =  quantity.to_f
-          else
-            total = 0
-          end 
+        quantity = parts[5]
+        
+        total =  quantity.to_f
+          
         
         begin
           subtotal += total
@@ -204,7 +201,7 @@ def get_total_inicial(items)
     return "#{self.code} "
   end
   def get_lgvs
-      @lgvs = LgvDetail.where(:id=> self.id)
+      @lgvs = LgvDetail.where(:lgv_id=> self.id)
   end
 
   def get_invoices

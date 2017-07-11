@@ -20,10 +20,13 @@
     
         <td>
         <div class="field">
-          
-          <%= f.label :compro_id ,"LIQUIDACION DE VIAJE "%><br />
-          <%= f.select :compro_id, options_from_collection_for_select(@compros,'id','code') %>
-          
+           <td>
+        <div class="field">
+          <%= f.label :code, "Code*", :class => "bold" %><br />
+          <%= f.text_field :code, :onclick => "$(this).select();" %>
+        </div>
+        </td>
+        
           <strong>Documento :</strong><br />
           <input type="text" name="ac_item_compro" id="ac_item_compro" value="" />
           <div class="small">
@@ -43,9 +46,14 @@
         </div>
         
         </td>      
-         
-        <br />
         
+         <td>
+        <div class="field">
+          <%= f.label :peaje, "Peaje*", :class => "bold" %><br />
+          <%= f.number_field :peaje, :class => "input.tf_short" ,:value => "0.00" %>
+        </div>
+
+        </td>
         <td>
         <div class="field">
           <%= f.label :fecha, "Fecha*", :class => "bold" %><br />
@@ -54,12 +62,7 @@
 
         </td>
         
-        <td>
-        <div class="field">
-          <%= f.label :code, "Code*", :class => "bold" %><br />
-          <%= f.text_field :code, :onclick => "$(this).select();" %>
-        </div>
-        </td>
+       
   
         <%= hr() %>
   
@@ -95,6 +98,7 @@
     <div class="actions">
       <input type="hidden" name="items" id="items" value="<% if @lgvs_lines %><%= @lgvs_lines %><% end %>" />
       <%= f.hidden_field :user_id, :id => "ac_user_id" %>
+      <%= f.hidden_field :compro_id, :id => "ac_compro_id" %>
       <%= f.hidden_field :company_id %>
 
       <%= f.submit %>
@@ -201,7 +205,7 @@
     
     $("#ac_item_compro").result(function(event, data, formatted) {
       $("#ac_item_inicial").val(data[4]);
-    
+      $("#ac_compro_id").val(data[2]);
     });
     
     $("#ac_user").autocomplete("/lgvs/ac_user/<%= @company.id %>", {

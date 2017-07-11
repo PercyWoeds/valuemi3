@@ -53,7 +53,7 @@ class LgvsController < ApplicationController
     items = params[:items]
     items = items.split(",")
     items_arr = []
-    monto_inicial = params[:stock_inicial]
+    
     @products = []
     @total_pago1= 0
     @diferencia = 0
@@ -65,14 +65,14 @@ class LgvsController < ApplicationController
     for item in items
       if item != ""
         parts = item.split("|BRK|")
-        
-        # item_id + "|BRK|" +ac_item_fecha + "|BRK|" +td + "|BRK|"+documento + "|BRK|"+ importe  ;
          
         id = parts[0]
         fecha = parts[1]
         td = parts[2]
         documento = parts[3]
         importe  = parts[4]
+        peaje = parts[5].to_f
+        monto_inicial = parts[6].to_f 
         
         product = Gasto.find(id.to_i)
         product[:i] = i
@@ -87,9 +87,9 @@ class LgvsController < ApplicationController
         
         @total_pago1  = total     
         if monto_inicial != nil
-          @diferencia =  monto_inicial - total 
+          @diferencia =  monto_inicial - total - peaje
         else
-          @diferencia =  total 
+          @diferencia =  total - peaje 
         end
         
         
@@ -266,7 +266,7 @@ class LgvsController < ApplicationController
     rescue 
       @lgv[:total_egreso]= 0 
     end 
-    @lgv[:saldo] = @lgv[:inicial] +  @lgv[:total_ing] - @lgv[:total_egreso]
+    @lgv[:saldo] = @lgv[:inicial] - @lgv[:total_ing] - @lgv[:total_egreso]
     
     if(params[:lgv][:user_id] and params[:lgv][:user_id] != "")
       curr_seller = User.find(params[:lgv][:user_id])
@@ -350,7 +350,7 @@ class LgvsController < ApplicationController
   private
   def lgv_params
     params.require(:lgv).permit( :code, :fecha, :viatico_id, :total, :devuelto_texto, :devuelto, :reembolso, :descuento, :observa,
- :company_id, :processed, :user_id,  :tranportorder_id, :comments, :gasto_id, :compro_id, :inicial, :total_ing, :total_egreso, :saldo)
+ :company_id, :processed, :user_id,  :tranportorder_id, :comments, :gasto_id, :compro_id, :inicial, :total_ing, :total_egreso, :saldo,:peaje)
   end
 
 end

@@ -1555,8 +1555,9 @@
     var item = $("#ac_item").val();
     if(item != "") {
       var company_id = $("#lgv_company_id").val();
-      var stock_inicial = $("#lgv_item_inicial").val();
-      
+      var stock_inicial = $("#ac_item_inicial").val();
+      var peaje = $("#lgv_peaje").val();
+        
       var item_id = $("#ac_item_id").val();
       var ac_item_fecha = $("#ac_item_fecha").val();
     
@@ -1570,7 +1571,7 @@
         alert("Por favor ingrese un importe valido");
       } else {
       
-        var item_line = item_id + "|BRK|" +ac_item_fecha + "|BRK|" + td + "|BRK|"+documento + "|BRK|"+ importe  ;
+      var item_line = item_id + "|BRK|" +ac_item_fecha + "|BRK|" + td + "|BRK|"+documento + "|BRK|"+ importe + "|BRK|"+ peaje + "|BRK|"+ stock_inicial;
         
         $("#items").val($("#items").val() + "," + item_line);
         listItemslgv();
@@ -1580,6 +1581,7 @@
         $("#ac_td").val("");
         $("#ac_documento").val("");
         $("#ac_item_total").val("0.00");
+        
         
     
       }
@@ -1593,10 +1595,8 @@
     
     var items = $("#items").val();
     var company_id = $("#lgv_company_id").val();
-     var stock_inicial = $("#ac_item_inicial").val();
     
-    
-    $.get('/lgvs/list_items/' + company_id + stock_inicial,  {
+    $.get('/lgvs/list_items/' + company_id ,  {
       items: items
     },
     function(data) {
@@ -1624,6 +1624,7 @@
     $("#items").val(items_final.join(","));
     listItemslgv();
   }
+
 
 
  //............................................................................  
