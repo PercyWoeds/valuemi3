@@ -1593,10 +1593,10 @@
     
     var items = $("#items").val();
     var company_id = $("#lgv_company_id").val();
-     var stock_inicial = $("#lgv_item_inicial").val();
-     
+     var stock_inicial = $("#ac_item_inicial").val();
     
-    $.get('/lgvs/list_items/' + company_id +stock_inicial,  {
+    
+    $.get('/lgvs/list_items/' + company_id + stock_inicial,  {
       items: items
     },
     function(data) {

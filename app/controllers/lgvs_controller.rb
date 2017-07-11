@@ -74,8 +74,6 @@ class LgvsController < ApplicationController
         documento = parts[3]
         importe  = parts[4]
         
-        
-        
         product = Gasto.find(id.to_i)
         product[:i] = i
         product[:fecha] = fecha
@@ -88,7 +86,11 @@ class LgvsController < ApplicationController
         product[:currtotal] = total
         
         @total_pago1  = total     
-        @diferencia =  monto_inicial - total 
+        if monto_inicial != nil
+          @diferencia =  monto_inicial - total 
+        else
+          @diferencia =  total 
+        end
         
         
         @products.push(product)
@@ -238,7 +240,8 @@ class LgvsController < ApplicationController
   def create
     @pagetitle = "New lgv"
     @action_txt = "Create"
-    
+     @compros = Compro.all 
+     
     items = params[:items].split(",")
     
     @lgv = Lgv.new(lgv_params)
@@ -346,7 +349,8 @@ class LgvsController < ApplicationController
   
   private
   def lgv_params
-    params.require(:lgv).permit(:company_id,:code,:tranportorder_id,:fecha,:viatico_id,:total,:devuelto_texto,:devuelto,:reembolso,:descuento,:observa)
+    params.require(:lgv).permit( :code, :fecha, :viatico_id, :total, :devuelto_texto, :devuelto, :reembolso, :descuento, :observa,
+ :company_id, :processed, :user_id,  :tranportorder_id, :comments, :gasto_id, :compro_id, :inicial, :total_ing, :total_egreso, :saldo)
   end
 
 end

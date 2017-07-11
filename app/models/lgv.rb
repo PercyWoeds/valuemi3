@@ -2,7 +2,8 @@ class Lgv < ActiveRecord::Base
    
     
   self.per_page = 20
-  validates_presence_of :company_id,  :code, :user_id,:fecha,:tranportorder_id
+  
+  validates_presence_of :company_id,  :code, :fecha,:compro_id 
   validates_uniqueness_of :code
   
   belongs_to :company
@@ -178,8 +179,7 @@ def get_total_inicial(items)
       if(item and item != "")
         parts = item.split("|BRK|")
         
-    var item_line = item_id + "|BRK|" +ac_item_fecha + "|BRK|" + td + "|BRK|"+documento + "|BRK|"+ importe  ;
-        
+    
         id        = parts[0]
         fecha     = parts[1]
         td        = parts[2]
@@ -190,9 +190,9 @@ def get_total_inicial(items)
         
         
     
-          product = Compro.find(id.to_i)
+          product = Gasto.find(id.to_i)
           
-          new_invoice_product = LgvDetail.new(:lgv_id => self.id,:gasto_id=>id,:fecha=> fecha ,:td=> td,:documento=> documento,:importe=> total )
+          new_invoice_product = LgvDetail.new(:lgv_id => self.id,:gasto_id=>id,:fecha=> fecha ,:td=> td,:documento=> documento,:total=> total )
 
           new_invoice_product.save
           
@@ -204,7 +204,7 @@ def get_total_inicial(items)
     return "#{self.code} "
   end
   def get_lgvs
-      @lgvs = lgvDetail.where(:id=> self.id)
+      @lgvs = LgvDetail.where(:lgv_id=> self.id)
   end
 
   def get_invoices
