@@ -204,7 +204,7 @@ def get_total_inicial(items)
     return "#{self.code} "
   end
   def get_lgvs
-      @lgvs = LgvDetail.where(:lgv_id=> self.id)
+      @lgvs = LgvDetail.where(:id=> self.id)
   end
 
   def get_invoices
