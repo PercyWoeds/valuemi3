@@ -84,6 +84,10 @@ class ComprosController < ApplicationController
   # POST /compros.xml
   def create
     @pagetitle = "New compro"
+    @locations = @company.get_locations()
+    @divisions = @company.get_divisions()
+    @transports = @company.get_transports()
+    @ac_user = getUsername()
     
     @company = Company.find(params[:compro][:company_id])
     @compro = Compro.new(compro_params)
