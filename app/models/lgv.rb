@@ -3,7 +3,7 @@ class Lgv < ActiveRecord::Base
     
   self.per_page = 20
   
-  validates_presence_of :company_id,  :code, :fecha,:compro_id,:peaje ,:inicial,:peaje 
+  validates_presence_of :company_id,  :code, :fecha,:compro_id,:peaje ,:inicial 
   validates_uniqueness_of :code
   
   
