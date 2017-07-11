@@ -69,17 +69,18 @@
 
     <% for product in @lgv.get_lgvs() %>
       <tr>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.gasto.code %>
+          </td>
+
        <td class="small bordered_bottom bordered_right">
-            <%= product.tranportorder.employee.full_name %>
+            <%= product.gasto.descrip %>
           </td>
           
          <td class="small bordered_bottom bordered_right">
-            <%= product.tranportorder.truck.placa %>
+            <%= product.gasto.truck.placa %>
           </td>
-         <td class="small bordered_bottom bordered_right">
-            <%= product.tranportorder.code %>
-          </td>
-
+       
          <td class="small bordered_bottom bordered_right">
             <%= product.tranportorder.ubication_id %>
           </td>
