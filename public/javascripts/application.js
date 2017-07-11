@@ -1555,6 +1555,7 @@
     var item = $("#ac_item").val();
     if(item != "") {
       var company_id = $("#lgv_company_id").val();
+      var stock_inicial = $("#lgv_item_inicial").val();
       
       var item_id = $("#ac_item_id").val();
       var ac_item_fecha = $("#ac_item_fecha").val();
@@ -1592,8 +1593,10 @@
     
     var items = $("#items").val();
     var company_id = $("#lgv_company_id").val();
+     var stock_inicial = $("#lgv_item_inicial").val();
+     
     
-    $.get('/lgvs/list_items/' + company_id, {
+    $.get('/lgvs/list_items/' + company_id +stock_inicial,  {
       items: items
     },
     function(data) {

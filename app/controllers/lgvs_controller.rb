@@ -49,13 +49,18 @@ class LgvsController < ApplicationController
   def list_items
     
     @company = Company.find(params[:company_id])
+    
     items = params[:items]
     items = items.split(",")
     items_arr = []
+    monto_inicial = params[:stock_inicial]
     @products = []
     @total_pago1= 0
+    @diferencia = 0
+    
     i = 0
     total = 0 
+    diferencia = 0
     
     for item in items
       if item != ""
@@ -69,9 +74,7 @@ class LgvsController < ApplicationController
         documento = parts[3]
         importe  = parts[4]
         
-        puts  "inicial"
-        puts td
-        puts fecha 
+        
         
         product = Gasto.find(id.to_i)
         product[:i] = i
@@ -85,6 +88,8 @@ class LgvsController < ApplicationController
         product[:currtotal] = total
         
         @total_pago1  = total     
+        @diferencia =  monto_inicial - total 
+        
         
         @products.push(product)
         
@@ -104,7 +109,7 @@ class LgvsController < ApplicationController
   end
   # Autocomplete for compro
   def ac_compros
-    @products = Compro.where(["company_id = ? AND code LIKE ?", params[:company_id], "%" + params[:q] + "%"])
+    @compros = Compro.where(["company_id = ? AND code LIKE ?", params[:company_id], "%" + params[:q] + "%"])
     
     render :layout => false
   end

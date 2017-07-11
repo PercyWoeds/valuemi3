@@ -10,6 +10,7 @@ gem 'rails', '4.2.5.1'
 
 # Added
 gem 'bluecloth'
+gem 'grape'
 
 gem 'htmlentities'
 gem 'will_paginate'

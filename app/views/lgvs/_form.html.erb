@@ -23,6 +23,23 @@
           
           <%= f.label :compro_id ,"LIQUIDACION DE VIAJE "%><br />
           <%= f.select :compro_id, options_from_collection_for_select(@compros,'id','code') %>
+          
+          <strong>Documento :</strong><br />
+          <input type="text" name="ac_item_compro" id="ac_item_compro" value="" />
+          <div class="small">
+            Ingrese un termino de busqueda para encontrar un documento 
+          </div>
+    
+          <br />
+
+          <strong>Importe :</strong><br />
+      
+          <input type="text" name="ac_item_inicial" id="ac_item_inicial" value="" class="tf_short" readonly />
+          <div class="small">
+            Importe entregado en comprobante.
+          </div>
+          <br />
+          
         </div>
         
         </td>      
@@ -183,7 +200,7 @@
     });
     
     $("#ac_item_compro").result(function(event, data, formatted) {
-      $("#ac_item_inicial").val(data[2]);
+      $("#ac_item_inicial").val(data[4]);
     
     });
     

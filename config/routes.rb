@@ -282,6 +282,7 @@ end
   
   match 'compros/list_items/:company_id' => 'compros#list_items', via: [:get, :post]
   match 'compros/ac_products/:company_id' => 'compros#ac_products', via: [:get, :post]
+  
   match 'compros/ac_unidads/:company_id' => 'compros#ac_unidads', via: [:get, :post]
   match 'compros/ac_user/:company_id' => 'compros#ac_user', via: [:get, :post]
   match 'compros/ac_purchases/:company_id' => 'compros#ac_purchases', via: [:get, :post]
@@ -348,6 +349,7 @@ end
   match 'lgvs/list_items/:company_id' => 'lgvs#list_items', via: [:get, :post]
   
   match 'lgvs/ac_documentos/:company_id' => 'lgvs#ac_documentos', via: [:get, :post]
+  match 'lgvs/ac_compros/:company_id' => 'lgvs#ac_compros', via: [:get, :post]
   match 'lgvs/ac_user/:company_id' => 'lgvs#ac_user', via: [:get, :post]
   match 'lgvs/ac_customers/:company_id' => 'lgvs#ac_customers', via: [:get, :post]
   match 'lgvs/new/:company_id' => 'lgvs#new', via: [:get, :post]
