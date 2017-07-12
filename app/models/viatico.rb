@@ -208,10 +208,10 @@ def get_total_inicial(items)
           new_invoice_product = ViaticoDetail.new(:viatico_id => self.id,:descrip=> detalle2,:importe=> total ,:detalle=> detalle1,:tm=>tm1,:tranportorder_id=> product.id)
 
           new_invoice_product.save
-        
-          new_compro = Compro.new(:ost_id=> self.id ,:importe=> total,:detalle=>detalle1,:company_id=>1,:location_id=>1,:division_id=>1,:tranportorder_id=>product.id,:code=>detalle2,:fecha=>fecha)
-          new_compro.save 
-      
+          if tm1.to_i != 6
+            new_compro = Compro.new(:ost_id=> self.id ,:importe=> total,:detalle=>detalle1,:company_id=>1,:location_id=>1,:division_id=>1,:tranportorder_id=>product.id,:code=>detalle2,:fecha=>fecha)
+            new_compro.save 
+          end
           
     
       end
