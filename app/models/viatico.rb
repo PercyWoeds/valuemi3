@@ -134,7 +134,7 @@ def get_total_inicial(items)
         quantity = parts[1]
         tm  = parts[3].to_i
         
-          if tm == 6 || tm == 10
+          if tm == 6 || tm == 11
             total = quantity.to_f
           else
             total = 0
