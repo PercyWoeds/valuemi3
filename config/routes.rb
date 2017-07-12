@@ -508,6 +508,7 @@ end
 
   match 'ajusts/new/:company_id' => 'ajusts#new', via: [:get, :post]
   match 'ajusts/do_email/:id' => 'ajusts#do_email', via: [:get, :post]
+  match 'ajusts/do_process/:id' => 'ajusts#do_process', via: [:get, :post]
   match 'ajusts/email/:id' => 'ajusts#email', via: [:get, :post]
   match 'ajusts/pdf/:id' => 'ajusts#pdf', via: [:get, :post]
   match 'companies/ajusts/:company_id' => 'ajusts#list_ajusts', via: [:get, :post]

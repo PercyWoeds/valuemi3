@@ -369,7 +369,7 @@ def build_pdf_header(pdf)
   end
 
   def do_process
-    @ajust = ajust.find(params[:id])
+    @ajust = Ajust.find(params[:id])
     @ajust[:processed] = "1"
     
     @ajust.process
@@ -603,13 +603,21 @@ def build_pdf_header(pdf)
   # GET /ajusts/1.xml
   def show
     @ajust = Ajust.find(params[:id])
-  
+  @cierre = Cierre.last 
 
   end
 
   def new
     @pagetitle = "Nueva Orden Compra"
     @action_txt = "Create"
+    
+    @cierre = Cierre.last 
+    parts0 = @cierre.fecha.strftime("%Y-%m-%d") 
+    parts = parts0.split("-")
+    
+    $yy = parts[0].to_i
+    $mm = parts[1].to_i
+    $dd = parts[2].to_i 
     
     @ajust = Ajust.new
     
@@ -624,7 +632,7 @@ def build_pdf_header(pdf)
     @suppliers = @company.get_suppliers()
     @payments  = @company.get_payments()
     @monedas    = @company.get_monedas()
-    
+   
         
     @ac_user = getUsername()
     @ajust[:user_id] = getUserId()
@@ -669,7 +677,7 @@ def build_pdf_header(pdf)
     @monedas  = @company.get_monedas()
 
     @tipodocumento = @ajust[:document_id]
-
+    @cierre = Cierre.last 
 
     
     @ajust[:subtotal] = @ajust.get_subtotal(items)

@@ -222,12 +222,38 @@ class Ajust < ActiveRecord::Base
   # Process the ajust
   def process
 
-    if(self.processed == "1" or self.processed == true)
-      self.processed="1"      
-      self.date_processed = Time.now
-      self.save
-    end
-  end
+   
+    if(self.processed == "1" or self.processed == true  )
+
+      purchase_details =AjustDetail.where(ajust_id: self.id)
+    
+      for ip in purchase_details
+                
+        #actualiza stock
+         stock_product =  Stock.find_by(:product_id => ip.product_id)
+
+        if stock_product 
+           $last_stock = stock_product.quantity + ip.quantity      
+           stock_product.quantity = $last_stock
+          
+        else
+
+          $last_stock = 0
+          stock_product= Stock.new(:store_id=>1,:state=>"Lima",:unitary_cost=>0,
+          :quantity=> ip.quantity,:minimum=>0,:user_id=>@user_id,:product_id=>ip.product_id)           
+        end 
+
+        stock_product.save
+
+        self.date_processed = Time.now
+        self.save
+      
+      end
+    end   
+  
+end 
+  
+  
   def process_cerrar
 
     if(self.processed == "3" or self.processed == true)

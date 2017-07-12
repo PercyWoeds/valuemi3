@@ -156,6 +156,13 @@
 <div class="button">
   <%= link_to 'Exportar a PDF', "/ajusts/pdf/#{@ajust.id}.pdf" %>
   
+  <% if @ajust.fecha1 > @cierre.fecha %>
+    <% if @ajust.processed != "1"  %>
+    <%= link_to 'Procesar', "/ajusts/do_process/#{@ajust.id}" %>
+    <%end %>
+  
+  <%end %>
+  
   <%= link_to 'Regresar', "/companies/ajusts/#{@ajust.company.id}" %>
 </div>
 

@@ -189,6 +189,7 @@ class ViaticosController < ApplicationController
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
     
+    @documents = @company.get_documents()
     
     @ac_user = getUsername()
     @viatico[:user_id] = getUserId()
@@ -214,7 +215,7 @@ class ViaticosController < ApplicationController
   # POST /viaticos
   # POST /viaticos.xml
   def create
-    @pagetitle = "New viatico"
+    @pagetitle = "Nuevo viatico"
     @action_txt = "Create"
     
     items = params[:items].split(",")
