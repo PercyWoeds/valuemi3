@@ -66,14 +66,15 @@ class ViaticosController < ApplicationController
         tm       = parts[3]
         inicial  = parts[4].to_f
         compro   = parts[5]
+        fecha    = parts[6]
        
         product = Tranportorder.find(id.to_i)
         product[:i] = i
         product[:importe] = quantity.to_f
         product[:detalle] = detalle
         product[:tm] = tm
-        
         product[:comprobante] = compro
+        product[:fecha] = fecha 
         
         if tm.to_i == 6
           total += product[:importe]
