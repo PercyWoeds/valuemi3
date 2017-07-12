@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170711203838) do
+ActiveRecord::Schema.define(version: 20170712152011) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1490,6 +1490,12 @@ ActiveRecord::Schema.define(version: 20170711203838) do
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.integer  "user_id"
+    t.integer  "i"
+    t.string   "tm"
+    t.string   "comprobante"
+    t.float    "importe"
+    t.string   "detalle"
+    t.float    "CurrTotal"
   end
 
   create_table "transferencia_detalles", force: :cascade do |t|

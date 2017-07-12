@@ -1,0 +1,5 @@
+<% if @ost %>
+  <% for factura in @ost %>
+    <%= factura.code %>|BRK|<%= factura.id %> 
+  <% end %>
+<% end %>

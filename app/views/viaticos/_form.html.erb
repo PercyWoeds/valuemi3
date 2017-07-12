@@ -34,7 +34,7 @@
   
         <div class="field">
           <%= f.label  :inicial,"Inicial:  " , :class => "bold"%><br />
-            <%= f.text_field :inicial  %>
+            <%= f.number_field :inicial  %>
         </div>
    
         <%= hr() %>
@@ -101,34 +101,28 @@
   <input type="hidden" name="ac_item_id" id="ac_item_id" value="" />  
   
     <div class="field">
-      
-      <options_from_collection_for_select(@documents, 'id', 'name', '1') >
-        
-      
-    <select id="tm" name = "tm" >
-      
-    <option value="">Select an option&hellip;</option>
-    <option value="1">Ingreso</option>
-    <option value="0">Salida </option>
-    </select>
-
-     </div>
     
-    <strong>Documento :</strong><br />
+    <br />
+    
+      <strong>Orden de servicio :</strong><br />
     <input type="text" name="ac_item" id="ac_item" value="" />
     <div class="small">
       Ingrese un termino de busqueda para encontrar un documento 
     </div>
+    <br />
+      <%= select_tag :tm, options_from_collection_for_select(@documents,'id','description')%>  
+     </div>
+    
+    
+    <strong>Comprobante :</strong><br />
+    <input type="text" name="ac_item_compro" id="ac_item_compro" value="" />
+    <div class="small">
+      Ingrese un termino de busqueda para encontrar un documento 
+    </div>
+    
+    
     
     <br />  
-    <div>
-      <strong>Importe:</strong><br />
-      <span id="ac_item_total2">0.00</span>
-    </div>
-    <div class="small">
-     Importe 
-    </div>
-  
 
     <div >
       <strong>Total:</strong><br />    
@@ -164,7 +158,7 @@
 <script type="text/javascript">
   $(document).ready(function() {
 
-    $("#ac_item").autocomplete("/viaticos/ac_documentos/<%= @company.id %>", {
+    $("#ac_item").autocomplete("/viaticos/ac_osts/<%= @company.id %>", {
       matchSubset: 1,
       matchContains: 1,
       selectFirst: false
@@ -172,7 +166,6 @@
     
     $("#ac_item").result(function(event, data, formatted) {
       $("#ac_item_id").val(data[2]);
-      $("#ac_item_total").val(data[4]);  
       
       updateItemTotalViaticos();
     });

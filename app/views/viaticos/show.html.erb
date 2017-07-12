@@ -52,19 +52,37 @@
   <%= link_to @viatico.inicial %>
 </p>
 
-<p>
-  <b>Ingreso: </b>  
-  <%=  @viatico.total_ing   %>
-</p>  
 
-<b> _Egreso </b>  
-  <%=  @viatico.total_egreso   %>
-</p>
 
-<b> Saldo </b>  
-  <%=  @viatico.saldo   %>
-</p>
+<%= hr() %>
 
+<table>
+  <thead>
+    <tr>
+      <th>
+        Cod.
+      </th>
+      <th>
+        Gasto
+      </th>
+      <th>
+        Fecha
+      </th>
+      
+      <th>
+        Td
+      </th>
+      
+      <th>
+        Documento 
+      </th>
+      <th>
+        Total
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    
 <%= hr() %>
 
     <% for product in @viatico.get_viaticos() %>
@@ -92,9 +110,21 @@
 
       </tr>
     <% end %>
-    <tr>
-      <td colspan="6" class="bordered_bottom bordered_right">
-        &nbsp;
+   <tr>
+      <td colspan="6" class="bordered_bottom bordered_right bold">
+        Total Egresos
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@viatico.total_ing) %>
+      </td>
+    </tr>
+    
+   <tr>
+      <td colspan="6" class="bordered_bottom bordered_right bold">
+        Saldo
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@viatico.saldo) %>
       </td>
     </tr>
     

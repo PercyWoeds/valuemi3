@@ -1458,7 +1458,6 @@
   
   // Add an item to a product
   function addItemToViatico() {
-  
     
     var item = $("#ac_item").val();
 
@@ -1469,6 +1468,7 @@
       var item_id = $("#ac_item_id").val();
       
       var quantity = $("#ac_item_total").val();
+      var compro  = $("#ac_item_compro").val();
       var detalle= $("#ac_item_detalle").val();
       
       var items_arr = $("#items").val().split(",");
@@ -1477,7 +1477,7 @@
         alert("Por favor ingrese un importe valido");
       } else {
       
-        var item_line = item_id + "|BRK|" + quantity + "|BRK|" +detalle + "|BRK|" +tm + "|BRK|"+inicial  ;
+        var item_line = item_id + "|BRK|" + quantity + "|BRK|" +detalle + "|BRK|" +tm + "|BRK|"+inicial + "|BRK|"+compro ;
         
         $("#items").val($("#items").val() + "," + item_line);
         listItemsViatico();

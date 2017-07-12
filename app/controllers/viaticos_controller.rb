@@ -59,25 +59,33 @@ class ViaticosController < ApplicationController
     for item in items
       if item != ""
         parts = item.split("|BRK|")
-        
+     
+            
         id = parts[0]
         quantity = parts[1]
-        detalle = parts[2]
-        inicial = parts[4]
-        puts  "inicial"
-        puts inicial  
-        
-        product = Compro.find(id.to_i)
+        detalle  = parts[2]
+        tm       = parts[3]
+        inicial  = parts[4]
+        compro   = parts[5]
+       
+        product = Tranportorder.find(id.to_i)
         product[:i] = i
         product[:importe] = quantity.to_f
         product[:detalle] = detalle
+        product[:tm] = tm
         
-        total += product[:importe]
+        product[:compro] = compro
+        
+        total = product[:importe]
         
         product[:CurrTotal] = total
         
         @total_pago1  = total     
-        
+        if inicial != nil
+          @diferencia =  inicial - total 
+        else
+          @diferencia =  total 
+        end
         @products.push(product)
         
       end
@@ -92,6 +100,12 @@ class ViaticosController < ApplicationController
   def ac_documentos
     @products = Compro.where(["company_id = ? AND code LIKE ? ", params[:company_id], "%" + params[:q] + "%"])
     
+    render :layout => false
+  end
+  # Autocomplete for documento
+  def ac_osts
+    @ost = Tranportorder.where(["company_id = ? AND code LIKE ? ", params[:company_id], "%" + params[:q] + "%"])
+  
     render :layout => false
   end
   

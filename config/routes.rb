@@ -339,6 +339,7 @@ end
   match 'viaticos/list_items/:company_id' => 'viaticos#list_items', via: [:get, :post]
   
   match 'viaticos/ac_documentos/:company_id' => 'viaticos#ac_documentos', via: [:get, :post]
+  match 'viaticos/ac_osts/:company_id' => 'viaticos#ac_osts', via: [:get, :post]
   match 'viaticos/ac_user/:company_id' => 'viaticos#ac_user', via: [:get, :post]
   match 'viaticos/ac_customers/:company_id' => 'viaticos#ac_customers', via: [:get, :post]
   match 'viaticos/new/:company_id' => 'viaticos#new', via: [:get, :post]
