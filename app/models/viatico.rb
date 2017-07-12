@@ -103,7 +103,7 @@ def get_total_inicial(items)
       if(item and item != "")
         parts = item.split("|BRK|")
         
-         id = parts[0]
+        id = parts[0]
          quantity = parts[1]
          tm  = parts[3]
          inicial  = parts[4]
@@ -128,11 +128,14 @@ def get_total_inicial(items)
       if(item and item != "")
         parts = item.split("|BRK|")
         
+          
+        
         id = parts[0]
         quantity = parts[1]
-         tm  = parts[3]
-         if tm == "1"
-            total =  quantity.to_f
+        tm  = parts[3].to_i
+        
+          if tm == 6 || tm == 10
+            total = quantity.to_f
           else
             total = 0
           end 
@@ -157,10 +160,11 @@ def get_total_inicial(items)
         id = parts[0]
         quantity = parts[1]
          tm  = parts[3]
-         if tm == "0"
-            total =  quantity.to_f
-          else
+         if tm == 6 || tm == 10
             total = 0
+          else
+            total =  quantity.to_f
+            
           end 
         
         begin
@@ -191,13 +195,13 @@ def get_total_inicial(items)
         quantity = parts[1]
         detalle1 = parts[2]
         tm1      = parts[3]
+        detalle2 = parts[5]
         total    =  quantity.to_f
         
-        
     
-          product = Compro.find(id.to_i)
+          product = Tranportorder.find(id.to_i)
           
-          new_invoice_product = ViaticoDetail.new(:viatico_id => self.id,:descrip=> detalle1,:importe=> total ,:detalle=> detalle1,:tm=>tm1)
+          new_invoice_product = ViaticoDetail.new(:viatico_id => self.id,:descrip=> detalle2,:importe=> total ,:detalle=> detalle1,:tm=>tm1,:tranportorder_id=> product.id)
 
           new_invoice_product.save
 
@@ -245,7 +249,7 @@ def get_total_inicial(items)
     return "#{self.code} "
   end
   def get_viaticos
-      @viaticos = ViaticoDetail.where(:id=> self.id)
+      @viaticos = ViaticoDetail.where(:viatico_id=> self.id)
   end
 
   def get_invoices

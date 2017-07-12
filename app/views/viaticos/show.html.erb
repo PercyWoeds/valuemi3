@@ -77,6 +77,10 @@
         Documento 
       </th>
       <th>
+        Detalle
+      </th>
+      
+      <th>
         Total
       </th>
     </tr>
@@ -99,7 +103,10 @@
           </td>
 
          <td class="small bordered_bottom bordered_right">
-            <%= product.tranportorder.ubication_id %>
+            <%= product.tranportorder.get_punto(product.tranportorder.ubication_id) %>
+          </td>
+          <td class="small bordered_bottom bordered_right">
+              <%=product.tm << "-"<< product.descrip %>
           </td>
            <td class="small bordered_bottom bordered_right">
               <%=product.detalle %>

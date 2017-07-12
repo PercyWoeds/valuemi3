@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170712152011) do
+ActiveRecord::Schema.define(version: 20170712193508) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1600,9 +1600,12 @@ ActiveRecord::Schema.define(version: 20170712152011) do
     t.float    "importe"
     t.text     "detalle"
     t.string   "tm"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
     t.float    "CurrTotal"
+    t.integer  "transportorder_id"
+    t.integer  "tranportorder_id"
+    t.datetime "date_processed"
   end
 
   create_table "viaticos", force: :cascade do |t|
@@ -1612,13 +1615,14 @@ ActiveRecord::Schema.define(version: 20170712152011) do
     t.float    "total_ing"
     t.float    "total_egreso"
     t.float    "saldo"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
     t.string   "comments"
     t.integer  "user_id"
     t.integer  "company_id"
     t.string   "processed"
     t.integer  "compro_id"
+    t.datetime "date_processed"
   end
 
   create_table "voideds", force: :cascade do |t|

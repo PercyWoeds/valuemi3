@@ -1470,7 +1470,7 @@
       var quantity = $("#ac_item_total").val();
       var compro  = $("#ac_item_compro").val();
       var detalle= $("#ac_item_detalle").val();
-      
+    
       var items_arr = $("#items").val().split(",");
 
       if(quantity == "" || !isNumeric(quantity)) {

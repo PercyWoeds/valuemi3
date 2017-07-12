@@ -60,12 +60,11 @@ class ViaticosController < ApplicationController
       if item != ""
         parts = item.split("|BRK|")
      
-            
         id = parts[0]
         quantity = parts[1]
         detalle  = parts[2]
         tm       = parts[3]
-        inicial  = parts[4]
+        inicial  = parts[4].to_f
         compro   = parts[5]
        
         product = Tranportorder.find(id.to_i)
@@ -74,18 +73,23 @@ class ViaticosController < ApplicationController
         product[:detalle] = detalle
         product[:tm] = tm
         
-        product[:compro] = compro
+        product[:comprobante] = compro
         
-        total = product[:importe]
-        
+        if tm.to_i == 6
+          total += product[:importe]
+        else
+          total -= product[:importe]
+        end
         product[:CurrTotal] = total
         
         @total_pago1  = total     
+        
         if inicial != nil
-          @diferencia =  inicial - total 
+          @diferencia =  inicial + total 
         else
           @diferencia =  total 
         end
+        
         @products.push(product)
         
       end
@@ -240,6 +244,8 @@ class ViaticosController < ApplicationController
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
+    @documents = @company.get_documents()
+       
     begin
       @viatico[:inicial] = @viatico.get_total_inicial(items)
     rescue
@@ -338,7 +344,7 @@ class ViaticosController < ApplicationController
   end
   private
   def viatico_params
-    params.require(:viatico).permit(:company_id,:code,:fecha1,:inicial,:total_ing,:total_egreso,:saldo,:comments,:user_id,:company_id,:processed,:compro_id)
+    params.require(:viatico).permit(:code, :fecha1, :inicial, :total_ing, :total_egreso, :saldo, :comments, :user_id, :company_id, :processed)
   end
 
 end
