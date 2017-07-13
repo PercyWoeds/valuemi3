@@ -119,12 +119,13 @@ class LgvsController < ApplicationController
 
         id = parts[0]  
         inicial= parts[1].to_f
+        
         puts "inicial"
         puts inicial 
         
         product = Compro.find(id.to_i)
         product[:i] = i
-        product[:importe] = inicial
+        product[:importe] = inicial.to_f
         
         @lgvs.push(product)
         
