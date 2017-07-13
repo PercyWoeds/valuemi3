@@ -120,7 +120,7 @@ class LgvsController < ApplicationController
   
 
         id = parts[0]  
-        inicial= parts[1] .to_f
+        inicial= parts[1].to_f
         
         product = Compro.find(id.to_i)
         product[:i] = i
