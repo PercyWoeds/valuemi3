@@ -9,7 +9,10 @@
         <th class="small bordered_bottom bordered_right">
           Comprobante
         </th>
-       
+       <th class="small bordered_bottom bordered_right">
+          Importe 
+         </th>
+        
       </tr>
     </thead>
     <tbody>
@@ -22,6 +25,21 @@
           </td>
        
         </tr>
+        
+          <td class="small bordered_bottom bordered_right">
+            <%= product.importe %>
+          </td>
+        
       <% end %>
+      
+      <tr>
+      <td colspan="2" class="bordered_bottom bordered_right bold">
+        Total:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@total_inicial) %>    
+      </td>      
+    </tr>
+
     </tbody>
   </table>

@@ -112,19 +112,26 @@ class LgvsController < ApplicationController
     items_arr = []
     @lgvs = []
     i = 0
-
+    @total_inicial = 0
     for item in items
       if item != ""
         parts = item.split("|BRK|")
 
   
 
-        id = parts[0]      
+        id = parts[0]  
+        inicial= parts[1] .to_f
+        
         product = Compro.find(id.to_i)
         product[:i] = i
-
+        product[:importe] = inicial
         @lgvs.push(product)
-
+        
+       total += product[:importe]
+        
+        @total_inicial  = total     
+        
+        @lgvs.push(product)
 
       end
       

@@ -1630,18 +1630,22 @@
  
 function addItemToLgv2() {
     var item = $("#ac_item_compro").val();
-    alert("aaaa");
+    
    if(item != "") {
       var company_id = $("#lgv_company_id").val();
       var item_id = $("#ac_compro_id").val();        
+      var inicial = $("#ac_item_inicial").val();        
+      
       var items_arr = $("#items2").val().split(",");
-      var item_line = item_id + "|BRK|" ;
+      
+      var item_line = item_id + "|BRK|" + inicial ;
         
         $("#items2").val($("#items2").val() + "," + item_line );
 
         listItemsLgv2();
         
         $("#ac_item_compro").val("");
+        $("#ac_item_inicial").val("");
         $("#ac_compro_id").val("");      
       
     } else {
