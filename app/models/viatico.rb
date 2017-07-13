@@ -134,11 +134,13 @@ def get_total_inicial(items)
         quantity = parts[1]
         tm  = parts[3].to_i
         
-          if tm == 6 || tm == 11
-            total = quantity.to_f
-          else
-            total = 0
-          end 
+         if tm.to_i == 6
+          total = quantity.to_f
+        else
+          total = 0
+        end
+        
+          
         
         begin
           subtotal += total
@@ -159,12 +161,12 @@ def get_total_inicial(items)
         
         id = parts[0]
         quantity = parts[1]
-         tm  = parts[3]
-         if tm == 6 || tm == 11
+         tm  = parts[3].to_i 
+         
+         if tm.to_i == 6 
             total = 0
           else
             total =  quantity.to_f
-            
           end 
         
         begin
