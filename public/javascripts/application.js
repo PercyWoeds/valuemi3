@@ -1654,7 +1654,7 @@ function addItemToLgv2() {
     var items2 = $("#items2").val();
     var company_id = $("#lgv_company_id").val();
     
-    $.get('/lgv/list_items2/' + company_id, {
+    $.get('/lgvs/list_items2/' + company_id, {
       items2: items2
     },
     function(data) {
