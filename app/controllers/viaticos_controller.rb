@@ -6,14 +6,190 @@ include ProductsHelper
 class ViaticosController < ApplicationController
   before_filter :authenticate_user!, :checkProducts
      
+  
+ 
+  def build_pdf_header(pdf)
+    
+      pdf.image "#{Dir.pwd}/public/images/logo2.png", :width => 270        
+      pdf.move_down 6        
+      pdf.move_down 4
+      #pdf.text customer.street, :size => 10
+      #pdf.text customer.district, :size => 10
+      #pdf.text customer.city, :size => 10
+      pdf.move_down 4
+
+      pdf.bounding_box([325, 725], :width => 200, :height => 80) do
+        pdf.stroke_bounds
+        pdf.move_down 15
+        pdf.font "Helvetica", :style => :bold do
+          pdf.text "R.U.C: 20424092941", :align => :center
+          pdf.text "LIQUIDACION DE VIATICOS", :align => :center
+          pdf.text "#{@viatico.code}", :align => :center,
+                                 :style => :bold
+          
+        end
+      end
+      pdf.move_down 10
+      pdf 
+  end   
+
+  def build_pdf_body(pdf)
+  
+    pdf.text " ", :size => 13, :spacing => 4
+    pdf.font "Helvetica" , :size => 8        
+    pdf.text "SALDO INICIAL :" << sprintf("%.2f",@viatico.inicial) 
+          
+      headers = []
+      table_content = []
+
+      Viatico::TABLE_HEADERS.each do |header|
+        cell = pdf.make_cell(:content => header)
+        cell.background_color = "FFFFCC"
+        headers << cell
+      end
+
+      table_content << headers
+
+      nroitem=1
+  
+       for  product in @viatico.get_viaticos() 
+            row = []
+            
+            row << nroitem.to_s        
+            row << product.fecha.strftime("%d/%m/%Y") 
+            row << product.tranportorder.employee.full_name   
+            row << product.tm
+            row << product.descrip 
+            if product.tm.to_i != 6
+                row << " "
+                row << sprintf("%.2f",product.importe)
+    
+            else
+              row << sprintf("%.2f",product.importe)
+              
+            
+            end
+            if product.tm.to_i != 6
+              lcDato = product.tranportorder.code << " - " << product.tranportorder.truck.placa<<" - " << product.tranportorder.get_placa(product.tranportorder.truck2_id)
+              row << lcDato 
+              row << product.detalle
+              
+              row << product.tranportorder.get_punto(product.tranportorder.ubication_id)
+            else
+              row << " "
+              row << " "
+              row << " "
+              row << " "
+                
+            end 
+            table_content << row
+            nroitem=nroitem + 1      
+        end
+
+       
+
+      result = pdf.table table_content, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width
+                                        } do 
+                                          columns([0]).align=:center
+                                          columns([1]).align=:left 
+                                          columns([2]).align=:left                                          
+                                          columns([3]).align=:left
+                                          columns([4]).align=:right 
+                                          columns([5]).align=:right 
+                                          columns([6]).align=:right 
+                                          columns([7]).align=:left  
+                                          columns([8]).align=:right 
+                                    
+                                        end
+
+      pdf.move_down 10  
+      pdf
+
+    end
+
+
+    def build_pdf_footer(pdf)
+
+   
+
+   $lcIngreso  = sprintf("%.2f",@viatico.total_ing.round(2).to_s)  
+   $lcEgreso   = sprintf("%.2f",@viatico.total_egreso.round(2).to_s)  
+   $lcSaldo   = sprintf("%.2f",@viatico.saldo.round(2).to_s)  
+
+      data0 = [[" "," "," "," ","TOTALES INGRESOS => ",$lcIngreso ],
+               [" "," "," "," ","TOTALES EGRESOS  => ",$lcEgreso],
+               [" "," "," "," ","SALDO            => ",$lcSaldo]]
+
+            
+        pdf.move_down 150
+        pdf.text " "
+        pdf.table(data0,:cell_style=> {:border_width=>0, :width=> 90,:height => 20 })
+            
+       
+        pdf.text ""
+        pdf.text "" 
+        pdf.text "OBSERVACIONES : #{@viatico.comments}", :size => 8, :spacing => 4
+
+        
+       data =[ ["Procesado Asis.Finanzas ","V.B.Contador","V.B.Administracion ","V.B. Gerente ."],
+               [":",":",":",":"],
+               [":",":",":",":"],
+               ["Fecha:","Fecha:","Fecha:","Fecha:"] ]
+
+           
+            pdf.text " "
+            pdf.table(data,:cell_style=> {:border_width=>1} , :width => pdf.bounds.width)
+            pdf.move_down 10          
+                  
+        pdf.bounding_box([0, 20], :width => 538, :height => 50) do        
+        pdf.draw_text "Company: #{@viatico.company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom ]
+
+      end
+
+      pdf
+      
+  end   
+     
   # Export viatico to PDF
+
   def pdf
     @viatico = Viatico.find(params[:id])
-    respond_to do |format|
-      format.html { redirect_to("/viaticos/pdf/#{@viatico.id}.pdf") }
-      format.pdf { render :layout => false }
-    end
+    company =@viatico.company_id
+    @company =Company.find(company)
+  
+    
+     $lcFecha1= @viatico.fecha1.strftime("%d/%m/%Y") 
+     $lcMon   = @viatico.get_moneda(1)
+     $lcPay= ""
+     $lcSubtotal=0
+     $lcIgv=0
+     $lcTotal=sprintf("%.2f",@viatico.inicial)
+
+     $lcDetracion=0
+     $lcAprobado= @viatico.get_processed 
+
+
+    $lcEntrega5 =  "FECHA :"
+    $lcEntrega6 =  $lcFecha1
+
+    Prawn::Document.generate("app/pdf_output/#{@viatico.id}.pdf") do |pdf|
+        pdf.font "Helvetica"
+        pdf = build_pdf_header(pdf)
+        pdf = build_pdf_body(pdf)
+        build_pdf_footer(pdf)
+         $lcFileName =  "app/pdf_output/#{@viatico.id}.pdf"      
+        
+    end     
+
+    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
+                
+    send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
+
+
   end
+  
   
   # Process an viatico
   def do_process

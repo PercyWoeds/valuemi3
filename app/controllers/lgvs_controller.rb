@@ -103,6 +103,39 @@ class LgvsController < ApplicationController
     render :layout => false
   end
   
+  
+   def list_items2
+    
+    @company = Company.find(params[:company_id])
+    items = params[:items2]
+    items = items.split(",")
+    items_arr = []
+    @lgvs = []
+    i = 0
+
+    for item in items
+      if item != ""
+        parts = item.split("|BRK|")
+
+  
+
+        id = parts[0]      
+        product = Compro.find(id.to_i)
+        product[:i] = i
+
+        @lgvs.push(product)
+
+
+      end
+      
+      i += 1
+    end
+
+    render :layout => false
+  end 
+
+
+  
   # Autocomplete for documento
   def ac_documentos
     @products = Gasto.where(["company_id = ? AND code LIKE ?", params[:company_id], "%" + params[:q] + "%"])
@@ -230,6 +263,7 @@ class LgvsController < ApplicationController
     @ac_user = @lgv.user.username
     
     @products_lines = @lgv.products_lines
+    @compros_lines= @lgv.compros_lines
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
@@ -266,7 +300,7 @@ class LgvsController < ApplicationController
     rescue 
       @lgv[:total_egreso]= 0 
     end 
-    @lgv[:saldo] = @lgv[:inicial] - @lgv[:total_ing] - @lgv[:total_egreso]
+    @lgv[:saldo] = @lgv[:inicial] +@lgv[:total_ing] - @lgv[:total_egreso] -@lgv[:peaje]
     
     if(params[:lgv][:user_id] and params[:lgv][:user_id] != "")
       curr_seller = User.find(params[:lgv][:user_id])
@@ -276,7 +310,8 @@ class LgvsController < ApplicationController
     respond_to do |format|
       if @lgv.save
         # Create products for kit
-        @lgv.add_products(items)        
+        @lgv.add_products(items)  
+        
         # Check if we gotta process the lgv
         @lgv.process()
         

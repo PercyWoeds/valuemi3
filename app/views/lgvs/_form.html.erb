@@ -27,21 +27,7 @@
         </div>
         </td>
         
-          <strong>Documento :</strong><br />
-          <input type="text" name="ac_item_compro" id="ac_item_compro" value="" />
-          <div class="small">
-            Ingrese un termino de busqueda para encontrar un documento 
-          </div>
-    
-          <br />
-
-          <strong>Importe :</strong><br />
-      
-          <input type="text" name="ac_item_inicial" id="ac_item_inicial" value="" class="tf_short" readonly />
-          <div class="small">
-            Importe entregado en comprobante.
-          </div>
-          <br />
+          
           
         </div>
         
@@ -70,6 +56,11 @@
         <p class="bold big">Productos:</p>
       </div>
       
+    <div class="field" id="list_items2">
+      <p class="bold big">Guias:</p>
+    </div>
+    
+      
     <%= hr() %>
       
         <div class="field">
@@ -97,6 +88,7 @@
     <%= hr() %>
     <div class="actions">
       <input type="hidden" name="items" id="items" value="<% if @lgvs_lines %><%= @lgvs_lines %><% end %>" />
+      <input type="hidden" name="items2" id="items2" value="<% if @compro_lines %><%= @compro_lines %><% end %>" />
       <%= f.hidden_field :user_id, :id => "ac_user_id" %>
       <%= f.hidden_field :compro_id, :id => "ac_compro_id" %>
       <%= f.hidden_field :company_id %>
@@ -112,9 +104,39 @@
 </div>
 
 
+
+
 <div class="mid_box">
+  
+  
+  <h4>
+    Agregar CE Comprobante de Egreso 
+  </h4>
+                                              
+  <form method="get" action="/lgvs" onsubmit="addItemToLgv2(); return false;">
+
+    <strong>Documento :</strong><br />
+          <input type="text" name="ac_item_compro" id="ac_item_compro" value="" />
+          <div class="small">
+            Ingrese un termino de busqueda para encontrar un documento 
+          </div>
+    
+          <br />
+
+          <strong>Importe :</strong><br />
+      
+          <input type="text" name="ac_item_inicial" id="ac_item_inicial" value="" class="tf_short" readonly />
+          <div class="small">
+            Importe entregado en comprobante.
+          </div>
+          <br />
+    
+    <input type="submit" value="Agregar Comprobante" />
+
+  </form>
+
   <h5>
-    Agregar informacion comprobante 
+    Agregar informacion egresos comprobante 
   </h5>
   
   <form method="get" action="/lgvs" onsubmit="addItemTolgv(); return false;">   
@@ -196,6 +218,10 @@
       $("#ac_item_id").val(data[2]);
     
     });
+    
+    
+    
+    
     
    $("#ac_item_compro").autocomplete("/lgvs/ac_compros/<%= @company.id %>", {
       matchSubset: 1,

@@ -185,8 +185,6 @@ def get_total_inicial(items)
         
         total     =  importe.to_f
         
-        
-    
           product = Gasto.find(id.to_i)
           
           new_invoice_product = LgvDetail.new(:lgv_id => self.id,:gasto_id=>id,:fecha=> fecha ,:td=> td,:documento=> documento,:total=> total )
@@ -259,7 +257,22 @@ def get_total_inicial(items)
 
     return services.join(",")
   end
+def compros_lines
+    services = []
+    invoice_products = InvoiceService.where(factura_id:  self.id)
+    
+    invoice_products.each do | ip |
 
+      ip.service[:price]    = ip.price
+      ip.service[:quantity] = ip.quantity
+      ip.service[:discount] = ip.discount
+      ip.service[:total]    = ip.total
+      services.push("#{ip.service.id}|BRK|#{ip.service.quantity}|BRK|#{ip.service.price}|BRK|#{ip.service.discount}")
+    end
+      puts  #{ip.service.id}|BRK|#{ip.service.quantity}|BRK|#{ip.service.price}|BRK|#{ip.service.discount
+
+    return services.join(",")
+  end
   
     def get_processed
     if(self.processed == "1")

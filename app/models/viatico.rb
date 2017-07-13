@@ -18,16 +18,16 @@ self.per_page = 20
 
   has_many   :viatico_details
   
-   TABLE_HEADERS = ["TD",
-                      "Documento",
-                     "Fecha",
-                     "Cliente",
-                     "Moneda",
-                     "",
-                     "subtotal",
-                     "IGV.",
-                     "TOTAL",
-                     "ESTADO"]
+   TABLE_HEADERS = ["ITEM",
+                      "FECHA ",
+                     "DESCRIPCION",
+                     "TD",
+                     "COMPROBANTE",
+                     "INGRESO",
+                     "EGRESO",
+                     "DETALLE",
+                     "OST",
+                     "DESTINO"]
 
   TABLE_HEADERS2 = ["TD",
                       "Documento",
@@ -73,7 +73,11 @@ self.per_page = 20
           Factura.create! row.to_hash 
         end
   end      
+  def get_moneda(id)
+    a = Moneda.find(id)
 
+    return a.description
+  end
   def get_vencido
 
       if(self.fecha2 < Date.today)   
@@ -207,7 +211,7 @@ def get_total_inicial(items)
     
           product = Tranportorder.find(id.to_i)
           
-          new_invoice_product = ViaticoDetail.new(:viatico_id => self.id,:descrip=> detalle2,:importe=> total ,:detalle=> detalle1,:tm=>tm1,:tranportorder_id=> product.id)
+          new_invoice_product = ViaticoDetail.new(:viatico_id => self.id,:descrip=> detalle2,:importe=> total ,:detalle=> detalle1,:tm=>tm1,:tranportorder_id=> product.id,:fecha=>fecha)
 
           new_invoice_product.save
           if tm1.to_i != 6

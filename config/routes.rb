@@ -353,6 +353,7 @@ end
 # lgv
   
   match 'lgvs/list_items/:company_id' => 'lgvs#list_items', via: [:get, :post]
+  match 'lgvs/list_items2/:company_id' => 'lgvs#list_items2', via: [:get, :post]
   
   match 'lgvs/ac_documentos/:company_id' => 'lgvs#ac_documentos', via: [:get, :post]
   match 'lgvs/ac_compros/:company_id' => 'lgvs#ac_compros', via: [:get, :post]

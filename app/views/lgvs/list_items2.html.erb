@@ -1,0 +1,27 @@
+<p class="bold big">
+  Comprobante 
+</p>
+
+
+  <table>
+    <thead>
+      <tr>
+        <th class="small bordered_bottom bordered_right">
+          Comprobante
+        </th>
+       
+      </tr>
+    </thead>
+    <tbody>
+      <% for product in @lgvs %>
+        <tr>
+          <td class="small bordered_bottom bordered_right" style="width: 220px;">
+            <a href="#" onclick="removeItemFromLgv2(<%= product.i %>); return false;" title="Eliminar desde Lgv"><%= product.code %></a>
+            [<a href="#" onclick="removeItemFromLgv2(<%= product.i %>); return false;" title="
+            Eliminar desde Lgv">X</a>]
+          </td>
+       
+        </tr>
+      <% end %>
+    </tbody>
+  </table>

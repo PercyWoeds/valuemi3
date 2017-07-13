@@ -1116,7 +1116,7 @@
 // agregar item guias  
   function addItemToGuias() {
 
-    alert("Buscando... ");
+    
     var item = $("#ac_item").val();
     var company_id = $("#delivery_company_id").val();
 
@@ -1626,9 +1626,65 @@
     listItemslgv();
   }
 
-
-
  //............................................................................  
+ 
+function addItemToLgv2() {
+    var item = $("#ac_item_compro").val();
+    alert("aaaa");
+   if(item != "") {
+      var company_id = $("#lgv_company_id").val();
+      var item_id = $("#ac_compro_id").val();        
+      var items_arr = $("#items2").val().split(",");
+      var item_line = item_id + "|BRK|" ;
+        
+        $("#items2").val($("#items2").val() + "," + item_line );
+
+        listItemsLgv2();
+        
+        $("#ac_item_compro").val("");
+        $("#ac_compro_id").val("");      
+      
+    } else {
+      alert("Por favor ingreso informacion de comprobante.");
+    }
+  }
+
+
+  function listItemsLgv2() {
+    var items2 = $("#items2").val();
+    var company_id = $("#lgv_company_id").val();
+    
+    $.get('/lgv/list_items2/' + company_id, {
+      items2: items2
+    },
+    function(data) {
+      $("#list_items2").html(data);
+      documentReady();
+    });
+
+  }
+
+// Removes an item from an invoice
+  function removeItemFromLgv2(id) {
+    var items = $("#items2").val();
+    var items_arr = items.split(",");
+    var items_final = Array();
+    var i = 0;
+    
+    while(i < items_arr.length) {
+      if(i != id) {
+        items_final[i] = items_arr[i];
+      }
+      i++;
+    }
+    
+    $("#items2").val(items_final.join(","));
+    listItemsLgv2();
+  }
+
+  
+ //............................................................................  
+
 
   // On ready
   $(document).ready(function() {

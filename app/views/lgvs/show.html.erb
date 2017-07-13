@@ -136,19 +136,27 @@
     
     <tr>
       <td colspan="5" class="bordered_bottom bordered_right bold">
-        Total Egresos
+        Total ingresos
       </td>
       <td class="bordered_bottom bordered_right bold right">
         <%= money(@lgv.total_ing) %>
       </td>
     </tr>
     
-   <tr>
+    <tr>
       <td colspan="5" class="bordered_bottom bordered_right bold">
-        Peajes
+        Total Egresos
       </td>
       <td class="bordered_bottom bordered_right bold right">
         <%= money(@lgv.total_egreso) %>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="5" class="bordered_bottom bordered_right bold">
+        Peajes 
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@lgv.peaje) %>
       </td>
     </tr>
    <tr>
