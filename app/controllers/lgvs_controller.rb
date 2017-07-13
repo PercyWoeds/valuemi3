@@ -117,14 +117,15 @@ class LgvsController < ApplicationController
       if item != ""
         parts = item.split("|BRK|")
 
-  
-
         id = parts[0]  
         inicial= parts[1].to_f
+        puts "inicial"
+        puts inicial 
         
         product = Compro.find(id.to_i)
         product[:i] = i
         product[:importe] = inicial
+        
         @lgvs.push(product)
         
        total += product[:importe]
