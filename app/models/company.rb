@@ -1532,9 +1532,15 @@ def get_purchaseorder_detail2(fecha1,fecha2)
  end 
 
  def get_stocks_inventarios4(product1)
-    @productExiste = Product.where(:products_category_id=> product1) 
+   
+    @productExiste = Product.find_by_sql(['Select products.*,
+      stocks.quantity  
+      from products INNER JOIN stocks ON products.id = stocks.product_id where products.category_id = ?', product1 ])
+    
     return @productExiste 
+    
  end
+ 
 
  ###INVENTARIO  STOCKS 
 

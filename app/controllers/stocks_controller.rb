@@ -89,13 +89,14 @@ class StocksController < ApplicationController
               row << product.unidad
               row << product.ubicacion               
               row << product.stock.quantity
+              row << " "
+              row << " "
               
-
               table_content << row
               nroitem=nroitem + 1
 
-              @cantidad += saldo 
-              @totales  += @total 
+            
+           
         end
             
       result = pdf.table table_content, {:position => :center,
