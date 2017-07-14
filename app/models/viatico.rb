@@ -25,8 +25,8 @@ self.per_page = 20
                      "COMPROBANTE",
                      "INGRESO",
                      "EGRESO",
-                     "DETALLE",
                      "OST",
+                     "DETALLE",
                      "DESTINO"]
 
   TABLE_HEADERS2 = ["TD",
