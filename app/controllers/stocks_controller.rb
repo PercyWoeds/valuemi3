@@ -88,7 +88,7 @@ class StocksController < ApplicationController
               row << product.name
               row << product.unidad
               row << product.ubicacion               
-              row << product.stock.quantity
+              row << product.quantity
               row << " "
               row << " "
               
