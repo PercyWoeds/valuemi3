@@ -1,5 +1,5 @@
 <p class="bold big">
-  Documentos a cancelar
+  Detalle de gastos 
 </p>
 
   <table>
@@ -35,11 +35,11 @@
       <% for product in @products %>
         <tr>
           <td class="small bordered_bottom bordered_right" style="width: 100px;">
-          <a href="#" onclick="removeItemFromlgv(<%= product.id%>); return false;" title="Remove product from invoice"><%= product.descrip %></a>
-          <a href="#" onclick="removeItemFromlgv(<%= product.id   %>); return false;" title="Remove product from invoice">X</a>
+          <a href="#" onclick="removeItemFromlgv(<%= product.i %>); return false;" title="Remove product from invoice"><%= product.descrip %></a>
+          <a href="#" onclick="removeItemFromlgv(<%= product.i %>); return false;" title="Remove product from invoice">X</a>
           </td>
           <td class="small bordered_bottom bordered_right">
-            <%= product.fecha %>
+            <%= product.fecha.strftime("%d/%m/%Y")  %>
           </td>
           
          <td class="small bordered_bottom bordered_right">
@@ -63,7 +63,7 @@
     
     <tr>
       <td colspan="5" class="bordered_bottom bordered_right bold">
-        Total:
+        Gastos realizados : 
       </td>
       <td class="bordered_bottom bordered_right bold right">
         <%= money(@total_pago1) %>    

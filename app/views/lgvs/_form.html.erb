@@ -20,14 +20,12 @@
     
         <td>
         <div class="field">
-           <td>
+        <td>
         <div class="field">
           <%= f.label :code, "Code*", :class => "bold" %><br />
           <%= f.text_field :code, :onclick => "$(this).select();" %>
         </div>
         </td>
-        
-          
           
         </div>
         
@@ -51,19 +49,34 @@
        
   
         <%= hr() %>
-  
-      <div class="field" id="list_items">
-        <p class="bold big">Productos:</p>
+      <div class="field" id="list_items2">
+        <p class="bold big">Viaticos :</p>
       </div>
       
-    <div class="field" id="list_items2">
-      <p class="bold big">Guias:</p>
-    </div>
-    
+      <div class="field" id="list_items">
+        <p class="bold big">Detalle gastos :</p>
+      </div>
+      
+      
       
     <%= hr() %>
+        <div class="field">
+          <%= f.label  :devuelto,"Devuelto  " , :class => "bold"%><br />
+          <%= f.number_field :devuelto, :class => "input.tf_short" ,:value => "0.00" %>
+        </div>
+        
+         <div class="field">
+          <%= f.label  :descuento,"Descuento  " , :class => "bold"%><br />
+          <%= f.number_field :descuento, :class => "input.tf_short" ,:value => "0.00" %>
+        </div>
       
         <div class="field">
+          <%= f.label  :reembolso,"Reembolso  " , :class => "bold"%><br />
+          <%= f.number_field :reembolso, :class => "input.tf_short" ,:value => "0.00" %>
+        </div>
+        
+        <%= hr() %>
+         <div class="field">
           <%= f.label  :comments,"Comentarios  " , :class => "bold"%><br />
           <%= f.text_area :comments  %>
         </div>
@@ -110,7 +123,7 @@
   
   
   <h4>
-    Agregar CE Comprobante de Egreso 
+    Agregar Viaticos por rendir 
   </h4>
                                               
   <form method="get" action="/lgvs" onsubmit="addItemToLgv2(); return false;">
@@ -135,6 +148,7 @@
 
   </form>
 
+<%= hr() %>
   <h5>
     Agregar informacion egresos comprobante 
   </h5>
@@ -147,7 +161,7 @@
     
     <td>
       
-     <strong>Documento :</strong><br />
+     <strong>Gasto :</strong><br />
     <input type="text" name="ac_item" id="ac_item" value="" />
     <div class="small">
       Ingrese un termino de busqueda para encontrar un documento 

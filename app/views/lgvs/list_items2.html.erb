@@ -1,5 +1,5 @@
 <p class="bold big">
-  Comprobante 
+  Viaticos 
 </p>
 
 
@@ -8,6 +8,12 @@
       <tr>
         <th class="small bordered_bottom bordered_right">
           Comprobante
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          Conductor 
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          Placa
         </th>
        <th class="small bordered_bottom bordered_right">
           Importe 
@@ -18,22 +24,26 @@
     <tbody>
       <% for product in @lgvs %>
         <tr>
-          <td class="small bordered_bottom bordered_right" style="width: 220px;">
+          <td class="small bordered_bottom bordered_right" style="width: 100px;">
             <a href="#" onclick="removeItemFromLgv2(<%= product.i %>); return false;" title="Eliminar desde Lgv"><%= product.code %></a>
             [<a href="#" onclick="removeItemFromLgv2(<%= product.i %>); return false;" title="
             Eliminar desde Lgv">X</a>]
           </td>
-       
-        </tr>
+         <td class="small bordered_bottom bordered_right">
+            <%= product.detalle %>
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.descrip %>
+          </td>
         
           <td class="small bordered_bottom bordered_right">
             <%= product.importe %>
           </td>
-        
+        </tr>
       <% end %>
       
       <tr>
-      <td colspan="2" class="bordered_bottom bordered_right bold">
+      <td colspan="3" class="bordered_bottom bordered_right bold">
         Total:
       </td>
       <td class="bordered_bottom bordered_right bold right">

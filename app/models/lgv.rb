@@ -3,7 +3,7 @@ class Lgv < ActiveRecord::Base
     
   self.per_page = 20
   
-  validates_presence_of :company_id,  :code, :fecha,:compro_id,:peaje ,:inicial 
+  validates_presence_of :company_id,  :code, :fecha,:peaje ,:inicial 
   validates_uniqueness_of :code
   
   
@@ -17,35 +17,21 @@ class Lgv < ActiveRecord::Base
   has_many   :lgv_details
   
    TABLE_HEADERS = ["TD",
-                      "Documento",
-                     "Fecha",
-                     "Cliente",
-                     "Moneda",
-                     "",
-                     "subtotal",
-                     "IGV.",
-                     "TOTAL",
-                     "ESTADO"]
+                     "FECHA",
+                     "GASTO",
+                     "TD",
+                     "DESCRIP",
+                     "TD",
+                     "DOCUMENTO",
+                     " ",
+                     "TOTAL "]
 
-  TABLE_HEADERS2 = ["TD",
-                      "Documento",
-                     "Fecha",
-                     "Cliente",
-                     "Moneda",
-                     "SUBTOTAL",
-                     "IGV.",
-                     "TOTAL",
-                     "ESTADO"]
-  TABLE_HEADERS3 = ["TD",
-                      "Documento",
-                     "Fecha",
-                     "Fec.Vmto",
-                     "Cliente",
-                     "Moneda",                                         
-                     "SOLES",
-                     "DOLARES ",
-                     "DETRACCION",
-                     "OBSERV"]
+  TABLE_HEADERS2 = ["VIATICOS POR RENDIR",
+                      "COMPROBANTE",
+                     "IMPORTE"]
+  TABLE_HEADERS3 = ["GASTOS REALIZADOS",
+                      "COMPROBANTE",
+                     "IMPORTE"]
   
 
   def self.search(search)
@@ -75,7 +61,6 @@ class Lgv < ActiveRecord::Base
   def get_vencido
 
       if(self.fecha2 < Date.today)   
-
         return "** Vencido ** "
       else
         return ""
@@ -123,10 +108,9 @@ def get_total_inicial(items)
         parts = item.split("|BRK|")
         
         id = parts[0]
-        quantity = parts[4]
-      
+        quantity = parts[1]
         
-            total =  quantity.to_f
+        total =  quantity.to_f
          
         
         begin
@@ -147,7 +131,7 @@ def get_total_inicial(items)
         parts = item.split("|BRK|")
         
         id = parts[0]
-        quantity = parts[5]
+        quantity = parts[4]
         
         total =  quantity.to_f
           
@@ -195,13 +179,43 @@ def get_total_inicial(items)
      end
     end
   end
+  
+  def add_products2(items)
+    for item in items
+      if(item and item != "")
+        parts = item.split("|BRK|")
+        
+        
+        
+        id        = parts[0]
+        importe   = parts[1]
+        
+        total     =  importe.to_f
+        
+       
+          
+          new_invoice_product = LgvDelivery.new(:lgv_id => self.id,:compro_id=>id.to_i ,:importe => total )
+          new_invoice_product.save
+          
+    
+     end
+    end
+  end
+  
+   def get_moneda(id)
+    a = Moneda.find(id)
+
+    return a.description
+  end
   def identifier
     return "#{self.code} "
   end
   def get_lgvs
       @lgvs = LgvDetail.where(:lgv_id=> self.id)
   end
-
+  def get_lgvs2
+      @lgvs = LgvDelivery.where(:lgv_id=> self.id)
+  end
   def get_invoices
     @facturas= Factura.find_by_sql(['Select facturas.*,customers.ruc,payments.descrip from facturas 
       LEFT JOIN customers on facturas.customer_id = customers.id 

@@ -1606,7 +1606,6 @@
     });
   }
 
-  
 
   // Removes an item from an invoice
   function removeItemFromlgv(id) {

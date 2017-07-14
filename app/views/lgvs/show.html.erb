@@ -31,7 +31,7 @@
 </p>
 
 <p>
-    <b>Fecha entrega:</b>
+    <b>Fecha :</b>
     <%= @lgv.fecha.strftime("%d/%m/%Y") %>   
 </p>
  
@@ -47,36 +47,81 @@
   Informacion LGV
 </h3>
 <p>
-  <b>Commprobante </b>  
-  <%= link_to @lgv.compro.code %>
+  <b>Comprobante </b>  
+  
    
 </p>
 <p>
-  <b>Detalle Comprobante </b>  
-  </p>
-  <p>
-   <%=@lgv.compro.tranportorder.employee.full_name %>
-   </p>
-   <p>
-   <%= @lgv.compro.tranportorder.truck.placa %>
-  </p>
-    <p>    
-    <b> Fecha 1</b>
-   <%= @lgv.compro.tranportorder.fecha1.strftime("%d/%m/%Y") %>
-    </p>
-    <p>
-      <b> Fecha 2</b>
-      <%= @lgv.compro.tranportorder.fecha2.strftime("%d/%m/%Y") %>
-    </p>
+  
+<%= hr() %>
 
+
+<table>
+  <thead>
+    <tr>
+      <th>
+        Compro 
+      </th>
+      
+      <th>
+        Cod.
+      </th>
+      <th>
+        Placa 
+      </th>
+      <th>
+        OST 
+      </th>
+      
+      <th>
+        Lugar 
+      </th>
+      
+     
+      <th>
+        Total
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    
+
+    <% for product in @lgv.get_lgvs2()%>
+      <tr>
+        <td class="small bordered_bottom bordered_right">
+            <%= product.compro.code  %>
+          </td>
+        
+        <td class="small bordered_bottom bordered_right">
+            <%= product.compro.tranportorder.employee.full_name %>
+          </td>
+          
+         <td class="small bordered_bottom bordered_right">
+            <%=  product.compro.tranportorder.truck.placa<<" - " << product.compro.tranportorder.get_placa(product.compro.tranportorder.truck2_id) %>
+          </td>
+         <td class="small bordered_bottom bordered_right">
+            <%= product.compro.tranportorder.code %>
+          </td>
+
+         <td class="small bordered_bottom bordered_right">
+            <%= product.compro.tranportorder.get_punto(product.compro.tranportorder.ubication_id) %>
+          </td>
+          
+          <td class="small bordered_bottom bordered_right">
+            <%= money(product.importe) %>
+          </td>
+
+      </tr>
+    <% end %>
+    
+</tbody>
+</table>
 
 <p>
-  <b>Inicial </b>  
-  <%= link_to @lgv.inicial %>
+  
+
+ <b>Gastos </b>  
 </p>
-
-
-<%= hr() %>
 
 <table>
   <thead>
@@ -117,7 +162,7 @@
           </td>
           
          <td class="small bordered_bottom bordered_right">
-            <%= product.fecha %>
+            <%= product.fecha.strftime("%d/%m/%Y")%>
           </td>
        
          <td class="small bordered_bottom bordered_right">
@@ -159,7 +204,7 @@
         <%= money(@lgv.peaje) %>
       </td>
     </tr>
-   <tr>
+    <tr>
       <td colspan="5" class="bordered_bottom bordered_right bold">
         Saldo
       </td>
@@ -167,6 +212,45 @@
         <%= money(@lgv.saldo) %>
       </td>
     </tr>
+    
+     <tr>
+      <td colspan="5" class="bordered_bottom bordered_right bold">
+        
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td colspan="5" class="bordered_bottom bordered_right bold">
+          Vuelto
+      </td>
+      
+      <td class="bordered_bottom bordered_right bold right">
+          <%= money(@lgv.devuelto) %>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="5" class="bordered_bottom bordered_right bold">
+          Descuento
+      </td>
+      
+      <td class="bordered_bottom bordered_right bold right">
+          <%= money(@lgv.descuento) %>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="5" class="bordered_bottom bordered_right bold">
+          Reembolso
+      </td>
+      
+      <td class="bordered_bottom bordered_right bold right">
+          <%= money(@lgv.reembolso) %>
+      </td>
+    </tr>
+    
+    
     
   </tbody>
 </table>
@@ -189,7 +273,7 @@
 
 <div class="button">
   
-  
+  <%= link_to 'Exportar to PDF', "/lgvs/pdf/#{@lgv.id}.pdf" %>  
  <% if @lgv.processed == "1" %> 
 
  <% %>

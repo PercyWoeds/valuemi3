@@ -1,4 +1,3 @@
-
 include UsersHelper
 include CustomersHelper
 include ProductsHelper
@@ -7,13 +6,322 @@ class LgvsController < ApplicationController
     
     before_filter :authenticate_user!, :checkProducts
      
-  # Export lgv to PDF
-  def pdf
-    @lgv = Lgv.find(params[:id])
-    respond_to do |format|
-      format.html { redirect_to("/lgvs/pdf/#{@lgv.id}.pdf") }
-      format.pdf { render :layout => false }
+ 
+  def build_pdf_header(pdf)
+    
+      pdf.image "#{Dir.pwd}/public/images/logo2.png", :width => 270        
+      pdf.move_down 6        
+      pdf.move_down 4
+      pdf.move_down 4
+
+      pdf.bounding_box([325, 725], :width => 200, :height => 80) do
+        pdf.stroke_bounds
+        pdf.move_down 15
+        pdf.font "Helvetica", :style => :bold do
+          pdf.text "R.U.C: 20424092941", :align => :center
+          pdf.text "LIQUIDACION GASTOS DE VIAJE", :align => :center
+          pdf.text "#{@lgv.code}", :align => :center,
+                                 :style => :bold
+          
+        end
+      end
+       
+      
+      pdf 
+  end   
+
+  def build_pdf_body(pdf)
+  
+    pdf.text " ", :size => 13, :spacing => 4
+    pdf.font "Helvetica" , :size => 8        
+    
+     
+       a= @lgv.get_lgvs2.first
+    
+       $lcCli = a.compro.tranportorder.code
+       $lcdir1 = a.compro.tranportorder.employee.full_name
+       $lcPlaca = a.compro.tranportorder.truck.placa << " - " << a.compro.tranportorder.get_placa(a.compro.tranportorder.truck2_id)
+       
+       $lcPunto2=  a.compro.tranportorder.get_punto(a.compro.tranportorder.ubication2_id)
+       $lcPunto =  a.compro.tranportorder.get_punto(a.compro.tranportorder.ubication_id) << " Hasta "<< $lcPunto2
+       $lcFecha = a.compro.tranportorder.fecha1.strftime("%d/%m/%Y")
+       $lcFecha2 = a.compro.tranportorder.fecha2.strftime("%d/%m/%Y")
+       
+       max_rows = [client_data_headers.length, invoice_headers.length, 0].max
+       
+        rows = []
+        (1..max_rows).each do |row|
+          rows_index = row - 1
+          rows[rows_index] = []
+          rows[rows_index] += (client_data_headers.length >= row ? client_data_headers[rows_index] : ['',''])
+          rows[rows_index] += (invoice_headers.length >= row ? invoice_headers[rows_index] : ['',''])
+        end
+  
+        if rows.present?
+  
+          pdf.table(rows, {
+            :position => :center,
+            :cell_style => {:border_width => 0},
+            :width => pdf.bounds.width
+          }) do
+            columns([0, 2]).font_style = :bold
+  
+          end
+  
+          pdf.move_down 18
+  
+        end
+      headers = []
+      table_content = []
+
+      Lgv::TABLE_HEADERS.each do |header|
+        cell = pdf.make_cell(:content => header)
+        cell.background_color = "FFFFCC"
+        headers << cell
+      end
+       
+      table_content << headers
+      
+       nroitem=1 
+       row = []
+       row << nroitem.to_s 
+       row << "  "
+       row << "PEAJE ...."
+       
+         row << "  "
+         row << "  "
+         row << "  "
+         row << "MTC "
+         row << "  "
+         row << @lgv.peaje 
+         
+         table_content << row
+  
+      nroitem = nroitem + 1
+       
+
+        
+        
+        for  product in @lgv.get_lgvs() 
+            row = []
+            row << nroitem.to_s 
+            row << product.fecha.strftime("%d/%m/%Y")
+            row << product.gasto.grupo 
+            row << product.gasto.code
+            row << product.gasto.descrip
+            row << product.td
+            row << product.documento
+            
+#              lcDato = product.tranportorder.code << " - " << product.tranportorder.truck.placa<<" - " << product.tranportorder.get_placa(product.tranportorder.truck2_id)
+            row << " "
+          row << product.total
+            table_content << row
+            nroitem=nroitem + 1      
+        end
+        
+      result = pdf.table table_content, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width
+                                        } do 
+                                          columns([0]).align=:center
+                                          columns([1]).align=:left 
+                                          columns([2]).align=:left                                          
+                                          columns([3]).align=:left
+                                          columns([4]).align=:left  
+                                          columns([5]).align=:right 
+                                          columns([6]).align=:right 
+                                          columns([7]).align=:left  
+                                          columns([8]).align=:right 
+                                    
+                                        end
+      pdf.move_down 18
+      headers2 = []
+      table_content2 = []
+      
+      Lgv::TABLE_HEADERS2.each do |header|
+        cell = pdf.make_cell(:content => header)
+        cell.background_color = "FFFFCC"
+        headers2 << cell
+      end
+      
+      table_content2 << headers2
+      por_rendir = 0
+       
+        for  product in @lgv.get_lgvs2() 
+            row = []
+            row  <<  "VIATICOS "
+            row  <<  product.compro.code
+            row  <<  product.importe
+            por_rendir += product.importe.to_f  
+            table_content2 << row
+            nroitem=nroitem + 1      
+        end
+        
+        row = []
+        row  <<  "TOTAL A RENDIR: "
+        row  <<  " "
+        row  <<  por_rendir
+      
+        table_content2 << row
+        
+        result = pdf.table table_content2, {
+                                        :position => :right,
+                                        :cell_style => {:border_width => 1},
+                                        :width => pdf.bounds.width/2
+                                        } do 
+                                          columns([0]).align=:center
+                                          columns([1]).align=:left 
+                                          columns([2]).align=:left                                          
+                                          columns([3]).align=:right  
+                                 
+                                    
+                                        end
+       
+    
+      
+      pdf.move_down 20  
+     
+     $lcIngreso   = sprintf("%.2f",@lgv.total_ing.round(2).to_s)  
+     $lcEgreso    = sprintf("%.2f",@lgv.total_egreso.round(2).to_s)  
+     $lcSaldo     = sprintf("%.2f",@lgv.saldo.round(2).to_s)  
+     $lcDevuelto  = sprintf("%.2f",@lgv.devuelto.round(2).to_s)  
+     $lcReembolso = sprintf("%.2f",@lgv.reembolso.round(2).to_s)  
+     $lcDescuento = sprintf("%.2f",@lgv.descuento.round(2).to_s)  
+
+     
+      
+      headers3 = []
+      table_content3 = []
+      
+      Lgv::TABLE_HEADERS3.each do |header|
+        cell = pdf.make_cell(:content => header)
+        cell.background_color = "FFFFCC"
+        headers3 << cell
+      end
+      
+      table_content3 << headers3
+
+        row = []
+        row  <<  "GASTOS REALIZADOS : "
+        row  <<  " "
+        row  <<  $lcEgreso
+        table_content3 << row
+        row = []
+        row  <<  "VUELTO: "
+        row  <<  " "
+        row  <<  $lcDevuelto
+        table_content3 << row
+        row = []
+        row  <<  "DESCUENTO: "
+        row  <<  " "
+        row  <<  $lcDescuento
+        table_content3 << row
+        row = []
+        row  <<  "REEMBOLSO: "
+        row  <<  " "
+        row  <<  $lcReembolso
+        table_content3 << row
+        
+        
+        
+        result = pdf.table table_content3, {
+                                        :position => :right,
+                                        :cell_style => {:border_width => 1},
+                                        :width => pdf.bounds.width/2
+                                        } do 
+                                          columns([0]).align=:center
+                                          columns([1]).align=:left 
+                                          columns([2]).align=:left                                          
+                                          columns([3]).align=:right
+                                 
+                                    
+                                        end
+       
+    
+      pdf.move_down 10  
+      
+      pdf
     end
+
+
+    def build_pdf_footer(pdf)
+      
+    
+        pdf.text ""
+        pdf.text "" 
+        pdf.text "OBSERVACIONES : #{@lgv.comments}", :size => 8, :spacing => 4
+
+        
+       data =[ ["Procesado Asis.Finanzas ","V.B.Contador","V.B.Administracion ","V.B. Gerente ."],
+               [":",":",":",":"],
+               [":",":",":",":"],
+               ["Fecha:","Fecha:","Fecha:","Fecha:"] ]
+
+           
+            pdf.text " "
+            pdf.table(data,:cell_style=> {:border_width=>1} , :width => pdf.bounds.width)
+            pdf.move_down 10          
+                  
+        pdf.bounding_box([0, 20], :width => 538, :height => 50) do        
+        pdf.draw_text "Company: #{@lgv.company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom ]
+
+      end
+
+      pdf
+      
+  end   
+     
+  # Export lgv to PDF
+
+  def pdf
+    @lgv  =Lgv.find(params[:id])
+    company =@lgv.company_id
+    @company =Company.find(company)
+  
+    
+     $lcFecha1= @lgv.fecha.strftime("%d/%m/%Y") 
+     $lcMon   = @lgv.get_moneda(1)
+     $lcPay= ""
+     $lcSubtotal=0
+     $lcIgv=0
+     $lcTotal=sprintf("%.2f",@lgv.inicial)
+
+     $lcDetracion=0
+     $lcAprobado= @lgv.get_processed 
+
+
+    $lcEntrega5 =  "FECHA :"
+    $lcEntrega6 =  $lcFecha1
+
+    Prawn::Document.generate("app/pdf_output/#{@lgv.id}.pdf") do |pdf|
+        pdf.font "Helvetica"
+        pdf = build_pdf_header(pdf)
+        pdf = build_pdf_body(pdf)
+        build_pdf_footer(pdf)
+         $lcFileName =  "app/pdf_output/#{@lgv.id}.pdf"      
+        
+    end     
+
+    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
+                
+    send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
+
+
+  end
+  
+  def client_data_headers
+      client_headers  = [["O-ST N°  :", $lcCli ]]
+      client_headers << ["Conductor :", $lcdir1]
+      client_headers << ["Placa :", $lcPlaca]
+      client_headers
+  end
+
+  def invoice_headers          
+    
+      invoice_headers  = [["Desde : ",$lcPunto]]
+      invoice_headers << ["Fecha Salida  :", $lcFecha]
+      invoice_headers << ["Fecha Llegada :", $lcFecha2]
+      invoice_headers
   end
   
   # Process an lgv
@@ -48,8 +356,8 @@ class LgvsController < ApplicationController
   # List items
   def list_items
     
+   
     @company = Company.find(params[:company_id])
-    
     items = params[:items]
     items = items.split(",")
     items_arr = []
@@ -71,7 +379,7 @@ class LgvsController < ApplicationController
         td = parts[2]
         documento = parts[3]
         importe  = parts[4]
-        peaje = parts[5].to_f
+        peaje    = parts[5].to_f
         monto_inicial = parts[6].to_f 
         
         product = Gasto.find(id.to_i)
@@ -86,10 +394,12 @@ class LgvsController < ApplicationController
         product[:currtotal] = total
         
         @total_pago1  = total     
-        if monto_inicial != nil
-          @diferencia =  monto_inicial - total - peaje
+        if $total_inicial != nil
+          
+          @diferencia = $total_inicial -  total - peaje
         else
-          @diferencia =  total - peaje 
+          $total_inicial = 0 
+          @diferencia = $total_inicial -  total - peaje 
         end
         
         
@@ -113,30 +423,34 @@ class LgvsController < ApplicationController
     @lgvs = []
     i = 0
     @total_inicial = 0
+    total = 0 
+    monto_inicial = 0
+    $total_inicial= 0
     for item in items
       if item != ""
         parts = item.split("|BRK|")
 
-        id = parts[0]  
-        inicial= parts[1].to_f
-        
-        puts "inicial"
-        puts inicial 
+        id      = parts[0]  
+        monto_inicial = parts[1]
         
         product = Compro.find(id.to_i)
+        
         product[:i] = i
-        product[:importe] = inicial.to_f
+        product[:importe] = monto_inicial.to_f
+        product[:detalle] = product.tranportorder.employee.full_name 
+        product[:descrip] = product.tranportorder.truck.placa 
         
-        @lgvs.push(product)
-        
-       total += product[:importe]
+        total += product[:importe]
         
         @total_inicial  = total     
+        
+        @diferencia = 
         
         @lgvs.push(product)
 
       end
       
+      $total_inicial= @total_inicial
       i += 1
     end
 
@@ -245,7 +559,7 @@ class LgvsController < ApplicationController
     @lgv = Lgv.new
     @lgv[:code] = "I_#{generate_guid()}"
     @lgv[:processed] = "0"
-    
+    $total_inicial = 0 
     @company = Company.find(params[:company_id])
     @lgv.company_id = @company.id
     
@@ -286,6 +600,7 @@ class LgvsController < ApplicationController
      @compros = Compro.all 
      
     items = params[:items].split(",")
+    items2 = params[:items2].split(",")
     
     @lgv = Lgv.new(lgv_params)
     
@@ -294,13 +609,13 @@ class LgvsController < ApplicationController
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
     begin
-      @lgv[:inicial] = @lgv.get_total_inicial(items)
+      @lgv[:inicial] = 0
     rescue
       @lgv[:inicial] = 0
     end 
     
     begin
-      @lgv[:total_ing] = @lgv.get_total_ing(items)
+      @lgv[:total_ing] = @lgv.get_total_ing(items2)
     rescue 
       @lgv[:total_ing] = 0
     end 
@@ -309,7 +624,7 @@ class LgvsController < ApplicationController
     rescue 
       @lgv[:total_egreso]= 0 
     end 
-    @lgv[:saldo] = @lgv[:inicial] +@lgv[:total_ing] - @lgv[:total_egreso] -@lgv[:peaje]
+    @lgv[:saldo] =@lgv[:total_ing] - @lgv[:total_egreso] -@lgv[:peaje]
     
     if(params[:lgv][:user_id] and params[:lgv][:user_id] != "")
       curr_seller = User.find(params[:lgv][:user_id])
@@ -320,7 +635,7 @@ class LgvsController < ApplicationController
       if @lgv.save
         # Create products for kit
         @lgv.add_products(items)  
-        
+        @lgv.add_products2(items2)  
         # Check if we gotta process the lgv
         @lgv.process()
         
@@ -393,7 +708,7 @@ class LgvsController < ApplicationController
   
   private
   def lgv_params
-    params.require(:lgv).permit( :code, :fecha, :viatico_id, :total, :devuelto_texto, :devuelto, :reembolso, :descuento, :observa,
+    params.require(:lgv).permit( :code, :fecha, :lgv_id, :total, :devuelto_texto, :devuelto, :reembolso, :descuento, :observa,
  :company_id, :processed, :user_id,  :tranportorder_id, :comments, :gasto_id, :compro_id, :inicial, :total_ing, :total_egreso, :saldo,:peaje)
   end
 
