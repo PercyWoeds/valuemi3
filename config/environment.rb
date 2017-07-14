@@ -6,3 +6,4 @@ Mnygo::Application.initialize!
 
 
 
+
