@@ -2286,7 +2286,14 @@ def get_dolar(fecha1)
   return @dolar 
 end 
 
-
+def get_lgvs3(fecha1,fecha2)
+  
+      @lgvs = LgvDelivery.find_by_sql(['Select lgvs.*,lgv_deliveries.lgv_id,lgv_deliveries.compro_id
+      from lgv_deliveries
+      INNER JOIN lgvs ON lgv_deliveries.lgv_id = lgvs.id
+      WHERE lgvs.fecha >= ? and lgvs.fecha <= ? ', "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
+      return @lgvs 
+  end
 
 
 end

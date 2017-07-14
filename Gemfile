@@ -10,8 +10,6 @@ gem 'rails', '4.2.5.1'
 
 # Added
 gem 'bluecloth'
-gem 'grape'
-gem "rack-timeout"
 
 
 gem 'htmlentities'

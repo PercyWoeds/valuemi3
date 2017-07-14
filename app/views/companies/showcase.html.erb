@@ -1,14 +1,5 @@
 <div class="mid_box bordered_right">
-  <h3>
-    <%= image_tag("products_32.png", :class => "vmiddle") %>
-    <%= link_to "Registro de viaticos","/companies/compros/#{@company.id}" %>
-  </h3>
-
-  <p>
-    Agregar, editar or eliminar viaticos.
-  </p>
-
-  <%= hr() %>
+  
 
   
   <h3>
@@ -61,7 +52,8 @@
   <h3>
         <div>
           <%= image_tag("divisions_32.png", :class => "vmiddle") %>
-          <%= link_to "Reporte de vueltos y fletes ", "/companies/divisions/#{@company.id}" %>
+          <%= link_to "Reporte de vueltos y fletes ", "/companies/reports/rpt_caja2_pdf/#{@company.id}" %>
+           
         </div>
   </h3>
   <p>

@@ -33,7 +33,17 @@ class Lgv < ActiveRecord::Base
                       "COMPROBANTE",
                      "IMPORTE"]
   
-
+  TABLE_HEADERS4 = ["CODE",
+                      "CONDUCTOR",
+                     "PLACA",
+                     "DESDE",
+                     "FEC.SALIDA",
+                     "FEC.LLEGADA",
+                     "DEVUELTO",
+                     "REEMBOLSO",
+                     "DESCUENTO"   ]
+                     
+             
   def self.search(search)
       where("code LIKE ?", "%#{search}%") 
         
@@ -216,6 +226,8 @@ def get_total_inicial(items)
   def get_lgvs2
       @lgvs = LgvDelivery.where(:lgv_id=> self.id)
   end
+  
+  
   def get_invoices
     @facturas= Factura.find_by_sql(['Select facturas.*,customers.ruc,payments.descrip from facturas 
       LEFT JOIN customers on facturas.customer_id = customers.id 

@@ -278,6 +278,7 @@ end
   match 'companies/reports/sales/:company_id' => 'reports#report_sales', via: [:get, :post]
   match 'companies/reports/:company_id' => 'reports#reports', via: [:get, :post]
 
+  match 'companies/reports/rpt_caja2_pdf/:company_id' => 'reports#rpt_caja2_pdf', via: [:get, :post]
   # Company users
 
   match 'company_users/ac_users' => 'company_users#ac_users', via: [:get, :post]
@@ -365,7 +366,9 @@ end
   match 'lgvs/do_process/:id' => 'lgvs#do_process', via: [:get, :post]
   match 'lgvs/email/:id' => 'lgvs#email', via: [:get, :post]
   match 'lgvs/pdf/:id' => 'lgvs#pdf', via: [:get, :post]
-  match 'companies/lgvs/:company_id' => 'lgvs#list_lgvs', via: [:get, :post]
+  
+  match 'lgvs/rpt_lgv2_pdf/:id' => 'lgvs#rpt_lgv2_pdf', via: [:get, :post]
+  match 'companies/lgvs/:id' => 'lgvs#list_lgvs', via: [:get, :post]
   resources :lgvs 
 
 # Declarations
