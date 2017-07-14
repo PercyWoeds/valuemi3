@@ -58,7 +58,7 @@ class ViaticosController < ApplicationController
             row << nroitem.to_s        
             row << product.fecha.strftime("%d/%m/%Y") 
             row << product.tranportorder.employee.full_name   
-            lcompro = product.tm << " "<<  product.descrip 
+            lccompro = product.tm << " "<<  product.descrip 
             row << lccompro 
             
             if product.tm.to_i != 6
