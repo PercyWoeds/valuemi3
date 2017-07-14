@@ -1531,6 +1531,10 @@ def get_purchaseorder_detail2(fecha1,fecha2)
     return ret    
  end 
 
+ def get_stocks_inventarios4(product1)
+    @productExiste = Product.where(:products_category_id=> product1) 
+    return @productExiste 
+ end
 
  ###INVENTARIO  STOCKS 
 

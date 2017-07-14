@@ -58,7 +58,7 @@ class StocksController < ApplicationController
 
   def build_pdf_body(pdf)
     
-    pdf.text "Almacen : Central  Stocks  al : "+@fecha2 , :size => 11 
+    pdf.text "Almacen :  " 
     pdf.text " Categoria : " + @namecategoria , :size => 11 
     pdf.font "Open Sans",:size =>6
 
@@ -80,38 +80,16 @@ class StocksController < ApplicationController
       @totales  = 0
       saldo = 0  
 
-       for  stock in @movements 
+       for  product in @movements
 
               row = []
               row << nroitem.to_s
-              row << stock.product.code
-              row << stock.product.name
-              row << stock.product.unidad
-              row << stock.product.ubicacion               
-              if stock.stock_inicial == nil
-                  stock.stock_inicial = 0                  
-              end 
-              if stock.ingreso == nil
-                  stock.ingreso = 0                  
-              end 
-              if stock.salida  == nil
-                  stock.salida   = 0                  
-              end 
+              row << product.code
+              row << product.name
+              row << product.unidad
+              row << product.ubicacion               
+              row << product.stock.quantity
               
-              saldo = stock.stock_inicial  + stock.ingreso - stock.salida       
-
-              row << saldo 
-              row << stock.price
-
-              if stock.price == nil  
-                stock.price = 0
-              end 
-              if saldo == nil
-                saldo = 0
-              end 
-              @total = (stock.price * saldo)
-
-              row << sprintf("%.2f",@total.round(2).to_s)
 
               table_content << row
               nroitem=nroitem + 1
@@ -119,18 +97,7 @@ class StocksController < ApplicationController
               @cantidad += saldo 
               @totales  += @total 
         end
-            row = []
-            row << ""
-            row <<""          
-            row << ""            
-            row << ""            
-            row << "TOTALES GENERAL"
-            row << sprintf("%.2f",@cantidad.round(2).to_s)
-            row << " "
-            row << sprintf("%.2f",@totales.round(2).to_s)
             
-            table_content << row
-
       result = pdf.table table_content, {:position => :center,
                                         :header => true,
                                         :width => pdf.bounds.width
@@ -172,7 +139,7 @@ class StocksController < ApplicationController
     @fecha2 = params[:fecha1]
     @categoria = params[:products_category_id]
     @namecategoria= @company.get_categoria_name(@categoria)      
-    @movements = @company.get_stocks_inventarios2(@fecha1,@fecha2,@categoria)
+    @movements = @company.get_stocks_inventarios4(@categoria)
       
     Prawn::Document.generate("app/pdf_output/stocks1.pdf") do |pdf|      
 
