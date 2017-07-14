@@ -36,8 +36,8 @@ class ViaticosController < ApplicationController
   def build_pdf_body(pdf)
   
     pdf.text " ", :size => 13, :spacing => 4
-    pdf.font "Helvetica" , :size => 8        
-    pdf.text "SALDO INICIAL :" << sprintf("%.2f",@viatico.inicial) 
+    pdf.font "Helvetica" , :size => 6
+    pdf.text "SALDO INICIAL :" << sprintf("%.2f",@viatico.inicial) ,:style => :bold;
           
       headers = []
       table_content = []
