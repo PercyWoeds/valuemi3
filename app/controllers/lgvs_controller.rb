@@ -679,7 +679,7 @@ class LgvsController < ApplicationController
   
   # Show lgvs for a company
   def list_lgvs
-    @company = Company.find(params[:company_id])
+    @company = Company.find(1)
     @pagetitle = "#{@company.name} - lgvs"
     @filters_display = "block"
     

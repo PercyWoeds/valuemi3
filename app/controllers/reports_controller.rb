@@ -341,8 +341,9 @@ class ReportsController < ApplicationController
 
   # Report customers monthly
   def report_view_monthly_customers
-    @company = Company.find(params[:company_id])
-    @customer = Customer.find(params[:customer_id])
+    
+    @customer = current_user.vruc 
+    @monedas = Client.get_monedas()
     
     if(params[:year] and params[:year].numeric?)
       @year = params[:year].to_i
