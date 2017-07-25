@@ -709,8 +709,9 @@ WHERE purchase_details.product_id = ?',params[:id] ])
             row << product.codigo
             row << product.nameproducto
             row << product.unidad 
-            row << product.supplier.name 
-            row << product.moneda_id 
+            row << product.supplier.name  
+            row << ""
+            row << ""
             row << sprintf("%.2f",product.quantity.to_s)
             row << sprintf("%.2f",product.price.to_s)
             row << sprintf("%.2f",product.total.to_s)
@@ -987,182 +988,6 @@ WHERE purchase_details.product_id = ?',params[:id] ])
 
 
 #fin reporte de ingresos x producto 
-
-# reporte de ingresos x producto x familia 
-
-# reporte completo
-  def build_pdf_header_rpt9(pdf)
-      pdf.font "Helvetica" , :size => 8
-     $lcCli  =  @company.name 
-     $lcdir1 = @company.address1+@company.address2+@company.city+@company.state
-
-     $lcFecha1= Date.today.strftime("%d/%m/%Y").to_s
-     $lcHora  = Time.now.to_s
-
-    max_rows = [client_data_headers_rpt.length, invoice_headers_rpt.length, 0].max
-      rows = []
-      (1..max_rows).each do |row|
-        rows_index = row - 1
-        rows[rows_index] = []
-        rows[rows_index] += (client_data_headers_rpt.length >= row ? client_data_headers_rpt[rows_index] : ['',''])
-        rows[rows_index] += (invoice_headers_rpt.length >= row ? invoice_headers_rpt[rows_index] : ['',''])
-      end
-
-      if rows.present?
-
-        pdf.table(rows, {
-          :position => :center,
-          :cell_style => {:border_width => 0},
-          :width => pdf.bounds.width
-        }) do
-          columns([0, 2]).font_style = :bold
-
-        end
-
-        pdf.move_down 10
-      end      
-      pdf 
-  end   
-
-  def build_pdf_body_rpt9(pdf)
-    
-    pdf.text "Listado de Trazabilidad desde "+@fecha1.to_s+ " Hasta: "+@fecha2.to_s , :size => 11
-    pdf.text "Categoria  : "+@namecategoria  , :size => 11
-    pdf.font "Helvetica" , :size => 6
-
-      headers = []
-      table_content = []
-
-      Purchase::TABLE_HEADERS2.each do |header|
-        cell = pdf.make_cell(:content => header)
-        cell.background_color = "FFFFCC"
-        headers << cell
-      end
-
-      table_content << headers
-
-      nroitem=1
-
-      @totales = 0
-      @cantidad = 0
-      nroitem = 1
-
-       for  product in @facturas_rpt
- 
-            row = []         
-            row << nroitem.to_s
-            row << product.code
-            row << product.fecha.strftime("%d/%m/%Y")
-            row << product.codigo
-            row << product.nameproducto
-            row << product.unidad 
-            row << product.supplier.name  
-            row << ""
-            row << ""
-            
-            row << sprintf("%.2f",product.quantity.to_s)
-
-            if product.price != nil 
-            row << sprintf("%.2f",product.price.to_s)
-            else
-             row << "0.00"
-            end 
-            row << sprintf("%.2f",product.total.to_s)
-          
-            table_content << row
-
-            @totales += product.total 
-            @cantidad += product.quantity
-
-            nroitem=nroitem + 1
-       
-        end
-      
-      row =[]
-      row << ""
-      row << ""
-      row << ""
-      row << ""
-      row << ""
-      row << ""
-      row << ""
-      row << ""
-      
-      row << "TOTALES => "
-      row << sprintf("%.2f",@cantidad.to_s)
-      row << " "
-      row << sprintf("%.2f",@totales.to_s)
-
-
-      table_content << row
-      
-      result = pdf.table table_content, {:position => :center,
-                                        :header => true,
-                                        :width => pdf.bounds.width
-                                        } do 
-                                          columns([0]).align=:center
-                                          columns([1]).align=:left
-                                          columns([2]).align=:left
-                                          columns([3]).align=:left
-                                          columns([4]).align=:left
-                                          columns([5]).align=:center  
-                                          columns([6]).align=:right
-                                          columns([7]).align=:right
-                                          columns([8]).align=:right
-                                        end                                          
-      pdf.move_down 10      
-      #totales 
-      pdf 
-
-    end
-
-    def build_pdf_footer_rpt9(pdf)
-            data =[ ["Procesado por Almacen ","V.B.Almacen","V.B.Compras ","V.B. Gerente ."],
-               [":",":",":",":"],
-               [":",":",":",":"],
-               ["Fecha:","Fecha:","Fecha:","Fecha:"] ]
-
-           
-            pdf.text " "
-            pdf.table(data,:cell_style=> {:border_width=>1} , :width => pdf.bounds.width)
-            pdf.move_down 10          
-
-                        
-      pdf.text "" 
-      pdf.bounding_box([0, 30], :width => 535, :height => 40) do
-      pdf.draw_text "Company: #{@company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
-
-      end
-
-      pdf
-      
-  end
-
-  def rpt_ingresos9_all_pdf
-  
-    @company=Company.find(params[:id])          
-    @fecha1 = params[:fecha1]    
-    @fecha2 = params[:fecha2]    
-    @categoria = params[:products_category_id]    
-    @namecategoria = @company.get_categoria_name(@categoria)      
-
-    @facturas_rpt = @company.get_trazabilidad_day(@fecha1,@fecha2,@categoria)
-
-
-    Prawn::Document.generate("app/pdf_output/rpt_factura.pdf") do |pdf|
-        pdf.font "Helvetica"
-        pdf = build_pdf_header_rpt9(pdf)
-        pdf = build_pdf_body_rpt9(pdf)
-        build_pdf_footer_rpt9(pdf)
-        $lcFileName =  "app/pdf_output/rpt_factura.pdf"              
-    end     
-    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
-    send_file("app/pdf_output/rpt_factura.pdf", :type => 'application/pdf', :disposition => 'inline')
-
-  end
-
-
-
 
 
   # reporte completo
@@ -1715,15 +1540,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
     $lcTipoFacturaCompra = "0"
 
     @detalleitems =  @company.get_orden_detalle(@purchaseorder.id)
-    
-     @cierre = Cierre.last 
-    parts0 = @cierre.fecha.strftime("%Y-%m-%d") 
-    parts =parts0.split("-")
-    
-    $yy = parts[0]
-    $mm = parts[1]
-    $dd = parts[2]
-    $fecha_min = $yy <<'-'<< $mm <<'-'<< $dd
+
     @purchase = Purchase.new 
 
     
@@ -1755,13 +1572,6 @@ def newfactura2
 
     $lcTipoFacturaCompra= "1"
     @detalleitems =  @company.get_orden_detalle2(@purchaseorder.id)
-     @cierre = Cierre.last 
-    parts0 = @cierre.fecha.strftime("%Y-%m-%d") 
-    parts =parts0.split("-")
-    
-    $yy = parts[0].to_i
-    $mm = parts[1].to_i
-    $dd = parts[2].to_i 
 
     @purchase = Purchase.new 
 
@@ -1831,6 +1641,10 @@ def newfactura2
             @purchase[:tax_amount] = @purchase.get_tax3(@detalleitems, @purchase[:supplier_id])
            end 
            x = @purchase[:tax_amount]
+                 puts "servicio"
+                  puts x.to_s 
+                  puts $lcPurchaseOrderId
+
 
       rescue
           @purchase[:tax_amount] = 0        
@@ -2089,14 +1903,6 @@ def newfactura2
   def show
     @purchase = Purchase.find(params[:id])
     @supplier = @purchase.supplier
-    @cierre = Cierre.last 
-    parts0 = @cierre.fecha.strftime("%Y-%m-%d") 
-    parts =parts0.split("-")
-    
-    $yy = parts[0].to_i
-    $mm = parts[1].to_i
-    $dd = parts[2].to_i 
-    
   end
 
   # GET /purchases/new
@@ -2143,13 +1949,6 @@ def newfactura2
     @monedas  = @company.get_monedas()
     @payments  = @company.get_payments()
 
-    @cierre = Cierre.last 
-    parts0 = @cierre.fecha.strftime("%Y-%m-%d") 
-    parts =parts0.split("-")
-    
-    $yy = parts[0].to_i
-    $mm = parts[1].to_i
-    $dd = parts[2].to_i 
     
     @ac_user = getUsername()
     @purchase[:user_id] = getUserId()
