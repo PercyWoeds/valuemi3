@@ -859,7 +859,7 @@ def get_payments_detail_value(fecha1,fecha2,value = "total",moneda)
     
  end 
  
- def get_pendientes_day_cliente_value(fecha1,fecha2,value = "total",moneda,cliente)
+ def get_pendientes_day_cliente_value(fecha1,fecha2,value = "total",cliente,moneda)
 
     facturas = Factura.where(["balance>0  and  company_id = ? AND fecha >= ? and fecha<= ? and moneda_id = ? and customer_id = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda , cliente ]).order(:customer_id,:moneda_id)
     if facturas
