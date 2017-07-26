@@ -1143,20 +1143,6 @@ def get_purchases_pendientes_day_supplier(fecha1,fecha2,value,moneda)
     return ret    
  end 
 
-def get_supplier_payments2(moneda)
-
-   @facturas = Purchase.find_by_sql(["
-  SELECT   year_month as year_month,
-   supplier_id,
-   SUM(balance) as balance   
-   FROM purchases
-   WHERE moneda_id = ? and balance>0
-   GROUP BY 2,1
-   ORDER BY 2,1 ", moneda])    
-
-  return @facturas
-    
- end 
 
  def get_supplier_payments_value2(fecha1,fecha2)
 
