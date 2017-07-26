@@ -2309,7 +2309,7 @@ def get_lgvs3(fecha1,fecha2)
 
 def get_purchases_pendientes_day_value(fecha1,fecha2,value = "total",cliente,moneda)
 
-    facturas = Purchase.where(["balance>0  and  company_id = ? AND date1 >= ? and date1<= ? and moneda_id = ? and customer_id = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda , cliente ]).order(:customer_id,:moneda_id)
+    facturas = Purchase.where(["balance>0  and  company_id = ? AND date1 >= ? and date1<= ? and moneda_id = ? and supplier_id = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda , cliente ]).order(:customer_id,:moneda_id)
     if facturas
     ret=0  
     for factura in facturas

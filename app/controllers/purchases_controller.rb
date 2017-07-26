@@ -1197,7 +1197,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
 
   def build_pdf_body_rpt2(pdf)
     
-    pdf.text "Cuentas por cobrar  : desde "+@fecha1.to_s+ " Hasta: "+@fecha2.to_s , :size => 8 
+    pdf.text "Cuentas por Pagar  : desde "+@fecha1.to_s+ " Hasta: "+@fecha2.to_s , :size => 8 
     pdf.text ""
     pdf.font "Helvetica" , :size => 6
 
