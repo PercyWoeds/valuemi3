@@ -240,9 +240,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
 
 ### RESUMEN FACTURAS X CATEGORIA.
 
-## Reporte de factura detallado
 
- 
   def build_pdf_body10(pdf)
     
     pdf.text "Resumen por Categoria de Facturas de compra Desde :"+@fecha1.to_s+ " Hasta : "+@fecha2.to_s , :size => 11 
@@ -268,43 +266,20 @@ WHERE purchase_details.product_id = ?',params[:id] ])
 
       nroitem=1
 
-      for ordencompra in @rpt_detalle_purchase
+      for compras in @rpt_detalle_purchase
 
-           $lcNumero    = ordencompra.documento     
-           $lcFecha     = ordencompra.date1
-           $lcProveedor = ordencompra.supplier.name 
-
-        @orden_compra1  = @company.get_purchase_detalle(ordencompra.id)
-
-
-       for  orden in @orden_compra1
             row = []
             row << nroitem.to_s
-            row << $lcProveedor 
-            row << $lcNumero 
-            row << $lcFecha.strftime("%d/%m/%Y")        
-            row << orden.quantity.to_s
-
-            if orden.product 
-              row << orden.product.code
-              row << orden.product.name
-            else
-              a = orden.get_service(orden.product_id)
-              row << a.code 
-              row << a.name 
-            end 
-
-            if orden.price_without_tax != nil
-            row << orden.price_without_tax.round(2).to_s
-            else 
-            row << "0.00"
-            end  
+            row << compras.products_category_id
             row << " "
-            row << orden.total.round(2).to_s
+            row << " "
+            row << " "
+            row << compras.total.round(2).to_s
             table_content << row
-            puts nroitem.to_s 
+            
+            
             nroitem=nroitem + 1
-        end
+      
 
       end
 
@@ -319,10 +294,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
                                           columns([3]).align=:center
                                           columns([4]).align=:left
                                           columns([5]).align=:left
-                                          columns([6]).align=:left
-                                          columns([7]).align=:right
-                                          columns([8]).align=:right
-                                          columns([9]).align=:right
+                                          
                                         end
 
       pdf.move_down 10      
@@ -346,10 +318,10 @@ WHERE purchase_details.product_id = ?',params[:id] ])
     @company =Company.find(1)
     @fecha1 =params[:fecha1]
     @fecha2 =params[:fecha2]
+    @moneda1 = params[:moneda]
     
 
-    @rpt_detalle_purchase = @company.get_purchases_day_categoria(@fecha1,@fecha2)
-
+    @rpt_detalle_purchase = @company.get_purchases_day_categoria(@fecha1,@fecha2,@moneda1)
     Prawn::Document.generate("app/pdf_output/orden_1.pdf") do |pdf|
         pdf.font "Helvetica"
         pdf = build_pdf_header9(pdf)
