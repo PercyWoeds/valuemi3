@@ -1229,7 +1229,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
               fechas2 = product.date2 
 
             row = []          
-            row << lcDoc
+            row << product.document.descripshort
             row << product.documento 
             row << product.date1.strftime("%d/%m/%Y")
             row << product.date2.strftime("%d/%m/%Y")
@@ -1273,8 +1273,8 @@ WHERE purchase_details.product_id = ?',params[:id] ])
             lcCliente = product.supplier_id
 
             row = []          
-            row << lcDoc
-            row << product.code
+            row << product.document.descripshort
+            row << product.documento 
             row << product.date1.strftime("%d/%m/%Y")
             row << product.date2.strftime("%d/%m/%Y")
             row << product.supplier.name
