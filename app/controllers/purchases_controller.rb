@@ -280,8 +280,8 @@ WHERE purchase_details.product_id = ?',params[:id] ])
             nroitem=nroitem + 1
       end
             row = []
-            row << 
-            row << 
+            row << ""
+            row << "" 
             row << "TOTAL : "
             row << total.round(2) 
             table_content << row
@@ -290,7 +290,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
 
       result = pdf.table table_content, {:position => :center,
                                         :header => true,
-                                        :width => pdf.bounds.width
+                                        :width => pdf.bounds.width/2
                                         } do 
                                           columns([0]).align=:center
                                           columns([1]).align=:left
