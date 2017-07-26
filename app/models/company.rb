@@ -41,17 +41,17 @@ class Company < ActiveRecord::Base
     end 
   end 
 
-  def actualiza_purchase_monthyear
-    @factura = Factura.where(:year_mounth=> nil)
+  def actualizar_purchase_monthyear
+    @factura = Purchase.where(:yearmonth=> nil)
     for factura in @factura
-        f = Factura.find(factura.id)
+        f = Purchase.find(factura.id)
       if f
-        @fechas =f.fecha2.to_s
+        @fechas =f.date2.to_s
         parts = @fechas.split("-")
         year = parts[0]
         mes  = parts[1]
         dia  = parts[2]      
-        f.year_mounth = year+mes 
+        f.yearmonth = year+mes 
         f.save
       end 
     end 
@@ -713,6 +713,18 @@ def get_customer_payments_detail_value(fecha1,fecha2,value="total")
     end 
 
  end
+ 
+  def actualizar_fecha2_supplier
+
+    facturas = Factura.where(:fecha2 => nil )
+    for factura in facturas
+        fact =  Factura.find(factura.id)
+        days = fact.payment.day 
+        fechas2 = factura.fecha + days.days           
+        fact.update_attributes(:fecha2=>fechas2)   
+    end 
+
+ end
  def actualizar_detraccion
     
     det = 0
@@ -740,6 +752,24 @@ def get_customer_payments_detail_value(fecha1,fecha2,value="total")
     end 
 
  end
+
+
+## REPORTE DE ESTADISTICAS DE PAGOS pivot
+
+def get_supplier_payments2(moneda,fecha1,fecha2)
+
+   @facturas = Purchase.find_by_sql(["
+  SELECT   yearmonth as year_month,
+   supplier_id,
+   SUM(balance) as balance   
+   FROM purchases
+   WHERE moneda_id = ? and balance>0 and date1 >= ? and date1  <= ?
+   GROUP BY 2,1
+   ORDER BY 2,1 ", moneda,fecha1,fecha2 ])    
+
+  return @facturas
+    
+ end 
 
 
 #reporte de cancelaciones detallado x proveedor

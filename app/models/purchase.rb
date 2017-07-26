@@ -51,6 +51,24 @@ TABLE_HEADERS2  = ["ITEM ",
                      "SOLES",
                      "DOLARES ",
                      "OBSERV"]
+                     
+  TABLE_HEADERS6 = ["ITEM",
+                     "CLIENTE",   
+                     "=<2016",                  
+                    "Ene-2017",
+                    "Feb-2017",             
+                    "Mar-2017",
+                    "Abr-2017",
+                    "May-2017",
+                    "Jun-2017",
+                    "Jul-201",             
+                    "Ago-2017",
+                    "Sep-2017",
+                    "Oct-2017",
+                    "Nov-2017",              
+                    "Dic-2017",
+                    "TOTAL   "]
+                     
 
   def get_vencido
 

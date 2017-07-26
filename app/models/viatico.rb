@@ -5,7 +5,6 @@ self.per_page = 20
 
 
   validates_presence_of :company_id,  :code, :user_id,:inicial,:fecha1
-
   validates_uniqueness_of :code
   
   
