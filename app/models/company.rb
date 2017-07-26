@@ -714,7 +714,7 @@ def get_customer_payments_detail_value(fecha1,fecha2,value="total")
 
  end
  
-  def actualizar_fecha2_supplier
+  def actualizar_purchase_fecha2
 
     facturas = Factura.where(:fecha2 => nil )
     for factura in facturas
