@@ -42,7 +42,15 @@ TABLE_HEADERS2  = ["ITEM ",
                      "TOTAL "]
 
 
-
+ TABLE_HEADERS3 = ["TD",
+                      "Documento",
+                     "Fecha",
+                     "Fec.Vmto",
+                     "Cliente",
+                     "Moneda",                                         
+                     "SOLES",
+                     "DOLARES ",
+                     "OBSERV"]
 
   def get_vencido
 
