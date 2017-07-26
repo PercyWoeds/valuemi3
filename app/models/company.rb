@@ -2315,11 +2315,11 @@ def get_purchases_pendientes_day_value(fecha1,fecha2,value = "total_amount",clie
     for factura in facturas
       
       if(value == "payable_amount")
-        ret += factura.subtotal
+        ret += factura.payable_amount
       elsif(value == "tax_amount")
-        ret += factura.tax
+        ret += factura.tax_amount 
       else         
-        ret += factura.total.round(2)
+        ret += factura.total_amount.round(2)
       end
     end
     end 
