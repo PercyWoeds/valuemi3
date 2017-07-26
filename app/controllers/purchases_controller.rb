@@ -235,8 +235,142 @@ WHERE purchase_details.product_id = ?',params[:id] ])
 
   end
 
+## end reporte de factura detallado
+
+
+### RESUMEN FACTURAS X CATEGORIA.
+
+## Reporte de factura detallado
+
+ 
+  def build_pdf_body10(pdf)
+    
+    pdf.text "Resumen por Categoria de Facturas de compra Desde :"+@fecha1.to_s+ " Hasta : "+@fecha2.to_s , :size => 11 
+    pdf.text ""
+    pdf.font_families.update("Open Sans" => {
+          :normal => "app/assets/fonts/OpenSans-Regular.ttf",
+          :italic => "app/assets/fonts/OpenSans-Italic.ttf",
+        })
+
+        pdf.font "Open Sans",:size =>6
+  
+
+      headers = []
+      table_content = []
+
+      Purchaseorder::TABLE_HEADERS1.each do |header|
+        cell = pdf.make_cell(:content => header)
+        cell.background_color = "FFFFCC"
+        headers << cell
+      end
+
+      table_content << headers
+
+      nroitem=1
+
+      for ordencompra in @rpt_detalle_purchase
+
+           $lcNumero    = ordencompra.documento     
+           $lcFecha     = ordencompra.date1
+           $lcProveedor = ordencompra.supplier.name 
+
+        @orden_compra1  = @company.get_purchase_detalle(ordencompra.id)
+
+
+       for  orden in @orden_compra1
+            row = []
+            row << nroitem.to_s
+            row << $lcProveedor 
+            row << $lcNumero 
+            row << $lcFecha.strftime("%d/%m/%Y")        
+            row << orden.quantity.to_s
+
+            if orden.product 
+              row << orden.product.code
+              row << orden.product.name
+            else
+              a = orden.get_service(orden.product_id)
+              row << a.code 
+              row << a.name 
+            end 
+
+            if orden.price_without_tax != nil
+            row << orden.price_without_tax.round(2).to_s
+            else 
+            row << "0.00"
+            end  
+            row << " "
+            row << orden.total.round(2).to_s
+            table_content << row
+            puts nroitem.to_s 
+            nroitem=nroitem + 1
+        end
+
+      end
+
+
+      result = pdf.table table_content, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width
+                                        } do 
+                                          columns([0]).align=:center
+                                          columns([1]).align=:left
+                                          columns([2]).align=:center
+                                          columns([3]).align=:center
+                                          columns([4]).align=:left
+                                          columns([5]).align=:left
+                                          columns([6]).align=:left
+                                          columns([7]).align=:right
+                                          columns([8]).align=:right
+                                          columns([9]).align=:right
+                                        end
+
+      pdf.move_down 10      
+      pdf
+
+    end
+
+
+    def build_pdf_footer10(pdf)
+
+        pdf.text ""
+        pdf.text "" 
+        
+
+     end
+    
+
+  # Export purchaseorder to PDF
+  def rpt_purchase3_all
+        
+    @company =Company.find(1)
+    @fecha1 =params[:fecha1]
+    @fecha2 =params[:fecha2]
+    
+
+    @rpt_detalle_purchase = @company.get_purchases_day_categoria(@fecha1,@fecha2)
+
+    Prawn::Document.generate("app/pdf_output/orden_1.pdf") do |pdf|
+        pdf.font "Helvetica"
+        pdf = build_pdf_header9(pdf)
+        pdf = build_pdf_body10(pdf)
+        build_pdf_footer10(pdf)
+        $lcFileName =  "app/pdf_output/orden_1.pdf"      
+        
+    end     
+
+    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
+                
+    send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
+  
+
+  end
 
 ## end reporte de factura detallado
+
+
+
+### FIN RESUMEN FACTURAS X CATEGORIA
 
 
 

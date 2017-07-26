@@ -1017,6 +1017,23 @@ def get_payments_detail_value(fecha1,fecha2,value = "total",moneda)
     end 
     return @purchases 
   end
+  
+  def get_purchases_day_categoria(fecha1,fecha2,moneda)
+    
+    @purchases = Purchase.where([" company_id = ? AND date1 >= ? and date1 <= ? and processed = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59","1"]).order(:supplier_id,:moneda_id,:date1)    
+    
+    @purchases = Purchase.find_by_sql(['Select products.products_category_id,purchases.moneda_id,purchases.*,purchase_details.quantity,
+    purchase_details.price_without_tax as price,purchases.date1 as fecha,purchase_details.total 
+    from purchase_details   
+    INNER JOIN purchases ON purchase_details.purchase_id = purchases.id
+    INNER JOIN products ON purchase_details.product_id = products.id
+    WHERE purchases.date1 >= ? and purchases.date1 <= ?  and purchases.moneda_id= ?
+    GROUP BY 1  ' , "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda ])
+     
+    
+    return @purchases
+    
+  end
 
   def get_purchases_by_day(fecha1,fecha2,moneda)
   

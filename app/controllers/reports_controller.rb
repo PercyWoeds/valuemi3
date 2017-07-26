@@ -1333,6 +1333,13 @@ class ReportsController < ApplicationController
     @products = @company.get_products()
     
   end
+  def rpt_purchase3_all
+      @company = Company.find(params[:company_id])    
+    @pagetitle = "Listado de Productos "    
+    @products = @company.get_products()
+    
+  end
+  
   def rpt_caja2_pdf
       @company = Company.find(params[:company_id])    
     @pagetitle = "Listado de vueltos y fletes "    
