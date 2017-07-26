@@ -1034,6 +1034,7 @@ class ReportsController < ApplicationController
     @company = Company.find(params[:company_id])    
     @pagetitle = "Cuentas x pagar por vencimiento"    
     @customers = @company.get_customers()
+    @monedas = Moneda.all 
   end
   
   

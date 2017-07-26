@@ -84,7 +84,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
      $lcdir1 = @company.address1+@company.address2+@company.city+@company.state
 
      $lcFecha1= Date.today.strftime("%d/%m/%Y").to_s
-     $lcHora  = Time.now.to_s
+     $lcHora  = Time.zone.now.to_s
 
     max_rows = [client_data_headers.length, invoice_headers.length, 0].max
       rows = []
