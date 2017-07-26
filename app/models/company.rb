@@ -2307,6 +2307,27 @@ def get_lgvs3(fecha1,fecha2)
   end
 
 
+def get_purchases_pendientes_day_value(fecha1,fecha2,value = "total",cliente,moneda)
+
+    facturas = Purchase.where(["balance>0  and  company_id = ? AND date1 >= ? and date1<= ? and moneda_id = ? and customer_id = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda , cliente ]).order(:customer_id,:moneda_id)
+    if facturas
+    ret=0  
+    for factura in facturas
+      
+      if(value == "subtotal")
+        ret += factura.subtotal
+      elsif(value == "tax")
+        ret += factura.tax
+      else         
+        ret += factura.total.round(2)
+      end
+    end
+    end 
+
+    return ret
+    
+ end 
+ 
 end
 
 
