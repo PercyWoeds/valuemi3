@@ -244,7 +244,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
   def build_pdf_body10(pdf)
     
     pdf.text "Resumen por Categoria", :size => 11 
-    pdf.text "Facturas de compra Desde :"+@fecha1.to_s+ " Hasta : "+@fecha2.to_s , :size => 10 
+    pdf.text "Documentos de compra Desde :"+@fecha1.to_s+ " Hasta : "+@fecha2.to_s , :size => 10 
     pdf.text "Moneda " + $lcMoneda , :size => 10 
     pdf.text "*Solo documentos procesados *",:size => 6 
     pdf.font_families.update("Open Sans" => {
@@ -324,7 +324,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
     @fecha2 =params[:fecha2]
     @moneda1 = params[:moneda]
     
-    if @moneda1== 2
+    if @moneda1== "1"
       $lcMoneda ="SOLES"
     else
       $lcMoneda ="DOLARES"
