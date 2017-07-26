@@ -1287,9 +1287,8 @@ WHERE purchase_details.product_id = ?',params[:id] ])
                 row << sprintf("%.2f",product.balance.to_s)
                 row << "0.00 "
             end 
-            row << product.observ
+            row << product.get_vencido 
 
-            
             table_content << row
 
 
