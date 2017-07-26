@@ -68,6 +68,13 @@ TABLE_HEADERS2  = ["ITEM ",
                     "Nov-2017",              
                     "Dic-2017",
                     "TOTAL   "]
+
+
+  TABLE_HEADERS7  = ["ITEM ",
+                      "CATEGORIA",
+                     "DESCRIPCION",
+                     "TOTAL "]
+
                      
 
   def get_vencido
@@ -512,7 +519,14 @@ def get_tax3(items, supplier_id)
     end
 
   end
-
+  def get_categoria_name(codigo)  
+    
+    a=ProductsCategory.find(codigo)
+    return a.category
+      
+    
+  end   
+  
   
 
 

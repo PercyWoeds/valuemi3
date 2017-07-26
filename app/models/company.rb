@@ -1018,16 +1018,16 @@ def get_payments_detail_value(fecha1,fecha2,value = "total",moneda)
     return @purchases 
   end
   
-  def get_purchases_day_categoria(fecha1,fecha2,moneda)
+  def get_purchases_day_categoria(fecha1,fecha2,moneda,tipo)
     
     
     @purchases = Purchase.find_by_sql(['Select products.products_category_id,SUM(purchase_details.total) AS TOTAL
     from purchase_details   
     INNER JOIN purchases ON purchase_details.purchase_id = purchases.id
     INNER JOIN products ON purchase_details.product_id = products.id
-    WHERE purchases.date1 >= ? and purchases.date1 <= ?  and purchases.moneda_id= ? 
+    WHERE purchases.date1 >= ? and purchases.date1 <= ?  and purchases.moneda_id= ?  and purchases.tipo = ?
     GROUP BY products.products_category_id  
-    ORDER BY products.products_category_id  ' , "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda ])
+    ORDER BY products.products_category_id  ' , "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda,tipo ])
      
     
     return @purchases

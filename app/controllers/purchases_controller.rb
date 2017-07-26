@@ -243,8 +243,10 @@ WHERE purchase_details.product_id = ?',params[:id] ])
 
   def build_pdf_body10(pdf)
     
-    pdf.text "Resumen por Categoria de Facturas de compra Desde :"+@fecha1.to_s+ " Hasta : "+@fecha2.to_s , :size => 11 
-    pdf.text ""
+    pdf.text "Resumen por Categoria", :size => 11 
+    pdf.text "Facturas de compra Desde :"+@fecha1.to_s+ " Hasta : "+@fecha2.to_s , :size => 10 
+    pdf.text "Moneda " + $lcMoneda , :size => 10 
+    pdf.text "*Solo documentos procesados *",:size => 6 
     pdf.font_families.update("Open Sans" => {
           :normal => "app/assets/fonts/OpenSans-Regular.ttf",
           :italic => "app/assets/fonts/OpenSans-Italic.ttf",
@@ -256,7 +258,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
       headers = []
       table_content = []
 
-      Purchaseorder::TABLE_HEADERS1.each do |header|
+      Purchase::TABLE_HEADERS7.each do |header|
         cell = pdf.make_cell(:content => header)
         cell.background_color = "FFFFCC"
         headers << cell
@@ -271,9 +273,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
             row = []
             row << nroitem.to_s
             row << compras.products_category_id
-            row << " "
-            row << " "
-            row << " "
+            row << compras.get_categoria_name(compras.products_category_id)
             row << compras.total.round(2).to_s
             table_content << row
             
@@ -320,8 +320,14 @@ WHERE purchase_details.product_id = ?',params[:id] ])
     @fecha2 =params[:fecha2]
     @moneda1 = params[:moneda]
     
+    if @moneda1== 2
+      $lcMoneda ="SOLES"
+    else
+      $lcMoneda ="DOLARES"
+    end 
+      @tipo = "0"    
 
-    @rpt_detalle_purchase = @company.get_purchases_day_categoria(@fecha1,@fecha2,@moneda1)
+    @rpt_detalle_purchase = @company.get_purchases_day_categoria(@fecha1,@fecha2,@moneda1,@tipo)
     Prawn::Document.generate("app/pdf_output/orden_1.pdf") do |pdf|
         pdf.font "Helvetica"
         pdf = build_pdf_header9(pdf)
@@ -566,7 +572,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]    
     @tiporeporte =params[:tiporeporte]
-
+    
     @facturas_rpt = @company.get_purchases_day_tipo(@fecha1,@fecha2,@tiporeporte)
 
      
