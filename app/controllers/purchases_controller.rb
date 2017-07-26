@@ -290,7 +290,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
 
       result = pdf.table table_content, {:position => :center,
                                         :header => true,
-                                        :width => pdf.bounds.width/2
+                                        :width => pdf.bounds.width
                                         } do 
                                           columns([0]).align=:center
                                           columns([1]).align=:left
