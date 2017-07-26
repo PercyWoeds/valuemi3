@@ -581,7 +581,7 @@ end
   match 'purchases/rpt_cpagar2_pdf/:company_id' => 'purchases#rpt_cpagar2_pdf', via: [:get, :post]
   match 'purchases/rpt_cpagar3_pdf/:company_id' => 'purchases#rpt_cpagar3_pdf', via: [:get, :post]
   match 'purchases/rpt_cpagar4_pdf/:company_id' => 'purchases#rpt_cpagar4_pdf', via: [:get, :post]
-  match 'purchases/rpt_cpagar5_pdf/:company_id' => 'purchases#rpt_cpagar5_pdf', via: [:get, :post]
+  match 'purchases/rpt_cpagar5_pdf/:id' => 'purchases#rpt_cpagar5_pdf', via: [:get, :post]
 
   match 'purchases/rpt_ingresos_all_pdf/:id' => 'purchases#rpt_ingresos_all_pdf', via: [:get, :post]
   match 'purchases/rpt_ingresos2_all_pdf/:id' => 'purchases#rpt_ingresos2_all_pdf', via: [:get, :post]

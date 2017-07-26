@@ -1906,6 +1906,8 @@ WHERE purchase_details.product_id = ?',params[:id] ])
 
 
   def rpt_cpagar5_pdf
+    
+            
     @company=Company.find(params[:id])      
     @fecha1 = params[:fecha1]
     @fecha2 = params[:fecha2]
