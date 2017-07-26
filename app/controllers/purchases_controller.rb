@@ -1609,13 +1609,13 @@ WHERE purchase_details.product_id = ?',params[:id] ])
       
 
 
-      lcCli = @customerpayment_rpt.first.purchase_id
+      lcCli = @customerpayment_rpt.first.supplier_id
       $lcCliName = ""
     
 
      for  customerpayment_rpt in @customerpayment_rpt
 
-        if lcCli == customerpayment_rpt.purchase_id 
+        if lcCli == customerpayment_rpt.supplier_id 
 
           $lcCliName = customerpayment_rpt.supplier.name  
       
@@ -1714,7 +1714,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
             ## TOTAL XMES GENERAL
 
             $lcCliName =customerpayment_rpt.supplier.name
-            lcCli = customerpayment_rpt.purchase_id
+            lcCli = customerpayment_rpt.supplier_id
 
 
             @total_anterior = 0
@@ -1815,7 +1815,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
           
             row = []
             row << nroitem.to_s        
-            row << customerpayment_rpt.customer.name  
+            row << customerpayment_rpt.supplier.name  
             row << sprintf("%.2f",@total_anterior.to_s)
             row << sprintf("%.2f",@total_mes01.to_s)
             row << sprintf("%.2f",@total_mes02.to_s)
