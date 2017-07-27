@@ -75,6 +75,15 @@ TABLE_HEADERS2  = ["ITEM ",
                      "DESCRIPCION",
                      "TOTAL "]
 
+  TABLE_HEADERS8  = ["ITEM ",
+                     "CATEGORIA",
+                     "DESCRIPCION",
+                     "PROVEEDOR",
+                     "PRODUCTO",
+                     "CANTIDAD",
+                     "PRECIO",
+                     "TOTAL "]
+
                      
 
   def get_vencido

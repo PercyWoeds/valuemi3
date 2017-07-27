@@ -240,7 +240,8 @@ end
   match 'companies/reports/rpt_purchases_all/:company_id' => 'reports#rpt_purchases_all', via: [:get, :post]
   match 'companies/reports/rpt_purchase2_all/:company_id' => 'reports#rpt_purchase2_all', via: [:get, :post]
   match 'companies/reports/rpt_purchase3_all/:company_id' => 'reports#rpt_purchase3_all', via: [:get, :post]
-
+  match 'companies/reports/rpt_purchase4_all/:company_id' => 'reports#rpt_purchase4_all', via: [:get, :post]
+  
   match 'companies/reports/rpt_purchaseorder_all/:company_id' => 'reports#rpt_purchaseorder_all', via: [:get, :post]
   match 'companies/reports/rpt_purchaseorder2_all/:company_id' => 'reports#rpt_purchaseorder2_all', via: [:get, :post]
 
@@ -590,7 +591,8 @@ end
   match 'purchases/rpt_purchase_all/:id' => 'purchases#rpt_purchase_all', via: [:get, :post]
   match 'purchases/rpt_purchase2_all/:id' => 'purchases#rpt_purchase2_all', via: [:get, :post]
   match 'purchases/rpt_purchase3_all/:id' => 'purchases#rpt_purchase3_all', via: [:get, :post]
-
+  match 'purchases/rpt_purchase4_all/:id' => 'purchases#rpt_purchase4_all', via: [:get, :post]
+  
   match 'companies/purchases/:company_id' => 'purchases#list_purchases', via: [:get, :post]  
   
   resources :purchases

@@ -1,0 +1,51 @@
+<%= render 'layouts/charts' %>
+<%
+invoices_subtotal = 0
+invoices_tax = 0
+invoices_total = 0
+subtotals = []
+taxes = []
+totals = []
+%>
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %> &raquo;
+  <%= link_to "Reports", "/companies/reports/#{@company.id}" %>
+</div>
+
+<h3>
+  <%= image_tag("reports_48.png", :class => "vmiddle") %>
+ Reporte de cuentas proveedores - 
+ <br/>
+ Detallado  * Solo facturas procesadas 
+</h3	>
+
+<form method="get" action="/purchases/rpt_purchase4_all/<%= @company.id %>">
+
+  <div class="field">
+      <input type="date" name="fecha1" value="2017-01-01" style = "width: 120px" >
+
+    </div>
+	<div class="field">
+		<input type="date" name="fecha2" value="2017-01-31" style = "width: 120px" >
+  </div>
+  
+  <p>
+  <label for="Moneda"> Tipo de Moneda:</label><br>
+  <select id="moneda" name="moneda" >
+
+
+    <option value="2" selected> SOLES  </option>
+    <option value="1" selected> DOLARES </option>
+    
+    
+  </select>
+</p>
+
+  
+  <input type="submit" value="Generar" />
+  
+</form>
+
+<br />
+

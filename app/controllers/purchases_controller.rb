@@ -324,7 +324,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
     @fecha2 =params[:fecha2]
     @moneda1 = params[:moneda]
     
-    if @moneda1== "1"
+    if @moneda1== "2"
       $lcMoneda ="SOLES"
     else
       $lcMoneda ="DOLARES"
@@ -349,10 +349,129 @@ WHERE purchase_details.product_id = ?',params[:id] ])
   end
 
 ## end reporte de factura detallado
+## FIN RESUMEN FACTURAS X CATEGORIA
 
 
+### DETALLE FACTURAS X CATEGORIA. 
 
-### FIN RESUMEN FACTURAS X CATEGORIA
+
+  def build_pdf_body11(pdf)
+    
+    pdf.text "Detalle por Categoria", :size => 11 
+    pdf.text "Documentos de compra Desde :"+@fecha1.to_s+ " Hasta : "+@fecha2.to_s , :size => 10 
+    pdf.text "Moneda " + $lcMoneda , :size => 10 
+    pdf.text "*Solo documentos procesados *",:size => 6 
+    pdf.font_families.update("Open Sans" => {
+          :normal => "app/assets/fonts/OpenSans-Regular.ttf",
+          :italic => "app/assets/fonts/OpenSans-Italic.ttf",
+        })
+
+        pdf.font "Open Sans",:size =>6
+  
+
+      headers = []
+      table_content = []
+
+      Purchase::TABLE_HEADERS8.each do |header|
+        cell = pdf.make_cell(:content => header)
+        cell.background_color = "FFFFCC"
+        headers << cell
+      end
+
+      table_content << headers
+
+      nroitem=1
+      total = 0
+      for compras in @rpt_detalle_purchase
+
+            row = []
+            row << nroitem.to_s
+            row << compras.products_category_id
+            row << compras.get_categoria_name(compras.products_category_id)
+            row << compras.supplier.name 
+            row << compras.product.name 
+            row << compras.quantity.round(2)
+            row << compras.price_without_tax.round(2)
+            row << compras.total.round(2).to_s
+            total += compras.total.round(2)
+            table_content << row
+            nroitem=nroitem + 1
+      end
+            row = []
+            row << ""
+            row << ""
+            row << "" 
+            row << ""
+            row << "" 
+            row << "TOTAL : "
+            row << " "
+            row << total.round(2) 
+            table_content << row
+      
+      result = pdf.table table_content, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width/2
+                                        } do 
+                                          columns([0]).align=:center
+                                          columns([1]).align=:left
+                                          columns([2]).align=:center
+                                          columns([3]).align=:center
+                                          columns([4]).align=:left
+                                          columns([5]).align=:left
+                                          
+                                        end
+
+      pdf.move_down 10      
+      pdf
+
+    end
+
+
+    def build_pdf_footer11(pdf)
+
+        pdf.text ""
+        pdf.text "" 
+        
+
+     end
+    
+
+  # Export purchaseorder to PDF
+  def rpt_purchase4_all
+        
+    @company =Company.find(1)
+    @fecha1 =params[:fecha1]
+    @fecha2 =params[:fecha2]
+    @moneda1 = params[:moneda]
+    
+    if @moneda1== "2"
+      $lcMoneda ="SOLES"
+    else
+      $lcMoneda ="DOLARES"
+    end 
+      @tipo = "0"    
+
+    @rpt_detalle_purchase = @company.get_purchases_day_categoria2(@fecha1,@fecha2,@moneda1,@tipo)
+    Prawn::Document.generate("app/pdf_output/orden_1.pdf") do |pdf|
+        pdf.font "Helvetica"
+        pdf = build_pdf_header9(pdf)
+        pdf = build_pdf_body11(pdf)
+        build_pdf_footer11(pdf)
+        $lcFileName =  "app/pdf_output/orden_1.pdf"      
+        
+    end     
+
+    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
+                
+    send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
+  
+
+  end
+
+## end reporte de factura detallado
+## FIN RESUMEN FACTURAS X CATEGORIA
+
+
 
 
 
@@ -1604,6 +1723,9 @@ WHERE purchase_details.product_id = ?',params[:id] ])
   end
   
   ###pendientes de pago detalle
+
+
+
 
   def rpt_cpagar4_pdf
       $lcxCliente ="0"
