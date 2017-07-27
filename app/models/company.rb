@@ -1036,8 +1036,8 @@ def get_payments_detail_value(fecha1,fecha2,value = "total",moneda)
 
 def get_purchases_day_categoria2(fecha1,fecha2,moneda,tipo)
     
-    
-    @purchases = Purchase.find_by_sql(['Select purchase_details.*,products.products_category_id
+    @purchases = Purchase.find_by_sql(['Select purchase_details.*,products.products_category_id,purchases.supplier_id,purchases.documento,
+    purchases.document_id,purchases.date1
     from purchase_details   
     INNER JOIN purchases ON purchase_details.purchase_id = purchases.id
     INNER JOIN products ON purchase_details.product_id = products.id

@@ -12,6 +12,7 @@ class Purchase < ActiveRecord::Base
   belongs_to :document
   belongs_to :moneda
   belongs_to :payment
+  belongs_to :product 
   belongs_to :purchaseorder
 
   has_many :purchase_details
@@ -79,12 +80,18 @@ TABLE_HEADERS2  = ["ITEM ",
                      "CATEGORIA",
                      "DESCRIPCION",
                      "PROVEEDOR",
+                     "FECHA",
+                     "TD",
+                     "DOCUMENTO",
                      "PRODUCTO",
                      "CANTIDAD",
                      "PRECIO",
                      "TOTAL "]
 
                      
+                     
+            
+                                 
 
   def get_vencido
 

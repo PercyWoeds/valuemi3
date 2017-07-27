@@ -389,10 +389,14 @@ WHERE purchase_details.product_id = ?',params[:id] ])
             row << compras.products_category_id
             row << compras.get_categoria_name(compras.products_category_id)
             row << compras.supplier.name 
+            row << compras.date1.strftime("%d/%m/%Y")
+            row << compras.document.descripshort 
+            row << compras.documento
             row << compras.product.name 
             row << compras.quantity.round(2)
             row << compras.price_without_tax.round(2)
             row << compras.total.round(2).to_s
+            
             total += compras.total.round(2)
             table_content << row
             nroitem=nroitem + 1
@@ -400,17 +404,21 @@ WHERE purchase_details.product_id = ?',params[:id] ])
             row = []
             row << ""
             row << ""
+            row << ""
+            row << "" 
             row << "" 
             row << ""
             row << "" 
+            row << " "
             row << "TOTAL : "
             row << " "
             row << total.round(2) 
+            
             table_content << row
       
       result = pdf.table table_content, {:position => :center,
                                         :header => true,
-                                        :width => pdf.bounds.width/2
+                                        :width => pdf.bounds.width
                                         } do 
                                           columns([0]).align=:center
                                           columns([1]).align=:left
@@ -418,7 +426,11 @@ WHERE purchase_details.product_id = ?',params[:id] ])
                                           columns([3]).align=:center
                                           columns([4]).align=:left
                                           columns([5]).align=:left
-                                          
+                                          columns([6]).align=:left
+                                          columns([7]).align=:left
+                                          columns([8]).align=:left
+                                          columns([9]).align=:left
+                                          columns([10]).align=:left
                                         end
 
       pdf.move_down 10      
