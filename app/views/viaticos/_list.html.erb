@@ -6,21 +6,29 @@
          Orden
         </th>
         <th class="bordered_right bordered_bottom">
-          Cliente 
+          Saldo Inicial 
         </th>
         <th class="bordered_right bordered_bottom">
-          Total 
+          Total Ingreso
         </th>
         <th class="bordered_right bordered_bottom">
-          Fecha 
+          Total Egreso
+        </th>
+        <th class="bordered_right bordered_bottom">
+          Saldo Final 
         </th>
         
         <th class="bordered_right bordered_bottom">
+          Fecha 
+        </th>
+        <th class="bordered_right bordered_bottom">
           Aprobado 
         </th>
+        
         <th class="bordered_right bordered_bottom" colspan="3">
           Opciones 
         </th>
+        
       </tr>
     </thead>
     <tbody>
@@ -55,10 +63,10 @@
             <%= link_to "Ver", viatico %>
           </td>
           <td class="bordered_right bordered_bottom">  
-          
-            
+            <%= link_to 'Editar',edit_viatico_path(viatico) %>
+          </td>
+          <td class="bordered_right bordered_bottom">  
           <%= link_to 'Eliminar', viatico, :data=> {:confirm => 'Esta seguro ?'}, :method => :delete  %>           
-                  
           </td>
         </tr>
       <% end %>

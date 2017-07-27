@@ -313,6 +313,14 @@ class ViaticosController < ApplicationController
     render :layout => false
   end
   
+  # Autocomplete for suppliers
+  def ac_suppliers
+    @suppliers =  Supplier.where(["company_id = ? AND (ruc LIKE ? OR name LIKE ?)", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])
+   
+    render :layout => false
+  end
+  
+  
   # Autocomplete for customers
   def ac_customers
     @customers = Customer.where(["company_id = ? AND (email LIKE ? OR name LIKE ?)", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])
@@ -385,6 +393,8 @@ class ViaticosController < ApplicationController
     @divisions = @company.get_divisions()
     
     @documents = @company.get_documents()
+    @cajas = Caja.all 
+    @gastos = Gasto.all
     
     @ac_user = getUsername()
     @viatico[:user_id] = getUserId()
@@ -422,7 +432,9 @@ class ViaticosController < ApplicationController
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
     @documents = @company.get_documents()
-       
+    @cajas = Caja.all      
+    @gastos = Gasto.all
+    
     begin
       @viatico[:inicial] = @viatico.get_total_inicial(items)
     rescue
@@ -521,7 +533,7 @@ class ViaticosController < ApplicationController
   end
   private
   def viatico_params
-    params.require(:viatico).permit(:code, :fecha1, :inicial, :total_ing, :total_egreso, :saldo, :comments, :user_id, :company_id, :processed)
+    params.require(:viatico).permit(:code, :fecha1, :inicial, :total_ing, :total_egreso, :saldo, :comments, :user_id, :company_id, :processed,:caja_id)
   end
 
 end

@@ -176,12 +176,13 @@ def get_total_inicial(items)
         td        = parts[2]
         documento = parts[3]
         importe   = parts[4]
+        detalle0  = parts[5]
         
         total     =  importe.to_f
         
           product = Gasto.find(id.to_i)
           
-          new_invoice_product = LgvDetail.new(:lgv_id => self.id,:gasto_id=>id,:fecha=> fecha ,:td=> td,:documento=> documento,:total=> total )
+          new_invoice_product = LgvDetail.new(:lgv_id => self.id,:gasto_id=>id,:fecha=> fecha ,:td=> td,:documento=> documento,:total=> total,:detalle=>detalle0 )
 
           new_invoice_product.save
           

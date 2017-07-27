@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170713205058) do
+ActiveRecord::Schema.define(version: 20170727174104) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -129,6 +129,13 @@ ActiveRecord::Schema.define(version: 20170713205058) do
     t.string   "address2"
     t.string   "phone1"
     t.string   "email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "cajas", force: :cascade do |t|
+    t.string   "descrip"
+    t.float    "inicial"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -739,6 +746,7 @@ ActiveRecord::Schema.define(version: 20170713205058) do
     t.integer  "supplier_id"
     t.integer  "lgv_id"
     t.string   "td"
+    t.string   "detalle"
   end
 
   create_table "lgvs", force: :cascade do |t|
@@ -768,6 +776,9 @@ ActiveRecord::Schema.define(version: 20170713205058) do
     t.float    "saldo"
     t.integer  "lgv_id"
     t.float    "peaje"
+    t.string   "cdevuelto"
+    t.string   "cdescuento"
+    t.string   "creembolso"
   end
 
   create_table "line_items", force: :cascade do |t|
@@ -1615,6 +1626,9 @@ ActiveRecord::Schema.define(version: 20170713205058) do
     t.integer  "transportorder_id"
     t.integer  "tranportorder_id"
     t.datetime "date_processed"
+    t.string   "ruc"
+    t.integer  "supplier_id"
+    t.integer  "gasto_id"
   end
 
   create_table "viaticos", force: :cascade do |t|
@@ -1632,6 +1646,11 @@ ActiveRecord::Schema.define(version: 20170713205058) do
     t.string   "processed"
     t.integer  "compro_id"
     t.datetime "date_processed"
+    t.string   "tipo"
+    t.integer  "caja_id"
+    t.string   "cdevuelto"
+    t.string   "cdescuento"
+    t.string   "creembolso"
   end
 
   create_table "voideds", force: :cascade do |t|

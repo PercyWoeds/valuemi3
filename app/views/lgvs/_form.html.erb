@@ -12,14 +12,13 @@
 <%= hr() %>
 
 <div class="mid_box bordered_right">
-44
+
   <%= form_for(@lgv) do |f| %>
     <h4>
        Informacion Liquidacion de Gastos
     </h4>
     
-        <td>
-        <div class="field">
+  <div>
         <td>
         <div class="field">
           <%= f.label :code, "Code*", :class => "bold" %><br />
@@ -60,21 +59,58 @@
       
       
     <%= hr() %>
-        <div class="field">
-          <%= f.label  :devuelto,"Devuelto  " , :class => "bold"%><br />
-          <%= f.number_field :devuelto, :class => "input.tf_short" ,:value => "0.00" %>
-        </div>
+    
+        <table>
+          
+          <tr>
+            <td>
+              <div class="field">
+                <%= f.label  :cdevuelto,"Comp.Devuelto " , :class => "bold"%><br />
+                <%= f.text_field :cdevuelto, :class => "input.tf_short" ,:value => "" %>
+              </div>
+            </td>
+            
+            <td>
+              <div class="field">
+                <%= f.label  :devuelto,"Devuelto  " , :class => "bold"%><br />
+                <%= f.number_field :devuelto, :class => "input.tf_short" ,:value => "0.00" %>
+              </div>
+            </td>
         
-         <div class="field">
-          <%= f.label  :descuento,"Descuento  " , :class => "bold"%><br />
-          <%= f.number_field :descuento, :class => "input.tf_short" ,:value => "0.00" %>
-        </div>
-      
-        <div class="field">
-          <%= f.label  :reembolso,"Reembolso  " , :class => "bold"%><br />
-          <%= f.number_field :reembolso, :class => "input.tf_short" ,:value => "0.00" %>
-        </div>
+        </tr>
         
+          <tr>
+            
+            <td>
+              <div class="field">
+                <%= f.label  :cdescuento,"Comp.Descuento " , :class => "bold"%><br />
+                <%= f.text_field :cdescuento, :class => "input.tf_short" ,:value => "" %>
+              </div>
+            </td>
+            <td>
+             <div class="field">
+              <%= f.label  :descuento,"Descuento  " , :class => "bold"%><br />
+              <%= f.number_field :descuento, :class => "input.tf_short" ,:value => "0.00" %>
+              </div>
+            </td>  
+          </td>
+          
+          <tr>
+            <td>
+              <div class="field">
+                <%= f.label  :creembolso,"Comp.Reembolso" , :class => "bold"%><br />
+                <%= f.text_field :creembolso, :class => "input.tf_short" ,:value => "" %>
+              </div>
+            </td>
+            
+          <td>
+          <div class="field">
+            <%= f.label  :reembolso,"Reembolso  " , :class => "bold"%><br />
+            <%= f.number_field :reembolso, :class => "input.tf_short" ,:value => "0.00" %>
+          </div>
+        </td>
+        </tr>
+        </table>
         <%= hr() %>
          <div class="field">
           <%= f.label  :comments,"Comentarios  " , :class => "bold"%><br />
@@ -155,15 +191,19 @@
   
   <form method="get" action="/lgvs" onsubmit="addItemTolgv(); return false;">   
   
-    <input type="hidden" name="ac_item_id" id="ac_item_id" value="" />  
+    
   
     <br />
     
     <td>
       
-     <strong>Gasto :</strong><br />
-    <input type="text" name="ac_item" id="ac_item" value="" />
-    <div class="small">
+     
+    <div >
+    <strong>Gasto  :</strong><br />
+    <br />
+      <%= select_tag :ac_item_id, options_from_collection_for_select(@gastos,'id','descrip')%>  
+    <br />
+    <div>
       Ingrese un termino de busqueda para encontrar un documento 
     </div>
     
@@ -202,8 +242,15 @@
     </div>
 
     <br />
+    <div >
+      <strong>Detalle:</strong><br />    
+    <input type="text" name="ac_item_detalle" id="ac_item_detalle" value=""  />
+    </div>
+    <div class="small">
+     Detalle 
+    </div>
     
-  
+  <br />
     
     <input type="submit" value="Agregar item a Comprobante" />
       
@@ -222,17 +269,6 @@
 <script type="text/javascript">
   $(document).ready(function() {
 
-    $("#ac_item").autocomplete("/lgvs/ac_documentos/<%= @company.id %>", {
-      matchSubset: 1,
-      matchContains: 1,
-      selectFirst: false
-    });
-    
-    $("#ac_item").result(function(event, data, formatted) {
-      $("#ac_item_id").val(data[2]);
-    
-    });
-    
     
     
     

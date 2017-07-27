@@ -348,6 +348,11 @@ class LgvsController < ApplicationController
      $lcIngreso   = sprintf("%.2f",@lgv.total_ing.round(2).to_s)  
      $lcEgreso    = sprintf("%.2f",@lgv.total_egreso.round(2).to_s)  
      $lcSaldo     = sprintf("%.2f",@lgv.saldo.round(2).to_s)  
+     
+     $lcCDevuelto  = @lgv.cdevuelto
+     $lcCReembolso = @lgv.creembolso
+     $lcCDescuento = @lgv.cdescuento
+
      $lcDevuelto  = sprintf("%.2f",@lgv.devuelto.round(2).to_s)  
      $lcReembolso = sprintf("%.2f",@lgv.reembolso.round(2).to_s)  
      $lcDescuento = sprintf("%.2f",@lgv.descuento.round(2).to_s)  
@@ -372,17 +377,17 @@ class LgvsController < ApplicationController
         table_content3 << row
         row = []
         row  <<  "VUELTO: "
-        row  <<  " "
+        row  <<  $lcCDevuelto
         row  <<  $lcDevuelto
         table_content3 << row
         row = []
         row  <<  "DESCUENTO: "
-        row  <<  " "
+        row  <<  $lcCDescuento
         row  <<  $lcDescuento
         table_content3 << row
         row = []
         row  <<  "REEMBOLSO: "
-        row  <<  " "
+        row  <<  $lcCReembolso
         row  <<  $lcReembolso
         table_content3 << row
         
@@ -783,6 +788,8 @@ class LgvsController < ApplicationController
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
+    @gastos = Gasto.all 
+    
     begin
       @lgv[:inicial] = 0
     rescue
@@ -884,7 +891,8 @@ class LgvsController < ApplicationController
   private
   def lgv_params
     params.require(:lgv).permit( :code, :fecha, :lgv_id, :total, :devuelto_texto, :devuelto, :reembolso, :descuento, :observa,
- :company_id, :processed, :user_id,  :tranportorder_id, :comments, :gasto_id, :compro_id, :inicial, :total_ing, :total_egreso, :saldo,:peaje)
+ :company_id, :processed, :user_id,  :tranportorder_id, :comments, :gasto_id, :compro_id, :inicial, :total_ing, :total_egreso, :saldo,:peaje,
+ :creembolso,:cdescuento,:cdevuelto)
   end
 
 end

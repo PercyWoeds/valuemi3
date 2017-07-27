@@ -15,8 +15,16 @@
 
   <%= form_for(@viatico) do |f| %>
     <h4>
-       Informacion Viaticos
+       Informacion
     </h4>
+    <td>
+   <div class="field">
+      <%= f.label :caja_id, "CAJA : " %><br />
+      <%= f.select :caja_id,options_from_collection_for_select(@cajas,'id','descrip') %>
+    </div>  
+     
+    </td>
+    
         <td>
         <div class="field">
           <%= f.label :fecha1, "Fecha*", :class => "bold" %><br />
@@ -106,13 +114,48 @@
     
       <strong>Orden de servicio :</strong><br />
     <input type="text" name="ac_item" id="ac_item" value="" />
+    
+    
     <div class="small">
       Ingrese un termino de busqueda para encontrar un documento 
     </div>
+    
+    <%= hr() %>
+    
+    <div >
+    <strong>Gasto  :</strong><br />
+    <br />
+      <%= select_tag :gasto_id, options_from_collection_for_select(@gastos,'id','descrip')%>  
+    <br />
+    </div >
+    <td>
+      
+      <label for="ac_supplier" class="bold">Proveedor*</label><br />
+      <input type="text" name="ac_supplier" id="ac_supplier" value="<% if @ac_supplier %><%= @ac_supplier %><% end %>" />
+      
+      <div class="small">
+      <a href="#" onclick="createSupplierPurchase(); return false;">+ Crear nuevo proveedor</a>
+      </div>
+
+      <div class="small">
+        Ingrese una termino de busqueda para encontrar un proveedor
+      </div>
+    </td>
+    
+      <br />
+
+
+      <div class="small">
+        <strong>Seleccionar proveedor:</strong>
+
+        <span id="selected supplier"><% if @ac_supplier %><%= @ac_supplier %><% else %><!-- i --><% end %></span>
+
+      </div>
+      
+      <strong>Documento:</strong><br />
     <br />
       <%= select_tag :tm, options_from_collection_for_select(@documents,'id','description')%>  
-     </div>
-    
+    <br /> 
     
     <strong>Comprobante :</strong><br />
     <input type="text" name="ac_item_compro" id="ac_item_compro" value="" />
@@ -120,6 +163,8 @@
       Ingrese un termino de busqueda para encontrar un documento 
     </div>
     
+    
+      
     <td>
       <strong> Fecha :</strong><br />
       <input type="date" name="ac_item_fecha" id="ac_item_fecha" min="2017-01-01"><br> 
@@ -163,6 +208,18 @@
 <script type="text/javascript">
   $(document).ready(function() {
 
+    $("#ac_supplier").autocomplete("/purchases/ac_suppliers/<%= @company.id %>", {
+      matchSubset: 1,
+      matchContains: 1,
+      selectFirst: false
+    });
+    
+    $("#ac_supplier").result(function(event, data, formatted) {
+      $("#ac_supplier_id").val(data[2]);
+      $("#selected_supplier").html(data[0]);
+    });
+    
+    
     $("#ac_item").autocomplete("/viaticos/ac_osts/<%= @company.id %>", {
       matchSubset: 1,
       matchContains: 1,

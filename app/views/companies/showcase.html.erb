@@ -4,11 +4,11 @@
   
   <h3>
     <%= image_tag("products_32.png", :class => "vmiddle") %>
-    <%= link_to "Arqueo de Liquidacion de viaticos","/companies/viaticos/#{@company.id}" %>
+    <%= link_to "Liquidacion Viaticos/Cajas Chicas","/companies/viaticos/#{@company.id}" %>
   </h3>
 
   <p>
-    Agregar, editar or eliminar liquidacion de viaticos que tu negocio ofrece.
+    Agregar, editar or eliminar liquidacion de viaticos/cajas que tu negocio ofrece.
   </p>
 
   <%= hr() %>
@@ -24,20 +24,24 @@
 
   <%= hr() %>
 
-  <h3>
-    <%= image_tag("product_category_32.png", :class => "vmiddle") %>
-    <%= link_to "Arqueo de caja chica", "/companies/unidads/#{@company.id}" %>
-  </h3>
-
-  <p>
-     Agregar, editar or eliminar los arqueos de caja chica
-  </p>
-
 
   
 </div>
 
 <div class="mid_box">
+  
+  
+  
+  <h3>
+      <div>
+        <%= image_tag("product_kit_32.png", :class => "vmiddle") %>
+        <%= link_to "Gastos", gastos_path  %>
+      </div>
+  </h3>
+  <p>
+    Gastos 
+  </p>
+
   <h3>
         <div>
           <%= image_tag("locations_32.png", :class => "vmiddle") %>

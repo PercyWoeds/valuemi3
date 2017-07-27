@@ -1470,7 +1470,9 @@
       var quantity = $("#ac_item_total").val();
       var compro  = $("#ac_item_compro").val();
       var detalle= $("#ac_item_detalle").val();
-      var fecha= $("#ac_item_fecha").val();
+      var fecha  = $("#ac_item_fecha").val();
+      var ruc    = $("#ac_supplier_id").val();
+      var gasto    = $("#gasto_id").val();
     
       var items_arr = $("#items").val().split(",");
 
@@ -1478,8 +1480,8 @@
         alert("Por favor ingrese un importe valido");
       } else {
       
-        var item_line = item_id + "|BRK|" + quantity + "|BRK|" +detalle + "|BRK|" +tm + "|BRK|"+inicial + "|BRK|"+compro+ "|BRK|"+fecha;
-        
+        var item_line = item_id + "|BRK|" + quantity + "|BRK|" +detalle + "|BRK|" +tm + "|BRK|"+inicial + "|BRK|"+compro+ "|BRK|"+fecha+ "|BRK|"+ruc+ "|BRK|"+gasto;
+      
         $("#items").val($("#items").val() + "," + item_line);
         listItemsViatico();
         
@@ -1487,6 +1489,9 @@
         $("#ac_item_id").val("");
         $("#ac_item").val("");
         $("#ac_item_total").val("0.00");
+        $("#ac_item_compro").val("");
+        $("#ac_item_detalle").val("");
+        $("#ac_item_ruc").val("");
         
         updateItemTotalViatico();
       }
@@ -1565,6 +1570,7 @@
       var td        = $("#ac_item_td").val();
       var documento = $("#ac_item_documento").val();
       var importe   = $("#ac_item_importe").val();
+      var detalle   = $("#ac_item_detalle").val();
       
       var items_arr = $("#items").val().split(",");
 
@@ -1572,7 +1578,7 @@
         alert("Por favor ingrese un importe valido");
       } else {
       
-      var item_line = item_id + "|BRK|" +ac_item_fecha + "|BRK|" + td + "|BRK|"+documento + "|BRK|"+ importe + "|BRK|"+ peaje + "|BRK|"+ stock_inicial;
+      var item_line = item_id + "|BRK|" +ac_item_fecha + "|BRK|" + td + "|BRK|"+documento + "|BRK|"+ importe + "|BRK|"+ peaje + "|BRK|"+ stock_inicial+ "|BRK|"+ detalle;
         
         $("#items").val($("#items").val() + "," + item_line);
         listItemslgv();
@@ -1582,9 +1588,8 @@
         $("#ac_td").val("");
         $("#ac_documento").val("");
         $("#ac_item_total").val("0.00");
+        $("#ac_item_detalle").val("");
         
-        
-    
       }
     } else {
       alert("Por favor ingrese un detalle primero.");    
