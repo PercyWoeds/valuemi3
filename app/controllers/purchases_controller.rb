@@ -420,18 +420,27 @@ WHERE purchase_details.product_id = ?',params[:id] ])
                                         } do 
                                           columns([0]).align=:center
                                           columns([1]).align=:left
-                                          columns([2]).align=:center
+                                          columns([2]).align=:left
+                                          columns([2]).width= 120    
                                           columns([3]).align=:center
                                           columns([4]).align=:left
                                           columns([5]).align=:left
                                           columns([6]).align=:left
-                                          columns([7]).align=:left
-                                          columns([8]).align=:left
-                                          columns([9]).align=:left
-                                          columns([10]).align=:left
+                                          columns([7]).align=:left 
+                                          columns([8]).align=:right
+                                          columns([9]).align=:right
+                                          columns([10]).align=:right 
                                         end
 
       pdf.move_down 10      
+        pdf.bounding_box([0, 20], :width => 535, :height => 40) do
+        
+        pdf.text "_________________               _____________________         ____________________      ", :size => 13, :spacing => 4
+        pdf.text ""
+        pdf.text "                  Realizado por                                         V.B.Jefe Compras                                      V.B.Gerencia           ", :size => 10, :spacing => 4
+        pdf 
+       end 
+      
       pdf
 
     end
@@ -442,9 +451,9 @@ WHERE purchase_details.product_id = ?',params[:id] ])
         pdf.text ""
         pdf.text "" 
         
-
-     end
+        
     
+    end 
 
   # Export purchaseorder to PDF
   def rpt_purchase4_all
