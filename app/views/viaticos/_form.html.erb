@@ -84,6 +84,7 @@
     <div class="actions">
       <input type="hidden" name="items" id="items" value="<% if @viaticos_lines %><%= @viaticos_lines %><% end %>" />
       <%= f.hidden_field :user_id, :id => "ac_user_id" %>
+      
       <%= f.hidden_field :company_id %>
 
       <%= f.submit %>
@@ -119,7 +120,14 @@
     <div class="small">
       Ingrese un termino de busqueda para encontrar un documento 
     </div>
-    
+      <br />
+
+      <div class="small">
+        <strong>Seleccionar proveedor:</strong>
+
+        <span id="selected supplier"><% if @ac_supplier %><%= @ac_supplier %><% else %><!-- i --><% end %></span>
+
+      </div>
     <%= hr() %>
     
     <div >

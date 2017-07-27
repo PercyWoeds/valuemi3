@@ -195,7 +195,7 @@ def get_total_inicial(items)
       if(item and item != "")
         parts = item.split("|BRK|")
         
-             
+      puts parts        
              
         id       = parts[0]
         quantity = parts[1]

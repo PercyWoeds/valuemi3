@@ -408,7 +408,7 @@ class ViaticosController < ApplicationController
     
     @viatico = Viatico.find(params[:id])
     @company = @viatico.company
-    @ac_customer = @viatico.customer.name
+    
     @ac_user = @viatico.user.username
     
     @products_lines = @viatico.products_lines
