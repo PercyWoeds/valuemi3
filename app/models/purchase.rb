@@ -77,7 +77,6 @@ TABLE_HEADERS2  = ["ITEM ",
                      "TOTAL "]
 
   TABLE_HEADERS8  = ["ITEM ",
-                     "CATEGORIA",
                      "DESCRIPCION",
                      "PROVEEDOR",
                      "FECHA",

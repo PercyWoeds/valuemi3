@@ -386,7 +386,6 @@ WHERE purchase_details.product_id = ?',params[:id] ])
 
             row = []
             row << nroitem.to_s
-            row << compras.products_category_id
             row << compras.get_categoria_name(compras.products_category_id)
             row << compras.supplier.name 
             row << compras.date1.strftime("%d/%m/%Y")
