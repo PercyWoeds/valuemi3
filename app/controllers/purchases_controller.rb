@@ -329,7 +329,8 @@ WHERE purchase_details.product_id = ?',params[:id] ])
     else
       $lcMoneda ="DOLARES"
     end 
-      @tipo = "0"    
+    
+    @tipo =params[:tiporeporte]
 
     @rpt_detalle_purchase = @company.get_purchases_day_categoria(@fecha1,@fecha2,@moneda1,@tipo)
     Prawn::Document.generate("app/pdf_output/orden_1.pdf") do |pdf|
@@ -468,7 +469,9 @@ WHERE purchase_details.product_id = ?',params[:id] ])
     else
       $lcMoneda ="DOLARES"
     end 
-      @tipo = "0"    
+    
+    
+    @tipo =params[:tiporeporte]
 
     @rpt_detalle_purchase = @company.get_purchases_day_categoria2(@fecha1,@fecha2,@moneda1,@tipo)
     Prawn::Document.generate("app/pdf_output/orden_1.pdf") do |pdf|
