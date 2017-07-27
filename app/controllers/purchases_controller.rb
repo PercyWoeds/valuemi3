@@ -407,7 +407,6 @@ WHERE purchase_details.product_id = ?',params[:id] ])
             row << "" 
             row << "" 
             row << ""
-            row << "" 
             row << " "
             row << "TOTAL : "
             row << " "

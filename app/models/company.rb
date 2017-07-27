@@ -1042,7 +1042,7 @@ def get_purchases_day_categoria2(fecha1,fecha2,moneda,tipo)
     INNER JOIN purchases ON purchase_details.purchase_id = purchases.id
     INNER JOIN products ON purchase_details.product_id = products.id
     WHERE purchases.date1 >= ? and purchases.date1 <= ?  and purchases.moneda_id= ?  and purchases.tipo = ?
-    ORDER BY products.products_category_id  ' , "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda,tipo ])
+    ORDER BY products.products_category_id,purchases.date1,purchases.document_id,purchases.documento   ' , "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda,tipo ])
      
     
     return @purchases
