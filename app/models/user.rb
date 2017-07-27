@@ -1,14 +1,15 @@
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
-  self.per_page = 20
+  devise :database_authenticatable,  :rememberable, :trackable, :validatable
+  
+  
+   self.per_page = 20
   
   attr_accessible :id, :username, :email, :password, :salt, :encrypted_password, :first_name, :last_name, :level 
 
  # validates_presence_of :username, :email, :password, :level, :first_name, :last_name
-  validates_uniqueness_of :username, :email
+  validates_uniqueness_of  :email
   validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
   
   has_many :sessions
@@ -212,3 +213,5 @@ class User < ActiveRecord::Base
     end
   end
 end
+  
+

@@ -1,34 +1,21 @@
-<h1>
+<p id="notice"><%= notice %></p>
+
+
+<p>
+  <strong>Email:</strong>
+  <%= @user.email %>
+</p>
+
+<p>
+  <strong>Name:</strong>
   <%= @user.username %>
-</h1>
+</p>
 
-<% if @user.created_at %>
-  <p>
-    <strong>User since:</strong>
-    <%= doDate(@user.created_at, 3) %>
-  </p>
-<% end %>
+<p>
+  <strong>Permission level:</strong>
+  <%= @user.level %>
+</p>
 
-<% if @user.get_name %>
-  <p>
-    <strong>Name:</strong>
-    <%= @user.get_name %>
-  </p>
-<% end %>
+<%= link_to 'Edit', edit_user_path(@user) %> |
+<%= link_to 'Back', users_path %>
 
-<% if(@is_admin) %>
-  <p>
-    <strong>ID:</strong>
-    <%= @user.id %>
-  </p>
-  
-  <p>
-    <b>Email:</b>
-    <%= link_to @user.email, 'mailto:' + @user.email %>
-  </p>
-  
-  <div class="button">
-    <%= link_to 'Edit', edit_user_path(@user) %>
-    <%= link_to 'Back', users_path %>
-  </div>
-<% end %>
