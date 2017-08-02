@@ -1036,7 +1036,7 @@ def get_payments_detail_value(fecha1,fecha2,value = "total",moneda)
       @purchases = Purchase.find_by_sql(['Select products.products_category_id,SUM(purchase_details.total) AS TOTAL
       from purchase_details   
       INNER JOIN purchases ON purchase_details.purchase_id = purchases.id
-      INNER JOIN servicebuys ON servicebuys.product_id = products.id
+      INNER JOIN servicebuys ON servicebuys.id = products.id
       WHERE purchases.date1 >= ? and purchases.date1 <= ?  and purchases.moneda_id= ?  and purchases.tipo = ?
       GROUP BY servicebuys.code  
       ORDER BY servicebuys.code  ' , "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda,tipo ])
