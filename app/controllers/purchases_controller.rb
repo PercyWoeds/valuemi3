@@ -272,8 +272,14 @@ WHERE purchase_details.product_id = ?',params[:id] ])
 
             row = []
             row << nroitem.to_s
-            row << compras.products_category_id
-            row << compras.get_categoria_name(compras.products_category_id)
+            if @tipo =='0'
+              row << compras.products_category_id
+              row << compras.get_categoria_name(compras.products_category_id)
+            else
+              row <<" "
+              row << compras.get_service_name(compras.product_id)
+            end 
+            
             row << compras.total.round(2).to_s
             total += compras.total.round(2)
             table_content << row
@@ -387,12 +393,24 @@ WHERE purchase_details.product_id = ?',params[:id] ])
 
             row = []
             row << nroitem.to_s
+            
             row << compras.get_categoria_name(compras.products_category_id)
+            
             row << compras.supplier.name 
             row << compras.date1.strftime("%d/%m/%Y")
             row << compras.document.descripshort 
             row << compras.documento
-            row << compras.product.name 
+            
+            
+            if compras.product 
+              row << orden.product.name
+            else
+              a = compras.get_service(compras.product_id)
+              
+              row << a.name 
+            end 
+            
+           
             row << compras.quantity.round(2)
             row << compras.price_without_tax.round(2)
             row << compras.total.round(2).to_s

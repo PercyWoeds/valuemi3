@@ -195,9 +195,13 @@ class Company < ActiveRecord::Base
      return category
   end 
 
-def get_categoria_name(id)
+  def get_categoria_name(id)
      category = ProductsCategory.find(id)
      return category.category
+  end 
+  def get_service_name(id)
+     category = Servicebuy.find(id)
+     return category.name 
   end 
   
   def get_last_tax_name(tax_number)
@@ -1020,30 +1024,42 @@ def get_payments_detail_value(fecha1,fecha2,value = "total",moneda)
   
   def get_purchases_day_categoria(fecha1,fecha2,moneda,tipo)
     
-    
-    @purchases = Purchase.find_by_sql(['Select products.products_category_id,SUM(purchase_details.total) AS TOTAL
-    from purchase_details   
-    INNER JOIN purchases ON purchase_details.purchase_id = purchases.id
-    INNER JOIN products ON purchase_details.product_id = products.id
-    WHERE purchases.date1 >= ? and purchases.date1 <= ?  and purchases.moneda_id= ?  and purchases.tipo = ?
-    GROUP BY products.products_category_id  
-    ORDER BY products.products_category_id  ' , "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda,tipo ])
-     
-    
+    if tipo == "0"
+      @purchases = Purchase.find_by_sql(['Select products.products_category_id,SUM(purchase_details.total) AS TOTAL
+      from purchase_details   
+      INNER JOIN purchases ON purchase_details.purchase_id = purchases.id
+      INNER JOIN products ON purchase_details.product_id = products.id
+      WHERE purchases.date1 >= ? and purchases.date1 <= ?  and purchases.moneda_id= ?  and purchases.tipo = ?
+      GROUP BY products.products_category_id  
+      ORDER BY products.products_category_id  ' , "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda,tipo ])
+    else
+      @purchases = Purchase.find_by_sql(['Select products.products_category_id,SUM(purchase_details.total) AS TOTAL
+      from purchase_details   
+      INNER JOIN purchases ON purchase_details.purchase_id = purchases.id
+      INNER JOIN servicebuys ON servicebuys.product_id = products.id
+      WHERE purchases.date1 >= ? and purchases.date1 <= ?  and purchases.moneda_id= ?  and purchases.tipo = ?
+      GROUP BY servicebuys.code  
+      ORDER BY servicebuys.code  ' , "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda,tipo ])
+      
+    end 
     return @purchases
     
   end
 
 def get_purchases_day_categoria2(fecha1,fecha2,moneda,tipo)
-    
-    @purchases = Purchase.find_by_sql(['Select purchase_details.*,products.products_category_id,purchases.supplier_id,purchases.documento,
-    purchases.document_id,purchases.date1
-    from purchase_details   
-    INNER JOIN purchases ON purchase_details.purchase_id = purchases.id
-    INNER JOIN products ON purchase_details.product_id = products.id
-    WHERE purchases.date1 >= ? and purchases.date1 <= ?  and purchases.moneda_id= ?  and purchases.tipo = ?
-    ORDER BY products.products_category_id,purchases.supplier_id,purchases.date1,purchases.document_id,purchases.documento' , "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda,tipo ])
-     
+  
+  
+    if  tipo == "0"
+        @purchases = Purchase.find_by_sql(['Select purchase_details.*,products.products_category_id,purchases.supplier_id,purchases.documento,
+        purchases.document_id,purchases.date1
+        from purchase_details   
+        INNER JOIN purchases ON purchase_details.purchase_id = purchases.id
+        INNER JOIN products ON purchase_details.product_id = products.id
+        WHERE purchases.date1 >= ? and purchases.date1 <= ?  and purchases.moneda_id= ?  and purchases.tipo = ?
+        ORDER BY products.products_category_id,purchases.supplier_id,purchases.date1,purchases.document_id,purchases.documento' , "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda,tipo ])
+    else  
+        @purchases = Purchase.where(["  date1 >= ? and date1 <= ?  AND tipo = ?  and processed = ?", "#{fecha1} 00:00:00","#{fecha2} 23:59:59", tipo, "1"]).order(:supplier_id,:moneda_id,:date1)
+    end 
     
     return @purchases
     
