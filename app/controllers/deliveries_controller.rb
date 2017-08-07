@@ -258,7 +258,7 @@ end
           @deliveries = Delivery.where(["company_id = ? AND code like ? ", @company.id, "%" + params[:search] + "%"]).paginate(:page => params[:page])
 
         else
-          @deliveries = Delivery.where(company_id:  @company.id).order("code desc ").paginate(:page => params[:page])
+          @deliveries = Delivery.where(company_id:  @company.id).order("created_at  desc ").paginate(:page => params[:page])
           @filters_display = "none"
         end
     else
