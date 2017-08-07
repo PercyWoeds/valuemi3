@@ -8,9 +8,9 @@ class TranportordersController < ApplicationController
   @tranportorders = Tranportorder.all.order(:code)
 
   if params[:search]
-    @tranportorders = Tranportorder.search(params[:search]).order(:code)
+    @tranportorders = Tranportorder.search(params[:search]).order(:created_at)
   else
-    @tranportorders = Tranportorder.all.order(:code)
+    @tranportorders = Tranportorder.all.order(:created_at)
   end
 
     
