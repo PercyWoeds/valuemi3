@@ -359,7 +359,11 @@ def build_pdf_header(pdf)
       
     Prawn::Document.generate("app/pdf_output/stocks1.pdf") do |pdf|      
 
-     pdf.font_families.update( "Helvetica" => { normal: Rails.root.join('app', 'assets/fonts', 'HelveticaNeueW01-65Medium.ttf').to_s, bold: Rails.root.join('app', 'assets/fonts', 'HelveticaNeueW01-65Medium.ttf').to_s, italic: Rails.root.join('app', 'assets/fonts', 'HelveticaNeueW01-65Medium.ttf').to_s, bold_italic: Rails.root.join('app', 'assets/fonts', 'HelveticaNeueW01-65Medium.ttf').to_s } )
+        pdf.font_families.update("Open Sans" => {
+          :normal => "app/assets/fonts/OpenSans-Regular.ttf",
+          :italic => "app/assets/fonts/OpenSans-Italic.ttf",
+        })
+
         pdf.font "Open Sans",:size =>6
   
         pdf = build_pdf_header(pdf)
