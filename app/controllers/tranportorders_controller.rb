@@ -170,7 +170,11 @@ class TranportordersController < ApplicationController
             row = []
             row << nroitem.to_s
             row << orden.code
-            row << orden.employee.full_name
+            if orden.employee != nil
+              row << orden.employee.full_name
+            else
+              row << "*Empleado no registrado ** " 
+            end
             row << orden.get_placa(orden.truck2_id) 
             row << orden.get_punto(orden.ubication_id) 
             row << orden.get_punto(orden.ubication2_id)
