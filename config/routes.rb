@@ -748,6 +748,7 @@ end
   resources :employees  
   
   # Suppliers
+  match 'suppliers/create_ajax/:company_id' => 'suppliers#create_ajax', via: [:get, :post]
   match 'suppliers/new/:company_id' => 'suppliers#new', via: [:get, :post]
   match 'companies/suppliers/:company_id' => 'suppliers#list_suppliers', via: [:get, :post]
   resources :suppliers
