@@ -61,12 +61,15 @@
 
     <div class="field">
       <%= f.label :fecha1, "Fecha Emision*", :class => "bold" %><br />
-      <%= f.date_field :fecha1, value: Time.now.strftime("%d/%m/%Y") %>
+      <%= f.date_field :fecha1%>
+
     </div>
 
     <div class="field">
       <%= f.label :fecha2, "Fecha Traslado*", :class => "bold" %><br />
-      <%= f.date_field :fecha2, value: Time.now.strftime("%d/%m/%Y") %>
+      
+      
+      <%= f.date_field :fecha2 %>
     </div>
     
     <%= hr() %>

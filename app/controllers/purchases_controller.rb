@@ -403,7 +403,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
             
             
             if compras.product 
-              row << orden.product.name
+              row << compras.product.name
             else
               a = compras.get_service(compras.product_id)
               

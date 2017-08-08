@@ -62,6 +62,12 @@ class SuppliersController < ApplicationController
     else
       redirect_to('/companies')
     end
+    
+    
+    if(params[:ajax])
+      @ajax = true
+      render :layout => false
+    end
   end
 
   # GET /suppliers/1/edit
@@ -133,10 +139,10 @@ class SuppliersController < ApplicationController
   
     # Create via ajax
   def create_ajax
-    if(params[:company_id] and params[:company_id] != "" and params[:name] and params[:name] != "")
+    if(params[:company_id] and params[:company_id] != "" and params[:name] and params[:name] != "" and params[:ruc] != "")
       @supplier = Supplier.new(:company_id => params[:company_id].to_i, :name => params[:name], :email => params[:email], :phone1 => params[:phone1], :phone2 => params[:phone2], :address1 => params[:address1], :address2 => params[:address2], :city => params[:city], :state => params[:state], :zip => params[:zip], :country => params[:country], :comments => params[:comments],:ruc=>params[:ruc])
       
-      if @customer.save
+      if @supplier.save
         render :text => "#{@supplier.id}|BRK|#{@supplier.name}"
       else
         render :text => "error"

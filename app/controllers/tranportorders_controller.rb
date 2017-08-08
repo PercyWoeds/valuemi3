@@ -30,8 +30,12 @@ class TranportordersController < ApplicationController
     @employees = Employee.all 
     @trucks = Truck.all 
     @tranportorder[:code] = "#{generate_guid6()}"
+    
     @locations = Location.all
     @divisions = Division.all 
+    
+     @some_time1  = Time.now
+    @some_time2  = Time.now
   
   end
 
@@ -39,11 +43,29 @@ class TranportordersController < ApplicationController
   def edit
      @customers = @tranportorder.get_customers()
      @puntos = @tranportorder.get_puntos()
+     
+     @tranportorder = Tranportorder.find(params[:id])
+     
      @employees = Employee.all 
      @trucks = Truck.all 
      @locations = Location.all
      @divisions = Division.all 
+     
+     @tranportorder[:location_id] = @tranportorder.location_id
+     @tranportorder[:division_id] = @tranportorder.division_id
+     
+     @tranportorder[:employee_id] = @tranportorder.employee_id
+     @tranportorder[:employee2_id] = @tranportorder.employee2_id
+     @tranportorder[:ubication_id] = @tranportorder.ubication_id
+     @tranportorder[:ubication2_id] = @tranportorder.ubication2_id
+     
   
+     @tranportorder[:truck_id] = @tranportorder.truck_id
+     @tranportorder[:truck2_id] = @tranportorder.truck2_id
+     
+    
+     
+
   end
 
   # POST /tranportorders
