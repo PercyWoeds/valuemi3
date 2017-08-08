@@ -279,10 +279,12 @@ WHERE purchase_details.product_id = ?',params[:id] ])
               row <<" "
               row << compras.get_service_name(compras.product_id)
             end 
-            
+            calculo = 0
             if compras.products_category_id == 2
-              row << compras.total.round(2).to_s/1.18
-              total += compras.total.round(2)/1.18
+              calculo = compras.total / 1.18
+              row   << calculo.round(2).to_s
+              total += calculo.round(2)
+              
             else
               row << compras.total.round(2).to_s
               total += compras.total.round(2)
@@ -417,11 +419,17 @@ WHERE purchase_details.product_id = ?',params[:id] ])
             
            
             row << compras.quantity.round(2)
-            
+            calculo = 0
+            calculototal = 0 
             if compras.products_category_id == 2
-              row << compras.price_without_tax.round(2)/1.18
-              row << compras.total.round(2).to_s/1.18
-              total += compras.total.round(2)/1.18
+              
+              calculo = compras.price_without_tax / 1.18
+              calculototal = compras.total / 1.18
+              
+              row << calculo.round(2)
+              row << calculototal.round(2).to_s
+              total += calculototal.round(2)
+              
             else  
               row << compras.price_without_tax.round(2)
               row << compras.total.round(2).to_s
