@@ -18,8 +18,9 @@
       <th>Vehiculo 2</th>
       <th>Ubicacion</th>
       <th>Ubicacion2</th>
-      <th>Fecha Inicio </th>
-      <th>Fecha Fin </th>
+      <th>Fecha Registro </th>
+      <th>Fecha Emision </th>
+      <th>Fecha Traslado </th>
       
       <th colspan="3"></th>
     </tr>
@@ -36,12 +37,15 @@
         <td><%= tranportorder.get_placa(tranportorder.truck2_id) %></td>
         <td><%= tranportorder.get_punto(tranportorder.ubication_id)  %></td>
         <td><%= tranportorder.get_punto(tranportorder.ubication2_id) %></td>
+        <td><%= tranportorder.created_at.strftime("%d/%m/%Y") %></td>
         <td><%= tranportorder.fecha1.strftime("%d/%m/%Y") %></td>
         <td><%= tranportorder.fecha2.strftime("%d/%m/%Y") %></td>
       
         <td><%= link_to 'Ver', tranportorder %></td>
         <td><%= link_to 'Editar', edit_tranportorder_path(tranportorder) %></td>
-        <td><%= link_to 'Eliminar', tranportorder, method: :delete, data: { confirm: 'Esta seguro ?' } %></td>
+        <% if @current_user.level == "admin" %>
+          <td><%= link_to 'Eliminar', tranportorder, method: :delete, data: { confirm: 'Esta seguro ?' } %></td>
+        <%end %>
       </tr>
     <% end %>
   </tbody>
