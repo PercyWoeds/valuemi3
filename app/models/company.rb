@@ -388,8 +388,13 @@ class Company < ActiveRecord::Base
     return @delivery
  end 
  #orden de transporte
- def get_ordertransporte_day(fecha1,fecha2)
-    @orden = Tranportorder.where(["company_id = ? AND fecha1 >= ? AND fecha1 <= ?", self.id, "#{fecha1} 00:00:00", "#{fecha2} 23:59:59"]).order(:code)
+ def get_ordertransporte_day(fecha1,fecha2,tipo)
+   
+    if tipo == "0"
+      @orden = Tranportorder.where(["company_id = ? AND fecha1 >= ? AND fecha1 <= ?", self.id, "#{fecha1} 00:00:00", "#{fecha2} 23:59:59"]).order(:code)
+    else
+      @orden = Tranportorder.where(["company_id = ? AND fecha1 >= ? AND fecha1 <= ?", self.id, "#{fecha1} 00:00:00", "#{fecha2} 23:59:59"]).order(:code)
+    end 
     return @orden 
  end 
  def get_guias_day(fecha1,fecha2)

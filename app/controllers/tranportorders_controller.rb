@@ -230,9 +230,9 @@ class TranportordersController < ApplicationController
 
     @fecha1 = params[:fecha1]
     @fecha2 = params[:fecha2]
-
+    @tipo = params[:tiporeporte]
           
-    @orden_transporte = @company.get_ordertransporte_day(@fecha1,@fecha2)  
+    @orden_transporte = @company.get_ordertransporte_day(@fecha1,@fecha2,@tipo)  
       
     Prawn::Document.generate("app/pdf_output/ost1.pdf") do |pdf|      
         pdf.font "Helvetica"
