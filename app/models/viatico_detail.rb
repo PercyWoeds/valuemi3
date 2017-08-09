@@ -4,5 +4,7 @@ class ViaticoDetail < ActiveRecord::Base
   
     belongs_to :viatico  
     belongs_to :tranportorder
+    belongs_to :supplier 
+    belongs_to :gasto 
     
 end
