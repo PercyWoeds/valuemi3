@@ -70,11 +70,18 @@
         Gasto
       </th>
       <th>
-        Fecha
+        Vehiculo
       </th>
       
       <th>
-        Td
+        OST.
+      </th>
+      <th>
+        Desde
+      </th>
+      
+      <th>
+        Fecha
       </th>
       
       <th>
@@ -116,6 +123,10 @@
             <%= product.tranportorder.get_punto(product.tranportorder.ubication_id) %>
           </td>
           <td class="small bordered_bottom bordered_right">
+              <%=product.fecha.strftime("%d/%m/%Y") %>
+          </td>
+          
+          <td class="small bordered_bottom bordered_right">
               <%=product.tm << "-"<< product.descrip %>
           </td>
            <td class="small bordered_bottom bordered_right">
@@ -128,7 +139,7 @@
       </tr>
     <% end %>
    <tr>
-      <td colspan="6" class="bordered_bottom bordered_right bold">
+      <td colspan="10" class="bordered_bottom bordered_right bold">
         Total Egresos
       </td>
       <td class="bordered_bottom bordered_right bold right">
@@ -137,7 +148,7 @@
     </tr>
     
    <tr>
-      <td colspan="6" class="bordered_bottom bordered_right bold">
+      <td colspan="10" class="bordered_bottom bordered_right bold">
         Saldo
       </td>
       <td class="bordered_bottom bordered_right bold right">
