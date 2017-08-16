@@ -1,0 +1,5 @@
+<% if @employees %>
+  <% for customer in @employees %>
+    <%= customer.full_name %>|BRK|<%= customer.id %>
+  <% end %>
+<% end %>

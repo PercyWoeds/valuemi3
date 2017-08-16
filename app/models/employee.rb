@@ -1,8 +1,12 @@
 class Employee < ActiveRecord::Base
 
 	before_save :set_full_name
+	
 	has_many :outputs
 	
+  validates_uniqueness_of :IdNumber
+  validates_presence_of :company_id, :IdNumber, :firstname,:lastname
+ 
 
 	private 
 

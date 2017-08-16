@@ -291,6 +291,12 @@ class ViaticosController < ApplicationController
   
     render :layout => false
   end
+  # Autocomplete for employees
+  def ac_employees
+    @suppliers= Employee.where(["company_id = ? AND IdNumber LIKE ? ", params[:company_id], "%" + params[:q] + "%"])
+  
+    render :layout => false
+  end
   
   # Autocomplete for users
   def ac_user
