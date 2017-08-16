@@ -1480,7 +1480,7 @@
         alert("Por favor ingrese un importe valido");
       } else {
       
-        var item_line = item_id + "|BRK|" + quantity + "|BRK|" +detalle + "|BRK|" +tm + "|BRK|"+inicial + "|BRK|"+compro+ "|BRK|"+fecha+ "|BRK|"+ruc+ "|BRK|"+gasto;
+      var item_line = item_id + "|BRK|" + quantity + "|BRK|" +detalle + "|BRK|" +tm + "|BRK|"+inicial + "|BRK|"+compro+ "|BRK|"+fecha+ "|BRK|"+ruc+ "|BRK|"+gasto;
       
         $("#items").val($("#items").val() + "," + item_line);
         listItemsViatico();
@@ -1549,6 +1549,7 @@
     
     $("#items").val(items_final.join(","));
     listItemsViatico();
+    
   }
 
 

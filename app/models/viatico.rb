@@ -185,7 +185,7 @@ def get_total_inicial(items)
   
   
   def delete_products()
-    invoice_services = InvoiceService.where(factura_id: self.id)
+    invoice_services = ViaticoDetail.where(viatico_id: self.id)
     
     for ip in invoice_services
       ip.destroy
@@ -197,8 +197,6 @@ def get_total_inicial(items)
       if(item and item != "")
         parts = item.split("|BRK|")
         
-      puts parts        
-             
         id       = parts[0]
         quantity = parts[1]
         detalle1 = parts[2]
@@ -210,7 +208,6 @@ def get_total_inicial(items)
         
         total    =  quantity.to_f
         
-    
           product = Tranportorder.find(id.to_i)
           
           new_invoice_product = ViaticoDetail.new(:viatico_id => self.id,:descrip=> detalle2,:importe=> total ,:detalle=> detalle1,:tm=>tm1,:tranportorder_id=> product.id,:fecha=>fecha,:supplier_id =>ac_supplier.to_i ,:gasto_id=> gasto.to_i)
@@ -341,20 +338,40 @@ def get_total_inicial(items)
     return invoice_products
   end
   
-  def products_lines
+  def viaticos_lines
     services = []
-    invoice_products = InvoiceService.where(factura_id:  self.id)
     
-    invoice_products.each do | ip |
-
-      ip.service[:price]    = ip.price
-      ip.service[:quantity] = ip.quantity
-      ip.service[:discount] = ip.discount
-      ip.service[:total]    = ip.total
-      services.push("#{ip.service.id}|BRK|#{ip.service.quantity}|BRK|#{ip.service.price}|BRK|#{ip.service.discount}")
+    viatico_header = Viatico.where(id: self.id)
+    
+    invoice_products = ViaticoDetail.where(viatico_id:  self.id)
+    
+    
+    viatico_header.each do  | ip |
+      
+      inicial = ip.inicial 
+      
+    end 
+    
+    
+    
+    
+    ruc = ""
+    gasto = 0
+    i= 0  
+    
+      invoice_products.each do | ip |
+      i +=1
+      ip.tranportorder[:CurrTotal] = ip.importe
+      ip.tranportorder[:detalle] = ip.detalle
+      ip.tranportorder[:tm]      = ip.tm
+      ip.tranportorder[:comprobante]  = ip.descrip
+      ip.tranportorder[:fecha]  = ip.fecha 
+      ip[:supplier_id] = ip.supplier_id
+      ip[:gasto_id]    = ip.gasto_id
+      
+      services.push("#{ip.tranportorder.id}|BRK|#{ip.tranportorder.CurrTotal}|BRK|#{ip.tranportorder.detalle}|BRK|#{ip.tranportorder.tm}|BRK|#{inicial}|BRK|#{ip.tranportorder.comprobante}|BRK|#{ip.tranportorder.fecha}|BRK|#{ip.supplier_id}|BRK|#{ip.gasto_id} ")
     end
-      puts  #{ip.service.id}|BRK|#{ip.service.quantity}|BRK|#{ip.service.price}|BRK|#{ip.service.discount
-
+    
     return services.join(",")
   end
   

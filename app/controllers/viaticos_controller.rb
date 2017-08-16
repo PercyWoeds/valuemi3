@@ -396,7 +396,8 @@ class ViaticosController < ApplicationController
     
     @documents = @company.get_documents()
     @cajas = Caja.all 
-    @gastos = Gasto.all
+    
+    @gastos = Gasto.order(:descrip)
     
     @ac_user = getUsername()
     @viatico[:user_id] = getUserId()
@@ -413,7 +414,13 @@ class ViaticosController < ApplicationController
     
     @ac_user = @viatico.user.username
     
-    @products_lines = @viatico.products_lines
+    @documents = @company.get_documents()
+    @cajas = Caja.all 
+    @gastos = Gasto.order(:descrip)
+    
+    
+    @viaticos_lines = @viatico.viaticos_lines
+    
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
@@ -488,24 +495,43 @@ class ViaticosController < ApplicationController
     @viatico = Viatico.find(params[:id])
     @company = @viatico.company
     
-    if(params[:ac_customer] and params[:ac_customer] != "")
-      @ac_customer = params[:ac_customer]
-    else
-      @ac_customer = @viatico.customer.name
-    end
-    
-    @products_lines = @viatico.products_lines
+  
+   @company = Company.find(params[:viatico][:company_id])
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
+    @documents = @company.get_documents()
+    @cajas = Caja.all      
+    @gastos = Gasto.order(:descrip)
     
-    @viatico[:subtotal] = @viatico.get_subtotal(items)
-    @viatico[:tax] = @viatico.get_tax(items, @viatico[:customer_id])
-    @viatico[:total] = @viatico[:subtotal] + @viatico[:tax]
-
+    begin
+      @viatico[:inicial] = @viatico.get_total_inicial(items)
+    rescue
+      @viatico[:inicial] = 0
+    end 
+    
+    begin
+      @viatico[:total_ing] = @viatico.get_total_ing(items)
+    rescue 
+      @viatico[:total_ing] = 0
+    end 
+    begin 
+      @viatico[:total_egreso]=  @viatico.get_total_sal(items)
+    rescue 
+      @viatico[:total_egreso]= 0 
+    end 
+    @viatico[:saldo] = @viatico[:inicial] +  @viatico[:total_ing] - @viatico[:total_egreso]
+    
+    if(params[:viatico][:user_id] and params[:viatico][:user_id] != "")
+      curr_seller = User.find(params[:viatico][:user_id])
+      @ac_user = curr_seller.username
+    end
+ 
+   
+   
 
     respond_to do |format|
-      if @viatico.update_attributes(params[:viatico])
+      if @viatico.update_attributes(viatico_params)
         # Create products for kit
         @viatico.delete_products()
         @viatico.add_products(items)

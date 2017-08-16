@@ -140,10 +140,10 @@ class Invoice < ActiveRecord::Base
     
     invoice_products.each do | ip |
 
-      ip.product[:price] = ip.price
+      ip.product[:price]    = ip.price
       ip.product[:quantity] = ip.quantity
       ip.product[:discount] = ip.discount
-      ip.product[:total] = ip.total
+      ip.product[:total]    = ip.total
       #products.push("#{ip.product.id}|BRK|#{ip.product.curr_quantity}|BRK|#{ip.product.curr_price}|BRK|#{ip.product.curr_discount}")
       products.push("#{ip.product.id}|BRK|#{ip.product.quantity}|BRK|#{ip.product.price}|BRK|#{ip.product.discount}")
     end
