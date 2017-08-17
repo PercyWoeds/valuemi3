@@ -56,11 +56,15 @@ class TranportordersController < ApplicationController
      
      @tranportorder[:employee_id]   = @tranportorder.employee_id
      @tranportorder[:employee2_id]  = @tranportorder.employee2_id
+     
      @tranportorder[:ubication_id]  = @tranportorder.ubication_id
      @tranportorder[:ubication2_id] = @tranportorder.ubication2_id
   
      @tranportorder[:truck_id]  = @tranportorder.truck_id
      @tranportorder[:truck2_id] = @tranportorder.truck2_id
+    
+     puts @tranportorder.ubication_id
+     puts @tranportorder[:ubication_id] 
     
   end
 
