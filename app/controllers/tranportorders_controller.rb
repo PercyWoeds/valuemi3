@@ -42,30 +42,26 @@ class TranportordersController < ApplicationController
   # GET /tranportorders/1/edit
   def edit
      @customers = @tranportorder.get_customers()
-     @puntos = @tranportorder.get_puntos()
+     @puntos    = @tranportorder.get_puntos()
      
      @tranportorder = Tranportorder.find(params[:id])
      
      @employees = Employee.all 
-     @trucks = Truck.all 
+     @trucks    = Truck.all 
      @locations = Location.all
      @divisions = Division.all 
      
      @tranportorder[:location_id] = @tranportorder.location_id
      @tranportorder[:division_id] = @tranportorder.division_id
      
-     @tranportorder[:employee_id] = @tranportorder.employee_id
-     @tranportorder[:employee2_id] = @tranportorder.employee2_id
-     @tranportorder[:ubication_id] = @tranportorder.ubication_id
+     @tranportorder[:employee_id]   = @tranportorder.employee_id
+     @tranportorder[:employee2_id]  = @tranportorder.employee2_id
+     @tranportorder[:ubication_id]  = @tranportorder.ubication_id
      @tranportorder[:ubication2_id] = @tranportorder.ubication2_id
-     
   
-     @tranportorder[:truck_id] = @tranportorder.truck_id
+     @tranportorder[:truck_id]  = @tranportorder.truck_id
      @tranportorder[:truck2_id] = @tranportorder.truck2_id
-     
     
-     
-
   end
 
   # POST /tranportorders

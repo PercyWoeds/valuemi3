@@ -1473,26 +1473,25 @@
       var fecha  = $("#ac_item_fecha").val();
       var ruc    = $("#ac_supplier_id").val();
       var gasto    = $("#gasto_id").val();
-    
+      var empleado =$("#ac_employee_id").val();
       var items_arr = $("#items").val().split(",");
 
       if(quantity == "" || !isNumeric(quantity)) {
         alert("Por favor ingrese un importe valido");
       } else {
       
-      var item_line = item_id + "|BRK|" + quantity + "|BRK|" +detalle + "|BRK|" +tm + "|BRK|"+inicial + "|BRK|"+compro+ "|BRK|"+fecha+ "|BRK|"+ruc+ "|BRK|"+gasto;
+      var item_line = item_id + "|BRK|" + quantity + "|BRK|" +detalle + "|BRK|" +tm + "|BRK|"+inicial + "|BRK|"+compro+ "|BRK|"+fecha+ "|BRK|"+ruc+ "|BRK|"+gasto+ "|BRK|"+empleado ;
       
         $("#items").val($("#items").val() + "," + item_line);
         listItemsViatico();
-        
-        $("#tm").val("");
+          $("#tm").val("");
         $("#ac_item_id").val("");
         $("#ac_item").val("");
         $("#ac_item_total").val("0.00");
         $("#ac_item_compro").val("");
         $("#ac_item_detalle").val("");
         $("#ac_item_ruc").val("");
-        
+        $("#ac_item_empleado").val("");        
         updateItemTotalViatico();
       }
     } else {

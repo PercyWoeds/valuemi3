@@ -106,7 +106,11 @@
             <%= product.tranportorder.employee.full_name %>
           </td>
          <td class="small bordered_bottom bordered_right">
+           <%if product.supplier %>
             <%= product.supplier.name %>
+          <%else%>
+            <%= product.employee.full_name %>
+          <%end %>
           </td>
          <td class="small bordered_bottom bordered_right">
             <%= product.gasto.descrip %>

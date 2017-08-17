@@ -205,12 +205,13 @@ def get_total_inicial(items)
         fecha    = parts[6]
         ac_supplier = parts[7]
         gasto      = parts[8]
+        empleado   = parts[9]
         
         total    =  quantity.to_f
         
           product = Tranportorder.find(id.to_i)
           
-          new_invoice_product = ViaticoDetail.new(:viatico_id => self.id,:descrip=> detalle2,:importe=> total ,:detalle=> detalle1,:tm=>tm1,:tranportorder_id=> product.id,:fecha=>fecha,:supplier_id =>ac_supplier.to_i ,:gasto_id=> gasto.to_i)
+          new_invoice_product = ViaticoDetail.new(:viatico_id => self.id,:descrip=> detalle2,:importe=> total ,:detalle=> detalle1,:tm=>tm1,:tranportorder_id=> product.id,:fecha=>fecha,:supplier_id =>ac_supplier.to_i ,:gasto_id=> gasto.to_i,:employee_id=> empleado )
 
           new_invoice_product.save
           if tm1.to_i != 6

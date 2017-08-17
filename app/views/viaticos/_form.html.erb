@@ -105,7 +105,7 @@
   
   <input type="hidden" name="ac_item_id" id="ac_item_id" value="" />  
   <input type="hidden" name="ac_supplier_id" id="ac_supplier_id" value="" />
-  
+  <input type="hidden" name="ac_employee_id" id="ac_employee_id" value="" />
     <div class="field">
     
     <br />
@@ -138,18 +138,27 @@
       
       <label for="ac_supplier" class="bold">Proveedor/Empleado*</label><br />
           
-          <input type="radio" name="tipoproveedor" value="1" checked> Provedor<br>
-          <input type="radio" name="tipoproveedor" value="2"> Empleado<br>
-          
-  
-      
-      <input type="text" name="ac_supplier" id="ac_supplier" value="<% if @ac_supplier %><%= @ac_supplier %><% end %>" />
+    <table> 
+    
+  <tr>
+    <td>        <input type="radio" name="tipoproveedor" value="1" checked> Provedor<br></td>
+    <td><input type="text" name="ac_supplier" id="ac_supplier" value="<% if @ac_supplier %><%= @ac_supplier %><% end %>" />
       <div class="small">
       <a href="#" onclick="createSupplier(); return false;">+ Crear nuevo proveedor</a>
-      </div>
+      </div></td> 
+  
+  </tr>
+  <tr>
+    <td><input type="radio" name="tipoproveedor" value="2"> Empleado<br></td>
+    <td>      <input type="text" name="ac_employee" id="ac_employee" value="<% if @ac_employee %><%= @ac_employee %><% end %>" />
+    </td> 
 
+  </tr>
+  
+      </table>      
+      
       <div class="small">
-        Ingrese una termino de busqueda para encontrar un proveedor
+        Ingrese una termino de busqueda 
       </div>
     </td>
     
@@ -219,10 +228,6 @@
 <script type="text/javascript">
   $(document).ready(function() {
   
-  var tipoproveedor = $("#tipoproveedor").val();
-  
-
-    
     $("#ac_supplier").autocomplete("/purchases/ac_suppliers/<%= @company.id %>", {
       matchSubset: 1,
       matchContains: 1,
@@ -233,6 +238,18 @@
       $("#ac_supplier_id").val(data[2]);
       $("#selected_supplier").html(data[0]);
     });
+    
+    $("#ac_employee").autocomplete("/viaticos/ac_employees/<%= @company.id %>", {
+      matchSubset: 1,
+      matchContains: 1,
+      selectFirst: false
+    });
+  
+    $("#ac_employee").result(function(event, data, formatted) {
+      $("#ac_employee_id").val(data[2]);
+      $("#selected_employee").html(data[0]);
+    });
+    
     
     
     $("#ac_item").autocomplete("/viaticos/ac_osts/<%= @company.id %>", {

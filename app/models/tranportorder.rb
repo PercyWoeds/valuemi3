@@ -39,8 +39,8 @@ self.per_page = 20
 	  	if id != nil || id !="" || id.blank? ==false || id.empty? == false 
 		  	empleado = Employee.find(id)
 		  	return empleado.full_name 	
-		else
-			return ""  	
+		elsev
+			rveturn ""  	
 	  	end	
 	  end 	
 

@@ -4,8 +4,8 @@ class Employee < ActiveRecord::Base
 	
 	has_many :outputs
 	
-  validates_uniqueness_of :IdNumber
-  validates_presence_of :company_id, :IdNumber, :firstname,:lastname
+  validates_uniqueness_of :idnumber
+  validates_presence_of :company_id, :idnumber, :firstname,:lastname
  
 
 	private 

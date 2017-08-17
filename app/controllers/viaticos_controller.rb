@@ -293,7 +293,7 @@ class ViaticosController < ApplicationController
   end
   # Autocomplete for employees
   def ac_employees
-    @suppliers= Employee.where(["company_id = ? AND IdNumber LIKE ? ", params[:company_id], "%" + params[:q] + "%"])
+    @employees= Employee.where(["company_id = ? AND full_name ilike ? or idnumber LIKE ? ", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])
   
     render :layout => false
   end
@@ -383,7 +383,6 @@ class ViaticosController < ApplicationController
 
   # GET /viaticos/new
   # GET /viaticos/new.xml
-
   
   
   def new
@@ -532,11 +531,7 @@ class ViaticosController < ApplicationController
       curr_seller = User.find(params[:viatico][:user_id])
       @ac_user = curr_seller.username
     end
- 
-   
-   
-
-    respond_to do |format|
+     respond_to do |format|
       if @viatico.update_attributes(viatico_params)
         # Create products for kit
         @viatico.delete_products()
