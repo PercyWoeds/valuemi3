@@ -27,6 +27,10 @@ class Product < ActiveRecord::Base
   
   before_destroy :ensure_not_referenced_by_any_line_item
 
+  include PgSearch
+  pg_search_scope :search_by_name, :against => :name
+  
+  
  TABLE_HEADERS = ["ITEM",
                   "CODIGO",
                   "DESCRIP  ",
@@ -106,6 +110,7 @@ end
     
     return name
   end
+  
   
 private
   # ensure that there are no line items referencing this product
