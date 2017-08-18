@@ -166,7 +166,7 @@ class Company < ActiveRecord::Base
   end
   
   def get_employees()
-     employees =  Employee.find_by_sql(['Select id,licencia,full_name   from employees' ])
+     employees =  Employee.where(:active => "1").order(:full_name)
      return employees
   end
       

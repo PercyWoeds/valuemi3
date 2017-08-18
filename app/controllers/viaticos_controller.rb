@@ -298,7 +298,7 @@ class ViaticosController < ApplicationController
   end
   # Autocomplete for employees
   def ac_employees
-    @employees= Employee.where(["company_id = ? AND full_name ilike ? or idnumber LIKE ? ", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])
+    @employees= Employee.where(["active= '1' and company_id = ? AND full_name ilike ? or idnumber LIKE ? ", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])
   
     render :layout => false
   end
