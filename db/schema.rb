@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170817191530) do
+ActiveRecord::Schema.define(version: 20170818211954) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -466,6 +466,7 @@ ActiveRecord::Schema.define(version: 20170817191530) do
     t.string   "full_name"
     t.string   "IdNumber"
     t.string   "idnumber"
+    t.string   "active"
   end
 
   create_table "facturas", force: :cascade do |t|

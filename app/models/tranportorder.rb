@@ -66,6 +66,10 @@ self.per_page = 20
 	    return puntos
 	  end
 
+	  def get_employees()
+	    empleados = Employee.where(:active =>"1")
+	    return empleados
+	  end
 
 		def correlativo		
 			numero=Voided.find(8).numero.to_i + 1

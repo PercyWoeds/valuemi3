@@ -27,7 +27,8 @@ class TranportordersController < ApplicationController
 
     @customers = @tranportorder.get_customers()
     @puntos =    @tranportorder.get_puntos()
-    @employees = Employee.all 
+    @employees = @tranportorder.get_employees() 
+    
     @trucks = Truck.all 
     @tranportorder[:code] = "#{generate_guid6()}"
     
@@ -45,7 +46,7 @@ class TranportordersController < ApplicationController
      @puntos    = @tranportorder.get_puntos()
      
     
-     @employees = Employee.all 
+     @employees = @tranportorder.get_employees() 
      @trucks    = Truck.all 
      @locations = Location.all
      @divisions = Division.all 
@@ -64,7 +65,7 @@ class TranportordersController < ApplicationController
     @tranportorder = Tranportorder.new(tranportorder_params)
     @customers = @tranportorder.get_customers()
     @puntos = @tranportorder.get_puntos()
-    @employees = Employee.all 
+  @employees = @tranportorder.get_employees() 
     @trucks = Truck.all 
     @locations = Location.all
     @divisions = Division.all 

@@ -74,7 +74,17 @@
     <%= f.label :company_id %><br>
     <%= f.number_field :company_id %>
   </div>
-  <div class="actions">
+  
+   <div class="field">
+      <%= f.check_box :active%>
+      <%= f.label :active ,"Activo?", :class => "bold" %>
+      <div class="small">
+        Es un empleado  ?
+      </div>
+    </div>
+    
+   <div class="form-actions">
+    
     <%= f.submit %>
   </div>
 <% end %>
