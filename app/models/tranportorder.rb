@@ -13,6 +13,7 @@ self.per_page = 20
 	belongs_to :truck
 	belongs_to :delivery
 	belongs_to :punto 
+	
 
  TABLE_HEADERS = ["ITEM",
                      "CODIGO",
