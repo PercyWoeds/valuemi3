@@ -44,24 +44,14 @@ class TranportordersController < ApplicationController
      @customers = @tranportorder.get_customers()
      @puntos    = @tranportorder.get_puntos()
      
-     @tranportorder = Tranportorder.find(params[:id])
-     
+    
      @employees = Employee.all 
      @trucks    = Truck.all 
      @locations = Location.all
      @divisions = Division.all 
      
-     @tranportorder[:location_id] = @tranportorder.location_id
-     @tranportorder[:division_id] = @tranportorder.division_id
+      @tranportorder = Tranportorder.find(params[:id])
      
-     @tranportorder[:employee_id]   = @tranportorder.employee_id
-     @tranportorder[:employee2_id]  = @tranportorder.employee2_id
-     
-     @tranportorder[:ubication_id]  = @tranportorder.ubication_id
-     @tranportorder[:ubication2_id] = @tranportorder.ubication2_id
-  
-     @tranportorder[:truck_id]  = @tranportorder.truck_id
-     @tranportorder[:truck2_id] = @tranportorder.truck2_id
     
      puts @tranportorder.ubication_id
      puts @tranportorder[:ubication_id] 

@@ -221,9 +221,9 @@ class OutputsController < ApplicationController
   end   
 
   def build_pdf_body_rpt2(pdf)
-    
+    pdf.text "Categoria  : "+@namecategoria  , :size => 11
     pdf.text "Listado de Salidas desde "+@fecha1.to_s+ " Hasta: "+@fecha2.to_s , :size => 8 
-  
+     
     pdf.font "Helvetica" , :size => 6
 
       headers = []
@@ -342,6 +342,7 @@ class OutputsController < ApplicationController
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]    
     @categoria = params[:products_category_id]    
+ @namecategoria = @company.get_categoria_name(@categoria)      
 
     @facturas_rpt = @company.get_salidas_day2(@fecha1,@fecha2,@categoria)
 

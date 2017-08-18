@@ -1,5 +1,5 @@
+
 <%= simple_form_for(@tranportorder) do |f| %>
-  <%= f.error_notification %>
 
 
   <div class="form-inputs">
@@ -12,7 +12,7 @@
     </div>
     <div class="field">
       <%= f.label :division_id %><br />
-      <%= f.select :division_id,options_from_collection_for_select(@divisions,'id','name') %>
+      <%= f.select :division_id, options_from_collection_for_select(@divisions,'id','name') %>
     </div>
 
 
@@ -37,12 +37,12 @@
 
     <div class="field">
       <%= f.label :ubication_id , "De  "%><br />
-      <%= f.select :ubication_id,options_from_collection_for_select(@puntos,'id','name') %>
+      <%= f.select :ubication_id,options_from_collection_for_select(@puntos,'id','name')  %>
     </div>
    
     <div class="field">
-      <%= f.label :ubication2_id , "De  "%><br />
-      <%= f.select :ubication2_id,options_from_collection_for_select(@puntos,'id','name') %>
+      <%= f.label :ubication2_id , "Hasta  "%><br />
+      <%= f.select :ubication2_id,options_from_collection_for_select(@puntos,'id','name'), :selected => :ubication2_id  %>
     </div>
    
 
@@ -61,7 +61,7 @@
 
     <div class="field">
       <%= f.label :fecha1, "Fecha Emision*", :class => "bold" %><br />
-      <%= f.date_field :fecha1%>
+      <%= f.date_field :fecha1 %>
 
     </div>
 
