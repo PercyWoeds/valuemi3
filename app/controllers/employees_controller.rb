@@ -3,7 +3,7 @@ class EmployeesController < ApplicationController
 
 
 
-   def import
+  def import
       Employee.import(params[:file])
        redirect_to root_url, notice: "Empleados importadas."
   end 
@@ -11,7 +11,9 @@ class EmployeesController < ApplicationController
   # GET /employees
   # GET /employees.json
   def index
+    
     @employees = Employee.all
+    
   end
 
   # GET /employees/1

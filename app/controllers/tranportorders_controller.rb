@@ -29,7 +29,7 @@ class TranportordersController < ApplicationController
     @puntos =    @tranportorder.get_puntos()
     @employees = @tranportorder.get_employees() 
     
-    @trucks = Truck.all 
+    @trucks = Truck.all.order(:placa )
     @tranportorder[:code] = "#{generate_guid6()}"
     
     @locations = Location.all

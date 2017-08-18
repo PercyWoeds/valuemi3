@@ -31,7 +31,7 @@
      Agregar, editar or eliminar las categorias para tus productos.
   </p>
 
-
+<% if @current_user.level = "admin" %>
   <%= hr() %>
 
   <h3>
@@ -43,6 +43,7 @@
      Agregar, editar or eliminar las categorias para tus productos.
   </p>
 
+<%end%>
 <%= hr() %>
 
   <h3>
@@ -95,16 +96,8 @@
   <p>
      Agregar, editar or eliminar ordenes de venta 
   </p>
-<%= hr() %>
-  <h3>
-        <div>
-          <%= image_tag("divisions_32.png", :class => "vmiddle") %>
-          <%= link_to "Empleados ", "/companies/employees/#{@company.id}" %>
-        </div>
-  </h3>
-  <p>
-     Agregar, editar or eliminar empleados
-  </p>
+  
+ 
 
 <%= hr() %>
   <h3>

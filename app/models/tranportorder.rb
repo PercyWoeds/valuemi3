@@ -57,17 +57,17 @@ self.per_page = 20
 	  end 	
 
 	  def get_customers()
-	    customers = Customer.all 
+	    customers = Customer.all
 	    return customers
 	  end
 
 	  def get_puntos()
-	    puntos = Punto.all 
+	    puntos = Punto.all.order(:name)
 	    return puntos
 	  end
 
 	  def get_employees()
-	    empleados = Employee.where(:active =>"1")
+	    empleados = Employee.where(:active =>"1").order(:full_name)
 	    return empleados
 	  end
 
@@ -78,7 +78,7 @@ self.per_page = 20
 		end
 
 
-	  def get_processed
+	  def processed
 	    if(self.processed == "1")
 	      return "Aprobado "
 	    elsif (self.processed == "2")      
