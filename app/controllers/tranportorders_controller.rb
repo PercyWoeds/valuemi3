@@ -76,6 +76,7 @@ class TranportordersController < ApplicationController
 
     respond_to do |format|
       if @tranportorder.save
+        
          @tranportorder.correlativo
 
         format.html { redirect_to @tranportorder, notice: 'Tranportorder was successfully created.' }

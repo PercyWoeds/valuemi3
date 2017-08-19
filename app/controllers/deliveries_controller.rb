@@ -686,7 +686,14 @@ end
                [" "],
                [" "],
                ["Fecha:"] ]
-      else
+      elsif  @tiporeporte == "3"
+        
+         data =[ ["RECEPCION Y DES.","IRMA LOBO ","VILMA VEGA","ASIS.GERENCIA","RUTH VEGA","CONTABILIDAD"],
+               [" "],
+               [" "],
+               ["Fecha:"] ]
+        
+      else  
           data =[ ["RECEPCION Y DES.","IRMA LOBO ","VILMA VEGA","ASIS.GERENCIA","RUTH VEGA","PAUL PEREDA"],
                [" "],
                [" "],

@@ -598,6 +598,9 @@ end
   
   resources :purchases
 
+
+ 
+
   match 'tranportorders/rpt_ost1_pdf/:company_id' => 'tranportorders#rpt_ost1_pdf', via: [:get, :post]
       
 

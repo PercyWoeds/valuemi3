@@ -50,7 +50,7 @@
   <h3>
         <div>
     <%= image_tag("clients_32.png", :class => "vmiddle") %>
-    <%= link_to "Bancos", "/companies/banks/#{@company.id}" %>
+    <%= link_to "Bancos", banks_path %>
         </div>
   </h3>
   <p>
@@ -61,7 +61,7 @@
 
   <h3>
     <%= image_tag("supplier_32.png", :class => "vmiddle") %>
-    <%= link_to "Cuentas bancarias ", "/companies/bank_acounts/#{@company.id}" %>
+   <%= link_to "Cuentas bancarias ", bank_acounts_path %>
   </h3>
   <p>
      Agregar, editar or eliminar cuentas por pagar 

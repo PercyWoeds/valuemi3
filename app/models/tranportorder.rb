@@ -78,7 +78,7 @@ self.per_page = 20
 		end
 
 
-	  def processed
+	  def get_processed
 	    if(self.processed == "1")
 	      return "Aprobado "
 	    elsif (self.processed == "2")      
@@ -89,9 +89,9 @@ self.per_page = 20
 	      return "* Facturado **"
 	    else 
 	      return "No Aprobado"
-	        
-	  end
-  end
+	    end
+	  
+    end
 
 
 end
