@@ -1,7 +1,7 @@
 class Tranportorder < ActiveRecord::Base
 self.per_page = 20
 
-	validates_presence_of :location_id,division_id,truck_id,truck2_id,:code,:employee_id,:employee2_id,:ubication_id,:ubication2_id,:truck_id,:truck2_id
+	validates_presence_of :location_id,:division_id,:code,:employee_id,:employee2_id,:ubication_id,:ubication2_id,:truck_id,:truck2_id
 	validates_presence_of :fecha1,:fecha2 	
 
 
