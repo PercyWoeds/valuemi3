@@ -2195,7 +2195,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
             end 
 
       detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>detail.quantity,:salida => 0,
-      :price=>$lcprice,:product_id=> detail.product_id,:document_id=>$lcDocuemntid,
+      :price=>$lcprice,:product_id=> detail.product_id,:document_id=>$lcDocumentid,
       :documento=>$lcDocumento,:tm =>"02")
       detail.save 
          
