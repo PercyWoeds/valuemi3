@@ -1644,7 +1644,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
      ##saldo inicial
      ######################################################################3 
 
-     @inv = Inventario.where('fecha < ?',fecha1)  
+     @inv = Inventario.where('fecha < ?',"#{fecha1} 00:00:00")  
 
     
      for inv in @inv       
@@ -1682,7 +1682,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
       end 
 
       #ingresos
-     @ing = Purchase.where('date1 <  ?',fecha1)
+     @ing = Purchase.where('date1 <  ?',"#{fecha1} 00:00:00")
 
      for ing in @ing    
           $lcFecha = ing.date1.to_date
@@ -1734,7 +1734,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
      end 
 
      #salidas 
-    @sal  = Output.where('fecha <  ?',fecha1)
+    @sal  = Output.where('fecha <  ?',"#{fecha1} 00:00:00")
 
      for sal in @sal     
         @saldetail=  OutputDetail.where(:output_id=>sal.id)
@@ -1768,7 +1768,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
    #actualiza ajustes de inventarios
    
    
-     @ajuste  = Ajust.where('fecha1 <  ?',fecha1)
+     @ajuste  = Ajust.where('fecha1 <  ?',"#{fecha1} 00:00:00")
 
      for ajuste  in @ajuste
         @ajustedetail= AjustDetail.where(:ajust_id=>ajuste.id)
@@ -1808,7 +1808,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
 
    
   #actualiza  el costo de la salida
-     @inv = Inventario.where('fecha >= ? and  fecha <= ?',fecha1,fecha2)  
+     @inv = Inventario.where('fecha >= ? and  fecha <= ?',"#{fecha1} 00:00:00","#{fecha2} 00:00:00")  
      for inv in @inv 
         $lcFecha =inv.fecha 
 
@@ -1829,7 +1829,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
         end 
       end 
       #ingresos0 
-     @ing = Purchase.where('date1>= ? and date1 <= ?  ',fecha1,fecha2)
+     @ing = Purchase.where('date1>= ? and date1 <= ?  ',"#{fecha1} 00:00:00","#{fecha2} 00:00:00")
 
      for ing in @ing
 
@@ -1876,7 +1876,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
      end 
 
      #salidas 
-    @sal  = Output.where('fecha>= ? and fecha <= ?',fecha1,fecha2)
+    @sal  = Output.where('fecha>= ? and fecha <= ?',"#{fecha1} 00:00:00","#{fecha2} 00:00:00")
 
      for sal in @sal 
         $lcFecha = sal.fecha 
@@ -1907,7 +1907,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
 # ajustes de inventarios
 
 
-    @ajuste = Ajust.where('fecha1>= ? and fecha1 <= ?',fecha1,fecha2)
+    @ajuste = Ajust.where('fecha1>= ? and fecha1 <= ?',"#{fecha1} 00:00:00","#{fecha2} 00:00:00")
 
      for sal in @ajuste
         $lcFecha = sal.fecha1 
