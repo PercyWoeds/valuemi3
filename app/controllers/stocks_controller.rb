@@ -435,13 +435,19 @@ class StocksController < ApplicationController
         
       lcCli = @movements.first.product_id    
       lcDatos = @movements.first      
-
+      if lcDatos.product   
               pdf.text  "CODIGO DE LA EXISTENCIA :" << lcDatos.product.code 
               pdf.text  "TIPO : 05 SUMINISTROS"
               pdf.text  "DESCRIPCION : "<<lcDatos.product.name 
               pdf.text  "CODIGO DE LA UNIDAD DE MEDIDAD : " << lcDatos.product.unidad  
               pdf.text  "METODO DE VALUACION : ULTIMO PRECIO"
-
+      else
+              pdf.text  "CODIGO DE LA EXISTENCIA :" 
+              pdf.text  "TIPO : 05 SUMINISTROS"
+              pdf.text  "DESCRIPCION : "
+              pdf.text  "CODIGO DE LA UNIDAD DE MEDIDAD : " 
+              pdf.text  "METODO DE VALUACION : ULTIMO PRECIO"
+      end 
       #{:border_width=>1  }.each do |property,value|
       #       pdf.text " Instrucciones: "
       #       pdf.table(data,:cell_style=> {property =>value})
