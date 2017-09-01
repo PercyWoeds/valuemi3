@@ -659,6 +659,7 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? and factur
 ## REPORTE DE ESTADISTICAS DE PAGOS pivot
 
 def get_customer_payments2(moneda,fecha1,fecha2)
+puts fecha2
 
    @facturas = Factura.find_by_sql(["
   SELECT   year_mounth as year_month,
@@ -667,7 +668,7 @@ def get_customer_payments2(moneda,fecha1,fecha2)
    FROM facturas
    WHERE moneda_id = ? and balance>0 and fecha >= ? and fecha  <= ?
    GROUP BY 2,1
-   ORDER BY 2,1 ", moneda,fecha1,fecha2 ])    
+   ORDER BY 2,1 ", moneda,"#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])    
 
   return @facturas
     
