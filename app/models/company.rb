@@ -716,8 +716,13 @@ def get_customer_payments_detail_value(fecha1,fecha2,value="total")
     facturas = Factura.where(:fecha2 => nil )
     for factura in facturas
         fact =  Factura.find(factura.id)
+        if fact.payment 
         days = fact.payment.day 
+
         fechas2 = factura.fecha + days.days           
+      else
+        fechas2 = factura.fecha 
+      end 
         fact.update_attributes(:fecha2=>fechas2)   
     end 
 
@@ -2147,7 +2152,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
 
           if movdetail                 
             detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>invdetail.cantidad,
- :salida => 0,:price=>invdetail.precio_unitario,:product_id=> invdetail.product_id,:tm=>"16",:document_id=>1,:documento=>"-INVENTARIO")
+            :salida => 0,:price=>invdetail.precio_unitario,:product_id=> invdetail.product_id,:tm=>"16",:document_id=>1,:documento=>"-INVENTARIO")
             detail.save 
             end   
         end 
@@ -2241,8 +2246,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
 
      # CALCULANDO SALDO - STOCK 
      
-
-     
+  
     return @inv 
 
  end
