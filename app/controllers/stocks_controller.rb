@@ -472,7 +472,11 @@ class StocksController < ApplicationController
 
         if lcCli == stock.product_id 
 
+               if stock.product 
                lcname = stock.product.name 
+               else
+                lcname =""
+               end
                row = []
 
                row << stock.fecha.strftime("%d%m%Y")                
