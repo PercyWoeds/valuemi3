@@ -1320,7 +1320,7 @@ class CustomerPaymentsController < ApplicationController
 
   def build_pdf_body_rpt2(pdf)
     
-    if @tipomoneda == 1
+    if @tipomoneda == "1"
        @tipomoneda_name ="DOLARES"  
     else
        @tipomoneda_name ="SOLES "  

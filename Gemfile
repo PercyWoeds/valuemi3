@@ -73,7 +73,7 @@ gem 'rails_autolink', '~> 1.1', '>= 1.1.6'
 # group :development, :test do
 #   gem 'w
 
-  gem 'pg', '~> 0.18.4'
+  gem 'pg'
  
 
  
