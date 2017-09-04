@@ -1179,29 +1179,25 @@ WHERE purchase_details.product_id = ?',params[:id] ])
             row << product.nameproducto
             row << product.unidad 
             row << product.supplier.name  
-         
-          
-
              
-
             row << sprintf("%.2f",product.quantity.to_s)
 
             if product.price != nil 
 
               valorcambio =product.price * @tipocambio
 
-              if product.moneda_id = 1
+              if product.moneda_id == 1
                 row << sprintf("%.2f",valorcambio.to_s)
-                row << "0.00"
+                row << "0.00 "
               else
-                row << "0.00"
+                row << "0.00 "
                 row << sprintf("%.2f",valorcambio.to_s)
                 
               end 
 
             else
-              row << "0.00"
-              row << "0.00"
+              row << "0.00 "
+              row << "0.00 "
             end 
               valortotal = product.total*@tipocambio
             row << sprintf("%.2f",valortotal.to_s)
