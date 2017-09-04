@@ -1209,9 +1209,9 @@ WHERE purchase_details.product_id = ?',params[:id] ])
               row << "0.00 "
               row << "0.00 "
             end 
-             @totales1 += valortotal   
-            row << sprintf("%.2f",@totales1.to_s)
-          
+             
+            row << sprintf("%.2f",valortotal.to_s)
+            @totales1 += valortotal   
             table_content << row          
             @cantidad += product.quantity
 
@@ -1230,6 +1230,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
      
       row << "TOTALES => "
       row << sprintf("%.2f",@cantidad.to_s)
+      row << " "
       row << " "
       row << sprintf("%.2f",@totales1.to_s)
 
