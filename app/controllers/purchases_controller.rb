@@ -1228,8 +1228,8 @@ WHERE purchase_details.product_id = ?',params[:id] ])
      
       row << "TOTALES => "
       row << sprintf("%.2f",@cantidad.to_s)
-      row << " "
-      row << sprintf("%.2f",@totales.to_s)
+      row << sprintf("%.2f",@totales1.to_s)
+      row << sprintf("%.2f",@totales2.to_s)
 
 
       table_content << row
