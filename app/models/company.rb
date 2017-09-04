@@ -203,7 +203,10 @@ class Company < ActiveRecord::Base
      category = Servicebuy.find(id)
      return category.name 
   end 
-  
+   def get_tipocambio(fecha1)
+     tipocambio = Tipocambio.find(fecha1)
+     return tipocambio.venta 
+  end 
   def get_last_tax_name(tax_number)
     product = Product.where(company_id: self.id)
     
@@ -2315,6 +2318,7 @@ WHERE purchase_details.product_id = ?  and purchases.date1 > ? and purchases.dat
  
     return @purchases 
 end
+
 
 
 def get_ingresos_day2(fecha1,fecha2,product)
