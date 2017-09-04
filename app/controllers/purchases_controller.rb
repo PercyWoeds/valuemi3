@@ -1184,9 +1184,9 @@ WHERE purchase_details.product_id = ?',params[:id] ])
              
             row << sprintf("%.2f",product.quantity.to_s)
             puts product.fecha 
-            
-            @tipocambio = product.get_tipocambio(product.fecha)
-
+            if product.fecha 
+              @tipocambio = product.get_tipocambio(product.fecha)
+            end 
             if product.price != nil 
 
               valorcambio =product.price * @tipocambio
