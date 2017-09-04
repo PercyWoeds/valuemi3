@@ -541,7 +541,7 @@ def get_tax3(items, supplier_id)
     
   end   
    def get_tipocambio(fecha)
-     tipocambio = Tipocambio.find_by(["dia  = ? ", fecha)
+     tipocambio = Tipocambio.find_by("dia  = ? ", fecha)
      return tipocambio.compra 
   end 
   
