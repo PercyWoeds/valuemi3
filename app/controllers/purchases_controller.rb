@@ -989,11 +989,14 @@ WHERE purchase_details.product_id = ?',params[:id] ])
 
       table_content << headers
 
-      nroitem=1
-
-      @totales = 0
+      @totales1 = 0
+      @totales2 = 0
       @cantidad = 0
       nroitem = 1
+      @tipocambio = 1
+      valorcambio = 0
+      valortotal = 0
+
 
        for  product in @facturas_rpt
  
@@ -1005,19 +1008,47 @@ WHERE purchase_details.product_id = ?',params[:id] ])
             row << product.nameproducto
             row << product.unidad 
             row << product.supplier.name  
-            row << ""
-            row << ""
+             
             row << sprintf("%.2f",product.quantity.to_s)
-            row << sprintf("%.2f",product.price.to_s)
-            row << sprintf("%.2f",product.total.to_s)
-          
-            table_content << row
+       
+           
+            if product.price != nil 
 
-            @totales += product.total 
+             
+
+              if product.moneda_id == 1
+                 if product.fecha 
+                @tipocambio = product.get_tipocambio(product.fecha)
+                else
+                  @tipocambio = 1
+                  end 
+                   valorcambio =product.price * @tipocambio
+                row << sprintf("%.2f",product.price.to_s)
+                row << sprintf("%.2f",valorcambio.to_s)
+                valortotal = product.total*@tipocambio
+               
+              else
+                
+                row << "0.00 "
+                row << sprintf("%.2f",valorcambio.to_s)
+               
+                 valortotal = product.total*@tipocambio
+              end 
+
+            else
+              row << "0.00 "
+              row << "0.00 "
+            end 
+             
+            row << sprintf("%.2f",valortotal.to_s)
+            @totales1 += valortotal   
+            table_content << row          
             @cantidad += product.quantity
 
             nroitem=nroitem + 1
-       
+            valorcambio = 0
+            valortotal = 0 
+            @tipocambio = 1
         end
       
       row =[]
@@ -1027,13 +1058,12 @@ WHERE purchase_details.product_id = ?',params[:id] ])
       row << ""
       row << ""
       row << ""
-      row << ""
-      row << ""
-      
+     
       row << "TOTALES => "
       row << sprintf("%.2f",@cantidad.to_s)
       row << " "
-      row << sprintf("%.2f",@totales.to_s)
+      row << " "
+      row << sprintf("%.2f",@totales1.to_s)
 
 
       table_content << row
