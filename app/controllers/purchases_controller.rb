@@ -1183,32 +1183,34 @@ WHERE purchase_details.product_id = ?',params[:id] ])
             row << product.supplier.name  
              
             row << sprintf("%.2f",product.quantity.to_s)
-            puts product.fecha 
+       
             if product.fecha 
               @tipocambio = product.get_tipocambio(product.fecha)
+            else
+               @tipocambio = 1
             end 
             if product.price != nil 
 
               valorcambio =product.price * @tipocambio
 
               if product.moneda_id == 1
+                row << sprintf("%.2f",product.price.to_s)
                 row << sprintf("%.2f",valorcambio.to_s)
-                row << "0.00 "
                 valortotal = product.total*@tipocambio
-                @totales1 += valortotal 
+               
               else
                 row << "0.00 "
                 row << sprintf("%.2f",valorcambio.to_s)
                 valortotal = product.total*@tipocambio
-                @totales2 += valortotal 
+                
               end 
 
             else
               row << "0.00 "
               row << "0.00 "
             end 
-              
-            row << sprintf("%.2f",valortotal.to_s)
+             @totales1 += valortotal   
+            row << sprintf("%.2f",@totales1.to_s)
           
             table_content << row          
             @cantidad += product.quantity
@@ -1228,8 +1230,8 @@ WHERE purchase_details.product_id = ?',params[:id] ])
      
       row << "TOTALES => "
       row << sprintf("%.2f",@cantidad.to_s)
+      row << " "
       row << sprintf("%.2f",@totales1.to_s)
-      row << sprintf("%.2f",@totales2.to_s)
 
 
       table_content << row
