@@ -36,10 +36,9 @@ TABLE_HEADERS2  = ["ITEM ",
                      "PRODUCTO",
                      "UNIDAD",
                      "PROVEEDOR",
-                     " ",
-                     " ",
                      "CANTIDAD",
-                     "COSTO",
+                     "COSTO US$",
+                     "COSTO S/.",
                      "TOTAL "]
 
 

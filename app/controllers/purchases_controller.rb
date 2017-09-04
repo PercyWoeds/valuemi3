@@ -1179,8 +1179,8 @@ WHERE purchase_details.product_id = ?',params[:id] ])
             row << product.nameproducto
             row << product.unidad 
             row << product.supplier.name  
-            row << ""
-            row << ""
+         
+          
 
              
 
