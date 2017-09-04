@@ -1187,7 +1187,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
            
             if product.price != nil 
 
-              valorcambio =product.price * @tipocambio
+             
 
               if product.moneda_id == 1
                  if product.fecha 
@@ -1195,15 +1195,17 @@ WHERE purchase_details.product_id = ?',params[:id] ])
                 else
                   @tipocambio = 1
                   end 
+                   valorcambio =product.price * @tipocambio
                 row << sprintf("%.2f",product.price.to_s)
                 row << sprintf("%.2f",valorcambio.to_s)
                 valortotal = product.total*@tipocambio
                
               else
+                
                 row << "0.00 "
                 row << sprintf("%.2f",valorcambio.to_s)
-                valortotal = product.total*@tipocambio
-                
+               
+                 valortotal = product.total*@tipocambio
               end 
 
             else
