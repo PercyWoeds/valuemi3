@@ -1163,12 +1163,14 @@ WHERE purchase_details.product_id = ?',params[:id] ])
 
       nroitem=1
 
-      @totales = 0
+      @totales1 = 0
+      @totales2 = 0
       @cantidad = 0
       nroitem = 1
       @tipocambio = 1
       valorcambio = 0
       valortotal = 0
+
        for  product in @facturas_rpt
  
             row = []         
@@ -1181,6 +1183,9 @@ WHERE purchase_details.product_id = ?',params[:id] ])
             row << product.supplier.name  
              
             row << sprintf("%.2f",product.quantity.to_s)
+            puts product.fecha 
+            
+            @tipocambio = product.get_tipocambio(product.fecha)
 
             if product.price != nil 
 
@@ -1189,22 +1194,23 @@ WHERE purchase_details.product_id = ?',params[:id] ])
               if product.moneda_id == 1
                 row << sprintf("%.2f",valorcambio.to_s)
                 row << "0.00 "
+                valortotal = product.total*@tipocambio
+                @totales1 += valortotal 
               else
                 row << "0.00 "
                 row << sprintf("%.2f",valorcambio.to_s)
-                
+                valortotal = product.total*@tipocambio
+                @totales2 += valortotal 
               end 
 
             else
               row << "0.00 "
               row << "0.00 "
             end 
-              valortotal = product.total*@tipocambio
+              
             row << sprintf("%.2f",valortotal.to_s)
           
-            table_content << row
-
-            @totales += valortotal 
+            table_content << row          
             @cantidad += product.quantity
 
             nroitem=nroitem + 1
@@ -1219,9 +1225,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
       row << ""
       row << ""
       row << ""
-      row << ""
-      row << ""
-      
+     
       row << "TOTALES => "
       row << sprintf("%.2f",@cantidad.to_s)
       row << " "
