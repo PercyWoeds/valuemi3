@@ -204,7 +204,7 @@ class Company < ActiveRecord::Base
      return category.name 
   end 
    def get_tipocambio(fecha1)
-     tipocambio = Tipocambio.find(fecha1)
+     tipocambio = Tipocambio.find(doDate(fecha1)
      return tipocambio.venta 
   end 
   def get_last_tax_name(tax_number)
