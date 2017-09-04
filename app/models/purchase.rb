@@ -541,7 +541,10 @@ def get_tax3(items, supplier_id)
       
     
   end   
-  
+   def get_tipocambio(fecha1)
+     tipocambio = Tipocambio.find(fecha1)
+     return tipocambio.venta 
+  end 
   
 
 
