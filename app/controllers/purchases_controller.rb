@@ -1182,7 +1182,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
             row << ""
             row << ""
 
-            @tipocambio = product.get_cambio(fecha)
+            @tipocambio = product.get_cambio(product.fecha)
             if  @tipocambio = nil
         
                 @tipocambio = 1              
