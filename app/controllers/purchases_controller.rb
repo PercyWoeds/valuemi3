@@ -1218,6 +1218,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
             nroitem=nroitem + 1
             valorcambio = 0
             valortotal = 0 
+            @tipocambio = 1
         end
       
       row =[]
