@@ -542,7 +542,7 @@ def get_tax3(items, supplier_id)
     
   end   
    def get_tipocambio(fecha1)
-     tipocambio = Tipocambio.find_by(["dia  >= ? and dia <= ? ", "#{$fecha1} 00:00:00","#{$fecha} 23:59:59" ])
+     tipocambio = Tipocambio.find_by(["dia  >= ? and dia <= ? ", "#{$fecha1} 00:00:00","#{$fecha1} 23:59:59" ])
      return tipocambio.compra 
   end 
   
