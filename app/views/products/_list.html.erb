@@ -72,8 +72,9 @@
             <% end %>
           </td>
           <td><%= link_to 'Ver', product %></td>
+           <% if @current_user.level == "admin"%>
         <td><%= link_to 'Editar', edit_product_path(product) %></td>
-          <% if @current_user.level == "admin"%>
+         
         <td><%= link_to 'Eliminar', product, method: :delete, data: { confirm: 'Are you sure?' }
          %></td>
          <% end %>

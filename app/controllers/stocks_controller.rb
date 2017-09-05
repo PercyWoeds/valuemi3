@@ -418,7 +418,7 @@ class StocksController < ApplicationController
        inner_table4 = "OPERACION "
        inner_table5 = "TABLA 12"
 
-        data =[[{:content=> inner_table0,:colspan=>4}, inner_table3,{:content=>"ENTRADAS",:colspan=>3},{:content=>"SALIDAS",:colspan=>3},"SALDO" ] ,
+        data =[[{:content=> inner_table0,:colspan=>4},inner_table3,{:content=>"ENTRADAS",:colspan=>3},{:content=>"SALIDAS",:colspan=>3},"SALDO" ] ,
                [{:content=> inner_table1,:colspan=>4},inner_table4,"CANTIDAD","COSTO UNIT.","COSTO TOTAL","CANTIDAD","COSTO UNIT.","COSTO TOTAL","CANTIDAD","COSTO UNIT.","COSTO TOTAL"],
                ["FECHA","TIPO","SERIE","NUMERO"]       ]
 
@@ -438,14 +438,14 @@ class StocksController < ApplicationController
       if lcDatos.product   
               pdf.text  "CODIGO DE LA EXISTENCIA :" << lcDatos.product.code 
               pdf.text  "TIPO : 05 SUMINISTROS"
-              pdf.text  "DESCRIPCION : "<<lcDatos.product.name 
-              pdf.text  "CODIGO DE LA UNIDAD DE MEDIDAD : " << lcDatos.product.unidad  
+              pdf.text  "DESCRIPCION : "<< @namecategoria
+              pdf.text  "CODIGO DE LA UNIDAD DE MEDIDAD : UNIDADES " 
               pdf.text  "METODO DE VALUACION : ULTIMO PRECIO"
       else
               pdf.text  "CODIGO DE LA EXISTENCIA :" 
               pdf.text  "TIPO : 05 SUMINISTROS"
               pdf.text  "DESCRIPCION : "
-              pdf.text  "CODIGO DE LA UNIDAD DE MEDIDAD : " 
+              pdf.text  "CODIGO DE LA UNIDAD DE MEDIDA : UNIDADES " 
               pdf.text  "METODO DE VALUACION : ULTIMO PRECIO"
       end 
       #{:border_width=>1  }.each do |property,value|
@@ -472,23 +472,27 @@ class StocksController < ApplicationController
 
         if lcCli == stock.product_id 
 
-               if stock.product 
-               lcname = stock.product.name 
-               else
-                lcname =""
-               end
+              
                row = []
-
+                        
+                if stock.product 
+                row << stock.product.code
+                row << stock.product.name       
+               else
+                row << " "
+                row << " "
+               end
                row << stock.fecha.strftime("%d%m%Y")                
                row << stock.document.tiposunat 
 
                if stock.documento != nil   
                parts  = stock.documento.split("-")
+
                serie  = parts[0]
                numero = parts[1]        
 
                row << serie
-               row << numero 
+               row << stock.documento 
                
                else 
                row << " "
@@ -504,9 +508,9 @@ class StocksController < ApplicationController
                 total1 = stock.ingreso*stock.price
                 row << sprintf("%.2f",total1.to_s)
                else
-                row << " "                
-                row << " "
-                row << " "
+                row << "0.00 "                
+                row << "0.00 "
+                row << "0.00 "
                end 
 
                if stock.salida != 0
@@ -515,9 +519,9 @@ class StocksController < ApplicationController
                 total2 = stock.salida*stock.price
                 row << sprintf("%.2f",total2.to_s)
                else
-                row << " "                
-                row << " "
-                row << " "              
+                row << "0.00 "                
+                row << "0.00 "
+                row << "0.00 "              
                end 
 
               #saldo = stock.stock_inicial  + stock.ingreso - stock.salida       
@@ -533,7 +537,7 @@ class StocksController < ApplicationController
               @cantidad3 += stock.salida
               @cantidad4 += total2
 
-              nroitem=nroitem + 1
+              nroitem = nroitem + 1
         else      
 
              row = []
@@ -548,7 +552,7 @@ class StocksController < ApplicationController
              row << sprintf("%.2f",@cantidad3.to_s)
              row << " "
              row << sprintf("%.2f",@cantidad4.to_s)
-
+            puts stock.product.name 
               table_content << row            
               result = pdf.table table_content, {:position => :center,
                                                 :header => true,
@@ -584,8 +588,7 @@ class StocksController < ApplicationController
               @cantidad4 = 0
               total1 = 0
               total2 = 0                
-
-              pdf.start_new_page
+            
 
              $lcCliName = stock.product.name
              lcCli = stock.product_id 
@@ -616,9 +619,7 @@ class StocksController < ApplicationController
                 headers << cell
               end
 
-              table_content << headers1
-              table_content << headers
-
+             
                  
 
         end          

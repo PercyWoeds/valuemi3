@@ -630,7 +630,6 @@ ActiveRecord::Schema.define(version: 20170818211954) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.float    "preciocigv"
-    t.integer  "factura_id"
   end
 
   create_table "invoiceitems", force: :cascade do |t|
@@ -1623,10 +1622,9 @@ ActiveRecord::Schema.define(version: 20170818211954) do
     t.float    "importe"
     t.text     "detalle"
     t.string   "tm"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
     t.float    "CurrTotal"
-    t.integer  "transportorder_id"
     t.integer  "tranportorder_id"
     t.datetime "date_processed"
     t.string   "ruc"

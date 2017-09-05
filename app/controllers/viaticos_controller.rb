@@ -390,6 +390,7 @@ class ViaticosController < ApplicationController
   # GET /viaticos/new.xml
   
   
+
   def new
     @pagetitle = "New viatico"
     @action_txt = "Create"
@@ -411,6 +412,19 @@ class ViaticosController < ApplicationController
     
     @ac_user = getUsername()
     @viatico[:user_id] = getUserId()
+  end
+
+  def new2
+    @pagetitle = "Nuevo Viatico"
+    @action_txt = "Create"
+    
+    @viatico = Viatico.new
+    
+    
+    @company = Company.find(params[:company_id])
+
+    @viatico.company_id = @company.id    
+   
   end
 
 

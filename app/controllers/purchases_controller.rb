@@ -1216,9 +1216,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
        
            
             if product.price != nil 
-
-             
-
+            
               if product.moneda_id == 1
                  if product.fecha 
                 @tipocambio = product.get_tipocambio(product.fecha)

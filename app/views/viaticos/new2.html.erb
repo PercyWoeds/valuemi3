@@ -1,0 +1,72 @@
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %> &raquo;
+  <%= link_to "viaticos", "/companies/viaticos/#{@company.id}" %>
+</div>
+
+<h3>
+  <%= image_tag("invoice_48.png", :class => "vmiddle") %>
+  Nueva factura 
+</h3>
+
+<p>
+  Para crear una nueva liquidacion, por favor llenar el siguiente formulario. Los campos marcados con <strong>*</strong> son obligatorios
+  
+</p>
+
+<% if @viatico.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@viatico.errors.count, "error") %> prohibited this viatico from being saved:</h2>
+
+    <ul>
+    <% @viatico.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+  <%= hr() %>
+
+<div class="mid_box bordered_right">
+  <form method="get" action="/viaticos/do_crear/<%= @company.id %>">
+    <h4>
+       Informacion Liquidacion
+    </h4>
+
+     <div class="field">
+
+     <strong>Documento:</strong><br />      
+     
+      <%= f.label :caja_id, "CAJA : " %><br />
+      <%= select_tag(:caja_id, options_from_collection_for_select(@cajas,'id','description'))  %>
+    </div> 
+
+    <div class="field">
+      <strong>Fecha Emision :</strong><br />
+      <input type="date" name="fecha1" value="2017-10-01" style = "width: 150px" >
+    </div>
+
+                  
+    <%= hr() %>
+
+          
+    <input type="submit" value="Generar " />
+
+    
+  </form>
+
+</div>
+
+
+<%= br() %>
+<br />
+
+<%= render 'layouts/autocomplete' %>
+
+
+<%= hr() %>
+
+<div class="button">
+  <%= link_to 'Regresar', "/companies/viaticos/#{@company.id}" %>
+</div>

@@ -2245,11 +2245,18 @@ def get_purchaseorder_detail2(fecha1,fecha2)
      end 
 
      # AGREGA LOS QUE NO TIENEN MOVIMIENTO 
-      MovementDetail.where(:document_id=>nil).update_all(:document_id=>1)    
-      @inv = MovementDetail.all.order(:product_id,:fecha,:tm)
 
+      @movactualizar = MovementDetail.where(:document_id=>nil)
+       for a in @movactualizar
+
+          a.update_columns(:document_id=> 1)
+
+       end  
+      
+
+      @inv = MovementDetail.order(:product_id,:fecha,:tm ).includes([:product,:document])
      # CALCULANDO SALDO - STOCK 
-     
+           
   
     return @inv 
 
@@ -2318,7 +2325,6 @@ WHERE purchase_details.product_id = ?  and purchases.date1 > ? and purchases.dat
  
     return @purchases 
 end
-
 
 
 def get_ingresos_day2(fecha1,fecha2,product)

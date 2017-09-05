@@ -347,7 +347,8 @@ end
   match 'viaticos/ac_user/:company_id' => 'viaticos#ac_user', via: [:get, :post]
   match 'viaticos/ac_customers/:company_id' => 'viaticos#ac_customers', via: [:get, :post]
   match 'viaticos/new/:company_id' => 'viaticos#new', via: [:get, :post]
-  
+  match 'viaticos/new2/:company_id' => 'viaticos#new2', via: [:get, :post]
+
   match 'viaticos/do_email/:id' => 'viaticos#do_email', via: [:get, :post]
   match 'viaticos/do_process/:id' => 'viaticos#do_process', via: [:get, :post]
   match 'viaticos/email/:id' => 'viaticos#email', via: [:get, :post]
