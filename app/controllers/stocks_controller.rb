@@ -390,6 +390,7 @@ class StocksController < ApplicationController
 
   def build_pdf_header4(pdf)
       pdf.font "Helvetica" , :size => 8
+
      $lcCli  =  @company.name 
      $lcdir1 = @company.address1+@company.address2+@company.city+@company.state
 
@@ -418,10 +419,9 @@ class StocksController < ApplicationController
        inner_table4 = "OPERACION "
        inner_table5 = "TABLA 12"
 
-        data =[[{:content=> inner_table0,:colspan=>4},inner_table3,{:content=>"ENTRADAS",:colspan=>3},{:content=>"SALIDAS",:colspan=>3},"SALDO" ] ,
+         data =[[{:content=> inner_table0,:colspan=>4},inner_table3,{:content=>"ENTRADAS",:colspan=>3},{:content=>"SALIDAS",:colspan=>3},"SALDO" ] ,
                [{:content=> inner_table1,:colspan=>4},inner_table4,"CANTIDAD","COSTO UNIT.","COSTO TOTAL","CANTIDAD","COSTO UNIT.","COSTO TOTAL","CANTIDAD","COSTO UNIT.","COSTO TOTAL"],
-               ["FECHA","TIPO","SERIE","NUMERO"]       ]
-
+["FECHA","TIPO","SERIE","NUMERO"] ]
                     
       nroitem = 1
       @cantidad1 = 0
@@ -458,6 +458,7 @@ class StocksController < ApplicationController
         cell.background_color = "FFFFCC"
         headers1 << cell
       end
+
     Stock::TABLE_HEADERS4.each do |header|
         cell = pdf.make_cell(:content => header)
         cell.background_color = "FFFFCC"
@@ -470,65 +471,38 @@ class StocksController < ApplicationController
       if @movements
         for  stock in @movements 
 
-        if lcCli == stock.product_id 
-
-              
-               row = []
-                        
-                if stock.product 
-                row << stock.product.code
-                row << stock.product.name       
-               else
-                row << " "
-                row << " "
-               end
+               row = []                                    
+               row << stock.product.code
+               row << stock.product.name                   
                row << stock.fecha.strftime("%d%m%Y")                
-               row << stock.document.tiposunat 
-
-               if stock.documento != nil   
-               parts  = stock.documento.split("-")
-
-               serie  = parts[0]
-               numero = parts[1]        
-
-               row << serie
-               row << stock.documento 
-               
-               else 
-               row << " "
-               row << " "
-                
-               end 
-
+               row << stock.document.descripshort  
+               row << "" 
+               row << stock.documento                           
                row << stock.tm
 
-               if stock.ingreso != 0                
+                         
                 row << sprintf("%.2f",stock.ingreso.to_s)
-                row << sprintf("%.2f",stock.price.to_s)
-                total1 = stock.ingreso*stock.price
+                
+                  
+                row << sprintf("%.2f",stock.costo_ingreso.to_s)
+                
+                total1 = stock.ingreso*stock.costo_ingreso
                 row << sprintf("%.2f",total1.to_s)
-               else
-                row << "0.00 "                
-                row << "0.00 "
-                row << "0.00 "
-               end 
-
-               if stock.salida != 0
+              
+              
                 row << sprintf("%.2f",stock.salida.to_s)
-                row << sprintf("%.2f",stock.price.to_s)
-                total2 = stock.salida*stock.price
+
+                row << sprintf("%.2f",stock.costo_salida.to_s)
+
+                total2 = stock.salida*stock.costo_salida
                 row << sprintf("%.2f",total2.to_s)
-               else
-                row << "0.00 "                
-                row << "0.00 "
-                row << "0.00 "              
-               end 
+              
 
               #saldo = stock.stock_inicial  + stock.ingreso - stock.salida       
               row << ""
-              row << sprintf("%.2f",stock.price.to_s)
-              total3 = stock.salida*stock.price 
-              row << sprintf("%.2f",total3.to_s) 
+              row << sprintf("%.2f",stock.costo_ingreso.to_s)
+              total3 = stock.saldo*stock.costo_ingreso 
+              row << sprintf("%.2f",stock_final.to_s) 
 
               table_content << row
 
@@ -538,7 +512,9 @@ class StocksController < ApplicationController
               @cantidad4 += total2
 
               nroitem = nroitem + 1
-        else      
+
+                puts stock.product.name 
+        end  
 
              row = []
              row << ""
@@ -552,36 +528,30 @@ class StocksController < ApplicationController
              row << sprintf("%.2f",@cantidad3.to_s)
              row << " "
              row << sprintf("%.2f",@cantidad4.to_s)
-            puts stock.product.name 
+           
               table_content << row            
               result = pdf.table table_content, {:position => :center,
                                                 :header => true,
                                                 :width => pdf.bounds.width
                                                 } do 
-                                                  columns([0]).align =:center
-                                                  columns([0]).width = 40 
-                                                  columns([1]).align =:left
-                                                  columns([1]).width = 30 
+                                                  columns([0]).align =:center                                             
+                                                  columns([1]).align =:left                                              
                                                   columns([2]).align =:left                                                                                             
                                                   columns([3]).align =:left  
                                                   columns([4]).align =:right
-                                                  columns([5]).align =:right 
-                                                  columns([5]).width = 40 
+                                                  columns([5]).align =:right                                              
                                                   columns([6]).align =:right
                                                   columns([7]).align =:right
-                                                  columns([8]).align =:right
-                                                  columns([8]).width = 40 
+                                                  columns([8]).align =:right                                               
                                                   columns([9]).align =:right
                                                   columns([10]).align =:right
-                                                  columns([11]).align =:right
-                                                  columns([11]).width = 40 
+                                                  columns([11]).align =:right                                                
                                                   columns([12]).align =:right
                                                   columns([13]).align =:right
                                                   columns([14]).align =:right
                                                 end                                          
                 pdf.move_down 10
-
-              
+    
               @cantidad1 = 0
               @cantidad2 = 0
               @cantidad3 = 0
@@ -589,44 +559,16 @@ class StocksController < ApplicationController
               total1 = 0
               total2 = 0                
             
-
              $lcCliName = stock.product.name
              lcCli = stock.product_id 
 
              headers = []
              headers1 = []
-             table_content = []
-
-              pdf.text  "CODIGO DE LA EXISTENCIA :" << stock.product.code 
-              pdf.text  "TIPO : 05 SUMINISTROS"
-              pdf.text  "DESCRIPCION : "<< stock.product.name 
-              
-              if stock.product.unidad == nil
-                pdf.text  "CODIGO DE LA UNIDAD DE MEDIDAD : "
-              else 
-                pdf.text  "CODIGO DE LA UNIDAD DE MEDIDAD : " << stock.product.unidad  
-              end
-              pdf.text  "METODO DE VALUACION : ULTIMO PRECIO"
-
-              Stock::TABLE_HEADERS41.each do |header|
-                cell = pdf.make_cell(:content => header)
-                cell.background_color = "FFFFCC"
-                headers1 << cell
-              end
-              Stock::TABLE_HEADERS4.each do |header|
-                cell = pdf.make_cell(:content => header)
-                cell.background_color = "FFFFCC"
-                headers << cell
-              end
-
-             
-                 
-
-        end          
-      end   
+             table_content = []      
       pdf 
       end 
-    end
+  
+end 
 
 
     def build_pdf_footer4(pdf)
@@ -658,9 +600,9 @@ class StocksController < ApplicationController
           :normal => "app/assets/fonts/OpenSans-Regular.ttf",
           :italic => "app/assets/fonts/OpenSans-Italic.ttf",
         })
-
+        pdf.start_new_page(:size => "A3")
         pdf.font "Open Sans",:size =>6
-  
+        
         pdf = build_pdf_header4(pdf)
         pdf = build_pdf_body4(pdf)
         build_pdf_footer4(pdf)

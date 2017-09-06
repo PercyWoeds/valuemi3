@@ -31,6 +31,8 @@ belongs_to :product
                      "TOTAL  "  ]
 
   TABLE_HEADERS41 = ["",
+                     "", 
+                     "",
                      "",   
                      " ",
                      "DOCUMENTO INTERNO O SIMILAR",
@@ -45,7 +47,9 @@ belongs_to :product
                      "SALDO FINAL ",
                      ""  ]
 
-  TABLE_HEADERS4 = ["FECHA",
+  TABLE_HEADERS4 = ["CODIGO",
+                     "DESCRIPCION", 
+                     "FECHA",
                      "TIPO ",
                      "SERIE",
                      "NUMERO",
