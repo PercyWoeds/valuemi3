@@ -2326,17 +2326,19 @@ def get_purchaseorder_detail2(fecha1,fecha2)
 
 ##
 
-wkey = ""
+wkey1 = ""
 wkey2 =  @inv.first.product_id 
-
+wvar =0
+wtotal_saldo = 0 
+wcosto = 0
 for  a in @inv 
     if wkey1 == wkey2
 
 
-     saldo    = wvar+ingreso-salida     
-     totalsaldo  = wtotal_saldo + ctotal_ing -ctotal_sal       
+     saldo    = wvar +a.ingreso - a.salida     
+     totalsaldo  = wtotal_saldo +  a.ingreso - a.salida 
      
-     if ingreso >0 
+     if a.ingreso >0 
 
         costo  = totalsaldo / saldo 
         wcosto = costo  
@@ -2344,8 +2346,8 @@ for  a in @inv
 
 
       a.costo_salida = costo 
-      a.total_salida = costo_saldo* salida 
-      a.total_saldo = wtotal_saldo +ctotal_ing - ctotal_sal
+     
+      a.stock_final =totalsaldo
       a.save
 
      end 
@@ -2354,15 +2356,14 @@ for  a in @inv
      wtotal_saldo = totalsaldo    
 
   else
-    *cambiar por saldo_00 cuando tengan todos los saldo actualizados
+  
 
-
-    a.total_saldo = a.ingreso 
+    a.stock_final = a.ingreso 
     
     wkey1 = a.product_id     
-    wvar = a.total_saldo
+    wvar = a.stock_final
     wcosto = a.costo_saldo
-    wtotal_saldo = a.total_saldo
+    wtotal_saldo = a.stock_final
     
     end 
   

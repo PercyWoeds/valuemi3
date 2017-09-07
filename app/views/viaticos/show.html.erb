@@ -109,11 +109,17 @@
            <%if product.supplier %>
             <%= product.supplier.name %>
           <%else%>
+           <%if product.employee %>
             <%= product.employee.full_name %>
+            <%end %>
           <%end %>
           </td>
          <td class="small bordered_bottom bordered_right">
-            <%= product.gasto.descrip %>
+             <%if product.gasto %>  
+              <%= product.gasto.descrip %>
+               <%else%>
+               
+              <%end %>
           </td>
           
          <td class="small bordered_bottom bordered_right">
