@@ -118,7 +118,7 @@
              <%if product.gasto %>  
               <%= product.gasto.descrip %>
                <%else%>
-               
+
               <%end %>
           </td>
           
@@ -133,7 +133,12 @@
             <%= product.tranportorder.get_punto(product.tranportorder.ubication_id) %>
           </td>
           <td class="small bordered_bottom bordered_right">
-              <%=product.fecha.strftime("%d/%m/%Y") %>
+             <%if product.gasto %>  
+              <%=product.fecha %>
+               <%else%>
+
+              <%end %>
+
           </td>
           
           <td class="small bordered_bottom bordered_right">
