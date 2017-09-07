@@ -1478,7 +1478,14 @@
 
       if(quantity == "" || !isNumeric(quantity)) {
         alert("Por favor ingrese un importe valido");
+      } else if(fecha == "" ) {
+        alert("Por favor ingrese una fecha");
+      } else if(gasto == "" || !isNumeric(gasto)) {
+        alert("Por favor ingrese un gasto  ");
+      } else if(empleado == "" || !isNumeric(empleado)) {
+        alert("Por favor ingrese un empleado ");
       } else {
+
       
       var item_line = item_id + "|BRK|" + quantity + "|BRK|" +detalle + "|BRK|" +tm + "|BRK|"+inicial + "|BRK|"+compro+ "|BRK|"+fecha+ "|BRK|"+ruc+ "|BRK|"+gasto+ "|BRK|"+empleado ;
       

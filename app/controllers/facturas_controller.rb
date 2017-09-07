@@ -989,6 +989,9 @@ class FacturasController < ApplicationController
             row << product.code
             row << product.fecha.strftime("%d/%m/%Y")
             row << product.fecha2.strftime("%d/%m/%Y")
+            dias = (product.fecha2.to_date - product.fecha.to_date).to_i 
+            
+            row << dias 
             row << product.customer.name
             row << product.moneda.symbol  
 
@@ -1020,7 +1023,8 @@ class FacturasController < ApplicationController
             row << ""
             row << ""
             row << ""
-            row << ""          
+            row << ""  
+            row << ""  
             row << "TOTALES POR CLIENTE=> "            
             row << ""
             row << sprintf("%.2f",total_cliente_dolares.to_s)
@@ -1038,6 +1042,9 @@ class FacturasController < ApplicationController
             row << product.code
             row << product.fecha.strftime("%d/%m/%Y")
             row << product.fecha2.strftime("%d/%m/%Y")
+              dias = (product.fecha2.to_date - product.fecha.to_date).to_i 
+            
+            row << dias 
             row << product.customer.name
             row << product.moneda.symbol  
 
@@ -1076,11 +1083,13 @@ class FacturasController < ApplicationController
             row << ""
             row << ""
             row << ""
+            row << ""  
             row << ""          
             row << "TOTALES POR CLIENTE=> "            
             row << ""
             row << sprintf("%.2f",total_cliente_dolares.to_s)
             row << sprintf("%.2f",total_cliente_soles.to_s)                      
+            row << " "
             row << " "
             table_content << row
               
@@ -1094,10 +1103,12 @@ class FacturasController < ApplicationController
           row << ""
           row << ""
           row << ""
+          row << ""  
           row << "TOTALES => "
           row << ""
           row << sprintf("%.2f",total_soles.to_s)
           row << sprintf("%.2f",total_dolares.to_s)                    
+          row << " "
           row << " "
           table_content << row
           end 
@@ -1111,10 +1122,12 @@ class FacturasController < ApplicationController
                                           columns([2]).align=:left
                                           columns([3]).align=:left
                                           columns([4]).align=:left
-                                          columns([5]).align=:right  
+                                          columns([5]).align=:left   
                                           columns([6]).align=:right
                                           columns([7]).align=:right
                                           columns([8]).align=:right
+                                          columns([9]).align=:right
+                                          columns([10]).align=:right
                                         end                                          
                                         
       pdf.move_down 10      
@@ -1281,6 +1294,7 @@ class FacturasController < ApplicationController
       invoice_headers  = [["Fecha : ",$lcHora]]    
       invoice_headers
   end
+ 
 
 
 

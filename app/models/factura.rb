@@ -44,6 +44,7 @@ class Factura < ActiveRecord::Base
                       "Documento",
                      "Fecha",
                      "Fec.Vmto",
+                     "Dias ",
                      "Cliente",
                      "Moneda",                                         
                      "SOLES",
