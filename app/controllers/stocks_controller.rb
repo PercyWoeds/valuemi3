@@ -501,8 +501,8 @@ class StocksController < ApplicationController
               #saldo = stock.stock_inicial  + stock.ingreso - stock.salida       
               row << ""
               row << sprintf("%.2f",stock.costo_ingreso.to_s)
-              total3 = stock.saldo*stock.costo_ingreso 
-              row << sprintf("%.2f",stock_final.to_s) 
+              
+              row << sprintf("%.2f",stock.stock_final.to_s) 
 
               table_content << row
 

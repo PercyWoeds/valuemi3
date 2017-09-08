@@ -2223,10 +2223,10 @@ def get_purchaseorder_detail2(fecha1,fecha2)
               end 
             end 
 
-      detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>detail.quantity,:salida => 0,
-      :costo_ingreso=>$lcprice,:product_id=> detail.product_id,:document_id=>$lcDocumentid,
-      :documento=>$lcDocumento,:tm =>"02")
-      detail.save 
+          detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>detail.quantity,:salida => 0,
+          :costo_ingreso=>$lcprice,:costo_salida=>0,:product_id=> detail.product_id,:document_id=>$lcDocumentid,
+          :documento=>$lcDocumento,:tm =>"02")
+          detail.save 
        
         
           else     
@@ -2251,7 +2251,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
 
           if movdetail        
              detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>0, :salida=>detail.quantity,
-            :costo_salida =>detail.price,:product_id=> detail.product_id,:document_id=> $lcDocumentId,
+            :costo_ingreso =>0,:costo_salida =>detail.price,:product_id=> detail.product_id,:document_id=> $lcDocumentId,
             :documento=>$lcDocumento,:tm =>"10")
              detail.save 
           else     
@@ -2289,7 +2289,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
                 lcsalida = movdetail.salida
                 lcprice = 0
                 detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>0, :salida=>lcsalida ,
-            :costo_salida=>lcprice ,:product_id=> detail.product_id,:document_id=> $lcDocumentId,
+            :costo_ingreso =>0,:costo_salida=>lcprice ,:product_id=> detail.product_id,:document_id=> $lcDocumentId,
             :documento=>$lcDocumento,:tm =>"10")
                 lcsalida = 0    
               end     
@@ -2329,47 +2329,48 @@ def get_purchaseorder_detail2(fecha1,fecha2)
 wkey1 = ""
 wkey2 =  @inv.first.product_id 
 wvar =0
-wtotal_saldo = 0 
+saldo = 0 
 wcosto = 0
 for  a in @inv 
     if wkey1 == wkey2
 
 
      saldo    = wvar +a.ingreso - a.salida     
-     totalsaldo  = wtotal_saldo +  a.ingreso - a.salida 
-     
-     if a.ingreso >0 
+      
 
-        costo  = totalsaldo / saldo 
-        wcosto = costo  
-     else
-
-
-      a.costo_salida = costo 
-     
-      a.stock_final =totalsaldo
+      if a.ingreso = 0  
+        a.costo_ingreso = wcosto    
+        a.costo_salida = 0   
+        wcosto = a.costo_ingreso
+      end
+      if a.salida > 0  
+        a.costo_ingreso = 0 
+        a.costo_salida = wcosto
+      end
+                  
+      a.stock_final = saldo
+      a.costo_saldo =  wcosto 
       a.save
 
-     end 
+    
        
      wvar = saldo 
-     wtotal_saldo = totalsaldo    
-
-  else
+   
+   else
   
 
     a.stock_final = a.ingreso 
-    
+    a.save 
     wkey1 = a.product_id     
     wvar = a.stock_final
-    wcosto = a.costo_saldo
-    wtotal_saldo = a.stock_final
+    wcosto = a.costo_ingreso
+      
     
     end 
   
   
   
-  wkey2 = a.product_id
+   wkey2 = a.product_id
 
 end 
 
