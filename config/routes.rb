@@ -175,6 +175,7 @@ end
     resources :addresses
     collection { post :import }
     collection { post :import2 }
+    collection { post :csv }
 
   end 
   resources :purchases do

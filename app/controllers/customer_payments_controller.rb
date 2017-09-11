@@ -449,7 +449,7 @@ class CustomerPaymentsController < ApplicationController
          #@customerpayments = CustomerPayment.find_by_sql("Select * from Customer_Payments ")
           respond_to do |format|
               format.html
-              format.csv { send_data @customerpayment.to_csv }
+              format.csv { send_data @customerpayments.to_csv }
               
             end         
           @filters_display = "none"
