@@ -3,7 +3,8 @@ include CompaniesHelper
 
 class CustomersController < ApplicationController
   before_filter :authenticate_user!, :checkCompanies
-  
+    before_action :set_customer_params, only: [:show, :edit, :update, :destroy]
+
   # Show customers for a company
 
   def import
@@ -38,6 +39,13 @@ class CustomersController < ApplicationController
     @companies = Company.where(user_id: getUserId()).order("name")
     @path = 'customers'
     @pagetitle = "Customers"
+    
+    @products = Customer.all 
+    respond_to do |format|
+      format.html
+      format.csv { send_data @products.to_csv }
+    
+    end
   end
 
   # GET /customers/1
@@ -149,6 +157,9 @@ class CustomersController < ApplicationController
   end
   
     private
+    def set_customer
+      @customer = Customer.find(params[:id])
+    end
 
     def customer_params
       params.require(:customer).permit(:company_id,:email,:phone1,:phone2,:address1,:address2,:city,:state,:zip,:country,:comments,:account,:taxable,:name,:ruc)
