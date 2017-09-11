@@ -31,6 +31,7 @@ class Customer < ActiveRecord::Base
         csv << customer.attributes.values_at(*column_names)
       end
     end   
+  end 
   
   def get_taxable
     if(self.taxable == "1")
