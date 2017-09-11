@@ -447,7 +447,11 @@ class CustomerPaymentsController < ApplicationController
 
           @customerpayments = CustomerPayment.where(company_id:  @company.id).order("id DESC").paginate(:page => params[:page])
          #@customerpayments = CustomerPayment.find_by_sql("Select * from Customer_Payments ")
-         
+          respond_to do |format|
+              format.html
+              format.csv { send_data @customerpayment.to_csv }
+              
+            end         
           @filters_display = "none"
         end
       end
@@ -464,7 +468,7 @@ class CustomerPaymentsController < ApplicationController
     @path = 'customerpayments'
     @pagetitle = "customerpayments"
 
-
+    
   end
 
   # GET /customerpayments/1
