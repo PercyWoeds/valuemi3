@@ -567,7 +567,7 @@ class FacturasController < ApplicationController
   def show
     @invoice = Factura.find(params[:id])
     @customer = @invoice.customer
-    
+    @tipodocumento = @invoice.document 
   end
 
   # GET /invoices/new
@@ -591,7 +591,7 @@ class FacturasController < ApplicationController
     @deliveryships = @invoice.my_deliverys 
     @tipofacturas = @company.get_tipofacturas() 
     @monedas = @company.get_monedas()
-
+    @tipodocumento = @company.get_documents()
     @ac_user = getUsername()
     @invoice[:user_id] = getUserId()
   end
@@ -631,21 +631,24 @@ class FacturasController < ApplicationController
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
-    @payments = @company.get_payments()    
-    @services = @company.get_services()
+    @payments  = @company.get_payments()    
+    @services  = @company.get_services()
 
-    @invoice[:subtotal] = @invoice.get_subtotal(items)
+
     
+    
+    @invoice[:subtotal] = @invoice.get_subtotal(items)
     begin
       @invoice[:tax] = @invoice.get_tax(items, @invoice[:customer_id])
     rescue
       @invoice[:tax] = 0
     end
-    
-    @invoice[:total] = @invoice[:subtotal] + @invoice[:tax]
+    @invoice[:total]   = @invoice[:subtotal] + @invoice[:tax]
     @invoice[:balance] = @invoice[:total]
-    @invoice[:pago] = 0
-    @invoice[:charge] = 0
+    @invoice[:pago]    = 0
+    @invoice[:charge]  = 0
+    
+    
     
     
      parts = (@invoice[:code]).split("-")
@@ -985,7 +988,11 @@ class FacturasController < ApplicationController
             fechas2 = product.fecha2 
 
             row = []          
-            row << lcDoc
+            if product.document 
+              row << product.document.descripshort 
+            else
+              row <<  lcDoc 
+            end 
             row << product.code
             row << product.fecha.strftime("%d/%m/%Y")
             row << product.fecha2.strftime("%d/%m/%Y")
@@ -996,16 +1003,31 @@ class FacturasController < ApplicationController
             row << product.moneda.symbol  
 
             if product.moneda_id == 1 
-                row << "0.00 "
-                row << sprintf("%.2f",product.balance.to_s)
-
+                if product.document_id   == 2
+                  
+                  row << "0.00 "
+                  row << sprintf("%.2f",(product.balance*-1).to_s)
+                else  
+                  row << "0.00 "
+                  row << sprintf("%.2f",product.balance.to_s)
+                end   
             else
-                row << sprintf("%.2f",product.balance.to_s)
-                row << "0.00 "
+                if product.document_id == 2
+                  
+                  row << sprintf("%.2f",(product.balance*-1).to_s)
+                  row << "0.00 "
+                else                
+                  row << sprintf("%.2f",product.balance.to_s)
+                  row << "0.00 "
+                end 
             end
             
-            row << sprintf("%.2f",product.detraccion.to_s)
-
+            
+            if product.detraccion == nil
+              row <<  "0.00"
+            else  
+              row << sprintf("%.2f",product.detraccion.to_s)
+            end
             row << product.get_vencido 
             
             table_content << row
@@ -1014,8 +1036,8 @@ class FacturasController < ApplicationController
 
           else
             totals = []            
-            total_cliente_soles = 0
-            total_cliente_soles = @company.get_pendientes_day_customer(@fecha1,@fecha2, lcCliente, lcmonedadolares)
+            total_cliente_soles   = 0
+            total_cliente_soles   = @company.get_pendientes_day_customer(@fecha1,@fecha2, lcCliente, lcmonedadolares)
             total_cliente_dolares = 0
             total_cliente_dolares = @company.get_pendientes_day_customer(@fecha1,@fecha2, lcCliente, lcmonedasoles)
             
@@ -1068,16 +1090,14 @@ class FacturasController < ApplicationController
        
         end
 
-        lcCliente = @facturas_rpt.last.customer_id 
-
+            lcCliente = @facturas_rpt.last.customer_id 
             totals = []            
             total_cliente = 0
 
-            total_cliente_soles = 0
-            total_cliente_soles = @company.get_pendientes_day_customer(@fecha1,@fecha2, lcCliente, lcmonedadolares)
+            total_cliente_soles   = 0
+            total_cliente_soles   = @company.get_pendientes_day_customer(@fecha1,@fecha2, lcCliente, lcmonedadolares)
             total_cliente_dolares = 0
             total_cliente_dolares = @company.get_pendientes_day_customer(@fecha1,@fecha2, lcCliente, lcmonedasoles)
-    
             
             row =[]
             row << ""
@@ -1093,7 +1113,7 @@ class FacturasController < ApplicationController
             row << " "
             table_content << row
               
-          total_soles = @company.get_pendientes_day_value(@fecha1,@fecha2, "total",lcmonedasoles)
+          total_soles   = @company.get_pendientes_day_value(@fecha1,@fecha2, "total",lcmonedasoles)
           total_dolares = @company.get_pendientes_day_value(@fecha1,@fecha2, "total",lcmonedadolares)
       
            if $lcxCliente == "0" 
@@ -1300,7 +1320,7 @@ class FacturasController < ApplicationController
 
   private
   def factura_params
-    params.require(:factura).permit(:company_id,:location_id,:division_id,:customer_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:payment_id,:fecha,:preciocigv,:tipo,:observ,:moneda_id,:detraccion,:factura2)
+    params.require(:factura).permit(:company_id,:location_id,:division_id,:customer_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:payment_id,:fecha,:preciocigv,:tipo,:observ,:moneda_id,:detraccion,:factura2,:description,:document_id)
   end
 
 end

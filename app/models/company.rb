@@ -905,7 +905,7 @@ def get_payments_detail_value(fecha1,fecha2,value = "total",moneda)
     @facturas = Factura.where(["balance > 0  and  company_id = ? AND fecha >= ? and fecha<= ? and customer_id = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", cliente ]).order(:customer_id,:moneda_id,:fecha)
     return @facturas
     
- end 
+ end
  
  def get_pendientes_day_cliente_value(fecha1,fecha2,value = "total",cliente,moneda)
 
@@ -934,14 +934,26 @@ def get_payments_detail_value(fecha1,fecha2,value = "total",moneda)
 
     if facturas
     ret=0  
+    
+    
     for factura in facturas
-      
-      if(value == "subtotal")
-        ret += factura.subtotal
-      elsif(value == "tax")
-        ret += factura.tax
-      else         
-        ret += factura.balance.round(2)
+    
+      if factura.document_id != 2
+        if(value == "subtotal")
+          ret += factura.subtotal
+        elsif(value == "tax")
+          ret += factura.tax
+        else         
+          ret += factura.balance.round(2)
+        end
+      else
+        if(value == "subtotal")
+          ret -= factura.subtotal
+        elsif(value == "tax")
+          ret -= factura.tax
+        else         
+          ret -= factura.balance.round(2)
+        end
       end
     end
     end 

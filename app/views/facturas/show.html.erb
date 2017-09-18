@@ -32,6 +32,14 @@
   </p>
 <% end %>
 
+<% if @invoice.document %>
+  <p>
+    <b>Documento:</b>
+    <%= link_to @invoice.document.description, @invoice.description %>
+  </p>
+<% end %>
+
+
 <p>
   <b>Code:</b>
   <%= @invoice.code %>

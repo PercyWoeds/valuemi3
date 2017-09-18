@@ -15,6 +15,7 @@ class Document < ActiveRecord::Base
   has_many :invoices
   has_many :inventories
   has_many :company_users  
+  
 
 
 end
