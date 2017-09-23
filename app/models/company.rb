@@ -469,14 +469,23 @@ def get_guias_2(fecha1,fecha2)
     if facturas
     ret=0  
     for factura in facturas
-      
-      if(value == "subtotal")
-        ret += factura.subtotal
-      elsif(value == "tax")
-        ret += factura.tax
-      else         
-        ret += factura.total
-      end
+      if factura.document_id == 2
+        if(value == "subtotal")
+          ret -= factura.subtotal
+        elsif(value == "tax")
+          ret -= factura.tax
+        else         
+          ret -= factura.total
+        end
+    else
+        if(value == "subtotal")
+          ret += factura.subtotal
+        elsif(value == "tax")
+          ret += factura.tax
+        else         
+          ret += factura.total
+        end
+    end
     end
     end 
 
@@ -490,14 +499,23 @@ def get_facturas_day_value_cliente(fecha1,fecha2,cliente,value = "total",moneda)
     if facturas
     ret=0  
     for factura in facturas
-      
-      if(value == "subtotal")
-        ret += factura.subtotal
-      elsif(value == "tax")
-        ret += factura.tax
-      else         
-        ret += factura.total
-      end
+      if factura.document_id == 2
+        if(value == "subtotal")
+          ret -= factura.subtotal
+        elsif(value == "tax")
+          ret -= factura.tax
+        else         
+          ret -= factura.total
+        end
+      else  
+        if(value == "subtotal")
+          ret += factura.subtotal
+        elsif(value == "tax")
+          ret += factura.tax
+        else         
+          ret += factura.total
+        end
+      end 
     end
     end 
 
@@ -1765,8 +1783,6 @@ def get_purchaseorder_detail2(fecha1,fecha2)
             else
               movdetail.stock_inicial -= detail.quantity
             end
-
- 
             movdetail.save           
 
           else     
@@ -1823,7 +1839,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
 
    
   #actualiza  el costo de la salida
-     @inv = Inventario.where('fecha >= ? and  fecha <= ?',"#{fecha1} 00:00:00","#{fecha2} 00:00:00")  
+     @inv = Inventario.where('fecha >= ? and  fecha <= ?',"#{fecha1} 00:00:00","#{fecha2} 23:59:59")  
      for inv in @inv 
         $lcFecha =inv.fecha 
 
@@ -1844,7 +1860,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
         end 
       end 
       #ingresos0 
-     @ing = Purchase.where('date1>= ? and date1 <= ?  ',"#{fecha1} 00:00:00","#{fecha2} 00:00:00")
+     @ing = Purchase.where('date1>= ? and date1 <= ?  ',"#{fecha1} 00:00:00","#{fecha2} 23:59:59")
 
      for ing in @ing
 
@@ -1891,7 +1907,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
      end 
 
      #salidas 
-    @sal  = Output.where('fecha>= ? and fecha <= ?',"#{fecha1} 00:00:00","#{fecha2} 00:00:00")
+    @sal  = Output.where('fecha>= ? and fecha <= ?',"#{fecha1} 00:00:00","#{fecha2} 23:59:59")
 
      for sal in @sal 
         $lcFecha = sal.fecha 
@@ -1922,7 +1938,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
 # ajustes de inventarios
 
 
-    @ajuste = Ajust.where('fecha1>= ? and fecha1 <= ?',"#{fecha1} 00:00:00","#{fecha2} 00:00:00")
+    @ajuste = Ajust.where('fecha1>= ? and fecha1 <= ?',"#{fecha1} 00:00:00","#{fecha2} 23:59:59")
 
      for sal in @ajuste
         $lcFecha = sal.fecha1 

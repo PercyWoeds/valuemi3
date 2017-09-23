@@ -799,12 +799,14 @@ class FacturasController < ApplicationController
 
       nroitem=1
       lcDoc='FT'
-      
+      lcsubtotal =  0
+      lctax = 0
+      lctotal = 0
 
        for  product in @facturas_rpt
 
             row = []          
-            row << lcDoc
+            row << product.document.descripshort
             row << product.code
             row << product.fecha.strftime("%d/%m/%Y")            
             row << product.customer.name  
@@ -813,10 +815,20 @@ class FacturasController < ApplicationController
             else
               row << "S/."
             end 
-
-            row << product.subtotal.to_s
-            row << product.tax.to_s
-            row << product.total.to_s
+            if product.document_id == 2
+              lcsubtotal = product.subtotal * -1
+              lctax = product.tax * -1
+              lctotal = product.total* -1
+              row << lcsubtotal
+              row << lctax
+              row << lctotal 
+            else
+             
+              
+              row << product.subtotal.to_s
+              row << product.tax.to_s
+              row << product.total.to_s
+            end 
             row << ""
             table_content << row
 
