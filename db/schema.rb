@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170918200346) do
+ActiveRecord::Schema.define(version: 20170925161205) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -952,6 +952,7 @@ ActiveRecord::Schema.define(version: 20170918200346) do
     t.float    "costo_ingreso"
     t.float    "costo_salida"
     t.float    "costo_saldo"
+    t.float    "amount"
   end
 
   add_index "movement_details", ["account_id"], name: "index_movement_details_on_account_id", using: :btree

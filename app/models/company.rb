@@ -2018,7 +2018,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
         if product
         else
           detail  = MovementDetail.new(:fecha=>fecha1 ,:stock_inicial=>0,:ingreso=>0,:salida =>0,:stock_final =>0,
-         :costo_ingreso=> existe.price ,:costo_salida=> 0,:costo_saldo => 0, :product_id=> existe.id,:tm=>"04",:documento=>"SALDO INICIAL")
+         :costo_ingreso=> existe.price ,:costo_salida=> 0,:costo_saldo => 0, :product_id=> existe.id,:tm=>"04",:documento=>"SALDO INICIAL",:amount=>0 )
           detail.save
         end        
      end    
@@ -2045,6 +2045,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
             movdetail.ingreso += 0   
             else
             movdetail.ingreso += invdetail.cantidad
+            movdetail.amount +=  invdetail.cantidad
             end
 
             if invdetail.precio_unitario == nil
@@ -2082,6 +2083,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
               movdetail.ingreso  += 0   
             else 
               movdetail.ingreso  +=  detail.quantity
+              movdetail.amount +=    detail.quantity
             end 
 
             if detail.price_without_tax == nil
@@ -2089,7 +2091,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
             else
               if $lcmoneda != nil                 
                 if $lcmoneda == 2
-                  movdetail.price = detail.price_without_tax
+                  movdetail.costo_ingreso = detail.price_without_tax
                 else
                   @dolar = Tipocambio.find_by(["dia  >= ? and dia <= ? ", "#{$lcFecha} 00:00:00","#{$lcFecha} 23:59:59" ])
                   if @dolar 
@@ -2132,6 +2134,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
               movdetail.ingreso += 0   
             else
               movdetail.ingreso -= detail.quantity
+              movdetail.amount  -= detail.quantity
             end
 
  
@@ -2168,8 +2171,10 @@ def get_purchaseorder_detail2(fecha1,fecha2)
             else
               if detail.quantity > 0
                 movdetail.ingreso  += detail.quantity
+                movdetail.amount +=    detail.quantity
               else
                 movdetail.ingreso -= detail.quantity*-1
+                movdetail.amount +=    detail.quantity*-1
               end     
               
             end
@@ -2199,6 +2204,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
            movdetail  = MovementDetail.find_by(:product_id=>invdetail.product_id)          
         if movdetail   
             movdetail.ingreso += invdetail.cantidad
+            movdetail.amount +=    detail.quantity
             movdetail.costo_ingreso = invdetail.precio_unitario
             movdetail.save 
         else
@@ -2252,8 +2258,8 @@ def get_purchaseorder_detail2(fecha1,fecha2)
             end 
 
           detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>detail.quantity,:salida => 0,
-          :costo_ingreso=>$lcprice,:costo_salida=>0,:product_id=> detail.product_id,:document_id=>$lcDocumentid,
-          :documento=>$lcDocumento,:tm =>"02")
+          :costo_ingreso=>$lcprice,:costo_salida=>0,:costo_saldo=>$lcprice,:product_id=> detail.product_id,:document_id=>$lcDocumentid,
+          :documento=>$lcDocumento,:tm =>"02",:amount => detail.quantity,:stock_final=> 0)
           detail.save 
        
         
@@ -2279,8 +2285,8 @@ def get_purchaseorder_detail2(fecha1,fecha2)
 
           if movdetail        
              detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>0, :salida=>detail.quantity,
-            :costo_ingreso =>0,:costo_salida =>detail.price,:product_id=> detail.product_id,:document_id=> $lcDocumentId,
-            :documento=>$lcDocumento,:tm =>"10")
+            :costo_ingreso =>0,:costo_salida =>detail.price,:costo_saldo=>detail.price,:product_id=> detail.product_id,:document_id=> $lcDocumentId,
+            :documento=>$lcDocumento,:tm =>"10",:amount => detail.quantity,:stock_final=> 0)
              detail.save 
           else     
           
@@ -2292,7 +2298,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
         end 
      end 
 
-     @ajuste = Ajust.where('fecha1>= ? and fecha1 <= ?',"#{fecha1} 00:00:00","#{fecha2} 00:00:00")
+     @ajuste = Ajust.where('fecha1>= ? and fecha1 <= ?',"#{fecha1} 00:00:00","#{fecha2} 23:59:59")
 
      for sal in @ajuste
         $lcFecha = sal.fecha1 
@@ -2302,29 +2308,33 @@ def get_purchaseorder_detail2(fecha1,fecha2)
         for detail in @ajustedetail 
 
           movdetail  = MovementDetail.find_by(:product_id=>detail.product_id)
-
+          lcingreso= 0
+          lcsalida = 0
+          lcamount = 0
           if movdetail
 
             if detail.quantity == nil
               movdetail.salida += 0  
               movdetail.ingreso += 0  
             else
+              
               if detail.quantity > 0
                 movdetail.ingreso += detail.quantity
-
+                lcingreso = movdetail.ingreso 
               else
                 movdetail.salida  += detail.quantity*-1
                 lcsalida = movdetail.salida
                 lcprice = 0
-                detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>0, :salida=>lcsalida ,
+              end   
+              lcamount=lcingreso + lcsalida
+              
+              detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>lcingreso, :salida=>lcsalida ,
             :costo_ingreso =>0,:costo_salida=>lcprice ,:product_id=> detail.product_id,:document_id=> $lcDocumentId,
-            :documento=>$lcDocumento,:tm =>"10")
-                lcsalida = 0    
-              end     
+            :documento=>$lcDocumento,:tm =>"10",:amount=> lcamount ,:stock_final=> 0)
                 
             end
               
-              movdetail.save           
+            
           else     
           
             #detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>0,:salida =>detail.quantity,
@@ -2343,69 +2353,58 @@ def get_purchaseorder_detail2(fecha1,fecha2)
 
        end  
 
-
-      
-
      # @inv = MovementDetail.order(:product_id,:fecha,:tm ).includes([:product,:document])
      #@inv = MovementDetail.order(:product_id,:fecha,:tm ).preload([:product,:document])
      # CALCULANDO SALDO - STOCK 
           #  @inv = MovementDetail.all 
-      @inv = MovementDetail.order(:product_id,:fecha,:tm).joins(:product,:document).select("movement_details.*, products.name as product_name").where("products.products_category_id = ?", product1)
+@inv = MovementDetail.order(:product_id,:fecha,:tm).joins(:product,:document).select("movement_details.*, products.name as product_name").where("products.products_category_id = ?", product1)
 
 ##
-
 wkey1 = ""
 wkey2 =  @inv.first.product_id 
 wvar =0
 saldo = 0 
 wcosto = 0
+
 for  a in @inv 
+    wkey2 = a.product_id
+    
     if wkey1 == wkey2
-
-
-     saldo    = wvar +a.ingreso - a.salida     
-      
-
-      if a.ingreso = 0  
-        a.costo_ingreso = wcosto    
-        a.costo_salida = 0   
-        wcosto = a.costo_ingreso
+      saldo  = wvar +a.ingreso - a.salida     
+    
+      if a.ingreso > 0  
+        a.costo_saldo = a.costo_ingreso
+        if a.tm == '02'
+          wcosto = a.costo_saldo  
+        end   
       end
+      
       if a.salida > 0  
         a.costo_ingreso = 0 
-        a.costo_salida = wcosto
+        a.costo_salida  = wcosto
       end
                   
       a.stock_final = saldo
-      a.costo_saldo =  wcosto 
+      a.costo_saldo = wcosto 
       a.save
-
-    
-       
-     wvar = saldo 
+      wvar = saldo   
    
-   else
-  
-
-    a.stock_final = a.ingreso 
-    a.save 
-    wkey1 = a.product_id     
-    wvar = a.stock_final
-    wcosto = a.costo_ingreso
+    else
+      wkey1 = a.product_id     
+      wvar = 0
       
-    
+      saldo  = wvar +a.ingreso - a.salida    
+      a.costo_saldo = a.costo_ingreso 
+      a.stock_final = saldo
+      a.save 
+      
+      wvar=saldo
+        
+      if a.tm =='02' || a.tm == '04'
+        wcosto =a.costo_ingreso
+      end 
     end 
-  
-  
-  
-   wkey2 = a.product_id
-
-end 
-
-
-
-
-
+    end 
     return @inv 
 
  end

@@ -12,11 +12,7 @@
         <div class="metadata">
           <%= link_to "View", company %>
           
-          <% if(company.own(current_user)) %>
-            &#183;
-            <%= link_to "Edit", edit_company_path(company) %> &#183;
-            <%= link_to "Delete", company, :confirm => 'Are you sure?', :method => :delete %>
-          <% end %>
+          
         </div>
         <%= br() %>
       </div>

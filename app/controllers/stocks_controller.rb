@@ -348,7 +348,6 @@ class StocksController < ApplicationController
         })
 
         pdf.font "Open Sans",:size =>6
-  
         pdf = build_pdf_header2(pdf)
         pdf = build_pdf_body2(pdf)
         build_pdf_footer2(pdf)
@@ -499,10 +498,10 @@ class StocksController < ApplicationController
               
 
               #saldo = stock.stock_inicial  + stock.ingreso - stock.salida       
-              row << ""
-              row << sprintf("%.2f",stock.costo_ingreso.to_s)
-              
-              row << sprintf("%.2f",stock.stock_final.to_s) 
+              row << sprintf("%.2f",stock.stock_final.to_s)
+              row << sprintf("%.2f",stock.costo_saldo.to_s)
+              total3 = stock.stock_final*stock.costo_saldo
+              row << sprintf("%.2f",total3.to_s) 
 
               table_content << row
 
@@ -549,6 +548,7 @@ class StocksController < ApplicationController
                                                   columns([12]).align =:right
                                                   columns([13]).align =:right
                                                   columns([14]).align =:right
+                                                  
                                                 end                                          
                 pdf.move_down 10
     
@@ -612,7 +612,7 @@ end
 
     $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName    
     send_file("app/pdf_output/stocks4.pdf", :type => 'application/pdf', :disposition => 'inline')
-    MovementDetail.delete_all 
+    #MovementDetail.delete_all 
   end
 
 
