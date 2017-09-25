@@ -612,7 +612,7 @@ end
 
     $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName    
     send_file("app/pdf_output/stocks4.pdf", :type => 'application/pdf', :disposition => 'inline')
-    #MovementDetail.delete_all 
+    MovementDetail.delete_all 
   end
 
 
