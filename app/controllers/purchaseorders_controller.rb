@@ -480,7 +480,7 @@ def build_pdf_header(pdf)
   
   # Autocomplete for products
   def ac_products
-    @products = Product.where(["company_id = ? AND (code LIKE ? OR name LIKE ?)", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])
+    @products = Product.where(["company_id = ? AND (code iLIKE ? OR name iLIKE ?)", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])
    
     render :layout => false
   end
@@ -510,7 +510,7 @@ def build_pdf_header(pdf)
   
   # Autocomplete for suppliers
   def ac_suppliers
-    @suppliers = Supplier.where(["company_id = ? AND (ruc  LIKE ? OR name LIKE ?)", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])
+    @suppliers = Supplier.where(["company_id = ? AND (ruc  iLIKE ? OR name iLIKE ?)", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])
    
     render :layout => false
   end
