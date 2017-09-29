@@ -1778,6 +1778,8 @@ function addItemToLgv2() {
  //............................................................................  
 // Shortcut to create new customer form
   function createSupplier2() {
+    
+    alert("sup");
     var company_id = $("#purchaseorder_company_id").val();
     
     $.get('/suppliers/new/' + company_id + '?ajax=1', {
