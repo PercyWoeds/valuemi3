@@ -1,0 +1,38 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Parametros </h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Fecha</th>
+      <th>Onp</th>
+      <th>Sctr 1</th>
+      <th>Sctr 2</th>
+      <th>Essalud</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @parameters.each do |parameter| %>
+      <tr>
+        <td><%= parameter.code %></td>
+        <td><%= parameter.fecha %></td>
+        <td><%= parameter.onp %></td>
+        <td><%= parameter.sctr_1 %></td>
+        <td><%= parameter.sctr_2 %></td>
+        <td><%= parameter.essalud %></td>
+        <td><%= link_to 'Show', parameter %></td>
+        <td><%= link_to 'Edit', edit_parameter_path(parameter) %></td>
+        <td><%= link_to 'Destroy', parameter, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Parameter', new_parameter_path %>
+<%= link_to 'Regresar', "/companies/planilla/#{@company.id}"%>

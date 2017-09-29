@@ -42,7 +42,15 @@ class Ajust < ActiveRecord::Base
                      "USD",                     
                      "TOTAL" ]
 
-    
+ TABLE_HEADERS3 = ["ITEM",
+                      "DOCUMENTO",
+                     "FECHA",
+                     "CODE",
+                     "PRODUCTO",
+                     "UNIDAD",                                          
+                     "CANTIDAD",
+                     "COSTO ",
+                     "TOTAL"]    
 
   def get_subtotal(items)
     subtotal = 0

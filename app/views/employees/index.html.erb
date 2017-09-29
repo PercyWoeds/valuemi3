@@ -1,23 +1,13 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Employees</h1>
+<h1>Empleados</h1>
 
 <table>
   <thead>
     <tr>
-      <th>Firstname</th>
-      <th>Lastname</th>
-      <th>Address1</th>
-      <th>Address2</th>
-      <th>City</th>
-      <th>State</th>
-      <th>Zip</th>
-      <th>Country</th>
-      <th>Phone1</th>
-      <th>Phone2</th>
-      <th>Email1</th>
-      <th>Email2</th>
-      <th>Company</th>
+      <th>Nombre </th>
+      <th>Apellidos</th>
+      
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -27,37 +17,30 @@
       <tr>
         <td><%= employee.firstname %></td>
         <td><%= employee.lastname %></td>
-        <td><%= employee.address1 %></td>
-        <td><%= employee.address2 %></td>
-        <td><%= employee.city %></td>
-        <td><%= employee.state %></td>
-        <td><%= employee.zip %></td>
-        <td><%= employee.country %></td>
-        <td><%= employee.phone1 %></td>
-        <td><%= employee.phone2 %></td>
-        <td><%= employee.email1 %></td>
-        <td><%= employee.email2 %></td>
-        <td><%= employee.company_id %></td>
-        <td><%= link_to 'Show', employee %></td>
-        <td><%= link_to 'Edit', edit_employee_path(employee) %></td>
+        <td><%= employee.idnumber  %></td>
+        <% if employee.fecha_ingreso != nil %>
+        <td><%= employee.fecha_ingreso.strftime("%d/%m/%Y")  %></td>
+        <% end %>
+        <td><%= employee.active  %></td>
+        <td><%= link_to 'Ver', employee %></td>
+        <td><%= link_to 'Editar', edit_employee_path(employee) %></td>
           <%if @current_user.level == 'admin' %>
-        <td><%= link_to 'Destroy', employee, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Eliminar', employee, method: :delete, data: { confirm: 'Esta seguro ?' } %></td>
           <% end %>
       </tr>
     <% end %>
+
   </tbody>
+  
 </table>
 
-<br>
 
+<br>
+<%= will_paginate @employees %>
+    
 <%= link_to 'Nuevo empleado ', new_employee_path %>
 
 
-<h2>Importar Archivo empleado "*.csv"</h2>
-<%= form_tag import_employees_path, multipart: true do %>
-  <%= file_field_tag :file %>
-  <%= submit_tag "Importar " %>
-<% end %>
 
 
 

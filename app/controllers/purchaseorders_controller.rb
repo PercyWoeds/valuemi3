@@ -682,7 +682,7 @@ def build_pdf_header(pdf)
     @payments  = @company.get_payments()
     @monedas    = @company.get_monedas()
     
-        
+         
     @ac_user = getUsername()
     @purchaseorder[:user_id] = getUserId()
 

@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Parametros </h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Afp</th>
+      <th>Aporte</th>
+      <th>Seguro</th>
+      <th>Comision</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @parameter_details.each do |parameter_detail| %>
+      <tr>
+        <td><%= parameter_detail.parameter_id %></td>
+        <td><%= parameter_detail.afp_id %></td>
+        <td><%= parameter_detail.aporte %></td>
+        <td><%= parameter_detail.seguro %></td>
+        <td><%= parameter_detail.comision %></td>
+        <td><%= link_to 'Show', parameter_detail %></td>
+        <td><%= link_to 'Edit', edit_parameter_detail_path(parameter_detail) %></td>
+        <td><%= link_to 'Destroy', parameter_detail, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Parameter detail', new_parameter_detail_path %>

@@ -475,25 +475,23 @@ class StocksController < ApplicationController
                row << stock.product.name                   
                row << stock.fecha.strftime("%d%m%Y")                
                row << stock.document.descripshort  
-               row << "" 
+               row << " " 
                row << stock.documento                           
                row << stock.tm
 
-                         
                 row << sprintf("%.2f",stock.ingreso.to_s)
-                
                   
                 row << sprintf("%.2f",stock.costo_ingreso.to_s)
                 
                 total1 = stock.ingreso*stock.costo_ingreso
                 row << sprintf("%.2f",total1.to_s)
               
-              
                 row << sprintf("%.2f",stock.salida.to_s)
 
                 row << sprintf("%.2f",stock.costo_salida.to_s)
 
                 total2 = stock.salida*stock.costo_salida
+                
                 row << sprintf("%.2f",total2.to_s)
               
 

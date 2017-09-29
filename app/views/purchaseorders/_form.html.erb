@@ -19,11 +19,12 @@
     </h3>
 
       <label for="ac_supplier" class="bold">Proveedor*</label><br />
-<input type="text" name="ac_supplier" id="ac_supplier" value="<% if @ac_supplier %><%= @ac_supplier %><% end %>" />
-      
+      <input type="text" name="ac_supplier" id="ac_supplier" value="<% if @ac_supplier %><%= @ac_supplier %><% end %>" />
       <div class="small">
-      <a href="#" onclick="createSupplierPurchase(); return false;">+ Crear nuevo proveedor</a>
+      <a href="#" onclick="createSupplier2(); return false;">+ Crear nuevo proveedor</a>
       </div>
+      
+  
               
     <div class="small">
         <strong>Seleccionar proveedor:</strong>
@@ -190,7 +191,7 @@
 <script type="text/javascript">
   $(document).ready(function() {
 
-    $("#ac_supplier").autocomplete("/purchaseorders/ac_suppliers/<%= @company.id %>", {
+    $("#ac_supplier").autocomplete("/purchases/ac_suppliers/<%= @company.id %>", {
       matchSubset: 1,
       matchContains: 1,
       selectFirst: false
@@ -201,6 +202,7 @@
       $("#selected_supplier").html(data[0]);
     });
 
+     
     
   $("#ac_item").autocomplete("/purchaseorders/ac_products/<%= @company.id %>", {
       matchSubset: 1,

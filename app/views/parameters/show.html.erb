@@ -1,0 +1,93 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @parameter.code %>
+</p>
+
+<p>
+  <strong>Fecha:</strong>
+  <%= @parameter.fecha %>
+</p>
+
+<p>
+  <strong>Onp:</strong>
+  <%= @parameter.onp %>
+</p>
+
+<p>
+  <strong>Sctr 1:</strong>
+  <%= @parameter.sctr_1 %>
+</p>
+
+<p>
+  <strong>Sctr 2:</strong>
+  <%= @parameter.sctr_2 %>
+</p>
+
+<p>
+  <strong>Essalud:</strong>
+  <%= @parameter.essalud %>
+</p>
+<h3>
+  Detalle
+</h3>
+
+<table>
+  <thead>
+    <tr>
+      
+      <th>
+        AFP
+      </th>
+      <th>
+        Aporte
+      </th>
+      
+      
+      <th>
+        Seguro
+      </th>
+      <th>
+        Comision
+      </th>
+      
+    </tr>
+  </thead>
+  <tbody>
+
+
+    <%  @parameter_details.each do |detalle| %>
+    <tr>
+          
+          <td class="small bordered_bottom bordered_right">
+            <%= detalle.afp.name %>    
+          </td>
+          
+          <td class="small bordered_bottom bordered_right">
+            <%= detalle.aporte %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= detalle.seguro %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= detalle.comision %>              
+          </td>
+          <td><%= link_to 'Editar', edit_parameter_parameter_detail_path(parameter_id: @parameter.id,id: detalle.id ) %></td>          
+          <td><%= link_to 'Eliminar',[@parameter,detalle], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+
+          
+    </td>
+    
+    <% end %>
+
+</tbody>
+</table>
+<br />
+
+
+<div class="button">
+<%= link_to 'Agregar Item', new_parameter_parameter_detail_path(@parameter) %>
+<%= link_to 'Editar', edit_parameter_path(@parameter) %> 
+<%= link_to 'Regresar', parameters_path %>
+</div> 

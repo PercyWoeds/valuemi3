@@ -7,16 +7,17 @@ class AjustsController < ApplicationController
 ##
 ## REPORTE DE COMPRAS 
 ##    
- 
- def build_pdf_header1(pdf)
-    pdf.font "Helvetica" , :size => 6    
+
+  # reporte completo
+  def build_pdf_header_rpt(pdf)
+      pdf.font "Helvetica" , :size => 8
      $lcCli  =  @company.name 
      $lcdir1 = @company.address1+@company.address2+@company.city+@company.state
 
      $lcFecha1= Date.today.strftime("%d/%m/%Y").to_s
      $lcHora  = Time.now.to_s
 
-    max_rows = [client_data_headers.length, invoice_headers.length, 0].max
+    max_rows = [client_data_headers_rpt.length, invoice_headers_rpt.length, 0].max
       rows = []
       (1..max_rows).each do |row|
         rows_index = row - 1
@@ -26,6 +27,7 @@ class AjustsController < ApplicationController
       end
 
       if rows.present?
+
         pdf.table(rows, {
           :position => :center,
           :cell_style => {:border_width => 0},
@@ -33,31 +35,23 @@ class AjustsController < ApplicationController
         }) do
           columns([0, 2]).font_style = :bold
 
-      end
+        end
 
         pdf.move_down 10
-
-      end
-      
+      end      
       pdf 
   end   
 
-  def build_pdf_body1(pdf)
+  def build_pdf_body_rpt(pdf)
     
-    pdf.text "Ordenes de compra Emitidas : Fecha "+@fecha1.to_s+ " Mes : "+@fecha2.to_s , :size => 11 
-    pdf.text ""
-    pdf.font_families.update("Open Sans" => {
-          :normal => "app/assets/fonts/OpenSans-Regular.ttf",
-          :italic => "app/assets/fonts/OpenSans-Italic.ttf",
-        })
-
-        pdf.font "Open Sans",:size =>6
+    pdf.text "Listado de Ajust desde "+@fecha1.to_s+ " Hasta: "+@fecha2.to_s , :size => 8 
   
+    pdf.font "Helvetica" , :size => 6
 
       headers = []
       table_content = []
 
-      ajust::TABLE_HEADERS1.each do |header|
+      Ajust::TABLE_HEADERS3.each do |header|
         cell = pdf.make_cell(:content => header)
         cell.background_color = "FFFFCC"
         headers << cell
@@ -66,244 +60,126 @@ class AjustsController < ApplicationController
       table_content << headers
 
       nroitem=1
+      lcDoc='FT'
+      lcMon='S/.'
+      @total = 0
+      @totales = 0
+      @cantidad = 0
+      nroitem = 1
 
-      for ordencompra in @rpt_detalle_ajust
-
-           $lcNumero = ordencompra.code    
-           $lcFecha = ordencompra.fecha1
-           $lcProveedor = ordencompra.supplier.name 
-
-          @orden_compra1  = @company.get_orden_detalle(ordencompra.id)
-
-
-       for  orden in @orden_compra1
-            row = []
+       for  product in @facturas_rpt
+ 
+            row = []         
             row << nroitem.to_s
-            row << $lcProveedor 
-            row << $lcNumero 
-            row << $lcFecha.strftime("%d/%m/%Y")        
-            row << orden.quantity.to_s
-            row << orden.product.code
-            row << orden.product.name
-            row << orden.price.round(2).to_s
-            row << orden.discount.round(2).to_s
-            row << orden.total.round(2).to_s
+            row << product.code
+            row << product.fecha1.strftime("%d/%m/%Y")
+            row << product.codigo
+            row << product.nameproducto
+            row << product.unidad 
+            
+            row << sprintf("%.2f",product.quantity.to_s)
+            row << " "
+            row << " "
             table_content << row
-            puts nroitem.to_s 
+
+            @totales += @total  
+            @cantidad += product.quantity
+
             nroitem=nroitem + 1
+       
         end
+      
+      row =[]
+      row << ""
+      row << ""
+      row << ""
+      row << ""
+      row << ""
 
-      end
+      row << "TOTALES => "
+      row << sprintf("%.2f",@cantidad.to_s)
+      row << " "
+      row << sprintf("%.2f",@totales.to_s)
 
 
+      table_content << row
+      
       result = pdf.table table_content, {:position => :center,
                                         :header => true,
                                         :width => pdf.bounds.width
                                         } do 
                                           columns([0]).align=:center
                                           columns([1]).align=:left
-                                          columns([2]).align=:center
-                                          columns([3]).align=:center
+                                          columns([2]).align=:left
+                                          columns([3]).align=:left
                                           columns([4]).align=:left
-                                          columns([5]).align=:left
-                                          columns([6]).align=:left
+                                          columns([5]).align=:center  
+                                          columns([6]).align=:right
                                           columns([7]).align=:right
                                           columns([8]).align=:right
-                                          columns([9]).align=:right
-                                        end
-
+                                        end                                          
       pdf.move_down 10      
-      pdf
-
-    end
-
-
-    def build_pdf_footer1(pdf)
-
-        pdf.text ""
-        pdf.text "" 
-        
-
-     end
-    
-
-  # Export ajust to PDF
-  def rpt_ajust_all
-        
-    @company =Company.find(1)
-    @fecha1 =params[:fecha1]
-    @fecha2 =params[:fecha2]
-
-    @rpt_detalle_ajust = @company.get_ajust_detail(@fecha1,@fecha2)
-
-    Prawn::Document.generate("app/pdf_output/orden_1.pdf") do |pdf|
-        pdf.font "Helvetica"
-        pdf = build_pdf_header1(pdf)
-        pdf = build_pdf_body1(pdf)
-        build_pdf_footer1(pdf)
-        $lcFileName =  "app/pdf_output/orden_1.pdf"      
-        
-    end     
-
-    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
-                
-    send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
-  
-
-  end
-
-##
-##
-
-
-
-def build_pdf_header(pdf)
-
-     
-     $lcFecha1= @ajust.fecha1.strftime("%d/%m/%Y") 
-     
-     $lcSubtotal=sprintf("%.2f",(@ajust.subtotal).round(2))
-     $lcIgv=sprintf("%.2f",(@ajust.tax).round(2))
-     $lcTotal=sprintf("%.2f",(@ajust.total).round(2))
-
-   
-     $lcAprobado= @ajust.get_processed 
-    
-      pdf.image "#{Dir.pwd}/public/images/logo2.png", :width => 270
-        
-      pdf.move_down 6
-        
-      pdf.move_down 4
-      #pdf.text supplier.street, :size => 10
-      #pdf.text supplier.district, :size => 10
-      #pdf.text supplier.city, :size => 10
-      pdf.move_down 4
-
-      pdf.bounding_box([325, 725], :width => 200, :height => 80) do
-        pdf.stroke_bounds
-        pdf.move_down 15
-        pdf.font "Helvetica", :style => :bold do
-          pdf.text "R.U.C: 20424092941", :align => :center
-          pdf.text "AJUSTES INVENTARIO", :align => :center
-          pdf.text "#{@ajust.id}", :align => :center,
-                                 :style => :bold
-          
-        end
-      end
-      pdf.move_down 25
+      #totales 
       pdf 
-  end   
-
-  def build_pdf_body(pdf)
-    
-    pdf.text "__________________________________________________________________________", :size => 13, :spacing => 4
-    pdf.text " ", :size => 13, :spacing => 4
-    pdf.font "Helvetica" , :size => 8
-
-   
-      headers = []
-      table_content = []
-
-      Ajust::TABLE_HEADERS.each do |header|
-        cell = pdf.make_cell(:content => header)
-        cell.background_color = "FFFFCC"
-        headers << cell
-      end
-
-      table_content << headers
-
-      nroitem=1
-
-       for  product in @ajust.get_products()
-            row = []
-            row << nroitem.to_s      
-            row << product.quantity.to_s
-            row << product.code
-            row << product.name
-            row << "0.00"
-            row << "0.00"
-            row << "0.00"
-            table_content << row
-
-            nroitem=nroitem + 1
-        end
-
-      result = pdf.table table_content, {:position => :center,
-                                        :header => true,
-                                        :width => pdf.bounds.width
-                                        } do 
-                                          columns([0]).align=:center
-                                          columns([1]).align=:right
-                                          columns([2]).align=:center
-                                          columns([3]).align=:center
-                                          columns([4]).align=:right
-                                          columns([5]).align=:right
-                                          columns([6]).align=:right
-                                         
-                                        end
-
-      pdf.move_down 10      
-      
-      pdf
 
     end
 
+    def build_pdf_footer_rpt(pdf)
+            data =[ ["Procesado por Almacen ","V.B.Almacen","V.B.Compras ","V.B. Gerente ."],
+               [":",":",":",":"],
+               [":",":",":",":"],
+               ["Fecha:","Fecha:","Fecha:","Fecha:"] ]
 
-    def build_pdf_footer(pdf)
+           
+            pdf.text " "
+            pdf.table(data,:cell_style=> {:border_width=>1} , :width => pdf.bounds.width)
+            pdf.move_down 10          
 
-        pdf.text ""
-        pdf.text "" 
-        pdf.text "Descripcion : #{@ajust.description}", :size => 8, :spacing => 4
-        pdf.text "Comentarios : #{@ajust.comments}", :size => 8, :spacing => 4
-                
-
-        data =[[{:content=> $lcEntrega4,:colspan=>2},"" ] ,
-               [$lcEntrega1,{:content=> $lcEntrega3,:rowspan=>2}],
-               [$lcEntrega2]               
-               ]
-
-           {:border_width=>0  }.each do |property,value|
-            pdf.text " Instrucciones: "
-            pdf.table(data,:cell_style=> {property =>value})
-            pdf.move_down 20          
-           end     
-
-        pdf.bounding_box([0, 20], :width => 535, :height => 40) do
-        
-        pdf.text "_________________               _____________________         ____________________      ", :size => 13, :spacing => 4
-        pdf.text ""
-        pdf.text "                  Realizado por                                                 V.B.Jefe Compras                                            V.B.Gerencia           ", :size => 10, :spacing => 4
-        pdf.draw_text "Company: #{@ajust.company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
+                        
+      pdf.text "" 
+      pdf.bounding_box([0, 30], :width => 535, :height => 40) do
+      pdf.draw_text "Company: #{@company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
 
       end
+
       pdf
       
   end
 
 
-  # Export ajust to PDF
-  def pdf
-    @ajust = Ajust.find(params[:id])
-    company =@ajust.company_id
-    @company =Company.find(company)
+# Export serviceorder to PDF
+  def rpt_ajust_all_pdf
 
-    @instrucciones = @company.get_instruccions()
+    $lcFacturasall = '1'
+
+    @company=Company.find(params[:id])          
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]    
+    @product = params[:ac_item_id]    
+
+    @products = @company.get_products_dato(@product)        
+
+    @facturas_rpt = @company.get_ajust_detail(@fecha1,@fecha2,@product)
 
 
-    Prawn::Document.generate("app/pdf_output/#{@ajust.id}.pdf") do |pdf|
+    Prawn::Document.generate("app/pdf_output/rpt_factura.pdf") do |pdf|
         pdf.font "Helvetica"
-        pdf = build_pdf_header(pdf)
-        pdf = build_pdf_body(pdf)
-        build_pdf_footer(pdf)
-        $lcFileName =  "app/pdf_output/#{@ajust.id}.pdf"      
-        
+        pdf = build_pdf_header_rpt(pdf)
+        pdf = build_pdf_body_rpt(pdf)
+        build_pdf_footer_rpt(pdf)
+        $lcFileName =  "app/pdf_output/rpt_factura.pdf"              
     end     
-
-    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName                
-    send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
-  
+    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
+    send_file("app/pdf_output/rpt_factura.pdf", :type => 'application/pdf', :disposition => 'inline')
 
   end
+
+######
+##
+
+
+
+
 
  def client_data_headers
 

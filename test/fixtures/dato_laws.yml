@@ -1,0 +1,57 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  employee_id: 1
+  sueldo_integral: MyString
+  comision: MyString
+  descuento_ley: MyString
+  afp_id: 1
+  ies: MyString
+  senati: MyString
+  sobretiempo: MyString
+  otra_ley_social: MyString
+  accidente_trabajo: MyString
+  descuento_quinta: MyString
+  domiciliado: MyString
+  a_familiar: MyString
+  no_afecto: MyString
+  no_afecto_grati: MyString
+  no_afecto_afp: MyString
+  cussp: MyString
+  tipo_afiliado_id: MyString
+  regimen_id: MyString
+  contrato_inicio: 2017-09-26 20:34:19
+  contrato_fin: 2017-09-26 20:34:19
+  vacaciones_inicio: 2017-09-26 20:34:19
+  vacaciones_fin: 2017-09-26 20:34:19
+  grati_julio: 1.5
+  grati_diciembre: 1.5
+  importe_subsidio: 1.5
+
+two:
+  employee_id: 1
+  sueldo_integral: MyString
+  comision: MyString
+  descuento_ley: MyString
+  afp_id: 1
+  ies: MyString
+  senati: MyString
+  sobretiempo: MyString
+  otra_ley_social: MyString
+  accidente_trabajo: MyString
+  descuento_quinta: MyString
+  domiciliado: MyString
+  a_familiar: MyString
+  no_afecto: MyString
+  no_afecto_grati: MyString
+  no_afecto_afp: MyString
+  cussp: MyString
+  tipo_afiliado_id: MyString
+  regimen_id: MyString
+  contrato_inicio: 2017-09-26 20:34:19
+  contrato_fin: 2017-09-26 20:34:19
+  vacaciones_inicio: 2017-09-26 20:34:19
+  vacaciones_fin: 2017-09-26 20:34:19
+  grati_julio: 1.5
+  grati_diciembre: 1.5
+  importe_subsidio: 1.5

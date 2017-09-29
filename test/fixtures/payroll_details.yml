@@ -1,0 +1,37 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  employee_id: 1
+  remuneracion: 1.5
+  calc1: 1.5
+  calc2: 1.5
+  calc3: 1.5
+  total1: 1.5
+  calc4: 1.5
+  calc5: 1.5
+  calc6: 1.5
+  calc7: 1.5
+  total2: 1.5
+  remneta: 1.5
+  calc8: 1.5
+  calc9: 1.5
+  calc10: 1.5
+  total3: 1.5
+
+two:
+  employee_id: 1
+  remuneracion: 1.5
+  calc1: 1.5
+  calc2: 1.5
+  calc3: 1.5
+  total1: 1.5
+  calc4: 1.5
+  calc5: 1.5
+  calc6: 1.5
+  calc7: 1.5
+  total2: 1.5
+  remneta: 1.5
+  calc8: 1.5
+  calc9: 1.5
+  calc10: 1.5
+  total3: 1.5

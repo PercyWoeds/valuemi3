@@ -1,0 +1,77 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Dato Laws</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Employee</th>
+      <th>Sueldo integral</th>
+      <th>Comision</th>
+      <th>Descuento ley</th>
+      <th>Afp</th>
+      <th>Ies</th>
+      <th>Senati</th>
+      <th>Sobretiempo</th>
+      <th>Otra ley social</th>
+      <th>Accidente trabajo</th>
+      <th>Descuento quinta</th>
+      <th>Domiciliado</th>
+      <th>A familiar</th>
+      <th>No afecto</th>
+      <th>No afecto grati</th>
+      <th>No afecto afp</th>
+      <th>Cussp</th>
+      <th>Tipo afiliado</th>
+      <th>Regimen</th>
+      <th>Contrato inicio</th>
+      <th>Contrato fin</th>
+      <th>Vacaciones inicio</th>
+      <th>Vacaciones fin</th>
+      <th>Grati julio</th>
+      <th>Grati diciembre</th>
+      <th>Importe subsidio</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @dato_laws.each do |dato_law| %>
+      <tr>
+        <td><%= dato_law.employee_id %></td>
+        <td><%= dato_law.sueldo_integral %></td>
+        <td><%= dato_law.comision %></td>
+        <td><%= dato_law.descuento_ley %></td>
+        <td><%= dato_law.afp_id %></td>
+        <td><%= dato_law.ies %></td>
+        <td><%= dato_law.senati %></td>
+        <td><%= dato_law.sobretiempo %></td>
+        <td><%= dato_law.otra_ley_social %></td>
+        <td><%= dato_law.accidente_trabajo %></td>
+        <td><%= dato_law.descuento_quinta %></td>
+        <td><%= dato_law.domiciliado %></td>
+        <td><%= dato_law.a_familiar %></td>
+        <td><%= dato_law.no_afecto %></td>
+        <td><%= dato_law.no_afecto_grati %></td>
+        <td><%= dato_law.no_afecto_afp %></td>
+        <td><%= dato_law.cussp %></td>
+        <td><%= dato_law.tipo_afiliado_id %></td>
+        <td><%= dato_law.regimen_id %></td>
+        <td><%= dato_law.contrato_inicio %></td>
+        <td><%= dato_law.contrato_fin %></td>
+        <td><%= dato_law.vacaciones_inicio %></td>
+        <td><%= dato_law.vacaciones_fin %></td>
+        <td><%= dato_law.grati_julio %></td>
+        <td><%= dato_law.grati_diciembre %></td>
+        <td><%= dato_law.importe_subsidio %></td>
+        <td><%= link_to 'Show', dato_law %></td>
+        <td><%= link_to 'Edit', edit_dato_law_path(dato_law) %></td>
+        <td><%= link_to 'Destroy', dato_law, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Dato law', new_dato_law_path %>

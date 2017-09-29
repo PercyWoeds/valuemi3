@@ -1,0 +1,71 @@
+<%= render 'layouts/charts' %>
+<%
+invoices_subtotal = 0
+invoices_tax = 0
+invoices_total = 0
+subtotals = []
+taxes = []
+totals = []
+%>
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %> &raquo;
+  <%= link_to "Reports", "/companies/reports/#{@company.id}" %>
+</div>
+
+<h1>
+  <%= image_tag("reports_48.png", :class => "vmiddle") %>
+  Reporte de Ajustes
+</h1>
+
+
+<form method="get" action="/ajusts/rpt_ajust_all_pdf/<%= @company.id %>" >   
+
+  <div class="field">
+      <input type="date" name="fecha1" value="2017-07-01" style = "width: 150px" >
+    </div>
+
+	<div class="field">
+		<input type="date" name="fecha2" value="2017-07-31" style = "width: 150px" >
+  </div>
+
+  
+  <input type="hidden" name="ac_item_id" id="ac_item_id" value="" style = "width: 350px"  />
+    
+    <strong>Producto:</strong><br />
+    <input type="text" name="ac_item" id="ac_item" value="" />
+    <div class="small">
+      Ingrese un termino de busqueda para encontrar un producto.
+    </div>
+  
+
+    <br />
+    
+
+
+  <input type="submit" value="Ver Reporte " />
+  
+</form>
+
+<br />
+
+<%= render 'layouts/autocomplete' %>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    
+    $("#ac_item").autocomplete("/invoices/ac_products/<%= @company.id %>", {
+      matchSubset: 1,
+      matchContains: 1,
+      selectFirst: false
+    });
+    
+    $("#ac_item").result(function(event, data, formatted) {
+      
+      $("#ac_item_id").val(data[2]);
+      $("#ac_item_price").val(data[4]);          
+    });
+    
+    
+  });
+</script>

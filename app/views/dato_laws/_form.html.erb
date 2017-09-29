@@ -1,0 +1,36 @@
+<%= simple_form_for(@dato_law) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :employee_id %>
+    <%= f.input :sueldo_integral %>
+    <%= f.input :comision %>
+    <%= f.input :descuento_ley %>
+    <%= f.input :afp_id %>
+    <%= f.input :ies %>
+    <%= f.input :senati %>
+    <%= f.input :sobretiempo %>
+    <%= f.input :otra_ley_social %>
+    <%= f.input :accidente_trabajo %>
+    <%= f.input :descuento_quinta %>
+    <%= f.input :domiciliado %>
+    <%= f.input :a_familiar %>
+    <%= f.input :no_afecto %>
+    <%= f.input :no_afecto_grati %>
+    <%= f.input :no_afecto_afp %>
+    <%= f.input :cussp %>
+    <%= f.input :tipo_afiliado_id %>
+    <%= f.input :regimen_id %>
+    <%= f.input :contrato_inicio %>
+    <%= f.input :contrato_fin %>
+    <%= f.input :vacaciones_inicio %>
+    <%= f.input :vacaciones_fin %>
+    <%= f.input :grati_julio %>
+    <%= f.input :grati_diciembre %>
+    <%= f.input :importe_subsidio %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

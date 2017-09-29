@@ -1775,6 +1775,82 @@ function addItemToLgv2() {
   }
 
   
+ //............................................................................  
+// Shortcut to create new customer form
+  function createSupplier2() {
+    var company_id = $("#purchaseorder_company_id").val();
+    
+    $.get('/suppliers/new/' + company_id + '?ajax=1', {
+    },
+    function(data) {
+      displayRemote(data);
+      showRemote();
+      
+      $("#new_supplier").bind("submit", function() {
+        event.preventDefault();
+        doCreateSupplier2();
+      });
+    });
+  }
+
+  // Create new customer in the invoice via ajax
+  function doCreateSupplier2() {
+    var company_id = $("#purchaseorder_company_id").val();
+    var ruc = $("#supplier_ruc").val();
+    var name = $("#supplier_name").val();
+    var email = $("#supplier_email").val();
+    var phone1 = $("#supplier_phone1").val();
+    var phone2 = $("#supplier_phone2").val();
+    var address1 = $("#supplier_address1").val();
+    var address2 = $("#supplier_address2").val();
+    var city = $("#supplier_city").val();
+    var state = $("#supplier_state").val();
+    var zip = $("#supplier_zip").val();
+    var country = $("#supplier_country").val();
+    var comments = $("#supplier_comments").val();
+    
+    if($("#supplier_taxable").attr("checked")) {
+      var taxable = 1;
+    } else {
+      var taxable = 0;
+    }
+    
+    if(name != "") {
+      $.post('/suppliers/create_ajax/' + company_id, {
+        name: name,
+        email: email,
+        phone1: phone1,
+        phone2: phone2,
+        address1: address1,
+        address2: address2,
+        city: city,
+        state: state,
+        zip: zip,
+        country: country,
+        comments: comments,
+        taxable: taxable
+      },
+      function(data) {
+        if(data == "error_empty") {
+          alert("Please enter a supplier name");
+        } else if(data == "error") {
+          alert("Ah ocurrido un error grabando el proveedor ,por favor trate otra vez ");
+        } else {
+          var data_arr = data.split("|BRK|");
+          
+          $("#ac_supplier").val(data_arr[1]);
+          $("#ac_supplier_id").val(data_arr[0]);
+          $("#selected_supplier").html(data_arr[1]);
+          
+          hideRemote();
+          alert("Proveedor creado");
+        }
+      });
+    } else {
+      alert("Por favor ingrese un proveedor.");
+    }
+  }
+
   // On ready
   $(document).ready(function() {
     documentReady();

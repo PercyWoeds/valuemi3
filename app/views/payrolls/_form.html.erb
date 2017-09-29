@@ -1,0 +1,49 @@
+
+
+<%= simple_form_for(@payroll) do |f| %>
+
+
+  <%= f.error_notification %>
+
+    <div class="field">
+      <%= f.label :code , "Codigo "%><br />
+      <%= f.text_field :code %>
+    </div>
+    <div class="field">
+      <%= f.label :type_payroll_id , "Tipo Planilla "%><br />
+      
+      <%= f.collection_select :type_payroll_id, @type_payrolls, :id, :descrip, :prompt => true %>
+      
+    </div>
+    
+    <div class="field">
+      <%= f.label :parameter_id, "Parametros AFP ONP "%><br />
+      
+      <%= f.collection_select :parameter_id, @parameter, :id, :code, :prompt => true %>
+      
+    </div>
+
+
+    <div class="field">
+      <%= f.label :fecha, "Fecha Emision*", :class => "bold" %><br />
+      <%= f.date_field :fecha %>
+
+    </div>
+    <div class="field">
+      <%= f.label :fecha_inicial, "Fecha Inicial*", :class => "bold" %><br />
+      <%= f.date_field :fecha_inicial %>
+    </div>
+    <div class="field">
+      <%= f.label :fecha_final, "Fecha Final*", :class => "bold" %><br />
+      <%= f.date_field :fecha_final %>
+    </div>
+    <div class="field">
+      <%= f.label :fecha_pago, "Fecha Pago*", :class => "bold" %><br />
+      <%= f.date_field :fecha_pago %>
+    </div>
+
+    
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

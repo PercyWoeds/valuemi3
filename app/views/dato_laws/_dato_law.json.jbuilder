@@ -1,0 +1,2 @@
+json.extract! dato_law, :id, :employee_id, :sueldo_integral, :comision, :descuento_ley, :afp_id, :ies, :senati, :sobretiempo, :otra_ley_social, :accidente_trabajo, :descuento_quinta, :domiciliado, :a_familiar, :no_afecto, :no_afecto_grati, :no_afecto_afp, :cussp, :tipo_afiliado_id, :regimen_id, :contrato_inicio, :contrato_fin, :vacaciones_inicio, :vacaciones_fin, :grati_julio, :grati_diciembre, :importe_subsidio, :created_at, :updated_at
+json.url dato_law_url(dato_law, format: :json)

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170925161205) do
+ActiveRecord::Schema.define(version: 20170927190037) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -75,6 +75,13 @@ ActiveRecord::Schema.define(version: 20170925161205) do
     t.string   "full_address"
     t.integer  "address2_id"
     t.integer  "customer_id"
+  end
+
+  create_table "afps", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "company_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "ajust_details", force: :cascade do |t|
@@ -141,6 +148,14 @@ ActiveRecord::Schema.define(version: 20170925161205) do
   end
 
   create_table "carts", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "categoria", force: :cascade do |t|
+    t.string   "code"
+    t.string   "descrip"
+    t.integer  "company_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -338,6 +353,37 @@ ActiveRecord::Schema.define(version: 20170925161205) do
     t.string   "ruc"
   end
 
+  create_table "dato_laws", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.string   "sueldo_integral"
+    t.string   "comision"
+    t.string   "descuento_ley"
+    t.integer  "afp_id"
+    t.string   "ies"
+    t.string   "senati"
+    t.string   "sobretiempo"
+    t.string   "otra_ley_social"
+    t.string   "accidente_trabajo"
+    t.string   "descuento_quinta"
+    t.string   "domiciliado"
+    t.string   "a_familiar"
+    t.string   "no_afecto"
+    t.string   "no_afecto_grati"
+    t.string   "no_afecto_afp"
+    t.string   "cussp"
+    t.string   "tipo_afiliado_id"
+    t.string   "regimen_id"
+    t.datetime "contrato_inicio"
+    t.datetime "contrato_fin"
+    t.datetime "vacaciones_inicio"
+    t.datetime "vacaciones_fin"
+    t.float    "grati_julio"
+    t.float    "grati_diciembre"
+    t.float    "importe_subsidio"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
   create_table "declaration_deliveries", force: :cascade do |t|
     t.integer  "delivery_id"
     t.integer  "declaration_id"
@@ -517,13 +563,37 @@ ActiveRecord::Schema.define(version: 20170925161205) do
     t.string   "email1"
     t.string   "email2"
     t.integer  "company_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
     t.string   "licencia"
     t.string   "full_name"
     t.string   "IdNumber"
     t.string   "idnumber"
     t.string   "active"
+    t.integer  "categoria_id"
+    t.string   "file_nro"
+    t.datetime "fecha_nacimiento"
+    t.integer  "ocupacion_id"
+    t.string   "carnet_seguro"
+    t.integer  "sexo_id"
+    t.integer  "tipotrabajador_id"
+    t.integer  "estado_civil_id"
+    t.float    "quincena"
+    t.integer  "grado_instruccion_id"
+    t.float    "sueldo"
+    t.integer  "sueldo_moneda"
+    t.float    "horas_diarias"
+    t.string   "calculo_base_hora"
+    t.integer  "nacionalidad_id"
+    t.string   "calculo_tardanza_hora"
+    t.datetime "fecha_ingreso"
+    t.datetime "fecha_cese"
+    t.integer  "confianza_id"
+    t.string   "anexo_referencia"
+    t.integer  "motivo_cese_id"
+    t.string   "anexo_contable"
+    t.integer  "afp_id"
+    t.string   "onp"
   end
 
   create_table "facturas", force: :cascade do |t|
@@ -953,6 +1023,7 @@ ActiveRecord::Schema.define(version: 20170925161205) do
     t.float    "costo_salida"
     t.float    "costo_saldo"
     t.float    "amount"
+    t.string   "to"
   end
 
   add_index "movement_details", ["account_id"], name: "index_movement_details_on_account_id", using: :btree
@@ -1092,6 +1163,30 @@ ActiveRecord::Schema.define(version: 20170925161205) do
     t.datetime "updated_at"
   end
 
+  create_table "parameter_details", force: :cascade do |t|
+    t.integer  "parameter_id"
+    t.integer  "afp_id"
+    t.float    "aporte"
+    t.float    "seguro"
+    t.float    "comision"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  create_table "parameters", force: :cascade do |t|
+    t.string   "code"
+    t.datetime "fecha"
+    t.float    "onp"
+    t.float    "sctr_1"
+    t.float    "sctr_2"
+    t.float    "essalud"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "company_id"
+    t.integer  "user_id"
+    t.string   "description"
+  end
+
   create_table "payment_methods", force: :cascade do |t|
     t.string   "name"
     t.string   "internal_type"
@@ -1116,6 +1211,45 @@ ActiveRecord::Schema.define(version: 20170925161205) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "company_id"
+  end
+
+  create_table "payroll_details", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.float    "remuneracion"
+    t.float    "calc1"
+    t.float    "calc2"
+    t.float    "calc3"
+    t.float    "total1"
+    t.float    "calc4"
+    t.float    "calc5"
+    t.float    "calc6"
+    t.float    "calc7"
+    t.float    "total2"
+    t.float    "remneta"
+    t.float    "calc8"
+    t.float    "calc9"
+    t.float    "calc10"
+    t.float    "total3"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.integer  "payroll_id"
+  end
+
+  create_table "payrolls", force: :cascade do |t|
+    t.string   "code"
+    t.string   "type_payroll"
+    t.string   "integer"
+    t.datetime "fecha"
+    t.datetime "fecha_inicial"
+    t.datetime "fecha_final"
+    t.datetime "fecha_pago"
+    t.integer  "company_id"
+    t.integer  "user_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.integer  "type_payroll_id"
+    t.integer  "parameter_id"
+    t.datetime "date_processed"
   end
 
   create_table "products", force: :cascade do |t|
@@ -1618,6 +1752,13 @@ ActiveRecord::Schema.define(version: 20170925161205) do
     t.string   "propio"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+  end
+
+  create_table "type_payrolls", force: :cascade do |t|
+    t.string   "code"
+    t.string   "descrip"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "ubicas", force: :cascade do |t|

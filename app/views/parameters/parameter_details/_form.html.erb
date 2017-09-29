@@ -1,0 +1,39 @@
+
+<%= simple_form_for [@parameter, @parameter_detail] do |f| %>
+
+  
+  <div class="form-inputs">
+      
+     <td>
+        <div class="field">
+          <%= f.label :afp_id , "Empleado "%><br />
+          <%= f.collection_select :afp_id, @afps, :id, :name, :prompt => true %>
+        </div> 
+    
+     </td>
+
+      <td>        
+        <div class="field">
+          <%= f.label :aporte , "Aporte" %><br />
+          <%= f.number_field :aporte,:style=> 'width: 50px',min: 0  %>
+        </div>
+      </td>
+       <td>        
+        <div class="field">
+          <%= f.label :seguro , "Seguro" %><br />
+          <%= f.number_field :seguro,:style=> 'width: 50px',min: 0  %>
+        </div>
+      </td>
+       <td>        
+        <div class="field">
+          <%= f.label :comision , "Comision" %><br />
+          <%= f.number_field :comision,:style=> 'width: 50px',min: 0  %>
+        </div>
+      </td>
+    
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

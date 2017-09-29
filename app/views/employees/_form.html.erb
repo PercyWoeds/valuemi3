@@ -11,65 +11,103 @@
     </div>
   <% end %>
 
+<div class="mid_box bordered_right">
+  
   <div class="field">
-    <%= f.label :firstname %><br>
+    <%= f.label :firstname, "Nombres" %><br>
     <%= f.text_field :firstname %>
   </div>
   <div class="field">
-    <%= f.label :lastname %><br>
+    <%= f.label :lastname ,"Apellidos "%><br>
     <%= f.text_field :lastname %>
   </div>
+  
   <div class="field">
-    <%= f.label :idnumber %><br>
+      <%= f.label :categoria_id , "Categoria Trabajador "%><br />
+      <%= f.collection_select :categoria_id, @categorias, :id, :descrip, :prompt => true %>
+  </div>
+  
+  <div class="field">
+    <%= f.label :idnumber ,"DNI.:"%><br>
     <%= f.text_field :idnumber %>
   </div>
   
   <div class="field">
-    <%= f.label :address1 %><br>
+    <%= f.label :sexo_id ,"  "%><br />
+    <%= f.select :sexo_id, options_for_select([["MASCULINO",1],["FEMENINO",2]]) %>
+   </div>
+   <div class="field">
+    <%= f.label :estado_civil_id ,"  "%><br />
+    <%= f.select :estado_civil_id, options_for_select([["SOLTERO",1],["CASADO",2],["VIUDO",3],["DIVORCIADO",4]]) %>
+   </div>
+  
+   
+  <div class="field">
+    
+    <%= f.label :address1 ,"Dirección 1:" %><br>
     <%= f.text_field :address1 %>
   </div>
   <div class="field">
-    <%= f.label :address2 %><br>
+    <%= f.label :address2,"Dirección 2:" %><br>
     <%= f.text_field :address2 %>
   </div>
   <div class="field">
-    <%= f.label :city %><br>
+    <%= f.label :city,"Distrito:" %><br>
     <%= f.text_field :city %>
   </div>
   <div class="field">
-    <%= f.label :state %><br>
+    <%= f.label :state, "Provincia:" %><br>
     <%= f.text_field :state %>
   </div>
   <div class="field">
-    <%= f.label :zip %><br>
+    <%= f.label :zip,"Cod.Postal" %><br>
     <%= f.text_field :zip %>
   </div>
   <div class="field">
-    <%= f.label :country %><br>
+    <%= f.label :country,"Pais" %><br>
     <%= f.text_field :country %>
   </div>
   <div class="field">
-    <%= f.label :licencia %><br>
+    <%= f.label :licencia ,"Licencia" %><br>
     <%= f.text_field :licencia  %>
   </div>
   
   <div class="field">
-    <%= f.label :phone1 %><br>
+    <%= f.label :phone1 ,"Telefono 1:"%><br>
     <%= f.text_field :phone1 %>
   </div>
   <div class="field">
-    <%= f.label :phone2 %><br>
+    <%= f.label :phone2, "Telefono 2:"%><br>
     <%= f.text_field :phone2 %>
   </div>
 
   <div class="field">
-    <%= f.label :email1 %><br>
+    <%= f.label :email1, "email: 1" %><br>
     <%= f.text_field :email1 %>
   </div>
   <div class="field">
-    <%= f.label :email2 %><br>
+    <%= f.label :email2 , "email 2"%><br>
     <%= f.text_field :email2 %>
   </div>
+  <div class="field">
+    <%= f.label :sueldo, "Sueldo:" %><br>
+    <%= f.number_field :sueldo,:step => 0.5 %>
+  </div>
+  
+  
+  <div class="field">
+      <%= f.label :afp_id , "Afp  "%><br />
+      <%= f.collection_select :afp_id, @afps, :id, :name, :prompt => true %>
+  </div>
+  <div class="field">
+      <%= f.check_box :onp %>
+      <%= f.label :onp ,"ONP?", :class => "bold" %>
+      <div class="small">
+        Regimen ONP ? 
+      </div>
+    </div>
+   
+  
   <div class="field">
     <%= f.label :company_id %><br>
     <%= f.number_field :company_id %>
@@ -82,9 +120,41 @@
         Es un empleado  ?
       </div>
     </div>
-    
+</div>
+
+<div class="mid_box">
+  
+  <div class="field">
+    <%= f.label :file_nro, "File Numero " %><br>
+    <%= f.number_field :file_nro  %>
+  </div>
+  
+  <div class="field">
+    <%= f.label :carnet_seguro, "Carnet Seguro:" %><br>
+    <%= f.number_field :carnet_seguro  %>
+  </div>
+  
+  
+  <div class="field">
+    <%= f.label :fecha_nacimiento, "Fecha Nacimiento:" %><br>
+    <%= f.date_field :fecha_nacimiento  %>
+  </div>
+  <div class="field">
+    <%= f.label :fecha_ingreso, "Fecha Ingreso:" %><br>
+    <%= f.date_field :fecha_ingreso  %>
+  </div>
+  
+  <div class="field">
+    <%= f.label :fecha_cese, "Fecha Cese:" %><br>
+    <%= f.date_field :fecha_cese  %>
+  </div>
+  
+  
+  
+</div>
+
+
    <div class="form-actions">
-    
     <%= f.submit %>
   </div>
 <% end %>

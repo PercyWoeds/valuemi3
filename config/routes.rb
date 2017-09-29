@@ -1,6 +1,15 @@
   Mnygo::Application.routes.draw do
 
 
+  resources :payroll_details
+  resources :type_payrolls
+  resources :type_payrolls
+  resources :payrolls
+  resources :categoria
+  resources :parameter_details
+  resources :parameters
+  resources :afps
+  resources :dato_laws
   resources :cierres
   resources :gastos
   resources :cegresos
@@ -188,6 +197,11 @@ end
   resources :trucks do
     collection { post :import }
   end 
+  
+   resources :parameters do
+      resources :parameter_details, except: [:index,:show], controller: "parameters/parameter_details"
+  end 
+  
   #Manifiesto busqueda de guias
 
   get 'search_mines', to: 'deliveries#search'
@@ -270,7 +284,8 @@ end
   match 'companies/reports/rpt_calmacen5_pdf/:company_id' => 'reports#rpt_calmacen5_pdf', via: [:get, :post]  
   match 'companies/reports/rpt_calmacen6_pdf/:company_id' => 'reports#rpt_calmacen6_pdf', via: [:get, :post]  
   match 'companies/reports/rpt_calmacen7_pdf/:company_id' => 'reports#rpt_calmacen7_pdf', via: [:get, :post]  
-  match 'companies/reports/rpt_calmacen8_pdf/:company_id' => 'reports#rpt_calmacen8_pdf', via: [:get, :post]  
+  match 'companies/reports/rpt_calmacen8_pdf/:company_id' => 'reports#rpt_calmacen8_pdf', via: [:get, :post]
+  match 'companies/reports/rpt_cajust1_pdf/:company_id' => 'reports#rpt_cajust1_pdf', via: [:get, :post]
 
   match 'companies/reports/rpt_facturas_all/:company_id' => 'reports#rpt_facturas_all', via: [:get, :post]
   match 'companies/reports/rpt_facturas_all2/:company_id' => 'reports#rpt_facturas_all2', via: [:get, :post]
@@ -515,12 +530,14 @@ end
   match 'ajusts/ac_user/:company_id' => 'ajusts#ac_user', via: [:get, :post]
   match 'ajusts/ac_purchases/:company_id' => 'ajusts#ac_purchases', via: [:get, :post]
   match 'ajusts/ac_suppliers/:company_id' => 'ajusts#ac_suppliers', via: [:get, :post]
-
+  match 'ajusts/rpt_ajust_all_pdf/:id' => 'ajusts#rpt_ajust_all_pdf', via: [:get, :post]
+  
   match 'ajusts/new/:company_id' => 'ajusts#new', via: [:get, :post]
   match 'ajusts/do_email/:id' => 'ajusts#do_email', via: [:get, :post]
   match 'ajusts/do_process/:id' => 'ajusts#do_process', via: [:get, :post]
   match 'ajusts/email/:id' => 'ajusts#email', via: [:get, :post]
   match 'ajusts/pdf/:id' => 'ajusts#pdf', via: [:get, :post]
+  
   match 'companies/ajusts/:company_id' => 'ajusts#list_ajusts', via: [:get, :post]
   resources :ajusts 
 
@@ -779,6 +796,7 @@ end
   match 'companies/cpagar/:id' => 'companies#cpagar', via: [:get, :post]
   match 'companies/ccobrar/:id' => 'companies#ccobrar', via: [:get, :post]
   match 'companies/showcase/:id' => 'companies#showcase', via: [:get, :post]
+  match 'companies/planilla/:id' => 'companies#planilla', via: [:get, :post]
   resources :companies
 
   # Users packages
@@ -837,6 +855,10 @@ end
   match 'companies/inventarios/:company_id' => 'inventarios#index', via: [:get, :post]
   
   resources :inventarios
+
+  match 'payrolls/do_process/:id' => 'payrolls#do_process', via: [:get, :post]  
+  match 'payrolls/do_pdf/:id' => 'payrolls#do_pdf', via: [:get, :post]  
+  resources :payrolls 
 
 
   # Sessions

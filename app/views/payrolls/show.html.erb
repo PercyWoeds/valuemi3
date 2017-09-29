@@ -1,0 +1,200 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @payroll.code %>
+</p>
+
+<p>
+  <strong>Type payroll:</strong>
+  <%= @payroll.type_payroll %>
+</p>
+
+<p>
+  <strong>Integer:</strong>
+  <%= @payroll.integer %>
+</p>
+
+<p>
+  <strong>Fecha:</strong>
+  <%= @payroll.fecha %>
+</p>
+
+<p>
+  <strong>Fecha inicial:</strong>
+  <%= @payroll.fecha_inicial %>
+</p>
+
+<p>
+  <strong>Fecha final:</strong>
+  <%= @payroll.fecha_final %>
+  </p>
+
+<p>
+  <strong>Fecha pago:</strong>
+  <%= @payroll.fecha_pago %>
+</p>
+<div class="button">
+<%= link_to 'Generar', "/payrolls/do_process/#{@payroll.id}" %> 
+<%= link_to 'Exportar Pdf', "/payrolls/do_pdf/#{@payroll.id}" %> 
+<%= link_to 'Editar', edit_payroll_path(@payroll) %> 
+<%= link_to 'Regresar', payrolls_path %>
+</div>
+
+<h3>
+  Detalle
+</h3>
+
+<table>
+  <thead>
+    <tr>
+      
+      <th>
+        Empleado 
+      </th>
+      <th>
+        Rem.<br>
+        Bruta
+      </th>
+      <th>
+         Asign.<br>
+         Familiar
+      </th>
+      <th>
+        Gratif.<br>
+        Truncas
+        
+      </th>
+      <th>
+        Vacac.<br>
+        Truncas
+      </th>
+      
+      <th>
+        Total<br>
+        Remun.
+      </th>
+      <th>
+        Renta.<br>
+        Quinta
+      </th>
+      
+      <th>
+        ONP.<br>
+        
+      </th>
+      <th>
+        AFP<br>
+        
+      </th>
+      
+      <th>
+        Adelanto<br>
+        
+      </th>
+      
+      <th>
+        Total<br>
+      
+      </th>
+      <th>
+        Remun.<br>
+        Neta
+      </th>
+      <th>
+        ESSALUD.<br>
+        
+      </th>
+      <th>
+        SCTR<br>
+        Salud
+      </th>
+      
+      <th>
+        SCTR.<br>
+        Pension
+      </th>
+      
+      <th>
+        Total<br>
+        Aporte 
+      </th>
+      
+    </tr>
+  </thead>
+  <tbody>
+
+
+    <%  @payroll_details.each do |detalle| %>
+    <tr>
+          
+          <td class="small bordered_bottom bordered_right">
+            <%= link_to detalle.employee.full_name, detalle.employee, :title => "Ir a Empleado" %>
+            
+          </td>
+          
+          <td class="small bordered_bottom bordered_right">
+            <%= detalle.remuneracion %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= detalle.calc1 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= detalle.calc2 %>              
+          </td>
+          
+          <td class="small bordered_bottom bordered_right">
+            <%= detalle.calc3 %>              
+            
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= detalle.total1 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= detalle.calc4 %>              
+          </td>
+          
+          <td class="small bordered_bottom bordered_right">
+            <%= detalle.calc5 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= detalle.calc6 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= detalle.calc7 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= detalle.total2 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= detalle.total1- detalle.total2 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= detalle.calc8 %>              
+          </td>
+          
+          <td class="small bordered_bottom bordered_right">
+            <%= detalle.calc9 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= detalle.calc10 %>              
+          </td>
+          
+          <td class="small bordered_bottom bordered_right">
+            <%= detalle.total3 %>              
+          </td>
+          
+          
+          
+          
+          
+    </td>
+    
+    <% end %>
+
+</tbody>
+</table>
+<br />
+
+
+

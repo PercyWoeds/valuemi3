@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  code: MyString
+  fecha: 2017-09-26 20:54:56
+  onp: 1.5
+  sctr_1: 1.5
+  sctr_2: 1.5
+  essalud: 1.5
+
+two:
+  code: MyString
+  fecha: 2017-09-26 20:54:56
+  onp: 1.5
+  sctr_1: 1.5
+  sctr_2: 1.5
+  essalud: 1.5

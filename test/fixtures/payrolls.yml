@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  code: MyString
+  type_payroll: MyString
+  integer: MyString
+  fecha: 2017-09-26 22:56:57
+  fecha_inicial: 2017-09-26 22:56:57
+  fecha: 
+  fecha_pago: 2017-09-26 22:56:57
+
+two:
+  code: MyString
+  type_payroll: MyString
+  integer: MyString
+  fecha: 2017-09-26 22:56:57
+  fecha_inicial: 2017-09-26 22:56:57
+  fecha: 
+  fecha_pago: 2017-09-26 22:56:57

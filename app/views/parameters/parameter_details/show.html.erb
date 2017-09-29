@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Parametros :</strong>
+  <%= @parameter_detail.parameter_id %>
+</p>
+
+<p>
+  <strong>Afp:</strong>
+  <%= @parameter_detail.afp_id %>
+</p>
+
+<p>
+  <strong>Aporte:</strong>
+  <%= @parameter_detail.aporte %>
+</p>
+
+<p>
+  <strong>Seguro:</strong>
+  <%= @parameter_detail.seguro %>
+</p>
+
+<p>
+  <strong>Comision:</strong>
+  <%= @parameter_detail.comision %>
+</p>
+
+<%= link_to 'Edit', edit_parameter_detail_path(@parameter_detail) %> |
+<%= link_to 'Back', parameter_details_path %>

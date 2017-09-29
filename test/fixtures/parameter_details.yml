@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  parameter_id: 1
+  afp_id: 1
+  aporte: 1.5
+  seguro: 1.5
+  comision: 1.5
+
+two:
+  parameter_id: 1
+  afp_id: 1
+  aporte: 1.5
+  seguro: 1.5
+  comision: 1.5
