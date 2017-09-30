@@ -3,7 +3,8 @@ include CompaniesHelper
 
 class CustomersController < ApplicationController
   before_filter :authenticate_user!, :checkCompanies
-    before_action :set_customer_params, only: [:show, :edit, :update, :destroy]
+  
+  before_action :set_customer, only: [:show, :edit, :update, :destroy]
 
   # Show customers for a company
 

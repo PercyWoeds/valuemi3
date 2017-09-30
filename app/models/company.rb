@@ -682,17 +682,17 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? and factur
 def get_customer_payments2(moneda,fecha1,fecha2)
 
    @facturas = Factura.find_by_sql(["
-  SELECT   year_mounth as year_month,
+   SELECT   year_mounth as year_month,
    customer_id,
    SUM(balance) as balance   
    FROM facturas
-   WHERE moneda_id = ? and balance>0 and fecha >= ? and fecha  <= ?
+   WHERE moneda_id = ? and balance>0 and fecha >= ? and fecha  <= ? and document_id <> 2 
    GROUP BY 2,1
    ORDER BY 2,1 ", moneda,"#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])    
    
    
    @facturas2 = Factura.find_by_sql(["
-  SELECT   year_mounth as year_month,
+   SELECT   year_mounth as year_month,
    customer_id,
    SUM(balance) as balance   
    FROM facturas
@@ -702,25 +702,29 @@ def get_customer_payments2(moneda,fecha1,fecha2)
    
    Tempfactura.delete_all
    
-   
    for f in @facturas
-   
-       b=Tempfactura.new(year_month: f.year_month , customer_id: f.customer_id,balance: f.balance)
+       b = Tempfactura.new(year_month: f.year_month , customer_id: f.customer_id,balance: f.balance)
        b.save 
    end 
    
    
    for c in @facturas2
-   
-       b = Tempfactura.find_by(customer_id: c.customer_id)
-       if b 
-         b.balance -= c.balance
-         b.save   
-       end 
+         lcBalance= c.balance 
+         puts c.customer_id
+         tf = Tempfactura.find_by(year_month: c.year_month, customer_id: c.customer_id)
+       
+       if tf 
+           puts "balance "
+           puts c.balance
+           puts tf.balance 
+           tf.balance -= c.balance 
+           puts tf.balance
+           tf.save 
+       end
        
    end 
    
-   @facturas = Tempfactura.all 
+   @facturas = Tempfactura.order(:customer_id,:year_month) 
   return @facturas
     
  end 
