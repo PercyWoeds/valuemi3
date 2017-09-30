@@ -117,6 +117,8 @@ class SuppliersController < ApplicationController
   # DELETE /suppliers/1
   # DELETE /suppliers/1.xml
   def destroy
+    
+    
     @supplier = Supplier.find(params[:id])
     
     # Erase supplier id for products from supplier
@@ -128,8 +130,16 @@ class SuppliersController < ApplicationController
    # end
     
     @company = @supplier.company
-    @supplier.destroy
-
+    
+   
+    @ordens = Purchaseorder.find_by(supplier_id: @supplier.id)
+    @services = Serviceorder.find_by(supplier_id: @supplier.id)
+    @facturas = Purchase.find_by(supplier_id: @supplier.id)
+    if @ordens || @services || @facturas 
+      
+    else  
+      @supplier.destroy
+    end 
     respond_to do |format|
       format.html { redirect_to "/companies/suppliers/#{@company.id}" }
       format.xml  { head :ok }
