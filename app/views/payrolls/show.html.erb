@@ -36,7 +36,10 @@
 </p>
 <div class="button">
 <%= link_to 'Generar', "/payrolls/do_process/#{@payroll.id}" %> 
-<%= link_to 'Exportar Pdf', "/payrolls/do_pdf/#{@payroll.id}" %> 
+<%= link_to 'Exportar Pdf', "/payrolls/do_pdf/#{@payroll.id}" %>
+<%= link_to 'Agregar Bonificaciones (+)', "/payrolls/do_pdf/#{@payroll.id}" %> 
+<%= link_to 'Agregar Descuentos (-)', "/payrolls/do_pdf/#{@payroll.id}" %> 
+
 <%= link_to 'Editar', edit_payroll_path(@payroll) %> 
 <%= link_to 'Regresar', payrolls_path %>
 </div>

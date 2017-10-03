@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Valors</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Comments</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @valors.each do |valor| %>
+      <tr>
+        <td><%= valor.name %></td>
+        <td><%= valor.comments %></td>
+        <td><%= link_to 'Show', valor %></td>
+        <td><%= link_to 'Edit', edit_valor_path(valor) %></td>
+        <td><%= link_to 'Destroy', valor, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Valor', new_valor_path %>

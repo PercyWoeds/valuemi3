@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  employee_id: 1
+  valor_id: 1
+  tm: MyString
+  detalle: MyText
+
+two:
+  employee_id: 1
+  valor_id: 1
+  tm: MyString
+  detalle: MyText

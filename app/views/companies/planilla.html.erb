@@ -52,7 +52,7 @@
 
   <h3>
     <%= image_tag("supplier_32.png", :class => "vmiddle") %>
-    <%= link_to "Haberes y Descuentos fijos", "/companies/services/#{@company.id}" %>
+    <%= link_to "Haberes y Descuentos fijos", loans_path  %>
   </h3>
 
   <p>
@@ -73,8 +73,7 @@
   </p>
 
 
-<%= hr() %>
-  
+
   <h3>
     <%= image_tag("supplier_32.png", :class => "vmiddle") %>
     <%= link_to "Acumulados de quinta categoria", "/companies/payments/#{@company.id}" %>
@@ -196,5 +195,15 @@
   <p>
      Agregar, editar or eliminar Grado de instruccion
   </p>
+<%= hr() %>
+  
+  <h3>
+    <%= image_tag("supplier_32.png", :class => "vmiddle") %>
+    <%= link_to "Parametros detalle boleta ", valors_path %>
+  </h3>
 
 
+
+  <p>
+     Agregar, editar or eliminar parametros detalle boleta 
+  </p>

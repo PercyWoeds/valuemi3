@@ -1,6 +1,9 @@
   Mnygo::Application.routes.draw do
 
 
+  resources :valors
+  resources :loan_details
+  resources :loans
   resources :grado_instruccions
   resources :tipotrabajadors
   resources :ocupacions
@@ -204,6 +207,11 @@ end
    resources :parameters do
       resources :parameter_details, except: [:index,:show], controller: "parameters/parameter_details"
   end 
+  
+ resources :loans do
+      resources :loan_details, except: [:index,:show], controller: "loans/loan_details"
+  end 
+
   
   #Manifiesto busqueda de guias
 

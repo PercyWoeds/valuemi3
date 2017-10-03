@@ -106,9 +106,6 @@ class PayrollsController < ApplicationController
 
        for  bp in @payroll_details
        
-            
-      
-
        cell_1 = pdf.make_cell(:content => " NOMBRE : "<< bp.employee.full_name)
        cell_2 = pdf.make_cell(:content => "SUELDO: " << bp.remuneracion.to_s)
        

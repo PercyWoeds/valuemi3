@@ -464,7 +464,7 @@ def get_guias_2(fecha1,fecha2)
  end 
  
  def get_facturas_day_value(fecha1,fecha2,value = "total",moneda)
-
+    
     facturas = Factura.where([" company_id = ? AND fecha >= ? and fecha<= ? and moneda_id = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59",moneda])
     if facturas
     ret=0  
@@ -680,7 +680,10 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? and factur
 ## REPORTE DE ESTADISTICAS DE PAGOS pivot
 
 def get_customer_payments2(moneda,fecha1,fecha2)
-
+   
+     fecha1a = fecha1.strftime("%F") 
+     fecha2a = fecha2.strftime("%F") 
+     
    @facturas = Factura.find_by_sql(["
    SELECT   year_mounth as year_month,
    customer_id,
@@ -688,7 +691,7 @@ def get_customer_payments2(moneda,fecha1,fecha2)
    FROM facturas
    WHERE moneda_id = ? and balance>0 and fecha >= ? and fecha  <= ? and document_id <> 2 
    GROUP BY 2,1
-   ORDER BY 2,1 ", moneda,"#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])    
+   ORDER BY 2,1 ", moneda,"#{fecha1a} 00:00:00","#{fecha2a} 23:59:59" ])    
    
    
    @facturas2 = Factura.find_by_sql(["
@@ -696,9 +699,9 @@ def get_customer_payments2(moneda,fecha1,fecha2)
    customer_id,
    SUM(balance) as balance   
    FROM facturas
-   WHERE moneda_id = ? and balance>0 and fecha >= ? and fecha  <= ? and document_id =2 
+   WHERE moneda_id = ? and balance>0 and fecha >= ? and fecha  <= ? and document_id = 2 
    GROUP BY 2,1
-   ORDER BY 2,1 ", moneda,"#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])    
+   ORDER BY 2,1 ", moneda,"#{fecha1a} 00:00:00","#{fecha2a} 23:59:59" ])    
    
    Tempfactura.delete_all
    

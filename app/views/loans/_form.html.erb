@@ -1,0 +1,16 @@
+<%= simple_form_for(@loan) do |f| %>
+  <%= f.error_notification %>
+
+   <div class="field">
+      <%= f.label :parameter_id, "Planilla afecta"%><br />
+      <%= f.collection_select :payroll_id, @payroll, :id, :code, :prompt => true %>
+    </div>
+     <div class="field">
+      <%= f.label :descrip, "Descripcion*", :class => "bold" %><br />
+      <%= f.text_field :descrip %>
+    </div>
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>
+

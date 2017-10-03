@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @valor.name %>
+</p>
+
+<p>
+  <strong>Comments:</strong>
+  <%= @valor.comments %>
+</p>
+
+<%= link_to 'Edit', edit_valor_path(@valor) %> |
+<%= link_to 'Back', valors_path %>

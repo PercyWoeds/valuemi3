@@ -1,0 +1,77 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Payroll:</strong>
+  <%= @loan.payroll_id %>
+</p>
+
+<p>
+  <strong>Descrip:</strong>
+  <%= @loan.descrip %>
+</p>
+
+<%= link_to 'Edit', edit_loan_path(@loan) %> |
+<%= link_to 'Back', loans_path %>
+
+
+
+<h3>
+  Detalle
+</h3>
+
+<table>
+  <thead>
+    <tr>
+      
+      <th>
+        Empleado 
+      </th>
+      <th>
+        Valor 
+      </th>
+      
+      <th>
+        Detalle 
+      </th>
+      
+      
+    </tr>
+  </thead>
+  <tbody>
+
+
+    <%  @loan_details.each do |detalle| %>
+    <tr>
+          
+          <td class="small bordered_bottom bordered_right">
+            <%= link_to detalle.employee.full_name, detalle.employee, :title => "Ir a Empleado" %>
+            
+          </td>
+          
+          <td class="small bordered_bottom bordered_right">
+            <%= detalle.valor.descrip %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= detalle.detalle  %>              
+          </td>
+      </tr>    
+          
+          
+          
+          
+    </td>
+    
+    <% end %>
+
+</tbody>
+</table>
+<br />
+
+
+
+<div class="button">
+<%= link_to 'Agregar Item', new_loan_loan_detail_path(@loan) %>
+<%= link_to 'Editar', edit_loan_path(@loan) %> 
+<%= link_to 'Regresar', loans_path %>
+</div> 
+

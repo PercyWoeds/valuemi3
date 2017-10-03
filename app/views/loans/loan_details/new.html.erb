@@ -1,0 +1,16 @@
+<h1>Nuevo </h1>
+
+<p>
+<% @loan.payroll.code %>
+@loan.payroll.fecha_inicial
+@loan.payroll.fecha_final
+</p>
+
+<p>
+@loan.descrip
+
+</p>
+
+<%= render 'form' %>
+
+<%= link_to 'Regresar', loan_details_path %>
