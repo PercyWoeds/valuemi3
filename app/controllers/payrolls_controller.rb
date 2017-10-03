@@ -22,6 +22,7 @@ class PayrollsController < ApplicationController
     @payroll.fecha_inicial = Date.today 
     @payroll.fecha_final = Date.today 
     @payroll.fecha_pago = Date.today 
+   
   end
 
   # GET /payrolls/1/edit
@@ -105,69 +106,10 @@ class PayrollsController < ApplicationController
 
        for  bp in @payroll_details
        
-            row = []
             
-              row << "Apellidos y Nombres : " 
-              row <<  bp.employee.full_name
-              row << " "
-              row << " "
-              row << " "
-            table_content << row
-            
-            row = []
-            row << "Ocupacion :"
-            row << " "
-            row << " "
-            row << "Fec.Ingreso: "
-            row <<  bp.employee.fecha_ingreso
-            table_content << row
-            
-            row = []
-            row << "Fec.Nacimiento :"
-            row << bp.employee.fecha_nacimiento
-            row << " "
-            row << "DNI :"
-            row << bp.employee.idnumber  
-            table_content << row
-                      
-            row = []
-            row << "Nro.AFP:"
-            row << ""
-            row << " "
-            row << "Fec.Cese :"
-            row << ""
-            table_content << row
-                      
-            row = []
-            row << "Inicio Vacaciones :"
-            row << " "
-            row << " "
-            row << "Salida Vacaciones :"
-            row << ""
-            table_content << row
-            
-            row = []
-            
-            row << "Remuneración :"
-            row << bp.remuneracion 
-            row << "Essalud:"
-            row << bp.calc8
-            row << ""
-            table_content << row
-            
-            row = []
-            row << "Jornal :"
-            row << " "
-            row << "ONP:"
-            row << ""
-            row << bp.calc5
-            table_content << row
-            
-            nroitem=nroitem + 1
-            
-        end
+      
 
-       cell_1 = pdf.make_cell(:content => " NOMBRE :"<< bp.employee.full_name)
+       cell_1 = pdf.make_cell(:content => " NOMBRE : "<< bp.employee.full_name)
        cell_2 = pdf.make_cell(:content => "SUELDO: " << bp.remuneracion.to_s)
        
        cell_3 = pdf.make_cell(:content => "CODIGO: " << bp.employee_id.to_s)
@@ -194,32 +136,152 @@ class PayrollsController < ApplicationController
        cell_19 = pdf.make_cell(:content => "CUSSP:")
        cell_20 = pdf.make_cell(:content => "REGIMEN PENSION. :")
        cell_21 = pdf.make_cell(:content => "F.FIN.VACAC. :")
+        
        
        
-       two_dimensional_array =[
-        ["Remuneracion : "],
-       ["Jornal"],
-       ["Dominical"],
-       ["Incremento"],
-       ["Horas Extras"],
-       ["Asig.familiar"],
-       ["Part.Utilidades"],
-       ["Feriados"],
-       ["Bonificaciones."],
-       ["Reintegros."],
-       ["Vacaciones"],
-       ["Comisiones"]  ]
+      dell_1 =pdf.make_cell(:content => "DIAS/HRS.")
+      dell_2 =pdf.make_cell(:content => "") 
+      dell_3 =pdf.make_cell(:content => "HABERES")
+      dell_4 =pdf.make_cell(:content => "") 
+      dell_5 =pdf.make_cell(:content => "DESCUENTO")
+      dell_6 =pdf.make_cell(:content => "")
+      dell_7 =pdf.make_cell(:content => "APORTACIONES")
       
-      dell_1 =pdf.make_cell(:content => "CUSSP:")
-      dell_2 =pdf.make_cell(:content => "CUSSP:") 
-      dell_3 =pdf.make_cell(:content => "CUSSP:")
-      dell_4 =pdf.make_cell(:content => "CUSSP:") 
-      dell_5 =pdf.make_cell(:content => "CUSSP:")
-      dell_6 =pdf.make_cell(:content => "CUSSP:")
-      dell_7 =pdf.make_cell(:content => "CUSSP:")
+      #DETALLE BOLETAS
+      # fila 1
+      
+      dell_8 =pdf.make_cell(:content => "30.00")
+      dell_9 =pdf.make_cell(:content => "SUELDOS  ") 
+      dell_10 =pdf.make_cell(:content => bp.remuneracion.to_s)
+      
+      if bp.employee.onp == "1"
+        dell_11 =pdf.make_cell(:content => "ONP") 
+        dell_12 =pdf.make_cell(:content => bp.calc5.to_s)
+      else
+        dell_11 =pdf.make_cell(:content => "AFP LEY 10%") 
+        dell_12 =pdf.make_cell(:content => bp.calc6.to_s)
+      end 
+        
+        dell_13 =pdf.make_cell(:content => "ESSALUD")
+        dell_14 =pdf.make_cell(:content => bp.total3.to_s)
+        
+      #fila 2
+      dell_15 =pdf.make_cell(:content => "")
+      dell_16 =pdf.make_cell(:content => "ASIG.FAMILIAR") 
+      dell_17 =pdf.make_cell(:content => "")
+      
+      if bp.employee.onp == "1"
+        dell_18 =pdf.make_cell(:content => "") 
+        dell_19 =pdf.make_cell(:content => "")
+      else
+        dell_18 =pdf.make_cell(:content => "AFP ISS%") 
+        dell_19 =pdf.make_cell(:content => bp.calc6.to_s)
+      end 
+
+        dell_20 =pdf.make_cell(:content => "")
+        dell_21 =pdf.make_cell(:content => "")
+      #fila 3  
+        dell_22 =pdf.make_cell(:content => "")
+        dell_23 =pdf.make_cell(:content => "") 
+        dell_24 =pdf.make_cell(:content => "")
+      
+      if bp.employee.onp == "1"
+        dell_25 =pdf.make_cell(:content => "") 
+        dell_26 =pdf.make_cell(:content => "")
+      else
+        dell_25 =pdf.make_cell(:content => "AFP COM.") 
+        dell_26 =pdf.make_cell(:content => bp.calc6.to_s)
+      end 
+          
+        dell_27 =pdf.make_cell(:content => "")
+        dell_28 =pdf.make_cell(:content => "")
+      
+      #fila 4
+      
+        dell_29 =pdf.make_cell(:content => "")
+        dell_30 =pdf.make_cell(:content => "") 
+        dell_31 =pdf.make_cell(:content => "")
       
       
-       pdf.table([["TRANSPORTES PEREDA SRL ","JR VIRTOR REINEL 185 LIMA ","", "BOLETA NRO."],
+        dell_32 =pdf.make_cell(:content => "") 
+        dell_33 =pdf.make_cell(:content => "")
+        
+        dell_34 =pdf.make_cell(:content => "")
+        dell_35 =pdf.make_cell(:content => "")
+      #fila 5
+      
+        dell_36 =pdf.make_cell(:content => "")
+        dell_37 =pdf.make_cell(:content => "") 
+        dell_38 =pdf.make_cell(:content => "")
+      
+        dell_39 =pdf.make_cell(:content => "") 
+        dell_40 =pdf.make_cell(:content => "")
+        
+        dell_41 =pdf.make_cell(:content => "")
+        dell_42 =pdf.make_cell(:content => "")
+      
+      #fila 6
+      
+        dell_43 =pdf.make_cell(:content => "")
+        dell_44 =pdf.make_cell(:content => "") 
+        dell_45 =pdf.make_cell(:content => "")
+      
+        dell_46 =pdf.make_cell(:content => "") 
+        dell_47 =pdf.make_cell(:content => "")
+        
+        dell_48 =pdf.make_cell(:content => "")
+        dell_49 =pdf.make_cell(:content => "")
+      #fila 7
+      
+        
+        dell_50 =pdf.make_cell(:content => "") 
+        dell_51 =pdf.make_cell(:content => "")
+        dell_52 =pdf.make_cell(:content => "")
+        
+        dell_53 =pdf.make_cell(:content => "")
+        dell_54 =pdf.make_cell(:content => "")
+        
+        dell_55 =pdf.make_cell(:content => "")
+        dell_56 =pdf.make_cell(:content => "")
+      #fila 8
+      
+        
+        dell_57 =pdf.make_cell(:content => "") 
+        dell_58 =pdf.make_cell(:content => "")
+        dell_59 =pdf.make_cell(:content => "") 
+        
+        dell_60 =pdf.make_cell(:content => "")
+        dell_61 =pdf.make_cell(:content => "")
+        
+        dell_62 =pdf.make_cell(:content => "")
+        dell_63 =pdf.make_cell(:content => "")
+      #fila 9
+      
+        
+        dell_64 =pdf.make_cell(:content => "") 
+        dell_65 =pdf.make_cell(:content => "")
+        dell_66 =pdf.make_cell(:content => "")
+        
+        dell_67 =pdf.make_cell(:content => "")
+        dell_68 =pdf.make_cell(:content => "")
+        
+        dell_69 =pdf.make_cell(:content => "")
+        dell_70 =pdf.make_cell(:content => "")
+      #fila 10
+      
+        
+        dell_71 =pdf.make_cell(:content => "") 
+        dell_72 =pdf.make_cell(:content => "")
+        dell_73 =pdf.make_cell(:content => "")
+        
+        dell_74 =pdf.make_cell(:content => "")
+        dell_75 =pdf.make_cell(:content => "")
+        
+        dell_76 =pdf.make_cell(:content => "")
+        dell_77 =pdf.make_cell(:content => "")
+      
+      
+       pdf.table([["TRANSPORTES PEREDA SRL ","JR VICTOR REINEL 185 LIMA ","", "BOLETA NRO."],
        ["RUC: 20424092941", "", "D.S.001-98-TR", "PERIODO DE PAGO :"],
        [cell_1, "", "",cell_2],
        [cell_3,cell_4,cell_5,cell_6],
@@ -233,15 +295,64 @@ class PayrollsController < ApplicationController
         })
         
         
+        pdf.stroke_horizontal_rule
+        
         pdf.table(
-      [[dell_1,dell_2,dell_3,dell_4,dell_5,dell_6,dell_7]], {
+      [[dell_1 ,dell_2,dell_3,dell_4,dell_5,dell_6,dell_7] 
+       ],
+       {
+          :position => :center,
+          :cell_style => {:border_width => 0},
+          :width => pdf.bounds.width,
+          :column_widths => {0 => 50}
+        }  )
+       pdf.stroke_horizontal_rule
+       pdf.table(
+      [
+       [dell_8 ,dell_9,dell_10,dell_11,dell_12,dell_13,dell_14],
+       [dell_15,dell_16,dell_17,dell_18,dell_19,dell_20,dell_21],
+       [dell_22,dell_23,dell_24,dell_25,dell_26,dell_27,dell_28],
+       [dell_29,dell_30,dell_31,dell_32,dell_33,dell_34,dell_35],
+       [dell_36,dell_37,dell_38,dell_39,dell_40,dell_41,dell_42],
+       [dell_43,dell_44,dell_45,dell_46,dell_47,dell_48,dell_49],
+       [dell_50,dell_51,dell_52,dell_53,dell_54,dell_55,dell_56],
+       [dell_57,dell_58,dell_59,dell_60,dell_61,dell_62,dell_63],
+       [dell_64,dell_65,dell_66,dell_67,dell_68,dell_69,dell_70],
+       [dell_71,dell_72,dell_73,dell_74,dell_75,dell_76,dell_77]],
+       {
           :position => :center,
           :cell_style => {:border_width => 0},
           :width => pdf.bounds.width
         })
         
+      pdf.move_down 50
+      pdf.stroke_horizontal_rule
+      
+      
+      tell_1 =pdf.make_cell(:content => "TOTAL HABERES.")
+      tell_2 =pdf.make_cell(:content => "") 
+      tell_3 =pdf.make_cell(:content => bp.total1.to_s)
+      tell_4 =pdf.make_cell(:content => "TOTAL DSCTOS.") 
+      tell_5 =pdf.make_cell(:content => bp.total2.to_s)
+      tell_6 =pdf.make_cell(:content => "NETO")
+      tell_7 =pdf.make_cell(:content => bp.remneta.to_s)
+      
+      
+      
+        pdf.table(
+      [[tell_1,tell_2,tell_3,tell_4,tell_5,tell_6,tell_7] 
+       ],
+       {
+          :position => :center,
+          :cell_style => {:border_width => 0},
+          :width => pdf.bounds.width
+        })
+      
+            pdf.stroke_horizontal_rule
+            
+            pdf.move_down 20      
+    end 
        
-       pdf.move_down 10      
      
        pdf
 
@@ -268,7 +379,7 @@ class PayrollsController < ApplicationController
           :italic => "app/assets/fonts/OpenSans-Italic.ttf",
         })
 
-        pdf.font "Open Sans",:size =>6
+        pdf.font "Open Sans",:size =>7
         pdf = build_pdf_header(pdf)
         pdf = build_pdf_body(pdf)
         build_pdf_footer(pdf)

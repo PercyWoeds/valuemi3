@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Grado Instruccions</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @grado_instruccions.each do |grado_instruccion| %>
+      <tr>
+        <td><%= grado_instruccion.code %></td>
+        <td><%= grado_instruccion.name %></td>
+        <td><%= link_to 'Show', grado_instruccion %></td>
+        <td><%= link_to 'Edit', edit_grado_instruccion_path(grado_instruccion) %></td>
+        <td><%= link_to 'Destroy', grado_instruccion, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Grado instruccion', new_grado_instruccion_path %>

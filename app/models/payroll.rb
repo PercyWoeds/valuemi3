@@ -34,8 +34,7 @@ class Payroll < ActiveRecord::Base
       lcSctr1 = @detalle.sctr_1
       lcSctr2 = @detalle.sctr_2
       lcEssalud = @detalle.essalud 
-      
-      
+     
       for ip in planilla
                 
         #actualiza stock
@@ -77,9 +76,10 @@ class Payroll < ActiveRecord::Base
         lctotal3 = lccalc8+lccalc9+lccalc10
         
         lctotal2 = lccalc4 + lccalc5 + lccalc6 + lccalc7
+        lcneto = totalremu -lctotal2
         
         a=  PayrollDetail.new(employee_id: ip.id, remuneracion: ip.sueldo, calc1: 0, calc2: 0, calc3: 0, total1: totalremu,
-        calc4: 0, calc5: lccalc5.round(2), calc6: lccalc6.round(2), calc7: 0, total2: lctotal2, remneta: 0, calc8: lccalc8, calc9: lccalc9, calc10: lccalc10,
+        calc4: 0, calc5: lccalc5.round(2), calc6: lccalc6.round(2), calc7: 0, total2: lctotal2, remneta: lcneto, calc8: lccalc8, calc9: lccalc9, calc10: lccalc10,
         total3: lctotal3, payroll_id: self.id)
         
         a.save

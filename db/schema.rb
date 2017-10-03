@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170929231133) do
+ActiveRecord::Schema.define(version: 20171002205313) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -594,6 +594,9 @@ ActiveRecord::Schema.define(version: 20170929231133) do
     t.string   "anexo_contable"
     t.integer  "afp_id"
     t.string   "onp"
+    t.integer  "location_id"
+    t.integer  "division_id"
+    t.string   "code"
   end
 
   create_table "facturas", force: :cascade do |t|
@@ -646,6 +649,13 @@ ActiveRecord::Schema.define(version: 20170929231133) do
     t.float    "currtotal"
     t.integer  "company_id"
     t.string   "grupo"
+  end
+
+  create_table "grado_instruccions", force: :cascade do |t|
+    t.integer  "code"
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "histories", force: :cascade do |t|
@@ -1092,6 +1102,13 @@ ActiveRecord::Schema.define(version: 20170929231133) do
   create_table "numeras", force: :cascade do |t|
     t.string   "subdiario"
     t.string   "compro"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "ocupacions", force: :cascade do |t|
+    t.integer  "code"
+    t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -1696,6 +1713,13 @@ ActiveRecord::Schema.define(version: 20170929231133) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "company_id"
+  end
+
+  create_table "tipotrabajadors", force: :cascade do |t|
+    t.integer  "code"
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "tranportorders", force: :cascade do |t|

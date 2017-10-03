@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Tipotrabajadors</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @tipotrabajadors.each do |tipotrabajador| %>
+      <tr>
+        <td><%= tipotrabajador.code %></td>
+        <td><%= tipotrabajador.name %></td>
+        <td><%= link_to 'Show', tipotrabajador %></td>
+        <td><%= link_to 'Edit', edit_tipotrabajador_path(tipotrabajador) %></td>
+        <td><%= link_to 'Destroy', tipotrabajador, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Tipotrabajador', new_tipotrabajador_path %>

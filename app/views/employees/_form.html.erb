@@ -124,6 +124,21 @@
 
 <div class="mid_box">
   
+  
+  
+    <div class="field">
+      <%= f.label :location_id ,"Agencia :"%><br />
+      <%= f.collection_select :location_id, @locations, :id, :name, :prompt => true %>
+      
+    </div>
+
+    <div class="field">
+      <%= f.label :division_id ,"Seccion : " %><br />
+      <%= f.collection_select :division_id, @divisions, :id, :name, :prompt => true %>
+      
+    </div>
+    <%= hr() %>
+    
   <div class="field">
     <%= f.label :file_nro, "File Numero " %><br>
     <%= f.number_field :file_nro  %>
@@ -131,7 +146,7 @@
   
   <div class="field">
     <%= f.label :carnet_seguro, "Carnet Seguro:" %><br>
-    <%= f.number_field :carnet_seguro  %>
+    <%= f.text_field :carnet_seguro  %>
   </div>
   
   
@@ -152,8 +167,6 @@
   
   
 </div>
-
-
    <div class="form-actions">
     <%= f.submit %>
   </div>

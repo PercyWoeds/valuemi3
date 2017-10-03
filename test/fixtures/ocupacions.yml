@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  AddOcupacionToEmployee: MyString
+  code: 1
+  name: 
+
+two:
+  AddOcupacionToEmployee: MyString
+  code: 1
+  name: 

@@ -1,6 +1,9 @@
   Mnygo::Application.routes.draw do
 
 
+  resources :grado_instruccions
+  resources :tipotrabajadors
+  resources :ocupacions
   resources :payroll_details
   resources :type_payrolls
   resources :type_payrolls

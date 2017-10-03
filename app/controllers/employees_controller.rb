@@ -29,6 +29,8 @@ class EmployeesController < ApplicationController
     @employee.fecha_nacimiento = Date.today
     @employee.fecha_ingreso    = Date.today
     @employee.fecha_cese    = Date.today
+     @locations =Location.all
+    @divisions =Division.all 
     
   end
 
@@ -39,6 +41,8 @@ class EmployeesController < ApplicationController
     @employee.fecha_nacimiento = Date.today
     @employee.fecha_ingreso    = Date.today
     @employee.fecha_cese    = Date.today
+     @locations =Location.all
+    @divisions =Division.all 
     
   end
 
@@ -47,6 +51,9 @@ class EmployeesController < ApplicationController
   def create
     @employee = Employee.new(employee_params)
     @categorias =Categorium.all 
+     @locations =Location.all
+    @divisions =Division.all 
+    
     @afps = Afp.all
     respond_to do |format|
       if @employee.save
