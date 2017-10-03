@@ -710,7 +710,7 @@ def get_customer_payments2(moneda,fecha1,fecha2)
    
    
    for c in @facturas2
-         lcBalance= c.balance 
+         lcBalance= 0 
          puts c.customer_id
          tf = Tempfactura.find_by(year_month: c.year_month, customer_id: c.customer_id)
        
@@ -721,6 +721,10 @@ def get_customer_payments2(moneda,fecha1,fecha2)
            tf.balance -= c.balance 
            puts tf.balance
            tf.save 
+       else
+         lcbalance = c.balance * -1
+         a= Tempfactura.new(:year_month=> c.year_month,:customer_id => c.customer_id,:balance=>lcBalance)
+         a.save 
        end
        
    end 
