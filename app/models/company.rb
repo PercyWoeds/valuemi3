@@ -935,13 +935,22 @@ def get_payments_detail_value(fecha1,fecha2,value = "total",moneda)
     if facturas
     ret=0  
     for factura in facturas
-      
-      if(value == "subtotal")
-        ret += factura.subtotal
-      elsif(value == "tax")
-        ret += factura.tax
-      else         
-        ret += factura.balance.round(2)
+     if factura.document_id != 2
+        if(value == "subtotal")
+          ret += factura.subtotal
+        elsif(value == "tax")
+          ret += factura.tax
+        else         
+          ret += factura.balance.round(2)
+        end
+      else
+        if(value == "subtotal")
+          ret -= factura.subtotal
+        elsif(value == "tax")
+          ret -= factura.tax
+        else         
+          ret -= factura.balance.round(2)
+        end
       end
     end
     
