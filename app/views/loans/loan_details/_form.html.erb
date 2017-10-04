@@ -25,7 +25,7 @@
     </div>
     <div class="field">
       <%= f.label :total, "Importe: *", :class => "bold" %><br />
-      <%= f.text_field :total %>
+      <%= f.number_field :total,:step => 0.1 %>
     </div>
     
     <div class="field">

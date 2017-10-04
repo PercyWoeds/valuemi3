@@ -41,6 +41,7 @@
 
 
     <%  @loan_details.each do |detalle| %>
+    
     <tr>
           
           <td class="small bordered_bottom bordered_right">
@@ -49,17 +50,27 @@
           </td>
           
           <td class="small bordered_bottom bordered_right">
-            <%= detalle.valor.descrip %>              
+            <%= detalle.valor.name %>              
+          </td>
+          
+          <td class="small bordered_bottom bordered_right">
+            <%= detalle.total  %>              
           </td>
           <td class="small bordered_bottom bordered_right">
             <%= detalle.detalle  %>              
           </td>
+            <td><%= link_to 'Editar', edit_loan_loan_detail_path(loan_id: @loan.id,id: detalle.id ) %></td>          
+       <td><%= link_to 'Eliminar',[@loan,detalle], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+
       </tr>    
           
           
           
-          
-    </td>
+             <tr>
+  
+         
+     
+        </tr>
     
     <% end %>
 

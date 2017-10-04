@@ -1,8 +1,11 @@
 class Loans::LoanDetailsController < ApplicationController
   
-  
-  before_action :set_loan_detail, only: [:show, :edit, :update, :destroy]
 
+  
+  before_action :set_loan 
+  before_action :set_loan_detail, only: [:show, :edit, :update, :destroy]
+  
+  
   # GET /loan_details
   # GET /loan_details.json
   def index
@@ -19,6 +22,7 @@ class Loans::LoanDetailsController < ApplicationController
     @loan_detail = LoanDetail.new
     @employee = Employee.all.order(:full_name).where(active:"1")
     @valor = Valor.all
+    
   end
 
   # GET /loan_details/1/edit
@@ -31,7 +35,7 @@ class Loans::LoanDetailsController < ApplicationController
   # POST /loan_details.json
   def create
     @loan_detail = LoanDetail.new(loan_detail_params)
-    @loan_detail.parameter_id  = @loan.id 
+    @loan_detail.loan_id  = @loan.id 
     @employee = Employee.all 
     @valor = Valor.all
     respond_to do |format|
@@ -66,8 +70,9 @@ class Loans::LoanDetailsController < ApplicationController
   # DELETE /loan_details/1.json
   def destroy
     @loan_detail.destroy
+    
     respond_to do |format|
-      format.html { redirect_to loan_details_url, notice: 'Loan detail was successfully destroyed.' }
+      format.html { redirect_to loan_url, notice: 'Loan detail was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -75,7 +80,8 @@ class Loans::LoanDetailsController < ApplicationController
   private
   
     def set_loan 
-      @loan = Loan.find(params[:parameter_id])
+      @loan = Loan.find(params[:loan_id])
+      
     end 
     # Use callbacks to share common setup or constraints between actions.
     def set_loan_detail
@@ -84,6 +90,6 @@ class Loans::LoanDetailsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def loan_detail_params
-      params.require(:loan_detail).permit(:employee_id, :valor_id, :tm, :detalle)
+      params.require(:loan_detail).permit(:employee_id, :valor_id, :tm, :detalle,:total )
     end
 end

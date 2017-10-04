@@ -1,13 +1,17 @@
 <h1>Nuevo </h1>
 
 <p>
-<% @loan.payroll.code %>
-@loan.payroll.fecha_inicial
-@loan.payroll.fecha_final
+Planilla: <%= @loan.payroll.code %>
+</p>
+<p>
+Fecha Inicial : <%= @loan.payroll.fecha_inicial %>
+</p>
+<p>
+Fecha final : <%= @loan.payroll.fecha_final%>
 </p>
 
 <p>
-@loan.descrip
+Descrip:  <%= @loan.descrip%>
 
 </p>
 

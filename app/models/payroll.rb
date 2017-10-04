@@ -1,7 +1,7 @@
 class Payroll < ActiveRecord::Base
     
     validates_presence_of :type_payroll_id, :parameter_id,:fecha,:fecha_inicial,:company_id,:user_id
-    
+    belongs_to :loan     
     has_many :type_payrolls
     has_many :payroll_details, :dependent => :destroy
     
