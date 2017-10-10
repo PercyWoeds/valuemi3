@@ -16,6 +16,76 @@ class Company < ActiveRecord::Base
   has_many :company_users
   has_many :ajusts 
 
+ def get_pendientes_cliente(fecha1,fecha2,cliente)
+
+    @facturas = Factura.where([" balance > 0  and  company_id = ? AND fecha >= ? and fecha<= ? and customer_id = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", cliente ]).order(:customer_id,:moneda_id,:fecha)
+    return @facturas
+    
+ end
+ def get_facturas_day_value(fecha1,fecha2,value = "total",moneda)
+    
+    facturas = Factura.where([" company_id = ? AND fecha >= ? and fecha<= ? and moneda_id = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59",moneda])
+    if facturas
+    ret=0  
+    for factura in facturas
+      if factura.document_id == 2
+        if(value == "subtotal")
+          ret -= factura.subtotal
+        elsif(value == "tax")
+          ret -= factura.tax
+        else         
+          ret -= factura.total
+        end
+    else
+        if(value == "subtotal")
+          ret += factura.subtotal
+        elsif(value == "tax")
+          ret += factura.tax
+        else         
+          ret += factura.total
+        end
+    end
+    end
+    end 
+
+    return ret
+  
+ end  
+
+
+def get_facturas_day_value_cliente(fecha1,fecha2,cliente,value = "total",moneda)
+
+    facturas = Factura.where([" company_id = ? AND fecha >= ? and fecha<= ? and customer_id = ?
+     and moneda_id  = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59",cliente,moneda ])
+    if facturas
+    ret=0  
+    for factura in facturas
+      if factura.document_id == 2
+        if(value == "subtotal")
+          ret -= factura.subtotal
+        elsif(value == "tax")
+          ret -= factura.tax
+        else         
+          ret -= factura.total
+        end
+      else  
+        if(value == "subtotal")
+          ret += factura.subtotal
+        elsif(value == "tax")
+          ret += factura.tax
+        else         
+          ret += factura.total
+        end
+      end 
+    end
+    end 
+
+    return ret
+  
+ end 
+ 
+
+
   def to_hash
     hash=[]
 
@@ -463,65 +533,7 @@ def get_guias_2(fecha1,fecha2)
     
  end 
  
- def get_facturas_day_value(fecha1,fecha2,value = "total",moneda)
-    
-    facturas = Factura.where([" company_id = ? AND fecha >= ? and fecha<= ? and moneda_id = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59",moneda])
-    if facturas
-    ret=0  
-    for factura in facturas
-      if factura.document_id == 2
-        if(value == "subtotal")
-          ret -= factura.subtotal
-        elsif(value == "tax")
-          ret -= factura.tax
-        else         
-          ret -= factura.total
-        end
-    else
-        if(value == "subtotal")
-          ret += factura.subtotal
-        elsif(value == "tax")
-          ret += factura.tax
-        else         
-          ret += factura.total
-        end
-    end
-    end
-    end 
 
-    return ret
-  
- end 
-def get_facturas_day_value_cliente(fecha1,fecha2,cliente,value = "total",moneda)
-
-    facturas = Factura.where([" company_id = ? AND fecha >= ? and fecha<= ? and customer_id = ?
-     and moneda_id  = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59",cliente,moneda ])
-    if facturas
-    ret=0  
-    for factura in facturas
-      if factura.document_id == 2
-        if(value == "subtotal")
-          ret -= factura.subtotal
-        elsif(value == "tax")
-          ret -= factura.tax
-        else         
-          ret -= factura.total
-        end
-      else  
-        if(value == "subtotal")
-          ret += factura.subtotal
-        elsif(value == "tax")
-          ret += factura.tax
-        else         
-          ret += factura.total
-        end
-      end 
-    end
-    end 
-
-    return ret
-  
- end 
 
 ## REPORTES DE LIQUIDACION  DE COBRANZA
 
@@ -959,20 +971,14 @@ def get_payments_detail_value(fecha1,fecha2,value = "total",moneda)
  end 
 
  def get_facturas_day_cliente(fecha1,fecha2,cliente)
-
+   
     @facturas = Factura.where(["total> 0  and  company_id = ? AND fecha >= ? and fecha<= ? and customer_id = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", cliente ]).order(:customer_id,:moneda_id,:fecha)
     return @facturas
     
  end 
  
 
- def get_pendientes_day_cliente(fecha1,fecha2,cliente)
 
-    @facturas = Factura.where(["balance > 0  and  company_id = ? AND fecha >= ? and fecha<= ? and customer_id = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", cliente ]).order(:customer_id,:moneda_id,:fecha)
-    return @facturas
-    
- end
- 
  def get_pendientes_day_cliente_value(fecha1,fecha2,value = "total",cliente,moneda)
 
     facturas = Factura.where(["balance>0  and  company_id = ? AND fecha >= ? and fecha<= ? and moneda_id = ? and customer_id = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda , cliente ]).order(:customer_id,:moneda_id)
@@ -2616,7 +2622,7 @@ def get_lgvs3(fecha1,fecha2)
       INNER JOIN lgvs ON lgv_deliveries.lgv_id = lgvs.id
       WHERE lgvs.fecha >= ? and lgvs.fecha <= ? ', "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
       return @lgvs 
-  end
+end
 
 
 def get_purchases_pendientes_day_value(fecha1,fecha2,value = "total_amount",cliente,moneda)

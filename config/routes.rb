@@ -687,6 +687,8 @@ end
 
   match 'inventories_detaisl/additems/:company_id' => 'additems#list', via: [:get, :post]  
   resources :inventory_details
+   # Marca
+  match 'marcas/create_ajax/:company_id' => 'marcas#create_ajax', via: [:get, :post]
   
   # Customers
   match 'customers/create_ajax/:company_id' => 'customers#create_ajax', via: [:get, :post]

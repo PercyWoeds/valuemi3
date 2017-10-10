@@ -351,7 +351,7 @@ class CustomerPaymentsController < ApplicationController
 
   # Autocomplete for documents
   def ac_documentos
-    @docs = Factura.where(["company_id = ? and balance>0 AND (code LIKE ? )", params[:company_id], "%" + params[:q] + "%"])   
+    @docs = Factura.where(["company_id = ? and balance>0 AND (code ILIKE ? )", params[:company_id], "%" + params[:q] + "%"])   
     render :layout => false
   end
   

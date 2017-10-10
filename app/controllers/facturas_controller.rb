@@ -1272,8 +1272,12 @@ class FacturasController < ApplicationController
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]
     @cliente = params[:customer_id]      
-
-    @facturas_rpt = @company.get_pendientes_day_cliente(@fecha1,@fecha2,@cliente)  
+    puts @company.id 
+    puts @fecha1
+    puts @fecha2
+    puts @cliente 
+    
+    @facturas_rpt = @company.get_pendientes_cliente(@fecha1,@fecha2,@cliente)  
 
 
     if @facturas_rpt.size > 0 

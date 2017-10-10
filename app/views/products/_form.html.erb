@@ -24,6 +24,7 @@
       The name of the product.
     </div>
   </div>
+  
   <div class="field">
     <%= f.label :code, "Codigo Producto (UPC/EAN/ISBN)" %><br />
     <%= f.text_field :code %>
@@ -48,7 +49,9 @@
       Marca del producto.
     </div>
   </div>
-
+  
+      <%= link_to 'Create marca', new_marca_path, data: { behavior: 'modal' } %>
+      
   <div class="field">
     <%= f.label :modelo_id %><br />
     <%= f.select :modelo_id,options_from_collection_for_select(@modelos,'id','descrip') %>
@@ -161,9 +164,10 @@
     <%= f.hidden_field :company_id %>
     <%= f.submit %>
   </div>
-  
+    <% end %>
   
   <%= render 'layouts/autocomplete' %>
+  
   
   <script type="text/javascript"> 
     $(document).ready(function() {
@@ -173,4 +177,3 @@
       });
     });
   </script>
-<% end %>

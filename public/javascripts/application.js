@@ -1853,6 +1853,52 @@ function addItemToLgv2() {
     }
   }
 
+
+//marca
+
+function createMarca() {
+    alert("aa");
+    var company_id = $("#product_company_id").val();
+    
+    $.get('/marcas/new/' + company_id + '?ajax=1', {
+    },
+    function(data) {
+      displayRemote(data);
+      showRemote();
+      
+      $("#new_marca").bind("submit", function() {
+        event.preventDefault();
+        doCreateMarca();
+      });
+    });
+  }
+
+ // Create new marca in the invoice via ajax
+  function doCreateMarca() {
+    var company_id = $("#product_company_id").val();
+    var name = $("#marca_descrip").val();
+  
+    if(name != "") {
+      $.post('/marcas/create_ajax/' + company_id, {
+        descrip: name
+      },
+      function(data) {
+        if(data == "error_empty") {
+          alert("Por favor ingreso una descripcion de marca");
+        } else if(data == "error") {
+          alert("Ah ocurrido un error grabando la marca,por favor trate otra vez ;-)");
+        } else {
+          var data_arr = data.split("|BRK|");
+          
+          hideRemote();
+          alert("marca creado");
+        }
+      });
+    } else {
+      alert("Por favor ingrese una marca.");
+    }
+  }
+
   // On ready
   $(document).ready(function() {
     documentReady();

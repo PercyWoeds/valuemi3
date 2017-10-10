@@ -1,4 +1,7 @@
-<%= form_for(@marca) do |f| %>
+
+
+<%= simple_form_for(@marca, html: { data: { modal: true } })  do |f|  %>
+
   <% if @marca.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@marca.errors.count, "error") %> prohibited this marca from being saved:</h2>
@@ -25,4 +28,5 @@
     
     <%= f.submit %>
   </div>
+  
 <% end %>
