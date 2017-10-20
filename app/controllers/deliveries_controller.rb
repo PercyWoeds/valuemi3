@@ -688,7 +688,7 @@ end
                ["Fecha:"] ]
       elsif  @tiporeporte == "3"
         
-         data =[ ["RECEPCION Y DES.","IRMA LOBO ","VILMA VEGA","ASIS.GERENCIA","RUTH VEGA","CONTABILIDAD"],
+         data =[ ["RECEPCION Y DES.","IRMA LOBO ","VILMA VEGA","ASIS.GERENCIA","CONTABILIDAD","PAUL PEREDA"],
                [" "],
                [" "],
                ["Fecha:"] ]
