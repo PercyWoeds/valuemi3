@@ -2344,7 +2344,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
      for sal in @sal 
         $lcFecha     = sal.fecha 
         $lcDocumento = sal.code
-        $lcDocumentId = 12
+        $lcDocumentId = "12"
         puts "salida"
         puts $lcFecha
         @saldetail=  OutputDetail.where(:output_id=>sal.id)
@@ -2374,7 +2374,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
 
      for sal in @ajuste
         $lcFecha = sal.fecha1 
-        $lcDocumentId = 12
+        $lcDocumentId = "12"
         $lcDocumento=sal.code 
         puts "ajuste"
         puts $lcFecha
