@@ -938,48 +938,29 @@ class CustomerPaymentsController < ApplicationController
       table_content << headers
       nroitem = 1
 
-       for  customerpayment_rpt in @customerpayment_rpt
+       for  productItem in @customerpayment_rpt
 
-        #@fechacobro = customerpayment_rpt.fecha1
-
-       # row = []
-       #  row << nroitem.to_s
-       #  row << customerpayment_rpt.code
-       #  row << customerpayment_rpt.fecha1.strftime("%d/%m/%Y")         
-       #  row << customerpayment_rpt.bank_acount.number
-       #  row << customerpayment_rpt.get_banco(customerpayment_rpt.bank_acount.bank_id)   
-       #  row << customerpayment_rpt.get_moneda(customerpayment_rpt.bank_acount.moneda_id)  
-       #  row << customerpayment_rpt.get_document(customerpayment_rpt.document_id)     
-       #  row << customerpayment_rpt.documento     
-       #  row << ""          
-       #  row << customerpayment_rpt.total    
-
-         #table_content << row
-         lcId      = customerpayment_rpt.id 
+        
+         lcId      = productItem.id 
 
           if $lcxCliente == "0" 
-            $lcCode   = customerpayment_rpt.code
+            $lcCode   = productItem.code
           else
-            $lcCode   = customerpayment_rpt.code_liq
+            $lcCode   = productItem.code_liq
           end 
 
-         $lcFecha1 = customerpayment_rpt.fecha1.strftime("%d/%m/%Y")                  
+         $lcFecha1 = productItem.fecha1.strftime("%d/%m/%Y")                  
          
-        @customerdetails =  customerpayment_rpt.get_payment_dato(lcId)
-
-        if @customerdetails
-
-           for  productItem in  @customerdetails
-                
+      
                 row = []
                 row << nroitem.to_s
                 row << $lcCode
                 row << $lcFecha1 
                 row << "FT"
-                row << productItem.code
-                row << productItem.fecha.strftime("%d/%m/%Y")         
-                row << productItem.customer.ruc       
-                row << productItem.customer.name                 
+                row << productItem.code_liq
+                row << productItem.fecha1.strftime("%d/%m/%Y")         
+                row << $lcRucCliente
+                row << $lcNameCliente 
                 
                 row << productItem.factory.to_s
                 if productItem.moneda_id == 2
@@ -991,7 +972,6 @@ class CustomerPaymentsController < ApplicationController
                   row << productItem.total.to_s
                   
                 end
-
 
 
                 total_factory = total_factory +  productItem.factory
@@ -1007,10 +987,7 @@ class CustomerPaymentsController < ApplicationController
                 nroitem=nroitem + 1
              
             end
-        end 
-
-       end  
-
+       
     @total_factory = total_factory
 
     @total_soles = total_general_soles
@@ -1262,6 +1239,10 @@ class CustomerPaymentsController < ApplicationController
     @fecha1 = params[:fecha1]
     @fecha2 = params[:fecha2]
     @cliente = params[:customer_id]
+    
+    @ClienteDato = @company.get_cliente(@cliente)
+    $lcNameCliente =@ClienteDato.name
+    $lcRucCliente =@ClienteDato.ruc
 
     @customerpayment_rpt = @company.get_customer_payments_cliente(@fecha1,@fecha2,@cliente)  
       

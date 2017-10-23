@@ -16,6 +16,11 @@ class Company < ActiveRecord::Base
   has_many :company_users
   has_many :ajusts 
 
+ def get_cliente(id)
+   
+   @dato = Customer.find(id)
+   return @dato 
+ end 
  def get_pendientes_cliente(fecha1,fecha2,cliente)
 
     @facturas = Factura.where([" balance > 0  and  company_id = ? AND fecha >= ? and fecha<= ? and customer_id = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", cliente ]).order(:customer_id,:moneda_id,:fecha)
@@ -589,7 +594,7 @@ WHERE facturas.code = ?',code ])
 
  #total banco x cliente
 def get_customer_payments_value_customer(fecha1,fecha2,id,cliente,value)
-facturas = CustomerPayment.find_by_sql(['Select customer_payments.id,customer_payments.total,
+facturas = CustomerPayment.find_by_sql(['Select DISTINCT ON (1)  customer_payments.id,customer_payments.total,
 facturas.code,facturas.customer_id,facturas.fecha,customer_payment_details.factory from customer_payment_details   
 INNER JOIN facturas ON   customer_payment_details.factura_id = facturas.id
 INNER JOIN customer_payments ON customer_payments.id = customer_payment_details.customer_payment_id    
@@ -612,7 +617,7 @@ customer_payments.bank_acount_id = ?  and facturas.customer_id = ?',
 
 def get_customer_payments_value_otros_customer(fecha1,fecha2,value,cliente)
 
-  facturas = CustomerPayment.find_by_sql(['Select customer_payments.id,customer_payment_details.total,
+  facturas = CustomerPayment.find_by_sql(['Select  DISTINCT ON (1)  customer_payments.id,customer_payment_details.total,
 facturas.code,facturas.customer_id,facturas.fecha,customer_payment_details.factory from customer_payment_details   
 INNER JOIN facturas ON   customer_payment_details.factura_id = facturas.id
 INNER JOIN customer_payments ON customer_payments.id = customer_payment_details.customer_payment_id    
@@ -651,8 +656,10 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? and factur
  def get_customer_payments_cliente(fecha1,fecha2,cliente)
 
 @facturas =CustomerPayment.find_by_sql(['Select customer_payments.id,customer_payment_details.total,
-customer_payments.code  as code_liq,facturas.code,facturas.customer_id,facturas.fecha,customer_payment_details.factory,
-customer_payments.fecha1 
+customer_payments.code  as code_liq,facturas.code,facturas.customer_id,facturas.fecha,
+facturas.moneda_id,
+customer_payment_details.factory,
+customer_payments.fecha1
 from customer_payment_details   
 INNER JOIN facturas ON   customer_payment_details.factura_id = facturas.id
 INNER JOIN customer_payments ON customer_payments.id = customer_payment_details.customer_payment_id    
