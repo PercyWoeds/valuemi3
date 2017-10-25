@@ -2142,7 +2142,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
      @ing = Purchase.where('date1 <  ?',"#{fecha1} 00:00:00")
 
      for ing in @ing    
-          $lcFecha = ing.date1.to_date
+          $lcFecha  = ing.date1.strftime("%F")
           $lcmoneda = ing.moneda_id
 
         @ingdetail=  PurchaseDetail.where(:purchase_id=>ing.id)
@@ -2456,7 +2456,7 @@ for  a in @inv
     wkey2 = a.product_id
     
     if wkey1 == wkey2
-      saldo  = wvar +a.ingreso - a.salida     
+      saldo  = wvar + a.ingreso - a.salida     
     
       if a.ingreso > 0  
         a.costo_saldo = a.costo_ingreso
@@ -2476,21 +2476,22 @@ for  a in @inv
       wvar = saldo   
    
     else
-      wkey1 = a.product_id     
-      wvar = 0
       
-      saldo  = wvar +a.ingreso - a.salida    
+      wkey1 = a.product_id     
+      wvar  = 0
+      saldo  = wvar + a.ingreso - a.salida    
       a.costo_saldo = a.costo_ingreso 
       a.stock_final = saldo
       a.save 
       
-      wvar=saldo
+      wvar = saldo
         
-      if a.tm =='02' || a.tm == '04'
+      if a.tm =='02' || a.tm == '04' ||  a.tm == '01' ||  a.tm == '16'
         wcosto =a.costo_ingreso
       end 
     end 
     end 
+    
     return @inv 
 
  end

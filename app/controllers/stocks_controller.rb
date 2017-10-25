@@ -412,13 +412,16 @@ class StocksController < ApplicationController
         headers1 = []
         table_content = []
 
-       inner_table0 = "DOCUMENTO DE TRASLADO, COMPROBANTE DE PAGO"
-       inner_table1 = "DOCUMENTO INTERNO O SIMILAR"
+       inner_table0 = "DOCUMENTO DE TRASLADO,
+       COMPROBANTE DE PAGO"
+       inner_table1 = "DOCUMENTO
+       INTERNO
+       O SIMILAR"
        inner_table3 = "TIPO DE "
        inner_table4 = "OPERACION "
        inner_table5 = "TABLA 12"
 
-         data =[[{:content=> inner_table0,:colspan=>4},inner_table3,{:content=>"ENTRADAS",:colspan=>3},{:content=>"SALIDAS",:colspan=>3},"SALDO" ] ,
+         data =[[{:content=> inner_table0,:colspan=>4},inner_table3,{:content=>"ENTRADAS ",:colspan=>3},{:content=>"SALIDAS ",:colspan=>3},"SALDO" ] ,
                [{:content=> inner_table1,:colspan=>4},inner_table4,"CANTIDAD","COSTO UNIT.","COSTO TOTAL","CANTIDAD","COSTO UNIT.","COSTO TOTAL","CANTIDAD","COSTO UNIT.","COSTO TOTAL"],
 ["FECHA","TIPO","SERIE","NUMERO"] ]
                     
@@ -466,10 +469,24 @@ class StocksController < ApplicationController
 
       table_content << headers1
       table_content << headers
-
+      @cantidad1 = 0
+      @cantidad2 = 0
+      @cantidad3 = 0
+      @cantidad4 = 0
+      @cantidad5 = 0
+      @cantidad6 = 0
+      @tcantidad1 = 0
+      @tcantidad2 = 0
+      @tcantidad3 = 0
+      @tcantidad4 = 0
+      
       if @movements
+        
+        lcProduct = @movements.first.product_id 
+        
         for  stock in @movements 
-
+        
+            if lcProduct == stock.product_id
                row = []                                    
                row << stock.product.code
                row << stock.product.name                   
@@ -494,7 +511,6 @@ class StocksController < ApplicationController
                 
                 row << sprintf("%.2f",total2.to_s)
               
-
               #saldo = stock.stock_inicial  + stock.ingreso - stock.salida       
               row << sprintf("%.2f",stock.stock_final.to_s)
               row << sprintf("%.2f",stock.costo_saldo.to_s)
@@ -502,22 +518,71 @@ class StocksController < ApplicationController
               row << sprintf("%.2f",total3.to_s) 
 
               table_content << row
-
               @cantidad1 += stock.ingreso 
               @cantidad2 += total1
               @cantidad3 += stock.salida
               @cantidad4 += total2
+            else
+              
+               lcProduct = stock.product_id
+               @cantidad5 += stock.stock_final
+               @cantidad6 += total3
+               
+               row = []                                    
+               row << stock.product.code
+               row << stock.product.name                   
+               row << stock.fecha.strftime("%d%m%Y")                
+               row << stock.document.descripshort  
+               row << " " 
+               row << stock.documento                           
+               row << stock.tm
 
-              nroitem = nroitem + 1
+                row << sprintf("%.2f",stock.ingreso.to_s)
+                  
+                row << sprintf("%.2f",stock.costo_ingreso.to_s)
+                
+                total1 = stock.ingreso*stock.costo_ingreso
+                row << sprintf("%.2f",total1.to_s)
+              
+                row << sprintf("%.2f",stock.salida.to_s)
 
-                puts stock.product.name 
+                row << sprintf("%.2f",stock.costo_salida.to_s)
+
+                total2 = stock.salida*stock.costo_salida
+                
+                row << sprintf("%.2f",total2.to_s)
+              
+              #saldo = stock.stock_inicial  + stock.ingreso - stock.salida       
+              row << sprintf("%.2f",stock.stock_final.to_s)
+              row << sprintf("%.2f",stock.costo_saldo.to_s)
+              total3 = stock.stock_final*stock.costo_saldo
+              row << sprintf("%.2f",total3.to_s) 
+
+              table_content << row
+              
+              @cantidad1 += stock.ingreso 
+              @cantidad2 += total1
+              
+              @cantidad3 += stock.salida
+              @cantidad4 += total2
+            
+             
+              
+            end
+            
         end  
-
+             
+              @cantidad5 += stock.stock_final
+              @cantidad6 += total3
+               
              row = []
              row << ""
              row << ""
              row << ""
-             row << " "
+             row << ""
+             row << ""
+             row << ""
+             
              row << "TOTALES"
              row << sprintf("%.2f",@cantidad1.to_s)
              row << " "
@@ -525,7 +590,10 @@ class StocksController < ApplicationController
              row << sprintf("%.2f",@cantidad3.to_s)
              row << " "
              row << sprintf("%.2f",@cantidad4.to_s)
-           
+             row << sprintf("%.2f",@cantidad5.to_s)
+             row << ""
+             row << sprintf("%.2f",@cantidad6.to_s)
+             
               table_content << row            
               result = pdf.table table_content, {:position => :center,
                                                 :header => true,
@@ -554,6 +622,9 @@ class StocksController < ApplicationController
               @cantidad2 = 0
               @cantidad3 = 0
               @cantidad4 = 0
+              @cantidad5 = 0
+              @cantidad6 = 0
+              
               total1 = 0
               total2 = 0                
             

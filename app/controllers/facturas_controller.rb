@@ -986,13 +986,14 @@ class FacturasController < ApplicationController
 
       table_content << headers
 
-      nroitem=1
+      nroitem = 1
       lcmonedasoles   = 2
       lcmonedadolares = 1
   
       lcDoc='FT'    
       lcCliente = @facturas_rpt.first.customer_id 
-
+      @totalvencido_soles = 0
+      @totalvencido_dolar = 0
        for  product in @facturas_rpt
         
           if lcCliente == product.customer_id
@@ -1016,21 +1017,32 @@ class FacturasController < ApplicationController
 
             if product.moneda_id == 1 
                 if product.document_id   == 2
-                  
                   row << "0.00 "
                   row << sprintf("%.2f",(product.balance*-1).to_s)
+                    if(product.fecha2 < Date.today)   
+                      @totalvencido_dolar += product.balance*-1
+                    end  
                 else  
                   row << "0.00 "
                   row << sprintf("%.2f",product.balance.to_s)
+                  if(product.fecha2 < Date.today)   
+                      @totalvencido_dolar += product.balance
+                  end  
                 end   
             else
                 if product.document_id == 2
-                  
                   row << sprintf("%.2f",(product.balance*-1).to_s)
                   row << "0.00 "
+                  if(product.fecha2 < Date.today)   
+                      @totalvencido_soles += product.balance*-1
+                  end  
                 else                
                   row << sprintf("%.2f",product.balance.to_s)
                   row << "0.00 "
+                  if(product.fecha2 < Date.today)   
+                      @totalvencido_soles += product.balance
+                  end  
+                    
                 end 
             end
             
@@ -1041,6 +1053,8 @@ class FacturasController < ApplicationController
               row << sprintf("%.2f",product.detraccion.to_s)
             end
             row << product.get_vencido 
+            
+             
             
             table_content << row
 
@@ -1095,9 +1109,10 @@ class FacturasController < ApplicationController
             
             table_content << row
 
-
-
           end 
+          
+          
+          
           
        
         end
@@ -1144,6 +1159,9 @@ class FacturasController < ApplicationController
           row << " "
           table_content << row
           end 
+          
+          
+          
 
           result = pdf.table table_content, {:position => :center,
                                         :header => true,
@@ -1162,9 +1180,34 @@ class FacturasController < ApplicationController
                                           columns([10]).align=:right
                                         end                                          
                                         
-      pdf.move_down 10      
-
+      pdf.move_down 10    
+      
+      puts "vencido soles"
+      puts @totalvencido_soles
+      
+      puts "vencido dolares"
+      puts @totalvencido_dolar
+      
+      puts "total soles"
+      puts total_cliente_soles
+      puts "total dolar"
+      puts total_cliente_dolares
+      
+      if $lcxCliente == "1" 
+      
+      totalxvencer_soles  = total_cliente_dolares   - @totalvencido_soles
+      totalxvencer_dolar  = total_cliente_soles - @totalvencido_dolar
+      
+      pdf.table([  ["Resumen    "," Soles  ", "Dólares "],
+              ["Total Vencido    ",sprintf("%.2f",@totalvencido_soles.to_s), sprintf("%.2f",@totalvencido_dolar.to_s)],
+              ["Total por Vencer ",sprintf("%.2f",totalxvencer_soles.to_s),sprintf("%.2f",totalxvencer_dolar.to_s)],
+              ["Totales          ",sprintf("%.2f",total_cliente_dolares.to_s),sprintf("%.2f",total_cliente_soles.to_s)]])
+              
+      end 
       #totales 
+      
+      
+      
 
       pdf 
 
