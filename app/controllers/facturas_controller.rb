@@ -1182,16 +1182,7 @@ class FacturasController < ApplicationController
                                         
       pdf.move_down 10    
       
-      puts "vencido soles"
-      puts @totalvencido_soles
       
-      puts "vencido dolares"
-      puts @totalvencido_dolar
-      
-      puts "total soles"
-      puts total_cliente_soles
-      puts "total dolar"
-      puts total_cliente_dolares
       
       if $lcxCliente == "1" 
       

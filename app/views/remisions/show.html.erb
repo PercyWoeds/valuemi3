@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @remision.code %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @remision.name %>
+</p>
+
+<%= link_to 'Edit', edit_remision_path(@remision) %> |
+<%= link_to 'Back', remisions_path %>

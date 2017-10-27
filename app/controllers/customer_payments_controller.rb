@@ -957,12 +957,21 @@ class CustomerPaymentsController < ApplicationController
                 row << $lcCode
                 row << $lcFecha1 
                 row << "FT"
-                row << productItem.code_liq
+                if $lcxCliente == "0" 
+            $lcCode   = productItem.code
+          else
+            $lcCode   = productItem.code_liq
+          end 
                 row << productItem.fecha1.strftime("%d/%m/%Y")         
                 row << $lcRucCliente
                 row << $lcNameCliente 
+                if $lcxCliente == "0" 
+                row << " "  
+                else
                 
                 row << productItem.factory.to_s
+                end 
+                
                 if productItem.moneda_id == 2
                   
                   row << productItem.total.to_s

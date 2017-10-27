@@ -19,8 +19,9 @@
        Informacion Guia        
     </h3>
     <%= f.label :remision ,"  "%><br />
-    <%= f.select :remision, options_for_select([["GUIA REMISION",1],["GUIA TRANSPORTISTA",2]]) %>
-
+    
+    <%= f.collection_select :remision, @remision, :id, :name, :prompt => true %>
+    
     <div class="field">
       <%= f.label :code, "Code*", :class => "bold" %><br />
       <%= f.text_field :code, :onclick => "$(this).select();" %>      
@@ -35,18 +36,19 @@
 
     <div class="field">
       <%= f.label :fecha1, "Fecha Emision*", :class => "bold" %><br />
-      <%= f.date_field :fecha1, value: Time.now.strftime("%d/%m/%Y") %>
+      <%= f.date_field :fecha1 %>
     </div>
 
     <div class="field">
       <%= f.label :fecha2, "Fecha Traslado*", :class => "bold" %><br />
-      <%= f.date_field :fecha2, value: Time.now.strftime("%d/%m/%Y") %>
+      <%= f.date_field :fecha2  %>
     </div>
     <%= hr() %>
 
     <div class="field">
     <label class="bold"> REMITENTE *</label><br />      
       <%= f.select :remite_id,options_from_collection_for_select(@remites,'id','name'),:style => "width:200px" %>
+      
     </div>
 
 
@@ -131,18 +133,18 @@
    
     <div class="field">
       <%= f.label :truck_id ,"Vehiculo "%><br />
-      <%= f.select :truck_id, options_from_collection_for_select(@trucks,'id','placa') %>
+      <%= f.collection_select :truck_id, @trucks1, :id, :placa, :prompt => true %>
     </div>
 
     <div class="field">
       <%= f.label :truck2_id ,"Vehiculo 2 "%><br />
-      <%= f.select :truck2_id, options_from_collection_for_select(@trucks,'id','placa') %>
+      <%= f.collection_select :truck2_id, @trucks2, :id, :placa, :prompt => true %>
     </div>
    
    
     <div class="field">
       <%= f.label :employee_id , "Empleado "%><br />
-      <%= f.select :employee_id,options_from_collection_for_select(@employees,'id','full_name') %>
+      <%= f.collection_select :employee_id, @employees, :id, :full_name, :prompt => true %>
     </div>
 
    

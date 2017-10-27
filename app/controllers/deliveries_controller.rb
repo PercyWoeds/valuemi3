@@ -295,14 +295,19 @@ end
     @delivery = Delivery.new
     @delivery[:code] = "#{generate_guid2()}"
     @delivery[:processed] = false
+    @remision = Remision.all 
     
     @company = Company.find(params[:company_id])
     @delivery.company_id = @company.id
+    @delivery[:fecha1]=Date.today
+    @delivery[:fecha2]=Date.today
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
 
-    @trucks    = @company.get_trucks()
+    @trucks1    = @company.get_trucks()
+    @trucks2    = @company.get_trucks()
+    
     @employees = @company.get_employees()
     @customers = @company.get_customers()
     @remites = @company.get_customers()
@@ -327,8 +332,10 @@ end
     
     @delivery = Delivery.find(params[:id])
     @company = @delivery.company
-
-    @trucks    = @company.get_trucks()
+    @remision = Remision.all 
+    
+    @trucks1    = @company.get_trucks()
+    @trucks2    = @company.get_trucks()
     @employees = @company.get_employees()
     @customers = @company.get_customers()
     @remites   = @company.get_customers()
@@ -352,6 +359,8 @@ end
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
     @transports = @company.get_transports()
+    
+    
   end
 
   # POST /deliverys
@@ -365,7 +374,7 @@ end
     @delivery = Delivery.new(delivery_params)
     
     @company = Company.find(params[:delivery][:company_id])
-    
+    @remision = Remision.all 
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
     @trucks    = @company.get_trucks()
@@ -427,7 +436,7 @@ end
     @company = @delivery.company
     @payments = @company.get_payments()    
     @transports = @company.get_transports()
-
+    @remision = Remision.all 
     if(params[:ac_customer] and params[:ac_customer] != "")
       @ac_customer = params[:ac_customer]
     else

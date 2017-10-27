@@ -1,6 +1,7 @@
   Mnygo::Application.routes.draw do
 
 
+  resources :remisions
   resources :valors
   resources :loan_details
   resources :loans
