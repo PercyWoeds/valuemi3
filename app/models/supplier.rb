@@ -1,5 +1,6 @@
 class Supplier < ActiveRecord::Base
   validates_presence_of :company_id, :name
+  validates_uniqueness_of :ruc
   
   belongs_to :company
   
