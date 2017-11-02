@@ -4,8 +4,7 @@ class Inventario < ActiveRecord::Base
   self.per_page = 20
   
   before_create :adicionar_fecha
-  before_save :adicionar_total
-  before_save :actualizar_inventario
+
   before_destroy :marcar_destroy
   #after_destroy :actualizar_inventario
 
