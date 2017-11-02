@@ -1303,13 +1303,13 @@ class FacturasController < ApplicationController
 
     $lcxCliente ="1"
     @company=Company.find(params[:company_id])      
+    @company.actualizar_fecha2
+    @company.actualizar_detraccion 
+    
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]
     @cliente = params[:customer_id]      
-    puts @company.id 
-    puts @fecha1
-    puts @fecha2
-    puts @cliente 
+   
     
     @facturas_rpt = @company.get_pendientes_cliente(@fecha1,@fecha2,@cliente)  
 

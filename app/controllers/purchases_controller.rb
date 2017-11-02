@@ -2900,12 +2900,19 @@ def newfactura2
   def destroy
     @purchase= Purchase.find(params[:id])
     company_id = @purchase[:company_id]
+    
+    if @purchase.processed != "1" 
+      @purchase.process_menos
+    end   
+    
     @purchase.destroy
+    
 
     respond_to do |format|
       format.html { redirect_to("/companies/purchases/" + company_id.to_s) }
     end
   end
+
 
   def client_data_headers
 
@@ -2921,8 +2928,9 @@ def newfactura2
       invoice_headers
   end
 
+  
 
-
+  
   private
   def purchase_params
     params.require(:purchase).permit(:tank_id,:date1,:date2,:date3,:exchange,

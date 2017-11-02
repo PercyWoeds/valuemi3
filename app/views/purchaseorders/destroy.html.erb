@@ -1,0 +1,21 @@
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %>
+</div>
+
+<h1>
+  <%= image_tag("invoice_48.png", :class => "vmiddle") %>
+  Ordenes de compra
+</h1>
+
+<p> 
+  <h4  style="color:red;"><%= @purchaseorder.code %> Orden compra tiene factura de compras asignada <%= @purchase.documento %> *No se puede eliminar *</h4>
+  Elimine primero la factura y luego regrese a eliminar la orden de compra.
+  
+</p>
+
+<%= hr() %>
+
+<div class="button">
+  
+  <%= link_to 'Regresar', "/companies/purchaseorders/#{@company.id}" %>
+</div>

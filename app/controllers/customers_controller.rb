@@ -149,12 +149,20 @@ class CustomersController < ApplicationController
   def destroy
     @customer = Customer.find(params[:id])
     company_id = @customer[:company_id]
-    @customer.destroy
-
-    respond_to do |format|
-      format.html { redirect_to("/companies/customers/" + company_id.to_s) }
-      format.xml  { head :ok }
-    end
+    @company = Company.find(@customer[:company_id])
+    
+    @facturas = Factura.find(@customer.id)
+    
+    if @facturas 
+      
+    else 
+      @customer.destroy
+      
+      respond_to do |format|
+        format.html { redirect_to("/companies/customers/" + company_id.to_s) }
+        format.xml  { head :ok }
+      end
+    end 
   end
   
     private

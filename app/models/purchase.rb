@@ -523,6 +523,41 @@ def get_tax3(items, supplier_id)
     end   
   end 
   end
+
+  def process_menos
+
+    if self.tipo =="0"
+
+    if(self.processed == "1" or self.processed == true  )
+
+      purchase_details =PurchaseDetail.where(purchase_id: self.id)
+    
+      for ip in purchase_details
+                
+        #actualiza stock
+         stock_product =  Stock.find_by(:product_id => ip.product_id)
+
+        if stock_product 
+           $last_stock = stock_product.quantity - ip.quantity      
+           stock_product.quantity = $last_stock
+             
+        else
+
+          $last_stock = 0
+          
+        end 
+
+        stock_product.save
+
+        self.date_processed = Time.now
+        self.save
+      
+
+      end
+    end   
+  end 
+  end
+
   
   # Color for processed or not
   def processed_color

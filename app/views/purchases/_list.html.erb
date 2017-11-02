@@ -36,7 +36,6 @@
         <td><%= purchase.date1.strftime("%d/%m/%Y") %></td>
         <td><%= purchase.date3.strftime("%d/%m/%Y") %></td>
         <td><%= purchase.moneda.symbol %></td>            
-
         <td><%= money(purchase.discount) %></td>      
         <td><%= money(purchase.payable_amount) %></td>      
         <td><%= money(purchase.tax_amount) %></td>
@@ -50,14 +49,13 @@
         </td>
             
         <td><%= link_to 'Ver', purchase %></td>
-         <%if @current_user.level == 'admin' %>
+         
           
-       <% if purchase.processed != "1" %>
+       <% if purchase.processed != "1" || @current_user.level == 'admin'  %>
         <td>
           <%= link_to 'Eliminar', purchase, method: :delete, data: { confirm: 'Are you sure?' } %>
         </td>
-        <% end %> 
-        <% end %> 
+       <% end %> 
         
       </tr>
     <% end %>

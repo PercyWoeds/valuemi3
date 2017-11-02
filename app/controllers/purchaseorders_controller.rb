@@ -822,11 +822,18 @@ def build_pdf_header(pdf)
   def destroy
     @purchaseorder = Purchaseorder.find(params[:id])
     company_id = @purchaseorder[:company_id]
+    @purchase =  Purchase.find_by(purchaseorder_id: @purchaseorder.id) 
+    @company = @purchaseorder.company
+    
+    if @purchase  
+      
+    else
     @purchaseorder.destroy
 
     respond_to do |format|
       format.html { redirect_to("/companies/purchaseorders/" + company_id.to_s) }
     end
+    end 
   end
 
   #reporte de order de compra  

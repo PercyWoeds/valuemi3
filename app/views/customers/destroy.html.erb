@@ -1,0 +1,34 @@
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %>
+</div>
+
+<h1>
+  <%= image_tag("clients_48.png", :class => "vmiddle") %>
+  Clientes 
+</h1>
+
+<div class="small">
+  <form method="get" action="/companies/customers/<%= @company.id %>">
+    <strong>Search:</strong>
+    <input type="text" name="search" value="<% if @q_org %><%= @q_org %><% end %>" class="small" style="width: 250px;" onclick="$(this).select();" />
+    <input type="submit" value="Find" class="bold small_btn" />
+    <a href="/companies/customers/<%= @company.id %>" class="small_btn">Clear</a>
+  </form>
+</div>
+
+<p>
+ 
+ <h1>  Cliente tiene facturas emitidas no se puede eliminar ...</h1>
+  
+</p>
+
+<br />
+
+<div class="button">
+  <%= link_to 'Regresar', "/companies/customers/#{@company.id}" %>
+</div>
+
+
+
+
