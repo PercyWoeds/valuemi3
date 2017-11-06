@@ -102,7 +102,17 @@ self.per_page = 20
                     "IMPORTE",
                   ]                      
                    
-
+ def get_cliente(customer_id)
+   
+     cliente = Customer.find(customer_id)
+    if cliente  
+     return cliente
+    else
+      return "."
+    end 
+   
+ end 
+ 
  def get_cliente_customer_payment(id)
 
     @itemproducts = CustomerPaymentDetail.find_by_sql(['Select customer_payment_details.total,

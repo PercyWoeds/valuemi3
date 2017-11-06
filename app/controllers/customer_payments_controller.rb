@@ -940,10 +940,7 @@ class CustomerPaymentsController < ApplicationController
       nroitem = 1
 
        for  productItem in @customerpayment_rpt
-
-        
-         lcId      = productItem.id 
-
+          lcId      = productItem.id 
           if $lcxCliente == "0" 
             $lcCode   = productItem.code
           else
@@ -955,26 +952,29 @@ class CustomerPaymentsController < ApplicationController
       
                 row = []
                 row << nroitem.to_s
+                if $lcxCliente == "0" 
+                  $lcCode   = productItem.code
+                else
+                  $lcCode   = productItem.code_liq
+                end 
+                
                 row << $lcCode
                 row << $lcFecha1 
                 row << "FT"
-                if $lcxCliente == "0" 
-            $lcCode   = productItem.code
-          else
-            $lcCode   = productItem.code_liq
-          end 
-                row << productItem.fecha1.strftime("%d/%m/%Y")         
-                row << $lcRucCliente
-                row << $lcNameCliente 
-                if $lcxCliente == "0" 
-                row << " "  
-                else
+                row << productItem.code 
+                row << productItem.fecha1.strftime("%d/%m/%Y")  
                 
-                row << productItem.factory.to_s
+                @cliente_obs = productItem.get_cliente(productItem.customer_id)
+                
+                row << @cliente_obs.ruc
+                row << @cliente_obs.name
+                if $lcxCliente == "0" 
+                  row << " "  
+                else
+                  row << productItem.factory.to_s
                 end 
                 
                 if productItem.moneda_id == 2
-                  
                   row << productItem.total.to_s
                   row << " "  
                 else
@@ -1227,6 +1227,7 @@ class CustomerPaymentsController < ApplicationController
     @company=Company.find(params[:id])      
     @fecha1 = params[:fecha1]
     @fecha2 = params[:fecha2]
+
 
     @customerpayment_rpt = @company.get_customer_payments(@fecha1,@fecha2)  
       

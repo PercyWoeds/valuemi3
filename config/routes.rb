@@ -297,6 +297,8 @@ end
   match 'companies/reports/rpt_calmacen6_pdf/:company_id' => 'reports#rpt_calmacen6_pdf', via: [:get, :post]  
   match 'companies/reports/rpt_calmacen7_pdf/:company_id' => 'reports#rpt_calmacen7_pdf', via: [:get, :post]  
   match 'companies/reports/rpt_calmacen8_pdf/:company_id' => 'reports#rpt_calmacen8_pdf', via: [:get, :post]
+  match 'companies/reports/rpt_calmacen10_pdf/:company_id' => 'reports#rpt_calmacen10_pdf', via: [:get, :post]
+  
   match 'companies/reports/rpt_cajust1_pdf/:company_id' => 'reports#rpt_cajust1_pdf', via: [:get, :post]
 
   match 'companies/reports/rpt_facturas_all/:company_id' => 'reports#rpt_facturas_all', via: [:get, :post]
@@ -620,6 +622,8 @@ end
   match 'purchases/rpt_ingresos_all_pdf/:id' => 'purchases#rpt_ingresos_all_pdf', via: [:get, :post]
   match 'purchases/rpt_ingresos2_all_pdf/:id' => 'purchases#rpt_ingresos2_all_pdf', via: [:get, :post]
   match 'purchases/rpt_ingresos3_all_pdf/:id' => 'purchases#rpt_ingresos3_all_pdf', via: [:get, :post]
+  match 'purchases/rpt_ingresos4_all_pdf/:id' => 'purchases#rpt_ingresos4_all_pdf', via: [:get, :post]
+  
   match 'purchases/rpt_purchase_all/:id' => 'purchases#rpt_purchase_all', via: [:get, :post]
   match 'purchases/rpt_purchase2_all/:id' => 'purchases#rpt_purchase2_all', via: [:get, :post]
   match 'purchases/rpt_purchase3_all/:id' => 'purchases#rpt_purchase3_all', via: [:get, :post]
