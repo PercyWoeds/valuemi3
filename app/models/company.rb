@@ -626,41 +626,67 @@ customer_payments.bank_acount_id = ?  and facturas.customer_id = ?',
     return ret    
  end 
 
-def get_customer_payments_value_otros_customer(fecha1,fecha2,value,cliente)
+def get_customer_payments_value_otros_customer(fecha1,fecha2,value,cliente,moneda_pago)
 
-  facturas = CustomerPayment.find_by_sql(['Select  DISTINCT ON (1)  customer_payments.id,customer_payment_details.total,
-facturas.code,facturas.customer_id,facturas.fecha,customer_payment_details.factory from customer_payment_details   
-INNER JOIN facturas ON   customer_payment_details.factura_id = facturas.id
-INNER JOIN customer_payments ON customer_payments.id = customer_payment_details.customer_payment_id    
-WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? and facturas.customer_id = ?', "#{fecha1} 00:00:00",
+  facturas = CustomerPayment.find_by_sql(['Select  DISTINCT ON (1)  customer_payments.id,
+  customer_payment_details.total,facturas.code,facturas.customer_id,
+  facturas.fecha,customer_payment_details.factory, 
+  customer_payments.bank_acount_id
+  from customer_payment_details   
+  INNER JOIN facturas ON   customer_payment_details.factura_id = facturas.id
+  INNER JOIN customer_payments ON customer_payments.id = customer_payment_details.customer_payment_id    
+  WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? and facturas.customer_id = ?', "#{fecha1} 00:00:00",
 "#{fecha2} 23:59:59",cliente ])
 
     ret = 0 
 
 
     if facturas 
-    ret=0  
-
-      for factura in facturas      
-                
+    ret1=0  
+    ret2=0  
+      for factura in facturas  
+      
+          @banco = Bank.find(factura.bank_acount_id)
+          moneda =@banco.moneda_id
+          
           @detail = CustomerPaymentDetail.where(:customer_payment_id => factura.id)
 
           for d in @detail 
+          
             if(value == "ajuste")
-              ret += d.ajuste
+              if moneda == 2 
+              ret2 += d.ajuste
+              else
+              ret1 += d.ajuste
+              end 
             elsif (value == "compen")
-              ret += d.compen 
+            if moneda == 2 
+              ret2 += d.compen 
+            else 
+              ret1 += d.compen 
+            end 
             elsif (value == "total")
-              ret += d.compen   
+              if moneda == 2
+                ret2 += d.compen   
+              else
+                ret1 += d.compen   
+              end
             else         
-              ret += d.factory
+              if moneda == 2
+                ret2 += d.factory
+              else
+                ret1 += d.factory
+              end
             end
           end 
 
       end
     end 
-    
-    return ret    
+    if moneda_pago == 2
+      return ret2    
+    else
+      return ret1
+    end 
  end 
  
  

@@ -429,11 +429,11 @@ class CustomerPaymentsController < ApplicationController
           redirect_to "/companies/customerpayments/#{@company.id}"
         end
       elsif(params[:location] and params[:location] != "" and params[:division] and params[:division] != "")
-        @customerpayments = CustomerPayment.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :location_id => params[:location], :division_id => params[:division]}, :order => "id DESC")
+        @customerpayments = CustomerPayment.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :location_id => params[:location], :division_id => params[:division]}, :order => "code DESC")
       elsif(params[:location] and params[:location] != "")
-        @customerpayments = CustomerrPayment.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :location_id => params[:location]}, :order => "id DESC")
+        @customerpayments = CustomerrPayment.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :location_id => params[:location]}, :order => "code DESC")
       elsif(params[:division] and params[:division] != "")
-        @customerpayments = CustomerPayment.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :division_id => params[:division]}, :order => "id DESC")
+        @customerpayments = CustomerPayment.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :division_id => params[:division]}, :order => "code DESC")
       else
         if(params[:q] and params[:q] != "")
           fields = ["description", "comments", "code"]
@@ -443,7 +443,7 @@ class CustomerPaymentsController < ApplicationController
 
           query = str_sql_search(q, fields)
 
-          @customerpayments = CustomerPayment.paginate(:page => params[:page], :order => 'id DESC', :conditions => ["company_id = ? AND (#{query})", @company.id])
+          @customerpayments = CustomerPayment.paginate(:page => params[:page], :order => 'code DESC', :conditions => ["company_id = ? AND (#{query})", @company.id])
         else
 
           @customerpayments = CustomerPayment.where(company_id:  @company.id).order("id DESC").paginate(:page => params[:page])
@@ -1104,45 +1104,60 @@ class CustomerPaymentsController < ApplicationController
           $lcFactory = 0
           $lcCompen  = 0
           $lcAjuste  = 0
+          
+          $lcFactory2 = 0
+          $lcCompen2  = 0
+          $lcAjuste2  = 0
+          
+          moneda_ajuste_soles = 2
+          moneda_ajuste_dolar = 1
 
-           $lcFactory = @company.get_customer_payments_value_otros(@fecha1,@fecha2,'factory')      
-           $lcCompen= @company.get_customer_payments_value_otros(@fecha1,@fecha2,'compen')
-           $lcAjuste = @company.get_customer_payments_value_otros(@fecha1,@fecha2,'ajuste')
-
-           @totalgeneral_soles = @totalgeneral_soles + $lcAjuste + $lcFactory +$lcCompen
+           $lcFactory = @company.get_customer_payments_value_otros_customer(@fecha1,@fecha2,'factory',@cliente,moneda_ajuste_soles)      
+           $lcCompen  = @company.get_customer_payments_value_otros_customer(@fecha1,@fecha2,'compen',@cliente,moneda_ajuste_soles)
+           $lcAjuste  = @company.get_customer_payments_value_otros_customer(@fecha1,@fecha2,'ajuste',@cliente,moneda_ajuste_soles)
+           
+           $lcFactory2 = @company.get_customer_payments_value_otros_customer(@fecha1,@fecha2,'factory',@cliente,moneda_ajuste_dolar)      
+           $lcCompen2  = @company.get_customer_payments_value_otros_customer(@fecha1,@fecha2,'compen',@cliente,moneda_ajuste_dolar)
+           $lcAjuste2  = @company.get_customer_payments_value_otros_customer(@fecha1,@fecha2,'ajuste',@cliente,moneda_ajuste_dolar)
            
 
-          row = []
+           @totalgeneral_soles = @totalgeneral_soles + $lcAjuste + $lcFactory +$lcCompen
+           @totalgeneral_dolar = @totalgeneral_dolar + $lcAjuste2 + $lcFactory2 +$lcCompen2
+           
+
+           row = []
           row << nroitem.to_s
           row << "FACTORY"
           row << sprintf("%.2f",$lcFactory.to_s)
-          row << " "
+          row << sprintf("%.2f",$lcFactory2.to_s)
+          
           table_content2 << row
-
           row = []
           row << nroitem.to_s
           row << "COMPENSACION:"
           row << sprintf("%.2f",$lcCompen.to_s)
-          row << " "
+          row << sprintf("%.2f",$lcCompen2.to_s)
           table_content2 << row
           
           row = []
           row << nroitem.to_s
           row << "AJUSTE"
           row << sprintf("%.2f",$lcAjuste.to_s)
-          row << " "
-
+          row << sprintf("%.2f",$lcAjuste2.to_s)
 
           table_content2 << row
           row = []
           row << nroitem.to_s
           row << "TOTAL => "
+
           row << sprintf("%.2f",@totalgeneral_soles.to_s)
+          
           row << sprintf("%.2f",@totalgeneral_dolar.to_s)
 
       else
         
           for banco in @banks
+          
           total1 = @company.get_customer_payments_value_customer(@fecha1,@fecha2,banco.id,@cliente,"total")  
 
           if total1>0 and total1 != nil
@@ -1151,50 +1166,70 @@ class CustomerPaymentsController < ApplicationController
             row << nroitem.to_s
             row << banco.number 
             row << sprintf("%.2f",total1.to_s)
-
-            @totalgeneral = @totalgeneral + total1 
-
+            if banco.moneda_id == 2
+              @totalgeneral_soles = @totalgeneral_soles + total1 
+            else
+              @totalgeneral_dolar = @totalgeneral_dolar + total1 
+            end 
             nroitem = nroitem + 1
             table_content2 << row
           else
             total1 = 0
-            @totalgeneral = @totalgeneral + total1 
+            if banco.moneda_id == 2
+              @totalgeneral_soles = @totalgeneral_soles + total1 
+            else
+              @totalgeneral_dolar = @totalgeneral_dolar + total1 
+            end 
           end   
 
           end
           $lcFactory = 0
           $lcCompen  = 0
           $lcAjuste  = 0
+          
+          moneda_ajuste_soles = 2
+          moneda_ajuste_dolar = 1
+            
+           $lcFactory = @company.get_customer_payments_value_otros_customer(@fecha1,@fecha2,'factory',@cliente,moneda_ajuste_soles)      
+           $lcCompen  = @company.get_customer_payments_value_otros_customer(@fecha1,@fecha2,'compen',@cliente,moneda_ajuste_soles)
+           $lcAjuste  = @company.get_customer_payments_value_otros_customer(@fecha1,@fecha2,'ajuste',@cliente,moneda_ajuste_soles)
+           
+           $lcFactory2 = @company.get_customer_payments_value_otros_customer(@fecha1,@fecha2,'factory',@cliente,moneda_ajuste_dolar)      
+           $lcCompen2  = @company.get_customer_payments_value_otros_customer(@fecha1,@fecha2,'compen',@cliente,moneda_ajuste_dolar)
+           $lcAjuste2  = @company.get_customer_payments_value_otros_customer(@fecha1,@fecha2,'ajuste',@cliente,moneda_ajuste_dolar)
+           
 
-           $lcFactory = @company.get_customer_payments_value_otros_customer(@fecha1,@fecha2,'factory',@cliente)      
-           $lcCompen= @company.get_customer_payments_value_otros_customer(@fecha1,@fecha2,'compen',@cliente)
-           $lcAjuste = @company.get_customer_payments_value_otros_customer(@fecha1,@fecha2,'ajuste',@cliente)
-
-           @totalgeneral = @totalgeneral + $lcAjuste + $lcFactory +$lcCompen
-
+           @totalgeneral_soles = @totalgeneral_soles + $lcAjuste + $lcFactory +$lcCompen
+           @totalgeneral_dolar = @totalgeneral_dolar + $lcAjuste2 + $lcFactory2 +$lcCompen2
+           
           row = []
           row << nroitem.to_s
           row << "FACTORY"
           row << sprintf("%.2f",$lcFactory.to_s)
+          row << sprintf("%.2f",$lcFactory2.to_s)
+          
           table_content2 << row
           row = []
           row << nroitem.to_s
           row << "COMPENSACION:"
           row << sprintf("%.2f",$lcCompen.to_s)
+          row << sprintf("%.2f",$lcCompen2.to_s)
           table_content2 << row
           
           row = []
           row << nroitem.to_s
           row << "AJUSTE"
           row << sprintf("%.2f",$lcAjuste.to_s)
-
-
+          row << sprintf("%.2f",$lcAjuste2.to_s)
 
           table_content2 << row
           row = []
           row << nroitem.to_s
           row << "TOTAL => "
-          row << sprintf("%.2f",@totalgeneral.to_s)
+
+          row << sprintf("%.2f",@totalgeneral_soles.to_s)
+          
+          row << sprintf("%.2f",@totalgeneral_dolar.to_s)
 
 
       end 
