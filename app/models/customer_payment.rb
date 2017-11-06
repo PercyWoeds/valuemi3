@@ -102,6 +102,14 @@ self.per_page = 20
                     "IMPORTE",
                   ]                      
                    
+                   
+def get_banco_moneda(banco)
+  
+  banco= BankAcount.find(banco)
+  
+  return banco.moneda_id 
+  
+end 
  def get_cliente(customer_id)
    
      cliente = Customer.find(customer_id)

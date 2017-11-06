@@ -974,7 +974,9 @@ class CustomerPaymentsController < ApplicationController
                   row << productItem.factory.to_s
                 end 
                 
-                if productItem.moneda_id == 2
+                monedabanco= productItem.get_banco_moneda(productItem.bank_acount_id)
+                
+                if monedabanco == 2
                   row << productItem.total.to_s
                   row << " "  
                 else
@@ -986,7 +988,7 @@ class CustomerPaymentsController < ApplicationController
 
                 total_factory = total_factory +  productItem.factory
 
-                if productItem.moneda_id == 2
+                if monedabanco == 2
                   total_general_soles = total_general_soles +  productItem.total
                 else
                   total_general_dolar = total_general_dolar +  productItem.total

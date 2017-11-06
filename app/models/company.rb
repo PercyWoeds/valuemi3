@@ -545,7 +545,7 @@ def get_guias_2(fecha1,fecha2)
  def get_customer_payments(fecha1,fecha2)
     @facturas =   CustomerPayment.find_by_sql(['Select customer_payments.id,customer_payment_details.total,
 customer_payments.code  as code_liq,facturas.code,facturas.customer_id,facturas.fecha,
-facturas.moneda_id,
+facturas.moneda_id,customer_payments.bank_acount_id,
 customer_payment_details.factory,
 customer_payments.fecha1
 from customer_payment_details   
