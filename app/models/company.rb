@@ -719,9 +719,9 @@ def get_customer_payments_value_otros_customer(fecha1,fecha2,value,cliente,moned
           
             if(value == "ajuste")
               if moneda == 2 
-                ret2 += d.ajuste
+                ret2 += d.ajuste*-1
               else
-                ret1 += d.ajuste
+                ret1 += d.ajuste*-1
               end 
             elsif (value == "compen")
               if moneda == 2 
@@ -748,9 +748,9 @@ def get_customer_payments_value_otros_customer(fecha1,fecha2,value,cliente,moned
     end 
     puts moneda_pago 
     if moneda_pago == 1
-      return ret2*-1    
+      return ret2    
     else
-      return ret1*-1
+      return ret1
     end 
  end 
  
