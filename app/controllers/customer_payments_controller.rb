@@ -1112,13 +1112,13 @@ class CustomerPaymentsController < ApplicationController
           moneda_ajuste_soles = 2
           moneda_ajuste_dolar = 1
 
-           $lcFactory = @company.get_customer_payments_value_otros_customer(@fecha1,@fecha2,'factory',@cliente,moneda_ajuste_soles)      
-           $lcCompen  = @company.get_customer_payments_value_otros_customer(@fecha1,@fecha2,'compen',@cliente,moneda_ajuste_soles)
-           $lcAjuste  = @company.get_customer_payments_value_otros_customer(@fecha1,@fecha2,'ajuste',@cliente,moneda_ajuste_soles)
+           $lcFactory = @company.get_customer_payments_value_otros_customer2(@fecha1,@fecha2,'factory',2)      
+           $lcCompen  = @company.get_customer_payments_value_otros_customer2(@fecha1,@fecha2,'compen',2)
+           $lcAjuste  = @company.get_customer_payments_value_otros_customer2(@fecha1,@fecha2,'ajuste',2)
            
-           $lcFactory2 = @company.get_customer_payments_value_otros_customer(@fecha1,@fecha2,'factory',@cliente,moneda_ajuste_dolar)      
-           $lcCompen2  = @company.get_customer_payments_value_otros_customer(@fecha1,@fecha2,'compen',@cliente,moneda_ajuste_dolar)
-           $lcAjuste2  = @company.get_customer_payments_value_otros_customer(@fecha1,@fecha2,'ajuste',@cliente,moneda_ajuste_dolar)
+           $lcFactory2 = @company.get_customer_payments_value_otros_customer2(@fecha1,@fecha2,'factory',1)      
+           $lcCompen2  = @company.get_customer_payments_value_otros_customer2(@fecha1,@fecha2,'compen',1)
+           $lcAjuste2  = @company.get_customer_payments_value_otros_customer2(@fecha1,@fecha2,'ajuste',1)
            
 
            @totalgeneral_soles = @totalgeneral_soles + $lcAjuste2 + $lcFactory2 +$lcCompen2

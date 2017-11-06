@@ -639,11 +639,11 @@ def get_customer_payments_value_otros_customer(fecha1,fecha2,value,cliente,moned
 "#{fecha2} 23:59:59",cliente ])
 
     ret = 0 
-
-
-    if facturas 
     ret1=0  
     ret2=0  
+    
+
+    if facturas 
       for factura in facturas  
       
           @banco = BankAcount.find(factura.bank_acount_id)
@@ -690,6 +690,69 @@ def get_customer_payments_value_otros_customer(fecha1,fecha2,value,cliente,moned
     end 
  end 
  
+ def get_customer_payments_value_otros_customer2(fecha1,fecha2,value,moneda_pago)
+
+  facturas = CustomerPayment.find_by_sql(['Select  DISTINCT ON (1)  customer_payments.id,
+  customer_payment_details.total,facturas.code,facturas.customer_id,
+  facturas.fecha,customer_payment_details.factory, 
+  customer_payments.bank_acount_id
+  from customer_payment_details   
+  INNER JOIN facturas ON   customer_payment_details.factura_id = facturas.id
+  INNER JOIN customer_payments ON customer_payments.id = customer_payment_details.customer_payment_id    
+  WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? ', "#{fecha1} 00:00:00",
+"#{fecha2} 23:59:59" ])
+
+    ret = 0 
+    ret1=0  
+    ret2=0  
+    
+
+    if facturas 
+      for factura in facturas  
+      
+          @banco = BankAcount.find(factura.bank_acount_id)
+          moneda = @banco.moneda_id
+          
+          @detail = CustomerPaymentDetail.where(:customer_payment_id => factura.id)
+
+          for d in @detail 
+          
+            if(value == "ajuste")
+              if moneda == 2 
+                ret2 += d.ajuste
+              else
+                ret1 += d.ajuste
+              end 
+            elsif (value == "compen")
+              if moneda == 2 
+                ret2 += d.compen 
+              else 
+                ret1 += d.compen 
+              end 
+            elsif (value == "total")
+              if moneda == 2
+                ret2 += d.compen   
+              else
+                ret1 += d.compen   
+              end
+            else         
+              if moneda == 2
+                ret2 += d.factory
+              else
+                ret1 += d.factory
+              end
+            end
+          end 
+
+      end
+    end 
+    puts moneda_pago 
+    if moneda_pago == 1
+      return ret2    
+    else
+      return ret1
+    end 
+ end 
  
  def get_customer_payments_cliente(fecha1,fecha2,cliente)
 
