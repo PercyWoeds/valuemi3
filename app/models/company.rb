@@ -647,7 +647,7 @@ def get_customer_payments_value_otros_customer(fecha1,fecha2,value,cliente,moned
       for factura in facturas  
       
           @banco = BankAcount.find(factura.bank_acount_id)
-          moneda =@banco.moneda_id
+          moneda = @banco.moneda_id
           
           @detail = CustomerPaymentDetail.where(:customer_payment_id => factura.id)
 
@@ -655,16 +655,16 @@ def get_customer_payments_value_otros_customer(fecha1,fecha2,value,cliente,moned
           
             if(value == "ajuste")
               if moneda == 2 
-              ret2 += d.ajuste
+                ret2 += d.ajuste
               else
-              ret1 += d.ajuste
+                ret1 += d.ajuste
               end 
             elsif (value == "compen")
-            if moneda == 2 
-              ret2 += d.compen 
-            else 
-              ret1 += d.compen 
-            end 
+              if moneda == 2 
+                ret2 += d.compen 
+              else 
+                ret1 += d.compen 
+              end 
             elsif (value == "total")
               if moneda == 2
                 ret2 += d.compen   
@@ -682,6 +682,7 @@ def get_customer_payments_value_otros_customer(fecha1,fecha2,value,cliente,moned
 
       end
     end 
+    puts moneda_pago 
     if moneda_pago == 2
       return ret2    
     else

@@ -1121,38 +1121,40 @@ class CustomerPaymentsController < ApplicationController
            $lcAjuste2  = @company.get_customer_payments_value_otros_customer(@fecha1,@fecha2,'ajuste',@cliente,moneda_ajuste_dolar)
            
 
-           @totalgeneral_soles = @totalgeneral_soles + $lcAjuste + $lcFactory +$lcCompen
-           @totalgeneral_dolar = @totalgeneral_dolar + $lcAjuste2 + $lcFactory2 +$lcCompen2
+           @totalgeneral_soles = @totalgeneral_soles + $lcAjuste2 + $lcFactory2 +$lcCompen2
+           @totalgeneral_dolar = @totalgeneral_dolar + $lcAjuste + $lcFactory +$lcCompen
            
 
            row = []
           row << nroitem.to_s
           row << "FACTORY"
-          row << sprintf("%.2f",$lcFactory.to_s)
-          row << sprintf("%.2f",$lcFactory2.to_s)
           
+          row << sprintf("%.2f",$lcFactory2.to_s)
+          row << sprintf("%.2f",$lcFactory.to_s)
           table_content2 << row
           row = []
           row << nroitem.to_s
           row << "COMPENSACION:"
-          row << sprintf("%.2f",$lcCompen.to_s)
           row << sprintf("%.2f",$lcCompen2.to_s)
+          row << sprintf("%.2f",$lcCompen.to_s)
+          
           table_content2 << row
           
           row = []
           row << nroitem.to_s
           row << "AJUSTE"
-          row << sprintf("%.2f",$lcAjuste.to_s)
           row << sprintf("%.2f",$lcAjuste2.to_s)
+          row << sprintf("%.2f",$lcAjuste.to_s)
+          
 
           table_content2 << row
           row = []
           row << nroitem.to_s
           row << "TOTAL => "
-
-          row << sprintf("%.2f",@totalgeneral_soles.to_s)
           
+          row << sprintf("%.2f",@totalgeneral_soles.to_s)
           row << sprintf("%.2f",@totalgeneral_dolar.to_s)
+          
 
       else
         
@@ -1199,28 +1201,31 @@ class CustomerPaymentsController < ApplicationController
            $lcAjuste2  = @company.get_customer_payments_value_otros_customer(@fecha1,@fecha2,'ajuste',@cliente,moneda_ajuste_dolar)
            
 
-           @totalgeneral_soles = @totalgeneral_soles + $lcAjuste + $lcFactory +$lcCompen
-           @totalgeneral_dolar = @totalgeneral_dolar + $lcAjuste2 + $lcFactory2 +$lcCompen2
+           @totalgeneral_soles = @totalgeneral_soles + $lcAjuste2 + $lcFactory2 +$lcCompen2
+           @totalgeneral_dolar = @totalgeneral_dolar + $lcAjuste + $lcFactory +$lcCompen 
            
           row = []
           row << nroitem.to_s
           row << "FACTORY"
-          row << sprintf("%.2f",$lcFactory.to_s)
           row << sprintf("%.2f",$lcFactory2.to_s)
+          row << sprintf("%.2f",$lcFactory.to_s)
+          
           
           table_content2 << row
           row = []
           row << nroitem.to_s
           row << "COMPENSACION:"
-          row << sprintf("%.2f",$lcCompen.to_s)
           row << sprintf("%.2f",$lcCompen2.to_s)
+          row << sprintf("%.2f",$lcCompen.to_s)
+          
           table_content2 << row
           
           row = []
           row << nroitem.to_s
           row << "AJUSTE"
-          row << sprintf("%.2f",$lcAjuste.to_s)
           row << sprintf("%.2f",$lcAjuste2.to_s)
+          row << sprintf("%.2f",$lcAjuste.to_s)
+          
 
           table_content2 << row
           row = []
@@ -1230,7 +1235,8 @@ class CustomerPaymentsController < ApplicationController
           row << sprintf("%.2f",@totalgeneral_soles.to_s)
           
           row << sprintf("%.2f",@totalgeneral_dolar.to_s)
-
+        
+            
 
       end 
 
