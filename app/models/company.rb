@@ -748,9 +748,9 @@ def get_customer_payments_value_otros_customer(fecha1,fecha2,value,cliente,moned
     end 
     puts moneda_pago 
     if moneda_pago == 1
-      return ret2    
+      return ret2*-1    
     else
-      return ret1
+      return ret1*-1
     end 
  end 
  
