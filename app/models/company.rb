@@ -646,7 +646,7 @@ def get_customer_payments_value_otros_customer(fecha1,fecha2,value,cliente,moned
     ret2=0  
       for factura in facturas  
       
-          @banco = Bank.find(factura.bank_acount_id)
+          @banco = BankAcount.find(factura.bank_acount_id)
           moneda =@banco.moneda_id
           
           @detail = CustomerPaymentDetail.where(:customer_payment_id => factura.id)

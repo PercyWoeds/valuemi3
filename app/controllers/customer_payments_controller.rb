@@ -1290,7 +1290,7 @@ class CustomerPaymentsController < ApplicationController
     
     @ClienteDato = @company.get_cliente(@cliente)
     $lcNameCliente =@ClienteDato.name
-    $lcRucCliente =@ClienteDato.ruc
+    $lcRucCliente  =@ClienteDato.ruc
 
     @customerpayment_rpt = @company.get_customer_payments_cliente(@fecha1,@fecha2,@cliente)  
       
