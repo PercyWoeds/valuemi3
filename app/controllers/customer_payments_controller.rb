@@ -953,7 +953,7 @@ class CustomerPaymentsController < ApplicationController
                 row = []
                 row << nroitem.to_s
                 if $lcxCliente == "0" 
-                  $lcCode   = productItem.code
+                  $lcCode   = productItem.code_liq
                 else
                   $lcCode   = productItem.code_liq
                 end 
