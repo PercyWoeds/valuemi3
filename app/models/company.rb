@@ -2688,7 +2688,8 @@ def get_ingresos_day4(fecha1,fecha2)
 
    @purchases = Purchase.find_by_sql(['Select purchases.*,purchase_details.quantity,
     purchase_details.price_without_tax as price,purchases.date1 as fecha, products.name as nameproducto,
-    products.code as codigo ,purchases.documento as code ,products.unidad,purchase_details.total,purchases.moneda_id
+    products.code as codigo ,purchases.documento as code ,products.unidad,purchase_details.total,
+    purchases.moneda_id,products.products_category_id 
     from purchase_details   
 INNER JOIN purchases ON purchase_details.purchase_id = purchases.id
 INNER JOIN products ON purchase_details.product_id = products.id
