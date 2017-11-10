@@ -30,12 +30,12 @@ TABLE_HEADERS  = ["ITEM ",
 
 
 TABLE_HEADERS2  = ["ITEM ",
+                      "CATEGORIA",
                       "DOCUMENTO",
                      "FECHA",
                      "CODIGO",
                      "PRODUCTO",
                      "UNIDAD",
-                     "PROVEEDOR",
                      "CANTIDAD",
                      "COSTO US$",
                      "COSTO S/.",
