@@ -1015,6 +1015,7 @@ def build_pdf_header_rpt48(pdf)
             if product.price != nil 
               if product.moneda_id == 1
                  if product.fecha 
+                   puts product.fecha 
                   @tipocambio = product.get_tipocambio(product.fecha)
                 else
                   @tipocambio = 1

@@ -2693,7 +2693,7 @@ def get_ingresos_day4(fecha1,fecha2)
     from purchase_details   
 INNER JOIN purchases ON purchase_details.purchase_id = purchases.id
 INNER JOIN products ON purchase_details.product_id = products.id
-WHERE purchases.date1 >= ? and purchases.date1 <= ? and purchases.processed = ?
+WHERE purchases.date1 >= ? and purchases.date1 <= ? and purchases.processed = ? 
 ORDER BY products.products_category_id,products.code  ', "#{fecha1} 00:00:00","#{fecha2} 23:59:59","1" ])
   
     return @purchases 

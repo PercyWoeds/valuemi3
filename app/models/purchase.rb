@@ -86,11 +86,6 @@ TABLE_HEADERS2  = ["ITEM ",
                      "PRECIO",
                      "TOTAL "]
 
-                     
-                     
-            
-                                 
-
   def get_vencido
 
       if(self.date3 < Date.today)   
@@ -207,7 +202,7 @@ def get_tax3(items, supplier_id)
   
   def get_subtotal(items)
     subtotal = 0
-    
+    precio_unit = 0 
     for item in items
       if(item and item != "")
         parts = item.split("|BRK|")
@@ -217,9 +212,14 @@ def get_tax3(items, supplier_id)
         price = parts[2]
         discount = parts[3]
         price2 = parts[4]
+        precio_unit = price.to_f * 1.18 
         
-        total = price.to_f * quantity.to_i
-        total -= total * (discount.to_f / 100)
+         
+        total0 = precio_unit.round(3) * quantity.to_f.round(3)
+        
+        total = total0 / 1.18 
+        total -= total.round(2) * (discount.to_f / 100)
+        
         
         begin
           product = Product.find(id.to_i)
@@ -247,7 +247,7 @@ def get_tax3(items, supplier_id)
             price = parts[2]
             discount = parts[3]
           
-            total = price.to_f * quantity.to_i
+            total = price.to_f * quantity.to_f
             total -= total * (discount.to_f / 100)
         
             begin
