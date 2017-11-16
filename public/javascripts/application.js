@@ -200,10 +200,9 @@
     
     if(isNumeric(quantity) && isNumeric(price) && isNumeric(discount)) {
       
-      var precio_unit = price * 1.18 ;
-      var total0 = quantity.toFixed(3) * precio_unit.toFixed(3);
-      var total  = total0 / 1.18 ;
-      total -= total.toFixed(3) * (discount / 100);
+      var total = quantity * price;
+      
+      total -= total * (discount / 100);
 
       $("#ac_item_total").html(total);
     } else {

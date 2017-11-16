@@ -212,13 +212,10 @@ def get_tax3(items, supplier_id)
         price = parts[2]
         discount = parts[3]
         price2 = parts[4]
-        precio_unit = price.to_f * 1.18 
-        
          
-        total0 = precio_unit.round(3) * quantity.to_f.round(3)
-        
-        total = total0 / 1.18 
-        total -= total.round(2) * (discount.to_f / 100)
+        total = price.to_f * quantity.to_f
+        total = total /1.18 
+        total -= total * (discount.to_f / 100)
         
         
         begin
@@ -248,6 +245,7 @@ def get_tax3(items, supplier_id)
             discount = parts[3]
           
             total = price.to_f * quantity.to_f
+            total = total /1.18 
             total -= total * (discount.to_f / 100)
         
             begin
@@ -294,7 +292,8 @@ def get_tax3(items, supplier_id)
         quantity = parts[1]
         price = parts[2]
         discount = parts[3]
-        lcprice_tax = price.to_f  * 1.18      
+        lcprice_tax = price.to_f
+        lcprice_without_tax = price.to_f/1.18
 
         total = lcprice_tax.to_f * quantity.to_f
         total -= total * (discount.to_f / 100)
@@ -303,7 +302,7 @@ def get_tax3(items, supplier_id)
 
           product = Product.find(id.to_i)          
           new_pur_product = PurchaseDetail.new(:purchase_id => self.id, :product_id => product.id,
-          :price_with_tax => lcprice_tax, :price_without_tax=>price.to_f, :quantity => quantity.to_f, :discount => discount.to_f,
+          :price_with_tax => lcprice_tax, :price_without_tax=>lcprice_without_tax, :quantity => quantity.to_f, :discount => discount.to_f,
           :total => total.to_f)
           new_pur_product.save
         rescue
