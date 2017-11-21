@@ -91,6 +91,11 @@ class EmployeesController < ApplicationController
       format.json { head :no_content }
     end
   end
+  def ac_employees
+    @employees = Employee.where(["company_id = ? AND (idnumber LIKE ? OR full_name  iLIKE ?)", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])  
+    render :layout => false
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

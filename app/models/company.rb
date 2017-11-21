@@ -274,6 +274,12 @@ def get_facturas_day_value_cliente(fecha1,fecha2,cliente,value = "total",moneda)
      category = ProductsCategory.find(id)
      return category.category
   end 
+  
+  def get_empleado_name(id)
+     empleado = Employee.find(id)
+     return empleado.full_name 
+  end 
+  
   def get_service_name(id)
      category = Servicebuy.find(id)
      return category.name 
@@ -2642,6 +2648,18 @@ def get_salidas_day2(fecha1,fecha2,product)
 INNER JOIN outputs ON output_details.output_id = outputs.id
 INNER JOIN products ON output_details.product_id = products.id
 WHERE products.products_category_id = ?  and outputs.fecha >= ? and outputs.fecha <= ?',product, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
+ 
+    return @purchases 
+
+end
+def get_salidas_day3(fecha1,fecha2,product,empleado)
+  
+    @purchases = Output.find_by_sql(['Select outputs.*,output_details.quantity,
+    output_details.price,output_details.total,products.name as nameproducto,products.code as codigo,products.unidad
+    from output_details   
+INNER JOIN outputs ON output_details.output_id = outputs.id
+INNER JOIN products ON output_details.product_id = products.id
+WHERE outputs.employee_id = ?  and products.products_category_id = ?  and outputs.fecha >= ? and outputs.fecha <= ?',empleado,product, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
  
     return @purchases 
 
