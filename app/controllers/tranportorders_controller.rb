@@ -355,7 +355,7 @@ class TranportordersController < ApplicationController
               row << ""
               row << "CLIENTE: "
               row << guias.get_delivery_customer(guias.id)
-              row << "GUIA" >> guias.code
+              row << guias.code
               row << guias.fecha1.strftime("%d/%m/%Y")  
               
               @facturas= guias.get_factura_delivery(guias.id)
