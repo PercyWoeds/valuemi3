@@ -26,6 +26,21 @@ class CustomerPaymentDetail < ActiveRecord::Base
 
   end 
   
+  def get_fecha_cobranza(id)
+    begin 
+    a = CustomerPayment.find(id)
+    if a 
+    return a 
+    else
+    return "" 
+    end 
+    rescue 
+  end 
+    
+  end   
+    
+    
+  
 end
 
 

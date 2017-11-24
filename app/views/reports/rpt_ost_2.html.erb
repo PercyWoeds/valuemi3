@@ -1,0 +1,47 @@
+<%= render 'layouts/charts' %>
+<%
+invoices_subtotal = 0
+invoices_tax = 0
+invoices_total = 0
+subtotals = []
+taxes = []
+totals = []
+%>
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %> &raquo;
+  <%= link_to "Reports", "/companies/reports/#{@company.id}" %>
+</div>
+
+<h1>
+  <%= image_tag("reports_48.png", :class => "vmiddle") %>
+  Orden de servicio de transporte 
+</h1>
+
+<form method="get" action="/tranportorders/rpt_ost2_pdf/<%= @company.id %>">
+  
+  
+<p>
+  <label for="tiporeporte"> Tipo de Reporte:</label><br>
+  <select id="tiporeporte" name="tiporeporte" >
+
+    <option value="0" selected> FECHA O.S.T. </option>
+    
+  </select>
+</p>
+
+  
+  <div class="field">
+      <input type="date" name="fecha1" value="2017-08-01" style = "width: 150px" >
+
+    </div>
+	<div class="field">
+		<input type="date" name="fecha2" value="2017-08-18" style = "width: 150px" >
+  </div>
+
+  <input type="submit" value="Generar Reporte" />
+  <a href="/tranportorders/rpt_ost2_pdf/<%= @company.id %>" > </a>
+</form>
+
+<br />
+

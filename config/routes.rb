@@ -256,7 +256,8 @@ end
 
   match 'companies/reports_guias/:company_id' => 'reports#reports_guias', via: [:get, :post]
   match 'companies/reports/rpt_ost_1/:company_id' => 'reports#rpt_ost_1', via: [:get, :post]
-      
+  match 'companies/reports/rpt_ost_2/:company_id' => 'reports#rpt_ost_2', via: [:get, :post]
+        
   match 'companies/reports_compras/:company_id' => 'reports#reports_compras', via: [:get, :post]
   match 'companies/reports/reports_cpagar/:company_id' => 'reports#reports_cpagar', via: [:get, :post]
   match 'companies/reports/reports_cventas/:company_id' => 'reports#reports_cventas', via: [:get, :post]
@@ -637,10 +638,8 @@ end
   resources :purchases
 
 
- 
-
   match 'tranportorders/rpt_ost1_pdf/:company_id' => 'tranportorders#rpt_ost1_pdf', via: [:get, :post]
-      
+  match 'tranportorders/rpt_ost2_pdf/:company_id' => 'tranportorders#rpt_ost2_pdf', via: [:get, :post]
 
   # supplier payments
   

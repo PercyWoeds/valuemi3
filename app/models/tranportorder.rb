@@ -36,14 +36,21 @@ self.per_page = 20
 	 def identifier
 	    return "#{self.code} - #{self.employee.full_name}"
 	 end
-
-
+	 	
+     def get_delivery(id)
+     	if id != nil || id !="" || id.blank? ==false || id.empty? == false 
+		  	guia = Delivery.where(tranportorder_id:id )
+		  	return guia
+		end	
+     end 
+  
+     
 	  def get_empleado(id)
 	  	if id != nil || id !="" || id.blank? ==false || id.empty? == false 
 		  	empleado = Employee.find(id)
 		  	return empleado.full_name 	
-		elsev
-			rveturn ""  	
+		else
+			return ""  	
 	  	end	
 	  end 	
 

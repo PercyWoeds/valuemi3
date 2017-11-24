@@ -78,8 +78,25 @@ def not_guias_with?(mine_id)
     Deliverymine.where(mine_id: mine_id).count < 1
 end
 
-
-
+ def get_factura_delivery(id)
+     	if id != nil || id !="" || id.blank? ==false || id.empty? == false 
+		  	factura = Deliveryship.find_by(delivery_id: id )
+		  	if factura 
+		  	facturas = Factura.find(factura.factura_id)
+		  	return facturas
+		  	else
+		  	 return ""
+		  	 end 
+		 end	
+end 
+  def get_factura_cancela(id)
+    	if id != nil || id !="" || id.blank? ==false || id.empty? == false 
+    		factura= CustomerPaymentDetail.where(factura_id: id)
+    		
+    		return factura
+    	end 	
+    	
+    end 
 def self.search(params)        
     customers = Factura.where("name  LIKE ?","%#{params[:search]}%") if params[:search].present?
     customers

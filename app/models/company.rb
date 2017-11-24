@@ -481,6 +481,8 @@ def get_facturas_day_value_cliente(fecha1,fecha2,cliente,value = "total",moneda)
     end 
     return @orden 
  end 
+ 
+ 
  def get_guias_day(fecha1,fecha2)
     @delivery = Delivery.where(["company_id = ? AND fecha1 >= ? AND fecha1 <= ?", self.id, "#{fecha1} 00:00:00", "#{fecha2} 23:59:59"]).order(:code)
     return @delivery

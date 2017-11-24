@@ -1235,6 +1235,11 @@ class ReportsController < ApplicationController
     @company = Company.find(params[:company_id])
     @pagetitle = "Orden Servicio de Transporte"    
   end
+  def rpt_ost_2
+    @company = Company.find(params[:company_id])
+    @pagetitle = "Orden Servicio de Transporte-2"    
+  end
+  
   #listado de orden de compra x fecha 
   def rpt_ost_pdf 
     @company = Company.find(params[:company_id])
