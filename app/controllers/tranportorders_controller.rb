@@ -315,7 +315,7 @@ class TranportordersController < ApplicationController
       headers = []
       table_content = []
 
-      Tranportorder::TABLE_HEADERS.each do |header|
+      Tranportorder2::TABLE_HEADERS.each do |header|
         cell = pdf.make_cell(:content => header)
         cell.background_color = "FFFFCC"
         headers << cell
@@ -349,22 +349,31 @@ class TranportordersController < ApplicationController
             @guias = orden.get_delivery(orden.id)
             
             for guias in @guias 
+            
+            
               row = []
               row << ""
-              row << "GUIA"
-              row << guias.code
+              row << "CLIENTE: "
+              row << guias.get_delivery_customer(guias.id)
+              row << "GUIA" >> guias.code
               row << guias.fecha1.strftime("%d/%m/%Y")  
-              row << "FACTURA"
+              
               @facturas= guias.get_factura_delivery(guias.id)
               if @facturas != ""
               row << @facturas.code
               row << @facturas.fecha.strftime("%d/%m/%Y")  
+              
               else
                 row << ""
                 row << ""
               end 
               row << ""
-              row << guias.get_processed
+              if @facturas !=""
+                row << @facturas.total 
+              else
+                row << ""
+              end 
+              
               table_content << row
             
               if @facturas != ""    
@@ -383,7 +392,7 @@ class TranportordersController < ApplicationController
               row << ""
               row << ""
               row << @fecha_cobranza.fecha1.strftime("%d/%m/%Y")  
-              row << ""
+              row << cancela.total 
               table_content << row
               
               end 

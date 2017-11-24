@@ -26,6 +26,15 @@ self.per_page = 20
                      "FEC.INICIO",
                      "FEC.FIN",                     
                      "ESTADO"]
+TABLE_HEADERS2 = ["ITEM",
+                     "CODIGO",
+                     "EMPLEADO",
+                     "GUIA",
+                     "FECHA",
+                     "FACTURA",
+                     "FEC.INICIO",
+                     "FEC.FIN",                     
+                     "ESTADO"]
 
 	def self.search(search)
 		  where("code LIKE ?", "%#{search}%") 
@@ -39,12 +48,11 @@ self.per_page = 20
 	 	
      def get_delivery(id)
      	if id != nil || id !="" || id.blank? ==false || id.empty? == false 
-		  	guia = Delivery.where(tranportorder_id:id )
+		  	guia = Delivery.where("tranportorder_id = ? and processed <> ? ",id,"2")
 		  	return guia
 		end	
      end 
-  
-     
+    
 	  def get_empleado(id)
 	  	if id != nil || id !="" || id.blank? ==false || id.empty? == false 
 		  	empleado = Employee.find(id)

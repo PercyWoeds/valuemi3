@@ -77,7 +77,15 @@ def self.import(file)
 def not_guias_with?(mine_id)
     Deliverymine.where(mine_id: mine_id).count < 1
 end
-
+ def get_delivery_customer(id)
+     	if id != nil || id !="" || id.blank? ==false || id.empty? == false 
+     		cliente= Delivery.find(id)
+     		
+     		return cliente.customer.name
+     		
+    	end
+     end 
+     
  def get_factura_delivery(id)
      	if id != nil || id !="" || id.blank? ==false || id.empty? == false 
 		  	factura = Deliveryship.find_by(delivery_id: id )
