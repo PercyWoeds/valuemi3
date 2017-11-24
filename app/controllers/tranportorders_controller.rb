@@ -315,7 +315,7 @@ class TranportordersController < ApplicationController
       headers = []
       table_content = []
 
-      Tranportorder2::TABLE_HEADERS.each do |header|
+      Tranportorder::TABLE_HEADERS2.each do |header|
         cell = pdf.make_cell(:content => header)
         cell.background_color = "FFFFCC"
         headers << cell
