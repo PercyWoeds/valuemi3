@@ -80,8 +80,12 @@ end
  def get_delivery_customer(id)
      	if id != nil || id !="" || id.blank? ==false || id.empty? == false 
      		cliente= Delivery.find(id)
-     		
-     		return cliente.customer.name
+     		begin 
+     		  return cliente.customer.name
+     		rescue
+     		 return "Cliente no registrado"
+     		end
+     		  
      		
     	end
      end 
