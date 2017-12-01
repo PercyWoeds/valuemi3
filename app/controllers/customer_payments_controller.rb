@@ -1726,9 +1726,7 @@ class CustomerPaymentsController < ApplicationController
     @company.actualiza_monthyear
     @customerpayment_rpt = @company.get_customer_payments2(@tipomoneda,@fecha1,@fecha2)
       
-    Prawn::Document.generate("app/pdf_output/rpt_customerpayment2.pdf") do |pdf|        
-
-        pdf.start_new_page(:size => "A4", :layout => :landscape)
+    Prawn::Document.generate "app/pdf_output/rpt_customerpayment2.pdf" , :page_layout => :landscape do |pdf|        
         pdf.font "Helvetica"
         pdf = build_pdf_header_rpt2(pdf)
         pdf = build_pdf_body_rpt2(pdf)

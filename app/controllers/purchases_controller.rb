@@ -594,7 +594,8 @@ WHERE purchase_details.product_id = ?',params[:id] ])
       nroitem=1
       lcmonedasoles   = 2
       lcmonedadolares = 1
-    
+      @total1=0
+      @total2=0
 
       lcDoc='FT'      
 
@@ -651,7 +652,8 @@ WHERE purchase_details.product_id = ?',params[:id] ])
             row << " "
             
             table_content << row
-
+            @total1 +=total_cliente_dolares
+            @total2 +=total_cliente_soles
             lcCliente = product.supplier_id
 
             row = []          
@@ -659,7 +661,11 @@ WHERE purchase_details.product_id = ?',params[:id] ])
             row << product.documento 
             row << product.date1.strftime("%d/%m/%Y")
             row << product.date2.strftime("%d/%m/%Y")
+            if product.supplier != nil 
             row << product.supplier.name
+            else
+            row << " "
+            end 
             row << product.moneda.symbol  
 
             if product.moneda_id == 1 
@@ -678,7 +684,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
 
             totals = []            
             total_cliente = 0
-
+  
             total_cliente_soles = 0
             total_cliente_soles = @company.get_purchase_day_value2(@fecha1,@fecha2, lcProveedor, lcmonedadolares)
             total_cliente_dolares = 0
@@ -690,11 +696,15 @@ WHERE purchase_details.product_id = ?',params[:id] ])
             row << ""
             row << ""
             row << ""          
-            row << "TOTALES POR CLIENTE=> "            
+            row << "TOTALES POR PROVEEDOR => "            
             row << ""
             row << sprintf("%.2f",total_cliente_dolares.to_s)
             row << sprintf("%.2f",total_cliente_soles.to_s)                      
             row << " "
+            
+            @total1 +=total_cliente_dolares
+            @total2 +=total_cliente_soles
+            
             table_content << row
               
           total_soles = @company.get_purchases_by_day_value(@fecha1,@fecha2, lcmonedasoles,"total_amount")
@@ -713,6 +723,20 @@ WHERE purchase_details.product_id = ?',params[:id] ])
           row << sprintf("%.2f",total_dolares.to_s)                    
           row << " "
           table_content << row
+          else
+            row =[]
+          row << ""
+          row << ""
+          row << ""
+          row << ""
+          row << "TOTALES => "
+          row << ""
+          row << sprintf("%.2f",@total1.to_s)
+          row << sprintf("%.2f",@total2.to_s)                    
+          row << " "
+          table_content << row
+          
+          
           end 
 
           result = pdf.table table_content, {:position => :center,

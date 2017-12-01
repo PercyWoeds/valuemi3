@@ -335,18 +335,27 @@ class TranportordersController < ApplicationController
             row = []
             row << nroitem.to_s
             row << orden.code
+            row << ""
+            row << ""
+            
+            row << ""
+            row << ""
+            row << ""
+            row << orden.fecha1.strftime("%d/%m/%Y")  
+            row << orden.fecha2.strftime("%d/%m/%Y")
+            row << orden.get_placa(orden.truck2_id) 
+            
             if orden.employee != nil
               row << orden.employee.full_name
             else
               row << "*Empleado no registrado ** " 
             end
-            row << orden.get_placa(orden.truck2_id) 
-            row << orden.get_punto(orden.ubication_id) 
-            row << orden.get_punto(orden.ubication2_id)
-            row << orden.fecha1.strftime("%d/%m/%Y")  
-            row << orden.fecha2.strftime("%d/%m/%Y")
-            row << orden.get_processed
-
+            
+            @destino =  orden.get_punto(orden.ubication_id) +"-" + orden.get_punto(orden.ubication2_id)
+            row << @destino
+            row << ""
+            row << ""
+            
             table_content << row
 
             nroitem=nroitem + 1
@@ -358,28 +367,39 @@ class TranportordersController < ApplicationController
             
               row = []
               row << ""
-              row << "CLIENTE: "
+              row << ""
+              row << ""
+              row << ""
               
-              row << guias.get_delivery_customer(guias.id)
               
               row << guias.code
               row << guias.fecha1.strftime("%d/%m/%Y")  
               
               @facturas= guias.get_factura_delivery(guias.id)
               if @facturas != ""
-              row << @facturas.code
+                
+              row << ""
               row << @facturas.fecha.strftime("%d/%m/%Y")  
+              row << guias.get_delivery_customer(guias.id)
               
               else
                 row << ""
                 row << ""
               end 
               row << ""
+              row << ""
+              
               if @facturas !=""
+                row << ""
                 row << @facturas.total 
+                row << @facturas.code
               else
                 row << ""
+                row << ""
+                row << ""
               end 
+              
+              
               
               table_content << row
             
@@ -466,7 +486,7 @@ class TranportordersController < ApplicationController
     @tipo = 1      
     @orden_transporte = @company.get_ordertransporte_day(@fecha1,@fecha2,@tipo)  
       
-    Prawn::Document.generate("app/pdf_output/ost2.pdf") do |pdf|      
+    Prawn::Document.generate "app/pdf_output/ost2.pdf" , :page_layout => :landscape do |pdf|      
         pdf.font "Helvetica"
         pdf = build_pdf_header2(pdf)
         pdf = build_pdf_body2(pdf)
