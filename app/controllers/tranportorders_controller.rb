@@ -340,9 +340,11 @@ class TranportordersController < ApplicationController
             
             row << ""
             row << ""
+            @ordenfecha1 = orden.fecha1.strftime("%d/%m/%Y")  
+            @ordenfecha2 = orden.fecha2.strftime("%d/%m/%Y")
             row << ""
-            row << orden.fecha1.strftime("%d/%m/%Y")  
-            row << orden.fecha2.strftime("%d/%m/%Y")
+            row << "" 
+            row << ""
             row << orden.get_placa(orden.truck2_id) 
             
             if orden.employee != nil
@@ -355,7 +357,7 @@ class TranportordersController < ApplicationController
             row << @destino
             row << ""
             row << ""
-            
+            row << ""
             table_content << row
 
             nroitem=nroitem + 1
@@ -374,16 +376,14 @@ class TranportordersController < ApplicationController
               
               row << guias.code
               row << guias.fecha1.strftime("%d/%m/%Y")  
-              
+              row << @ordenfecha1
+              row << @ordenfecha2
               @facturas= guias.get_factura_delivery(guias.id)
               if @facturas != ""
                 
-              row << ""
-              row << @facturas.fecha.strftime("%d/%m/%Y")  
-              row << guias.get_delivery_customer(guias.id)
-              
+                row << guias.get_delivery_customer(guias.id)
               else
-                row << ""
+                
                 row << ""
               end 
               row << ""
@@ -393,7 +393,9 @@ class TranportordersController < ApplicationController
                 row << ""
                 row << @facturas.total 
                 row << @facturas.code
+                row << @facturas.fecha.strftime("%d/%m/%Y")    
               else
+                row << ""
                 row << ""
                 row << ""
                 row << ""
@@ -415,11 +417,19 @@ class TranportordersController < ApplicationController
               row << ""
               row << ""
               row << ""
-              row << "CANCELACION"
               row << ""
               row << ""
-              row << @fecha_cobranza.fecha1.strftime("%d/%m/%Y")  
+              row << ""
+              row << ""
+              
+              row << ""
+              row << ""
+              row << ""
+              row << ""
               row << cancela.total 
+              row << "CANCELA"
+              row << @fecha_cobranza.fecha1.strftime("%d/%m/%Y")  
+              
               table_content << row
               
               end 

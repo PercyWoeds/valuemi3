@@ -28,18 +28,24 @@ self.per_page = 20
                      "ESTADO"]
 TABLE_HEADERS2 = ["ITEM",
                      "NRO.OST.",
-                     "FEC.GUIA",
+                     "FEC.
+                     GUIA",
                      "DIAS",
                      "GUIA",
-                     "FEC.INICIO",
-                     "FEC.TRASLADO",
-                     "FEC.RECEP.",
+                     "FEC.
+                     INICIO",
+                     "FEC.
+                     TRASLADO",
+                     "FEC.
+                     RECEP.",
                      "C L I E N T E",
                      "PLACA",
                      "CONDUCTOR",                     
                      "DESTINO",
                      "TOTAL",
-                     "FACTURA"]
+                     "FACTURA",
+                     "FEC.FACTURA
+                     /FEC.PAGO"]
 
 	def self.search(search)
 		  where("code LIKE ?", "%#{search}%") 
