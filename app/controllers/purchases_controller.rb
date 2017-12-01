@@ -315,17 +315,25 @@ WHERE purchase_details.product_id = ?',params[:id] ])
                                         end
 
       pdf.move_down 10      
+         
+        pdf.bounding_box([0, 20], :width => 535, :height => 40) do
+        
+        pdf.text "_________________               _____________________         ____________________      ", :size => 13, :spacing => 4
+        pdf.text ""
+        pdf.text "                  Realizado por                                         V.B.Jefe Compras                                      V.B.Gerencia           ", :size => 10, :spacing => 4
+        pdf 
+       end 
+      
       pdf
 
     end
 
 
     def build_pdf_footer10(pdf)
-
-        pdf.text ""
-        pdf.text "" 
+      
+        pdf.text " " 
+        pdf.text " "
         
-
      end
     
 
