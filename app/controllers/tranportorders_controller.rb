@@ -358,6 +358,9 @@ class TranportordersController < ApplicationController
             row << ""
             row << ""
             row << ""
+            row << ""
+            row << ""
+            
             table_content << row
 
             nroitem=nroitem + 1
