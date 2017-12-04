@@ -76,7 +76,12 @@ class Factura < ActiveRecord::Base
           Factura.create! row.to_hash 
         end
   end      
-
+  def get_dias_formapago
+    
+    return self.payment.day 
+    
+  end   
+    
   def get_vencido
 
       if(self.fecha2 < Date.today)   

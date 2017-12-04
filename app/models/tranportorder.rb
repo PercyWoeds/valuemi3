@@ -43,9 +43,12 @@ TABLE_HEADERS2 = ["ITEM",
                      "CONDUCTOR",                     
                      "DESTINO",
                      "TOTAL",
+                     "DIA",
                      "FACTURA",
                      "FEC.FACTURA
-                     /FEC.PAGO"]
+                     /FEC.PAGO",
+                     "DIAS CREDITO"
+                     ]
 
 	def self.search(search)
 		  where("code LIKE ?", "%#{search}%") 

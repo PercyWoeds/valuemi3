@@ -370,9 +370,11 @@ class TranportordersController < ApplicationController
               row = []
               row << ""
               row << ""
-              row << ""
-              row << ""
               
+              row << guias.fecha1.strftime("%d/%m/%Y")  
+              b = business_days_between(orden.fecha1,guias.fecha1)
+              
+              row << b
               
               row << guias.code
               row << guias.fecha1.strftime("%d/%m/%Y")  
@@ -392,9 +394,14 @@ class TranportordersController < ApplicationController
               if @facturas !=""
                 row << ""
                 row << @facturas.total 
+                a=business_days_between(@facturas.fecha,@ordenfecha1)
+                row << a
                 row << @facturas.code
                 row << @facturas.fecha.strftime("%d/%m/%Y")    
+                row << @facturas.get_dias_formapago.to_s 
               else
+                row << ""
+                row << ""
                 row << ""
                 row << ""
                 row << ""
@@ -426,8 +433,12 @@ class TranportordersController < ApplicationController
               row << ""
               row << ""
               row << ""
+              row << ""
+              row << ""
+              
               row << cancela.total 
               row << "CANCELA"
+              
               row << @fecha_cobranza.fecha1.strftime("%d/%m/%Y")  
               
               table_content << row
@@ -510,7 +521,15 @@ class TranportordersController < ApplicationController
     send_file("app/pdf_output/ost2.pdf", :type => 'application/pdf', :disposition => 'inline')
   end
   
-  
+  def business_days_between(date1, date2)
+  business_days = 0
+  date = date2
+  while date > date1
+   business_days = business_days + 1 
+   date = date.to_date  - 1.day
+  end
+  business_days
+end
   
 def client_data_headers
 
