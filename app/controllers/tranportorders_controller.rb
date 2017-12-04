@@ -394,7 +394,7 @@ class TranportordersController < ApplicationController
               if @facturas !=""
                 row << ""
                 row << @facturas.total 
-                a=business_days_between(@facturas.fecha,@ordenfecha1)
+                a=business_days_between(,@ordenfecha1,@facturas.fecha)
                 row << a
                 row << @facturas.code
                 row << @facturas.fecha.strftime("%d/%m/%Y")    
