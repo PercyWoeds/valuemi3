@@ -1236,17 +1236,18 @@ def build_pdf_header_rpt48(pdf)
     @fecha2 = params[:fecha2]    
     
     @facturas_rpt = @company.get_ingresos_day4(@fecha1,@fecha2)
-
-    Prawn::Document.generate("app/pdf_output/rpt_factura.pdf") do |pdf|
-        pdf.font "Helvetica"
-        pdf = build_pdf_header_rpt48(pdf)
-        pdf = build_pdf_body_rpt48(pdf)
-        build_pdf_footer_rpt48(pdf)
-        $lcFileName =  "app/pdf_output/rpt_factura.pdf"              
-    end     
-    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
+    
+   
+      Prawn::Document.generate("app/pdf_output/rpt_factura.pdf") do |pdf|
+          pdf.font "Helvetica"
+          pdf = build_pdf_header_rpt48(pdf)
+          pdf = build_pdf_body_rpt48(pdf)
+          build_pdf_footer_rpt48(pdf)
+          $lcFileName =  "app/pdf_output/rpt_factura.pdf"              
+      end     
+      $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
     send_file("app/pdf_output/rpt_factura.pdf", :type => 'application/pdf', :disposition => 'inline')
-  end
+    end
 
 #fin reporte de ingresos x producto 
 #----------------------------------------------------------------------------

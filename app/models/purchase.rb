@@ -577,8 +577,11 @@ def get_tax3(items, supplier_id)
   def get_tipocambio(fecha)
       fecha1 = fecha.strftime("%F") 
      tipocambio = Tipocambio.find_by("dia  >= ?  and dia <= ?", "#{fecha1} 00:00:00","#{fecha1} 23:59:59")
-     
-     return tipocambio.compra 
+     if tipocambio 
+      return tipocambio.compra 
+     else
+       return 0 
+     end 
   end 
   
 
