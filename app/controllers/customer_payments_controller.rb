@@ -1120,7 +1120,9 @@ class CustomerPaymentsController < ApplicationController
            $lcCompen2  = @company.get_customer_payments_value_otros_customer2(@fecha1,@fecha2,'compen',1)
            $lcAjuste2  = @company.get_customer_payments_value_otros_customer2(@fecha1,@fecha2,'ajuste',1)
            
-
+           $lcCompen = $lcCompen*-1
+           $lcCompen2 = $lcCompen2*-1
+           
            @totalgeneral_soles = @totalgeneral_soles + $lcAjuste2 + $lcFactory2 +$lcCompen2
            @totalgeneral_dolar = @totalgeneral_dolar + $lcAjuste + $lcFactory +$lcCompen
            
