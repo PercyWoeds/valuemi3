@@ -2,8 +2,6 @@ class CustomerPayment < ActiveRecord::Base
 self.per_page = 20
    
   validates_presence_of :company_id, :total,:user_id,:fecha1 
-  
-  
   validates_uniqueness_of :code
   
   belongs_to :company
@@ -13,6 +11,7 @@ self.per_page = 20
   belongs_to :user
   belongs_to :payment
   belongs_to :bank_acount
+  belongs_to :document 
 
   has_many :customer_payment_details
   
@@ -101,6 +100,18 @@ self.per_page = 20
                     "CLIENTE ",   
                     "IMPORTE",
                   ]                      
+
+ TABLE_HEADERS8 = ["ITEM",
+                     "NRO.",
+                     "FECHA",
+                     "TD",
+                     "FEC.DOC.",
+                     "CLIENTE",                    
+                     "FACTORY  ",
+                     "COMPENS. ",  
+                     "AJUSTE",
+                     "IMPORTE",  
+                     "DIFER."]                      
                    
                    
 def get_banco_moneda(banco)
@@ -313,7 +324,7 @@ end
 
   def get_payments    
  @itemproducts = CustomerPaymentDetail.find_by_sql(['Select customer_payment_details.total,
-      facturas.code,facturas.customer_id,facturas.fecha,customer_payment_details.factory,customer_payment_details.ajuste from customer_payment_details   
+      facturas.code,facturas.customer_id,facturas.fecha,customer_payment_details.factory,customer_payment_details.ajuste,customer_payment_details.compen from customer_payment_details   
       INNER JOIN facturas ON   customer_payment_details.factura_id = facturas.id
       WHERE  customer_payment_details.customer_payment_id = ?', self.id ])
 

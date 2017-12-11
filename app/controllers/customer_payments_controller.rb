@@ -1842,7 +1842,7 @@ class CustomerPaymentsController < ApplicationController
         @total_factory = @company.get_customer_payments_value_otros(@fecha1,@fecha2,"factory") 
         @total_ajuste  = @company.get_customer_payments_value_otros(@fecha1,@fecha2,"ajuste") 
         @total_compen  = @company.get_customer_payments_value_otros(@fecha1,@fecha2,"compen") 
-
+        @total_compen = @total_compen *-1 
         row = []
         row << nroitem.to_s
         row << "FACTORY :"
@@ -1861,7 +1861,9 @@ class CustomerPaymentsController < ApplicationController
         row = []
         row << nroitem.to_s
         row << "COMPENSACION :"
+        
         row << sprintf("%.2f",@total_compen.to_s)
+        
         row << " "
         table_content2 << row
 
@@ -2378,9 +2380,201 @@ class CustomerPaymentsController < ApplicationController
     @company = Company.find(params[:company_id])
     
   end
+
+##-------------------------------------------------------------------------------------
+## reporte completo de cobranza 
+##-------------------------------------------------------------------------------------
   
- 
+  def build_pdf_header_rpt10(pdf)
+     pdf.font "Helvetica" , :size => 6    
+     $lcCli  =  @company.name 
+     $lcdir1 = @company.address1+@company.address2+@company.city+@company.state
+
+     $lcFecha1= Date.today.strftime("%d/%m/%Y").to_s
+     $lcHora  = Time.now.to_s
+
+    max_rows = [client_data_headers.length, invoice_headers.length, 0].max
+      rows = []
+      (1..max_rows).each do |row|
+        rows_index = row - 1
+        rows[rows_index] = []
+        rows[rows_index] += (client_data_headers_rpt.length >= row ? client_data_headers_rpt[rows_index] : ['',''])
+        rows[rows_index] += (invoice_headers_rpt.length >= row ? invoice_headers_rpt[rows_index] : ['',''])
+      end
+
+      if rows.present?
+        pdf.table(rows, {
+          :position => :center,
+          :cell_style => {:border_width => 0},
+          :width => pdf.bounds.width
+        }) do
+          columns([0, 2]).font_style = :bold
+
+        end
+
+
+        pdf.move_down 10
+
+      end
+      
+      pdf 
+  end   
+
+
+  def build_pdf_body_rpt10(pdf)
+    
+    pdf.text "Listado de Cobranza Emitidas : Fecha "+@fecha1.to_s+ " Mes : "+@fecha2.to_s , :size => 11 
+    pdf.text ""
+    pdf.font "Helvetica" , :size => 6
+
+      headers = []
+      table_content = []
+      total_general_soles = 0
+      total_general_dolar = 0
+      total_factory = 0
+
+      CustomerPayment::TABLE_HEADERS8.each do |header|
+        cell = pdf.make_cell(:content => header)
+        cell.background_color = "FFFFCC"
+        headers << cell
+      end
+      table_content << headers
+      nroitem = 1
+
+       for  detalle in @customerpayment_rpt
+       puts detalle.total 
+               $lcFecha1 = detalle.fecha1.strftime("%d/%m/%Y")                  
+                row = []
+                row << nroitem.to_s
+                row << detalle.code 
+                row << detalle.get_banco(detalle.bank_acount.bank_id) 
+                row << detalle.get_moneda(detalle.bank_acount.moneda_id)
+                
+                row << $lcFecha1 
+               
+                if detalle.document 
+                row << detalle.document.description     
+                else
+                row << ".."
+                end 
+                row << detalle.documento   
+                row << detalle.nrooperacion
+                row << ""
+                row << detalle.total 
+                row << ""
+                table_content << row  
+                
+                tfactory = 0
+                tcompen  = 0
+                tajuste  = 0
+                ttotal = 0
+                diferencia = 0
+                for productItem in detalle.get_payments()
+                  row = []
+                  row << ""
+                  row << ""
+                  row << ""
+                  row << ""
+                  
+                  row << productItem.code  
+                  
+                  
+                  row << productItem.get_customer(productItem.customer_id)
+                  row << sprintf("%.2f",productItem.factory.to_s)
+                  row << sprintf("%.2f",productItem.compen.to_s)
+                  row << sprintf("%.2f",productItem.ajuste.to_s)  
+                  row << sprintf("%.2f",productItem.total.to_s)
+                  row << 0
+                  table_content << row
+                  
+                  tfactory+= productItem.factory 
+                  tcompen += productItem.compen 
+                  tajuste += productItem.ajuste 
+                  ttotal +=  productItem.total
+               end
+                
+                   row = []
+                  row << ""
+                  row << ""
+                  row << ""
+                  row << ""
+                  row << ""
+                  diferencia = detalle.total -  ttotal + tfactory +tcompen-tajuste 
+                  
+                  row << "TOTALES=>"
+                  row << sprintf("%.2f",tfactory.to_s)
+                  row << sprintf("%.2f",tcompen.to_s)
+                  row << sprintf("%.2f",tajuste.to_s)
+                  row << sprintf("%.2f",ttotal.to_s)
+                  row << sprintf("%.2f",diferencia.to_s )
+                  
+                  table_content << row
+                
+              
+
+                nroitem=nroitem + 1
+             
+            end
+       
+   
+
+      result = pdf.table table_content, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width
+                                        } do 
+                                          columns([0]).align=:center
+                                          columns([1]).align=:left
+                                          columns([2]).align=:left
+                                          columns([3]).align=:left
+                                          columns([4]).align=:left  
+                                          columns([5]).align=:left
+                                          columns([6]).align=:left
+                                          columns([7]).align=:left 
+                                          columns([8]).align=:right
+                                          columns([9]).align=:right
+                                          columns([10]).align=:right
+                                          columns([11]).align=:right
+                                          columns([12]).align=:right
+                                        end                                          
+      pdf.move_down 10      
+      pdf
+
+  
+
+  
+  end
+
+  def build_pdf_footer_rpt10(pdf)
+      pdf.bounding_box([0, 20], :width => 535, :height => 40) do
+      pdf.draw_text "Company: #{@company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
+      end
+      pdf
+    
+  end 
+  # Export cobrar  to PDF
+
+  def rpt_ccobrar10_pdf
+    @company=Company.find(params[:id])      
+    @fecha1 = params[:fecha1]
+    @fecha2 = params[:fecha2]
+    
+    @customerpayment_rpt = @company.get_customer_payments_cabecera(@fecha1,@fecha2)  
+      
+    Prawn::Document.generate("app/pdf_output/rpt_customerpayment.pdf") do |pdf|
+        pdf.font "Helvetica"        
+        pdf = build_pdf_header_rpt10(pdf)
+        pdf = build_pdf_body_rpt10(pdf)
+        build_pdf_footer_rpt10(pdf)
+        $lcFileName =  "app/pdf_output/rpt_customerpayment.pdf"              
+    end     
+
+    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName                
+    send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
+  
+  end
+
   private
+  
   def customerpayment_params
     params.require(:customer_payment).permit(:company_id,:location_id,:division_id,:bank_acount_id,
       :document_id,:documento,:customer_id,:tm,:total,:fecha1,:fecha2,:nrooperacion,:operacion,
