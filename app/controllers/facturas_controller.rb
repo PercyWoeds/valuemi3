@@ -993,8 +993,11 @@ class FacturasController < ApplicationController
       lcCliente = @facturas_rpt.first.customer_id 
       @totalvencido_soles = 0
       @totalvencido_dolar = 0
+      
        for  product in @facturas_rpt
-        
+       
+         if product.balance.round(2) > 0.00
+           
           if lcCliente == product.customer_id
 
             fechas2 = product.fecha2 
@@ -1110,7 +1113,7 @@ class FacturasController < ApplicationController
 
           end 
           
-          
+        end 
           
           
        
