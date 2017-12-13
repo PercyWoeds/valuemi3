@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  bank_acount_id: 1
+  fecha: 2017-12-12 18:04:42
+  saldo_inicial: 1.5
+  total_abono: 1.5
+  total_cargo: 1.5
+
+two:
+  bank_acount_id: 1
+  fecha: 2017-12-12 18:04:42
+  saldo_inicial: 1.5
+  total_abono: 1.5
+  total_cargo: 1.5

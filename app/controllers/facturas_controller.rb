@@ -357,7 +357,8 @@ class FacturasController < ApplicationController
         lcSerie  = parts[0]
         lcNumero = parts[1]
         lcFecha  = f.fecha 
-        lcTD = "FT"
+        
+        lcTD = f.document.descripshort
         lcVventa = f.subtotal
         lcIGV = f.tax
         lcImporte = f.total 
@@ -418,8 +419,6 @@ class FacturasController < ApplicationController
         :vventa => lcVventa,:igv => lcIGV,:importe => lcImporte,:ruc =>lcRuc,:guia => lcGuia,:formapago =>lcFormapago,
         :description => lcDescrip,:comments => lcComments,:descrip =>lcDes1,:moneda =>lcMoneda )
         new_invoice_item.save
-        
-        
         
       end  
     end 

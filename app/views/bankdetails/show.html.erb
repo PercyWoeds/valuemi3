@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Bank acount:</strong>
+  <%= @bankdetail.bank_acount_id %>
+</p>
+
+<p>
+  <strong>Fecha:</strong>
+  <%= @bankdetail.fecha %>
+</p>
+
+<p>
+  <strong>Saldo inicial:</strong>
+  <%= @bankdetail.saldo_inicial %>
+</p>
+
+<p>
+  <strong>Total abono:</strong>
+  <%= @bankdetail.total_abono %>
+</p>
+
+<p>
+  <strong>Total cargo:</strong>
+  <%= @bankdetail.total_cargo %>
+</p>
+<p>
+  <strong>Saldo final:</strong>
+  <%= @bankdetail.saldo_final %>
+</p>
+
+
+
+<%= link_to 'Edit', edit_bankdetail_path(@bankdetail) %> |
+<%= link_to 'Back', bankdetails_path %>

@@ -5,7 +5,7 @@ class BankAcount < ActiveRecord::Base
 
 	has_many :supplier_payments
 	has_many :customer_payments
-	
+	has_many :bankdetails
 
 	def get_banco(id)
 

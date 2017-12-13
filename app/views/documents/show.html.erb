@@ -4,6 +4,11 @@
   <strong>Description:</strong>
   <%= @document.description %>
 </p>
+<p>
+  <strong>Descripcion Corta:</strong>
+  <%= @document.descripshort %>
+</p>
 
-<%= link_to 'Edit', edit_document_path(@document) %> |
-<%= link_to 'Back', documents_path %>
+
+<%= link_to 'Editar', edit_document_path(@document) %> |
+<%= link_to 'Regresar', documents_path %>

@@ -1,6 +1,7 @@
   Mnygo::Application.routes.draw do
 
 
+  resources :bankdetails
   resources :remisions
   resources :valors
   resources :loan_details
@@ -370,7 +371,20 @@ end
   match 'outputs/rpt_salidas3_all_pdf/:id' => 'outputs#rpt_salidas3_all_pdf', via: [:get, :post]
   
   match 'companies/outputs/:company_id' => 'outputs#list_outputs', via: [:get, :post]
+  
   resources :outputs
+
+# Invoices
+  
+  match 'bankdetails/list_items/:company_id' => 'bankdetails#list_items', via: [:get, :post]
+  match 'bankdetails/new/:company_id' => 'bankdetails#new', via: [:get, :post]
+  
+  match 'bankdetails/rpt_salidas_all_pdf/:id' => 'bankdetails#rpt_bankdetails_all_pdf', via: [:get, :post]
+  
+  match 'companies/bankdetails/:company_id' => 'bankdetails#index', via: [:get, :post]
+  
+  resources :bankdetails
+
 
 # Viaticos
   
@@ -821,6 +835,8 @@ end
   match 'companies/ccobrar/:id' => 'companies#ccobrar', via: [:get, :post]
   match 'companies/showcase/:id' => 'companies#showcase', via: [:get, :post]
   match 'companies/planilla/:id' => 'companies#planilla', via: [:get, :post]
+  match 'companies/mantenimiento/:id' => 'companies#mantenimiento', via: [:get, :post]
+  match 'companies/bancos/:id' => 'companies#bancos', via: [:get, :post]
   resources :companies
 
   # Users packages

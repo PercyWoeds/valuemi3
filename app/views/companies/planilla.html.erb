@@ -9,28 +9,6 @@
      Agregar, editar or eliminar facturas para tu negocio.
   </p>
   
-  <%= hr() %>
-
-  <h3>
-    <%= image_tag("invoice_32.png", :class => "vmiddle") %>
-    <%= link_to "Consulta de Boletas ", "/companies/facturas/#{@company.id}" %>
-  </h3>
-
-  <p>
-     Agregar, editar or eliminar notas de credito para tu negocio.
-  </p>
-
-<%= hr() %>
-  
-  <h3>
-    <%= image_tag("supplier_32.png", :class => "vmiddle") %>
-    <%= link_to "Actualizacion y cierre de planillas ", categorium_path %>
-  </h3>
-
-  <p>
-     Agregar, editar or eliminar parametrizacion general.
-  </p>
-
     
 
 </div>
@@ -60,76 +38,6 @@
   </p>
 
 
-
-  <%= hr() %>
-  
-  <h3>
-    <%= image_tag("supplier_32.png", :class => "vmiddle") %>
-    <%= link_to "Prestamos", "/companies/payments/#{@company.id}" %>
-  </h3>
-
-  <p>
-     Agregar, editar or eliminar los prestamos.
-  </p>
-
-
-
-  <h3>
-    <%= image_tag("supplier_32.png", :class => "vmiddle") %>
-    <%= link_to "Acumulados de quinta categoria", "/companies/payments/#{@company.id}" %>
-  </h3>
-
-  <p>
-     Agregar, editar or eliminar acumulados de quinta categoria.
-  </p>
-
-
-
-  <%= hr() %>
-  
-  <h3>
-    <%= image_tag("supplier_32.png", :class => "vmiddle") %>
-    <%= link_to "Derecho habiente ", "/companies/payments/#{@company.id}" %>
-  </h3>
-
-  <p>
-     Agregar, editar or eliminar los derecho habiente.
-  </p>
-
-<%= hr() %>
-  
-  <h3>
-    <%= image_tag("supplier_32.png", :class => "vmiddle") %>
-    <%= link_to "Descuento judicial ", "/companies/payments/#{@company.id}" %>
-  </h3>
-
-  <p>
-     Agregar, editar or eliminar los derecho habientes.
-  </p>
-
-
-  <%= hr() %>
-  
-  <h3>
-    <%= image_tag("supplier_32.png", :class => "vmiddle") %>
-    <%= link_to "Derecho judicial ", "/companies/payments/#{@company.id}" %>
-  </h3>
-
-  <p>
-     Agregar, editar or eliminar los derecho judicial.
-  </p>
-
-  <%= hr() %>
-  
-  <h3>
-    <%= image_tag("supplier_32.png", :class => "vmiddle") %>
-    <%= link_to "Contratos ", "/companies/payments/#{@company.id}" %>
-  </h3>
-
-  <p>
-     Agregar, editar or eliminar los contratos.
-  </p>
-
   <%= hr() %>
   
   <h3>
@@ -142,6 +50,21 @@
   </p>
 
   
+
+<%= hr() %>
+  
+  <h3>
+    <%= image_tag("supplier_32.png", :class => "vmiddle") %>
+    <%= link_to "Parametros detalle boleta ", valors_path %>
+  </h3>
+
+
+
+  <p>
+     Agregar, editar or eliminar parametros detalle boleta 
+  </p>
+
+
   <%= hr() %>
   
   <h3>
@@ -154,7 +77,6 @@
   <p>
      Agregar, editar or eliminar parametrizacion general.
   </p>
-
 
 <%= hr() %>
   
@@ -199,11 +121,14 @@
   
   <h3>
     <%= image_tag("supplier_32.png", :class => "vmiddle") %>
-    <%= link_to "Parametros detalle boleta ", valors_path %>
+    <%= link_to "Tipo Planilla  ", type_payrolls_path %>
   </h3>
 
 
 
   <p>
-     Agregar, editar or eliminar parametros detalle boleta 
+     Agregar, editar or eliminar parametrizacion general.
   </p>
+
+<%= hr() %>
+  

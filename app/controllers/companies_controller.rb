@@ -54,7 +54,20 @@ class CompaniesController < ApplicationController
     @pagetitle = @company[:name]
     @locations = Location.where(company_id: @company.id)
   end 
-
+  def mantenimiento
+    @company = Company.find(params[:id])
+    set_company(@company)
+    
+    @pagetitle = @company[:name]
+    @locations = Location.where(company_id: @company.id)
+  end 
+  def bancos 
+    @company = Company.find(params[:id])
+    set_company(@company)
+    
+    @pagetitle = @company[:name]
+    @locations = Location.where(company_id: @company.id)
+  end 
   def faqs
     @company = Company.find(params[:id])
     set_company(@company)
@@ -104,6 +117,7 @@ class CompaniesController < ApplicationController
     @pagetitle = @company[:name]
     @locations = Location.where(company_id: @company.id)
   end 
+  
   def planilla 
     @company = Company.find(params[:id])
     set_company(@company)
