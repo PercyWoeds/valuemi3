@@ -229,7 +229,7 @@ class OutputsController < ApplicationController
       headers = []
       table_content = []
 
-      Output::TABLE_HEADERS2.each do |header|
+      Output::TABLE_HEADERS3.each do |header|
         cell = pdf.make_cell(:content => header)
         cell.background_color = "FFFFCC"
         headers << cell
