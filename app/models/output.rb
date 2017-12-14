@@ -31,6 +31,18 @@ class Output < ActiveRecord::Base
                      "COSTO ",
                      "TOTAL"]
 
+    TABLE_HEADERS3 = ["ITEM",
+                      "DOCUMENTO",
+                     "FECHA",
+                     "CODE",
+                     "PRODUCTO",
+                     "UNIDAD",
+                     "EMPLEADO",
+                     "PLACA",
+                     "CANTIDAD",
+                     "COSTO ",
+                     "TOTAL"]
+
   
   def get_subtotal(items)
     subtotal = 0
