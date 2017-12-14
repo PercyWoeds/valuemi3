@@ -302,6 +302,7 @@ end
   match 'companies/reports/rpt_calmacen8_pdf/:company_id' => 'reports#rpt_calmacen8_pdf', via: [:get, :post]
   match 'companies/reports/rpt_calmacen10_pdf/:company_id' => 'reports#rpt_calmacen10_pdf', via: [:get, :post]
   match 'companies/reports/rpt_calmacen11_pdf/:company_id' => 'reports#rpt_calmacen11_pdf', via: [:get, :post]
+  match 'companies/reports/rpt_calmacen12_pdf/:company_id' => 'reports#rpt_calmacen12_pdf', via: [:get, :post]
   
   match 'companies/reports/rpt_cajust1_pdf/:company_id' => 'reports#rpt_cajust1_pdf', via: [:get, :post]
 
@@ -360,6 +361,7 @@ end
   match 'outputs/ac_products/:company_id' => 'outputs#ac_products', via: [:get, :post]
   match 'outputs/ac_user/:company_id' => 'outputs#ac_user', via: [:get, :post]
   match 'outputs/ac_customers/:company_id' => 'outputs#ac_customers', via: [:get, :post]
+  match 'trucks/ac_placas/:company_id' => 'trucks#ac_placas', via: [:get, :post]
   match 'outputs/new/:company_id' => 'outputs#new', via: [:get, :post]
   
   match 'outputs/do_email/:id' => 'outputs#do_email', via: [:get, :post]
@@ -369,6 +371,7 @@ end
   match 'outputs/rpt_salidas_all_pdf/:id' => 'outputs#rpt_salidas_all_pdf', via: [:get, :post]
   match 'outputs/rpt_salidas2_all_pdf/:id' => 'outputs#rpt_salidas2_all_pdf', via: [:get, :post]
   match 'outputs/rpt_salidas3_all_pdf/:id' => 'outputs#rpt_salidas3_all_pdf', via: [:get, :post]
+  match 'outputs/rpt_salidas4_all_pdf/:id' => 'outputs#rpt_salidas4_all_pdf', via: [:get, :post]
   
   match 'companies/outputs/:company_id' => 'outputs#list_outputs', via: [:get, :post]
   

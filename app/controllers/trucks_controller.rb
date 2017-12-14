@@ -78,6 +78,12 @@ class TrucksController < ApplicationController
       format.json { head :no_content }
     end
   end
+  def ac_placas
+    @placas = Truck.where(["placa  iLIKE ? ", "%" + params[:q] + "%"])  
+    render :layout => false
+  end
+
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

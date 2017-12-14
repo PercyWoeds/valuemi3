@@ -1,0 +1,92 @@
+<%= render 'layouts/charts' %>
+<%
+invoices_subtotal = 0
+invoices_tax = 0
+invoices_total = 0
+subtotals = []
+taxes = []
+totals = []
+%>
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %> &raquo;
+  <%= link_to "Reports", "/companies/reports/#{@company.id}" %>
+</div>
+
+<h1>
+  <%= image_tag("reports_48.png", :class => "vmiddle") %>
+  Reporte de Salidas
+</h1>
+
+<form method="get" action="/outputs/rpt_salidas4_all_pdf/<%= @company.id %>" >   
+  <div class="field">
+      <input type="date" name="fecha1" value="2017-11-01" style = "width: 150px" >
+    </div>
+
+	<div class="field">
+		<input type="date" name="fecha2" value="2017-11-30" style = "width: 150px" >
+  </div>
+
+<input type="hidden" name="ac_item_id" id="ac_item_id" value="" style = "width: 350px"  />
+    
+    <strong>Placa:</strong><br />
+    <input type="text" name="ac_item" id="ac_item" value="" />
+    
+    <div class="small">
+      Ingrese un termino de busqueda para encontrar una placa.
+      
+    </div>
+
+    <input type="checkbox" id="categoriaCheck" name="categoriaCheck" unchecked /> Todas las categorias
+
+    
+   <div class="small">
+        <strong> Categorias :</strong>
+        <div class="field">
+          <%= select_tag(:products_category_id,options_from_collection_for_select(@categories,'id','category') )  %>
+        </div>
+    </div>
+    
+ 
+  
+  
+<br />
+
+
+  
+
+  <input type="submit" value="Generar Reporte " />
+  
+</form>
+
+<br />
+
+
+<%= render 'layouts/autocomplete' %>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    
+    $("#ac_item").autocomplete("/trucks/ac_placas/<%= @company.id %>", {
+      matchSubset: 1,
+      matchContains: 1,
+      selectFirst: false
+    });
+    
+    $("#ac_item").result(function(event, data, formatted) {
+      
+      $("#ac_item_id").val(data[2]);
+      
+    });
+    
+    $('#categoriaCheck').change(function() {
+   if ($('#categoriaCheck').is(":checked")) {
+     $('#products_category_id').attr('disabled', true);
+   }
+   else {
+     $('#products_category_id').attr('disabled', false);
+   }
+}); 
+    
+  });
+</script>

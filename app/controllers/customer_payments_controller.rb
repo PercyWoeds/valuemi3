@@ -2499,7 +2499,7 @@ class CustomerPaymentsController < ApplicationController
                   row << ""
                   row << ""
                   row << ""
-                  diferencia = detalle.total -  ttotal + tfactory +tcompen-tajuste 
+                  diferencia = detalle.total -  ttotal + tfactory -tcompen+tajuste 
                   
                   row << "TOTALES=>"
                   row << sprintf("%.2f",tfactory.to_s)

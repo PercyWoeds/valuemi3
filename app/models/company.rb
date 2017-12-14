@@ -2660,6 +2660,7 @@ WHERE products.products_category_id = ?  and outputs.fecha >= ? and outputs.fech
     return @purchases 
 
 end
+
 def get_salidas_day3(fecha1,fecha2,product,empleado)
   
     @purchases = Output.find_by_sql(['Select outputs.*,output_details.quantity,
@@ -2668,6 +2669,30 @@ def get_salidas_day3(fecha1,fecha2,product,empleado)
 INNER JOIN outputs ON output_details.output_id = outputs.id
 INNER JOIN products ON output_details.product_id = products.id
 WHERE outputs.employee_id = ?  and products.products_category_id = ?  and outputs.fecha >= ? and outputs.fecha <= ?',empleado,product, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
+ 
+    return @purchases 
+
+end
+def get_salidas_day3_1(fecha1,fecha2,product,placa)
+  
+    @purchases = Output.find_by_sql(['Select outputs.*,output_details.quantity,
+    output_details.price,output_details.total,products.name as nameproducto,products.code as codigo,products.unidad
+    from output_details   
+INNER JOIN outputs ON output_details.output_id = outputs.id
+INNER JOIN products ON output_details.product_id = products.id
+WHERE outputs.truck_id = ?  and products.products_category_id = ?  and outputs.fecha >= ? and outputs.fecha <= ?',placa,product, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
+ 
+    return @purchases 
+
+end
+def get_salidas_day3_2(fecha1,fecha2,placa)
+  
+    @purchases = Output.find_by_sql(['Select outputs.*,output_details.quantity,
+    output_details.price,output_details.total,products.name as nameproducto,products.code as codigo,products.unidad
+    from output_details   
+INNER JOIN outputs ON output_details.output_id = outputs.id
+INNER JOIN products ON output_details.product_id = products.id
+WHERE outputs.truck_id = ?  and outputs.fecha >= ? and outputs.fecha <= ?',placa, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
  
     return @purchases 
 
