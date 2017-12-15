@@ -1,6 +1,7 @@
   Mnygo::Application.routes.draw do
 
 
+  resources :categoria
   resources :bankdetails
   resources :remisions
   resources :valors
