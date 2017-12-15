@@ -2672,10 +2672,13 @@ class CustomerPaymentsController < ApplicationController
       @total_mes11_column = 0
       @total_mes12_column = 0
       
+      if @customerpayment_rpt.first 
       lcCli = @customerpayment_rpt.first.customer_id
+      else
+        lcCli = ""
+      end 
       $lcCliName = ""
     
-
      for  customerpayment_rpt in @customerpayment_rpt
 
         if lcCli == customerpayment_rpt.customer_id 
@@ -2880,7 +2883,11 @@ class CustomerPaymentsController < ApplicationController
           
             row = []
             row << nroitem.to_s        
+            if customerpayment_rpt != nil  
             row << customerpayment_rpt.customer.name  
+            else
+            row << " "
+            end 
             row << sprintf("%.2f",@total_anterior.to_s)
             row << sprintf("%.2f",@total_mes01.to_s)
             row << sprintf("%.2f",@total_mes02.to_s)
@@ -2978,10 +2985,10 @@ class CustomerPaymentsController < ApplicationController
     @fecha2 = params[:fecha2]
     @tipomoneda = params[:moneda_id]
 
-    @company.actualizar_fecha20
+    @company.actualizar_fecha20(@fecha1,@fecha2)
     
     @customerpayment_rpt = @company.get_customer_payments20(@tipomoneda,@fecha1,@fecha2)
-      
+    if @customerpayment_rpt  
     Prawn::Document.generate "app/pdf_output/rpt_customerpayment2.pdf" , :page_layout => :landscape do |pdf|        
         pdf.font "Helvetica"
         pdf = build_pdf_header_rpt11(pdf)
@@ -2993,7 +3000,7 @@ class CustomerPaymentsController < ApplicationController
 
     $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName                
     send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
-
+  end 
   end
 
   

@@ -29,7 +29,12 @@ totals = []
 	<div class="field">
 		<input type="date" name="fecha2" value="2017-11-30" style = "width: 150px" >
     </div>
-
+    
+  <div class="field">
+  <%= select_tag(:moneda_id, options_from_collection_for_select(@monedas,'id','description')) %>
+  </div>
+    
+    
     
   <input type="submit" value="Generar reporte" />
   <a href="/customer_payments/rpt_ccobrar11_pdf/<%= @company.id %>" >  </a>

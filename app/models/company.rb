@@ -889,23 +889,23 @@ def get_customer_payments20(moneda,fecha1,fecha2)
    SELECT   month_year as year_month,
    customer_id,
    SUM(balance) as balance   
-   FROM customer_payment_details
+   FROM tempcps
    WHERE moneda_id = ? and balance>0 and fecha2 >= ? and fecha2  <= ?  
    GROUP BY 2,1
    ORDER BY 2,1 ", moneda,"#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])    
    
    
-  
    Tempfactura.delete_all
    
     for f in @facturas
-        if f.customer_id != nil     
-       b = Tempfactura.new(year_month: f.year_month , customer_id: f.customer_id,balance: f.balance)
-       b.save 
-     end 
-   end 
+       if f.customer_id != nil
+        b = Tempfactura.new(year_month: f.year_month , customer_id: f.customer_id,balance: f.balance)
+        b.save 
+      end 
+    end 
    
    @facturas = Tempfactura.order(:customer_id,:year_month) 
+   
   return @facturas
     
  end 
@@ -965,25 +965,33 @@ def get_customer_payments_detail_value(fecha1,fecha2,value="total")
 
  end
  
- def actualizar_fecha20
-
-    facturas = CustomerPayment.all 
+ def actualizar_fecha20(fecha1,fecha2)
+    Tempcp.delete_all 
+    facturas = CustomerPayment.where([" fecha1 >= ? and fecha1 <= ?", "#{fecha1} 00:00:00","#{fecha2} 23:59:59"])
     
-    for factura in facturas
-        moneda =factura.bank_acount.moneda_id
+    for customerpayment  in facturas
+        moneda = customerpayment.bank_acount.moneda_id
+        fact =  CustomerPaymentDetail.where(customer_payment_id: customerpayment.id)
         
-        fact =  CustomerPaymentDetail.find_by(customer_payment_id: factura.id)
-        if fact 
-          fechas2 = factura.fecha1 
-          @fechas =factura.fecha1.to_s
+        for detalle in fact 
+          if detalle.factura 
+          cliente = detalle.factura.customer_id
+          fechas2 = customerpayment.fecha1 
+          @fechas = customerpayment.fecha1.to_s
+          
           parts = @fechas.split("-")
           year = parts[0]
           mes  = parts[1]
           dia  = parts[2]      
           yearmes = year+mes 
-          balance_0 =  fact.total - fact.factory + fact.ajuste - fact.compen  
+          #balance_0 =  fact.total - fact.factory + fact.ajuste - fact.compen  
+          balance_0 =  detalle.total 
+          b= Tempcp.new(:fecha2=>fechas2,:month_year=> yearmes,:customer_id=> cliente,:balance=> balance_0,:moneda_id=> moneda,:customer_payment_detail_id=> detalle.id)            
+          b.save
+          
+        end
         end 
-        fact.update_attributes(:fecha2=>fechas2,:month_year=> yearmes,:customer_id=> factura.customer_id,:balance=>balance_0,:moneda_id => moneda)   
+        
         
     end 
 

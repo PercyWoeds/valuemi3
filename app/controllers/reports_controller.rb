@@ -1025,7 +1025,7 @@ class ReportsController < ApplicationController
     @pagetitle = "Liquidacion Cobranzas Banco"    
     @customers = @company.get_customers()
     @bancos = @company.get_bank_acounts
-    
+    @monedas=@company.get_monedas
   end
   def rpt_cpagar2_pdf
     @company = Company.find(params[:company_id])    

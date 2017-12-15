@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  fecha2: 2017-12-15 16:28:52
+  month_year: MyString
+  customer_id: 1
+  balance: 1.5
+  moneda_id: 1
+
+two:
+  fecha2: 2017-12-15 16:28:52
+  month_year: MyString
+  customer_id: 1
+  balance: 1.5
+  moneda_id: 1

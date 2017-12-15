@@ -19,6 +19,7 @@ class Factura < ActiveRecord::Base
   has_many   :deliveryship
   has_many   :delivery 
   has_many   :invoice_services
+  has_many   :customer_payment_details
   
    TABLE_HEADERS = ["TD",
                       "Documento",
