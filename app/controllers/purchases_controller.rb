@@ -1499,7 +1499,7 @@ def build_pdf_header_rpt48(pdf)
       headers = []
       table_content = []
 
-      Purchase::TABLE_HEADERS2.each do |header|
+      Purchase::TABLE_HEADERS4.each do |header|
         cell = pdf.make_cell(:content => header)
         cell.background_color = "FFFFCC"
         headers << cell

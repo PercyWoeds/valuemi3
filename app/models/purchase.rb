@@ -51,7 +51,19 @@ TABLE_HEADERS2  = ["ITEM ",
                      "SOLES",
                      "DOLARES ",
                      "OBSERV"]
-                     
+
+ TABLE_HEADERS4 = ["TD",
+                      "DOCUMENTO",
+                     "FECHA",
+                     "CODIGO",
+                     "DESCRIPCION",
+                     "UNIDAD",                                         
+                     "PROVEEDOR",
+                     "CANTIDAD ",
+                     "COSTO US$ ",
+                     "COSTO S/.",
+                     "TOTAL S/."
+                     ]                     
   TABLE_HEADERS6 = ["ITEM",
                      "CLIENTE",   
                      "=<2016",                  
