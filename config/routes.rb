@@ -1,6 +1,7 @@
   Mnygo::Application.routes.draw do
 
 
+  resources :payrollbonis
   resources :categoria
   resources :bankdetails
   resources :remisions
@@ -904,6 +905,7 @@ end
 
   match 'payrolls/do_process/:id' => 'payrolls#do_process', via: [:get, :post]  
   match 'payrolls/do_pdf/:id' => 'payrolls#do_pdf', via: [:get, :post]  
+  match 'payrollbonis/index/:id' => 'payrollbonis#index', via: [:get, :post]  
   resources :payrolls 
 
 

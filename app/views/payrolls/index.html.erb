@@ -26,9 +26,9 @@
         <td><%= payroll.fecha_inicial %></td>
         <td><%= payroll.fecha_final %></td>
         <td><%= payroll.fecha_pago %></td>
-        <td><%= link_to 'Show', payroll %></td>
-        <td><%= link_to 'Edit', edit_payroll_path(payroll) %></td>
-        <td><%= link_to 'Destroy', payroll, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Ver', payroll %></td>
+        <td><%= link_to 'Editar', edit_payroll_path(payroll) %></td>
+        <td><%= link_to 'Eliminar', payroll, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

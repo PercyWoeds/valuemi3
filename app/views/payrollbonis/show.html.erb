@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @payrollboni.code %>
+</p>
+
+<p>
+  <strong>Descrip:</strong>
+  <%= @payrollboni.descrip %>
+</p>
+
+<p>
+  <strong>Importe:</strong>
+  <%= @payrollboni.importe %>
+</p>
+
+<%= link_to 'Edit', edit_payrollboni_path(@payrollboni) %> |
+<%= link_to 'Back', payrollbonis_path %>

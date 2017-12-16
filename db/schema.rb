@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171215175014) do
+ActiveRecord::Schema.define(version: 20171216135949) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1283,6 +1283,16 @@ ActiveRecord::Schema.define(version: 20171215175014) do
     t.float    "total3"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.integer  "payroll_id"
+  end
+
+  create_table "payrollbonis", force: :cascade do |t|
+    t.string   "code"
+    t.string   "descrip"
+    t.float    "importe"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "valor_id"
     t.integer  "payroll_id"
   end
 

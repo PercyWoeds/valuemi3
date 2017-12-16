@@ -1,0 +1,32 @@
+<%= simple_form_for(@payrollboni) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+  
+     <div class="field">
+      <%= f.label :valor_id,"Documento :" %><br />
+      <%= f.select :valor_id,options_from_collection_for_select(@parametros,'id','name'),  {style: "width: 140px" } %>
+    </div>
+
+    
+    
+    <div class="field">
+    <%= f.label :code %><br>
+    <%= f.text_field :code %>
+    </div>  
+    
+  <div class="field">
+    <%= f.label :descrip %><br>
+    <%= f.text_field :descrip %>
+  </div>  
+  
+  <div class="field">
+    <%= f.label :importe %><br>
+    <%= f.number_field :importe %>
+  </div>
+  </div>
+  
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>
