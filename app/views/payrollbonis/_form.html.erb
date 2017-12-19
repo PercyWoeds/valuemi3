@@ -1,24 +1,48 @@
+<% if @payrollboni.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@payrollboni.errors.count, "error") %> prohibited this delivery from being saved:</h2>
+
+    <ul>
+    <% @payrollboni.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= hr() %>
+
+
 <%= simple_form_for(@payrollboni) do |f| %>
-  <%= f.error_notification %>
+
 
   <div class="form-inputs">
   
-     <div class="field">
-      <%= f.label :valor_id,"Documento :" %><br />
-      <%= f.select :valor_id,options_from_collection_for_select(@parametros,'id','name'),  {style: "width: 140px" } %>
+  
+    <div class="field">
+      <%= f.label :payroll_id,"Planilla :" %><br />
+      <%= f.collection_select :payroll_id, @payrolls, :id, :code, :prompt => true %>
+      
     </div>
-
-    
     
     <div class="field">
-    <%= f.label :code %><br>
-    <%= f.text_field :code %>
-    </div>  
+      <%= f.label :employee_id,"Empleado :" %><br />
+      <%= f.collection_select :employee_id, @employees, :id, :full_name, :prompt => true %>
+      
+    </div>
+      <div class="field">
+      <%= f.label :tm_id,"Bonificación /Descuento :" %><br />
+      <%= f.collection_select :tm_id, @tms, :id, :descrip, :prompt => true %>
+      
+    </div>
+
+     <div class="field">
+      <%= f.label :valor_id,"Documento :" %><br />
+      <%= f.collection_select :valor_id, @parametros, :id, :name, :prompt => true %>
+      
+      </div>
+
     
-  <div class="field">
-    <%= f.label :descrip %><br>
-    <%= f.text_field :descrip %>
-  </div>  
   
   <div class="field">
     <%= f.label :importe %><br>

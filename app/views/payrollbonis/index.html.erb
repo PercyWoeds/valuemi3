@@ -1,12 +1,16 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Bonificaciones</h1>
+<h1>Bonificaciones / Descuentos </h1>
 
 <table>
   <thead>
     <tr>
-      <th>Codigo</th>
-      <th>Descripcion</th>
+      <th>Planilla</th>
+      <th>Fec.Inicial</th>
+      <th>Fec.Final</th>
+      <th>Empleado</th>
+      <th>Tipo</th>
+      <th>Movimiento</th>
       <th>Importe</th>
       <th colspan="3"></th>
     </tr>
@@ -15,17 +19,28 @@
   <tbody>
     <% @payrollbonis.each do |payrollboni| %>
       <tr>
-        <td><%= payrollboni.code %></td>
-        <td><%= payrollboni.descrip %></td>
+      
+        <td><%= payrollboni.payroll.code %></td> 
+        <td><%= payrollboni.payroll.fecha_inicial.strftime("%d/%m/%Y") %></td>
+        <% if payrollboni.payroll.fecha_final %>
+        <td><%= payrollboni.payroll.fecha_final.strftime("%d/%m/%Y") %></td>
+        <%else%>
+        <td> </td>
+        <%end %>
+        <td><%= payrollboni.employee.full_name %></td>
+        <td><%= payrollboni.tm.descrip %></td>
+        <td><%= payrollboni.valor.name %></td>
+      
         <td><%= payrollboni.importe %></td>
-        <td><%= link_to 'Show', payrollboni %></td>
-        <td><%= link_to 'Edit', edit_payrollboni_path(payrollboni) %></td>
-        <td><%= link_to 'Destroy', payrollboni, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Ver', payrollboni %></td>
+        <td><%= link_to 'Editar', edit_payrollboni_path(payrollboni) %></td>
+        <td><%= link_to 'Eliminar', payrollboni, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
 <br>
 
-<%= link_to 'New Payrollboni', new_payrollboni_path %>
+<%= link_to 'Nueva bonificacion',  new_payrollboni_path %>
+
+<%= link_to 'Regresar',"/companies/planilla/#{@company.id}"  %>

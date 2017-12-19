@@ -1,0 +1,45 @@
+<% if params[:field].blank? || params[:field] == "totaldia" %>
+<p>
+  <%= f.label :totaldia, "Falta *", :class => "bold" %><br />
+  <%= f.number_field :totaldia %>
+    
+</p>
+<% end %>
+
+<% if params[:field].blank? || params[:field] == "falta" %>
+<p>
+  <%= f.label :falta, "Falta *", :class => "bold" %><br />
+  <%= f.number_field :falta %>
+    
+</p>
+<% end %>
+<% if params[:field].blank? || params[:field] == "vaca" %>
+<p>
+  <%= f.label :vaca, "Vacaciones *", :class => "bold" %><br />
+  <%= f.number_field :vaca %>
+    
+</p>
+<% end %>
+
+<% if params[:field].blank? || params[:field] == "desmed" %>
+<p>
+  <%= f.label :desmed, "Descanso Medico *", :class => "bold" %><br />
+  <%= f.number_field :desmed %>
+    
+</p>
+<% end %>
+
+<% if params[:field].blank? || params[:field] == "subsidio" %>
+<p>
+  <%= f.label :subsidio, "Subsidio *", :class => "bold" %><br />
+  <%= f.number_field :subsidio %>
+    
+</p>
+<% end %>
+<% if params[:field].blank? || params[:field] == "reintegro" %>
+<p>
+  <%= f.label :reintegro, "Reintegro *", :class => "bold" %><br />
+  <%= f.number_field :reintegro %>
+    
+</p>
+<% end %>

@@ -1,6 +1,7 @@
   Mnygo::Application.routes.draw do
 
 
+  resources :tms
   resources :payrollbonis
   resources :categoria
   resources :bankdetails
@@ -65,9 +66,8 @@
   resources :gastos 
   resources :cierres 
 
-resources :gastos  do
+  resources :gastos  do
     collection { post :import }
-    
     
   end 
   resources :inventarios  do
@@ -92,6 +92,7 @@ resources :tranportorders do
   collection { get :search   }
   
 end 
+
 
 
   resources :serviceorders do 
@@ -215,7 +216,21 @@ end
  resources :loans do
       resources :loan_details, except: [:index,:show], controller: "loans/loan_details"
   end 
+ 
+ 
+resources :payrolls do   
+  
+  resources :payroll_details, except: [:index,:show,:editmultiple], controller: "payrolls/payroll_details"do 
+    collection do 
+      put :editmultiple      
+      put :updatemultiple      
+    end 
+ end
+end 
 
+ 
+ 
+ 
   
   #Manifiesto busqueda de guias
 
@@ -904,8 +919,10 @@ end
   resources :inventarios
 
   match 'payrolls/do_process/:id' => 'payrolls#do_process', via: [:get, :post]  
+  match 'payrolls/do_update/:id' => 'payrolls#do_update', via: [:get, :post]  
   match 'payrolls/do_pdf/:id' => 'payrolls#do_pdf', via: [:get, :post]  
   match 'payrollbonis/index/:id' => 'payrollbonis#index', via: [:get, :post]  
+  match 'payrollboni/new/:payroll_id' => 'payrollbonis#new', via: [:get, :post]  
   resources :payrolls 
 
 

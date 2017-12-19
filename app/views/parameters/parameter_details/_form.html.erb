@@ -26,11 +26,23 @@
       </td>
        <td>        
         <div class="field">
-          <%= f.label :comision , "Comision" %><br />
-          <%= f.number_field :comision,:style=> 'width: 50px',min: 0  %>
+          <%= f.label :comision_flujo , "Comision Flujo" %><br />
+          <%= f.number_field :comision_flujo,:style=> 'width: 50px',min: 0  %>
         </div>
       </td>
     
+    <td>        
+        <div class="field">
+          <%= f.label :comision_mixta , "Comision Mixta" %><br />
+          <%= f.number_field :comision_mixta,:style=> 'width: 50px',min: 0  %>
+        </div>
+      </td>
+      <td>        
+        <div class="field">
+          <%= f.label :comision_mixta_saldo , "Comision Flujo Mixta" %><br />
+          <%= f.number_field :comision_mixta_saldo,:style=> 'width: 50px',min: 0  %>
+        </div>
+      </td>
   </div>
 
   <div class="form-actions">

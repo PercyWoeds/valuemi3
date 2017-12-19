@@ -29,6 +29,12 @@
   <strong>Essalud:</strong>
   <%= @parameter.essalud %>
 </p>
+
+<p>
+  <strong>Asig.Familiar:</strong>
+  <%= @parameter.asigfamiliar %>
+</p>
+
 <h3>
   Detalle
 </h3>
@@ -49,7 +55,13 @@
         Seguro
       </th>
       <th>
-        Comision
+        Comision <br>Flujo
+      </th>
+      <th>
+        Comision <br>Mixta
+      </th>
+      <th>
+        Comision <br>Mixta Saldo
       </th>
       
     </tr>
@@ -71,9 +83,17 @@
             <%= detalle.seguro %>              
           </td>
           <td class="small bordered_bottom bordered_right">
-            <%= detalle.comision %>              
+            <%= detalle.comision_flujo %>              
           </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= detalle.comision_mixta %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= detalle.comision_mixta_saldo %>              
+          </td>
+          
           <td><%= link_to 'Editar', edit_parameter_parameter_detail_path(parameter_id: @parameter.id,id: detalle.id ) %></td>          
+          
           <td><%= link_to 'Eliminar',[@parameter,detalle], method: :delete, data: { confirm: 'Are you sure?' } %></td>
 
           

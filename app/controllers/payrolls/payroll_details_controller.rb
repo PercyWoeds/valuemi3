@@ -2,7 +2,7 @@ class Payrolls::PayrollDetailsController < ApplicationController
   
   before_action :set_payroll
   
-  before_action :set_payroll_detail, :except=> [:new,:create]
+  before_action :set_payroll_detail, :except=> [:new,:create,:editmultiple,:updatemultiple]
 
   
   # GET /payroll_details
@@ -29,7 +29,7 @@ class Payrolls::PayrollDetailsController < ApplicationController
   # POST /payroll_details.json
   def create
     @payroll_detail = PayrollDetail.new(payroll_detail_params)
-
+    @payroll_detail.payroll_id  = @payroll.id 
     respond_to do |format|
       if @payroll_detail.save
         format.html { redirect_to @payroll, notice: 'Payroll detail was successfully created.' }
@@ -65,18 +65,40 @@ class Payrolls::PayrollDetailsController < ApplicationController
     end
   end
 
+  def editmultiple
+
+    if params[:planilla_ids] != nil 
+      
+        @empleadoselect = PayrollDetail.find(params[:planilla_ids])      
+    end     
+    
+  end
+
+  def updatemultiple
+ 
+       PayrollDetail.where(id: params[:planilla_ids]).update_all(params[:payroll_detail])
+       @payroll.actualizar
+      
+      flash[:notice] = "Datos empleados modificados"
+      redirect_to  "/payrolls/1" 
+      
+  end
+
   private
+  
+   
     # Use callbacks to share common setup or constraints between actions.
     def set_payroll
       @payroll = Payroll.find(params[:payroll_id])
     end
 
     def set_payroll_detail
+      
       @payroll_detail = PayrollDetail.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def payroll_detail_params
-      params.require(:payroll_detail).permit(:employee_id, :remuneracion, :calc1, :calc2, :calc3, :total1, :calc4, :calc5, :calc6, :calc7, :total2, :remneta, :calc8, :calc9, :calc10, :total3)
+      params.require(:payroll_detail).permit(:employee_id, :remuneracion, :calc1, :calc2, :calc3, :total1, :calc4, :calc5, :calc6, :calc7, :total2, :remneta, :calc8, :calc9, :calc10, :total3,:totaldia,:falta,:vaca,:desmed,:subsidio,:hextra,:reintegro,:otros,:dias,:hextra0)
     end
 end

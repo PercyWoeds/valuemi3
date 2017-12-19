@@ -64,8 +64,9 @@ class Parameters::ParameterDetailsController < ApplicationController
   # DELETE /parameter_details/1.json
   def destroy
     @parameter_detail.destroy
+    
     respond_to do |format|
-      format.html { redirect_to parameter_details_url, notice: 'Parameter detail was successfully destroyed.' }
+      format.html { redirect_to parameter_url, notice: 'Parameter detail was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -80,8 +81,9 @@ class Parameters::ParameterDetailsController < ApplicationController
       @parameter_detail = ParameterDetail.find(params[:id])
     end
 
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def parameter_detail_params
-      params.require(:parameter_detail).permit(:parameter_id, :afp_id, :aporte, :seguro, :comision)
+      params.require(:parameter_detail).permit(:parameter_id, :afp_id, :aporte, :seguro, :comision_flujo,:comision_mixta,:comision_mixta_saldo)
     end
 end

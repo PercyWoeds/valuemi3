@@ -14,11 +14,6 @@
 
 <%= simple_form_for(@parameter) do |f| %>
 
-  
-
-
-    
-    
      <div class="field">
       <%= f.label :code, "Code*", :class => "bold" %><br />
       <%= f.text_field :code, :onclick => "$(this).select();" %>
@@ -46,6 +41,12 @@
       <%= f.label :essalud, "ESSALUD", :class => "bold" %><br />
       <%= f.number_field :essalud, :step => 0.5 %>
     </div>
+    
+    <div class="field">
+      <%= f.label :asigfamiliar, "Asig.Familiar", :class => "bold" %><br />
+      <%= f.number_field :asigfamiliar, :step => 0.5 %>
+    </div>
+    
     <div class="field">
       <%= f.label :description, "Descripcion: ", :class => "bold" %><br />
       <%= f.text_field :description  %>

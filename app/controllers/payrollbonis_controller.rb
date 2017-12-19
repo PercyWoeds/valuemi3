@@ -5,23 +5,34 @@ class PayrollbonisController < ApplicationController
   # GET /payrollbonis.json
   def index
     @payrollbonis = Payrollboni.all
+    @company = Company.find(1)
   end
 
   # GET /payrollbonis/1
   # GET /payrollbonis/1.json
   def show
-    @parametros = Valor.all 
+    @parametros = Valor.all
+    @payrolls = Payroll.all
+    @employees = Employee.where(:active=> "1")
+    @tms =Tm.all
   end
 
   # GET /payrollbonis/new
   def new
     @parametros = Valor.all 
+    @payrolls = Payroll.all 
     @payrollboni = Payrollboni.new
+    @employees = Employee.where(:active=> "1")
+    @tms =Tm.all
   end
 
   # GET /payrollbonis/1/edit
   def edit
     @parametros = Valor.all 
+    @payrolls = Payroll.all
+    @tms =Tm.all
+    
+    @employees = Employee.where(:active=> "1")
   end
 
   # POST /payrollbonis
@@ -29,15 +40,22 @@ class PayrollbonisController < ApplicationController
   def create
     
     @payrollboni = Payrollboni.new(payrollboni_params)
-  
+    
+    @payrolls=Payroll.all 
+    @tms =Tm.all
+    @employees = Employee.where(:active=> "1")
+    @parametros = Valor.all
+    puts "payroll id "
+    puts @payrollboni.payroll_id
     respond_to do |format|
       if @payrollboni.save
-        format.html { redirect_to @payrollboni, notice: 'Payrollboni was successfully created.' }
-        format.json { render :show, status: :created, location: @payrollboni }
+        format.html { redirect_to(@payrollboni, :notice => 'Formulario fue creado satisfactoriamente.') }
+        format.xml  { render :xml => @payrollboni, :status => :created, :location => @payrollboni }
       else
-        format.html { render :new }
-        format.json { render json: @payrollboni.errors, status: :unprocessable_entity }
+        format.html { render :action => "new" }
+        format.xml  { render :xml => @payrollboni.errors, :status => :unprocessable_entity }
       end
+    
     end
   end
 
@@ -73,6 +91,6 @@ class PayrollbonisController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def payrollboni_params
-      params.require(:payrollboni).permit(:code, :descrip, :importe,:valor_id,:payroll_id)
+      params.require(:payrollboni).permit(:importe,:valor_id,:payroll_id,:employee_id,:tm_id)
     end
 end

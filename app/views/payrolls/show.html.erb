@@ -1,3 +1,7 @@
+
+<%= form_tag  editmultiple_payroll_payroll_details_path(@payroll.id), method: :put do %>
+
+
 <p id="notice"><%= notice %></p>
 
 <p>
@@ -36,12 +40,15 @@
 </p>
 <div class="button">
 <%= link_to 'Generar', "/payrolls/do_process/#{@payroll.id}" %> 
+<%= link_to 'Actualizar.', "/payrolls/do_update/#{@payroll.id}" %> 
 <%= link_to 'Exportar Pdf', "/payrolls/do_pdf/#{@payroll.id}" %>
-<%= link_to 'Agregar Bonificaciones (+)', "/payrollbonis/index/#{@payroll.id}" %> 
-<%= link_to 'Agregar Descuentos (-)', "/payrolls/do_pdf/#{@payroll.id}" %> 
-
 <%= link_to 'Editar', edit_payroll_path(@payroll) %> 
 <%= link_to 'Regresar', payrolls_path %>
+
+<%= select_tag :field, options_for_select([["Dias Laborados", ""], ["Falta", "falta"], ["Vacaciones", "vaca"], ["Descanso Medico", "desmed"], ["Subsidio", "subsidio"]]), style: 'width: 120px'  %>
+<%= submit_tag "Editar solo marcados" %>
+
+
 </div>
 
 <h3>
@@ -56,30 +63,58 @@
         Empleado 
       </th>
       <th>
-        Rem.<br>
-        Bruta
+        Sueldo.<br>
+        Bruto
       </th>
+        <th>
+        Horas.<br>
+        Extras
+      </th>
+      
+      <th>
+        Dias<br>
+      </th>
+      <th>
+        Sueldo.<br>
+        Basico
+      </th>
+      
+      
       <th>
          Asign.<br>
          Familiar
       </th>
       <th>
-        Gratif.<br>
-        Truncas
+        Horas<br>
+        Extras
         
       </th>
       <th>
         Vacac.<br>
-        Truncas
+        
+      </th>
+      <th>
+        Descanso.<br>
+        Medico
+      </th>
+      <th>
+        Subsidio<br>
+        
+      </th>
+      
+      <th>
+        Reintegro.<br>
+        
+      </th>
+      
+      <th>
+        Total.<br>
+        Ingreso
       </th>
       
       <th>
         Total<br>
         Remun.
-      </th>
-      <th>
-        Renta.<br>
-        Quinta
       </th>
       
       <th>
@@ -90,10 +125,21 @@
         AFP<br>
         
       </th>
+      <th>
+        Renta.<br>
+        Quinta
+      </th>
+      <th>
+        Faltas.<br>
+        
+      </th>
       
       <th>
         Adelanto<br>
         
+      </th>
+      <th>
+        Otros <br>
       </th>
       
       <th>
@@ -108,19 +154,14 @@
         ESSALUD.<br>
         
       </th>
-      <th>
-        SCTR<br>
-        Salud
-      </th>
-      
-      <th>
-        SCTR.<br>
-        Pension
-      </th>
+    
       
       <th>
         Total<br>
         Aporte 
+      </th>
+      <th>
+        Editar 
       </th>
       
     </tr>
@@ -140,53 +181,80 @@
             <%= detalle.remuneracion %>              
           </td>
           <td class="small bordered_bottom bordered_right">
+            <%= detalle.hextra %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= detalle.dias %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= detalle.basico %>              
+          </td>
+          
+          <td class="small bordered_bottom bordered_right">
             <%= detalle.calc1 %>              
           </td>
           <td class="small bordered_bottom bordered_right">
-            <%= detalle.calc2 %>              
+            <%= detalle.hextra0 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= detalle.vacaciones %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= detalle.desmedico %>                
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= detalle.subsidio0 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= detalle.reintegro %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= detalle.totingreso %>              
           </td>
           
-          <td class="small bordered_bottom bordered_right">
-            <%= detalle.calc3 %>              
-            
-          </td>
           <td class="small bordered_bottom bordered_right">
             <%= detalle.total1 %>              
           </td>
-          <td class="small bordered_bottom bordered_right">
-            <%= detalle.calc4 %>              
-          </td>
           
-          <td class="small bordered_bottom bordered_right">
+          <td class="small bordered_bottom <bordered></bordered>_right">
             <%= detalle.calc5 %>              
           </td>
           <td class="small bordered_bottom bordered_right">
             <%= detalle.calc6 %>              
           </td>
+          
+          <td class="small bordered_bottom bordered_right">
+            <%= detalle.calc4 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= detalle.faltas %>              
+          </td>
+          
           <td class="small bordered_bottom bordered_right">
             <%= detalle.calc7 %>              
           </td>
           <td class="small bordered_bottom bordered_right">
+            <%= detalle.otros %>              
+          </td>
+          
+          
+          <td class="small bordered_bottom bordered_right">
             <%= detalle.total2 %>              
           </td>
           <td class="small bordered_bottom bordered_right">
-            <%= detalle.total1- detalle.total2 %>              
+            <%= detalle.remneta %>              
           </td>
           <td class="small bordered_bottom bordered_right">
             <%= detalle.calc8 %>              
           </td>
           
-          <td class="small bordered_bottom bordered_right">
-            <%= detalle.calc9 %>              
-          </td>
-          <td class="small bordered_bottom bordered_right">
-            <%= detalle.calc10 %>              
-          </td>
-          
+         
           <td class="small bordered_bottom bordered_right">
             <%= detalle.total3 %>              
           </td>
-          
+           <td class="bordered_right bordered_bottom right">
+            <%= check_box_tag "planilla_ids[]", detalle.id  %>
+          </td>  
           
           
           
@@ -197,7 +265,9 @@
 
 </tbody>
 </table>
+
+
 <br />
 
 
-
+<%end %>

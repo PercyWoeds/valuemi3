@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171216135949) do
+ActiveRecord::Schema.define(version: 20171219202809) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -613,6 +613,7 @@ ActiveRecord::Schema.define(version: 20171216135949) do
     t.integer  "location_id"
     t.integer  "division_id"
     t.string   "code"
+    t.integer  "asignacion"
   end
 
   create_table "facturas", force: :cascade do |t|
@@ -1220,8 +1221,11 @@ ActiveRecord::Schema.define(version: 20171216135949) do
     t.float    "aporte"
     t.float    "seguro"
     t.float    "comision"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.float    "comision_flujo"
+    t.float    "comision_mixta"
+    t.float    "comision_mixta_saldo"
   end
 
   create_table "parameters", force: :cascade do |t|
@@ -1231,11 +1235,12 @@ ActiveRecord::Schema.define(version: 20171216135949) do
     t.float    "sctr_1"
     t.float    "sctr_2"
     t.float    "essalud"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
     t.integer  "company_id"
     t.integer  "user_id"
     t.string   "description"
+    t.float    "asigfamiliar"
   end
 
   create_table "payment_methods", force: :cascade do |t|
@@ -1284,16 +1289,35 @@ ActiveRecord::Schema.define(version: 20171216135949) do
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.integer  "payroll_id"
+    t.float    "totaldia"
+    t.float    "falta"
+    t.float    "vaca"
+    t.float    "desmed"
+    t.float    "subsidio"
+    t.float    "hextra"
+    t.float    "reintegro"
+    t.float    "otros"
+    t.float    "dias"
+    t.float    "vacaciones"
+    t.float    "desmedico"
+    t.float    "subsidio0"
+    t.float    "totingreso"
+    t.float    "quinta"
+    t.float    "faltas"
+    t.float    "basico"
+    t.float    "hextra0"
   end
 
   create_table "payrollbonis", force: :cascade do |t|
     t.string   "code"
     t.string   "descrip"
     t.float    "importe"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
     t.integer  "valor_id"
     t.integer  "payroll_id"
+    t.integer  "employee_id"
+    t.integer  "tm_id"
   end
 
   create_table "payrolls", force: :cascade do |t|
@@ -1780,6 +1804,13 @@ ActiveRecord::Schema.define(version: 20171216135949) do
   create_table "tipotrabajadors", force: :cascade do |t|
     t.integer  "code"
     t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "tms", force: :cascade do |t|
+    t.string   "code"
+    t.string   "descrip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

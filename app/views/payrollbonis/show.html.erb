@@ -1,12 +1,26 @@
 <p id="notice"><%= notice %></p>
 
 <p>
+  <strong>Planilla:</strong>
+<br>
+  <strong>Code:</strong>
+  <%= @payrollboni.payroll.code %>
+  <br>
+  <strong>Fecha Inicial:</strong>
+  <%= @payrollboni.payroll.fecha_inicial %>
+  <br>
+  <strong>Fecha Final:</strong>
+  <%= @payrollboni.payroll.fecha_final %>
+</p>
+
+
+<p>
   <strong>Code:</strong>
   <%= @payrollboni.code %>
 </p>
 
 <p>
-  <strong>Descrip:</strong>
+  <strong>Descrpción:</strong>
   <%= @payrollboni.descrip %>
 </p>
 
@@ -15,5 +29,5 @@
   <%= @payrollboni.importe %>
 </p>
 
-<%= link_to 'Edit', edit_payrollboni_path(@payrollboni) %> |
-<%= link_to 'Back', payrollbonis_path %>
+<%= link_to 'Editar', edit_payrollboni_path(@payrollboni) %> |
+<%= link_to 'Regresar', payrollbonis_path %>

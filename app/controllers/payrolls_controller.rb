@@ -10,7 +10,9 @@ class PayrollsController < ApplicationController
   # GET /payrolls/1
   # GET /payrolls/1.json
   def show
-    @payroll_details= @payroll.payroll_details
+    
+    @payroll_details= @payroll.payroll_details.order(:id)
+    
   end
 
   # GET /payrolls/new
@@ -84,6 +86,16 @@ class PayrollsController < ApplicationController
     
     @payroll = Payroll.find(params[:id])
     @payroll.process
+    @user_id = @current_user.id 
+    flash[:notice] = "La planilla ha sido procesada."
+    redirect_to @payroll 
+    
+  end 
+  def do_update
+  
+    
+    @payroll = Payroll.find(params[:id])
+    @payroll.actualizar 
     @user_id = @current_user.id 
     flash[:notice] = "La planilla ha sido procesada."
     redirect_to @payroll 
@@ -399,6 +411,7 @@ class PayrollsController < ApplicationController
   end
 
 
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_payroll

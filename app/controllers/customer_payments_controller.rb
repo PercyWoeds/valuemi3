@@ -1725,6 +1725,8 @@ class CustomerPaymentsController < ApplicationController
     @company.actualizar_fecha2
     @company.actualiza_monthyear
     @customerpayment_rpt = @company.get_customer_payments2(@tipomoneda,@fecha1,@fecha2)
+  
+    if @customerpayment_rpt != nil 
       
     Prawn::Document.generate "app/pdf_output/rpt_customerpayment2.pdf" , :page_layout => :landscape do |pdf|        
         pdf.font "Helvetica"
@@ -1734,10 +1736,11 @@ class CustomerPaymentsController < ApplicationController
         $lcFileName =  "app/pdf_output/rpt_customerpayment2.pdf"      
         
     end     
-
+  
     $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName                
     send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
-
+  end 
+  
   end
 
 ##-------------------------------------------------------------------------------------##

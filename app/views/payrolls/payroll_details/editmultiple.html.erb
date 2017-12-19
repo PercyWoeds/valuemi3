@@ -1,0 +1,88 @@
+
+<% if @empleadoselect != nil %>
+
+<h1> Editar Horas </h1>		 
+
+<%= form_tag  updatemultiple_payroll_payroll_details_path(@payroll.id), method: :put do %>
+
+ 	<table>
+		<thead>
+		  <tr>
+		      <th>
+		       Empleado
+		      </th>
+		      <th>
+		        Total dia
+		      </th>
+		      <th>
+		        Faltas
+		      </th>
+		      <th>
+		        Vacaciones
+		      </th>
+		      <th>
+		        Descuento Medico
+		      </th>
+		      
+		      <th>
+		        Subsidio 
+		      </th>
+		      <th>
+		        Dias
+		      </th>
+		      
+		   </tr>		 
+		</thead>
+
+
+ 	<% for planilla in @empleadoselect %>
+
+ 		<%= hidden_field_tag "planilla_ids[]",planilla.id %>
+
+	    <tbody>		
+			<tr>
+			<td class="bordered_bottom bordered_right">
+	        	<%= planilla.employee.full_name %>
+	        </td>
+	        
+	        <td class="bordered_bottom bordered_right">
+	        	<%= planilla.totaldia %>
+	        </td>
+	        <td class="bordered_bottom bordered_right">
+	        	<%= planilla.falta %>
+	        </td>
+	        <td class="bordered_bottom bordered_right">
+	        	<%= planilla.vaca %>
+	        </td>
+	        <td class="bordered_bottom bordered_right">
+	        	<%= planilla.desmed %>
+	        </td>
+	        <td class="bordered_bottom bordered_right">
+	        	<%= planilla.subsidio %>
+	        </td>
+	        <td class="bordered_bottom bordered_right">
+	        	<%= planilla.dias %>
+	        </td>
+	      </tr>
+	 <%end %>
+	 	</tbody>
+	</table>
+
+	     <%= fields_for  planilla  do |f|	 %>		
+ 				
+ 		 	<%= render "fields",:f=> f %>
+	      	    
+   		 <%end %>
+
+		<div class="actions" >
+		<%= submit_tag "Actualizar  "%>
+		</div>
+
+
+
+<%end %>	
+<%end %>	
+
+
+
+
