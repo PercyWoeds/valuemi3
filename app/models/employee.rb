@@ -1,40 +1,49 @@
 class Employee < ActiveRecord::Base
 
 	before_save :set_full_name
+	belongs_to :location
+	belongs_to :division 
+	belongs_to :ocupacion
+	belongs_to :categorium
 	
 	has_many :outputs
 	has_many :payroll_details
 	has_many :payrollbonis 
 	
+	
     validates_uniqueness_of :idnumber
     validates_presence_of :company_id, :idnumber, :firstname,:lastname,:fecha_ingreso,:fecha_nacimiento
  
-	def get_afp(parameter_id,comision_id,value = "aporte")
+	def get_afp(parameter_id,value = "aporte")
 	
-	 detalle = ParameterDetail.where(["afp_id = ? and comision_id = ?  and parameter_id = ?", self.afp_id, self.comision_id, parameter_id ])
+	 detalle = ParameterDetail.where(["afp_id = ? and parameter_id = ?", self.afp_id, parameter_id ])
     if detalle
     ret=0  
+      
     for dato in detalle
-        if value="aporte"
-            ret = dato.aporte 
-        end
+      
+    
+       if self.onp == "1"
+           ret = 0
+       else 
+        if (value =="aporte")
+            ret = dato.aporte  
+        elsif  (value == "seguro")
         
-        if value="seguro"
-            ret = dato.seguro
-        end
-        if value="comision"
-            if comision_id = 1 
-            ret = dato.comision_flujo
+            ret = dato.seguro 
+        elsif (value == "comision")
+            if self.comision_flujo == 1 
+            ret = dato.comision_flujo 
             end 
-            if comision_id = 2
-            ret = dato.comision_mixta
+            if self.comision_flujo == 2
+            ret = dato.comision_mixta 
             end 
-            if comision_id = 3
-            ret = dato.comision_mixta_saldo
+            if self.comision_flujo == 3
+            ret = dato.comision_mixta_saldo 
             end 
             
         end
-        
+      end     
     end
     end 
 
@@ -46,7 +55,7 @@ class Employee < ActiveRecord::Base
 
 	def set_full_name
 		self.full_name ="#{self.firstname} #{self.lastname}".strip		
-
+        self.flujo = 0
 	end 
 	
 	def self.import(file)

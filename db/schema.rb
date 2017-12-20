@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171219202809) do
+ActiveRecord::Schema.define(version: 20171220144624) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -614,6 +614,8 @@ ActiveRecord::Schema.define(version: 20171219202809) do
     t.integer  "division_id"
     t.string   "code"
     t.integer  "asignacion"
+    t.integer  "flujo"
+    t.integer  "comision_flujo"
   end
 
   create_table "facturas", force: :cascade do |t|
@@ -1306,6 +1308,9 @@ ActiveRecord::Schema.define(version: 20171219202809) do
     t.float    "faltas"
     t.float    "basico"
     t.float    "hextra0"
+    t.float    "aporte"
+    t.float    "seguro"
+    t.float    "comision"
   end
 
   create_table "payrollbonis", force: :cascade do |t|

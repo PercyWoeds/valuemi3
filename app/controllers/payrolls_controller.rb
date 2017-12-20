@@ -122,24 +122,28 @@ class PayrollsController < ApplicationController
        cell_2 = pdf.make_cell(:content => "SUELDO: " << bp.remuneracion.to_s)
        
        cell_3 = pdf.make_cell(:content => "CODIGO: " << bp.employee_id.to_s)
-       cell_4 = pdf.make_cell(:content => "AGENCIA: " << bp.employee_id.to_s)
-       cell_5 = pdf.make_cell(:content => "DIAS LAB.: " << bp.employee_id.to_s)
+       cell_4 = pdf.make_cell(:content => "AGENCIA: " << bp.employee.location.name)
+       cell_5 = pdf.make_cell(:content => "DIAS LAB.: " << bp.totaldia.to_s)
        cell_6 = pdf.make_cell(:content => "TARDANZA :")
        
-       cell_7 = pdf.make_cell(:content => "DNI: " << bp.employee_id.to_s)
-       cell_8 = pdf.make_cell(:content => "SECCION: " << bp.employee_id.to_s)
+       cell_7 = pdf.make_cell(:content => "DNI: " << bp.employee.idnumber.to_s)
+       cell_8 = pdf.make_cell(:content => "SECCION: " << bp.employee.division.name)
        cell_9 = pdf.make_cell(:content => "REG. LAB.: " << bp.employee_id.to_s)
        cell_10 = pdf.make_cell(:content => "D.N.LAB. :")
        cell_11 = pdf.make_cell(:content => "SUBS. :")
        
-       cell_12 = pdf.make_cell(:content => "F.INGRESO: " << bp.employee_id.to_s)
-       cell_13 = pdf.make_cell(:content => "OCUPACION: " << bp.employee_id.to_s)
+       cell_12 = pdf.make_cell(:content => "F.INGRESO: " << bp.employee.fecha_ingreso.strftime("%d/%m/%Y"))
+       cell_13 = pdf.make_cell(:content => "OCUPACION: " << bp.employee.ocupacion.name)
        cell_14 = pdf.make_cell(:content => "TRABAJADOR DE.: " << bp.employee_id.to_s)
-       cell_15 = pdf.make_cell(:content => "HRS.NORM. :")
-       cell_16 = pdf.make_cell(:content => "HS.EXTRA. :")
-       
-       cell_16 = pdf.make_cell(:content => "F.CESE: " << bp.employee_id.to_s)
-       cell_17 = pdf.make_cell(:content => "TIPO DE TRAB.: " << bp.employee_id.to_s)
+       cell_15 = pdf.make_cell(:content => "HS.EXTRA. :"<< bp.hextra.to_s)
+       cell_16 = pdf.make_cell(:content => "HS.EXTRA. :" )
+       if bp.employee.fecha_cese != nil
+       cell_16 = pdf.make_cell(:content => "F.CESE: " << bp.employee.fecha_cese.strftime("%d/%m/%Y"))
+        else
+          cell_16 = pdf.make_cell(:content => "F.CESE: " )
+        end
+       #cell_17 = pdf.make_cell(:content => "TIPO DE TRAB.: " << bp.employee.categorium.descrip)
+       cell_17=""
        cell_18 = pdf.make_cell(:content => "F.INI.VACAC.: " << bp.employee_id.to_s)
        
        cell_19 = pdf.make_cell(:content => "CUSSP:")

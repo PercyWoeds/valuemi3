@@ -100,6 +100,11 @@
       <%= f.collection_select :afp_id, @afps, :id, :name, :prompt => true %>
   </div>
   <div class="field">
+      <%= f.label :comision_flujo ,"Comision Flujo ? [0-1..] :"%><br />
+      <%= f.number_field :comision_flujo  %>
+    </div>
+
+  <div class="field">
       <%= f.check_box :onp %>
       <%= f.label :onp ,"ONP?", :class => "bold" %>
       <div class="small">
@@ -142,6 +147,13 @@
       <%= f.collection_select :division_id, @divisions, :id, :name, :prompt => true %>
       
     </div>
+    
+    <div class="field">
+      <%= f.label :ocupacion_id ,"Seccion : " %><br />
+      <%= f.collection_select :ocupacion_id, @ocupacions, :id, :name, :prompt => true %>
+      
+    </div>
+    
     <%= hr() %>
     
   <div class="field">

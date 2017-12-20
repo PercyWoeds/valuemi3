@@ -6,4 +6,5 @@ class Division < ActiveRecord::Base
   
   has_many :invoices
   has_many :purchases
+  has_many :employees
 end

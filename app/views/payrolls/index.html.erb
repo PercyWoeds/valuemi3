@@ -22,10 +22,10 @@
         <td><%= payroll.code %></td>
         <td><%= payroll.type_payroll %></td>
         
-        <td><%= payroll.fecha %></td>
-        <td><%= payroll.fecha_inicial %></td>
-        <td><%= payroll.fecha_final %></td>
-        <td><%= payroll.fecha_pago %></td>
+        <td><%= payroll.fecha.strftime("%d/%m/%Y") %></td>
+        <td><%= payroll.fecha_inicial.strftime("%d/%m/%Y") %></td>
+        <td><%= payroll.fecha_final.strftime("%d/%m/%Y") %></td>
+        <td><%= payroll.fecha_pago.strftime("%d/%m/%Y") %></td>
         <td><%= link_to 'Ver', payroll %></td>
         <td><%= link_to 'Editar', edit_payroll_path(payroll) %></td>
         <td><%= link_to 'Eliminar', payroll, method: :delete, data: { confirm: 'Are you sure?' } %></td>

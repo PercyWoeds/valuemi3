@@ -208,15 +208,33 @@ class Payroll < ActiveRecord::Base
             lcRemBruta = pl.totingreso - pl.faltas
             pl.total1 = lcRemBruta.round(2)
             
-            lcAporteAfp = pl.employee.get_afp(self.parameter_id,pl.employee.flujo,"aporte")
             
+            lcAporteAfp = pl.employee.get_afp(self.parameter_id,"aporte")
+            
+            if pl.total1 < 9369.07 
+             lcSeguroAfp = pl.employee.get_afp(self.parameter_id,"seguro")
+            else
+             lcSeguroAfp = 0   
+            end 
+            lcComisionAfp = pl.employee.get_afp(self.parameter_id,"comision")
             #Afp
-            pl.aporte = lcaporteAfp * pl.total1
+            lcAporteAfp0 = (lcAporteAfp * pl.total1) / 100
+            lcSeguroAfp0 = (lcSeguroAfp * pl.total1) / 100
+            lcComisionAfp0= (lcComisionAfp * pl.total1) / 100
+            pl.aporte = lcAporteAfp0.round(2)
+            pl.seguro = lcSeguroAfp0.round(2)
+            pl.comision = lcComisionAfp0.round(2)
             
             
+            if pl.employee_id == 46
+             puts "***************"
+             puts lcAporteAfp
+             puts lcSeguroAfp
+             puts lcComisionAfp
+            end     
+    
             
-            
-            pl.total2 = pl.calc4 + pl.calc5 + pl.calc6 + pl.calc7 + pl.faltas + pl.otros
+            pl.total2 = pl.calc4 + pl.calc7+ pl.faltas + pl.otros+pl.aporte+pl.seguro+pl.comision
             pl.remneta = pl.totingreso - pl.total2 
                 
             if pl.totingreso > 850.00 

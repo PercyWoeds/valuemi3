@@ -20,23 +20,23 @@
 </p>
 
 <p>
-  <strong>Fecha:</strong>
-  <%= @payroll.fecha %>
+  <strong>Fecha registro:</strong>
+  <%= @payroll.fecha.strftime("%d/%m/%Y") %>
 </p>
 
 <p>
-  <strong>Fecha inicial:</strong>
-  <%= @payroll.fecha_inicial %>
+  <strong>Fecha inicial :</strong>
+  <%= @payroll.fecha_inicial.strftime("%d/%m/%Y") %>
 </p>
 
 <p>
-  <strong>Fecha final:</strong>
-  <%= @payroll.fecha_final %>
+  <strong>Fecha final :</strong>
+  <%= @payroll.fecha_final.strftime("%d/%m/%Y") %>
   </p>
 
 <p>
-  <strong>Fecha pago:</strong>
-  <%= @payroll.fecha_pago %>
+  <strong>Fecha pago :</strong>
+  <%= @payroll.fecha_pago.strftime("%d/%m/%Y") %>
 </p>
 <div class="button">
 <%= link_to 'Generar', "/payrolls/do_process/#{@payroll.id}" %> 
@@ -122,9 +122,18 @@
         
       </th>
       <th>
-        AFP<br>
+        Aporte<br>
         
       </th>
+      <th>
+        Seguro<br>
+        
+      </th>
+      <th>
+        Comision<br>
+        
+      </th>
+      
       <th>
         Renta.<br>
         Quinta
@@ -220,7 +229,13 @@
             <%= detalle.calc5 %>              
           </td>
           <td class="small bordered_bottom bordered_right">
-            <%= detalle.calc6 %>              
+            <%= detalle.aporte %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= detalle.seguro %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= detalle.comision %>              
           </td>
           
           <td class="small bordered_bottom bordered_right">
