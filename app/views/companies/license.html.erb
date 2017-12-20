@@ -62,11 +62,22 @@
     <%= image_tag("product_kit_32.png", :class => "vmiddle") %>
         <%= link_to "Gastos", gastos_path  %>
   </h3>
- <% end %>
+
   <p>
    Agregar, editar or eliminar  modelos.
   </p>
+ <% end %>
+<% if @current_user.level = "admin" %>
+  
+  <h3>
+    <%= image_tag("product_kit_32.png", :class => "vmiddle") %>
+        <%= link_to "Tipo movimiento RRHH", tms_path  %>
+  </h3>
 
+  <p>
+   Agregar, editar or eliminar  modelos.
+  </p>
+ <% end %>
 
   
 </div>
