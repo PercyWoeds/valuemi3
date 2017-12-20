@@ -221,22 +221,12 @@ class Payroll < ActiveRecord::Base
             lcAporteAfp0 = (lcAporteAfp * pl.total1) / 100
             lcSeguroAfp0 = (lcSeguroAfp * pl.total1) / 100
             lcComisionAfp0= (lcComisionAfp * pl.total1) / 100
-            puts "comision"
-            puts employee_id
-            puts pl.id 
-            puts lcComisionAfp0
             pl.aporte = lcAporteAfp0.round(2)
             pl.seguro = lcSeguroAfp0.round(2)
             pl.comision = lcComisionAfp0.round(2)
             
             
-            if pl.employee_id == 46
-             puts "***************"
-             puts lcAporteAfp
-             puts lcSeguroAfp
-             puts lcComisionAfp
-            end     
-    
+           
             
             pl.total2 = pl.calc4 + pl.calc7+ pl.faltas + pl.otros+pl.aporte+pl.seguro+pl.comision
             pl.remneta = pl.totingreso - pl.total2 
