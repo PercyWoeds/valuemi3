@@ -3,6 +3,8 @@ class Payroll < ActiveRecord::Base
     validates_presence_of :type_payroll_id, :parameter_id,:fecha,:fecha_inicial,:company_id,:user_id
     
     belongs_to :loan     
+    belongs_to :parameter
+    
     
     has_many :type_payrolls
     has_many :payroll_details, :dependent => :destroy
@@ -208,7 +210,12 @@ class Payroll < ActiveRecord::Base
             lcRemBruta = pl.totingreso - pl.faltas
             pl.total1 = lcRemBruta.round(2)
             
-            
+            if pl.employee.onp == "1"
+                lcOnpcalculo = (self.parameter.onp  * pl.total1) / 100
+                pl.calc5 = lcOnpcalculo.round(2)
+            else
+                pl.calc5 = 0
+            end 
             lcAporteAfp = pl.employee.get_afp(self.parameter_id,"aporte")
             
             if pl.total1 < 9369.07 
