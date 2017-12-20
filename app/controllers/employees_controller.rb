@@ -13,7 +13,7 @@ class EmployeesController < ApplicationController
   def index
     
     
-    @employees = Employee.paginate(:page => params[:page], :per_page => 20).order(:full_name)
+    @employees = Employee.paginate(:page => params[:page], :per_page => 20).order(:lastname)
   end
 
   # GET /employees/1

@@ -124,7 +124,7 @@ class PayrollsController < ApplicationController
        cell_3 = pdf.make_cell(:content => "CODIGO: " << bp.employee_id.to_s)
        cell_4 = pdf.make_cell(:content => "AGENCIA: " << bp.employee.location.name)
        cell_5 = pdf.make_cell(:content => "DIAS LAB.: " << bp.totaldia.to_s)
-       cell_6 = pdf.make_cell(:content => "TARDANZA :")
+       cell_6 = pdf.make_cell(:content => "DIAS FALTA :"<< bp.falta.to_s)
        
        cell_7 = pdf.make_cell(:content => "DNI: " << bp.employee.idnumber.to_s)
        cell_8 = pdf.make_cell(:content => "SECCION: " << bp.employee.division.name)
@@ -134,7 +134,7 @@ class PayrollsController < ApplicationController
        
        cell_12 = pdf.make_cell(:content => "F.INGRESO: " << bp.employee.fecha_ingreso.strftime("%d/%m/%Y"))
        cell_13 = pdf.make_cell(:content => "OCUPACION: " << bp.employee.ocupacion.name)
-       cell_14 = pdf.make_cell(:content => "TRABAJADOR DE.: " << bp.employee_id.to_s)
+       cell_14 = pdf.make_cell(:content => "TRABAJADOR DE.: " )
        cell_15 = pdf.make_cell(:content => "HS.EXTRA. :"<< bp.hextra.to_s)
        cell_16 = pdf.make_cell(:content => "HS.EXTRA. :" )
        if bp.employee.fecha_cese != nil
@@ -144,12 +144,12 @@ class PayrollsController < ApplicationController
         end
        #cell_17 = pdf.make_cell(:content => "TIPO DE TRAB.: " << bp.employee.categorium.descrip)
        cell_17=""
-       cell_18 = pdf.make_cell(:content => "F.INI.VACAC.: " << bp.employee_id.to_s)
+       cell_18 = pdf.make_cell(:content => "DIAS.VACAC.: " << bp.vaca.to_s)
        
-       cell_19 = pdf.make_cell(:content => "CUSSP:")
-       cell_20 = pdf.make_cell(:content => "REGIMEN PENSION. :")
-       cell_21 = pdf.make_cell(:content => "F.FIN.VACAC. :")
-        
+       cell_19 = pdf.make_cell(:content => "DESCANSO MEDICO : " << bp.desmed.to_s)
+       cell_20 = pdf.make_cell(:content => "SUBSIDIO : " << bp.subsidio.to_s)
+       cell_21 = pdf.make_cell(:content => "FALTAS : "<< bp.falta.to_s)
+      
        
        
       dell_1 =pdf.make_cell(:content => "DIAS/HRS.")
@@ -163,16 +163,16 @@ class PayrollsController < ApplicationController
       #DETALLE BOLETAS
       # fila 1
       
-      dell_8 =pdf.make_cell(:content => "30.00")
-      dell_9 =pdf.make_cell(:content => "SUELDOS  ") 
-      dell_10 =pdf.make_cell(:content => bp.remuneracion.to_s)
+      dell_8 =pdf.make_cell(:content => bp.dias.to_s)
+      dell_9 =pdf.make_cell(:content => "SUELDO BASICO  ") 
+      dell_10 =pdf.make_cell(:content => bp.basico.to_s)
       
       if bp.employee.onp == "1"
         dell_11 =pdf.make_cell(:content => "ONP") 
         dell_12 =pdf.make_cell(:content => bp.calc5.to_s)
       else
         dell_11 =pdf.make_cell(:content => "AFP LEY 10%") 
-        dell_12 =pdf.make_cell(:content => bp.calc6.to_s)
+        dell_12 =pdf.make_cell(:content => bp.aporte.to_s)
       end 
         
         dell_13 =pdf.make_cell(:content => "ESSALUD")
@@ -180,31 +180,46 @@ class PayrollsController < ApplicationController
         
       #fila 2
       dell_15 =pdf.make_cell(:content => "")
+      if bp.calc1 > 0 
       dell_16 =pdf.make_cell(:content => "ASIG.FAMILIAR") 
+      dell_17 =pdf.make_cell(:content => bp.calc1.to_s)
+      else 
+      dell_16 =pdf.make_cell(:content => "") 
       dell_17 =pdf.make_cell(:content => "")
-      
+        
+      end 
       if bp.employee.onp == "1"
         dell_18 =pdf.make_cell(:content => "") 
         dell_19 =pdf.make_cell(:content => "")
       else
-        dell_18 =pdf.make_cell(:content => "AFP ISS%") 
-        dell_19 =pdf.make_cell(:content => bp.calc6.to_s)
+        dell_18 =pdf.make_cell(:content => "AFP SEGURO ") 
+        dell_19 =pdf.make_cell(:content => bp.seguro.to_s)
       end 
 
         dell_20 =pdf.make_cell(:content => "")
         dell_21 =pdf.make_cell(:content => "")
       #fila 3  
+      
         dell_22 =pdf.make_cell(:content => "")
+        
+        if bp.hextra0 > 0
+        dell_23 =pdf.make_cell(:content => "HORAS EXTRAS") 
+        dell_24 =pdf.make_cell(:content => bp.hextra0.to_s)
+        else
         dell_23 =pdf.make_cell(:content => "") 
         dell_24 =pdf.make_cell(:content => "")
+          
+        end 
+            
       
       if bp.employee.onp == "1"
         dell_25 =pdf.make_cell(:content => "") 
         dell_26 =pdf.make_cell(:content => "")
       else
-        dell_25 =pdf.make_cell(:content => "AFP COM.") 
-        dell_26 =pdf.make_cell(:content => bp.calc6.to_s)
+        dell_25 =pdf.make_cell(:content => "AFP COMISION.") 
+        dell_26 =pdf.make_cell(:content => bp.comision.to_s)
       end 
+          
           
         dell_27 =pdf.make_cell(:content => "")
         dell_28 =pdf.make_cell(:content => "")
@@ -212,23 +227,33 @@ class PayrollsController < ApplicationController
       #fila 4
       
         dell_29 =pdf.make_cell(:content => "")
-        dell_30 =pdf.make_cell(:content => "") 
-        dell_31 =pdf.make_cell(:content => "")
+        
+        if bp.vaca > 0
+          dell_30 =pdf.make_cell(:content => "VACACIONES:") 
+          dell_31 =pdf.make_cell(:content => bp.vacaciones.to_s)
+        else 
+          dell_30 =pdf.make_cell(:content => "") 
+          dell_31 = pdf.make_cell(:content => "") 
+        end 
       
-      
-        dell_32 =pdf.make_cell(:content => "") 
-        dell_33 =pdf.make_cell(:content => "")
+        dell_32 =pdf.make_cell(:content => "5TA.CATEGORIA") 
+        dell_33 =pdf.make_cell(:content => bp.calc4.to_s)
         
         dell_34 =pdf.make_cell(:content => "")
         dell_35 =pdf.make_cell(:content => "")
       #fila 5
       
         dell_36 =pdf.make_cell(:content => "")
-        dell_37 =pdf.make_cell(:content => "") 
-        dell_38 =pdf.make_cell(:content => "")
+        if bp.desmed > 0
+          dell_37 =pdf.make_cell(:content => "DES.MEDICO") 
+          dell_38 =pdf.make_cell(:content => bp.desmedico.to_s)
+        else
+          dell_37 =pdf.make_cell(:content => "") 
+          dell_38 =pdf.make_cell(:content => "")
+        end 
       
-        dell_39 =pdf.make_cell(:content => "") 
-        dell_40 =pdf.make_cell(:content => "")
+        dell_39 =pdf.make_cell(:content => "FALTAS") 
+        dell_40 =pdf.make_cell(:content => bp.faltas.to_s)
         
         dell_41 =pdf.make_cell(:content => "")
         dell_42 =pdf.make_cell(:content => "")
@@ -236,11 +261,15 @@ class PayrollsController < ApplicationController
       #fila 6
       
         dell_43 =pdf.make_cell(:content => "")
-        dell_44 =pdf.make_cell(:content => "") 
-        dell_45 =pdf.make_cell(:content => "")
-      
-        dell_46 =pdf.make_cell(:content => "") 
-        dell_47 =pdf.make_cell(:content => "")
+        if bp.subsidio > 0
+          dell_44 =pdf.make_cell(:content => "SUBSIDIO:") 
+          dell_45 =pdf.make_cell(:content => bp.subsidio0.to_s) 
+        else
+          dell_44 =pdf.make_cell(:content => "") 
+          dell_45 =pdf.make_cell(:content => "")
+        end
+        dell_46 =pdf.make_cell(:content => "ADELANTO") 
+        dell_47 =pdf.make_cell(:content => bp.calc7.to_s)
         
         dell_48 =pdf.make_cell(:content => "")
         dell_49 =pdf.make_cell(:content => "")
@@ -251,8 +280,8 @@ class PayrollsController < ApplicationController
         dell_51 =pdf.make_cell(:content => "")
         dell_52 =pdf.make_cell(:content => "")
         
-        dell_53 =pdf.make_cell(:content => "")
-        dell_54 =pdf.make_cell(:content => "")
+        dell_53 =pdf.make_cell(:content => "OTROS")
+        dell_54 =pdf.make_cell(:content => bp.otros.to_s)
         
         dell_55 =pdf.make_cell(:content => "")
         dell_56 =pdf.make_cell(:content => "")
@@ -329,22 +358,20 @@ class PayrollsController < ApplicationController
        [dell_36,dell_37,dell_38,dell_39,dell_40,dell_41,dell_42],
        [dell_43,dell_44,dell_45,dell_46,dell_47,dell_48,dell_49],
        [dell_50,dell_51,dell_52,dell_53,dell_54,dell_55,dell_56],
-       [dell_57,dell_58,dell_59,dell_60,dell_61,dell_62,dell_63],
-       [dell_64,dell_65,dell_66,dell_67,dell_68,dell_69,dell_70],
-       [dell_71,dell_72,dell_73,dell_74,dell_75,dell_76,dell_77]],
+       [dell_57,dell_58,dell_59,dell_60,dell_61,dell_62,dell_63]],
        {
           :position => :center,
           :cell_style => {:border_width => 0},
           :width => pdf.bounds.width
         })
         
-      pdf.move_down 50
+      pdf.move_down 40
       pdf.stroke_horizontal_rule
       
       
       tell_1 =pdf.make_cell(:content => "TOTAL HABERES.")
       tell_2 =pdf.make_cell(:content => "") 
-      tell_3 =pdf.make_cell(:content => bp.total1.to_s)
+      tell_3 =pdf.make_cell(:content => bp.totingreso.to_s)
       tell_4 =pdf.make_cell(:content => "TOTAL DSCTOS.") 
       tell_5 =pdf.make_cell(:content => bp.total2.to_s)
       tell_6 =pdf.make_cell(:content => "NETO")
