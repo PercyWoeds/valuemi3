@@ -68,10 +68,28 @@ class Employee < ActiveRecord::Base
 	end 
 	
 	def self.import(file)
-          CSV.foreach(file.path, headers: true, encoding:'iso-8859-1:utf-8') do |row|
-          Employee.create! row.to_hash 
-        end
-    end       
-    
+      CSV.foreach(file.path, headers: true) do |row|
+          product_hash = row.to_hash # exclude the price field
+          
+          product = Employee.find_by(idnumber: product_hash["idnumber"])
+          puts "dni : "
+          puts product_hash["idnumber"]
+          
+          
+          if product   
+            product.fecha_ingreso = product_hash["fecha_ingreso"]
+            product.division_id = product_hash["division_id"]
+            product.onp = product_hash["onp"]
+            product.afp_id = product_hash["afp_id"]
+            product.comision_flujo = product_hash["comision_flujo"]
+            product.sueldo = product_hash["sueldo"]
+            product.asignacion = product_hash["asignacion"]
+            product.save
+          end     
+          
+        end # end CSV.foreach
+          
+    end
+
 
 end

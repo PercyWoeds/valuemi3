@@ -7,7 +7,9 @@
     <tr>
       <th>Nombre </th>
       <th>Apellidos</th>
-      
+      <th>DNI</th>
+      <th>Fecha Ingreso</th>
+      <th>Activo?</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -20,6 +22,8 @@
         <td><%= employee.idnumber  %></td>
         <% if employee.fecha_ingreso != nil %>
         <td><%= employee.fecha_ingreso.strftime("%d/%m/%Y")  %></td>
+        <%else%>
+        <td> No registrado </td>
         <% end %>
         <td><%= employee.active  %></td>
         <td><%= link_to 'Ver', employee %></td>
@@ -31,15 +35,22 @@
     <% end %>
 
   </tbody>
-  
-</table>
 
+</table>
 
 <br>
 <%= will_paginate @employees %>
     
+    
 <%= link_to 'Nuevo empleado ', new_employee_path %>
 
+
+<h2>Importar Archivo "*.csv"</h2>
+
+<%= form_tag import_employees_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Importar " %>
+<% end %>
 
 
 
