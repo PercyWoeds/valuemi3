@@ -539,11 +539,11 @@ class PayrollsController < ApplicationController
             if detalle.employee.onp == "0"
               if detalle.employee.afp != nil
               row << detalle.employee.afp.name
-                  if detalle.employee.comision_flujo = 1
+                  if detalle.employee.comision_flujo == 1
                   row << "FLUJO"
-                  elsif  detalle.employee.comision_flujo = 2
+                  elsif  detalle.employee.comision_flujo == 2
                     row << "MIXTA"
-                  elsif  detalle.employee.comision_flujo = 3
+                  elsif  detalle.employee.comision_flujo == 3
                     row << "FLUJO MIXTA"
                   else
                      row << "NINGUNO"  
@@ -675,26 +675,26 @@ class PayrollsController < ApplicationController
                                           columns([2]).align=:left
                                           columns([3]).align=:left
                                           columns([4]).align=:left
-                                          columns([5]).align=:right  
-                                          columns([6]).align=:right
-                                          columns([7]).align=:right
+                                          columns([5]).align=:left  
+                                          columns([6]).align=:left
+                                          columns([7]).align=:left
                                           columns([8]).align=:right
                                           columns([9]).align=:right
                                           columns([10]).align=:center
                                           columns([11]).align=:left
                                           columns([12]).align=:left
-                                          columns([13]).align=:left
-                                          columns([14]).align=:left
+                                          columns([13]).align=:right
+                                          columns([14]).align=:right
                                           columns([15]).align=:right  
                                           columns([16]).align=:right
                                           columns([17]).align=:right
                                           columns([18]).align=:right
                                           columns([19]).align=:right
-                                          columns([20]).align=:center
-                                          columns([21]).align=:left
-                                          columns([22]).align=:left
-                                          columns([23]).align=:left
-                                          columns([24]).align=:left
+                                          columns([20]).align=:right
+                                          columns([21]).align=:right
+                                          columns([22]).align=:right
+                                          columns([23]).align=:right
+                                          columns([24]).align=:right
                                           
                                         end                                          
       pdf.move_down 10      
