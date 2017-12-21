@@ -36,10 +36,12 @@
     
 </p>
 <% end %>
+
 <% if params[:field].blank? || params[:field] == "reintegro" %>
 <p>
   <%= f.label :reintegro, "Reintegro *", :class => "bold" %><br />
   <%= f.number_field :reintegro %>
     
 </p>
+
 <% end %>

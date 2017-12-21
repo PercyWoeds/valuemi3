@@ -22,7 +22,7 @@ class Payroll < ActiveRecord::Base
    
    def process
 
-      planilla  =Employee.where(active: "1")
+      planilla  =Employee.where(planilla: "1")
       
       PayrollDetail.where(payroll_id: self.id).delete_all
       
@@ -121,7 +121,7 @@ class Payroll < ActiveRecord::Base
         end
         
         #Asignacion familiar
-        planilla  =Employee.where(active: "1" )
+        planilla  =Employee.where(planilla: "1" )
         
         @detalle = Parameter.find(self.parameter_id)
         
