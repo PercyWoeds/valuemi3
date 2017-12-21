@@ -534,7 +534,11 @@ class PayrollsController < ApplicationController
             row << detalle.employee.idnumber.to_s 
             row << nombre2
 
+             if detalle.employee.division != nil
             row << detalle.employee.division.name
+            else
+            row << "null"
+            end 
             row << detalle.employee.ocupacion.name
             if detalle.employee.onp == "0"
               if detalle.employee.afp != nil
