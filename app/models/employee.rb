@@ -7,6 +7,7 @@ class Employee < ActiveRecord::Base
 	belongs_to :division 
 	belongs_to :ocupacion
 	belongs_to :categorium
+	belongs_to :afp 
 	
 	has_many :outputs
 	has_many :payroll_details

@@ -19,7 +19,45 @@ class Payroll < ActiveRecord::Base
                      "DSCTO",
                      "VALOR TOTAL"]
 
-   
+      TABLE_HEADERS2 =["Nro.",
+          "Fec.Ingreso",
+          "DNI",
+          "Empleado",
+          "Area",
+        "Puesto",
+        "SSP/SNP",
+        "Comision",
+        "Sueldo Bruto",
+        "Total Dia",
+        "Faltas",
+        "Vaca",
+        "Des.Med.",
+        "Subs.",
+        "H.Extra",
+        "Dias",
+        "Sueldo Basico",
+        "Asig.Familiar",
+        "Horas Extras",
+        "Vacac.",
+        "Descanso Medico",
+        "Subsidio",
+        "Reintegro.",
+        "Total.Ingreso",
+        "Total Remun.",
+        "ONP.",
+        "Aporte",
+        "Seguro",
+        "Comision",
+        "Renta.Quinta",
+        "Faltas.",
+        "Adelanto",
+        "Otros ",
+        "Total ",
+        "Remun.Neta",
+        "ESSALUD.",
+        "Total.Aporte "]
+      
+      
    def process
 
       planilla  =Employee.where(planilla: "1")
@@ -114,7 +152,10 @@ class Payroll < ActiveRecord::Base
             #Remuneracion neta
             
             pl.remneta = pl.remuneracion / 30 * (pl.totaldia + pl.falta) 
-            
+            pl.hextra0 = 0
+            pl.calc4 = 0 
+            pl.calc7 = 0 
+            pl.otros = 0
             
         
             pl.save 
@@ -178,7 +219,7 @@ class Payroll < ActiveRecord::Base
         
         end
         
-        @planilla =  PayrollDetail.where(payroll_id: self.id)    
+        @planilla =  PayrollDetail.where(payroll_id: self.id)
             
         for pl in @planilla
             

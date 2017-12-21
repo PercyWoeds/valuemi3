@@ -921,6 +921,9 @@ end
   match 'payrolls/do_process/:id' => 'payrolls#do_process', via: [:get, :post]  
   match 'payrolls/do_update/:id' => 'payrolls#do_update', via: [:get, :post]  
   match 'payrolls/do_pdf/:id' => 'payrolls#do_pdf', via: [:get, :post]  
+  match 'payrolls/do_pdf2/:id' => 'payrolls#do_pdf2', via: [:get, :post]  
+  
+  
   match 'payrollbonis/index/:id' => 'payrollbonis#index', via: [:get, :post]  
   match 'payrollboni/new/:payroll_id' => 'payrollbonis#new', via: [:get, :post]  
   resources :payrolls 

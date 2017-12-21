@@ -434,8 +434,217 @@ class PayrollsController < ApplicationController
   end 
   
 
+# reporte completo
+  def build_pdf_header_rpt(pdf)
+      pdf.font "Helvetica" , :size => 8
+     $lcCli  =  @company.name 
+     $lcdir1 = @company.address1+@company.address2+@company.city+@company.state
+
+     $lcFecha1= Date.today.strftime("%d/%m/%Y").to_s
+     $lcHora  = Time.now.to_s
+
+    max_rows = [client_data_headers_rpt.length, invoice_headers_rpt.length, 0].max
+      rows = []
+      (1..max_rows).each do |row|
+        rows_index = row - 1
+        rows[rows_index] = []
+        rows[rows_index] += (client_data_headers_rpt.length >= row ? client_data_headers_rpt[rows_index] : ['',''])
+        rows[rows_index] += (invoice_headers_rpt.length >= row ? invoice_headers_rpt[rows_index] : ['',''])
+      end
+
+      if rows.present?
+
+        pdf.table(rows, {
+          :position => :center,
+          :cell_style => {:border_width => 0},
+          :width => pdf.bounds.width
+        }) do
+          columns([0, 2]).font_style = :bold
+
+        end
+
+        pdf.move_down 10
+
+      end
+    
+      pdf 
+  end   
+
+  def build_pdf_body_rpt(pdf)
+    
+    pdf.text "Planilla Emitida : ", :size => 8 
+    pdf.text "Fecha inicial : "+@payroll.fecha_inicial.strftime("%d/%m/%Y").to_s
+    pdf.text "Fecha final : "+@payroll.fecha_final.strftime("%d/%m/%Y").to_s
+    pdf.font "Helvetica" , :size => 6
+
+      headers = []
+      table_content = []
+
+      Payroll::TABLE_HEADERS2.each do |header|
+        cell = pdf.make_cell(:content => header)
+        cell.background_color = "FFFFCC"
+        headers << cell
+      end
+
+      table_content << headers
+
+      nroitem=1
+      lcDoc='FT'
+      lcsubtotal =  0
+      lctax = 0
+      lctotal = 0
+
+       for  detalle  in @planilla 
+
+            row = []          
+            nombre2 = detalle.employee.lastname << detalle.employee.firstname
+            row << nroitem.to_s
+            row << detalle.employee.fecha_ingreso.strftime("%d/%m/%Y")
+            row << detalle.employee.idnumber.to_s 
+            row << nombre2
+
+            row << detalle.employee.division.name
+            row << detalle.employee.ocupacion.name
+            if detalle.employee.onp == "0"
+              if detalle.employee.afp != nil
+              row << detalle.employee.afp.name
+                  if detalle.employee.comision_flujo = 1
+                  row << "FLUJO"
+                  elsif  detalle.employee.comision_flujo = 2
+                    row << "MIXTA"
+                  elsif  detalle.employee.comision_flujo = 3
+                    row << "FLUJO MIXTA"
+                  else
+                     row << "NINGUNO"  
+                     row << ""
+                  end 
+              else
+                row << "null"
+                row << ""
+              end
+            else
+              row << "ONP"
+              row << ""
+            end 
+            
+            row << detalle.remuneracion 
+            row << detalle.totaldia
+            row << detalle.falta
+            row << detalle.vaca
+            row << detalle.desmed 
+            row << detalle.subsidio
+            row << detalle.hextra
+            row << detalle.dias
+            row << detalle.basico
+            row << detalle.calc1 
+            row << detalle.hextra0 
+            row << detalle.vacaciones
+            row << detalle.desmedico
+            row << detalle.subsidio0 
+            row << detalle.reintegro
+            row << detalle.totingreso
+            row << detalle.total1 
+            row << detalle.calc5
+            row << detalle.aporte
+            row << detalle.seguro 
+            row << detalle.comision 
+            row << detalle.calc4 
+            row << detalle.faltas 
+            row << detalle.calc7 
+            row << detalle.otros 
+            row << detalle.total2
+            row << detalle.remneta 
+            row << detalle.calc8
+            row << detalle.total3 
+            
+            table_content << row
+
+            nroitem=nroitem + 1
+       
+        end
+
+        result = pdf.table table_content, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width
+                                        } do 
+                                          columns([0]).align=:left
+                                          columns([1]).align=:left
+                                          columns([2]).align=:left
+                                          columns([3]).align=:left
+                                          columns([4]).align=:left
+                                          columns([5]).align=:right  
+                                          columns([6]).align=:right
+                                          columns([7]).align=:right
+                                          columns([8]).align=:right
+                                          columns([9]).align=:right
+                                          columns([10]).align=:center
+                                          columns([11]).align=:left
+                                          columns([12]).align=:left
+                                          columns([13]).align=:left
+                                          columns([14]).align=:left
+                                          columns([15]).align=:right  
+                                          columns([16]).align=:right
+                                          columns([17]).align=:right
+                                          columns([18]).align=:right
+                                          columns([19]).align=:right
+                                          columns([20]).align=:center
+                                          columns([21]).align=:left
+                                          columns([22]).align=:left
+                                          columns([23]).align=:left
+                                          columns([24]).align=:left
+                                          
+                                        end                                          
+      pdf.move_down 10      
+
+      #totales 
+
+      pdf 
+
+    end
+
+    def build_pdf_footer_rpt(pdf)
+      
+                  
+      pdf.text "" 
+      pdf.bounding_box([0, 20], :width => 535, :height => 40) do
+      pdf.draw_text "Company: #{@company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
+
+      end
+
+      pdf
+      
+  end
+
+
+def do_pdf2
+    @company = Company.find(1)
+    @payroll = Payroll.find(params[:id])
+    @planilla = PayrollDetail.where(payroll_id: @payroll.id).includes(:employee).order('employees.lastname ')    
+
+    Prawn::Document.generate "app/pdf_output/rpt_planilla.pdf" , :page_layout => :landscape,:page_size => "A3" do |pdf|        
+        pdf.font "Helvetica"
+        pdf = build_pdf_header_rpt(pdf)
+        pdf = build_pdf_body_rpt(pdf)
+        build_pdf_footer_rpt(pdf)
+        $lcFileName =  "app/pdf_output/rpt_planilla.pdf"              
+    end     
+    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
+    send_file("app/pdf_output/rpt_planilla.pdf", :type => 'application/pdf', :disposition => 'inline')
+
+  end
   
 
+  def client_data_headers_rpt
+      client_headers  = [["Empresa  :", $lcCli ]]
+      client_headers << ["Direccion :", $lcdir1]
+      client_headers
+  end
+
+  def invoice_headers_rpt            
+      invoice_headers  = [["Fecha : ",$lcHora]]    
+      invoice_headers
+  end
+ 
   def invoice_summary
       invoice_summary = []
       invoice_summary << ["Sueldo Neto ",  ActiveSupport::NumberHelper::number_to_delimited($lcRemNeta,delimiter:",",separator:".").to_s]
