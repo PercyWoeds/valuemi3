@@ -493,6 +493,37 @@ class PayrollsController < ApplicationController
       lcsubtotal =  0
       lctax = 0
       lctotal = 0
+            total_remuneracion = 0
+            total_totaldia = 0
+            total_falta =0
+            total_vaca = 0
+            total_desmed = 0
+            total_subsidio = 0
+            total_hextra  = 0
+            total_dias =  0
+            total_basico= 0
+            total_calc1  = 0
+            total_hextra0  = 0
+            total_vacaciones = 0
+            total_desmedico = 0
+            total_subsidio0 = 0
+            total_reintegro= 0
+            total_totingreso= 0
+            total_total1 = 0
+            total_calc5= 0
+            total_aporte = 0
+            total_seguro = 0
+            total_comision = 0
+            total_calc4 = 0
+            total_faltas = 0
+            total_calc7 = 0
+            total_otros = 0
+            total_total2= 0
+            total_remneta = 0
+            total_calc8= 0
+            total_total3 = 0
+        
+      
 
        for  detalle  in @planilla 
 
@@ -556,12 +587,84 @@ class PayrollsController < ApplicationController
             row << detalle.remneta 
             row << detalle.calc8
             row << detalle.total3 
+        
+        total_remuneracion += detalle.remuneracion
+            total_totaldia += detalle.totaldia
+            total_falta += detalle.falta
+            total_vaca += detalle.vaca
+            total_desmed += detalle.desmed
+            total_subsidio += detalle.subsidio
+            total_hextra  += detalle.hextra
+            total_dias += detalle.dias
+            total_basico += detalle.basico
+            total_calc1  += detalle.calc1
+            total_hextra0  += detalle.hextra0
+            total_vacaciones += detalle.vacaciones
+            total_desmedico += detalle.desmedico
+            total_subsidio0 += detalle.subsidio0
+            total_reintegro += detalle.reintegro
+            total_totingreso += detalle.totingreso
+            total_total1 += detalle.total1
+            total_calc5 += detalle.calc5
+            total_aporte +detalle.aporte
+            total_seguro += detalle.seguro
+            total_comision += detalle.comision
+            total_calc4 += detalle.calc4
+            total_faltas += detalle.faltas
+            total_calc7 += detalle.calc7
+            total_otros += detalle.otros 
+            total_total2 += detalle.total2
+            total_remneta += detalle.remneta
+            total_calc8 += detalle.calc8
+            total_total3 += detalle.total3
+        
             
             table_content << row
 
             nroitem=nroitem + 1
        
         end
+        
+            row = []
+            row << ""
+            row << ""
+            row << ""
+            row << "TOTALES => "
+            row << ""
+            row << ""
+            row << ""
+            row << ""
+            row << total_remuneracion.round(2) 
+            row << total_totaldia.round(2)
+            row << total_falta.round(2)
+            row << total_vaca.round(2)
+            row << total_desmed.round(2) 
+            row << total_subsidio.round(2)
+            row << total_hextra.round(2)
+            row << total_dias.round(2)
+            row << total_basico.round(2)
+            row << total_calc1.round(2) 
+            row << total_hextra0.round(2) 
+            row << total_vacaciones.round(2)
+            row << total_desmedico.round(2)
+            row << total_subsidio0.round(2) 
+            row << total_reintegro.round(2)
+            row << total_totingreso.round(2)
+            row << total_total1.round(2) 
+            row << total_calc5.round(2)
+            row << total_aporte.round(2)
+            row << total_seguro.round(2)
+            row << total_comision.round(2) 
+            row << total_calc4.round(2) 
+            row << total_faltas.round(2) 
+            row << total_calc7.round(2) 
+            row << total_otros.round(2) 
+            row << total_total2.round(2)
+            row << total_remneta.round(2) 
+            row << total_calc8.round(2)
+            row << total_total3.round(2) 
+            table_content << row
+        
 
         result = pdf.table table_content, {:position => :center,
                                         :header => true,
@@ -621,7 +724,7 @@ def do_pdf2
     @payroll = Payroll.find(params[:id])
     @planilla = PayrollDetail.where(payroll_id: @payroll.id).includes(:employee).order('employees.lastname ')    
 
-    Prawn::Document.generate "app/pdf_output/rpt_planilla.pdf" , :page_layout => :landscape,:page_size => "A3" do |pdf|        
+    Prawn::Document.generate "app/pdf_output/rpt_planilla.pdf" , :page_layout => :landscape,:page_size => "A2" do |pdf|        
         pdf.font "Helvetica"
         pdf = build_pdf_header_rpt(pdf)
         pdf = build_pdf_body_rpt(pdf)
