@@ -1,6 +1,8 @@
 class Employee < ActiveRecord::Base
 
 	before_save :set_full_name
+	before_save :set_full_name2
+	
 	belongs_to :location
 	belongs_to :division 
 	belongs_to :ocupacion
@@ -55,6 +57,12 @@ class Employee < ActiveRecord::Base
 
 	def set_full_name
 		self.full_name ="#{self.firstname} #{self.lastname}".strip		
+        self.flujo = 0
+	end 
+	
+	
+	def set_full_name2
+		self.full_name2 ="#{self.lastname} #{self.firstname}".strip		
         self.flujo = 0
 	end 
 	

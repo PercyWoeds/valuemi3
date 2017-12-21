@@ -14,10 +14,6 @@
   <%= @payroll.type_payroll %>
 </p>
 
-<p>
-  <strong>Integer:</strong>
-  <%= @payroll.integer %>
-</p>
 
 <p>
   <strong>Fecha registro:</strong>
@@ -58,8 +54,10 @@
 <table>
   <thead>
     <tr>
-      
       <th>
+        Editar 
+      </th>  
+      <th   style="width: 15%">
         Empleado 
       </th>
       <th>
@@ -169,9 +167,7 @@
         Total<br>
         Aporte 
       </th>
-      <th>
-        Editar 
-      </th>
+    
       
     </tr>
   </thead>
@@ -181,8 +177,12 @@
     <%  @payroll_details.each do |detalle| %>
     <tr>
           
+           <td class="bordered_right bordered_bottom right">
+            <%= check_box_tag "planilla_ids[]", detalle.id  %>
+          </td>  
+          
           <td class="small bordered_bottom bordered_right">
-            <%= link_to detalle.employee.full_name, detalle.employee, :title => "Ir a Empleado" %>
+            <%= link_to detalle.employee.full_name, detalle.employee, :title => "Ir a Empleado"  %>
             
           </td>
           
@@ -267,9 +267,7 @@
           <td class="small bordered_bottom bordered_right">
             <%= detalle.total3 %>              
           </td>
-           <td class="bordered_right bordered_bottom right">
-            <%= check_box_tag "planilla_ids[]", detalle.id  %>
-          </td>  
+          
           
           
           

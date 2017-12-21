@@ -4,15 +4,16 @@ class PayrollsController < ApplicationController
   # GET /payrolls
   # GET /payrolls.json
   def index
+
     @payrolls = Payroll.all
+    
   end
 
   # GET /payrolls/1
   # GET /payrolls/1.json
   def show
-    
-    @payroll_details= @payroll.payroll_details.order(:id)
-    
+  
+    @payroll_details= @payroll.payroll_details.includes(:employee).order('employees.lastname ')
   end
 
   # GET /payrolls/new
