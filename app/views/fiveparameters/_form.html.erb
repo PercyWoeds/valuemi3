@@ -1,0 +1,152 @@
+<%= simple_form_for(@fiveparameter) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <table>
+      <tr>
+       <div class="field">
+      <%= f.label :anio %><br />
+      <%= f.number_field :anio %>
+       </div>  
+    </tr>
+    
+     <tr>
+       <div class="field">
+      <%= f.label :valor_uit %><br />
+      <%= f.number_field :valor_uit %>
+       </div>  
+     </tr>    
+     
+      <tr>
+        <td>
+          <div class="field">
+            <%= f.label :hasta_5 %><br />
+            <%= f.number_field :hasta_5 %>
+          </div>  
+        </td>  
+        <td>
+          <div class="field">
+            <%= f.label :tasa1 %><br />
+            <%= f.text_field :tasa1 %>
+          </div>
+        </td>
+      </tr>      
+      <tr>
+        <td>
+          <div class="field">
+            <%= f.label :exceso_5 %><br />
+            <%= f.number_field :exceso_5 %>
+          </div>  
+        </td>  
+        <td>
+          <div class="field">
+            <%= f.label :tasa2 %><br />
+            <%= f.text_field :tasa2 %>
+          </div>
+        </td>
+      </tr>      
+          <tr>
+        <td>
+          <div class="field">
+            <%= f.label :y_hasta_20 %><br />
+            <%= f.number_field :y_hasta_20 %>
+          </div>  
+        </td>  
+        <td>
+          <div class="field">
+            <%= f.label :tasa3 %><br />
+            <%= f.text_field :tasa3 %>
+          </div>
+        </td>
+      </tr>      
+          <tr>
+        <td>
+          <div class="field">
+            <%= f.label :exceso_20 %><br />
+            <%= f.number_field :exceso_20 %>
+          </div>  
+        </td>  
+        <td>
+          <div class="field">
+            <%= f.label :tasa4 %><br />
+            <%= f.text_field :tasa4 %>
+          </div>
+        </td>
+      </tr>      
+    
+      <tr>
+        <td>
+          <div class="field">
+            <%= f.label :y_hasta_35 %><br />
+            <%= f.number_field :y_hasta_35 %>
+          </div>  
+        </td>  
+        <td>
+          <div class="field">
+            <%= f.label :tasa5 %><br />
+            <%= f.text_field :tasa5 %>
+          </div>
+        </td>
+      </tr>      
+          <tr>
+        <td>
+          <div class="field">
+            <%= f.label :exceso_35 %><br />
+            <%= f.number_field :exceso_35 %>
+          </div>  
+        </td>  
+        <td>
+          <div class="field">
+            <%= f.label :tasa6 %><br />
+            <%= f.text_field :tasa6 %>
+          </div>
+        </td>
+      </tr>      
+    
+          <tr>
+        <td>
+          <div class="field">
+            <%= f.label :y_hasta_45 %><br />
+            <%= f.number_field :y_hasta_45 %>
+          </div>  
+        </td>  
+        <td>
+          <div class="field">
+            <%= f.label :tasa7 %><br />
+            <%= f.text_field :tasa7 %>
+          </div>
+        </td>
+      </tr>      
+    
+      <tr>
+        <td>
+          <div class="field">
+            <%= f.label :exceso_45 %><br />
+            <%= f.number_field :exceso_45 %>
+          </div>  
+        </td>  
+        <td>
+          <div class="field">
+            <%= f.label :tasa8 %><br />
+            <%= f.text_field :tasa8 %>
+          </div>
+        </td>
+      </tr>      
+    
+
+
+
+
+    
+    
+    
+    </table>
+    
+    
+    
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

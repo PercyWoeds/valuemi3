@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  anio: 1
+  valor_uit: 1.5
+  hasta_5: 1.5
+  tasa1: 1.5
+  exceso_5: 1.5
+  y_hasta_20: 1.5
+  exceso_20: 1.5
+  y_hasta_35: 1.5
+  exceso_35: 1.5
+  y_hasta_45: 1.5
+  exceso_45: 1.5
+
+two:
+  anio: 1
+  valor_uit: 1.5
+  hasta_5: 1.5
+  tasa1: 1.5
+  exceso_5: 1.5
+  y_hasta_20: 1.5
+  exceso_20: 1.5
+  y_hasta_35: 1.5
+  exceso_35: 1.5
+  y_hasta_45: 1.5
+  exceso_45: 1.5
