@@ -273,8 +273,16 @@ class Payroll < ActiveRecord::Base
             pl.seguro = lcSeguroAfp0.round(2)
             pl.comision = lcComisionAfp0.round(2)
             
+            #Quinta 
             
-           
+            @quinta =  Quinto.find_by(employee_id: pl.employee_id)
+            if @quinta != nil
+                pl.calc4 = @quinta.retencion_mensual.round(2)
+            else
+                pl.calc4 = 0
+            end
+                
+            
             
             pl.total2 = pl.calc4+pl.calc5 + pl.calc7+ pl.faltas + pl.otros+pl.aporte+pl.seguro+pl.comision
             pl.remneta = pl.totingreso - pl.total2 

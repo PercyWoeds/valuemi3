@@ -1,0 +1,526 @@
+<%= simple_form_for(@quinto) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+  
+    
+    <div class="field">
+      <%= f.label :employee_id ,"Empleado "%><br />
+      <%= f.collection_select :employee_id, @employees, :id, :full_name, :prompt => true %>
+    
+    </div>
+    
+    <div class="field">
+      
+        <%= select_tag(:anio, options_for_select(@years, @year)) %>
+        <%= select_tag(:mes, options_for_select(@months, @month)) %>
+    </div>
+
+  <table width="600">
+       
+      <tr>
+        <td>
+          <div class="field">
+            Remuneracion Mes  Actual
+          </div>  
+        </td>  
+        <td>
+          <div class="field">
+          <%= f.number_field :rem_actual , :step => 0.1 %>  
+          </div>
+        </td>
+      </tr>      
+      
+        <th>
+            Remuneracion Mes
+        </th>  
+        <th>
+          
+        </th>
+      
+      <tr>
+        <td>
+          <div class="field">
+            Remuneracion Mes
+          </div>  
+        </td>  
+        <td>
+          <div class="field">
+          <%= f.number_field :rem_mes , :step => 0.1 %>  
+          </div>
+        </td>
+      </tr>      
+      
+      <tr>
+        <td>
+          <div class="field">
+            Asignacion Familiar
+          </div>  
+        </td>  
+        <td>
+          <div class="field">
+          <%= f.number_field :asignacion , :step => 0.1 %>  
+          </div>
+        </td>
+      </tr>      
+
+      <tr>
+        <td>
+          <div class="field">
+            Horas Extras
+          </div>  
+        </td>  
+        <td>
+          <div class="field">
+          <%= f.number_field :hextras , :step => 0.1 %>  
+          </div>
+        </td>
+      </tr>      
+
+      <tr>
+        <td>
+          <div class="field">
+            Otros
+          </div>  
+        </td>  
+        <td>
+          <div class="field">
+          <%= f.number_field :otros1 , :step => 0.1 %>  
+          </div>
+        </td>
+      </tr>      
+      
+      <tr>
+        <td>
+          <div class="field">
+            Gratificacion Julio
+          </div>  
+        </td>  
+        <td>
+          <div class="field">
+          <%= f.number_field :gratijulio , :step => 0.1 %>  
+          </div>
+        </td>
+      </tr>      
+      
+      <tr>
+        <td>
+          <div class="field">
+              Gratificacion Diciembre
+          </div>  
+        </td>  
+        <td>
+          <div class="field">
+          <%= f.number_field :gratidic , :step => 0.1 %>  
+          </div>
+        </td>
+      </tr>      
+
+
+      <tr>
+        <td>
+          <div class="field">
+            Bonificacion extraordinaria
+          </div>  
+        </td>  
+        <td>
+          <div class="field">
+          <%= f.number_field :bonextra , :step => 0.1 %>  
+          </div>
+        </td>
+      </tr>      
+  
+        <tr>
+        <td>
+          <div class="field">
+            Otros
+          </div>  
+        </td>  
+        <td>
+          <div class="field">
+          <%= f.number_field :otros2 , :step => 0.1 %>  
+          </div>
+        </td>
+      </tr>      
+
+  </table>    
+  
+  
+    <table width="600">
+      <th>
+        Remuneracion Percibidas
+        
+      </th>
+      <th>
+        
+      </th>
+      <tr>
+        <td>
+          <div class="field">
+            Enero
+          </div>  
+        </td>  
+        <td>
+          <div class="field">
+          <%= f.number_field :ene1 , :step => 0.1 %>  
+          </div>
+        </td>
+      </tr>    
+      
+      <tr>
+        <td>
+          <div class="field">
+            Febrero
+          </div>  
+        </td>  
+        <td>
+          <div class="field">
+          <%= f.number_field :feb1 , :step => 0.1 %>  
+          </div>
+        </td>
+      </tr>      
+      
+      <tr>
+        <td>
+          <div class="field">
+            Marzo
+          </div>  
+        </td>  
+        <td>
+          <div class="field">
+          <%= f.number_field :mar1 , :step => 0.1 %>  
+          </div>
+        </td>
+      </tr>      
+      
+    <tr>
+        <td>
+          <div class="field">
+            Abril
+          </div>  
+        </td>  
+        <td>
+          <div class="field">
+          <%= f.number_field :abr1 , :step => 0.1 %>  
+          </div>
+        </td>
+      </tr>      
+      
+      <tr>
+        <td>
+          <div class="field">
+            Mayo
+          </div>  
+        </td>  
+        <td>
+          <div class="field">
+          <%= f.number_field :may1 , :step => 0.1 %>  
+          </div>
+        </td>
+      </tr>      
+      
+      <tr>
+        <td>
+          <div class="field">
+            Junio
+          </div>  
+        </td>  
+        <td>
+          <div class="field">
+          <%= f.number_field :jun1 , :step => 0.1 %>  
+          </div>
+        </td>
+      </tr>      
+      
+       <tr>
+        <td>
+          <div class="field">
+            Gratificacion Julio 
+          </div>  
+        </td>  
+        <td>
+          <div class="field">
+          <%= f.number_field :gratijulio1 , :step => 0.1 %>  
+          </div>
+        </td>
+      </tr>      
+      
+      <tr>
+        <td>
+          <div class="field">
+            Julio 
+          </div>  
+        </td>  
+        <td>
+          <div class="field">
+          <%= f.number_field :jul1 , :step => 0.1 %>  
+          </div>
+        </td>
+      </tr>      
+      
+      <tr>
+        <td>
+          <div class="field">
+            Agosto
+          </div>  
+        </td>  
+        <td>
+          <div class="field">
+          <%= f.number_field :ago1 , :step => 0.1 %>  
+          </div>
+        </td>
+      </tr>      
+      
+      <tr>
+        <td>
+          <div class="field">
+            Setiembre
+          </div>  
+        </td>  
+        <td>
+          <div class="field">
+          <%= f.number_field :set1 , :step => 0.1 %>  
+          </div>
+        </td>
+      </tr>      
+      
+      <tr>
+        <td>
+          <div class="field">
+            Octubre
+          </div>  
+        </td>  
+        <td>
+          <div class="field">
+          <%= f.number_field :oct1 , :step => 0.1 %>  
+          </div>
+        </td>
+      </tr>      
+      
+      <tr>
+        <td>
+          <div class="field">
+            Noviembre
+          </div>  
+        </td>  
+        <td>
+          <div class="field">
+          <%= f.number_field :nov1 , :step => 0.1 %>  
+          </div>
+        </td>
+      </tr>      
+      
+    </table>
+
+<table width="600">
+    <th>
+      Totales
+      
+    </th>
+    <th>
+      
+    </th>
+    
+    
+      <tr>
+        <td>
+          <div class="field">
+            Renta Bruta
+          </div>  
+        </td>  
+        <td>
+          <div class="field">
+            <%= f.number_field :renta_bruta , :step => 0.1 ,:readonly => true %>  
+          
+          </div>
+        </td>
+      </tr>      
+  
+      <tr>
+        <td>
+          <div class="field">
+            Deduccion de 7 UIT 
+          </div>  
+        </td>  
+        <td>
+          <div class="field">
+          <%= f.number_field :deduccion7 , :step => 0.1 ,:readonly => true %>  
+          
+          </div>
+        </td>
+      </tr>      
+      
+      <tr>
+        <td>
+          <div class="field">
+            Total Renta 5ta Categoria
+          </div>  
+        </td>  
+        <td>
+          <div class="field">
+          <%= f.number_field :total_renta, :step => 0.1 ,:readonly => true %>  
+          
+          </div>
+        </td>
+      </tr>      
+      
+</table>
+  
+  <table width="600">
+    <th>
+      Retenciones Anteriores
+      
+    </th>
+    <th>
+      
+    </th>
+    
+      <tr>
+        <td>
+          <div class="field">
+            Enero 
+          </div>  
+        </td>  
+        <td>
+          <div class="field">
+          <%= f.number_field :ene2 , :step => 0.1 %>  
+          </div>
+        </td>
+      </tr>  
+      
+    <tr>
+        <td>
+          <div class="field">
+            Febrero
+          </div>  
+        </td>  
+        <td>
+          <div class="field">
+          <%= f.number_field :feb2 , :step => 0.1 %>  
+          </div>
+        </td>
+      </tr>      
+      
+    <tr>
+        <td>
+          <div class="field">
+            Marzo
+          </div>  
+        </td>  
+        <td>
+          <div class="field">
+          <%= f.number_field :mar2 , :step => 0.1 %>  
+          </div>
+        </td>
+      </tr> 
+      
+    <tr>
+        <td>
+          <div class="field">
+            Abril
+          </div>  
+        </td>  
+        <td>
+          <div class="field">
+          <%= f.number_field :abr2 , :step => 0.1 %>  
+          </div>
+        </td>
+      </tr>      
+      
+    <tr>
+        <td>
+          <div class="field">
+            Mayo
+          </div>  
+        </td>  
+        <td>
+          <div class="field">
+          <%= f.number_field :may2 , :step => 0.1 %>  
+          </div>
+        </td>
+      </tr>      
+  
+      <tr>
+        <td>
+          <div class="field">
+            Junio
+          </div>  
+        </td>  
+        <td>
+          <div class="field">
+          <%= f.number_field :jun2 , :step => 0.1 %>  
+          </div>
+        </td>
+      </tr>      
+      
+    <tr>
+        <td>
+          <div class="field">
+            Julio
+          </div>  
+        </td>  
+        <td>
+          <div class="field">
+          <%= f.number_field :jul2 , :step => 0.1 %>  
+          </div>
+        </td>
+      </tr>      
+      
+    <tr>
+        <td>
+          <div class="field">
+            Agosto
+          </div>  
+        </td>  
+        <td>
+          <div class="field">
+          <%= f.number_field :ago2, :step => 0.1 %>  
+          </div>
+        </td>
+      </tr>    
+      
+    <tr>
+        <td>
+          <div class="field">
+          Setiembre
+          </div>  
+        </td>  
+        <td>
+          <div class="field">
+          <%= f.number_field :set2 , :step => 0.1 %>  
+          </div>
+        </td>
+      </tr>      
+    <tr>
+        <td>
+          <div class="field">
+            Octubre
+          </div>  
+        </td>  
+        <td>
+          <div class="field">
+          <%= f.number_field :oct2 , :step => 0.1 %>  
+          </div>
+        </td>
+      </tr>      
+    <tr>
+        <td>
+          <div class="field">
+            Noviembre
+          </div>  
+        </td>  
+        <td>
+          <div class="field">
+          <%= f.number_field :nov2 , :step => 0.1 %>  
+          </div>
+        </td>
+      </tr>      
+  </table>
+  
+  </div>
+
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

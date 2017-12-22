@@ -9,10 +9,11 @@ class Employee < ActiveRecord::Base
 	belongs_to :categorium
 	belongs_to :afp 
 	
+	
 	has_many :outputs
 	has_many :payroll_details
 	has_many :payrollbonis 
-	
+	has_many :quintos 
 	
     validates_uniqueness_of :idnumber
     validates_presence_of :company_id, :idnumber, :firstname,:lastname,:fecha_ingreso,:fecha_nacimiento

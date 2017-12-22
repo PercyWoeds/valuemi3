@@ -1,0 +1,2 @@
+module QuintosHelper
+end

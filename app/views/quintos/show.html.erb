@@ -1,0 +1,853 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Anio:</strong>
+  <%= @quinto.anio %>
+</p>
+
+
+<p>
+  <strong>Mes:</strong>
+  <%= @quinto.mes %>
+</p>
+
+
+<p>
+  <strong>Employee:</strong>
+  <%= @quinto.employee.full_name %>
+</p>
+
+<table width="600">
+
+<th>
+  Remuneracion
+  
+</th>
+<th>
+  
+</th>
+<TH>
+  
+</TH>
+
+<th>
+  Importe 
+</th>
+
+<tr>
+  <td>
+  <strong>Remuneracion mensual actual:</strong>
+  </td>
+  
+  <td>
+  
+ <td>
+   
+ </td>
+  </td>
+  <td>
+  <%= @quinto.rem_actual %>
+  </td>
+</tr>
+</Table>
+
+<table width="600">
+<th>
+  Remuneración Mes
+  
+</th>
+<th>
+  
+</th>
+<th>
+  
+</th>
+
+<th>
+  Importe 
+</th>
+  
+<tr>
+  <td>
+  <strong>Remuneracion mes:</strong>
+  </td>
+  
+  <td>
+    <td>
+      
+    </td>
+  
+  </td>
+  <td>
+  <%= @quinto.rem_mes %>
+  </td>
+</tr>
+
+
+<tr>
+  <td>
+  <strong>Asignacion:</strong>
+  </td>
+  
+  <td>
+    
+  
+  </td>
+  <td>
+    
+  </td>
+  <td>
+  <%= @quinto.asignacion %>
+  </td>
+</tr>
+<tr>
+  <td>
+  <strong> Horas Extras </strong>
+  </td>
+  <td>
+    
+  </td>
+  <td>
+    
+  </td>
+  <td>
+  <%= @quinto.hextras %>
+  </td>
+</tr>
+<tr>
+  <td>
+  <strong> Otros </strong>
+  </td>
+  
+  <td>
+  
+  </td>
+  <td>
+    
+  </td>
+  <td>
+  <%= @quinto.otros1 %>
+  </td>
+</tr>
+
+<tr>
+  <td>
+  <strong>Remuneracion Proyectada </strong>
+  </td>
+  <td>
+    
+  </td>
+  <td>
+  <%= @quinto.mes_proy %>
+  </td>
+  <td>
+  <%= @quinto.rem_proyectada %>
+  </td>
+  
+</tr>
+
+<tr>
+  <td>
+  <strong>Gratificacion Julio </strong>
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+  
+  <td>
+  <%= @quinto.gratijulio %>
+  </td>
+  
+</tr>
+
+<tr>
+  <td>
+  <strong>Gratificacion Diciembre</strong>
+  </td>
+  <td>
+
+  </td>
+  <td>
+  </td>
+  
+  <td>
+  <%= @quinto.gratidic %>
+  </td>
+  
+</tr>
+
+<tr>
+  <td>
+  <strong> Bonificacion Extra </strong>
+  </td>
+  <td>
+  
+  </td>
+  <td>
+  </td>
+  
+  <td>
+  <%= @quinto.bonextra %>
+  </td>
+</tr>
+
+<tr>
+  <td>
+  <strong>Otros </strong>
+  </td>
+  
+  <td>
+  </td>
+  
+  <td>
+  </td>
+  
+  <td>
+  <%= @quinto.otros2 %>
+  </td>
+  
+</tr>
+  
+
+</table>
+
+
+<table width="600">
+
+<th>
+  Remuneracion Percibidas
+</th>  
+<th>
+  
+</th>
+<th>
+  
+</th>
+<th>
+  
+</th>
+
+<tr>
+  <td>
+  <strong>Enero </strong>
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+  <td align ="right">
+  <%= @quinto.ene1 %>
+  </td>
+</tr>
+
+
+<tr>
+  <td>
+  <strong>Febrero </strong>
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+  <td align ="right">
+  <%= @quinto.feb1 %>
+  </td>
+</tr>
+<tr>
+  <td>
+  <strong>Marzo </strong>
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+  <td align ="right">
+  <%= @quinto.mar1 %>
+  </td>
+</tr>
+
+<tr>
+  <td>
+  <strong> Abril </strong>
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+  <td align ="right">
+  <%= @quinto.abr1 %>
+  </td>
+</tr>
+
+<tr>
+  <td>
+  <strong>Mayo</strong>
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+  <td align ="right">
+  <%= @quinto.may1 %>
+  </td>
+</tr>
+
+<tr>
+  <td>
+  <strong> Junio </strong>
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+  <td align ="right">
+  <%= @quinto.jun1 %>
+  </td>
+</tr>
+
+<tr>
+  <td>
+  <strong>Julio </strong>
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+  <td align ="right">
+  <%= @quinto.jul1 %>
+  </td>
+</tr>
+<tr>
+  <td>
+  <strong>Gratificacion Julio </strong>
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+  <td align ="right">
+  <%= @quinto.gratijulio1 %>
+  </td>
+</tr>
+
+<tr>
+  <td>
+  <strong> Agosto </strong>
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+  <td align ="right">
+  <%= @quinto.ago1 %>
+  </td>
+  
+  <tr>
+  <td>
+  <strong>Setiembre </strong>
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+  <td align ="right">
+  <%= @quinto.set1 %>
+  </td>
+</tr>
+
+<tr>
+  <td>
+  <strong>Octubre </strong>
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+  <td align ="right">
+  <%= @quinto.oct1 %>
+  </td>
+</tr>
+
+<tr>
+  <td>
+  <strong>Noviembre </strong>
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+  <td align ="right">
+  <%= @quinto.nov1 %>
+  </td>
+</tr>
+
+
+</table>
+
+<table width="600">
+  <tr>
+    
+  </tr>
+<tr>
+  <td>
+  <strong>Renta Bruta </strong>
+  </td>
+  <td>
+    
+  </td>
+  <td>
+    
+  </td>
+  <td align="right">
+  <%= @quinto.renta_bruta %>
+  </td>
+</tr>  
+<tr>
+  <td>
+  <strong>Deducción de 7 UIT  (UIT = S/. <%= @fives.valor_uit%> ) </strong>
+  </td>
+  <td>
+    
+  </td>
+  <td>
+    
+  </td>
+  <td align="right">
+  <%= @quinto.deduccion7 %>
+  </td>
+  
+  
+</tr>  
+<tr>
+  <td>
+  <strong> Total Renta Quinta Categoría </strong>
+  </td>
+  <td>
+    
+  </td>
+  <td>
+    
+  </td>
+  <td align="right">
+  <%= money(@quinto.total_renta)  %>
+  </td>
+  
+  
+</tr>  
+  
+</table>
+
+<table width="600">
+  <th>
+    
+  </th>
+  
+  <th>
+    
+  </th>
+  <th>
+    
+  </th>
+  <th>
+    
+  </th>
+  
+<tr>
+  <td>
+   Hasta 5UIT o S/. <%= @fives.hasta_5 %>
+  </td>
+  
+  <td>
+  <%= @fives.tasa1 %> %     
+  </td>
+  
+  <td align="right">
+  <%= @quinto.renta_impo1 %>  
+  </td>
+  <td align="right">
+  
+  <%= @quinto.renta_anual_1 %>  
+  </td>
+  
+  
+</tr>  
+
+<tr>
+  <td>
+   Por el exceso de 5UIT o S/. <%= @fives.hasta_5 %> y hasta 20 UIT <%= @fives.y_hasta_20 %>
+  </td>
+  
+  <td>
+  <%= @fives.tasa2 %> %     
+  </td>
+  
+  <td align="right">
+  <%= @quinto.renta_impo2 %>  
+  </td>
+  <td align="right">
+  
+  <%= @quinto.renta_anual_2 %>  
+  </td>
+  
+</tr>  
+  
+<tr>
+  <td>
+   Por el exceso de 20UIT o S/. <%= @fives.y_hasta_20 %> y hasta 35 UIT <%= @fives.exceso_20 %>
+  </td>
+  
+  <td>
+  <%= @fives.tasa4 %> %     
+  </td>
+  
+  <td align="right">
+  <%= @quinto.renta_impo3 %>  
+  </td>
+  <td align="right">
+  
+  <%= @quinto.renta_anual_3 %>  
+  </td>
+  
+</tr>  
+  
+  <tr>
+  <td>
+   Por el exceso de 35UIT o S/. <%= @fives.y_hasta_35 %> y hasta 45 UIT <%= @fives.exceso_35 %>
+  </td>
+  
+  <td>
+  <%= @fives.tasa6 %> %     
+  </td>
+  
+  <td align="right">
+  <%= @quinto.renta_impo4 %>    
+  </td>
+  <td align="right">
+  
+  <%= @quinto.renta_anual_4 %>
+  </td>
+  
+</tr>  
+
+<tr>
+  <td>
+   Por el exceso de 45UIT o S/. <%= @fives.exceso_45 %> 
+  </td>
+  
+  <td>
+  <%= @fives.tasa8 %> %     
+  </td>
+  
+  <td align="right">
+  <%= @quinto.renta_impo5 %>  
+  </td>
+  
+  <td align="right">
+  <%= @quinto.renta_anual_5 %>  
+  </td>
+  
+</tr>  
+  
+
+  <tr>
+  <td>
+   <strong>Impuesto a la Renta Anual </strong>
+  </td>
+  
+  <td>
+  
+  </td>
+  
+  <td align="right">
+  
+  </td>
+  <td align="right">
+  <%= @quinto.total_renta_impo %>  
+  </td>
+  
+</tr>  
+
+</table>
+
+<table width="600">
+  
+  <th>
+    Retenciones Anteriores 
+  </th>
+  
+  <th>
+    
+  </th>
+  <th>
+    
+  </th>
+  <th>
+    Importe S/.
+  </th>
+  
+   <tr>
+  <td>
+   Enero 
+  </td>
+  
+  <td>
+  
+  </td>
+  
+  <td align="right">
+  
+  </td>
+  <td align="right">
+  <%= @quinto.ene2 %>  
+  </td>
+  
+  </tr>
+  
+   <tr>
+  <td>
+   Febrero
+  </td>
+  
+  <td>
+  
+  </td>
+  
+  <td align="right">
+  
+  </td>
+  <td align="right">
+  <%= @quinto.feb2 %>  
+  </td>
+  
+</tr>  
+
+ <tr>
+  <td>
+   Marzo
+  </td>
+  
+  <td>
+  
+  </td>
+  
+  <td align="right">
+  
+  </td>
+  <td align="right">
+  <%= @quinto.mar2 %>  
+  </td>
+  
+</tr>  
+
+
+ <tr>
+  <td>
+   Abril
+  </td>
+  
+  <td>
+  
+  </td>
+  
+  <td align="right">
+  
+  </td>
+  <td align="right">
+  <%= @quinto.abr2 %>  
+  </td>
+  
+</tr>  
+
+ <tr>
+  <td>
+   Mayo
+  </td>
+  
+  <td>
+  
+  </td>
+  
+  <td align="right">
+  
+  </td>
+  <td align="right">
+  <%= @quinto.may2%>  
+  </td>
+  
+</tr>  
+
+
+ <tr>
+  <td>
+   Junio
+  </td>
+  
+  <td>
+  
+  </td>
+  
+  <td align="right">
+  
+  </td>
+  <td align="right">
+  <%= @quinto.jun2 %>  
+  </td>
+  
+</tr>  
+
+ <tr>
+  <td>
+   Julio 
+  </td>
+  
+  <td>
+  
+  </td>
+  
+  <td align="right">
+  
+  </td>
+  <td align="right">
+  <%= @quinto.jul2 %>  
+  </td>
+  
+</tr>  
+ <tr>
+  <td>
+   Agosto
+  </td>
+  
+  <td>
+  
+  </td>
+  
+  <td align="right">
+  
+  </td>
+  <td align="right">
+  <%= @quinto.ago2 %>  
+  </td>
+  
+</tr>  
+
+
+ <tr>
+  <td>
+   Setiembre
+  </td>
+  
+  <td>
+  
+  </td>
+  
+  <td align="right">
+  
+  </td>
+  <td align="right">
+  <%= @quinto.set2 %>  
+  </td>
+  
+</tr>  
+   <tr>
+  <td>
+   Octubre 
+  </td>
+  
+  <td>
+  
+  </td>
+  
+  <td align="right">
+  
+  </td>
+  <td align="right">
+  <%= @quinto.oct2 %>  
+  </td>
+  
+</tr>  
+
+ <tr>
+  <td>
+   Noviembre
+  </td>
+  
+  <td>
+  
+  </td>
+  
+  <td align="right">
+  
+  </td>
+  <td align="right">
+  <%= @quinto.nov2 %>  
+  </td>
+  
+</tr>  
+
+
+ <tr>
+  <td>
+   <strong>Renta Imponible por Retener</strong>
+  </td>
+  
+  <td>
+  
+  </td>
+  
+  <td align="right">
+  
+  </td>
+  <td align="right">
+  <%= money(@quinto.renta_impo_ret) %>
+  </td>
+  
+</tr>    
+
+
+ <tr>
+  <td>
+   <strong>Meses Pendientes por Retener</strong>
+  </td>
+  
+  <td>
+  
+  </td>
+  
+  <td align="right">
+  
+  </td>
+  <td align="right">
+  <%= money(@quinto.mes_pendiente) %>
+  </td>
+  
+</tr>    
+
+
+
+ <tr>
+  <td>
+   <strong>Retención Mensual</strong>
+  </td>
+  
+  <td>
+  
+  </td>
+  
+  <td align="right">
+  
+  </td>
+  <td align="right">
+  <%= money(@quinto.retencion_mensual) %>
+  </td>
+  
+</tr>    
+
+
+</table>
+
+
+
+
+<%= link_to 'Editar', edit_quinto_path(@quinto) %> 
+<%= link_to 'Regresar', quintos_path %>

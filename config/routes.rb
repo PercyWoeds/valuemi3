@@ -1,6 +1,7 @@
   Mnygo::Application.routes.draw do
 
 
+  resources :quintos
   resources :fiveparameters
   resources :tms
   resources :payrollbonis
