@@ -39,6 +39,7 @@
 <%= link_to 'Actualizar.', "/payrolls/do_update/#{@payroll.id}" %> 
 <%= link_to 'Resumen - Pdf', "/payrolls/do_pdf2/#{@payroll.id}" %>
 <%= link_to 'Boletas - Pdf', "/payrolls/do_pdf/#{@payroll.id}" %>
+
 <%= link_to 'Editar', edit_payroll_path(@payroll) %> 
 <%= link_to 'Regresar', payrolls_path %>
 
@@ -46,6 +47,7 @@
 <%= submit_tag "Editar solo marcados" %>
 
 
+  
 </div>
 
 <h3>

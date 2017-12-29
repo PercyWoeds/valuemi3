@@ -119,225 +119,186 @@ class PayrollsController < ApplicationController
 
        for  bp in @payroll_details
        
-       cell_1 = pdf.make_cell(:content => " NOMBRE : "<< bp.employee.full_name)
-       cell_2 = pdf.make_cell(:content => "SUELDO: " << bp.remuneracion.to_s)
+       cell_1 =  bp.employee.full_name
+       $lcCodigo = bp.employee.idnumber
+       $lcTrabajador =  bp.employee.full_name
+       $lcCategoria = "EMPLEADO"
+       $lcArea = bp.employee.division.name 
+       $lcCargo = bp.employee.ocupacion.name 
+       $lcCCosto= "SERVICIOS"
+       $lcDni =  bp.employee.idnumber.to_s 
+       $lcFecNac = bp.employee.fecha_nacimiento.strftime("%d/%m/%Y")
+       $lcSitEspecial ="NINGUNO"
        
-       cell_3 = pdf.make_cell(:content => "CODIGO: " << bp.employee_id.to_s)
-       cell_4 = pdf.make_cell(:content => "AGENCIA: " << bp.employee.location.name)
-       cell_5 = pdf.make_cell(:content => "DIAS LAB.: " << bp.totaldia.to_s)
-       cell_6 = pdf.make_cell(:content => "DIAS FALTA :"<< bp.falta.to_s)
+       if bp.employee.onp == "1" 
+          $lcAfp = "ONP"
+       else
+          if bp.employee.afp == nil
+            $lcAfp = ""
+          else 
+            $lcAfp = bp.employee.afp.name 
+          end 
+       end 
        
-       cell_7 = pdf.make_cell(:content => "DNI: " << bp.employee.idnumber.to_s)
-       cell_8 = pdf.make_cell(:content => "SECCION: " << bp.employee.division.name)
-       cell_9 = pdf.make_cell(:content => "REG. LAB.: " << bp.employee_id.to_s)
-       cell_10 = pdf.make_cell(:content => "D.N.LAB. :")
-       cell_11 = pdf.make_cell(:content => "SUBS. :")
-       
-       cell_12 = pdf.make_cell(:content => "F.INGRESO: " << bp.employee.fecha_ingreso.strftime("%d/%m/%Y"))
-       cell_13 = pdf.make_cell(:content => "OCUPACION: " << bp.employee.ocupacion.name)
-       cell_14 = pdf.make_cell(:content => "TRABAJADOR DE.: " )
-       cell_15 = pdf.make_cell(:content => "HS.EXTRA. :"<< bp.hextra.to_s)
-       cell_16 = pdf.make_cell(:content => "HS.EXTRA. :" )
-       if bp.employee.fecha_cese != nil
-       cell_16 = pdf.make_cell(:content => "F.CESE: " << bp.employee.fecha_cese.strftime("%d/%m/%Y"))
-        else
-          cell_16 = pdf.make_cell(:content => "F.CESE: " )
+       if bp.employee.fecha_ingreso != nil
+          $FecIngreso = bp.employee.fecha_ingreso.strftime("%d/%m/%Y")
+       else
+          $FecIngreso = ""    
         end
-       #cell_17 = pdf.make_cell(:content => "TIPO DE TRAB.: " << bp.employee.categorium.descrip)
-       cell_17=""
-       cell_18 = pdf.make_cell(:content => "DIAS.VACAC.: " << bp.vaca.to_s)
+       if bp.employee.fecha_cese != nil
+          $FecCese = bp.employee.fecha_cese.strftime("%d/%m/%Y")
+        else
+          $FecCese = ""    
+        end
+       $lcDias = bp.dias
+       $lcSubs = bp.subsidio 
+       $lcFalta = bp.falta 
+       $lcVaca = bp.vaca 
+       $lcRemMensual = bp.employee.sueldo.to_s 
        
-       cell_19 = pdf.make_cell(:content => "DESCANSO MEDICO : " << bp.desmed.to_s)
-       cell_20 = pdf.make_cell(:content => "SUBSIDIO : " << bp.subsidio.to_s)
-       cell_21 = pdf.make_cell(:content => "FALTAS : "<< bp.falta.to_s)
-      
        
        
-      dell_1 =pdf.make_cell(:content => "DIAS/HRS.")
-      dell_2 =pdf.make_cell(:content => "") 
-      dell_3 =pdf.make_cell(:content => "HABERES")
+      dell_1 =pdf.make_cell(:content => "")
+      dell_2 =pdf.make_cell(:content => "INGRESO ") 
+      dell_3 =pdf.make_cell(:content => "")
       dell_4 =pdf.make_cell(:content => "") 
-      dell_5 =pdf.make_cell(:content => "DESCUENTO")
+      dell_5 =pdf.make_cell(:content => "DESCUENTOS")
       dell_6 =pdf.make_cell(:content => "")
-      dell_7 =pdf.make_cell(:content => "APORTACIONES")
+      dell_7 =pdf.make_cell(:content => "APORTACIONES EMPLEADOR")
       
       #DETALLE BOLETAS
       # fila 1
       
-      dell_8 =pdf.make_cell(:content => bp.dias.to_s)
-      dell_9 =pdf.make_cell(:content => "SUELDO BASICO  ") 
-      dell_10 =pdf.make_cell(:content => bp.basico.to_s)
+      
+      
+      $lcSueldoBasico = bp.basico.to_s
       
       if bp.employee.onp == "1"
-        dell_11 =pdf.make_cell(:content => "ONP") 
-        dell_12 =pdf.make_cell(:content => bp.calc5.to_s)
+        
+        $lcOnp = bp.calc5.to_s
       else
-        dell_11 =pdf.make_cell(:content => "AFP LEY 10%") 
-        dell_12 =pdf.make_cell(:content => bp.aporte.to_s)
+        
+        $lcAporteAfp   = bp.aporte.to_s
+        $lcSeguroAfp   = bp.seguro.to_s
+        $lcComisionAfp = bp.comision.to_s
       end 
         
-        dell_13 =pdf.make_cell(:content => "ESSALUD")
-        dell_14 =pdf.make_cell(:content => bp.total3.to_s)
+        $lcEssalud  = bp.total3.to_s
         
       #fila 2
-      dell_15 =pdf.make_cell(:content => "")
-      if bp.calc1 > 0 
-      dell_16 =pdf.make_cell(:content => "ASIG.FAMILIAR") 
-      dell_17 =pdf.make_cell(:content => bp.calc1.to_s)
-      else 
-      dell_16 =pdf.make_cell(:content => "") 
-      dell_17 =pdf.make_cell(:content => "")
-        
-      end 
-      if bp.employee.onp == "1"
-        dell_18 =pdf.make_cell(:content => "") 
-        dell_19 =pdf.make_cell(:content => "")
-      else
-        dell_18 =pdf.make_cell(:content => "AFP SEGURO ") 
-        dell_19 =pdf.make_cell(:content => bp.seguro.to_s)
-      end 
-
-        dell_20 =pdf.make_cell(:content => "")
-        dell_21 =pdf.make_cell(:content => "")
-      #fila 3  
       
-        dell_22 =pdf.make_cell(:content => "")
+      if bp.calc1 > 0 
+      
+      $lcAsignacionFamiliar = bp.calc1.to_s
+      else 
+      $lcAsignacionFamiliar = ""  
+      end 
+      
+      
         
         if bp.hextra0 > 0
-        dell_23 =pdf.make_cell(:content => "HORAS EXTRAS") 
-        dell_24 =pdf.make_cell(:content => bp.hextra0.to_s)
+        
+         $lcHorasExtras = bp.hextra0.to_s
         else
-        dell_23 =pdf.make_cell(:content => "") 
-        dell_24 =pdf.make_cell(:content => "")
-          
+         $lcHorasExtras = ""    
         end 
             
-      
-      if bp.employee.onp == "1"
-        dell_25 =pdf.make_cell(:content => "") 
-        dell_26 =pdf.make_cell(:content => "")
-      else
-        dell_25 =pdf.make_cell(:content => "AFP COMISION.") 
-        dell_26 =pdf.make_cell(:content => bp.comision.to_s)
-      end 
-          
-          
-        dell_27 =pdf.make_cell(:content => "")
-        dell_28 =pdf.make_cell(:content => "")
-      
       #fila 4
-      
-        dell_29 =pdf.make_cell(:content => "")
+     
+     
         
         if bp.vaca > 0
-          dell_30 =pdf.make_cell(:content => "VACACIONES:") 
-          dell_31 =pdf.make_cell(:content => bp.vacaciones.to_s)
+          
+          $lcVaca = bp.vacaciones.to_s
         else 
-          dell_30 =pdf.make_cell(:content => "") 
-          dell_31 = pdf.make_cell(:content => "") 
+          $lcVaca = "" 
         end 
-      
-        dell_32 =pdf.make_cell(:content => "5TA.CATEGORIA") 
-        dell_33 =pdf.make_cell(:content => bp.calc4.to_s)
-        
-        dell_34 =pdf.make_cell(:content => "")
-        dell_35 =pdf.make_cell(:content => "")
-      #fila 5
-      
-        dell_36 =pdf.make_cell(:content => "")
-        if bp.desmed > 0
-          dell_37 =pdf.make_cell(:content => "DES.MEDICO") 
-          dell_38 =pdf.make_cell(:content => bp.desmedico.to_s)
+         
+        if bp.calc4 > 0 
+          $lcQuinta =  bp.calc4.to_s
         else
-          dell_37 =pdf.make_cell(:content => "") 
-          dell_38 =pdf.make_cell(:content => "")
+          $lcQuinta = ""
         end 
-      
-        dell_39 =pdf.make_cell(:content => "FALTAS") 
-        dell_40 =pdf.make_cell(:content => bp.faltas.to_s)
         
-        dell_41 =pdf.make_cell(:content => "")
-        dell_42 =pdf.make_cell(:content => "")
-      
+        
+        if bp.desmed > 0
+          $lcDesMed = bp.desmedico.to_s
+        else
+          $lcDesMed = ""
+          
+        end 
+        if bp.faltas >0       
+           $lcFaltas = bp.faltas.to_s
+        else
+           $lcFaltas = 0
+        end 
+        
       #fila 6
       
-        dell_43 =pdf.make_cell(:content => "")
-        if bp.subsidio > 0
-          dell_44 =pdf.make_cell(:content => "SUBSIDIO:") 
-          dell_45 =pdf.make_cell(:content => bp.subsidio0.to_s) 
-        else
-          dell_44 =pdf.make_cell(:content => "") 
-          dell_45 =pdf.make_cell(:content => "")
-        end
-        dell_46 =pdf.make_cell(:content => "ADELANTO") 
-        dell_47 =pdf.make_cell(:content => bp.calc7.to_s)
         
-        dell_48 =pdf.make_cell(:content => "")
-        dell_49 =pdf.make_cell(:content => "")
+        if bp.subsidio > 0
+          $lcSubsidio = bp.subsidio0.to_s
+        else
+          $lcSubsidio = ""
+        end
+        
+        if bp.calc7 > 0
+          $lcAdelanto =  bp.calc7.to_s
+        else
+          $lcAdelanto = ""  
+        end 
+        
       #fila 7
       
         
-        dell_50 =pdf.make_cell(:content => "") 
-        dell_51 =pdf.make_cell(:content => "")
-        dell_52 =pdf.make_cell(:content => "")
+        if bp.otros > 0 
         
-        dell_53 =pdf.make_cell(:content => "OTROS")
-        dell_54 =pdf.make_cell(:content => bp.otros.to_s)
+          $lcOtros = bp.otros.to_s
+        else
+          $lcOtros = ""
+        end 
+          
         
-        dell_55 =pdf.make_cell(:content => "")
-        dell_56 =pdf.make_cell(:content => "")
-      #fila 8
-      
-        
-        dell_57 =pdf.make_cell(:content => "") 
-        dell_58 =pdf.make_cell(:content => "")
-        dell_59 =pdf.make_cell(:content => "") 
-        
-        dell_60 =pdf.make_cell(:content => "")
-        dell_61 =pdf.make_cell(:content => "")
-        
-        dell_62 =pdf.make_cell(:content => "")
-        dell_63 =pdf.make_cell(:content => "")
-      #fila 9
-      
-        
-        dell_64 =pdf.make_cell(:content => "") 
-        dell_65 =pdf.make_cell(:content => "")
-        dell_66 =pdf.make_cell(:content => "")
-        
-        dell_67 =pdf.make_cell(:content => "")
-        dell_68 =pdf.make_cell(:content => "")
-        
-        dell_69 =pdf.make_cell(:content => "")
-        dell_70 =pdf.make_cell(:content => "")
-      #fila 10
-      
-        
-        dell_71 =pdf.make_cell(:content => "") 
-        dell_72 =pdf.make_cell(:content => "")
-        dell_73 =pdf.make_cell(:content => "")
-        
-        dell_74 =pdf.make_cell(:content => "")
-        dell_75 =pdf.make_cell(:content => "")
-        
-        dell_76 =pdf.make_cell(:content => "")
-        dell_77 =pdf.make_cell(:content => "")
-      
-      
-       pdf.table([["TRANSPORTES PEREDA SRL ","JR VICTOR REINEL 185 LIMA ","", "BOLETA NRO."],
-       ["RUC: 20424092941", "", "D.S.001-98-TR", "PERIODO DE PAGO :"],
-       [cell_1, "", "",cell_2],
-       [cell_3,cell_4,cell_5,cell_6],
-       [cell_7,cell_8,cell_9,cell_10,cell_11],
-       [cell_12,cell_13,cell_14,cell_10,cell_15],
-       [cell_16,cell_17,"","",cell_18],
-       [cell_19,cell_20,cell_21,"",""]], {
+       
+      texto = "PLANILLA : " << @payroll.code
+       pdf.table([["TRANSPORTES PEREDA SRL ","","", "","DS.Nro.020 -2008"],
+       ["RUC: 20424092941", "BOLETAS  DE REMUNERACIONES ","",""," ",texto ]], {
           :position => :center,
           :cell_style => {:border_width => 0},
           :width => pdf.bounds.width
         })
         
+        ###
+      max_rows = [client_data_headers_1.length, invoice_headers_1.length,invoice_headers_2.length, 0].max
+      rows = []
+      (1..max_rows).each do |row|
+        rows_index = row - 1
+        rows[rows_index] = []
+        rows[rows_index] += (client_data_headers_1.length >= row ? client_data_headers_1[rows_index] : ['',''])
+        rows[rows_index] += (invoice_headers_1.length >= row ? invoice_headers_1[rows_index] : ['',''])
+        rows[rows_index] += (invoice_headers_2.length >= row ? invoice_headers_2[rows_index] : ['',''])
+      end
+
+      if rows.present?
+
+        pdf.table(rows, {
+          :position => :center,
+          :cell_style => {:border_width => 0},
+          :width => pdf.bounds.width,
+          
+        }) do
+          
+          columns([0,2,4]).font_style = :bold
+           rows(0..-1).each do |r|
+            r.height = 15
+          end
+          
+        end
         
+       
+        end
+        
+        ###
         pdf.stroke_horizontal_rule
         
         pdf.table(
@@ -350,21 +311,36 @@ class PayrollsController < ApplicationController
           :column_widths => {0 => 50}
         }  )
        pdf.stroke_horizontal_rule
-       pdf.table(
-      [
-       [dell_8 ,dell_9,dell_10,dell_11,dell_12,dell_13,dell_14],
-       [dell_15,dell_16,dell_17,dell_18,dell_19,dell_20,dell_21],
-       [dell_22,dell_23,dell_24,dell_25,dell_26,dell_27,dell_28],
-       [dell_29,dell_30,dell_31,dell_32,dell_33,dell_34,dell_35],
-       [dell_36,dell_37,dell_38,dell_39,dell_40,dell_41,dell_42],
-       [dell_43,dell_44,dell_45,dell_46,dell_47,dell_48,dell_49],
-       [dell_50,dell_51,dell_52,dell_53,dell_54,dell_55,dell_56],
-       [dell_57,dell_58,dell_59,dell_60,dell_61,dell_62,dell_63]],
-       {
+       
+      #DETALLE 
+       max_rows = [boleta_1.length, boleta_2.length,boleta_3.length, 0].max
+      rows = []
+      (1..max_rows).each do |row|
+        rows_index = row - 1
+        rows[rows_index] = []
+        rows[rows_index] += (boleta_1.length >= row ? boleta_1[rows_index] : ['',''])
+        rows[rows_index] += (boleta_2.length >= row ? boleta_2[rows_index] : ['',''])
+        rows[rows_index] += (boleta_3.length >= row ? boleta_3[rows_index] : ['',''])
+      end
+
+      if rows.present?
+
+        pdf.table(rows, {
           :position => :center,
-          :cell_style => {:border_width => 0},
-          :width => pdf.bounds.width
-        })
+          :cell_style => {:border_width => 1},
+          :width => pdf.bounds.width,
+          
+        }) do
+          
+           rows(0..-1).each do |r|
+            r.height = 15
+          end
+          
+        end
+        
+       
+        end
+      
         
       pdf.move_down 40
       pdf.stroke_horizontal_rule
@@ -407,20 +383,91 @@ class PayrollsController < ApplicationController
         pdf 
     end
       
+  def client_data_headers_1
+     lcdir1=""
+      client_headers  = [["Código  :", $lcCodigo]]
+      client_headers << ["Trabajador :", $lcTrabajador]
+      client_headers << ["Tipo/Categoria Trabajador :", $lcCategoria]
+      client_headers << ["Area :", $lcArea]     
+      client_headers << ["Centro de Costos :",$lcCCosto]     
+      client_headers << ["Cargo :", $lcCargo] 
+      client_headers << ["Tipo Documento :", $lcDni ] 
+      client_headers << ["Fecha Nacimiento :", $lcFecNac ] 
+      client_headers << ["Regimen Laboral  :", "PRIVADOR GENERAL D LEG N.728 " ] 
+      client_headers
+  end
 
+  def invoice_headers_1
+      invoice_headers  = [["Fecha Ingreso     : ",$FecIngreso ]]    
+      invoice_headers << ["Fecha Cese         : ",$FecCese ]
+      invoice_headers << ["Periodo Vacacional : ","-"]
+      invoice_headers << ["   Inicio Vac.:",""]
+      invoice_headers << ["   Fin Vac.   :",""]
+      invoice_headers << ["Rég.Pensionario    : ",$lcAfp]
+      invoice_headers << ["C.U.S.P.P.         : ",""]
+      invoice_headers << ["Autogenerado       : ",""]
+      invoice_headers << ["Sit.Especial       : ",$lcSitEspecial ]
+      invoice_headers
+  end
+  def invoice_headers_2
+      invoice_headers2  = [["Dias Lab.       : ",$lcDias ]]    
+      invoice_headers2 << ["Dias Subs.      : ",$lcSubs ]
+      invoice_headers2 << ["Dias No Lab.    : ",$lcFalta]
+      invoice_headers2 << ["Dias Vac.       : ",$lcVaca]
+      invoice_headers2 << ["N.Horas Ord.    : ",""]
+      invoice_headers2 << ["N.Hs.Ext.25%    : ",""]
+      invoice_headers2 << ["N.Hs.Ext.35%    : ",""]
+      invoice_headers2 << ["N.Hs.Ext.100%   : ",""]
+      invoice_headers2 << ["Rem.Mensual     : ",$lcRemMensual]
+      invoice_headers2
+  end
+  
+  def boleta_1
+      boleta_headers1  = [["Remuneración Basica  : ",$lcRemBasico ]]    
+      boleta_headers1 << ["Asignacion Familiar   : ",$lcAsignacion ]
+      boleta_headers1 << ["Vacaciones            : ","-"]
+      boleta_headers1 << ["Descanso Med..        :",""]
+      boleta_headers1 << ["Subsidio              :",""]
+      boleta_headers1 << ["Reintegro             : ",$lcAfp]
+      boleta_headers1 << [" ",""]
+      boleta_headers1 << [" ",""]
+      boleta_headers1 << [" ",$lcSitEspecial ]
+      boleta_headers1
+  end 
+  
+  def boleta_2
+      boleta_headers2 = [["AFP Aporte Obligatorio  : ",$lcRemBasico ]]    
+      boleta_headers2 << ["ONP                     : ",$lcAsignacion ]
+      boleta_headers2 << ["AFP Seguro de Vida      : ",$lcAsignacion ]
+      boleta_headers2 << ["AFP Comision sobre la RA: ","-"]
+      boleta_headers2 << ["Inasistencia        :",""]
+      boleta_headers2 << ["Quinta Categoria              :",""]
+      boleta_headers2 << ["Adelantos ",""]
+      boleta_headers2 << ["Otros  ",""]
+      boleta_headers2 << [" ","" ]
+      boleta_headers2
+  end 
+  def boleta_3
+      boleta_headers3 = [["Essalud  : ",$lcRemBasico ]]    
+      boleta_headers3 << ["","" ]
+      boleta_headers3 << ["","-"]
+      boleta_headers3 << ["",""]
+      boleta_headers3 << ["",""]
+      boleta_headers3 << ["",""]
+      boleta_headers3 << ["",""]
+      boleta_headers3 << [" ",""]
+      boleta_headers3 << [" ","" ]
+      boleta_headers3
+  end 
+  
+  
 
   def do_pdf
       @payroll_details= @payroll.payroll_details
       @user_id = @current_user.id 
   
     Prawn::Document.generate("app/pdf_output/#{@payroll.id}.pdf") do |pdf|
-      
-        pdf.font_families.update("Open Sans" => {
-          :normal => "app/assets/fonts/OpenSans-Regular.ttf",
-          :italic => "app/assets/fonts/OpenSans-Italic.ttf",
-        })
-
-        pdf.font "Open Sans",:size =>7
+        pdf.font "Helvetica" , :size => 6
         pdf = build_pdf_header(pdf)
         pdf = build_pdf_body(pdf)
         build_pdf_footer(pdf)
@@ -429,14 +476,18 @@ class PayrollsController < ApplicationController
 
     $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
     send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
+  # example 
   
+    
+    
     
   end 
   
 
 # reporte completo
   def build_pdf_header_rpt(pdf)
-      pdf.font "Helvetica" , :size => 8
+    
+     pdf.font "Helvetica" , :size => 8
      $lcCli  =  @company.name 
      $lcdir1 = @company.address1+@company.address2+@company.city+@company.state
 

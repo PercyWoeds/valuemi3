@@ -204,6 +204,10 @@ end
      collection { post :datos  }
   end 
   
+  resources :payrolls, only: [:index, :show] do
+    resource :download, only: [:show]
+  end
+  
   resources :employees do
     collection { post :import }
   end 

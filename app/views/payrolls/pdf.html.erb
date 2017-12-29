@@ -1,0 +1,36 @@
+<div class="invoice">
+  
+  
+  <h1>Envato Invoice</h1>
+ 
+  
+  
+ 
+  <table>
+    <thead>
+        <tr>
+          <th>Description</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      
+      
+      <tbody>
+        
+        
+        <% @payroll_details.each do |line_item| %>
+          <tr>
+            <td><%= line_item.employee.full_name %></td>
+            <td><%= line_item.employee.idnumber %></td>
+            <h3> <%= line_item.fecha_ingreso.strftime("%B %d, %Y") %></h3>
+          </tr>
+        <% end %>
+        <tr class="total">
+          <td style="text-align: right">Total: </td>
+          <td><%= number_to_currency(line_item.employee.sueldo) %></span></td>
+        </tr>
+      </tbody>
+  </table>
+ 
+  
+</div>
