@@ -105,4 +105,10 @@ pdf.text "Subtotal: #{money(@invoice.subtotal)}", :size => 13, :spacing => 4
 pdf.text "Igv: #{money(@invoice.tax)}", :size => 13, :spacing => 4
 pdf.text "Total: #{money(@invoice.total)}", :size => 13, :spacing => 4
 
+
+lcDato = @invoice.code >> "|" >> @ invoice.total.to_s
+pdf.print_qr_code(lcDato , extent: 144)
+
+
+
 pdf.draw_text "Company: #{@invoice.company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]

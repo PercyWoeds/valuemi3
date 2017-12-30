@@ -264,6 +264,12 @@
 
 <%= hr() %>
 
+
+<!--<img class="qr-code" src="<%= generate_qr("#{@invoice.code}") %>"/>-->
+
+<img src=<%="https://chart.googleapis.com/chart?chs=120x120&cht=qr&chl=#{@invoice.code}&choe=UTF-8"%> alt="QR code">
+
+<%= hr() %>
 <div class="button">
   <%= link_to 'Exportar to PDF', "/facturas/pdf/#{@invoice.id}.pdf" %>
   <%= link_to 'Send invoice via email', "/facturas/email/#{@invoice.id}" %>

@@ -557,4 +557,13 @@ module ApplicationHelper
     render :layout => false
   end
  
+ def generate_qr(text)
+  
+
+  barcode = Barby::QrCode.new(text, level: :q, size: 5)
+  base64_output = Base64.encode64(barcode.to_png({ xdim: 5 }))
+  "data:image/png;base64,#{base64_output}"
+end
+
+ 
 end
