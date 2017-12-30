@@ -4,14 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :checkUserInfo
   
-  require 'barby'
-  require 'barby/barcode'
-  require 'barby/barcode/qr_code'
-  require 'barby/outputter/png_outputter'
-  
-  require 'prawn/measurement_extensions'
-require 'prawn/qrcode'
-
+ 
  def respond_modal_with(*args, &blk)
     options = args.extract_options!
     options[:responder] = ModalResponder
