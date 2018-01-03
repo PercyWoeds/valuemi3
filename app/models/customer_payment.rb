@@ -112,6 +112,24 @@ self.per_page = 20
                      "AJUSTE",
                      "IMPORTE",  
                      "DIFER."]                      
+
+
+TABLE_HEADERS9 = ["ITEM",
+                     "CLIENTE",   
+                    "=<2016",                  
+                    "Jul=< 17",
+                    "Ago-2017",             
+                    "Set-2017",
+                    "Oct-2017",
+                    "Nov-2017",
+                    "Dic-2017",
+                    "Ene-2018",             
+                    "Feb-2018",
+                    "Mar-2018",
+                    "Abr-2018",
+                    "May-2018",              
+                    "Jun-2018",
+                    "TOTAL   "]
                    
                    
 def get_banco_moneda(banco)

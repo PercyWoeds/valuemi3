@@ -76,10 +76,7 @@ gem 'rails_autolink', '~> 1.1', '>= 1.1.6'
 gem 'pg', '~> 0.18.4'
 gem 'responders', '~> 2.0'
 
-gem 'barby',  '~> 0.6.2'
-gem 'rqrcode','~> 0.4.2'
-gem 'chunky_png', '~> 1.3', '>= 1.3.8'
- 
+
 gem  'prawn-qrcode'
  
 group :development, :test do

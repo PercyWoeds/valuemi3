@@ -1375,7 +1375,7 @@ class CustomerPaymentsController < ApplicationController
       total_general = 0
       total_factory = 0
 
-      CustomerPayment::TABLE_HEADERS6.each do |header|
+      CustomerPayment::TABLE_HEADERS9.each do |header|
         cell = pdf.make_cell(:content => header)
         cell.background_color = "FFFFCC"
         headers << cell
