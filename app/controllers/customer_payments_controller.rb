@@ -510,9 +510,7 @@ class CustomerPaymentsController < ApplicationController
     
     
     
-  end
 
-    
   end
 
   # GET /customerpayments/1
@@ -3053,4 +3051,4 @@ class CustomerPaymentsController < ApplicationController
 
   end
 
-
+end 
