@@ -50,7 +50,7 @@ class OutputsController < ApplicationController
       headers = []
       table_content = []
 
-      Output::TABLE_HEADERS2.each do |header|
+      Output::TABLE_HEADERS4.each do |header|
         cell = pdf.make_cell(:content => header)
         cell.background_color = "FFFFCC"
         headers << cell
@@ -79,6 +79,7 @@ class OutputsController < ApplicationController
             row << product.employee.full_name
             row << product.truck.placa            
             row << sprintf("%.2f",product.quantity.to_s)
+            row << sprintf("%.2f",product.get_stock(product.product_id).to_s)
             row << sprintf("%.2f",product.price.to_s)
             @total = product.quantity * product.price
             row << sprintf("%.2f",@total.to_s)
@@ -104,6 +105,7 @@ class OutputsController < ApplicationController
       
       row << "TOTALES => "
       row << sprintf("%.2f",@cantidad.to_s)
+      row << " "
       row << " "
       row << sprintf("%.2f",@totales.to_s)
 
@@ -222,7 +224,7 @@ class OutputsController < ApplicationController
 
   def build_pdf_body_rpt2(pdf)
     pdf.text "Categoria  : "+@namecategoria  , :size => 11
-    pdf.text "Listado de Salidas desde "+@fecha1.to_s+ " Hasta: "+@fecha2.to_s , :size => 8 
+    pdf.text "Listado de Salidas desde "+@fecha1.to_s+ " Hasta: "+@fecha2.to_s + "      Stock al : "+Date.today.strftime("%Y-%d-%m") , :size => 8 
      
     pdf.font "Helvetica" , :size => 6
 
@@ -258,6 +260,7 @@ class OutputsController < ApplicationController
             row << product.employee.full_name
             row << product.truck.placa            
             row << sprintf("%.2f",product.quantity.to_s)
+            row << sprintf("%.2f",product.get_stock(product.product_id).to_s)
             row << sprintf("%.2f",product.price.to_s)
 
             calculartotal =product.price*product.quantity
@@ -286,6 +289,7 @@ class OutputsController < ApplicationController
       row << "TOTALES => "
       row << sprintf("%.2f",@cantidad.to_s)
       row << " "
+      row << " "
       row << sprintf("%.2f",@totales.to_s)
 
 
@@ -298,12 +302,21 @@ class OutputsController < ApplicationController
                                           columns([0]).align=:center
                                           columns([1]).align=:left
                                           columns([2]).align=:left
+                                          columns([2]).width = 45
                                           columns([3]).align=:left
                                           columns([4]).align=:left
                                           columns([5]).align=:center  
-                                          columns([6]).align=:right
-                                          columns([7]).align=:right
+                                          columns([6]).align=:left
+                                          columns([7]).align=:left
                                           columns([8]).align=:right
+                                          columns([8]).width = 50
+                                          columns([9]).align=:right
+                                          columns([9]).width = 50
+                                          columns([10]).align=:right
+                                          columns([10]).width = 50
+                                          columns([11]).align=:right
+                                          columns([11]).width = 50
+                                          
                                         end                                          
       pdf.move_down 10      
       #totales 

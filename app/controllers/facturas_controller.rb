@@ -1,7 +1,8 @@
 include UsersHelper
 include CustomersHelper
 include ServicesHelper
-
+require "open-uri"
+ 
 class FacturasController < ApplicationController
 
   before_filter :authenticate_user!, :checkServices
@@ -545,7 +546,7 @@ class FacturasController < ApplicationController
     @facturas_all_txt = @company.get_facturas_year_month_day2(@f,@f2)
 
     if @facturas_all_txt
-      out_file = File.new("#{Dir.pwd}/app/txt_output/20424092941-RF-#{dd}#{mm}#{yy}-01.txt", "w")      
+        out_file = File.new("#{Dir.pwd}/app/txt_output/20424092941-RF-#{dd}#{mm}#{yy}-01.txt", "w")      
         for factura in @facturas_all_txt 
             parts = factura.code.split("-")
             @serie     =parts[0]
@@ -567,6 +568,48 @@ class FacturasController < ApplicationController
     @invoice = Factura.find(params[:id])
     @customer = @invoice.customer
     @tipodocumento = @invoice.document 
+    
+    $lcruc = "20424092941" 
+    
+    $lcTipoDocumento = @invoice.document.descripshort
+    parts1 = @invoice.code.split("-")
+    $lcSerie  = parts1[0]
+    $lcNumero = parts1[1]
+    
+    $lcIgv = @invoice.tax.to_s
+    $lcTotal = @invoice.total.to_s 
+    $lcFecha       = @invoice.fecha
+    $lcFecha1      = $lcFecha.to_s
+
+          parts = $lcFecha1.split("-")
+          $aa = parts[0]
+          $mm = parts[1]        
+          $dd = parts[2]       
+
+    
+    $lcFecha0 = $aa << "-" << $mm <<"-"<< $dd 
+    
+    if @invoice.document_id == 1 
+      $lcTipoDocCli =  "1"
+    else
+      $lcTipoDocCli =  "6"
+    end 
+      $lcNroDocCli  = @invoice.customer.ruc 
+
+      puts $lcruc 
+      puts $lcTipoDocumento
+      puts $lcSerie 
+      puts $lcNumero
+      puts $lcIgv
+      puts $lcTotal
+      puts $lcFecha0 
+      puts $lcTipoDocCli
+      puts $lcNroDocCli
+      
+      
+      $lcCodigoBarra = $lcruc << "|" << $lcTipoDocumento << "|" << $lcSerie << "|" << $lcNumero << "|" <<$lcIgv<< "|" << $lcTotal << "|" << $lcFecha0 << "|" << $lcTipoDocCli << "|" << $lcNroDocCli
+      
+
   end
 
   # GET /invoices/new

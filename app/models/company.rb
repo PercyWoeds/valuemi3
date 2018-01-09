@@ -2734,7 +2734,7 @@ end
 
 def get_salidas_day2(fecha1,fecha2,product)
   
-    @purchases = Output.find_by_sql(['Select outputs.*,output_details.quantity,
+    @purchases = Output.find_by_sql(['Select outputs.*,output_details.quantity,output_details.product_id,
     output_details.price,output_details.total,products.name as nameproducto,products.code as codigo,products.unidad
     from output_details   
 INNER JOIN outputs ON output_details.output_id = outputs.id

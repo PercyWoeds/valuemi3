@@ -35,16 +35,19 @@
 
   <div class="field">
     <%= f.label :products_category_id %><br />
-    <%= f.select :products_category_id,options_from_collection_for_select(@categories,'id','category') %>  
+    <%= f.collection_select :products_category_id, @categories, :id, :category, :prompt => true %>
+    
     <div class="small">
       You can group products together using categories.
     </div>
   </div>
 
   
+  
   <div class="field">
     <%= f.label :marca_id %><br />
-    <%= f.select :marca_id,options_from_collection_for_select(@marcas,'id','descrip') %>
+    <%= f.collection_select :marca_id, @marcas, :id, :descrip, :prompt => true %>
+    
     <div class="small">
       Marca del producto.
     </div>
@@ -54,7 +57,7 @@
       
   <div class="field">
     <%= f.label :modelo_id %><br />
-    <%= f.select :modelo_id,options_from_collection_for_select(@modelos,'id','descrip') %>
+    <%= f.collection_select :modelo_id, @modelos, :id, :descrip, :prompt => true %>
     <div class="small">
       Modelo del producto.
     </div>

@@ -40,6 +40,23 @@ class Output < ActiveRecord::Base
                      "EMPLEADO",
                      "PLACA",
                      "CANTIDAD",
+                     "STOCK
+                      ACTUAL",
+                     "COSTO ",
+                     "TOTAL"]
+
+   TABLE_HEADERS4 = ["ITEM",
+                      "DOCUMENTO",
+                     "FECHA",
+                     "CODE",
+                     "PRODUCTO",
+                     "UNIDAD",
+                     "UBICACION",
+                     "EMPLEADO",
+                     "PLACA",
+                     "CANTIDAD",
+                     "STOCK
+                      ACTUAL",
                      "COSTO ",
                      "TOTAL"]
 
@@ -286,7 +303,16 @@ end
       return "red"
     end
   end
-
+  
+  def get_stock(codigo)
+        
+       a = Stock.find_by(product_id: codigo)
+       if a 
+        return a.quantity
+       else
+        return 0 
+       end 
+  end 
 
 
 end

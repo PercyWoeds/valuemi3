@@ -106,9 +106,6 @@ pdf.text "Igv: #{money(@invoice.tax)}", :size => 13, :spacing => 4
 pdf.text "Total: #{money(@invoice.total)}", :size => 13, :spacing => 4
 
 
-lcDato = @invoice.code >> "|" >> @ invoice.total.to_s
-pdf.print_qr_code(lcDato , extent: 144)
-
-
+pdf.image open("https://chart.googleapis.com/chart?chs=120x120&cht=qr&chl=#{$lcCodigoBarra}&choe=UTF-8")
 
 pdf.draw_text "Company: #{@invoice.company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
