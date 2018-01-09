@@ -1628,9 +1628,6 @@ class CustomerPaymentsController < ApplicationController
           end   
          
           nroitem = nroitem + 1 
-
-
-
         end 
          @total_general = @total_general + customerpayment_rpt.balance.round(2)
        end   
@@ -1750,9 +1747,8 @@ class CustomerPaymentsController < ApplicationController
         pdf.text "" 
 
         pdf.bounding_box([0, 20], :width => 535, :height => 40) do
-        pdf.draw_text "Company: #{@company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
-
-      end
+           pdf.draw_text "Company: #{@company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
+        end
 
       pdf
       
@@ -1819,10 +1815,9 @@ class CustomerPaymentsController < ApplicationController
           :width => pdf.bounds.width
         }) do
           columns([0, 2]).font_style = :bold
+          end
 
-      end
-
-        pdf.move_down 10
+          pdf.move_down 10
 
       end
       
@@ -2181,7 +2176,7 @@ class CustomerPaymentsController < ApplicationController
         }) do
           columns([0, 2]).font_style = :bold
 
-      end
+         end
 
         pdf.move_down 10
 
@@ -2652,11 +2647,11 @@ class CustomerPaymentsController < ApplicationController
         }) do
           columns([0, 2]).font_style = :bold
 
-      end
+        end
 
         pdf.move_down 10
 
-      end
+      end 
       
       pdf 
   end   
@@ -2994,7 +2989,6 @@ class CustomerPaymentsController < ApplicationController
                                           columns([13]).align=:right 
                                           columns([14]).align=:right 
                                           columns([15]).align=:right
-                                          
                                         end                                          
       pdf.move_down 10      
       pdf
@@ -3017,8 +3011,7 @@ class CustomerPaymentsController < ApplicationController
 
         pdf.bounding_box([0, 20], :width => 535, :height => 40) do
         pdf.draw_text "Company: #{@company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
-
-      end
+          end
 
       pdf
       
@@ -3041,12 +3034,11 @@ class CustomerPaymentsController < ApplicationController
         pdf = build_pdf_body_rpt11(pdf)
         build_pdf_footer_rpt11(pdf)
         $lcFileName =  "app/pdf_output/rpt_customerpayment2.pdf"      
-        
     end     
 
     $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName                
     send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
-  end 
+    end 
   end
 
   
@@ -3061,5 +3053,4 @@ class CustomerPaymentsController < ApplicationController
 
   end
 
-end
 
