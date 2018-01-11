@@ -783,12 +783,12 @@ class FacturasController < ApplicationController
 
   end
   
-  def generate_xls 
+  def exportxls
   
     $lcxCliente ="1"
-    @company=Company.find(params[:company_id])      
-    @company.actualizar_fecha2
-    @company.actualizar_detraccion 
+    @company=Company.find(1)      
+ #  @company.actualizar_fecha2
+#    @company.actualizar_detraccion 
     
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]
@@ -797,10 +797,15 @@ class FacturasController < ApplicationController
     
     @facturas_rpt = @company.get_pendientes_cliente(@fecha1,@fecha2,@cliente)    
     
-     respond_to do |format|
-      format.xlsx  {render xlsx: 'download',filename: "payments.xlsx"}
-      
-     end 
+   
+    case params[:commit]
+      when "To PDF" then render  :controller => 'facturas', :action => 'rpt_ccobrar3_pdf', :id => 1
+      when "To Excel" then render xlsx: 'exportxls'
+      else render action: "index"
+    end
+    
+
+  
   end
   
   
@@ -1369,7 +1374,7 @@ class FacturasController < ApplicationController
   def rpt_ccobrar3_pdf
 
     $lcxCliente ="1"
-    @company=Company.find(params[:company_id])      
+    @company=Company.find(1)      
     @company.actualizar_fecha2
     @company.actualizar_detraccion 
     
@@ -1377,7 +1382,11 @@ class FacturasController < ApplicationController
     @fecha2 = params[:fecha2]
     @cliente = params[:customer_id]      
    
-    
+    puts "noww..    ."
+    puts @fecha1
+    puts @fecha2
+    puts @cliente 
+    puts "aaa"
     @facturas_rpt = @company.get_pendientes_cliente(@fecha1,@fecha2,@cliente)  
 
 

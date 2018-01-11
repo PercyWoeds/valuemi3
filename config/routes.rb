@@ -1,6 +1,5 @@
   Mnygo::Application.routes.draw do
 
-
   resources :quintos
   resources :fiveparameters
   resources :tms
@@ -73,8 +72,10 @@
   end 
   
   resources :facturas do
-    collection { post :generate_xls }
+    collection { post :exportxls }
+    collection { post :rpt_ccobrar3_pdf    }
   end 
+  
   resources :inventarios  do
     collection { post :import }
     collection { post :import2 }
