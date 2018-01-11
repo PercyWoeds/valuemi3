@@ -470,48 +470,11 @@ class CustomerPaymentsController < ApplicationController
     @pagetitle = "customerpayments"
     
     respond_to do |format|
-    format.html
-    format.xls  do 
-            excel_package = Axlsx::Package.new
-            style = excel_package.workbook.styles
-            highlight_cell = style.add_style bg_color: "45808c",fg_color: "FFFFFF",alignment: { horizontal: :center }, :b => true
-            heading_cell = style.add_style bg_color: cyan, fg_color: "45808c",:b => true
-            article_cell = style.add_style fg_color: "45808c",:b => true
-            @facturas_rpt.each do |user|
-                excel_package.workbook.add_worksheet(name: user.first_name.capitalize) do |worksheet|
-                    worksheet.add_row["","Articles",""]
-                    worksheet.add_row["Title","Body","Tags"] 
-                    user.articles.each do |article|
-                        tags = []
-                        article.tags.each do |tag|
-                            tags.push(tag.tag_name)
-                        end
-                        worksheet.add_row [article.title, article.body, tags.join(',')], :style=>article_cell
-                    end
-                end
-            end
-            excel_package.workbook.add_worksheet(name: "sample Pie chart") do |sheet|
-                sheet.add_row ["Total count",""], :style=> heading_color
-                sheet.add_row ["Total Articles", Article.count], :style=>highlight_cell
-                sheet.add_row ["Total Comments", Comment.count], :style=>highlight_cell
-                sheet.add_row ["Total Users", @users.count], :style=>highlight_cell
-                sheet.add_chart(Axlsx::Pie3DChart, :start_at => [0,5], :end_at => [10, 20], :title => "Pie Chart") do |chart|
-                  chart.add_series :data => sheet["B2:B4"], :labels => sheet["A2:A4"],  :colors => ['6cccc9', 'ed6f26', '8fdb9d']
-                end
-            end
-            path = "#{Rails.root}/public"
-            file = File.new("#{path}/sample.xlsx",  "w+")
-            excel_package.serialize file
-            send_file file
-            file.close()
-        end
-    end
-
-    
-    
-    
-
+     format.html
+     end
   end
+  
+ 
 
   # GET /customerpayments/1
   # GET /customerpayments/1.xml

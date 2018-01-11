@@ -70,7 +70,10 @@
 
   resources :gastos  do
     collection { post :import }
-    
+  end 
+  
+  resources :facturas do
+    collection { post :generate_xls }
   end 
   resources :inventarios  do
     collection { post :import }

@@ -76,7 +76,9 @@ gem 'rails_autolink', '~> 1.1', '>= 1.1.6'
 gem 'pg', '~> 0.18.4'
 gem 'responders', '~> 2.0'
 
-gem 'axlsx_rails'
+gem 'axlsx', '~> 2.0'
+gem "axlsx_rails"
+
 
 gem  'prawn-qrcode'
  

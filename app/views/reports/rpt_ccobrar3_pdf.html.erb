@@ -18,7 +18,8 @@ totals = []
  Reporte de cuentas cliente - <%= @month_name %> <%= @year %>
 </h3	>
 
-<form method="get" action="/facturas/rpt_ccobrar3_pdf/<%= @company.id %>">
+<%= form_tag url_for(:action => "/reports/rpt_ccobrar3_pdf/#{@company.id}",format: [:xls,:html],:controller => "reports" ) do %>
+
 
  	<div class="field">
     <input type="date" name="fecha1" value="2007-01-01" style = "width: 150px" >
@@ -31,15 +32,16 @@ totals = []
   <div class="field">
     <%= select_tag(:customer_id,options_from_collection_for_select(@customers,'id','name') ) %>
   </div>
-    
-  <input type="submit" value="Generar Reporte"  />
   
-</form>
+  
+  
+
+<% end %>
 
 <br />
 
 <div class="button">
-  <%= link_to "Excel", customer_payments_path(format: "xls") %>
-  
-  <%= link_to 'Back', "/companies/ccobrar/#{@company.id}" %>
+  <%= link_to "Excel", generate_xls_facturas_path , { class: "btn btn-primary btn-lg", style: "width: 100%;", format: 'xlsx'} %>
+
+  <%= link_to 'Regresar', "/companies/ccobrar/#{@company.id}" %>
 </div>
