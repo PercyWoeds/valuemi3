@@ -1,1 +1,35 @@
+$LOAD_PATH.unshift "#{File.dirname(__FILE__)}/../lib"
 
+require 'axlsx'
+
+p = Axlsx::Package.new
+wb = xlsx_package.workbook
+wb.styles do |s|
+    date = s.add_style(:format_code => "yyyy-mm-dd", :border => Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :right})
+    padded = s.add_style(:format_code => "00#", :border => Axlsx::STYLE_THIN_BORDER)
+    percent = s.add_style(:format_code => '#.##0.00', :border => Axlsx::STYLE_THIN_BORDER)
+    title = s.add_style(:bg_color => "FFFF0000", :fg_color=>"#FF000000",:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :center})
+    cadena =s.add_style(:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :right})
+
+    currency = wb.styles.add_style(:format_code=>"#,##0.#0;[Red]-#,##0.#0",
+                              :border=>Axlsx::STYLE_THIN_BORDER)
+    red_negative = wb.styles.add_style :num_fmt => 8
+    comma = wb.styles.add_style :num_fmt => 3
+    super_funk = wb.styles.add_style :format_code => '[Green]#'
+    
+    wb.add_worksheet(name: "Basic work sheet") do |sheet|
+    
+    sheet.add_row ["Td", "Nro.Documento", "Fec.Emision", "Fec.Vmto", "Cliente","Moneda", "Importe S/.","Importe US$","Detraccion","Estado"], :style => title 
+    
+   @facturas_rpt.each do |payment|
+   
+    sheet.add_row [payment.document.descripshort, payment.code,payment.fecha,payment.fecha2,payment.customer.name,payment.moneda.symbol,payment.get_importe_soles,payment.get_importe_dolares,payment.detraccion,payment.get_vencido], :style => [cadena,cadena,date,date,cadena,cadena,currency,currency,currency,cadena]
+   end
+   
+       sheet.add_row ["","","","","Totales => ","",@total_cliente_soles,@total_cliente_dolares,@total_cliente_detraccion,""], :style => [cadena,cadena,date,date,cadena,cadena,currency,currency,currency,cadena]
+   
+   
+end
+end 
+
+    

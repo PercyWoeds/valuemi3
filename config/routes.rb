@@ -72,8 +72,8 @@
   end 
   
   resources :facturas do
-    collection { post :exportxls }
-    collection { post :rpt_ccobrar3_pdf    }
+    collection { get :exportxls }
+    collection { get :rpt_ccobrar3_pdf    }
   end 
   
   resources :inventarios  do

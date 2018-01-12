@@ -1237,6 +1237,7 @@ def get_payments_detail_value(fecha1,fecha2,value = "total",moneda)
         else         
           ret += factura.balance.round(2)
         end
+        
       else
         if(value == "subtotal")
           ret -= factura.subtotal
@@ -1251,7 +1252,25 @@ def get_payments_detail_value(fecha1,fecha2,value = "total",moneda)
 
     return ret    
  end 
+ 
+def get_pendientes_day_customer_detraccion(fecha1,fecha2,cliente)
 
+    facturas = Factura.where(["balance>0  and  company_id = ? AND fecha >= ? and fecha<= ? AND customer_id = ?  ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", cliente ]).order(:customer_id,:moneda_id)
+
+    if facturas
+    ret=0  
+    
+    
+    for factura in facturas
+    
+          ret += factura.detraccion.round(2)
+      
+      end
+    end 
+
+    return ret    
+ end 
+ 
  def get_services_day2( fecha1,fecha2, value = "total")
   
     services = Serviceorder.where([" company_id = ?  AND fecha1 >= ? AND fecha1 <= ?", self.id,"#{fecha1} 00:00:00", "#{fecha2} 23:59:59"]).order("id desc")
