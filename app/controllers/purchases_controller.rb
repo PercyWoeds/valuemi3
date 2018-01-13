@@ -1941,7 +1941,11 @@ def build_pdf_header_rpt48(pdf)
             row << product.documento 
             row << product.date1.strftime("%d/%m/%Y")
             row << product.date2.strftime("%d/%m/%Y")
+            if product.supplier != nil
             row << product.supplier.name
+            else
+            row << "Proveedor no existe "
+            end 
             row << product.moneda.symbol  
 
             if product.moneda_id == 1 
