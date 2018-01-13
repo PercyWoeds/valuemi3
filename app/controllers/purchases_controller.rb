@@ -2181,7 +2181,7 @@ def build_pdf_header_rpt48(pdf)
 ## REPORTE DE ESTADISTICA DE VENTAS
 ##-------------------------------------------------------------------------------------
   
-  def build_pdf_header_rpt2(pdf)
+  def build_pdf_header_rpt5(pdf)
      pdf.font "Helvetica" , :size => 6
       
      $lcCli  = @company.name 
@@ -2216,7 +2216,7 @@ def build_pdf_header_rpt48(pdf)
       pdf 
   end   
 
-  def build_pdf_body_rpt2(pdf)
+  def build_pdf_body_rpt5(pdf)
     
     if @tipomoneda == "1"
        @tipomoneda_name ="DOLARES"  
@@ -2550,7 +2550,7 @@ def build_pdf_header_rpt48(pdf)
     end
 
 
-    def build_pdf_footer_rpt2(pdf)
+    def build_pdf_footer_rpt5(pdf)
 
         subtotals = []
         taxes = []
@@ -2587,9 +2587,9 @@ def build_pdf_header_rpt48(pdf)
 
         pdf.start_new_page(:size => "A4", :layout => :landscape)
         pdf.font "Helvetica"
-        pdf = build_pdf_header_rpt2(pdf)
-        pdf = build_pdf_body_rpt2(pdf)
-        build_pdf_footer_rpt2(pdf)
+        pdf = build_pdf_header_rpt5(pdf)
+        pdf = build_pdf_body_rpt5(pdf)
+        build_pdf_footer_rpt5(pdf)
         $lcFileName =  "app/pdf_output/rpt_customerpayment2.pdf"      
         
     end     

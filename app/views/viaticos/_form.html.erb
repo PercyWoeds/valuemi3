@@ -20,7 +20,7 @@
     <td>
    <div class="field">
       <%= f.label :caja_id, "CAJA : " %><br />
-      <%= f.select :caja_id,options_from_collection_for_select(@cajas,'id','descrip') %>
+      <%= f.select :caja_id,options_from_collection_for_select(@cajas,'id','descrip'), {class:"cat-code"} %>
     </div>  
      
     </td>
@@ -296,6 +296,22 @@
       updateItemTotalCP();
     });
     
+    
+     $(".cat-code").change(function(){          
+
+                    var getID = this.id;
+                    var value =  document.getElementById(this.id).value;
+
+                    console.log(getID + "with a value of" + value);
+
+                    if (value == 1 ){
+                          document.getElementById("viatico_inicial").value;
+                    }
+                    else if (value == 2){
+                          document.getElementById("viatico_inicial").value;
+                    }
+                });
+                
     <% if @viaticos_lines %>
       listItemsViatico();
     <% end %>
