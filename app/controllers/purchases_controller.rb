@@ -2776,7 +2776,7 @@ def newfactura2
     
 
       respond_to do |format|
-          @purchase.save 
+       if    @purchase.save  || @purchase[:documento] != ""
           # Create products for kit
           @purchase.add_products2(@detalleitems)
           # Check if we gotta process the invoice
@@ -2798,10 +2798,11 @@ def newfactura2
 
           format.html { redirect_to(@purchase, :notice => 'Factura fue grabada con exito .') }
           format.xml  { render :xml => @purchase, :status => :created, :location => @purchase}
-        #else
-        #  format.html { render :action => "new" }
-        #  format.xml  { render :xml => @purchase.errors, :status => :unprocessable_entity }
-        #end
+        else
+          format.html { render :action => "newfactura" }
+          format.xml  { render :xml => @purchase.errors, :status => :unprocessable_entity }
+        end 
+        
       end
   end 
 
