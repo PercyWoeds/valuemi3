@@ -1255,7 +1255,7 @@ def build_pdf_header_rpt48(pdf)
 # reporte de ingresos x producto 
 
 # reporte completo
-  def build_pdf_header_rpt5(pdf)
+  def build_pdf_header_rpt9(pdf)
       pdf.font "Helvetica" , :size => 8
      $lcCli  =  @company.name 
      $lcdir1 = @company.address1+@company.address2+@company.city+@company.state
@@ -1288,7 +1288,7 @@ def build_pdf_header_rpt48(pdf)
       pdf 
   end   
 
-  def build_pdf_body_rpt5(pdf)
+  def build_pdf_body_rpt9(pdf)
     
     pdf.text "Listado de Ingresos desde "+@fecha1.to_s+ " Hasta: "+@fecha2.to_s , :size => 8 
   
@@ -1404,7 +1404,7 @@ def build_pdf_header_rpt48(pdf)
 
     end
 
-    def build_pdf_footer_rpt5(pdf)
+    def build_pdf_footer_rpt9(pdf)
             data =[ ["Procesado por Almacen ","V.B.Almacen","V.B.Compras ","V.B. Gerente ."],
                [":",":",":",":"],
                [":",":",":",":"],
@@ -1440,9 +1440,9 @@ def build_pdf_header_rpt48(pdf)
 
     Prawn::Document.generate("app/pdf_output/rpt_factura.pdf") do |pdf|
         pdf.font "Helvetica"
-        pdf = build_pdf_header_rpt5(pdf)
-        pdf = build_pdf_body_rpt5(pdf)
-        build_pdf_footer_rpt5(pdf)
+        pdf = build_pdf_header_rpt9(pdf)
+        pdf = build_pdf_body_rpt9(pdf)
+        build_pdf_footer_rpt9(pdf)
         $lcFileName =  "app/pdf_output/rpt_factura.pdf"              
     end     
     $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              

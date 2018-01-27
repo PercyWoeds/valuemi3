@@ -4,13 +4,7 @@ class EmployeesController < ApplicationController
 
 
   def import
-    
-    
       Employee.import(params[:file])
-      
-      
-      
-      
        redirect_to root_url, notice: "Empleados importadas."
   end 
   
