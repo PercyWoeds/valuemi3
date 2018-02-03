@@ -170,7 +170,7 @@ class InvoicesController < ApplicationController
         @customer = Customer.find(params[:customer])
         
         if @customer
-          @invoices = Invoice.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :customer_id => @customer.id}, :order => "id DESC")
+           @invoices = Factura.where(:company_id => @company.id, :customer_id => @customer.id).order("id DESC").paginate(:page => params[:page])
         else
           flash[:error] = "We couldn't find any invoices for that customer."
           redirect_to "/companies/invoices/#{@company.id}"
