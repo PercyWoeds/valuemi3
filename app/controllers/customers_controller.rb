@@ -66,8 +66,9 @@ class CustomersController < ApplicationController
     @pagetitle = "New customer"
     
     @customer = Customer.new
-    @customer[:taxable] = true
+    
     @customer[:account] = "C_#{generate_guid()}"
+    @customer[:taxable] = "1"
     
     @company = Company.find(params[:company_id])
     @customer.company_id = @company.id
