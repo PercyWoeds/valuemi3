@@ -443,11 +443,7 @@ class ViaticosController < ApplicationController
     @documents = @company.get_documents()
     @cajas = Caja.all 
     @gastos = Gasto.order(:descrip)
-    
-    
     @viaticos_lines = @viatico.viaticos_lines
-    
-    
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
   end
