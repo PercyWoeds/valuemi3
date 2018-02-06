@@ -396,7 +396,8 @@ class ViaticosController < ApplicationController
     @action_txt = "Create"
     
     @viatico = Viatico.new
-    @viatico[:code] = "I_#{generate_guid()}"
+    @viatico[:code] = "#{generate_guid()}"
+    
     @viatico[:processed] = "0"
     
     @company = Company.find(params[:company_id])
@@ -411,6 +412,7 @@ class ViaticosController < ApplicationController
     @gastos = Gasto.order(:descrip)
     
     @ac_user = getUsername()
+    @viatico[:fecha1] = Date.today 
     @viatico[:user_id] = getUserId()
   end
 

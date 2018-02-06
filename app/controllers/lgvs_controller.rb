@@ -737,7 +737,7 @@ class LgvsController < ApplicationController
     @action_txt = "Create"
     
     @lgv = Lgv.new
-    @lgv[:code] = "I_#{generate_guid()}"
+    @lgv[:code] = "#{generate_guid_lgv()}"
     @lgv[:processed] = "0"
     $total_inicial = 0 
     @company = Company.find(params[:company_id])
@@ -751,6 +751,7 @@ class LgvsController < ApplicationController
     @gastos = Gasto.all 
     
     @ac_user = getUsername()
+    @lgv[:fecha] = Date.today
     @lgv[:user_id] = getUserId()
   end
 

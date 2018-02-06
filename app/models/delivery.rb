@@ -2,7 +2,7 @@ class Delivery < ActiveRecord::Base
 
 self.per_page = 20
 
-  validates_uniqueness_of :code
+  validates_uniqueness_of :code,:remision
   
   validates_presence_of :company_id, :customer_id, :code, :user_id,:fecha1,:fecha2,:remision 
   
@@ -336,9 +336,10 @@ where delivery_services.delivery_id = ?', self.id ])
   def get_remision
     if(self.remision == 1)
       return "GR"    
-    else 
+    elsif(self.remision==2) 
       return "GT"
-        
+    else 
+      return "NN"
     end
   end
   def get_processed_short

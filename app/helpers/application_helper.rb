@@ -137,11 +137,14 @@ module ApplicationHelper
   
   # Genera un GUID
   def generate_guid
-    require 'digest/md5'
-    
-    hash = Digest::MD5.hexdigest(Time.now.to_s)
-    hash = hash[0..5].upcase
-    return hash
+    @voidedlast = Voided.find(13)
+    correlative_number =@voidedlast.numero.to_s
+    return correlative_number.rjust(6, '0')
+  end
+  def generate_guid_lgv
+    @voidedlast = Voided.find(14)
+    correlative_number =@voidedlast.numero.to_s
+    return correlative_number.rjust(6, '0')
   end
 
   def generate_guid2
