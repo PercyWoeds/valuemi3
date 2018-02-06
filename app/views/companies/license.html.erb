@@ -163,6 +163,8 @@
   <p>
     Tipo de cambio sunat
   </p>
+  
+  <% if @current_user.level = "admin" %>
 <%= hr() %>
 
   <h3>
@@ -174,7 +176,7 @@
   <p>
      Agregar, editar or eliminar empleados
   </p>
-
+ <% end %>
 <%= hr() %>
   
 <%end%>
