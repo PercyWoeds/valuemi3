@@ -2,7 +2,7 @@ class Delivery < ActiveRecord::Base
 
 self.per_page = 20
 
-  validates_uniqueness_of :code,:remision
+  validates_uniqueness_of :code
   
   validates_presence_of :company_id, :customer_id, :code, :user_id,:fecha1,:fecha2,:remision 
   

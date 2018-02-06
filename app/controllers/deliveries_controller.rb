@@ -374,6 +374,10 @@ end
     @delivery = Delivery.new(delivery_params)
     
     @company = Company.find(params[:delivery][:company_id])
+    
+    @trucks1    = @company.get_trucks()
+    @trucks2    = @company.get_trucks()
+    
     @remision = Remision.all 
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
