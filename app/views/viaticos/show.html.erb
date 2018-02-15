@@ -53,6 +53,11 @@
 </p>
 
 
+<div class="button">
+<%= link_to 'Agregar Item', new_viatico_viatico_detail_path(@viatico) %>
+</div> 
+
+
 
 <%= hr() %>
 
@@ -99,8 +104,8 @@
   <tbody>
     
 <%= hr() %>
-
-    <% for product in @viatico.get_viaticos() %>
+    <%  @viatico_detail.each do |product| %>
+    
       <tr>
          <td class="small bordered_bottom bordered_right">
             <%= product.tranportorder.employee.full_name %>
@@ -142,7 +147,7 @@
           </td>
           
           <td class="small bordered_bottom bordered_right">
-              <%=product.tm << "-"<< product.descrip %>
+              <%=product.tm  %>
           </td>
            <td class="small bordered_bottom bordered_right">
               <%=product.detalle %>
@@ -150,7 +155,9 @@
           <td class="small bordered_bottom bordered_right">
             <%= money(product.importe) %>
           </td>
-
+          <td><%= link_to 'Editar',  edit_viatico_viatico_detail_path(viatico_id: @viatico.id,id: product.id ) %></td>          
+          <td><%= link_to 'Eliminar',[@viatico,product], method: :delete, data: { confirm: 'Esta seguro?' } %></td>
+          
       </tr>
     <% end %>
    <tr>

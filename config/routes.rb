@@ -1,5 +1,8 @@
   Mnygo::Application.routes.draw do
 
+  resources :destinos
+  resources :viatico_details
+  
   resources :quintos
   resources :fiveparameters
   resources :tms
@@ -67,6 +70,10 @@
   resources :gastos 
   resources :cierres 
 
+  resources :viaticos do
+    resources :viatico_details, except: [:index,:show], controller: "viaticos/viatico_details"
+  end   
+    
   resources :gastos  do
     collection { post :import }
   end 

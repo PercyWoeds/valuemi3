@@ -78,7 +78,7 @@
   
     <%= hr() %>
     <div class="actions">
-      <input type="hidden" name="items" id="items" value="<% if @viaticos_lines %><%= @viaticos_lines %><% end %>" />
+      
       <%= f.hidden_field :user_id, :id => "ac_user_id" %>
       
       <%= f.hidden_field :company_id %>
@@ -93,136 +93,6 @@
   <% end %>
 </div>
 
-
-<div class="mid_box">
-  <h5>
-    Agregar informacion comprobante 
-  </h5>
-  
-
-                                                  
-  <form method="get" action="/viaticos" onsubmit="addItemToViatico(); return false;">   
-  
-  <input type="hidden" name="ac_item_id" id="ac_item_id" value="" />  
-  <input type="hidden" name="ac_supplier_id" id="ac_supplier_id" value="" />
-  <input type="hidden" name="ac_employee_id" id="ac_employee_id" value="" />
-    <div class="field">
-    
-    <br />
-    
-      <strong>Orden de servicio :</strong><br />
-    <input type="text" name="ac_item" id="ac_item" value="" />
-    
-    
-    <div class="small">
-      Ingrese un termino de busqueda para encontrar un documento 
-    </div>
-      <br />
-
-      <div class="small">
-        <strong>Seleccionar proveedor:</strong>
-
-        <span id="selected supplier"><% if @ac_supplier %><%= @ac_supplier %><% else %><!-- i --><% end %></span>
-
-      </div>
-    <%= hr() %>
-    
-    <div >
-    <strong>Gasto  :</strong><br />
-    <br />
-      <%= select_tag :gasto_id, options_from_collection_for_select(@gastos,'id','descrip')%>  
-    <br />
-    </div >
-    <td>
-      
-      
-      <label for="ac_supplier" class="bold">Proveedor/Empleado*</label><br />
-          
-    <table> 
-    
-  <tr>
-    <td>        
-    <input type="radio" name="tipoproveedor" value="1" checked> Provedor<br>
-    </td>
-    
-    <td><input type="text" name="ac_supplier" id="ac_supplier" value="<% if @ac_supplier %><%= @ac_supplier %><% end %>" />
-      <div class="small">
-      <a href="#" onclick="createSupplier(); return false;">+ Crear nuevo proveedor</a>
-      </div>
-    </td> 
-    
-  </tr>
-  <tr>
-    <td><input type="radio" name="tipoproveedor" value="2"> Empleado<br></td>
-    <td>      <input type="text" name="ac_employee" id="ac_employee" value="<% if @ac_employee %><%= @ac_employee %><% end %>" />
-    </td> 
-
-  </tr>
-  
-      </table>      
-      
-      <div class="small">
-        Ingrese una termino de busqueda 
-      </div>
-    </td>
-    
-      <br />
-
-
-      <div class="small">
-        <strong>Seleccionar proveedor:</strong>
-
-        <span id="selected supplier"><% if @ac_supplier %><%= @ac_supplier %><% else %><!-- i --><% end %></span>
-
-      </div>
-      
-      <strong>Documento:</strong><br />
-    <br />
-      <%= select_tag :tm, options_from_collection_for_select(@documents,'id','description')%>  
-    <br /> 
-    
-    <strong>Comprobante :</strong><br />
-    <input type="text" name="ac_item_compro" id="ac_item_compro" value="" />
-    <div class="small">
-      Ingrese un termino de busqueda para encontrar un documento 
-    </div>
-    
-    
-      
-    <td>
-      <strong> Fecha :</strong><br />
-      <input type="date" name="ac_item_fecha" id="ac_item_fecha" min="2017-01-01"><br> 
-    </td>
-    
-    
-    
-    <br />  
-
-    <div >
-      <strong>Total:</strong><br />    
-    <input type="text" name="ac_item_total" id="ac_item_total" value="0.00" class="tf_short" />
-    </div>
-    <div class="small">
-     Total 
-    </div>
-
-    <br />
-    
-    <strong>Detalle :</strong><br />
-    <input type="text" name="ac_item_detalle" id="ac_item_detalle" value="" />
-    <div class="small">
-      Ingrese un termino de busqueda para encontrar un documento 
-    </div>
-    <br />  
-    
-    <input type="submit" value="Agregar item a Comprobante" />
-      
-  </form>
-  
-  <%= hr() %>
-  
-  
-</div>
 
 <%= br() %>
 <br />

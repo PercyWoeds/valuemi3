@@ -1,0 +1,234 @@
+
+<% if @viatico_detail.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@viatico_detail.errors.count, "error") %> prohibited this viatico from being saved:</h2>
+    <ul>
+    <% @viatico_detail.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= hr() %>
+
+<%= simple_form_for [@viatico, @viatico_detail] do |f| %>
+
+  <div class="form-inputs">
+    
+    <input type="hidden" name="ac_item_id" id="ac_item_id"  />  
+    <input type="hidden" name="ac_supplier_id" id="ac_supplier_id"  />
+    <input type="hidden" name="ac_employee_id" id="ac_employee_id"  />
+    <br />
+    
+    <strong>Orden de servicio :</strong><br />
+    <input type="text" name="ac_item" id="ac_item" value="<% if @ac_item %><%= @ac_item %><% end %>" />
+    
+    <div class="small">
+      Ingrese un termino de busqueda para encontrar un documento 
+    </div>
+    
+    <br />
+
+    <div class="small">
+      <strong>Seleccionar proveedor:</strong>
+      <span id="selected supplier"><% if @ac_supplier %><%= @ac_supplier %><% else %><!-- i --><% end %></span>
+
+    </div>
+    <%= hr() %>
+    
+    <div >
+    <strong>Gasto  :</strong>
+    <br />
+      <%= f.collection_select :destino_id, @destinos , :id, :name , :prompt => true %>
+    <br />
+      <%= f.collection_select :gasto_id, @gastos , :id, :descrip , :prompt => true %>
+    <br />
+    </div>
+    <td>
+    
+      <label for="ac_supplier" class="bold">Proveedor/Empleado*</label><br />
+          
+    <table> 
+    
+  <tr>
+    <td>        
+    <input type="radio" name="tipoproveedor" value="1" checked> Provedor<br>
+    </td>
+    
+    <td><input type="text" name="ac_supplier" id="ac_supplier" value="<% if @ac_supplier %><%= @ac_supplier %><% end %>" />
+        
+      <div class="small">
+      <a href="#" onclick="createSupplier(); return false;">+ Crear nuevo proveedor</a>
+      </div>
+    </td> 
+    
+  </tr>
+  <tr>
+    <td><input type="radio" name="tipoproveedor" value="2"> Empleado<br></td>
+    <td>
+      <%= f.collection_select :employee_id, @employees , :id, :full_name , :prompt => true %>
+    </td> 
+
+  </tr>
+  
+      </table>      
+      
+      <div class="small">
+        Ingrese una termino de busqueda 
+      </div>
+    </td>
+    
+      <br />
+
+
+      <div class="small">
+        <strong>Seleccionar proveedor:</strong>
+
+        <span id="selected supplier"><% if @ac_supplier %><%= @ac_supplier %><% else %><!-- i --><% end %></span>
+
+      </div>
+      
+      <strong>Documento:</strong><br />
+    <br />
+      
+      <%= f.collection_select :tm, @documents , :id, :description , :prompt => true %>
+    <br />
+    
+    <strong>Comprobante :</strong><br />
+    
+      <div class="field">
+          <%= f.text_field :numero ,:style=> 'width: 200px'%>
+      </div>
+    
+    <div class="small">
+      Ingrese un termino de busqueda para encontrar un documento 
+    </div>
+    
+    
+      
+    <td>
+      <div class="field">
+      <strong> Fecha :</strong><br />
+          <%= f.date_field :fecha ,:style=> 'width: 180px'%>
+      </div>
+      
+    </td>
+    
+    
+    
+    <br />  
+
+    <div >
+      <%= f.number_field :importe ,:style=> 'width: 120px' %>
+    </div>
+    <div class="small">
+     Total 
+    </div>
+
+    <br />
+    
+  <%= hr() %>
+
+
+  </div>
+
+  <div class="form-actions">
+    <%= f.hidden_field :tranportorder_id,:id => "ac_item_id" %>
+    <%= f.hidden_field :supplier_id, :id => "ac_supplier_id" %>
+    
+    <%= f.button :submit %>
+  </div>
+<% end %>
+
+
+<%= render 'layouts/autocomplete' %>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+  
+    $("#ac_supplier").autocomplete("/purchases/ac_suppliers/<%= @company.id %>", {
+      matchSubset: 1,
+      matchContains: 1,
+      selectFirst: false
+    });
+  
+    $("#ac_supplier").result(function(event, data, formatted) {
+      $("#ac_supplier_id").val(data[2]);
+      $("#selected_supplier").html(data[0]);
+    });
+    
+    $("#ac_employee").autocomplete("/viaticos/ac_employees/<%= @company.id %>", {
+      matchSubset: 1,
+      matchContains: 1,
+      selectFirst: false
+    });
+  
+    $("#ac_employee").result(function(event, data, formatted) {
+      $("#ac_employee_id").val(data[2]);
+      $("#selected_employee").html(data[0]);
+    });
+    
+    
+    
+    $("#ac_item").autocomplete("/viaticos/ac_osts/<%= @company.id %>", {
+      matchSubset: 1,
+      matchContains: 1,
+      selectFirst: false
+    });
+    
+    $("#ac_item").result(function(event, data, formatted) {
+      $("#ac_item_id").val(data[2]);
+      
+      updateItemTotalViaticos();
+    });
+    
+    $("#ac_customer").autocomplete("/viaticos/ac_customers/<%= @company.id %>", {
+      matchSubset: 1,
+      matchContains: 1,
+      selectFirst: false
+    });
+    
+    $("#ac_customer").result(function(event, data, formatted) {
+      $("#ac_customer_id").val(data[2]);
+      $("#selected_seller").html(data[0]);
+    });    
+    
+    
+    $("#ac_user").autocomplete("/viaticos/ac_user/<%= @company.id %>", {
+			matchSubset: 1,
+			matchContains: 1,
+      selectFirst: false
+    });
+    
+    $("#ac_user").result(function(event, data, formatted) {
+      $("#ac_user_id").val(data[2]);
+      $("#selected_seller").html(data[0]);
+    });    
+    
+    
+    $("#ac_item_total").bind("keyup", function() {
+      updateItemTotalCP();
+    });
+    
+    
+     $(".cat-code").change(function(){          
+
+                    var getID = this.id;
+                    var value =  document.getElementById(this.id).value;
+
+                    console.log(getID + "with a value of" + value);
+
+                    if (value == 1 ){
+                          document.getElementById("viatico_inicial").value;
+                    }
+                    else if (value == 2){
+                          document.getElementById("viatico_inicial").value;
+                    }
+                });
+                
+    <% if @viaticos_lines %>
+      listItemsViatico();
+    <% end %>
+  });
+</script>

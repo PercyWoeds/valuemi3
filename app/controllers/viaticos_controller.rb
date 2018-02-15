@@ -65,7 +65,8 @@ class ViaticosController < ApplicationController
               row << product.employee.full_name
             end 
             
-            lccompro = product.tm << " "<<  product.descrip 
+            lccompro =   product.descrip 
+            
             row << lccompro 
             
             if product.tm.to_i != 6
@@ -383,7 +384,18 @@ class ViaticosController < ApplicationController
   # GET /viaticos/1
   # GET /viaticos/1.xml
   def show
+    
+    
     @viatico = Viatico.find(params[:id])
+    
+    @viatico_detail = @viatico.viatico_details
+    
+    
+     respond_to do |format|
+      format.html # show.html.erb
+      format.xml  { render :xml => @viatico   }
+    end
+    
   end
 
   # GET /viaticos/new
@@ -421,7 +433,10 @@ class ViaticosController < ApplicationController
     @action_txt = "Create"
     
     @viatico = Viatico.new
-    
+    @cajas = Caja.all 
+    @company = Company.find(params[:company_id])
+    @locations = @company.get_locations()
+    @divisions = @company.get_divisions()
     
     @company = Company.find(params[:company_id])
 
@@ -453,6 +468,11 @@ class ViaticosController < ApplicationController
   def create
     @pagetitle = "Nuevo viatico"
     @action_txt = "Create"
+    @cajas = Caja.all      
+    @gastos = Gasto.order(:descrip)
+    @company= Company.find(1)
+    @locations = @company.get_locations()
+    @divisions = @company.get_divisions()
     
     items = params[:items].split(",")
     
@@ -460,25 +480,21 @@ class ViaticosController < ApplicationController
     
     @company = Company.find(params[:viatico][:company_id])
     
-    @locations = @company.get_locations()
-    @divisions = @company.get_divisions()
-    @documents = @company.get_documents()
-    @cajas = Caja.all      
-    @gastos = Gasto.all
+    
     
     begin
-      @viatico[:inicial] = @viatico.get_total_inicial(items)
+      @viatico[:inicial] = @viatico.get_total_inicial
     rescue
       @viatico[:inicial] = 0
     end 
     
     begin
-      @viatico[:total_ing] = @viatico.get_total_ing(items)
+      @viatico[:total_ing] = @viatico.get_total_ing
     rescue 
       @viatico[:total_ing] = 0
     end 
     begin 
-      @viatico[:total_egreso]=  @viatico.get_total_sal(items)
+      @viatico[:total_egreso]=  @viatico.get_total_sal
     rescue 
       @viatico[:total_egreso]= 0 
     end 
@@ -492,7 +508,6 @@ class ViaticosController < ApplicationController
     respond_to do |format|
       if @viatico.save
         # Create products for kit
-        @viatico.add_products(items)        
         # Check if we gotta process the viatico
         @viatico.process()
         
@@ -512,13 +527,10 @@ class ViaticosController < ApplicationController
     @pagetitle = "Edit viatico"
     @action_txt = "Update"
     
-    items = params[:items].split(",")
-    
     @viatico = Viatico.find(params[:id])
     @company = @viatico.company
     
-  
-   @company = Company.find(params[:viatico][:company_id])
+    @company = Company.find(params[:viatico][:company_id])
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
@@ -526,19 +538,11 @@ class ViaticosController < ApplicationController
     @cajas = Caja.all      
     @gastos = Gasto.order(:descrip)
     
-    begin
-      @viatico[:inicial] = @viatico.get_total_inicial(items)
-    rescue
-      @viatico[:inicial] = 0
-    end 
     
-    begin
-      @viatico[:total_ing] = @viatico.get_total_ing(items)
-    rescue 
-      @viatico[:total_ing] = 0
-    end 
-    begin 
-      @viatico[:total_egreso]=  @viatico.get_total_sal(items)
+    @viatico[:inicial] = @viatico.get_total_inicial 
+    @viatico[:total_ing] = @viatico.get_total_ing
+        begin 
+      @viatico[:total_egreso]=  @viatico.get_total_sal
     rescue 
       @viatico[:total_egreso]= 0 
     end 
@@ -551,8 +555,6 @@ class ViaticosController < ApplicationController
      respond_to do |format|
       if @viatico.update_attributes(viatico_params)
         # Create products for kit
-        @viatico.delete_products()
-        @viatico.add_products(items)
         
         # Check if we gotta process the viatico
         @viatico.process()

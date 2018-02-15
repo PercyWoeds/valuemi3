@@ -16,7 +16,8 @@ self.per_page = 20
   belongs_to :user
   
 
-  has_many   :viatico_details
+  has_many   :viatico_details , :dependent => :destroy
+  
   
    TABLE_HEADERS = ["ITEM",
                       "FECHA ",
@@ -100,86 +101,60 @@ self.per_page = 20
         Voided.where(:id=>'2').update_all(:numero =>lcnumero)        
   end
 
-def get_total_inicial(items)
-    subtotal = 0
+   def get_total_inicial
+  
+    subtotal = self.inicial
     
-    for item in items
-      if(item and item != "")
-        parts = item.split("|BRK|")
-        
-        id = parts[0]
-         quantity = parts[1]
-         tm  = parts[3]
-         inicial  = parts[4]
-         
-        
-            total =  inicial.to_f
-         
-        begin
-          subtotal = total
-        rescue
-        end
-      end
-    end
+    return subtotal 
     
-    return subtotal
   end
   
-  def get_total_ing(items)
+  def get_total_ing
     subtotal = 0
     
-    for item in items
-      if(item and item != "")
-        parts = item.split("|BRK|")
-        
-          
-        
-        id = parts[0]
-        quantity = parts[1]
-        tm  = parts[3].to_i
-        
-         if tm.to_i == 6
-          total = quantity.to_f
+    @viatico_details = ViaticoDetail.where(viatico_id: self.id)
+    
+    for item in  @viatico_details 
+    
+        if item.tm == "6"
+          total = item.importe
         else
           total = 0
         end
-        
-          
         
         begin
           subtotal += total
         rescue
         end
+        
       end
-    end
+  
     
     return subtotal
   end
   
-  def get_total_sal(items)
+  def get_total_sal
     subtotal = 0
+      
+    @viatico_details = ViaticoDetail.where(viatico_id: self.id)
     
-    for item in items
-      if(item and item != "")
-        parts = item.split("|BRK|")
-        
-        id = parts[0]
-        quantity = parts[1]
-         tm  = parts[3].to_i 
+  for item in  @viatico_details 
+  
+    
          
-         if tm.to_i == 6 
+        if item.tm == "6"
             total = 0
           else
-            total =  quantity.to_f
+            total = item.importe
           end 
         
         begin
           subtotal += total
         rescue
         end
+        
       end
-    end
-    
+  
     return subtotal
   end
   
