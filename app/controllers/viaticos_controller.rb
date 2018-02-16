@@ -474,7 +474,7 @@ class ViaticosController < ApplicationController
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
     
-    items = params[:items].split(",")
+    
     
     @viatico = Viatico.new(viatico_params)
     
