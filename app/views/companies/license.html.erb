@@ -179,6 +179,23 @@
  <% end %>
 <%= hr() %>
   
+
 <%end%>
  <%end%>
+ 
+   <% if @current_user.level = "admin" %>
+<%= hr() %>
+
+  <h3>
+        <div>
+          <%= image_tag("divisions_32.png", :class => "vmiddle") %>
+          <%= link_to "Caja Destino  ", destinos_path %>
+        </div>
+  </h3>
+  <p>
+     Agregar, editar or eliminar empleados
+  </p>
+ <% end %>
+
+ 
 </div>
