@@ -237,7 +237,7 @@ self.per_page = 20
     return "#{self.code} "
   end
   def get_viaticos
-      @viaticos = ViaticoDetail.where(:viatico_id=> self.id)
+      @viaticos = ViaticoDetail.where(:viatico_id=> self.id).order(:destino_id,:id)
   end
 
   def get_invoices

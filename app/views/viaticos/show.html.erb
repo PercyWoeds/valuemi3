@@ -65,7 +65,7 @@
   <thead>
     <tr>
       <th>
-        Cod.
+        Empleado
       </th>
       <th>
         Proveedor 
@@ -139,7 +139,9 @@
           </td>
           <td class="small bordered_bottom bordered_right">
              <%if product.gasto %>  
-              <%=product.fecha %>
+             
+             <%=product.fecha.strftime("%d/%m/%Y") %>
+             
                <%else%>
 
               <%end %>
@@ -147,7 +149,8 @@
           </td>
           
           <td class="small bordered_bottom bordered_right">
-              <%=product.tm  %>
+            
+              <%= product.document.descripshort << "-" << product.numero    %>
           </td>
            <td class="small bordered_bottom bordered_right">
               <%=product.detalle %>
