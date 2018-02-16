@@ -26,7 +26,7 @@ class Viaticos::ViaticoDetailsController < ApplicationController
   # GET /viatico_details/new
   def new
     @viatico_detail = ViaticoDetail.new
-    @gastos = Gasto.all
+    @gastos = Gasto.order(:codigo)
     @company = Company.find(1)
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
@@ -40,7 +40,7 @@ class Viaticos::ViaticoDetailsController < ApplicationController
 
   # GET /viatico_details/1/edit
   def edit
-     @gastos = Gasto.all
+    @gastos = Gasto.order(:codigo)
     @company = Company.find(1)
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
@@ -74,7 +74,7 @@ class Viaticos::ViaticoDetailsController < ApplicationController
   # POST /viatico_details.json
   def create
     
-    @gastos = Gasto.all
+    @gastos = Gasto.order(:codigo)
     @company = Company.find(1)
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
@@ -128,7 +128,7 @@ class Viaticos::ViaticoDetailsController < ApplicationController
   # PATCH/PUT /viatico_details/1
   # PATCH/PUT /viatico_details/1.json
   def update
-     @gastos = Gasto.all
+    @gastos = Gasto.order(:codigo)
     @company = Company.find(1)
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()

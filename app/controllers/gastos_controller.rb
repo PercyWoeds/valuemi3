@@ -9,7 +9,7 @@ class GastosController < ApplicationController
   # GET /gastos
   # GET /gastos.json
   def index
-    @gastos = Gasto.all
+    @gastos = Gasto.order(:codigo)
   end
 
   # GET /gastos/1
