@@ -56,12 +56,9 @@ class ViaticosController < ApplicationController
             row = []
             row << nroitem.to_s        
             row << product.fecha.strftime("%d/%m/%Y") 
-            row << product.tranportorder.employee.full_name   
-            if product.supplier 
-              row << product.supplier.name 
-            else
-              row << product.employee.full_name
-            end 
+            row << ""
+            row << product.employee.full_name
+
             lccompro =  product.document.descripshort << "-" << product.numero  
             row << lccompro 
             if product.tm.to_i != 6
@@ -193,12 +190,13 @@ class ViaticosController < ApplicationController
                                           columns([0]).align=:center
                                           columns([1]).align=:left 
                                           columns([2]).align=:left                                          
-                                          columns([3]).align=:right 
-                                          columns([4]).align=:right 
+                                          columns([3]).align=:left 
+                                          columns([4]).align=:left
                                           columns([5]).align=:right 
                                           columns([6]).align=:left  
-                                          columns([7]).align=:right 
-                                    
+                                          columns([7]).align=:left 
+                                          columns([8]).align=:left 
+                                          columns([9]).align=:left 
                                         end
 
       pdf.move_down 10  
