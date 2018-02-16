@@ -51,14 +51,53 @@ class ViaticosController < ApplicationController
       table_content << headers
 
       nroitem=1
-  
-       for  product in @viatico.get_viaticos() 
+      
+       for  product in @viatico.get_viaticos_cheque() 
             row = []
-            
             row << nroitem.to_s        
             row << product.fecha.strftime("%d/%m/%Y") 
             row << product.tranportorder.employee.full_name   
+            if product.supplier 
+              row << product.supplier.name 
+            else
+              row << product.employee.full_name
+            end 
+            lccompro =  product.document.descripshort << "-" << product.numero  
+            row << lccompro 
+            if product.tm.to_i != 6
+                row << " "
+                row << sprintf("%.2f",product.importe)
+            else
+              row << sprintf("%.2f",product.importe)
+            end
+            if product.tm.to_i != 6
+              lcDato = product.tranportorder.code << " - " << product.tranportorder.truck.placa<<" - " << product.tranportorder.get_placa(product.tranportorder.truck2_id)
+              row << lcDato 
+              row << product.detalle
+              row << product.tranportorder.get_punto(product.tranportorder.ubication_id)
+            else
+              row << " "
+              row << " "
+              row << " "
+              row << " "
+            end 
+            table_content << row
+            nroitem=nroitem + 1      
+       end 
+       
+            row = []
+            row << ""
+            row << ""
+            row << ""
+            row << "LIMA"
             
+            table_content << row
+    
+       for  product in @viatico.get_viaticos_lima() 
+            row = []
+            row << nroitem.to_s        
+            row << product.fecha.strftime("%d/%m/%Y") 
+            row << product.tranportorder.employee.full_name   
             if product.supplier 
               row << product.supplier.name 
             else
@@ -78,6 +117,56 @@ class ViaticosController < ApplicationController
               
             
             end
+            
+            if product.tm.to_i != 6
+              lcDato = product.tranportorder.code << " - " << product.tranportorder.truck.placa<<" - " << product.tranportorder.get_placa(product.tranportorder.truck2_id)
+              row << lcDato 
+              row << product.detalle
+              
+              row << product.tranportorder.get_punto(product.tranportorder.ubication_id)
+            else
+              row << " "
+              row << " "
+              row << " "
+              row << " "
+                
+            end 
+            table_content << row
+            nroitem=nroitem + 1      
+        end
+            row = []
+            row << ""
+            row << ""
+            row << ""
+            row << "PROVINCIA"
+            
+            table_content << row
+    
+       for  product in @viatico.get_viaticos_provincia() 
+            row = []
+            row << nroitem.to_s        
+            row << product.fecha.strftime("%d/%m/%Y") 
+            row << product.tranportorder.employee.full_name   
+            if product.supplier 
+              row << product.supplier.name 
+            else
+              row << product.employee.full_name
+            end 
+            
+            lccompro =  product.document.descripshort << "-" << product.numero  
+            
+            row << lccompro 
+            
+            if product.tm.to_i != 6
+                row << " "
+                row << sprintf("%.2f",product.importe)
+    
+            else
+              row << sprintf("%.2f",product.importe)
+              
+            
+            end
+            
             if product.tm.to_i != 6
               lcDato = product.tranportorder.code << " - " << product.tranportorder.truck.placa<<" - " << product.tranportorder.get_placa(product.tranportorder.truck2_id)
               row << lcDato 
