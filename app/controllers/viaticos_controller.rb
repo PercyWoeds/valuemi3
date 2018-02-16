@@ -65,7 +65,7 @@ class ViaticosController < ApplicationController
               row << product.employee.full_name
             end 
             
-            lccompro =   product.descrip 
+            lccompro =  product.document.descripshort << "-" << product.numero  
             
             row << lccompro 
             

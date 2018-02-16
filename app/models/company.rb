@@ -194,7 +194,7 @@ def get_facturas_day_value_cliente(fecha1,fecha2,cliente,value = "total",moneda)
   end
 
   def get_documents()
-     documents = Document.where(company_id: self.id)
+     documents = Document.where(company_id: self.id).order(:descripshort)
        
     return documents
   end

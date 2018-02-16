@@ -7,5 +7,6 @@ class ViaticoDetail < ActiveRecord::Base
     belongs_to :supplier 
     belongs_to :gasto 
     belongs_to :employee
+    belongs_to :document 
     
 end

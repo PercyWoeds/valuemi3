@@ -12,6 +12,7 @@ self.per_page = 20
   belongs_to :location
   belongs_to :division
   belongs_to :supplier
+  belongs_to :document 
   
   belongs_to :user
   

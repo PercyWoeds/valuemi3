@@ -95,7 +95,7 @@
       <strong>Documento:</strong><br />
     <br />
       
-      <%= f.collection_select :tm, @documents , :id, :description , :prompt => true %>
+      <%= f.collection_select :tm, @documents , :id, :fullname , :prompt => true %>
     <br />
     
     <strong>Comprobante :</strong><br />
@@ -128,6 +128,13 @@
     <div class="small">
      Total 
     </div>
+    <div >
+     <div class="field">
+      <%= f.label :detalle %><br />
+      <%= f.text_area :detalle %>
+    </div>  
+    </div>
+    
 
     <br />
     

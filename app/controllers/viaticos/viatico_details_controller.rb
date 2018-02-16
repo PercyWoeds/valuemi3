@@ -88,6 +88,7 @@ class Viaticos::ViaticoDetailsController < ApplicationController
     
     @viatico_detail.tranportorder_id = params[:ac_item_id]
     @viatico_detail.supplier_id = params[:ac_supplier_id]
+    @viatico_detail.document_id = params[:viatico_detail][:tm]
     
     if params[:ac_employee_id] == ""
         @viatico_detail.employee_id = 64
@@ -143,15 +144,9 @@ class Viaticos::ViaticoDetailsController < ApplicationController
     @viatico_detail.fecha = params[:viatico_detail][:fecha]
     @viatico_detail.employee_id = params[:ac_employee_id]
     
-    #@viatico_detail.employee_id = params[:ac_employee_id]
-    #@viatico_detail.supplier_id = params[:ac_supplier_id]
-    puts "update "
-    puts params[:ac_employee_id]
-    
-    
     respond_to do |format|
       if @viatico_detail.update_attributes(employee_id: params[:viatico_detail][:employee_id],fecha: params[:viatico_detail][:fecha],importe: params[:viatico_detail][:importe],
-        gasto_id: params[:viatico_detail][:gasto_id],destino_id: params[:viatico_detail][:destino_id],tm:params[:viatico_detail][:tm],numero: params[:viatico_detail][:numero])
+        gasto_id: params[:viatico_detail][:gasto_id],destino_id: params[:viatico_detail][:destino_id],tm:params[:viatico_detail][:tm],numero: params[:viatico_detail][:numero],detalle: params[:viatico_detail][:detalle],document_id: params[:viatico_detail][:tm])
          begin
       @viatico[:inicial] = @viatico.get_total_inicial
     rescue

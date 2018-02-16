@@ -1,6 +1,9 @@
 class Document < ActiveRecord::Base
 
-
+  before_save :set_fullname
+  before_update :set_fullname
+  
+  
   has_many :movement_details
 	has_many :locations
   has_many :suppliers
@@ -16,6 +19,12 @@ class Document < ActiveRecord::Base
   has_many :inventories
   has_many :company_users  
   has_many :customer_payments
-
-
+  has_many :viaticos 
+  has_many :viatico_details
+  
+  def set_fullname
+    self.fullname ="#{self.descripshort} #{self.description}".strip		
+    
+  end
+  
 end
