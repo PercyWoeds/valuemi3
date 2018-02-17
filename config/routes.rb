@@ -72,6 +72,7 @@
 
   resources :viaticos do
     resources :viatico_details, except: [:index,:show], controller: "viaticos/viatico_details"
+    collection { get :update_inicial}
   end   
     
   resources :gastos  do
@@ -429,6 +430,7 @@ end
   match 'viaticos/list_items/:company_id' => 'viaticos#list_items', via: [:get, :post]
   
   match 'viaticos/ac_documentos/:company_id' => 'viaticos#ac_documentos', via: [:get, :post]
+  match 'viaticos/ac_cajas/:company_id' => 'viaticos#ac_cajas', via: [:get, :post]
   match 'viaticos/ac_osts/:company_id' => 'viaticos#ac_osts', via: [:get, :post]
   match 'viaticos/ac_employees/:company_id' => 'viaticos#ac_employees', via: [:get, :post]
   match 'viaticos/ac_user/:company_id' => 'viaticos#ac_user', via: [:get, :post]

@@ -36,9 +36,12 @@ class ViaticosController < ApplicationController
   def build_pdf_body(pdf)
   
     pdf.text " ", :size => 13, :spacing => 4
-    pdf.font "Helvetica" , :size => 6
+    pdf.font "Helvetica" , :size => 8
+    pdf.text "FECHA :" << @viatico.fecha1.strftime("%d/%m/%Y")  <<    "           CAJA :" << @viatico.caja.descrip  ,:style => :bold;  
+   
+    
     pdf.text "SALDO INICIAL :" << sprintf("%.2f",@viatico.inicial) ,:style => :bold;
-          
+    pdf.font "Helvetica" , :size => 6      
       headers = []
       table_content = []
 
@@ -384,6 +387,13 @@ class ViaticosController < ApplicationController
   
     render :layout => false
   end
+  
+  def ac_cajas
+    @cajas = Caja.where(["descrip iLIKE ? ",  "%" + params[:q] + "%"])
+  
+    render :layout => false
+  end
+  
   # Autocomplete for employees
   def ac_employees
     @employees= Employee.where(["active= '1' and company_id = ? AND full_name ilike ? or idnumber LIKE ? ", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])
@@ -513,6 +523,8 @@ class ViaticosController < ApplicationController
     @ac_user = getUsername()
     @viatico[:fecha1] = Date.today 
     @viatico[:user_id] = getUserId()
+    
+    
   end
 
   def new2
@@ -532,14 +544,21 @@ class ViaticosController < ApplicationController
   end
 
 
+  def update_inicial
+    # updates songs based on artist selected
+     @viaticos = Viatico.find(params[:viatico_caja_id])
+     
+  end
+
   # GET /viaticos/1/edit
   def edit
     @pagetitle = "Edit viatico"
     @action_txt = "Update"
     
     @viatico = Viatico.find(params[:id])
-    @company = @viatico.company
     
+    @company = @viatico.company
+    @ac_caja = @viatico.caja.descrip  
     @ac_user = @viatico.user.username
     
     @documents = @company.get_documents()
@@ -561,12 +580,9 @@ class ViaticosController < ApplicationController
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
     
-    
-    
     @viatico = Viatico.new(viatico_params)
     
     @company = Company.find(params[:viatico][:company_id])
-    
     
     
     begin
@@ -585,18 +601,44 @@ class ViaticosController < ApplicationController
     rescue 
       @viatico[:total_egreso]= 0 
     end 
+    
     @viatico[:saldo] = @viatico[:inicial] +  @viatico[:total_ing] - @viatico[:total_egreso]
     
     if(params[:viatico][:user_id] and params[:viatico][:user_id] != "")
       curr_seller = User.find(params[:viatico][:user_id])
       @ac_user = curr_seller.username
     end
+    
 
     respond_to do |format|
       if @viatico.save
         # Create products for kit
         # Check if we gotta process the viatico
+ 
+        
+        if @viatico.caja_id == 1 
+          a = @cajas.find(1)
+          a.inicial =  @viatico[:saldo]
+          a.save
+        end 
+        if @viatico.caja_id == 2
+          a = @cajas.find(2)
+          a.inicial =  @viatico[:saldo]
+          a.save
+        end 
+        if @viatico.caja_id == 3 
+          a = @cajas.find(3)
+          a.inicial =  @viatico[:saldo]
+          a.save
+        end 
+        if @viatico.caja_id == 4 
+          a = @cajas.find(4)
+          a.inicial =  @viatico[:saldo]
+          a.save
+        end 
+        
         @viatico.process()
+        @viatico.correlativo
         
         format.html { redirect_to(@viatico, :notice => 'viatico was successfully created.') }
         format.xml  { render :xml => @viatico, :status => :created, :location => @viatico }
@@ -645,6 +687,30 @@ class ViaticosController < ApplicationController
         
         # Check if we gotta process the viatico
         @viatico.process()
+         
+        if @viatico.caja_id == 1 
+          a = @cajas.find(1)
+          a.inicial =  @viatico[:saldo]
+          a.save
+        end 
+        if @viatico.caja_id == 2
+          a = @cajas.find(2)
+          a.inicial =  @viatico[:saldo]
+          a.save
+        end 
+        if @viatico.caja_id == 3 
+          a = @cajas.find(3)
+          a.inicial =  @viatico[:saldo]
+          a.save
+        end 
+        if @viatico.caja_id == 4 
+          a = @cajas.find(4)
+          a.inicial =  @viatico[:saldo]
+          a.save
+        end 
+        
+        
+
         
         format.html { redirect_to(@viatico, :notice => 'viatico was successfully updated.') }
         format.xml  { head :ok }

@@ -117,6 +117,26 @@ class Viaticos::ViaticoDetailsController < ApplicationController
     end 
     @viatico[:saldo] = @viatico[:inicial] +  @viatico[:total_ing] - @viatico[:total_egreso]
          @viatico.save 
+          if @viatico.caja_id == 1 
+          a = @cajas.find(1)
+          a.inicial =  @viatico[:saldo]
+          a.save
+        end 
+        if @viatico.caja_id == 2
+          a = @cajas.find(2)
+          a.inicial =  @viatico[:saldo]
+          a.save
+        end 
+        if @viatico.caja_id == 3 
+          a = @cajas.find(3)
+          a.inicial =  @viatico[:saldo]
+          a.save
+        end 
+        if @viatico.caja_id == 4 
+          a = @cajas.find(4)
+          a.inicial =  @viatico[:saldo]
+          a.save
+        end 
          format.html { redirect_to @viatico, notice: 'Viatico Detalle fue creado satisfactoriamente.' }
          format.json { render :show, status: :created, location: @viatico }
        else
@@ -147,6 +167,59 @@ class Viaticos::ViaticoDetailsController < ApplicationController
     respond_to do |format|
       if @viatico_detail.update_attributes(employee_id: params[:viatico_detail][:employee_id],fecha: params[:viatico_detail][:fecha],importe: params[:viatico_detail][:importe],
         gasto_id: params[:viatico_detail][:gasto_id],destino_id: params[:viatico_detail][:destino_id],tm:params[:viatico_detail][:tm],numero: params[:viatico_detail][:numero],detalle: params[:viatico_detail][:detalle],document_id: params[:viatico_detail][:tm])
+   begin
+      @viatico[:inicial] = @viatico.get_total_inicial
+    rescue
+      @viatico[:inicial] = 0
+    end 
+    
+    begin
+      @viatico[:total_ing] = @viatico.get_total_ing
+    rescue 
+      @viatico[:total_ing] = 0
+    end 
+    begin 
+      @viatico[:total_egreso]=  @viatico.get_total_sal
+    rescue 
+      @viatico[:total_egreso]= 0 
+    end 
+    @viatico[:saldo] = @viatico[:inicial] +  @viatico[:total_ing] - @viatico[:total_egreso]
+        @viatico.save
+        
+         if @viatico.caja_id == 1 
+          a = @cajas.find(1)
+          a.inicial =  @viatico[:saldo]
+          a.save
+        end 
+        if @viatico.caja_id == 2
+          a = @cajas.find(2)
+          a.inicial =  @viatico[:saldo]
+          a.save
+        end 
+        if @viatico.caja_id == 3 
+          a = @cajas.find(3)
+          a.inicial =  @viatico[:saldo]
+          a.save
+        end 
+        if @viatico.caja_id == 4 
+          a = @cajas.find(4)
+          a.inicial =  @viatico[:saldo]
+          a.save
+        end 
+        format.html { redirect_to @viatico, notice: 'Viatico detail was successfully updated.' }
+        format.json { render :show, status: :ok, location: @viatico }
+      else
+        format.html { render :edit }
+        format.json { render json: @viatico.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # DELETE /viatico_details/1
+  # DELETE /viatico_details/1.json
+  def destroy
+      @cajas = Caja.all      
+      if @viatico_detail.destroy
          begin
       @viatico[:inicial] = @viatico.get_total_inicial
     rescue
@@ -165,20 +238,28 @@ class Viaticos::ViaticoDetailsController < ApplicationController
     end 
     @viatico[:saldo] = @viatico[:inicial] +  @viatico[:total_ing] - @viatico[:total_egreso]
         @viatico.save
-        format.html { redirect_to @viatico, notice: 'Viatico detail was successfully updated.' }
-        format.json { render :show, status: :ok, location: @viatico }
-      else
-        format.html { render :edit }
-        format.json { render json: @viatico.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /viatico_details/1
-  # DELETE /viatico_details/1.json
-  def destroy
-    
-      if @viatico_detail.destroy
+        
+         if @viatico.caja_id == 1 
+          a = @cajas.find(1)
+          a.inicial =  @viatico[:saldo]
+          a.save
+        end 
+        if @viatico.caja_id == 2
+          a = @cajas.find(2)
+          a.inicial =  @viatico[:saldo]
+          a.save
+        end 
+        if @viatico.caja_id == 3 
+          a = @cajas.find(3)
+          a.inicial =  @viatico[:saldo]
+          a.save
+        end 
+        if @viatico.caja_id == 4 
+          a = @cajas.find(4)
+          a.inicial =  @viatico[:saldo]
+          a.save
+        end 
+  
       flash[:notice]= "Item fue eliminado satisfactoriamente "
       redirect_to @viatico
     else

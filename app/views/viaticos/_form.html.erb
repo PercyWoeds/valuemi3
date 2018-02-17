@@ -18,11 +18,19 @@
        Informacion
     </h4>
     <td>
-   <div class="field">
-      <%= f.label :caja_id, "CAJA : " %><br />
-      <%= f.select :caja_id,options_from_collection_for_select(@cajas,'id','descrip'), {class:"cat-code"} %>
-    </div>  
-     
+    
+    <div class="field">
+      
+      <label for="ac_caja" class="bold">CAJA *</label><br />
+
+      <input type="text" name="ac_caja" id="ac_caja" value="<% if @ac_caja %><%= @ac_caja %><% end %>" />
+
+      <div class="small">
+        <p> Caja </p>      
+      </div>
+      <br />
+    </div>
+    
     </td>
     
         <td>
@@ -80,7 +88,7 @@
     <div class="actions">
       
       <%= f.hidden_field :user_id, :id => "ac_user_id" %>
-      
+      <%= f.hidden_field :caja_id, :id => "ac_caja_id" %>
       <%= f.hidden_field :company_id %>
 
       <%= f.submit %>
@@ -99,9 +107,24 @@
 
 <%= render 'layouts/autocomplete' %>
 
+
 <script type="text/javascript">
+
   $(document).ready(function() {
   
+    $("#ac_caja").autocomplete("/viaticos/ac_cajas/<%= @company.id %>", {
+      matchSubset: 1,
+      matchContains: 1,
+      selectFirst: false
+    });
+  
+    $("#ac_caja").result(function(event, data, formatted) {
+      $("#ac_caja_id").val(data[2]);
+      $("#selected_caja").html(data[0]);
+      $("#viatico_inicial").val(data[4]);
+    });
+    
+
     $("#ac_supplier").autocomplete("/purchases/ac_suppliers/<%= @company.id %>", {
       matchSubset: 1,
       matchContains: 1,
@@ -167,21 +190,7 @@
     });
     
     
-     $(".cat-code").change(function(){          
-
-                    var getID = this.id;
-                    var value =  document.getElementById(this.id).value;
-
-                    console.log(getID + "with a value of" + value);
-
-                    if (value == 1 ){
-                          document.getElementById("viatico_inicial").value;
-                    }
-                    else if (value == 2){
-                          document.getElementById("viatico_inicial").value;
-                    }
-                });
-                
+    
     <% if @viaticos_lines %>
       listItemsViatico();
     <% end %>

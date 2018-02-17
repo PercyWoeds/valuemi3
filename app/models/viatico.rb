@@ -15,7 +15,7 @@ self.per_page = 20
   belongs_to :document 
   
   belongs_to :user
-  
+  belongs_to :caja 
 
   has_many   :viatico_details , :dependent => :destroy
   
@@ -457,5 +457,11 @@ self.per_page = 20
     end
   end
  
+  def correlativo      
+        numero = Voided.find(13).numero.to_i + 1
+        lcnumero = numero.to_s
+        Voided.where(:id=>'13').update_all(:numero =>lcnumero)        
+  end
+
   
 end
