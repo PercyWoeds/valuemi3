@@ -3,37 +3,35 @@
 <div class="breadcrumbs">
   <%= link_to "My companies", "/companies" %> &raquo;
   <%= link_to @company.name, @company %> &raquo;
-  <%= link_to "Reports", "/companies/reports/#{@company.id}" %>
+  <%= link_to "Viaticos", "/companies/viaticos/#{@company.id}" %>
 </div>
 
 <h3>
   <%= image_tag("reports_48.png", :class => "vmiddle") %>
- Reporte de cuentas cliente - <%= @month_name %> <%= @year %>
+ Reporte de Viaticos 
 </h3	>
 
- <%= form_tag(exportxls_facturas_path, :method => "get") do %>
+  <%= form_tag url_for(:controller => 'viaticos', :action => 'reportxls'), :method => "get" do %>
+ 
  	<div class="field">
     <input type="date" name="fecha1" value="2018-02-17" style = "width: 150px" >
   </div>
 
 	<div class="field">
-		<input type="date" name="fecha2" value="2018-02-18" style = "width: 150px" >
+		<input type="date" name="fecha2" value="2018-02-21" style = "width: 150px" >
   </div>
 
   <div class="field">
-    <%= select_tag(:customer_id,options_from_collection_for_select(@customers,'id','name') ) %>
+    <%= select_tag(:caja_id,options_from_collection_for_select(@cajas,'id','descrip') ) %>
   </div>
  
   <%= submit_tag "To PDF", :name => "print" %>
   <%= submit_tag "To Excel", :name => "print" %>
      
 <% end %>
-  
-  
 
 <br />
 
 <div class="button">
-  
-  <%= link_to 'Regresar', "/companies/ccobrar/#{@company.id}" %>
+  <%= link_to 'Regresar', "/companies/viaticos/#{@company.id}" %>
 </div>

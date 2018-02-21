@@ -10,13 +10,12 @@ class FacturasController < ApplicationController
 
   def discontinue
     
-      @facturasselect = Factura.find(params[:products_ids])
+    @facturasselect = Factura.find(params[:products_ids])
 
     for item in @guiasselect
         begin
           a = item.id
           b = item.remite_id               
-
           new_invoice_guia = Deliverymine.new(:mine_id =>$minesid, :delivery_id =>item.id)          
           new_invoice_guia.save
            
@@ -787,8 +786,6 @@ class FacturasController < ApplicationController
   
     $lcxCliente ="1"
     @company=Company.find(1)      
- #  @company.actualizar_fecha2
-#    @company.actualizar_detraccion 
     
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]
@@ -799,21 +796,14 @@ class FacturasController < ApplicationController
     @total_cliente_dolares   = @company.get_pendientes_day_customer(@fecha1,@fecha2, @cliente, lcmonedadolares)
     @total_cliente_soles = @company.get_pendientes_day_customer(@fecha1,@fecha2, @cliente,lcmonedasoles)
     @total_cliente_detraccion = @company.get_pendientes_day_customer_detraccion(@fecha1,@fecha2, @cliente)
-   
     case params[:print]
       when "To PDF" then 
           redirect_to :action => "rpt_ccobrar3_pdf", :format => "pdf", :fecha1 => params[:fecha1], :fecha2 => params[:fecha2], :customer_id => params[:customer_id] 
       when "To Excel" then render xlsx: 'exportxls'
       else render action: "index"
     end
-    
-
-  
   end
   
-  
-
-
 # reporte completo
   def build_pdf_header_rpt(pdf)
       pdf.font "Helvetica" , :size => 8
@@ -1385,11 +1375,6 @@ class FacturasController < ApplicationController
     @fecha2 = params[:fecha2]
     @cliente = params[:customer_id]      
    
-    puts "noww..    ."
-    puts @fecha1
-    puts @fecha2
-    puts @cliente 
-    puts "aaa"
     @facturas_rpt = @company.get_pendientes_cliente(@fecha1,@fecha2,@cliente)  
 
 

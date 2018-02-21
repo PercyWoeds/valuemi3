@@ -2,7 +2,6 @@
 
   resources :destinos
   resources :viatico_details
-  
   resources :quintos
   resources :fiveparameters
   resources :tms
@@ -57,9 +56,7 @@
   resources :tanks
   resources :employees
   resources :pumps
-
   resources :supplier_payments
-
   resources :inventory_details
   resources :inventories
   resources :payment_methods
@@ -72,8 +69,14 @@
 
   resources :viaticos do
     resources :viatico_details, except: [:index,:show], controller: "viaticos/viatico_details"
+    
+  end 
+  resource :viaticos do 
+    collection { get :reportxls }
+    collection { get :rpt_viatico_pdf    }
     collection { get :update_inicial}
-  end   
+  end 
+  
     
   resources :gastos  do
     collection { post :import }
@@ -88,8 +91,6 @@
     collection { post :import }
     collection { post :import2 }
     collection { post :import3 }
-
-    
   end 
   resources :deliverymines   
 
@@ -106,8 +107,6 @@ resources :tranportorders do
   collection { get :search   }
   
 end 
-
-
 
   resources :serviceorders do 
 
@@ -210,8 +209,8 @@ end
     collection { post :import }
     collection { post :import2 }
     collection { post :csv }
-
   end 
+  
   resources :purchases do
      collection { post :datos  }
   end 
@@ -227,16 +226,16 @@ end
     collection { post :import }
   end 
   
-   resources :parameters do
+  resources :parameters do
       resources :parameter_details, except: [:index,:show], controller: "parameters/parameter_details"
   end 
   
- resources :loans do
+  resources :loans do
       resources :loan_details, except: [:index,:show], controller: "loans/loan_details"
   end 
  
  
-resources :payrolls do   
+  resources :payrolls do   
   
   resources :payroll_details, except: [:index,:show,:editmultiple], controller: "payrolls/payroll_details"do 
     collection do 
@@ -246,10 +245,6 @@ resources :payrolls do
  end
 end 
 
- 
- 
- 
-  
   #Manifiesto busqueda de guias
 
   get 'search_mines', to: 'deliveries#search'
@@ -339,9 +334,9 @@ end
   match 'companies/reports/rpt_calmacen10_pdf/:company_id' => 'reports#rpt_calmacen10_pdf', via: [:get, :post]
   match 'companies/reports/rpt_calmacen11_pdf/:company_id' => 'reports#rpt_calmacen11_pdf', via: [:get, :post]
   match 'companies/reports/rpt_calmacen12_pdf/:company_id' => 'reports#rpt_calmacen12_pdf', via: [:get, :post]
-  
   match 'companies/reports/rpt_cajust1_pdf/:company_id' => 'reports#rpt_cajust1_pdf', via: [:get, :post]
-
+  match 'companies/reports/rpt_viatico_pdf/:company_id' => 'reports#rpt_viatico_pdf', via: [:get, :post]
+  
   match 'companies/reports/rpt_facturas_all/:company_id' => 'reports#rpt_facturas_all', via: [:get, :post]
   match 'companies/reports/rpt_facturas_all2/:company_id' => 'reports#rpt_facturas_all2', via: [:get, :post]
 
@@ -352,6 +347,7 @@ end
   match 'companies/reports/:company_id' => 'reports#reports', via: [:get, :post]
 
   match 'companies/reports/rpt_caja2_pdf/:company_id' => 'reports#rpt_caja2_pdf', via: [:get, :post]
+  match 'companies/reports/rpt_viatico_pdf/:company_id' => 'reports#rpt_viatico_pdf', via: [:get, :post]  
   # Company users
 
   match 'company_users/ac_users' => 'company_users#ac_users', via: [:get, :post]
@@ -428,7 +424,6 @@ end
 # Viaticos
   
   match 'viaticos/list_items/:company_id' => 'viaticos#list_items', via: [:get, :post]
-  
   match 'viaticos/ac_documentos/:company_id' => 'viaticos#ac_documentos', via: [:get, :post]
   match 'viaticos/ac_cajas/:company_id' => 'viaticos#ac_cajas', via: [:get, :post]
   match 'viaticos/ac_osts/:company_id' => 'viaticos#ac_osts', via: [:get, :post]
@@ -437,12 +432,12 @@ end
   match 'viaticos/ac_customers/:company_id' => 'viaticos#ac_customers', via: [:get, :post]
   match 'viaticos/new/:company_id' => 'viaticos#new', via: [:get, :post]
   match 'viaticos/new2/:company_id' => 'viaticos#new2', via: [:get, :post]
-
   match 'viaticos/do_email/:id' => 'viaticos#do_email', via: [:get, :post]
   match 'viaticos/do_process/:id' => 'viaticos#do_process', via: [:get, :post]
   match 'viaticos/email/:id' => 'viaticos#email', via: [:get, :post]
   match 'viaticos/pdf/:id' => 'viaticos#pdf', via: [:get, :post]
   match 'companies/viaticos/:company_id' => 'viaticos#list_viaticos', via: [:get, :post]
+  match 'viaticos/rpt_viatico_pdf/:company_id' => 'viaticos#rpt_viatico_pdf', via: [:get, :post]
   resources :viaticos 
 # lgv
   
@@ -951,6 +946,7 @@ end
   # Sessions
   resources :sessions
   
+
   # Frontpage
  # match 'dashboard' => 'pages#dashboard', via: [:get,s :post]
 

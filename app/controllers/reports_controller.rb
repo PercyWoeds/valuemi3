@@ -1394,9 +1394,14 @@ class ReportsController < ApplicationController
 
   
   def rpt_caja2_pdf
-      @company = Company.find(params[:company_id])    
+    @company = Company.find(params[:company_id])    
     @pagetitle = "Listado de vueltos y fletes "    
+  end
+  def rpt_viatico_pdf
+    @company = Company.find(params[:company_id])    
+    @pagetitle = "Listado de viaticos "    
     
+    @cajas =Caja.order(:descrip)
     
   end
 

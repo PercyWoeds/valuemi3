@@ -2,20 +2,29 @@
 include UsersHelper
 include CustomersHelper
 include ProductsHelper
+require "open-uri"
 
 class ViaticosController < ApplicationController
-  before_filter :authenticate_user!, :checkProducts
-     
+before_filter :authenticate_user!
+
+  def reportxls
+    @company=Company.find(1)      
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]
+    puts "holasss...."
+      case params[:print]
+        when "To PDF" then 
+            redirect_to :action => "rpt_viatico_pdf", :format => "pdf", :fecha1 => params[:fecha1], :fecha2 => params[:fecha2] 
+        when "To Excel" then render xlsx: 'exportxls'
+        else render action: "index"
+      end
+  end
   
- 
+     
   def build_pdf_header(pdf)
-    
       pdf.image "#{Dir.pwd}/public/images/logo2.png", :width => 270        
       pdf.move_down 6        
       pdf.move_down 4
-      #pdf.text customer.street, :size => 10
-      #pdf.text customer.district, :size => 10
-      #pdf.text customer.city, :size => 10
       pdf.move_down 4
 
       pdf.bounding_box([325, 725], :width => 200, :height => 80) do
@@ -38,8 +47,6 @@ class ViaticosController < ApplicationController
     pdf.text " ", :size => 13, :spacing => 4
     pdf.font "Helvetica" , :size => 8
     pdf.text "FECHA :" << @viatico.fecha1.strftime("%d/%m/%Y")  <<    "           CAJA :" << @viatico.caja.descrip  ,:style => :bold;  
-   
-    
     pdf.text "SALDO INICIAL :" << sprintf("%.2f",@viatico.inicial) ,:style => :bold;
     pdf.font "Helvetica" , :size => 6      
       headers = []
@@ -495,10 +502,6 @@ class ViaticosController < ApplicationController
     
   end
 
-  # GET /viaticos/new
-  # GET /viaticos/new.xml
-  
-  
 
   def new
     @pagetitle = "New viatico"
@@ -549,7 +552,255 @@ class ViaticosController < ApplicationController
      @viaticos = Viatico.find(params[:viatico_caja_id])
      
   end
+  
+  def build_pdf_header_rpt2(pdf)
+      pdf.font "Helvetica" , :size => 8
+     $lcCli  =  @company.name 
+     $lcdir1 = @company.address1+@company.address2+@company.city+@company.state
 
+     $lcFecha1= Date.today.strftime("%d/%m/%Y").to_s
+     $lcHora  = Time.now.to_s
+
+    max_rows = [client_data_headers_rpt.length, invoice_headers_rpt.length, 0].max
+      rows = []
+      (1..max_rows).each do |row|
+        rows_index = row - 1
+        rows[rows_index] = []
+        rows[rows_index] += (client_data_headers_rpt.length >= row ? client_data_headers_rpt[rows_index] : ['',''])
+        rows[rows_index] += (invoice_headers_rpt.length >= row ? invoice_headers_rpt[rows_index] : ['',''])
+      end
+
+      if rows.present?
+
+        pdf.table(rows, {
+          :position => :center,
+          :cell_style => {:border_width => 0},
+          :width => pdf.bounds.width
+        }) do
+          columns([0, 2]).font_style = :bold
+
+        end
+
+        pdf.move_down 10
+
+      end
+
+      pdf 
+  end   
+
+  def build_pdf_body_rpt2(pdf)
+    
+    pdf.text "Listado de Viaticos : desde "+@fecha1.to_s+ " Hasta: "+@fecha2.to_s , :size => 8 
+    pdf.text ""
+    pdf.font "Helvetica" , :size => 7
+
+      headers = []
+      table_content = []
+
+      Viatico::TABLE_HEADERS3.each do |header|
+        cell = pdf.make_cell(:content => header)
+        cell.background_color = "FFFFCC"
+        headers << cell
+      end
+
+      table_content << headers
+
+      nroitem = 1
+      lcmonedasoles   = 2
+      lcmonedadolares = 1
+
+       for  product1 in @viaticos_rpt
+       
+          for  product in product1.get_viaticos_cheque() 
+            row = []
+            row << nroitem.to_s        
+            row << product.fecha.strftime("%d/%m/%Y") 
+            row << ""
+            row << product.employee.full_name
+
+            lccompro =  product.document.descripshort << "-" << product.numero  
+            row << lccompro 
+            if product.tm.to_i != 6
+                row << " "
+                row << sprintf("%.2f",product.importe)
+            else
+              row << sprintf("%.2f",product.importe)
+            end
+            if product.tm.to_i != 6
+              lcDato = product.tranportorder.code << " - " << product.tranportorder.truck.placa<<" - " << product.tranportorder.get_placa(product.tranportorder.truck2_id)
+              row << lcDato 
+              row << product.detalle
+              row << product.tranportorder.get_punto(product.tranportorder.ubication_id)
+            else
+              row << " "
+              row << " "
+              row << " "
+              row << " "
+            end 
+            table_content << row
+            nroitem=nroitem + 1      
+       end 
+       
+            row = []
+            row << ""
+            row << ""
+            row << ""
+            row << "LIMA"
+            
+            table_content << row
+    
+       for  product in product1.get_viaticos_lima() 
+            row = []
+            row << nroitem.to_s        
+            row << product.fecha.strftime("%d/%m/%Y") 
+            row << product.tranportorder.employee.full_name   
+            if product.supplier 
+              row << product.supplier.name 
+            else
+              row << product.employee.full_name
+            end 
+            
+            lccompro =  product.document.descripshort << "-" << product.numero  
+            
+            row << lccompro 
+            
+            if product.tm.to_i != 6
+                row << " "
+                row << sprintf("%.2f",product.importe)
+    
+            else
+              row << sprintf("%.2f",product.importe)
+              
+            
+            end
+            
+            if product.tm.to_i != 6
+              lcDato = product.tranportorder.code << " - " << product.tranportorder.truck.placa<<" - " << product.tranportorder.get_placa(product.tranportorder.truck2_id)
+              row << lcDato 
+              row << product.detalle
+              
+              row << product.tranportorder.get_punto(product.tranportorder.ubication_id)
+            else
+              row << " "
+              row << " "
+              row << " "
+              row << " "
+                
+            end 
+            table_content << row
+            nroitem=nroitem + 1      
+        end
+            row = []
+            row << ""
+            row << ""
+            row << ""
+            row << "PROVINCIA"
+            
+            table_content << row
+    
+       for  product in product1.get_viaticos_provincia() 
+            row = []
+            row << nroitem.to_s        
+            row << product.fecha.strftime("%d/%m/%Y") 
+            row << product.tranportorder.employee.full_name   
+            if product.supplier 
+              row << product.supplier.name 
+            else
+              row << product.employee.full_name
+            end 
+            
+            lccompro =  product.document.descripshort << "-" << product.numero  
+            
+            row << lccompro 
+            
+            if product.tm.to_i != 6
+                row << " "
+                row << sprintf("%.2f",product.importe)
+    
+            else
+              row << sprintf("%.2f",product.importe)
+              
+            
+            end
+            
+            if product.tm.to_i != 6
+              lcDato = product.tranportorder.code << " - " << product.tranportorder.truck.placa<<" - " << product.tranportorder.get_placa(product.tranportorder.truck2_id)
+              row << lcDato 
+              row << product.detalle
+              
+              row << product.tranportorder.get_punto(product.tranportorder.ubication_id)
+            else
+              row << " "
+              row << " "
+              row << " "
+              row << " "
+                
+            end 
+            table_content << row
+            nroitem=nroitem + 1      
+        end
+
+    
+       
+       
+       end
+       result = pdf.table table_content, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width
+                                        } do 
+                                          columns([0]).align=:center
+                                          columns([1]).align=:left
+                                          columns([2]).align=:left
+                                          columns([3]).align=:left
+                                          columns([4]).align=:left
+                                          columns([5]).align=:left   
+                                          columns([6]).align=:right
+                                          columns([7]).align=:right
+                                          columns([8]).align=:right
+                                          columns([9]).align=:right
+                                          columns([10]).align=:right
+                                        end                                          
+                                        
+      pdf.move_down 10    
+      pdf 
+
+    end
+
+    def build_pdf_footer_rpt2(pdf)      
+                  
+      pdf.text "" 
+      pdf.bounding_box([0, 20], :width => 535, :height => 40) do
+      pdf.draw_text "Company: #{@company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
+
+    end
+
+    pdf
+      
+  end
+  
+  def rpt_viatico_pdf
+
+    @company=Company.find(1)      
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]
+    
+    Prawn::Document.generate("app/pdf_output/rpt_pendientes.pdf") do |pdf|
+    pdf.font "Helvetica"
+    pdf = build_pdf_header_rpt2(pdf)
+    pdf = build_pdf_body_rpt2(pdf)
+    build_pdf_footer_rpt2(pdf)
+
+    $lcFileName =  "app/pdf_output/rpt_pendientes.pdf"              
+
+    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
+    send_file("app/pdf_output/rpt_pendientes.pdf", :type => 'application/pdf', :disposition => 'inline')
+
+    end 
+
+  end
+  
+ 
+  
   # GET /viaticos/1/edit
   def edit
     @pagetitle = "Edit viatico"
@@ -709,9 +960,6 @@ class ViaticosController < ApplicationController
           a.save
         end 
         
-        
-
-        
         format.html { redirect_to(@viatico, :notice => 'viatico was successfully updated.') }
         format.xml  { head :ok }
       else
@@ -732,6 +980,9 @@ class ViaticosController < ApplicationController
       format.html { redirect_to("/companies/viaticos/" + company_id.to_s) }
     end
   end
+  
+  
+  
   private
   def viatico_params
     params.require(:viatico).permit(:code, :fecha1, :inicial, :total_ing, :total_egreso, :saldo, :comments, :user_id, :company_id, :processed,:caja_id)

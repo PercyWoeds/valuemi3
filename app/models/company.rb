@@ -1294,6 +1294,11 @@ def get_pendientes_day_customer_detraccion(fecha1,fecha2,cliente)
     return ret
   end
  # Return value 
+ 
+ def get_viaticos
+   viaticos = Viatico.where([" company_id = ?  AND fecha1 >= ? AND fecha1 <= ?", self.id,"#{year}-#{month}-01 00:00:00", "#{year}-#{month}-31 23:59:59"]).order(:code)
+   return viaticos 
+ end 
 
  # Return value for user
  def get_services_year_month_value( year,month, value = "total")

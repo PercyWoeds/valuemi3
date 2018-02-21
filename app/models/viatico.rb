@@ -40,6 +40,7 @@ self.per_page = 20
                      "IGV.",
                      "TOTAL",
                      "ESTADO"]
+                     
   TABLE_HEADERS3 = ["TD",
                       "Documento",
                      "Fecha",
