@@ -11,7 +11,7 @@ wb.styles do |s|
     title = s.add_style(:bg_color => "FFFF0000", :fg_color=>"#FF000000",:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :center})
     title2= s.add_style  :bg_color => "0000FF", :fg_color => "FF", :sz => 9, :alignment => { :horizontal=> :center }
     title3= s.add_style  :bg_color => "ddeded", :fg_color => "00", :sz => 8, :alignment => { :horizontal=> :center }
-    
+    title4= s.add_style  :bg_color => "FF", :fg_color => "00", :sz => 16, :alignment => { :horizontal=> :center },:bold=>true 
     cadena =s.add_style(:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :left},:sz=>8)
     
     currency = wb.styles.add_style(:format_code=>"#,##0.#0;[Red]-#,##0.#0",
@@ -20,7 +20,12 @@ wb.styles do |s|
     comma = wb.styles.add_style :num_fmt => 3
     super_funk = wb.styles.add_style :format_code => '[Green]#'
     
-    wb.add_worksheet(name: "Basic work sheet") do |sheet|
+    wb.add_worksheet(name: "Viaticos") do |sheet|
+    
+      sheet.add_row [" ",
+                      "LISTADO DE ", @viaticos_rpt.first.caja.descrip
+                     ], :style => [title4,title4,title4]
+        
     
     
    @viaticos_rpt.each do |payment|
