@@ -53,18 +53,18 @@ wb.styles do |s|
                       payment.get_viaticos_lima.each do |payment3|
                       
                             if payment3.supplier                       
-                                sheet.add_row ["",payment3.fecha,payment3.supplier.name.payment3.document.descripshort,payment3.numero,payment3.importe],:style => [cadena,date,cadena,cadena,cadena,currency,cadena,cadena,cadena]
+                                sheet.add_row ["",payment3.fecha,payment3.supplier.name.payment3.document.descripshort,payment3.numero,payment3.importe,payment3.get_detalle,payment3.detalle,payment3.tranportorder.get_punto(payment3.tranportorder.ubication_id)],:style => [cadena,date,cadena,cadena,cadena,currency,cadena,cadena,cadena]
                             else
-                                sheet.add_row ["",payment3.fecha,payment3.tranportorder.employee.full_name,payment3.document.descripshort,payment3.numero,payment3.importe],:style => [cadena,date,cadena,cadena,cadena,currency,cadena,cadena,cadena]
+                                sheet.add_row ["",payment3.fecha,payment3.tranportorder.employee.full_name,payment3.document.descripshort,payment3.numero,payment3.importe,payment3.get_detalle,payment3.detalle,payment3.tranportorder.get_punto(payment3.tranportorder.ubication_id)],:style => [cadena,date,cadena,cadena,cadena,currency,cadena,cadena,cadena]
                             end 
                       end 
                       
                         payment.get_viaticos_provincia.each do |payment3|
                       
                             if payment3.supplier                       
-                                sheet.add_row ["",payment3.fecha,payment3.supplier.name.payment3.document.descripshort,payment3.numero,payment3.importe],:style => [cadena,date,cadena,cadena,cadena,currency,cadena,cadena,cadena]
+                                sheet.add_row ["",payment3.fecha,payment3.supplier.name.payment3.document.descripshort,payment3.numero,payment3.importe,payment3.get_detalle,payment3.detalle,payment3.tranportorder.get_punto(payment3.tranportorder.ubication_id)],:style => [cadena,date,cadena,cadena,cadena,currency,cadena,cadena,cadena]
                             else
-                                sheet.add_row ["",payment3.fecha,payment3.tranportorder.employee.full_name,payment3.document.descripshort,payment3.numero,payment3.importe],:style => [cadena,date,cadena,cadena,cadena,currency,cadena,cadena,cadena]
+                                sheet.add_row ["",payment3.fecha,payment3.tranportorder.employee.full_name,payment3.document.descripshort,payment3.numero,payment3.importe,payment3.get_detalle,payment3.detalle,payment3.tranportorder.get_punto(payment3.tranportorder.ubication_id)],:style => [cadena,date,cadena,cadena,cadena,currency,cadena,cadena,cadena]
                             end 
                       end 
                       
