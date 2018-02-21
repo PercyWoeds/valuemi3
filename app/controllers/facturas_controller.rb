@@ -595,15 +595,6 @@ class FacturasController < ApplicationController
     end 
       $lcNroDocCli  = @invoice.customer.ruc 
 
-      puts $lcruc 
-      puts $lcTipoDocumento
-      puts $lcSerie 
-      puts $lcNumero
-      puts $lcIgv
-      puts $lcTotal
-      puts $lcFecha0 
-      puts $lcTipoDocCli
-      puts $lcNroDocCli
       
       
       $lcCodigoBarra = $lcruc << "|" << $lcTipoDocumento << "|" << $lcSerie << "|" << $lcNumero << "|" <<$lcIgv<< "|" << $lcTotal << "|" << $lcFecha0 << "|" << $lcTipoDocCli << "|" << $lcNroDocCli

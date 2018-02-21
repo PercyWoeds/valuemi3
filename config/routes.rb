@@ -72,7 +72,6 @@
     
   end 
   resource :viaticos do 
-    collection { get :reportxls }
     collection { get :rpt_viatico_pdf    }
     collection { get :update_inicial}
   end 
@@ -437,7 +436,10 @@ end
   match 'viaticos/email/:id' => 'viaticos#email', via: [:get, :post]
   match 'viaticos/pdf/:id' => 'viaticos#pdf', via: [:get, :post]
   match 'companies/viaticos/:company_id' => 'viaticos#list_viaticos', via: [:get, :post]
+  
   match 'viaticos/rpt_viatico_pdf/:company_id' => 'viaticos#rpt_viatico_pdf', via: [:get, :post]
+  match 'viaticos/reportxls/:company_id' => 'viaticos#reportxls', via: [:get]
+  
   resources :viaticos 
 # lgv
   
@@ -936,7 +938,6 @@ end
   match 'payrolls/do_update/:id' => 'payrolls#do_update', via: [:get, :post]  
   match 'payrolls/do_pdf/:id' => 'payrolls#do_pdf', via: [:get, :post]  
   match 'payrolls/do_pdf2/:id' => 'payrolls#do_pdf2', via: [:get, :post]  
-  
   
   match 'payrollbonis/index/:id' => 'payrollbonis#index', via: [:get, :post]  
   match 'payrollboni/new/:payroll_id' => 'payrollbonis#new', via: [:get, :post]  

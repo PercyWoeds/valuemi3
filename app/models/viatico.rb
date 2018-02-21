@@ -52,6 +52,16 @@ self.per_page = 20
                      "DETRACCION",
                      "OBSERV"]
   
+ TABLE_HEADERS4  = ["ITEM",
+                      "FECHA",
+                     "PROVEEDOR/EMPLEADO",
+                     "COMPROBANTE",
+                     "INGRESO",                                         
+                     "EGRESO",
+                     "OST ",
+                     "DETALLE",
+                     "DESTINO"]
+  
 
   def self.search(search)
       where("code LIKE ?", "%#{search}%") 

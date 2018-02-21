@@ -9,9 +9,15 @@ before_filter :authenticate_user!
 
   def reportxls
     @company=Company.find(1)      
+   
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]
+    $caja_id = params[:caja_id]
+    @viaticos_rpt = @company.get_viaticos0(@fecha1,@fecha2,$caja_id)    
+    
     puts "holasss...."
+    puts params[:caja_id]
+    
       case params[:print]
         when "To PDF" then 
             redirect_to :action => "rpt_viatico_pdf", :format => "pdf", :fecha1 => params[:fecha1], :fecha2 => params[:fecha2] 
@@ -590,14 +596,15 @@ before_filter :authenticate_user!
 
   def build_pdf_body_rpt2(pdf)
     
-    pdf.text "Listado de Viaticos : desde "+@fecha1.to_s+ " Hasta: "+@fecha2.to_s , :size => 8 
-    pdf.text ""
+    pdf.text "Listado: desde "+@fecha1.to_s+ " Hasta: "+@fecha2.to_s , :size => 8 
+    a=@viaticos_rpt.first
+    pdf.text a.caja.descrip   
     pdf.font "Helvetica" , :size => 7
 
       headers = []
       table_content = []
 
-      Viatico::TABLE_HEADERS3.each do |header|
+      Viatico::TABLE_HEADERS4.each do |header|
         cell = pdf.make_cell(:content => header)
         cell.background_color = "FFFFCC"
         headers << cell
@@ -610,82 +617,105 @@ before_filter :authenticate_user!
       lcmonedadolares = 1
 
        for  product1 in @viaticos_rpt
-       
-          for  product in product1.get_viaticos_cheque() 
             row = []
-            row << nroitem.to_s        
-            row << product.fecha.strftime("%d/%m/%Y") 
-            row << ""
-            row << product.employee.full_name
-
-            lccompro =  product.document.descripshort << "-" << product.numero  
-            row << lccompro 
-            if product.tm.to_i != 6
-                row << " "
-                row << sprintf("%.2f",product.importe)
-            else
-              row << sprintf("%.2f",product.importe)
-            end
-            if product.tm.to_i != 6
-              lcDato = product.tranportorder.code << " - " << product.tranportorder.truck.placa<<" - " << product.tranportorder.get_placa(product.tranportorder.truck2_id)
-              row << lcDato 
-              row << product.detalle
-              row << product.tranportorder.get_punto(product.tranportorder.ubication_id)
-            else
-              row << " "
-              row << " "
-              row << " "
-              row << " "
-            end 
+            row << " "
+            row << "CODIGO :"
+            row << "SALDO INICIAL"
+            row << " "
+            row << "TOTAL 
+            INGRESOS"
+            row << "TOTAL 
+            EGRESOS"
+            row << "SALDO"
+            row << " "
+            row << " "
+            
             table_content << row
-            nroitem=nroitem + 1      
-       end 
+            
+            row = []
+            row << " "
+            row << product1.code 
+            row << product1.inicial
+            row << " "
+            row << product1.total_ing
+            row << product1.total_egreso
+            row << product1.saldo
+              row << " "
+              row << " "
+            table_content << row
+            
+            
+              for  product in product1.get_viaticos_cheque() 
+                    row = []
+                    row << nroitem.to_s        
+                    row << product.fecha.strftime("%d/%m/%Y") 
+                    
+                    row << product.employee.full_name
+                    lccompro =  product.document.descripshort << "-" << product.numero  
+                    
+                    row << lccompro 
+                    if product.tm.to_i != 6
+                        row << " "
+                        row << sprintf("%.2f",product.importe)
+                      else
+                      row << sprintf("%.2f",product.importe)
+                    end
+                    if product.tm.to_i != 6
+                      lcDato = product.tranportorder.code << " - " << product.tranportorder.truck.placa<<" - " << product.tranportorder.get_placa(product.tranportorder.truck2_id)
+                      row << lcDato 
+                      row << product.detalle
+                      row << product.tranportorder.get_punto(product.tranportorder.ubication_id)
+                      else
+                      row << " "
+                      row << " "
+                      row << " "
+                      row << " "
+                    end 
+                    table_content << row
+                    nroitem=nroitem + 1      
+        end 
        
             row = []
             row << ""
             row << ""
             row << ""
             row << "LIMA"
-            
+            row << ""
+            row << ""
+            row << ""
+            row << ""
+            row << ""
             table_content << row
     
        for  product in product1.get_viaticos_lima() 
             row = []
             row << nroitem.to_s        
             row << product.fecha.strftime("%d/%m/%Y") 
-            row << product.tranportorder.employee.full_name   
+            
             if product.supplier 
               row << product.supplier.name 
             else
-              row << product.employee.full_name
-            end 
-            
-            lccompro =  product.document.descripshort << "-" << product.numero  
-            
-            row << lccompro 
-            
+              row << product.tranportorder.employee.full_name   
+            end             
+            lccompro =  product.document.descripshort << "-" << product.numero              
+            row << lccompro             
             if product.tm.to_i != 6
                 row << " "
-                row << sprintf("%.2f",product.importe)
-    
+                row << sprintf("%.2f",product.importe)  
             else
               row << sprintf("%.2f",product.importe)
-              
-            
             end
             
             if product.tm.to_i != 6
               lcDato = product.tranportorder.code << " - " << product.tranportorder.truck.placa<<" - " << product.tranportorder.get_placa(product.tranportorder.truck2_id)
               row << lcDato 
-              row << product.detalle
-              
+              row << product.detalle              
               row << product.tranportorder.get_punto(product.tranportorder.ubication_id)
             else
               row << " "
               row << " "
               row << " "
-              row << " "
-                
+              row << " "                
             end 
             table_content << row
             nroitem=nroitem + 1      
@@ -695,32 +725,30 @@ before_filter :authenticate_user!
             row << ""
             row << ""
             row << "PROVINCIA"
-            
+            row << ""
+            row << ""
+            row << ""
+            row << ""
+            row << ""
             table_content << row
     
-       for  product in product1.get_viaticos_provincia() 
+        for  product in product1.get_viaticos_provincia() 
             row = []
             row << nroitem.to_s        
             row << product.fecha.strftime("%d/%m/%Y") 
-            row << product.tranportorder.employee.full_name   
+            
             if product.supplier 
               row << product.supplier.name 
             else
-              row << product.employee.full_name
-            end 
-            
-            lccompro =  product.document.descripshort << "-" << product.numero  
-            
-            row << lccompro 
-            
+              row << product.tranportorder.employee.full_name   
+            end             
+            lccompro =  product.document.descripshort << "-" << product.numero            
+            row << lccompro             
             if product.tm.to_i != 6
                 row << " "
-                row << sprintf("%.2f",product.importe)
-    
+                row << sprintf("%.2f",product.importe)    
             else
               row << sprintf("%.2f",product.importe)
-              
-            
             end
             
             if product.tm.to_i != 6
@@ -739,26 +767,40 @@ before_filter :authenticate_user!
             table_content << row
             nroitem=nroitem + 1      
         end
-
+            row = []
+            row << " "
+            row << " "
+            row << " "
+            row << " "
+            row << " "
+            row << " "
+            row << " "
+            row << " "
+            row << " "
+            
+            table_content << row
     
-       
-       
-       end
+        
+          
+      end
+      
        result = pdf.table table_content, {:position => :center,
                                         :header => true,
                                         :width => pdf.bounds.width
                                         } do 
                                           columns([0]).align=:center
+                                          columns([0]).width= 20
                                           columns([1]).align=:left
                                           columns([2]).align=:left
                                           columns([3]).align=:left
                                           columns([4]).align=:left
+                                          columns([4]).width= 60
                                           columns([5]).align=:left   
-                                          columns([6]).align=:right
-                                          columns([7]).align=:right
-                                          columns([8]).align=:right
-                                          columns([9]).align=:right
-                                          columns([10]).align=:right
+                                          columns([5]).width= 60
+                                          columns([6]).align=:left
+                                          columns([7]).align=:left
+                                          columns([8]).align=:left
+                                          columns([8]).width= 60
                                         end                                          
                                         
       pdf.move_down 10    
@@ -783,6 +825,11 @@ before_filter :authenticate_user!
     @company=Company.find(1)      
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]
+    
+    @viaticos_rpt = @company.get_viaticos0(@fecha1,@fecha2,$caja_id)    
+    
+    puts "holasss...."
+    puts $caja_id
     
     Prawn::Document.generate("app/pdf_output/rpt_pendientes.pdf") do |pdf|
     pdf.font "Helvetica"
@@ -982,6 +1029,18 @@ before_filter :authenticate_user!
   end
   
   
+
+  def client_data_headers_rpt
+      client_headers  = [["Empresa  :", $lcCli ]]
+      client_headers << ["Direccion :", $lcdir1]
+      client_headers
+  end
+
+  def invoice_headers_rpt            
+      invoice_headers  = [["Fecha : ",$lcHora]]    
+      invoice_headers
+  end
+ 
   
   private
   def viatico_params
