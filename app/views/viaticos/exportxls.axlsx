@@ -1,0 +1,81 @@
+$LOAD_PATH.unshift "#{File.dirname(__FILE__)}/../lib"
+
+require 'axlsx'
+
+p = Axlsx::Package.new
+wb = xlsx_package.workbook
+wb.styles do |s|
+    date = s.add_style(:format_code => "yyyy-mm-dd", :border => Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :left},:sz=>8)
+    padded = s.add_style(:format_code => "00#", :border => Axlsx::STYLE_THIN_BORDER)
+    percent = s.add_style(:format_code => '#.##0.00', :border => Axlsx::STYLE_THIN_BORDER)
+    title = s.add_style(:bg_color => "FFFF0000", :fg_color=>"#FF000000",:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :center})
+    title2= s.add_style  :bg_color => "0000FF", :fg_color => "FF", :sz => 9, :alignment => { :horizontal=> :center }
+    title3= s.add_style  :bg_color => "ddeded", :fg_color => "00", :sz => 8, :alignment => { :horizontal=> :center }
+    
+    cadena =s.add_style(:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :left},:sz=>8)
+    
+    currency = wb.styles.add_style(:format_code=>"#,##0.#0;[Red]-#,##0.#0",
+                              :border=>Axlsx::STYLE_THIN_BORDER,:sz=>8)
+    red_negative = wb.styles.add_style :num_fmt => 8
+    comma = wb.styles.add_style :num_fmt => 3
+    super_funk = wb.styles.add_style :format_code => '[Green]#'
+    
+    wb.add_worksheet(name: "Basic work sheet") do |sheet|
+    
+    
+   @viaticos_rpt.each do |payment|
+   
+      sheet.add_row ["CODE: ",
+                      "CODIGO:",
+                     "SALDO INICIAL",
+                     "INGRESO",
+                     "EGRESO",                                         
+                     "SALDO"," "," "," " ], :style => [title2,title2,title2,title2,title2,title2,title2,title2,title2]
+                     
+      sheet.add_row ["",payment.code,payment.inicial,payment.total_ing,payment.total_egreso,payment.saldo,"","",""],:style => [cadena,cadena,currency,currency,currency,currency,cadena,cadena,cadena]
+      sheet.add_row ["ITEM",
+                      "FECHA",
+                     "PROVEEDOR/EMPLEADO",
+                     "COMPROBANTE",
+                     "INGRESO",                                         
+                     "EGRESO",
+                     "OST ",
+                     "DETALLE",
+                     "DESTINO"], :style => [title3,title3,title3,title3,title3,title3,title3,title3,title3]
+    
+                        
+                      payment.get_viaticos_cheque.each do |payment2|
+                            sheet.add_row ["",payment2.fecha,payment2.employee.full_name,payment2.document.descripshort,payment2.numero,payment2.importe],:style => [cadena,date,cadena,cadena,cadena,currency]
+                      end 
+                      
+                      
+                      
+                      payment.get_viaticos_lima.each do |payment3|
+                      
+                            if payment3.supplier                       
+                                sheet.add_row ["",payment3.fecha,payment3.supplier.name.payment3.document.descripshort,payment3.numero,payment3.importe],:style => [cadena,date,cadena,cadena,cadena,currency,cadena,cadena,cadena]
+                            else
+                                sheet.add_row ["",payment3.fecha,payment3.tranportorder.employee.full_name,payment3.document.descripshort,payment3.numero,payment3.importe],:style => [cadena,date,cadena,cadena,cadena,currency,cadena,cadena,cadena]
+                            end 
+                      end 
+                      
+                        payment.get_viaticos_provincia.each do |payment3|
+                      
+                            if payment3.supplier                       
+                                sheet.add_row ["",payment3.fecha,payment3.supplier.name.payment3.document.descripshort,payment3.numero,payment3.importe],:style => [cadena,date,cadena,cadena,cadena,currency,cadena,cadena,cadena]
+                            else
+                                sheet.add_row ["",payment3.fecha,payment3.tranportorder.employee.full_name,payment3.document.descripshort,payment3.numero,payment3.importe],:style => [cadena,date,cadena,cadena,cadena,currency,cadena,cadena,cadena]
+                            end 
+                      end 
+                      
+              
+              
+   end
+   
+    
+   
+   
+end
+end 
+
+    

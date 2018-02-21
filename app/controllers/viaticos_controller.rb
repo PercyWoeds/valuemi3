@@ -617,6 +617,7 @@ before_filter :authenticate_user!
       lcmonedadolares = 1
 
        for  product1 in @viaticos_rpt
+       
             row = []
             row << " "
             row << "CODIGO :"
@@ -791,6 +792,7 @@ before_filter :authenticate_user!
                                           columns([0]).align=:center
                                           columns([0]).width= 20
                                           columns([1]).align=:left
+                                          columns([1]).width= 50
                                           columns([2]).align=:left
                                           columns([3]).align=:left
                                           columns([4]).align=:left
@@ -799,6 +801,7 @@ before_filter :authenticate_user!
                                           columns([5]).width= 60
                                           columns([6]).align=:left
                                           columns([7]).align=:left
+                                          columns([7]).width= 100
                                           columns([8]).align=:left
                                           columns([8]).width= 60
                                         end                                          
