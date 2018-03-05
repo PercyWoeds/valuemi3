@@ -9,8 +9,35 @@ class GastosController < ApplicationController
   # GET /gastos
   # GET /gastos.json
   def index
-    @gastos = Gasto.order(:codigo)
+    @company =Company.find(1)
+    @gastos = Gasto.order(:codigo).paginate(:page => params[:page])
+    
+        if params[:search]
+          @gastos = Gasto.search(params[:search]).order('id DESC').paginate(:page => params[:page])
+        else
+          @gastos = Gasto.all.order('id DESC').paginate(:page => params[:page]) 
+        end
   end
+def list_gastos
+    @company = Company.find(params[:company_id])
+    @pagetitle = "#{@company.name} - Gastos"
+    @filters_display = "block"
+    
+    
+    if(@company.can_view(current_user))
+         @gastos = Gasto.all.order('id DESC').paginate(:page => params[:page])
+        if params[:search]
+          @gastos = Gasto.search(params[:search]).order('id DESC').paginate(:page => params[:page])
+        else
+          @gastos = Gasto.all.order('id DESC').paginate(:page => params[:page]) 
+        end
+    
+    else
+      errPerms()
+    end
+  end
+  
+
 
   # GET /gastos/1
   # GET /gastos/1.json

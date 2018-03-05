@@ -44,7 +44,7 @@
         <td>
         <div class="field">
           <%= f.label :code, "Code*", :class => "bold" %><br />
-          <%= f.text_field :code, :onclick => "$(this).select();" %>
+          <%= f.text_field :code  %>
         </div>
         </td>
   
@@ -122,6 +122,9 @@
       $("#ac_caja_id").val(data[2]);
       $("#selected_caja").html(data[0]);
       $("#viatico_inicial").val(data[4]);
+      
+      $("#viatico_code").val(data[6]);
+      
     });
     
 
@@ -190,9 +193,12 @@
     });
     
     
-    
+  
     <% if @viaticos_lines %>
       listItemsViatico();
     <% end %>
+    
   });
+  
+  
 </script>

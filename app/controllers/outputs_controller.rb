@@ -1047,6 +1047,7 @@ def build_pdf_header(pdf)
     if(@company.can_view(current_user))
       
        @outputs = Output.all.order('id DESC').paginate(:page => params[:page])
+       
         if params[:search]
           @outputs = Output.search(params[:search]).order('id DESC').paginate(:page => params[:page])
         else

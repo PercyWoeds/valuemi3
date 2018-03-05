@@ -12,4 +12,9 @@ class Gasto < ActiveRecord::Base
          self.fullcuenta ="#{self.codigo} #{self.descrip}".strip		
 
     end 
+     def self.search(search)
+      
+      where("code LIKE ?", "%#{search}%") 
+           
+  end
 end

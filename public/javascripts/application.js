@@ -1874,7 +1874,7 @@ function createMarca() {
       });
     });
   }
-
+  
  // Create new marca in the invoice via ajax
   function doCreateMarca() {
     var company_id = $("#product_company_id").val();

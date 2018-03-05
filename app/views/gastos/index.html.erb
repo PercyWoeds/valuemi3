@@ -1,6 +1,16 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Gastos</h1>
+<h1>Listado Gastos</h1>
+
+<div class="small">
+  <form method="get" action="/companies/gastos/<%= @company.id %>">
+    <strong>Buscar :</strong>
+    <input type="text" name="search" value="<% if @q_org %><%= @q_org %><% end %>" class="small" style="width: 250px;" onclick="$(this).select();" />
+    <input type="submit" value="Buscar" class="bold small_btn" />
+    <a href="/companies/gastos/<%= @company.id %>" > Limpiar</a>
+  </form>
+</div>
+  
 
 <table>
   <thead>
@@ -20,14 +30,17 @@
         <td><%= gasto.code %></td>
         <td><%= gasto.descrip %></td>
         <td><%= gasto.cuenta %></td>
-        <td><%= link_to 'Show', gasto %></td>
-        <td><%= link_to 'Edit', edit_gasto_path(gasto) %></td>
-        <td><%= link_to 'Destroy', gasto, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Ver', gasto %></td>
+        <td><%= link_to 'Editar', edit_gasto_path(gasto) %></td>
+        <% if @current_user.level = "admin" %>
+        <td><%= link_to 'Eliminar', gasto, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
 </table>
 
+<%= will_paginate @gastos %>  
 <br>
 
 <%= link_to 'New Gasto', new_gasto_path %>

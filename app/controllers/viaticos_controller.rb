@@ -15,8 +15,6 @@ before_filter :authenticate_user!
     $caja_id = params[:caja_id]
     @viaticos_rpt = @company.get_viaticos0(@fecha1,@fecha2,$caja_id)    
     
-    puts "holasss...."
-    puts params[:caja_id]
     
       case params[:print]
         when "To PDF" then 
@@ -514,7 +512,7 @@ before_filter :authenticate_user!
     @action_txt = "Create"
     
     @viatico = Viatico.new
-    @viatico[:code] = "#{generate_guid()}"
+    @viatico[:code] = ""
     
     @viatico[:processed] = "0"
     
@@ -831,20 +829,20 @@ before_filter :authenticate_user!
     
     @viaticos_rpt = @company.get_viaticos0(@fecha1,@fecha2,$caja_id)    
     
-    puts "holasss...."
-    puts $caja_id
+     if @viaticos_rpt.size > 0 
     
-    Prawn::Document.generate("app/pdf_output/rpt_pendientes.pdf") do |pdf|
-    pdf.font "Helvetica"
-    pdf = build_pdf_header_rpt2(pdf)
-    pdf = build_pdf_body_rpt2(pdf)
-    build_pdf_footer_rpt2(pdf)
-
-    $lcFileName =  "app/pdf_output/rpt_pendientes.pdf"              
-
-    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
-    send_file("app/pdf_output/rpt_pendientes.pdf", :type => 'application/pdf', :disposition => 'inline')
-
+      Prawn::Document.generate("app/pdf_output/rpt_pendientes.pdf") do |pdf|
+      pdf.font "Helvetica"
+      pdf = build_pdf_header_rpt2(pdf)
+      pdf = build_pdf_body_rpt2(pdf)
+      build_pdf_footer_rpt2(pdf)
+  
+      $lcFileName =  "app/pdf_output/rpt_pendientes.pdf"              
+  
+      $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
+      send_file("app/pdf_output/rpt_pendientes.pdf", :type => 'application/pdf', :disposition => 'inline')
+      end 
+    
     end 
 
   end
@@ -882,7 +880,6 @@ before_filter :authenticate_user!
     @divisions = @company.get_divisions()
     
     @viatico = Viatico.new(viatico_params)
-    
     @company = Company.find(params[:viatico][:company_id])
     
     
@@ -920,21 +917,25 @@ before_filter :authenticate_user!
         if @viatico.caja_id == 1 
           a = @cajas.find(1)
           a.inicial =  @viatico[:saldo]
+          a.numero = @viatico.correlativo2(@viatico[:code])
           a.save
         end 
         if @viatico.caja_id == 2
           a = @cajas.find(2)
           a.inicial =  @viatico[:saldo]
+          a.numero = @viatico.correlativo2(@viatico[:code])
           a.save
         end 
         if @viatico.caja_id == 3 
           a = @cajas.find(3)
           a.inicial =  @viatico[:saldo]
+          a.numero = @viatico.correlativo2(@viatico[:code])
           a.save
         end 
         if @viatico.caja_id == 4 
           a = @cajas.find(4)
           a.inicial =  @viatico[:saldo]
+          a.numero = @viatico.correlativo2(@viatico[:code])
           a.save
         end 
         
@@ -992,21 +993,25 @@ before_filter :authenticate_user!
         if @viatico.caja_id == 1 
           a = @cajas.find(1)
           a.inicial =  @viatico[:saldo]
+          a.numero = @viatico.correlativo2(@viatico[:code])
           a.save
         end 
         if @viatico.caja_id == 2
           a = @cajas.find(2)
           a.inicial =  @viatico[:saldo]
+          a.numero = @viatico.correlativo2(@viatico[:code])
           a.save
         end 
         if @viatico.caja_id == 3 
           a = @cajas.find(3)
           a.inicial =  @viatico[:saldo]
+          a.numero = @viatico.correlativo2(@viatico[:code])
           a.save
         end 
         if @viatico.caja_id == 4 
           a = @cajas.find(4)
           a.inicial =  @viatico[:saldo]
+          a.numero = @viatico.correlativo2(@viatico[:code])
           a.save
         end 
         

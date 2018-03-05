@@ -1,0 +1,37 @@
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %>
+</div>
+
+<h1>
+  <%= image_tag("invoices_48.png", :class => "vmiddle") %>
+  
+  Listado de gastos 
+ 
+</h1>
+
+
+
+<br />
+<%= render "gastos/list" %>
+
+<br />
+
+<div class="button">
+  <%= link_to 'Nuevo Gasto', "/gastos/new/#{@company.id}" %>
+  
+</div>
+
+<%= will_paginate @gastos %>
+
+<%= render 'layouts/autocomplete' %>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("#ac_customer").autocomplete("/viaticos/ac_customers/<%= @company.id %>", {
+			matchSubset: 1,
+			matchContains: 1,
+      selectFirst: false
+    });
+  });
+</script>

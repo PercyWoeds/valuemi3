@@ -438,6 +438,7 @@ end
   match 'companies/viaticos/:company_id' => 'viaticos#list_viaticos', via: [:get, :post]
   
   match 'viaticos/rpt_viatico_pdf/:company_id' => 'viaticos#rpt_viatico_pdf', via: [:get, :post]
+  match 'viaticos/rpt_viatico_pdf' => 'viaticos#rpt_viatico_pdf', via: [:get, :post]
   match 'viaticos/reportxls/:company_id' => 'viaticos#reportxls', via: [:get]
   
   resources :viaticos 

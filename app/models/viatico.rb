@@ -113,6 +113,12 @@ self.per_page = 20
         Voided.where(:id=>'2').update_all(:numero =>lcnumero)        
   end
 
+  def correlativo2(dato)
+    ret = ""
+     lcNumero = dato.to_i + 1
+     ret = lcNumero.to_s.rjust(6, '0')   
+     return ret 
+  end 
    def get_total_inicial
   
     subtotal = self.inicial

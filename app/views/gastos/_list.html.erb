@@ -1,0 +1,13 @@
+ <% @gastos.each do |gasto| %>
+      <tr>
+        <td><%= gasto.codigo %></td>
+        <td><%= gasto.code %></td>
+        <td><%= gasto.descrip %></td>
+        <td><%= gasto.cuenta %></td>
+        <td><%= link_to 'Ver', gasto %></td>
+        <td><%= link_to 'Editar', edit_gasto_path(gasto) %></td>
+        <% if @current_user.level = "admin" %>
+        <td><%= link_to 'Eliminar', gasto, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
+      </tr>
+    <% end %>
