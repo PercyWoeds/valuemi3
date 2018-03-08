@@ -15,6 +15,12 @@
   </thead>
 
   <tbody>
+    
+    <%= form_tag(employees_path, :method => "get", id: "search-form") do %>
+  <%= text_field_tag :search, params[:search], placeholder: "Buscar empleado" %>
+  <%= submit_tag "Search" %>
+<% end %>
+
     <% @employees.each do |employee| %>
       <tr>
         <td><%= employee.firstname %></td>

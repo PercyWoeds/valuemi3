@@ -773,24 +773,32 @@ class PayrollsController < ApplicationController
       
   end
 
-
 def do_pdf2
-    @company = Company.find(1)
-    @payroll = Payroll.find(params[:id])
-    @planilla = PayrollDetail.where(payroll_id: @payroll.id).includes(:employee).order('employees.lastname ')    
+     @company = Company.find(1)
+     @payroll = Payroll.find(params[:id])
+     @planilla = PayrollDetail.where(payroll_id: @payroll.id).includes(:employee).order('employees.lastname ')    
 
-    Prawn::Document.generate "app/pdf_output/rpt_planilla.pdf" , :page_layout => :landscape,:page_size => "A2" do |pdf|        
-        pdf.font "Helvetica"
-        pdf = build_pdf_header_rpt(pdf)
-        pdf = build_pdf_body_rpt(pdf)
-        build_pdf_footer_rpt(pdf)
-        $lcFileName =  "app/pdf_output/rpt_planilla.pdf"              
-    end     
-    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
-    send_file("app/pdf_output/rpt_planilla.pdf", :type => 'application/pdf', :disposition => 'inline')
+  render  pdf: "Boleta",template: "payrolls/boleta_rpt.pdf.erb",locals: {:payroll => @planilla}
+  
+  
+          Prawn::Document.generate "app/pdf_output/rpt_planilla.pdf" , :page_layout => :landscape,:page_size => "A2" do |pdf|        
+             pdf.font "Helvetica"
+             pdf = build_pdf_header_rpt(pdf)
+             pdf = build_pdf_body_rpt(pdf)
+             build_pdf_footer_rpt(pdf)
+             $lcFileName =  "app/pdf_output/rpt_planilla.pdf"              
+         end     
+         $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
+         send_file("app/pdf_output/rpt_planilla.pdf", :type => 'application/pdf', :disposition => 'inline')
 
   end
+  def do_pdf3
+     @company = Company.find(1)
+     @payroll = Payroll.find(params[:id])
+     @planilla = PayrollDetail.where(payroll_id: @payroll.id).includes(:employee).order('employees.lastname ')    
+     render  pdf: "Boleta",template: "payrolls/boleta_rpt.pdf.erb",locals: {:payroll => @planilla}
   
+  end 
 
   def client_data_headers_rpt
       client_headers  = [["Empresa  :", $lcCli ]]

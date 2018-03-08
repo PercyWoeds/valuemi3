@@ -12,10 +12,14 @@ class EmployeesController < ApplicationController
   # GET /employees.json
   def index
     
-        @employees = Employee.paginate(:page => params[:page], :per_page => 20).order(:full_name,:active)
+    if params[:search]
+      @employees = Employee.paginate(:page => params[:page], :per_page => 20).search(params[:search]).order("lastname ")
+    else
+      @employees = Employee.paginate(:page => params[:page], :per_page => 20).where(active: "1",planilla:"1").order('lastname ')
+    end
         
-  end
 
+end 
   # GET /employees/1
   # GET /employees/1.json
   def show

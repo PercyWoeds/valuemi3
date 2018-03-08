@@ -73,9 +73,7 @@ class Employee < ActiveRecord::Base
           product_hash = row.to_hash # exclude the price field
           
           product = Employee.find_by(idnumber: product_hash["idnumber"])
-          puts "dni : "
-          puts product_hash["idnumber"]
-          
+        
           
           if product   
             product.fecha_ingreso = product_hash["fecha_ingreso"]
@@ -91,6 +89,9 @@ class Employee < ActiveRecord::Base
         end # end CSV.foreach
           
     end
-
+    def self.search(search)
+      # Title is for the above case, the OP incorrectly had 'name'
+      where("idnumber LIKE ? or full_name ilike ? and active = ?", "%#{search}%","%#{search}%","1")
+    end
 
 end
