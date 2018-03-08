@@ -237,8 +237,13 @@ class Payroll < ActiveRecord::Base
                 lcHextra0 = 0
             else
                 lcHextra0 = pl.hextra00
-                
             end 
+            if pl.hextra0 == nil
+                lcHextra1 = 0
+            else
+                lcHextra1 = pl.hextra0
+            end 
+            
         
             lcVaca  = (pl.remuneracion + pl.calc1 + lcHextra0)/30  *pl.vaca 
             pl.vacaciones = lcVaca.round(2)
@@ -252,7 +257,7 @@ class Payroll < ActiveRecord::Base
             lcBasico = pl.remuneracion/30 * (pl.totaldia + pl.falta )
             pl.basico =lcBasico.round(2)
             
-            lctotingreso = pl.basico+pl.calc1+lcHextra0+pl.vacaciones+pl.desmedico+pl.subsidio0+pl.reintegro
+            lctotingreso = pl.basico+pl.calc1+lcHextra1+pl.vacaciones+pl.desmedico+pl.subsidio0+pl.reintegro
             pl.totingreso = lctotingreso.round(2)
             
             lcFaltas = pl.remuneracion/30 * pl.falta
@@ -313,6 +318,7 @@ class Payroll < ActiveRecord::Base
             pl.save
             
             end
+            
             
         
         
