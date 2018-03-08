@@ -830,6 +830,6 @@ def do_pdf2
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def payroll_params
-      params.require(:payroll).permit(:code, :type_payroll_id, :fecha, :fecha_inicial, :fecha_final, :fecha_pago,:parameter_id)
+      params.require(:payroll).permit(:code, :type_payroll_id, :fecha, :fecha_inicial, :fecha_final, :fecha_pago,:parameter_id,:hextra00)
     end
 end

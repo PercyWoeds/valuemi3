@@ -3,37 +3,40 @@
 
 
 <p id="notice"><%= notice %></p>
-
+<table>
+  <tr>
+<td>
 <p>
   <strong>Code:</strong>
   <%= @payroll.code %>
 </p>
-
-<p>
-  <strong>Type payroll:</strong>
-  <%= @payroll.type_payroll %>
-</p>
-
-
+</td>
+    <td>
 <p>
   <strong>Fecha registro:</strong>
   <%= @payroll.fecha.strftime("%d/%m/%Y") %>
 </p>
-
+</td>
+<td>
 <p>
   <strong>Fecha inicial :</strong>
   <%= @payroll.fecha_inicial.strftime("%d/%m/%Y") %>
 </p>
-
+</td>
+<td>
 <p>
   <strong>Fecha final :</strong>
   <%= @payroll.fecha_final.strftime("%d/%m/%Y") %>
   </p>
-
+</td>
+<td>
 <p>
   <strong>Fecha pago :</strong>
   <%= @payroll.fecha_pago.strftime("%d/%m/%Y") %>
 </p>
+</td>
+</tr>
+</table>
 <div class="button">
 <%= link_to 'Generar', "/payrolls/do_process/#{@payroll.id}" %> 
 <%= link_to 'Actualizar.', "/payrolls/do_update/#{@payroll.id}" %> 

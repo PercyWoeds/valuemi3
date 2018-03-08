@@ -13,7 +13,7 @@ class PayrollbonisController < ApplicationController
   def show
     @parametros = Valor.all
     @payrolls = Payroll.all
-    @employees = Employee.where(:active=> "1")
+    @employees = Employee.where(:planilla=> "1")
     @tms =Tm.all
   end
 
@@ -22,7 +22,7 @@ class PayrollbonisController < ApplicationController
     @parametros = Valor.all 
     @payrolls = Payroll.all 
     @payrollboni = Payrollboni.new
-    @employees = Employee.where(:active=> "1")
+    @employees = Employee.where(:planilla=> "1").order(:lastname)
     @tms =Tm.all
   end
 
@@ -43,7 +43,7 @@ class PayrollbonisController < ApplicationController
     
     @payrolls=Payroll.all 
     @tms =Tm.all
-    @employees = Employee.where(:active=> "1")
+    @employees = Employee.where(:planilla=> "1")
     @parametros = Valor.all
     puts "payroll id "
     puts @payrollboni.payroll_id

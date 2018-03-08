@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180305160858) do
+ActiveRecord::Schema.define(version: 20180308221524) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1346,6 +1346,7 @@ ActiveRecord::Schema.define(version: 20180305160858) do
     t.float    "aporte"
     t.float    "seguro"
     t.float    "comision"
+    t.float    "hextra00"
   end
 
   create_table "payrollbonis", force: :cascade do |t|
