@@ -189,31 +189,40 @@ class Payroll < ActiveRecord::Base
             
             if he.valor_id == 4 
                 detalle = PayrollDetail.find_by(payroll_id: self.id,employee_id: he.employee_id)
+                if detalle 
                 detalle.hextra0 = (detalle.remuneracion + detalle.calc1 )/ 30 / 8 * 1.25 * he.importe
                 detalle.hextra = he.importe
                 f2 = detalle.hextra0 
                 detalle.hextra0 = f2.round(2)
                 detalle.save
+                end 
             end     
             if he.valor_id == 1 
+                
                 detalle = PayrollDetail.find_by(payroll_id: self.id,employee_id: he.employee_id)
+                if detalle 
                 f2 = he.importe
                 detalle.calc7 = f2.round(2)
                 detalle.save
+                end 
             end     
             
             if he.valor_id == 2
                 detalle = PayrollDetail.find_by(payroll_id: self.id,employee_id: he.employee_id)
+                if detalle 
                 f2 = he.importe
                 detalle.otros = f2.round(2)
                 detalle.save
+                end 
             end     
         #quinta categoria 
             if he.valor_id == 5
                 detalle = PayrollDetail.find_by(payroll_id: self.id,employee_id: he.employee_id)
+                if detalle 
                 f2 = he.importe
                 detalle.calc4 = f2.round(2)
                 detalle.save
+                end 
             end     
             
         
