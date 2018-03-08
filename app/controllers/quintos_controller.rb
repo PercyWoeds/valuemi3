@@ -19,7 +19,7 @@ class QuintosController < ApplicationController
     curr_year = Time.now.year
     c_year = curr_year
     c_month = 1
-    @employees= Employee.where(planilla:"1")
+    @employees= Employee.where(planilla:"1").order(:firstname)
     
     @years = []
     @month = Time.now.month

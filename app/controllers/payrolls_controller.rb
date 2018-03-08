@@ -590,7 +590,13 @@ class PayrollsController < ApplicationController
             else
             row << "null"
             end 
+            
+            if detalle.employee.ocupacion != nil
             row << detalle.employee.ocupacion.name
+          else
+            row << "no def"
+          end 
+            
             if detalle.employee.onp == "0"
               if detalle.employee.afp != nil
               row << detalle.employee.afp.name
