@@ -127,7 +127,7 @@ class Quinto < ActiveRecord::Base
         
         end
         
-        self.retencion_mensual = self.renta_impo_ret * self.mes_pendiente
+        self.retencion_mensual = self.renta_impo_ret / self.mes_pendiente
         
     end 
 end
