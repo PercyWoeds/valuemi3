@@ -16,7 +16,9 @@ class Employee < ActiveRecord::Base
 	has_many :quintos 
 	
     validates_uniqueness_of :idnumber
-    validates_presence_of :company_id, :idnumber, :firstname,:lastname,:fecha_ingreso,:fecha_nacimiento
+    validates_presence_of :company_id, :idnumber, :firstname,:lastname,:fecha_ingreso,:fecha_nacimiento,:sueldo
+    
+    
  
 	def get_afp(parameter_id,value = "aporte")
 	

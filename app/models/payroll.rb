@@ -274,8 +274,13 @@ class Payroll < ActiveRecord::Base
             pl.comision = lcComisionAfp0.round(2)
             
             #Quinta 
+            mes_anio_quinto = self.code
+            parts_quinto = mes_anio_quinto.split("-")
+            mes_quinto  = parts_quinto[0]
+            anio_quinto = parts_quinto[1]
             
-            @quinta =  Quinto.find_by(employee_id: pl.employee_id)
+            
+            @quinta =  Quinto.find_by(employee_id: pl.employee_id,anio: anio_quinto,mes: mes_quinto)
             if @quinta != nil
                 pl.calc4 = @quinta.retencion_mensual.round(2)
             else
