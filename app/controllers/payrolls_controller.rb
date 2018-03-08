@@ -782,11 +782,8 @@ class PayrollsController < ApplicationController
 def do_pdf2
      @company = Company.find(1)
      @payroll = Payroll.find(params[:id])
-     @planilla = PayrollDetail.where(payroll_id: @payroll.id).includes(:employee).order('employees.lastname ')    
-
-  render  pdf: "Boleta",template: "payrolls/boleta_rpt.pdf.erb",locals: {:payroll => @planilla}
-  
-  
+     @planilla = PayrollDetail.where(payroll_id: @payroll.id).includes(:employee).order('employees.lastname ')
+     
           Prawn::Document.generate "app/pdf_output/rpt_planilla.pdf" , :page_layout => :landscape,:page_size => "A2" do |pdf|        
              pdf.font "Helvetica"
              pdf = build_pdf_header_rpt(pdf)

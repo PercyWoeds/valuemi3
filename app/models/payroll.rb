@@ -191,8 +191,8 @@ class Payroll < ActiveRecord::Base
                 detalle = PayrollDetail.find_by(payroll_id: self.id,employee_id: he.employee_id)
                 if detalle 
                 detalle.hextra0 = (detalle.remuneracion + detalle.calc1 )/ 30 / 8 * 1.25 * he.importe
-                detalle.hextra = he.importe
-                f2 = detalle.hextra0 
+                detalle.hextra = he.importe 
+                f2 = detalle.hextra0 / detalle.totaldia * he.importe 
                 detalle.hextra0 = f2.round(2)
                 detalle.save
                 end 
