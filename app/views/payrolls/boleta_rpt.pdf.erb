@@ -216,7 +216,7 @@
     <td width = "16.5%">Remuneraci&oacuten B&aacutesica </td>
     <td width = "16.5%" align="right"><%= sprintf("%.2f",b.basico) %></td>
     
-    <% if b.employee.onp == "1"%>
+    <% if b.employee.onp == "0"%>
     <td width = "20%" >AFP. Aportaci&oacuten Obligator  </td>
     <td width = "10%"><%= sprintf("%.2f",$lcAporteAfp0) %> </td>
     <td width = "10%" align="right"><%= sprintf("%.2f",$lcAporteAfp) %></td>
@@ -241,7 +241,7 @@
     
     
     <% end  %>
-    <% if b.employee.onp == "1"%>
+    <% if b.employee.onp == "0"%>
     <td width = "20%" >AFP. Seguro de Vida  </td>
     <td width = "10%"><%=  sprintf("%.2f",$lcSeguroAfp0) %></td>
     <td width = "10%" align="right"><%=  sprintf("%.2f",$lcSeguroAfp)  %></td>
@@ -266,7 +266,7 @@
     <td width = "16.5%" align="right" > </td>
     
     <% end%>  
-      <% if b.employee.onp == "1"%>
+      <% if b.employee.onp == "0"%>
     <td width = "20%">AFP. Comisi&oacuten sobre la RA  </td>
     <td width = "10%"> <%= sprintf("%.2f",$lcComisionAfp0) %></td>
     <td width = "10%" align="right"> <%= sprintf("%.2f",$lcComisionAfp) %></td>
