@@ -1,24 +1,25 @@
 <html>
 <body>
-    
-<div style="width:800px;height:540px;border:1px solid #000;">
-		
+  
+<% for  b in @planilla %>    
+<div style="width:800px;height:575px;border:1px solid #000;">
+
 <table style='font-family:"Arial", Courier, monospace; font-size:80% ;width:100%'>
   <tr>
-    <td width= "30%">TRANSPORTES PEREDA SRL</td>
-    <td width= "40%"> </td>
-    <td width= "30%" style='font-weight:bold;font-size:75%' >D.S.N.020-2008</td>
+    <td style=  'width:30%'>TRANSPORTES PEREDA SRL</td>
+    <td style=  'width:40%'> </td>
+    <td style=  'width:30%' style='font-weight:bold;font-size:75%' >D.S.N.020-2008</td>
   </tr>      
   <tr>
-    <td width= "30%" style='font-weight:bold;font-size:75%' >Jr.Victor Reinel Nro.187 Lima</td>
-    <td width= "40%"> </td>
-    <td width= "30%"> </td>
+    <td style='font-weight:bold;font-size:75%;width:30%' >Jr.Victor Reinel Nro.187 Lima</td>
+    <td style=  'width:40%'> </td>
+    <td style=  'width:30%'> </td>
   </tr>      
   
   <tr >
-    <td width= "30%" style='font-weight:bold;font-size:75%' >Ruc 20424092941</td>
-    <td width= "40%" style='font-weight:bold;font-size:100% '>BOLETA DE REMUNERACIONES</td>
-    <td width= "30%" style='font-weight:bold;font-size:70% '>Fecha de Pago: </td>
+    <td style='font-weight:bold;font-size:75%;width:30%' >Ruc 20424092941</td>
+    <td style='font-weight:bold;font-size:100%;width:30% '>BOLETA DE REMUNERACIONES</td>
+    <td style='font-weight:bold;font-size:70%;width:30% '>Fecha de Pago: </td>
   </tr>
   
   </table>
@@ -27,77 +28,81 @@
   <table style='font-family:"Arial", Courier, monospace; font-size:70% ;width:100%'>
       
   <tr >
-    <td width= "16%" style='font-weight:bold'>Codigo :</td>
-    <td width= "16%" >  </td>
-    <td width= "16%" style='font-weight:bold'>Fecha Ingreso : </td>
-    <td width= "16%" > </td>
-    <td width= "10%" style='font-weight:bold'>Dias Lab.: </td>
-    <td width= "10%" >  </td>    
+    <td style='font-weight:bold;width:16%'>Codigo : </td>
+    <td style='width:16%' > <%=  b.employee.idnumber %> </td>
+    <td style='font-weight:bold;width:16%'>Fecha Ingreso : </td>
+    <td style='width:16%'><%= b.employee.fecha_ingreso.strftime("%d/%m/%Y") %> </td>
+    <td style='font-weight:bold;width:10%'>Dias Lab.: </td>
+    <td style='width:10%' ><%= b.dias %> </td>    
   </tr>
   <tr >
-    <td width= "16%" style='font-weight:bold'>Trabajador</td>
-    <td width= "16%" > </td>
-    <td width= "16%" style='font-weight:bold'>Fecha Cese </td>
-    <td width= "16%" > </td>
-    <td width= "10%" style='font-weight:bold'>Dias subs. </td>
-    <td width= "10%" >  </td>    
+    <td style='font-weight:bold;width:8%'>Trabajador</td>
+    <td style='width:22%;font-size:80%'><%= b.employee.lastname << " " << b.employee.firstname %> </td>
+    <td style='font-weight:bold;width:16%'>Fecha Cese : </td>
+    <% if b.employee.fecha_cese != nil %>
+    <td style='width:16%' > <%= b.employee.fecha_cese.strftime("%d/%m/%Y") %></td>
+    <% else %>
+    <td style='width:16%' >  </td>
+    <% end %>
+    <td style='font-weight:bold;width:10%'>Dias subs. </td>
+    <td style='width:10%' > <% b.subsidio %> </td>    
   </tr>
   <tr >
-    <td width= "16%" style='font-weight:bold'>Tipo/Categoria Trab.</td>
-    <td width= "16%" > </td>
-    <td width= "16%" style='font-weight:bold'>Periodo Vacacional : </td>
-    <td width= "16%" >  </td>
-    <td width= "10%" style='font-weight:bold'>Dias no Lab. </td>
-    <td width= "10%" >  </td>    
+    <td style='font-weight:bold;width=16%'>Tipo/Categoria Trab. : </td>
+    <td style='width:16%' > Empleado </td>
+    <td style='font-weight:bold'>Periodo Vacacional : </td>
+    <td style='width:16%' >  </td>
+    <td style='font-weight:bold'>Dias no Lab. </td>
+    <td style='width:16%' > <%= b.falta %> </td>    
   </tr>
   <tr >
-    <td width= "16%" style='font-weight:bold'>Area</td>
-    <td width= "16%" >  </td>
-    <td width= "16%" style='font-weight:bold'> Inicio Vac. </td>
-    <td width= "16%" > </td>
-    <td width= "10%" style='font-weight:bold'>Dias Vac. </td>
-    <td width= "10%" >  </td>    
+    <td style='font-weight:bold'>Area</td>
+    <td style='width:16%;font-size:80%'> <%= b.employee.division.name%>  </td>
+    <td style='font-weight:bold'> Inicio Vac. </td>
+    <td style='width:16%' > </td>
+    <td style='font-weight:bold'>Dias Vac. </td>
+    <td style='width:10%' > <%= b.vaca %> </td>    
   </tr>
   <tr >
-    <td width= "16%" style='font-weight:bold'>Centro de Costos</td>
-    <td width= "16%" >  </td>
-    <td width= "16%" style='font-weight:bold'>Fin.Vacac.</td>
-    <td width= "16%" ></td>
-    <td width= "10%" style='font-weight:bold'>Nro.Horas ord. </td>
-    <td width= "10%" > </td>    
+    <td  style='font-weight:bold'>Centro de Costos</td>
+    <td style='width:16%' >  </td>
+    <td style='font-weight:bold'>Fin.Vacac.</td>
+    <td style='width:16%'></td>
+    <td  style='font-weight:bold'>Nro.Horas ord. </td>
+    <td style='width:16%' > </td>    
   </tr>
   <tr >
-    <td width= "16%" style='font-weight:bold'>Cargo</td>
-    <td width= "16%" > </td>
-    <td width= "16%" style='font-weight:bold'>Reg.Pensionario </td>
-    <td width= "16%" > </td>
-    <td width= "10%" style='font-weight:bold'>N.Hs.Ext.25% </td>
-    <td width= "10%" > </td>    
+    <td style='font-weight:bold'>Cargo</td>
+    <td style='width:16%;font-size:80%' > <%= b.employee.ocupacion.name %> </td>
+    <td style='font-weight:bold'>Reg.Pensionario </td>
+    <td style='width:16%' > </td>
+    <td style='font-weight:bold'>N.Hs.Ext.25% : </td>
+    <td style='width:16%'><%= b.hextra0 %> </td>    
   </tr>
   <tr >
-    <td width= "16%" style='font-weight:bold'>Tipo Documento </td>
-    <td width= "16%" >  </td>
-    <td width= "16%" style='font-weight:bold'>CUSSPP </td>
-    <td width= "16%" > </td>
-    <td width= "10%" style='font-weight:bold'>N.Hs.Ext.35% </td>
-    <td width= "10%" ></td>    
+    <td style='font-weight:bold'>Tipo Documento </td>
+    <td style='width:16%' > DNI: <%= b.employee.idnumber %>  </td>
+    <td style='font-weight:bold'>CUSSPP </td>
+    <td style='width:16%'> </td>
+    <td style='font-weight:bold'>N.Hs.Ext.35% </td>
+    <td style='width:16%' ></td>    
   </tr>
   <tr >
-    <td width= "16%" style='font-weight:bold'>Fec.Nacimiento </td>
-    <td width= "16%" > </td>
-    <td width= "16%" style='font-weight:bold'>Autogenerado </td>
-    <td width= "16%" >  </td>
-    <td width= "10%" style='font-weight:bold'>N.Hs.Ext.100% </td>
-    <td width= "10%" > </td>    
+    <td style='font-weight:bold'>Fec.Nacimiento </td>
+    <td style='width:16%' ><%= b.employee.fecha_nacimiento.strftime("%d/%m/%Y")%> </td>
+    <td style='font-weight:bold'>Autogenerado </td>
+    <td style='width:16%' >  </td>
+    <td style='font-weight:bold'>N.Hs.Ext.100% </td>
+    <td style='width:16%' > </td>    
   </tr>
   
   <tr >
-    <td width= "16%" style='font-weight:bold'>Regimen Laboral </td>
-    <td width= "16%" > </td>
-    <td width= "16%" style='font-weight:bold'>Sit.Especial </td>
-    <td width= "16%" >  </td>
-    <td width= "10%" style='font-weight:bold'>Rem.Mensual </td>
-    <td width= "10%" > </td>    
+    <td style='font-weight:bold'>Regimen Laboral </td>
+    <td style='width:16%;font-size:80%'> PRIVADO GENERAL - D. LEG. N.728 </td>
+    <td style='font-weight:bold'>Sit.Especial </td>
+    <td style='width:16%' >  NINGUNO</td>
+    <td style='font-weight:bold'>Rem.Mensual : </td>
+    <td style='width:16%' > <%= b.remuneracion %> </td>    
   </tr>
   
   </table>
@@ -111,97 +116,203 @@
   	</tr>
   </table>
   <hr>     
+  
+     <% if b.employee.onp == "1"%>
+        
+       <% $lcOnp = b.calc5.to_s %>
+      <%else%>
+        <% $lcAporteAfp0   = b.aporte0.to_s %>
+        <% $lcSeguroAfp0   = b.seguro0.to_s %>
+        <% $lcComisionAfp0 = b.comision0.to_s %>
+      
+        <% $lcAporteAfp   = b.aporte.to_s %>
+        <% $lcSeguroAfp   = b.seguro.to_s %>
+        <% $lcComisionAfp = b.comision.to_s %>
+        
+      <% end %>
+         
+         <!--#fila 2-->
+         
+      <% if b.calc1 > 0 %>
+      
+      <% $lcAsignacionFamiliar = b.calc1.to_s %>
+      <% else %>
+      
+      <% $lcAsignacionFamiliar = ""  %>
+      <% end %>
+      
+      <%  if b.hextra0 > 0 %>
+        
+         <% $lcHorasExtras = b.hextra0.to_s %>
+      <%  else %>
+         <% $lcHorasExtras = ""    %>
+      <%  end %>
+            
+      <!--#fila 4-->
+     
+     
+        
+        <% if b.vaca > 0 %>
+          <% $lcVaca = b.vacaciones.to_s %>
+        <% else %>
+          <% $lcVaca = "" %>
+        <% end %>
+         
+        <% if b.calc4 > 0 %>
+        <%  $lcQuinta =  b.calc4.to_s %>
+        <% else%>
+        <% $lcQuinta = "" %>
+        <% end %>
+        
+        
+        <% if b.desmed > 0 %>
+          <% $lcDesMed = b.desmedico.to_s %>
+        <% else %>
+        <% $lcDesMed = "" %>
+          
+        <% end %>
+        <% if b.faltas >0       %>
+           <% $lcFaltas = b.faltas.to_s %>
+        <% else %>
+           <% $lcFaltas = 0 %>
+        <% end %>
+        
+      <!--#fila 6-->
+      
+        
+        <% if b.subsidio > 0 %>
+          <% $lcSubsidio = b.subsidio0.to_s %>
+        <% else %>
+          <% $lcSubsidio = "" %> 
+        <% end%>
+        <% if b.reintegro > 0 %>
+          <% $lcReintegro = b.reintegro.to_s %>
+        <% else %>
+          <% $lcReintegro = "" %> 
+        <% end%>
+        
+        
+        <% if b.calc7 > 0 %>
+          <% $lcAdelanto =  b.calc7.to_s %>
+        <% else%>
+          <% $lcAdelanto = ""  %>
+        <% end %>
+        
+      <!--#fila 7-->
+      
+        
+        <% if b.otros > 0 %>
+          <% $lcOtros = b.otros.to_s %>
+        <% else%>
+          <% $lcOtros = "" %>
+        <% end %>
+          
+      
     
     <table style='font-family:"Arial", Courier, monospace; font-size:70% ;width:100%'>
     	      
     <tr>
-    <td width = "16.5%">Remuneracion Básica </td>
-    <td width = "16.5%">12552.00 </td>
+    <td width = "16.5%">Remuneraci&oacuten B&aacutesica </td>
+    <td width = "16.5%"><%= b.basico %></td>
     
-    <td width = "20%" >Aportaciones Empleador  </td>
-    <td width = "10%">10.50% </td>
-    <td width = "10%">1236.50 </td>
+    <td width = "20%" >AFP. Aportaci&oacuten Obligator  </td>
+    <td width = "10%"><%= $lcAporteAfp0 %> </td>
+    <td width = "10%"><%= $lcAporteAfp %></td>
         
     <td width = "20%">EsSalud </td>
     <td width = "10%">9%</td>
-    <td width = "10%">123456.10</td>
+    <td width = "10%"><%= b.total3 %></td>
     </tr>
     
 	<tr>
-    <td width = "16.5%">Remuneracion Básica </td>
-    <td width = "16.5%">12552.00 </td>
+    <td width = "16.5%">Asignaci&oacuten Familiar </td>
+    <td width = "16.5%"><%= b.calc1  %> </td>
     
-    <td width = "20%" >Aportaciones Empleador  </td>
-    <td width = "10%">10.50% </td>
-    <td width = "10%">1236.50 </td>
+    <td width = "20%" >AFP. Seguro de Vida  </td>
+    <td width = "10%"><%= $lcSeguro0 %></td>
+    <td width = "10%"><%= $lcSeguro  %></td>
         
-    <td width = "20%">EsSalud </td>
-    <td width = "10%">9%</td>
-    <td width = "10%">123456.10</td>
+    <td width = "20%"> </td>
+    <td width = "10%"> </td>
+    <td width = "10%"> </td>
+    </tr>
+    
+    
+    <tr>
+    <td width = "16.5%"> Vacaciones </td>
+    <td width = "16.5%"><%=  $lcVaca %></td>
+    
+    <td width = "20%">AFP. Comisi&oacuten sobre la RA  </td>
+    <td width = "10%"> <%= $lcComision0 %></td>
+    <td width = "10%"> <%= $lcComision %></td>
+        
+    <td width = "20%"> </td>
+    <td width = "10%"> </td>
+    <td width = "10%"> </td>
     </tr>
     
     <tr>
-    <td width = "16.5%">Remuneracion Básica </td>
-    <td width = "16.5%">12552.00 </td>
+    <td width = "16.5%"> Descanso Medico </td>
+    <td width = "16.5%"> <%= $lcDescanso %>  </td>
     
-    <td width = "20%" >Aportaciones Empleador  </td>
-    <td width = "10%">10.50% </td>
-    <td width = "10%">1236.50 </td>
+    <td width = "20%" >Inasistencia  </td>
+    <td width = "10%"></td>
+    <td width = "10%"><%= b.faltas %> </td>
         
-    <td width = "20%">EsSalud </td>
-    <td width = "10%">9%</td>
-    <td width = "10%">123456.10</td>
+    <td width = "20%"> </td>
+    <td width = "10%"> </td>
+    <td width = "10%"> </td>
+    </tr>
+    <tr>
+    <td width = "16.5%">Subsidio </td>
+    <td width = "16.5%"><%= $lcSubsidio %></td>
+    
+    <td width = "20%" >Quinta Categoria  </td>
+    <td width = "10%"> </td>
+    <td width = "10%"> <%= $lcQuinta %></td>
+        
+    <td width = "20%"> </td>
+    <td width = "10%"> </td>
+    <td width = "10%"> </td>
+    </tr>
+    <tr>
+    <td width = "16.5%"> Reintegro</td>
+    <td width = "16.5%"><%= $lcReintegro %> </td>
+    
+    <td width = "20%" >Adelantos  </td>
+    <td width = "10%"> </td>
+    <td width = "10%"><%= $lcAdelanto %> </td>
+        
+    <td width = "20%"> </td>
+    <td width = "10%"> </td>
+    <td width = "10%"> </td>
     </tr>
     
     <tr>
-    <td width = "16.5%">Remuneracion Básica </td>
-    <td width = "16.5%">12552.00 </td>
+    <td width = "16.5%"> </td>
+    <td width = "16.5%"> </td>
     
-    <td width = "20%" >Aportaciones Empleador  </td>
-    <td width = "10%">10.50% </td>
-    <td width = "10%">1236.50 </td>
+    <td width = "20%" >Otros  </td>
+    <td width = "10%"> </td>
+    <td width = "10%"><%= $lcOtros %> </td>
         
-    <td width = "20%">EsSalud </td>
-    <td width = "10%">9%</td>
-    <td width = "10%">123456.10</td>
+    <td width = "20%"> </td>
+    <td width = "10%"> </td>
+    <td width = "10%"> </td>
     </tr>
+    
     <tr>
-    <td width = "16.5%">Remuneracion Básica </td>
-    <td width = "16.5%">12552.00 </td>
+    <td width = "16.5%"> </td>
+    <td width = "16.5%"> </td>
     
-    <td width = "20%" >Aportaciones Empleador  </td>
-    <td width = "10%">10.50% </td>
-    <td width = "10%">1236.50 </td>
+    <td width = "20%" >   </td>
+    <td width = "10%"> </td>
+    <td width = "10%">  </td>
         
-    <td width = "20%">EsSalud </td>
-    <td width = "10%">9%</td>
-    <td width = "10%">123456.10</td>
+    <td width = "20%"> </td>
+    <td width = "10%"> </td>
+    <td width = "10%"> </td>
     </tr>
-    <tr>
-    <td width = "16.5%">Remuneracion Básica </td>
-    <td width = "16.5%">12552.00 </td>
-    
-    <td width = "20%" >Aportaciones Empleador  </td>
-    <td width = "10%">10.50% </td>
-    <td width = "10%">1236.50 </td>
-        
-    <td width = "20%">EsSalud </td>
-    <td width = "10%">9%</td>
-    <td width = "10%">123456.10</td>
-    </tr>
-    <tr>
-    <td width = "16.5%">Remuneracion Básica </td>
-    <td width = "16.5%">12552.00 </td>
-    
-    <td width = "20%" >Aportaciones Empleador  </td>
-    <td width = "10%">10.50% </td>
-    <td width = "10%">1236.50 </td>
-        
-    <td width = "20%">EsSalud </td>
-    <td width = "10%">9%</td>
-    <td width = "10%">123456.10</td>
-    </tr>
-    
   </table>
   <hr>
   <table style='font-family:"Arial", Courier, monospace; font-size:70% ;width:100%'>
@@ -237,9 +348,31 @@
   	<td width ="33%" align="center"> TRABAJADOR </td>  	
   	</tr>  	
   	
+  	
+  	<tr>
+  	 <td> </td>
+  	 <td> </td>
+  	 <td> . </td>
+  	</tr>
+  	<tr>
+  	 <td> </td>
+  	 <td> </td>
+  	 <td> . </td>
+  	</tr>
+  	
   </table>
     
 </div>
+
+<p> 
+
+
+
+
+
+
+</p>
+<% end %>
 </body>
 
 </html>

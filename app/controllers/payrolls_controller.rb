@@ -798,8 +798,9 @@ def do_pdf2
   def do_pdf3
      @company = Company.find(1)
      @payroll = Payroll.find(params[:id])
-     @planilla = PayrollDetail.where(payroll_id: @payroll.id).includes(:employee).order('employees.lastname ')    
-     render  pdf: "Boleta",template: "payrolls/boleta_rpt.pdf.erb",locals: {:payroll => @planilla}
+     @planilla = PayrollDetail.where(payroll_id: @payroll.id).includes(:employee).order('employees.lastname ') 
+     
+     render  pdf: "Payrolls",template: "payrolls/boleta_rpt.pdf.erb",locals: {:payroll => @planilla}
   
   end 
 

@@ -208,6 +208,14 @@ class Payroll < ActiveRecord::Base
                 end 
             end     
             
+            if he.valor_id == 3
+                detalle = PayrollDetail.find_by(payroll_id: self.id,employee_id: he.employee_id)
+                if detalle 
+                f2 = he.importe
+                detalle.reintegro = f2.round(2)
+                detalle.save
+                end 
+            end     
             if he.valor_id == 2
                 detalle = PayrollDetail.find_by(payroll_id: self.id,employee_id: he.employee_id)
                 if detalle 
@@ -274,7 +282,7 @@ class Payroll < ActiveRecord::Base
             end 
             lcAporteAfp = pl.employee.get_afp(self.parameter_id,"aporte")
             
-            if pl.total1 < 9369.07 
+            if pl.total1 < 9321.52
              lcSeguroAfp = pl.employee.get_afp(self.parameter_id,"seguro")
             else
              lcSeguroAfp = 0   
@@ -284,6 +292,10 @@ class Payroll < ActiveRecord::Base
             lcAporteAfp0 = (lcAporteAfp * pl.total1) / 100
             lcSeguroAfp0 = (lcSeguroAfp * pl.total1) / 100
             lcComisionAfp0= (lcComisionAfp * pl.total1) / 100
+            pl.aporte0 = lcAporteAfp 
+            pl.seguro0 = lcSeguroAfp 
+            pl.comision0 = lcComisionAfp
+            
             pl.aporte = lcAporteAfp0.round(2)
             pl.seguro = lcSeguroAfp0.round(2)
             pl.comision = lcComisionAfp0.round(2)
