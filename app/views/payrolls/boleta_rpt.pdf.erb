@@ -124,8 +124,9 @@
      <% if b.employee.onp == "1"%>
         
        <% $lcOnp = b.calc5.to_s %>
+       
       <%else%>
-      
+      <% $lcOnp = 0 %>
         <% $lcAporteAfp0   = b.aporte0.to_s %>
         <% $lcSeguroAfp0   = b.seguro0.to_s %>
         <% $lcComisionAfp0 = b.comision0.to_s %>
