@@ -76,16 +76,16 @@
     <td style='width:16%;font-size:80%' > <%= b.employee.ocupacion.name %> </td>
     <td style='font-weight:bold'>Reg.Pensionario </td>
      <% if b.employee.onp == "1"%>
-    <td style='width:16%' > ONP </td>
+    <td style='width:16%;font-size:80%' > ONP </td>
     <% else %>
-    <td style='width:16%' > <%= b.employee.get_afpname %></td>
+    <td style='width:16%;font-size:80%' > <%= b.employee.get_afpname %></td>
     <% end %>
     <td style='font-weight:bold'>N.Hs.Ext.25% : </td>
     <td style='width:16%'><%= b.hextra0 %> </td>    
   </tr>
   <tr >
     <td style='font-weight:bold'>Tipo Documento </td>
-    <td style='width:16%' > DNI: <%= b.employee.idnumber %>  </td>
+    <td style='width:16%;font-size:80%' > DNI: <%= b.employee.idnumber %>  </td>
     <td style='font-weight:bold'>CUSSPP </td>
     <td style='width:16%'> <%= b.employee.carnet_seguro %></td>
     <td style='font-weight:bold'>N.Hs.Ext.35% </td>
@@ -104,7 +104,7 @@
     <td style='font-weight:bold'>Regimen Laboral </td>
     <td style='width:16%;font-size:80%'> PRIVADO GENERAL - D. LEG. N.728 </td>
     <td style='font-weight:bold'>Sit.Especial </td>
-    <td style='width:16%' >  NINGUNO</td>
+    <td style='width:16%;font-size:80%' >  NINGUNO</td>
     <td style='font-weight:bold'>Rem.Mensual : </td>
     <td style='width:16%' > <%= b.remuneracion %> </td>    
   </tr>

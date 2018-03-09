@@ -271,7 +271,7 @@ class Payroll < ActiveRecord::Base
             lcFaltas = pl.remuneracion/30 * pl.falta
             pl.faltas = lcFaltas.round(2)
             
-            lcRemBruta = pl.totingreso - pl.faltas
+            lcRemBruta = pl.totingreso - pl.faltas - pl.subsidio0
             pl.total1 = lcRemBruta.round(2)
             
             if pl.employee.onp == "1"
