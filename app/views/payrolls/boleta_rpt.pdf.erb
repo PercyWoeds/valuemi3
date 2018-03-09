@@ -75,7 +75,11 @@
     <td style='font-weight:bold'>Cargo</td>
     <td style='width:16%;font-size:80%' > <%= b.employee.ocupacion.name %> </td>
     <td style='font-weight:bold'>Reg.Pensionario </td>
-    <td style='width:16%' > </td>
+     <% if b.employee.onp == "1"%>
+    <td style='width:16%' > ONP </td>
+    <% else %>
+    <td style='width:16%' > <%= b.employee.get_afpname %></td>
+    <% end %>
     <td style='font-weight:bold'>N.Hs.Ext.25% : </td>
     <td style='width:16%'><%= b.hextra0 %> </td>    
   </tr>

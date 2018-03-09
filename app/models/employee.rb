@@ -18,7 +18,14 @@ class Employee < ActiveRecord::Base
     validates_uniqueness_of :idnumber
     validates_presence_of :company_id, :idnumber, :firstname,:lastname,:fecha_ingreso,:fecha_nacimiento,:sueldo
     
-    
+    def get_afpname
+        ret = ""
+    if self.afp_id != nil    
+        afp = Afp.find(self.afp_id)
+        ret = afp.name 
+        return ret
+    end 
+    end 
  
 	def get_afp(parameter_id,value = "aporte")
 	
