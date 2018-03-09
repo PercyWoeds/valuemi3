@@ -33,7 +33,7 @@
     <td style='font-weight:bold;width:16%'>Fecha Ingreso : </td>
     <td style='width:16%'><%= b.employee.fecha_ingreso.strftime("%d/%m/%Y") %> </td>
     <td style='font-weight:bold;width:10%'>Dias Lab.: </td>
-    <td style='width:10%' ><%= b.dias %> </td>    
+    <td style='width:10%' ><%= b.totaldia %> </td>    
   </tr>
   <tr >
     <td style='font-weight:bold;width:8%'>Trabajador</td>
@@ -121,6 +121,7 @@
         
        <% $lcOnp = b.calc5.to_s %>
       <%else%>
+      
         <% $lcAporteAfp0   = b.aporte0.to_s %>
         <% $lcSeguroAfp0   = b.seguro0.to_s %>
         <% $lcComisionAfp0 = b.comision0.to_s %>
@@ -145,7 +146,7 @@
         
          <% $lcHorasExtras = b.hextra0.to_s %>
       <%  else %>
-         <% $lcHorasExtras = ""    %>
+         <% $lcHorasExtras = 0    %>
       <%  end %>
             
       <!--#fila 4-->
@@ -153,26 +154,26 @@
      
         
         <% if b.vaca > 0 %>
-          <% $lcVaca = b.vacaciones.to_s %>
+          <% $lcVaca = b.vacaciones %>
         <% else %>
-          <% $lcVaca = "" %>
+          <% $lcVaca = 0 %>
         <% end %>
          
         <% if b.calc4 > 0 %>
-        <%  $lcQuinta =  b.calc4.to_s %>
+        <%  $lcQuinta =  b.calc4 %>
         <% else%>
-        <% $lcQuinta = "" %>
+        <% $lcQuinta = 0 %>
         <% end %>
         
         
         <% if b.desmed > 0 %>
-          <% $lcDesMed = b.desmedico.to_s %>
+          <% $lcDesMed = b.desmedico %>
         <% else %>
-        <% $lcDesMed = "" %>
+        <% $lcDesMed = 0%>
           
         <% end %>
         <% if b.faltas >0       %>
-           <% $lcFaltas = b.faltas.to_s %>
+           <% $lcFaltas = b.faltas %>
         <% else %>
            <% $lcFaltas = 0 %>
         <% end %>
@@ -181,30 +182,30 @@
       
         
         <% if b.subsidio > 0 %>
-          <% $lcSubsidio = b.subsidio0.to_s %>
+          <% $lcSubsidio = b.subsidio0 %>
         <% else %>
-          <% $lcSubsidio = "" %> 
+          <% $lcSubsidio = 0 %> 
         <% end%>
         <% if b.reintegro > 0 %>
-          <% $lcReintegro = b.reintegro.to_s %>
+          <% $lcReintegro = b.reintegro %>
         <% else %>
-          <% $lcReintegro = "" %> 
+          <% $lcReintegro = 0%> 
         <% end%>
         
         
         <% if b.calc7 > 0 %>
-          <% $lcAdelanto =  b.calc7.to_s %>
+          <% $lcAdelanto =  b.calc7 %>
         <% else%>
-          <% $lcAdelanto = ""  %>
+          <% $lcAdelanto =  0%>
         <% end %>
         
       <!--#fila 7-->
       
         
         <% if b.otros > 0 %>
-          <% $lcOtros = b.otros.to_s %>
+          <% $lcOtros = b.otros %>
         <% else%>
-          <% $lcOtros = "" %>
+          <% $lcOtros = 0 %>
         <% end %>
           
       
@@ -213,25 +214,43 @@
     	      
     <tr>
     <td width = "16.5%">Remuneraci&oacuten B&aacutesica </td>
-    <td width = "16.5%"><%= b.basico %></td>
+    <td width = "16.5%" align="right"><%= sprintf("%.2f",b.basico) %></td>
     
+    <% if b.employee.onp == "1"%>
     <td width = "20%" >AFP. Aportaci&oacuten Obligator  </td>
-    <td width = "10%"><%= $lcAporteAfp0 %> </td>
-    <td width = "10%"><%= $lcAporteAfp %></td>
-        
+    <td width = "10%"><%= sprintf("%.2f",$lcAporteAfp0) %> </td>
+    <td width = "10%" align="right"><%= sprintf("%.2f",$lcAporteAfp) %></td>
+    <%else%>    
+    <td width = "20%" > O.N.P.  </td>
+    <td width = "10%"> </td>
+    <td width = "10%" align="right"><%= sprintf("%.2f",$lcOnp) %></td>
+    
+    <% end %>
     <td width = "20%">EsSalud </td>
     <td width = "10%">9%</td>
-    <td width = "10%"><%= b.total3 %></td>
+    <td width = "10%" align="right"><%= sprintf("%.2f",b.total3) %></td>
     </tr>
     
 	<tr>
+	  <% if b.calc1 > 0 %>
     <td width = "16.5%">Asignaci&oacuten Familiar </td>
-    <td width = "16.5%"><%= b.calc1  %> </td>
+    <td width = "16.5%" align="right"><%= sprintf("%.2f",b.calc1)  %> </td>
+    <% else %>
+    <td width = "16.5%">  </td>
+    <td width = "16.5%" align="right"> </td>
     
+    
+    <% end  %>
+    <% if b.employee.onp == "1"%>
     <td width = "20%" >AFP. Seguro de Vida  </td>
-    <td width = "10%"><%= $lcSeguro0 %></td>
-    <td width = "10%"><%= $lcSeguro  %></td>
-        
+    <td width = "10%"><%=  sprintf("%.2f",$lcSeguroAfp0) %></td>
+    <td width = "10%" align="right"><%=  sprintf("%.2f",$lcSeguroAfp)  %></td>
+    <% else %>
+    <td width = "20%" >   </td>
+    <td width = "10%"> </td>
+    <td width = "10%" align="right"> </td>
+    
+      <% end %>    
     <td width = "20%"> </td>
     <td width = "10%"> </td>
     <td width = "10%"> </td>
@@ -239,50 +258,92 @@
     
     
     <tr>
+    <% if $lcVaca > 0 %>  
     <td width = "16.5%"> Vacaciones </td>
-    <td width = "16.5%"><%=  $lcVaca %></td>
+    <td width = "16.5%" align="right" ><%=  sprintf("%.2f",$lcVaca.to_s) %></td>
+    <% else%>  
+    <td width = "16.5%"> </td>
+    <td width = "16.5%" align="right" > </td>
     
+    <% end%>  
+      <% if b.employee.onp == "1"%>
     <td width = "20%">AFP. Comisi&oacuten sobre la RA  </td>
-    <td width = "10%"> <%= $lcComision0 %></td>
-    <td width = "10%"> <%= $lcComision %></td>
-        
+    <td width = "10%"> <%= sprintf("%.2f",$lcComisionAfp0) %></td>
+    <td width = "10%" align="right"> <%= sprintf("%.2f",$lcComisionAfp) %></td>
+        <% end %>  
     <td width = "20%"> </td>
     <td width = "10%"> </td>
     <td width = "10%"> </td>
     </tr>
     
     <tr>
+    <% if $lcDesMed > 0%>  
     <td width = "16.5%"> Descanso Medico </td>
-    <td width = "16.5%"> <%= $lcDescanso %>  </td>
+    <td width = "16.5%" align="right"> <%= sprintf("%.2f",$lcDesMed.to_s) %>  </td>
+    <%else%>
+    <td width = "16.5%">  </td>
+    <td width = "16.5%" align="right">   </td>
     
+    <%end %>
+    
+    <% if b.faltas > 0%>  
     <td width = "20%" >Inasistencia  </td>
     <td width = "10%"></td>
-    <td width = "10%"><%= b.faltas %> </td>
-        
+    <td width = "10%" align="right"><%= sprintf("%.2f",b.faltas.to_s) %> </td>
+    <%else%>
+    <td width = "20%" > </td>
+    <td width = "10%"> </td>
+    <td width = "10%" align="right"> </td>
+    
+    <%end %>
     <td width = "20%"> </td>
     <td width = "10%"> </td>
     <td width = "10%"> </td>
     </tr>
     <tr>
+    <% if  $lcSubsidio > 0%>  
     <td width = "16.5%">Subsidio </td>
-    <td width = "16.5%"><%= $lcSubsidio %></td>
+    <td width = "16.5%" align="right"><%= sprintf("%.2f",$lcSubsidio.to_s) %></td>
+    <% else %>
+    <td width = "16.5%"> </td>
+    <td width = "16.5%" align="right"> </td>
     
+    <% end %>
+    
+    <% if  $lcQuinta > 0%>  
     <td width = "20%" >Quinta Categoria  </td>
     <td width = "10%"> </td>
-    <td width = "10%"> <%= $lcQuinta %></td>
-        
+    <td width = "10%" align="right"> <%= sprintf("%.2f",$lcQuinta.to_s) %></td>
+      <% else %>
+    <td width = "20%" >   </td>
+    <td width = "10%"> </td>
+    <td width = "10%" align="right">  </td>
+    
+    <% end %>
     <td width = "20%"> </td>
     <td width = "10%"> </td>
     <td width = "10%"> </td>
     </tr>
     <tr>
+      
+    <% if  $lcReintegro > 0%>    
     <td width = "16.5%"> Reintegro</td>
-    <td width = "16.5%"><%= $lcReintegro %> </td>
+    <td width = "16.5%" align="right"><%= sprintf("%.2f",$lcReintegro.to_s) %> </td>
+    <% else %>
+    <td width = "16.5%"> </td>
+    <td width = "16.5%" align="right">  </td>
     
+    <% end %>
+    <% if  $lcAdelanto > 0%>  
     <td width = "20%" >Adelantos  </td>
     <td width = "10%"> </td>
-    <td width = "10%"><%= $lcAdelanto %> </td>
-        
+    <td width = "10%" align="right"><%= sprintf("%.2f",$lcAdelanto.to_s) %> </td>
+    <% else %>
+    <td width = "20%" >  </td>
+    <td width = "10%"> </td>
+    <td width = "10%" align="right">  </td>
+    
+    <% end %>
     <td width = "20%"> </td>
     <td width = "10%"> </td>
     <td width = "10%"> </td>
@@ -291,11 +352,16 @@
     <tr>
     <td width = "16.5%"> </td>
     <td width = "16.5%"> </td>
-    
+    <% if  $lcOtros > 0 %>    
     <td width = "20%" >Otros  </td>
     <td width = "10%"> </td>
-    <td width = "10%"><%= $lcOtros %> </td>
-        
+    <td width = "10%"align="right"><%= sprintf("%.2f",$lcOtros) %> </td>
+    <% else %>    
+    <td width = "20%" >   </td>
+    <td width = "10%"> </td>
+    <td width = "10%"align="right">  </td>
+    
+    <% end %>
     <td width = "20%"> </td>
     <td width = "10%"> </td>
     <td width = "10%"> </td>
@@ -317,17 +383,17 @@
   <hr>
   <table style='font-family:"Arial", Courier, monospace; font-size:70% ;width:100%'>
   	<tr>
-  	<td width ="33%" align="center"> TOTAL INGRESOS S/.</td>
-  	<td width ="33%" align="center"> TOTAL DESCUENTOS S/.</td>
-  	<td width ="33%" align="center"> TOTAL APORTACIONES S/.</td>
+  	<td width ="33%" align="center"> TOTAL INGRESOS S/.<%= sprintf("%.2f",b.totingreso.to_s) %> </td>
+  	<td width ="33%" align="center"> TOTAL DESCUENTOS S/.<%= sprintf("%.2f",b.total2.to_s) %></td>
+  	<td width ="33%" align="center"> TOTAL APORTACIONES S/.<%= sprintf("%.2f",b.total3.to_s) %></td>
   	</tr>  	
   </table>
   <hr>   
   <table style='font-family:"Arial", Courier, monospace; font-size:70% ;width:100%'>
   	<tr>
   	<td width ="33%" align="center"> </td>
-  	<td width ="33%" style='font-weight:bold' align="center"> NETO A PAGAR S/.</td>
-  	<td width ="33%" align="center"> </td>
+  	<td width ="33%" style='font-weight:bold' align="center"> NETO A PAGAR S/. <%=sprintf("%.2f",b.remneta.to_s) %> </td>
+  	<td width ="33%" align="center"></td>
   	</tr>  	
   </table>
   

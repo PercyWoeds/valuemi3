@@ -315,7 +315,6 @@ class Payroll < ActiveRecord::Base
             end
                 
             
-            
             pl.total2 = pl.calc4+pl.calc5 + pl.calc7+ pl.faltas + pl.otros+pl.aporte+pl.seguro+pl.comision
             pl.remneta = pl.totingreso - pl.total2 
                 
