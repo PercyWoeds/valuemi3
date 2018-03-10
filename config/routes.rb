@@ -1,5 +1,6 @@
   Mnygo::Application.routes.draw do
 
+  resources :ccostos
   resources :destinos
   resources :viatico_details
   resources :quintos

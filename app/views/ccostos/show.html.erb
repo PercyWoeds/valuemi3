@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @ccosto.code %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @ccosto.name %>
+</p>
+
+<p>
+  <strong>Comments:</strong>
+  <%= @ccosto.comments %>
+</p>
+
+<%= link_to 'Edit', edit_ccosto_path(@ccosto) %> |
+<%= link_to 'Back', ccostos_path %>

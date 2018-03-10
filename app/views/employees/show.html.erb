@@ -1,36 +1,36 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Firstname:</strong>
+  <strong>Nombre:</strong>
   <%= @employee.firstname %>
 </p>
 
 <p>
-  <strong>Lastname:</strong>
+  <strong>Apellidos:</strong>
   <%= @employee.lastname %>
 </p>
 
 <p>
-  <strong>Address1:</strong>
+  <strong>Direccion:</strong>
   <%= @employee.address1 %>
 </p>
 
 <p>
-  <strong>Address2:</strong>
+  <strong>Referencia:</strong>
   <%= @employee.address2 %>
 </p>
 <p>
-  <strong>Id Number:</strong>
+  <strong>DNI:</strong>
   <%= @employee.IdNumber %>
 </p>
 
 <p>
-  <strong>City:</strong>
+  <strong>Ciudad:</strong>
   <%= @employee.city %>
 </p>
 
 <p>
-  <strong>State:</strong>
+  <strong>Provincia:</strong>
   <%= @employee.state %>
 </p>
 
@@ -40,7 +40,7 @@
 </p>
 
 <p>
-  <strong>Country:</strong>
+  <strong>Pais:</strong>
   <%= @employee.country %>
 </p>
 
@@ -50,22 +50,22 @@
 </p>
 
 <p>
-  <strong>Phone1:</strong>
+  <strong>Telefono 1:</strong>
   <%= @employee.phone1 %>
 </p>
 
 <p>
-  <strong>Phone2:</strong>
+  <strong>Telefono 2:</strong>
   <%= @employee.phone2 %>
 </p>
 
 <p>
-  <strong>Email1:</strong>
+  <strong>e-mail :</strong>
   <%= @employee.email1 %>
 </p>
 
 <p>
-  <strong>Email2:</strong>
+  <strong>e-mail alternativo:</strong>
   <%= @employee.email2 %>
 </p>
 
@@ -74,5 +74,5 @@
   <%= @employee.company_id %>
 </p>
 
-<%= link_to 'Edit', edit_employee_path(@employee) %> |
-<%= link_to 'Back', employees_path %>
+<%= link_to 'Editar', edit_employee_path(@employee) %> |
+<%= link_to 'Regresar', employees_path %>

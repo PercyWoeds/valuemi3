@@ -60,7 +60,7 @@
       <th>
         Editar 
       </th>  
-      <th   style="width: 15%">
+      <th >
         Empleado 
       </th>
       <th>
@@ -184,7 +184,7 @@
             <%= check_box_tag "planilla_ids[]", detalle.id  %>
           </td>  
           
-          <td class="small bordered_bottom bordered_right">
+          <td  style='font-weight:bold;font-size:75%' >
             <%= link_to detalle.employee.full_name, detalle.employee, :title => "Ir a Empleado"  %>
             
           </td>

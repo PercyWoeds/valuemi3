@@ -143,18 +143,23 @@
       <%= f.collection_select :location_id, @locations, :id, :name, :prompt => true %>
       
     </div>
-
+     <div class="field">
+      <%= f.label :ccosto_id ,"Centro Costo : " %><br />
+      <%= f.collection_select :ccosto_id, @ccostos, :id, :name, :prompt => true %>
+    </div>
     <div class="field">
       <%= f.label :division_id ,"Seccion : " %><br />
       <%= f.collection_select :division_id, @divisions, :id, :name, :prompt => true %>
       
     </div>
     
+  
+    
     <div class="field">
       <%= f.label :ocupacion_id ,"Ocupacion : " %><br />
       <%= f.collection_select :ocupacion_id, @ocupacions, :id, :name, :prompt => true %>
-      
     </div>
+    
     
     <%= hr() %>
     
@@ -166,6 +171,10 @@
   <div class="field">
     <%= f.label :carnet_seguro, "Carnet Seguro:" %><br>
     <%= f.text_field :carnet_seguro  %>
+  </div>
+  <div class="field">
+    <%= f.label :cusspp, "CUSSPP:" %><br>
+    <%= f.text_field :cusspp  %>
   </div>
   
   

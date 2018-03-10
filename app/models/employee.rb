@@ -8,7 +8,7 @@ class Employee < ActiveRecord::Base
 	belongs_to :ocupacion
 	belongs_to :categorium
 	belongs_to :afp 
-	
+	belongs_to :ccosto 
 	
 	has_many :outputs
 	has_many :payroll_details
@@ -16,7 +16,7 @@ class Employee < ActiveRecord::Base
 	has_many :quintos 
 	
     validates_uniqueness_of :idnumber
-    validates_presence_of :company_id, :idnumber, :firstname,:lastname,:fecha_ingreso,:fecha_nacimiento,:sueldo
+    validates_presence_of :company_id, :idnumber, :firstname,:lastname,:fecha_ingreso,:fecha_nacimiento,:sueldo,:categoria_id,:division_id,:ccosto_id,:ocupacion_id,:comision_flujo,:asignacion,:location_id
     
     def get_afpname
         ret = ""

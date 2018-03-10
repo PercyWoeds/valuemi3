@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Ccostos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Comments</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @ccostos.each do |ccosto| %>
+      <tr>
+        <td><%= ccosto.code %></td>
+        <td><%= ccosto.name %></td>
+        <td><%= ccosto.comments %></td>
+        <td><%= link_to 'Show', ccosto %></td>
+        <td><%= link_to 'Edit', edit_ccosto_path(ccosto) %></td>
+        <td><%= link_to 'Destroy', ccosto, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Ccosto', new_ccosto_path %>

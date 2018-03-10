@@ -156,8 +156,8 @@ class Payroll < ActiveRecord::Base
             pl.calc4 = 0 
             pl.calc7 = 0 
             pl.otros = 0
+            pl.reintegro = 0
             
-        
             pl.save 
         end
         
@@ -197,8 +197,7 @@ class Payroll < ActiveRecord::Base
                 detalle.hextra0 = f2.round(2)
                 detalle.save
                 end 
-            end     
-            if he.valor_id == 1 
+            elsif he.valor_id == 1 
                 
                 detalle = PayrollDetail.find_by(payroll_id: self.id,employee_id: he.employee_id)
                 if detalle 
@@ -206,17 +205,21 @@ class Payroll < ActiveRecord::Base
                 detalle.calc7 = f2.round(2)
                 detalle.save
                 end 
-            end     
-            
-            if he.valor_id == 3
+            elsif  he.valor_id == 3
                 detalle = PayrollDetail.find_by(payroll_id: self.id,employee_id: he.employee_id)
                 if detalle 
                 f2 = he.importe
                 detalle.reintegro = f2.round(2)
                 detalle.save
                 end 
-            end     
-            if he.valor_id == 2
+            elsif    he.valor_id == 5
+                detalle = PayrollDetail.find_by(payroll_id: self.id,employee_id: he.employee_id)
+                if detalle 
+                f2 = he.importe
+                detalle.calc4 = f2.round(2)
+                detalle.save
+                end 
+            else
                 detalle = PayrollDetail.find_by(payroll_id: self.id,employee_id: he.employee_id)
                 if detalle 
                 f2 = he.importe
@@ -224,17 +227,7 @@ class Payroll < ActiveRecord::Base
                 detalle.save
                 end 
             end     
-        #quinta categoria 
-            if he.valor_id == 5
-                detalle = PayrollDetail.find_by(payroll_id: self.id,employee_id: he.employee_id)
-                if detalle 
-                f2 = he.importe
-                detalle.calc4 = f2.round(2)
-                detalle.save
-                end 
-            end     
-            
-        
+        #qu
         end
         
         @planilla =  PayrollDetail.where(payroll_id: self.id)

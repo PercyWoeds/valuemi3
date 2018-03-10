@@ -1,4 +1,5 @@
 class PayrollsController < ApplicationController
+  before_filter :authenticate_user!
   before_action :set_payroll, only: [:show, :edit, :update, :destroy,:do_pdf]
 
   # GET /payrolls
