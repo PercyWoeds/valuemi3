@@ -85,14 +85,22 @@ class Employee < ActiveRecord::Base
         
           
           if product   
-            product.fecha_ingreso = product_hash["fecha_ingreso"]
-            product.division_id = product_hash["division_id"]
-            product.onp = product_hash["onp"]
-            product.afp_id = product_hash["afp_id"]
-            product.comision_flujo = product_hash["comision_flujo"]
-            product.sueldo = product_hash["sueldo"]
-            product.asignacion = product_hash["asignacion"]
-            product.save
+               
+             
+              
+             puts product_hash["cusspp"]
+             puts product_hash["carnet_seguro"]
+             puts product_hash["fecha_nacimiento"]
+             
+             
+            product.cusspp = product_hash["cusspp"]
+            product.carnet_seguro = product_hash["carnet_seguro"]
+            product.fecha_nacimiento =  product_hash["fecha_nacimiento"]
+            
+            product.save 
+            
+            else
+                 puts product_hash["idnumber"]
           end     
           
         end # end CSV.foreach
