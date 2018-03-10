@@ -265,7 +265,7 @@ class Payroll < ActiveRecord::Base
             lcBasico = pl.remuneracion/30 * (pl.totaldia + pl.falta )
             pl.basico =lcBasico.round(2)
             
-            lctotingreso = pl.basico+pl.calc1+lcHextra1+pl.vacaciones+pl.desmedico+pl.subsidio0+pl.reintegro
+            lctotingreso = pl.basico+pl.calc1+lcHextra1+pl.vacaciones+pl.desmedico+pl.reintegro
             pl.totingreso = lctotingreso.round(2)
             
             lcFaltas = pl.remuneracion/30 * pl.falta
