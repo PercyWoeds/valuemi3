@@ -695,7 +695,7 @@ end
 
       if @tiporeporte == "2" 
 
-       data =[ ["RECEPCION Y DES.","IVAN ALBITEZ","IRMA LOBO ","VILMA VEGA","ASIS.GERENCIA","RUTH VEGA","PAUL PEREDA"],
+       data =[ ["RECEPCION Y DES.","MONITOREO","IRMA LOBO ","VILMA VEGA","ASIS.GERENCIA","RUTH VEGA","PAUL PEREDA"],
                [" "],
                [" "],
                ["Fecha:"] ]
