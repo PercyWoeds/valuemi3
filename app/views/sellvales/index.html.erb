@@ -77,3 +77,16 @@
 <br>
 
 <%= link_to 'New Sellvale', new_sellvale_path %>
+
+<h2>Importar Archivo  "*.csv"</h2>
+
+<%= form_tag import_sellvales_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Importar " %>
+<% end %>
+
+
+ Download:
+  <%= link_to "CSV", sellvales_path(format: "csv"), multipart: true  %> 
+  
+  
