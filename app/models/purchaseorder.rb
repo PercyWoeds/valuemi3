@@ -35,7 +35,9 @@ class Purchaseorder < ActiveRecord::Base
                      "DESCRIPCION",
                      "PRE.COSTO",
                      "DSCTO.",
-                     "TOTAL" ]
+                     "TOTAL",
+                     "PERCEPCION",
+                     "BALANCE"]
 
  TABLE_HEADERS2 = ["ITEM",
                      "ORDEN",

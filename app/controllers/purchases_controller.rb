@@ -142,6 +142,8 @@ WHERE purchase_details.product_id = ?',params[:id] ])
            $lcNumero    = ordencompra.documento     
            $lcFecha     = ordencompra.date1
            $lcProveedor = ordencompra.supplier.name 
+           $lcPercepcion = ordencompra.participacion.round(2).to_s
+           $lcBalance    = ordencompra.balance.round(2).to_s 
 
         @orden_compra1  = @company.get_purchase_detalle(ordencompra.id)
 
@@ -164,16 +166,19 @@ WHERE purchase_details.product_id = ?',params[:id] ])
             end 
 
             if orden.price_without_tax != nil
-            row << orden.price_without_tax.round(2).to_s
+            row << orden.price_without_tax.round(4).to_s
             else 
             row << "0.00"
             end  
             row << " "
             row << orden.total.round(2).to_s
+            row << $lcPercepcion
+            row << $lcBalance
             table_content << row
-            puts nroitem.to_s 
+        
             nroitem=nroitem + 1
         end
+        
 
       end
 
@@ -192,6 +197,8 @@ WHERE purchase_details.product_id = ?',params[:id] ])
                                           columns([7]).align=:right
                                           columns([8]).align=:right
                                           columns([9]).align=:right
+                                          columns([10]).align=:right
+                                          columns([11]).align=:right
                                         end
 
       pdf.move_down 10      
@@ -591,7 +598,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
       headers = []
       table_content = []
 
-      Factura::TABLE_HEADERS3.each do |header|
+      Purchase::TABLE_HEADERS3.each do |header|
         cell = pdf.make_cell(:content => header)
         cell.background_color = "FFFFCC"
         headers << cell
@@ -627,12 +634,13 @@ WHERE purchase_details.product_id = ?',params[:id] ])
             row << product.date2.strftime("%d/%m/%Y")
             row << product.supplier.name
             row << product.moneda.symbol  
+            row << sprintf("%.2f",product.participacion.to_s)
 
             if product.moneda_id == 1 
                 row << "0.00 "
-                row << sprintf("%.2f",product.total_amount.to_s)
+                row << sprintf("%.2f",product.balance.to_s)
             else
-                row << sprintf("%.2f",product.total_amount.to_s)
+                row << sprintf("%.2f",product.balance.to_s)
                 row << "0.00 "
             end 
             row << " "
@@ -655,6 +663,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
             row << ""          
             row << "TOTALES POR PROVEEDOR=> "            
             row << ""
+            row << ""
             row << sprintf("%.2f",total_cliente_dolares.to_s)
             row << sprintf("%.2f",total_cliente_soles.to_s)
             row << " "
@@ -675,6 +684,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
             row << " "
             end 
             row << product.moneda.symbol  
+            row << sprintf("%.2f",product.participacion.to_s)
 
             if product.moneda_id == 1 
                 row << "0.00 "
@@ -706,6 +716,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
             row << ""          
             row << "TOTALES POR PROVEEDOR => "            
             row << ""
+            row << ""
             row << sprintf("%.2f",total_cliente_dolares.to_s)
             row << sprintf("%.2f",total_cliente_soles.to_s)                      
             row << " "
@@ -715,8 +726,8 @@ WHERE purchase_details.product_id = ?',params[:id] ])
             
             table_content << row
               
-          total_soles = @company.get_purchases_by_day_value(@fecha1,@fecha2, lcmonedasoles,"total_amount")
-          total_dolares = @company.get_purchases_by_day_value(@fecha1,@fecha2, lcmonedadolares,"total_amount")
+          total_soles = @company.get_purchases_by_day_value(@fecha1,@fecha2, lcmonedasoles,"balance")
+          total_dolares = @company.get_purchases_by_day_value(@fecha1,@fecha2, lcmonedadolares,"balance")
       
            if $lcxCliente == "0" 
 
@@ -726,6 +737,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
           row << ""
           row << ""
           row << "TOTALES => "
+          row << ""
           row << ""
           row << sprintf("%.2f",total_soles.to_s)
           row << sprintf("%.2f",total_dolares.to_s)                    
@@ -738,6 +750,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
           row << ""
           row << ""
           row << "TOTALES => "
+          row << ""
           row << ""
           row << sprintf("%.2f",@total1.to_s)
           row << sprintf("%.2f",@total2.to_s)                    
@@ -761,6 +774,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
                                           columns([6]).align=:right
                                           columns([7]).align=:right
                                           columns([8]).align=:right
+                                          columns([9]).align=:right
                                         end                                          
                                         
       pdf.move_down 10      
@@ -3052,7 +3066,7 @@ def newfactura2
     @purchase = Purchase.new
     
     @purchase[:processed] = false
-    
+    @purchase[:participacion] = 0
     @company = Company.find(params[:company_id])
     @purchase.company_id = @company.id
     
@@ -3136,7 +3150,7 @@ def newfactura2
     @purchase[:total_amount] = @purchase[:payable_amount] + @purchase[:tax_amount]
     @purchase[:charge]  = 0
     @purchase[:pago] = 0
-    @purchase[:balance] =   @purchase[:total_amount]
+    @purchase[:balance] =   @purchase[:total_amount]+@purchase[:participacion]
     @purchase[:tipo]    = 0
     
     
@@ -3257,7 +3271,7 @@ def newfactura2
       :product_id,:unit_id,:price_with_tax,:price_without_tax,:price_public,:quantity,:other,:money_type,
       :discount,:tax1,:payable_amount,:tax_amount,:total_amount,:status,:pricestatus,:charge,:pago,
       :balance,:tax2,:supplier_id,:order1,:plate_id,:user_id,:company_id,:location_id,:division_id,:comments,
-      :processed,:return,:date_processed,:payment_id,:document_id,:documento,:moneda_id)
+      :processed,:return,:date_processed,:payment_id,:document_id,:documento,:moneda_id,:participacion)
   end
 
 end

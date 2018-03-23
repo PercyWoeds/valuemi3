@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180310142226) do
+ActiveRecord::Schema.define(version: 20180323161324) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1568,6 +1568,7 @@ ActiveRecord::Schema.define(version: 20180310142226) do
     t.integer  "purchaseorder_id"
     t.string   "yearmonth"
     t.string   "tipo"
+    t.float    "participacion"
   end
 
   create_table "purchaseships", force: :cascade do |t|

@@ -61,6 +61,10 @@
       <%= f.label :moneda_id ,"  "%><br />
       <%= f.select :moneda_id, options_from_collection_for_select(@monedas,'id','description') %>
     </div>
+    <div class="field">
+      <%= f.label :participacion ,"  "%><br />
+      <%= f.number_field :participacion, class: :text_field, step: :any %>
+    </div>
     
       
     <%= hr() %>

@@ -122,9 +122,28 @@
         <%= money(@purchase.total_amount) %>
       </td>
     </tr>
+    <tr>
+      <td colspan="4" class="bordered_bottom bordered_right bold">
+        Participacion:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@purchase.participacion) %>
+      </td>
+      
+    </tr>
+    <tr>
+      <td colspan="4" class="bordered_bottom bordered_right bold">
+        Monto total a pagar
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@purchase.balance) %>
+      </td>
+      
+    </tr>
   </tbody>
 </table>
 <br />
+
 
 <%= hr() %>
 
@@ -171,6 +190,6 @@
   <%end %>
   
 
-  <%= link_to 'Editar', edit_purchase_path(@purchase) %>
+  
   <%= link_to 'Regresar', "/companies/purchases/#{@purchase.company.id}" %>
 </div>
