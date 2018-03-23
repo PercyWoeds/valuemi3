@@ -1477,6 +1477,9 @@ def get_purchases_day_categoria2(fecha1,fecha2,moneda,tipo)
         ret += factura.subtotal
       elsif(value == "tax")
         ret += factura.tax
+      elsif(value == "balance")
+        ret += factura.balance 
+      
       else         
         ret += factura.total_amount.round(2)
       end

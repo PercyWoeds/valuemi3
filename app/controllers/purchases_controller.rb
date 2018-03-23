@@ -634,7 +634,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
             row << product.date2.strftime("%d/%m/%Y")
             row << product.supplier.name
             row << product.moneda.symbol  
-            row << sprintf("%.2f",product.participaciong.to_s)
+            row << sprintf("%.2f",product.participacion.to_s)
 
             if product.moneda_id == 1 
                 row << "0.00 "
@@ -652,9 +652,9 @@ WHERE purchase_details.product_id = ?',params[:id] ])
           else
             totals = []            
             total_cliente_soles = 0
-            total_cliente_soles = @company.get_purchases_by_day_value_supplier(@fecha1,@fecha2,lcmonedadolares,lcCliente)
+            total_cliente_soles = @company.get_purchases_by_day_value_supplier(@fecha1,@fecha2,lcmonedadolares,"balance",lcCliente)
             total_cliente_dolares = 0
-            total_cliente_dolares = @company.get_purchases_by_day_value_supplier(@fecha1,@fecha2, lcmonedasoles,lcCliente)
+            total_cliente_dolares = @company.get_purchases_by_day_value_supplier(@fecha1,@fecha2, lcmonedasoles,"balance",lcCliente)
             
             row =[]
             row << ""
@@ -704,9 +704,9 @@ WHERE purchase_details.product_id = ?',params[:id] ])
             total_cliente = 0
   
             total_cliente_soles = 0
-            total_cliente_soles = @company.get_purchase_day_value2(@fecha1,@fecha2, lcProveedor, lcmonedadolares)
+            total_cliente_soles = @company.get_purchase_day_value2(@fecha1,@fecha2, lcProveedor, lcmonedadolares,"balance")
             total_cliente_dolares = 0
-            total_cliente_dolares = @company.get_purchase_day_value2(@fecha1,@fecha2, lcProveedor, lcmonedasoles)
+            total_cliente_dolares = @company.get_purchase_day_value2(@fecha1,@fecha2, lcProveedor, lcmonedasoles,"balance")
     
             
             row =[]
