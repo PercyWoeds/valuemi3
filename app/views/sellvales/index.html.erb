@@ -1,0 +1,79 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Sellvales</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Td</th>
+      <th>Fecha</th>
+      <th>Turno</th>
+      <th>Cod emp</th>
+      <th>Caja</th>
+      <th>Serie</th>
+      <th>Numero</th>
+      <th>Cod cli</th>
+      <th>Ruc</th>
+      <th>Placa</th>
+      <th>Odometro</th>
+      <th>Cod prod</th>
+      <th>Cantidad</th>
+      <th>Precio</th>
+      <th>Importe</th>
+      <th>Igv</th>
+      <th>Fpago</th>
+      <th>Dolat</th>
+      <th>Implista</th>
+      <th>Cod tar</th>
+      <th>Km</th>
+      <th>Chofer</th>
+      <th>Tk devol</th>
+      <th>Cod sucu</th>
+      <th>Isla</th>
+      <th>Dni cli</th>
+      <th>Clear</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @sellvales.each do |sellvale| %>
+      <tr>
+        <td><%= sellvale.td %></td>
+        <td><%= sellvale.fecha %></td>
+        <td><%= sellvale.turno %></td>
+        <td><%= sellvale.cod_emp %></td>
+        <td><%= sellvale.caja %></td>
+        <td><%= sellvale.serie %></td>
+        <td><%= sellvale.numero %></td>
+        <td><%= sellvale.cod_cli %></td>
+        <td><%= sellvale.ruc %></td>
+        <td><%= sellvale.placa %></td>
+        <td><%= sellvale.odometro %></td>
+        <td><%= sellvale.cod_prod %></td>
+        <td><%= sellvale.cantidad %></td>
+        <td><%= sellvale.precio %></td>
+        <td><%= sellvale.importe %></td>
+        <td><%= sellvale.igv %></td>
+        <td><%= sellvale.fpago %></td>
+        <td><%= sellvale.dolat %></td>
+        <td><%= sellvale.implista %></td>
+        <td><%= sellvale.cod_tar %></td>
+        <td><%= sellvale.km %></td>
+        <td><%= sellvale.chofer %></td>
+        <td><%= sellvale.tk_devol %></td>
+        <td><%= sellvale.cod_sucu %></td>
+        <td><%= sellvale.isla %></td>
+        <td><%= sellvale.dni_cli %></td>
+        <td><%= sellvale.clear %></td>
+        <td><%= link_to 'Show', sellvale %></td>
+        <td><%= link_to 'Edit', edit_sellvale_path(sellvale) %></td>
+        <td><%= link_to 'Destroy', sellvale, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Sellvale', new_sellvale_path %>

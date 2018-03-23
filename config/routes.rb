@@ -1,5 +1,6 @@
   Mnygo::Application.routes.draw do
 
+  resources :sellvales
   resources :venta
   resources :ccostos
   resources :destinos
@@ -79,7 +80,7 @@
     collection { get :rpt_viatico_pdf    }
     collection { get :update_inicial}
   end 
-  resources :ventas  do
+  resources :sellvales  do
     collection { post :import }
   end 
   

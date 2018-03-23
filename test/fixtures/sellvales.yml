@@ -1,0 +1,59 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  td: MyString
+  fecha: 2018-03-23 22:36:08
+  turno: MyString
+  cod_emp: MyString
+  caja: MyString
+  serie: MyString
+  numero: MyString
+  cod_cli: MyString
+  ruc: MyString
+  placa: MyString
+  odometro: MyString
+  cod_prod: MyString
+  cantidad: 1.5
+  precio: MyString
+  importe: MyString
+  igv: 1.5
+  fpago: 1.5
+  dolat: 1.5
+  implista: 1.5
+  cod_tar: MyString
+  km: MyString
+  chofer: MyString
+  tk_devol: MyString
+  cod_sucu: MyString
+  isla: MyString
+  dni_cli: MyString
+  clear: MyString
+
+two:
+  td: MyString
+  fecha: 2018-03-23 22:36:08
+  turno: MyString
+  cod_emp: MyString
+  caja: MyString
+  serie: MyString
+  numero: MyString
+  cod_cli: MyString
+  ruc: MyString
+  placa: MyString
+  odometro: MyString
+  cod_prod: MyString
+  cantidad: 1.5
+  precio: MyString
+  importe: MyString
+  igv: 1.5
+  fpago: 1.5
+  dolat: 1.5
+  implista: 1.5
+  cod_tar: MyString
+  km: MyString
+  chofer: MyString
+  tk_devol: MyString
+  cod_sucu: MyString
+  isla: MyString
+  dni_cli: MyString
+  clear: MyString

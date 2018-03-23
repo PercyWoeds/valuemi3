@@ -78,14 +78,14 @@
 
 <h2>Importar Archivo  "*.csv"</h2>
 
-<%= form_tag import_venta_path, multipart: true do %>
+<%= form_tag import_sellvales_path, multipart: true do %>
   <%= file_field_tag :file %>
   <%= submit_tag "Importar " %>
 <% end %>
 
 
  Download:
-  <%= link_to "CSV", venta_path(format: "csv"), multipart: true  %> 
+  <%= link_to "CSV", sellvales_path(format: "csv"), multipart: true  %> 
   
   
 

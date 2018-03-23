@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180323214512) do
+ActiveRecord::Schema.define(version: 20180323225953) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1677,6 +1677,39 @@ ActiveRecord::Schema.define(version: 20180323214512) do
     t.integer  "company_id"
     t.string   "code"
     t.string   "already_processed"
+  end
+
+  create_table "sellvales", force: :cascade do |t|
+    t.string   "td"
+    t.datetime "fecha"
+    t.string   "turno"
+    t.string   "cod_emp"
+    t.string   "caja"
+    t.string   "serie"
+    t.string   "numero"
+    t.string   "cod_cli"
+    t.string   "ruc"
+    t.string   "placa"
+    t.string   "odometro"
+    t.string   "cod_prod"
+    t.float    "cantidad"
+    t.string   "precio"
+    t.string   "importe"
+    t.float    "igv"
+    t.float    "fpago"
+    t.float    "dolat"
+    t.float    "implista"
+    t.string   "cod_tar"
+    t.string   "km"
+    t.string   "chofer"
+    t.string   "tk_devol"
+    t.string   "cod_sucu"
+    t.string   "isla"
+    t.string   "dni_cli"
+    t.string   "clear"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.float    "dolar"
   end
 
   create_table "servicebuys", force: :cascade do |t|
