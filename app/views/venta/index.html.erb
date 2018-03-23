@@ -1,0 +1,91 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Venta</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Td</th>
+      <th>Fecha</th>
+      <th>Turno</th>
+      <th>Cod emp</th>
+      <th>Caja</th>
+      <th>Serie</th>
+      <th>Numero</th>
+      <th>Cod cli</th>
+      <th>Ruc</th>
+      <th>Placa</th>
+      <th>Odometro</th>
+      <th>Cod prod</th>
+      <th>Cantidad</th>
+      <th>Precio</th>
+      <th>Importe</th>
+      <th>Igv</th>
+      <th>Fpago</th>
+      <th>Dolat</th>
+      <th>Implista</th>
+      <th>Cod tar</th>
+      <th>Km</th>
+      <th>Chofer</th>
+      <th>Tk devol</th>
+      <th>Cod sucu</th>
+      <th>Isla</th>
+      <th>Dni cli</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @venta.each do |ventum| %>
+      <tr>
+        <td><%= ventum.td %></td>
+        <td><%= ventum.fecha %></td>
+        <td><%= ventum.turno %></td>
+        <td><%= ventum.cod_emp %></td>
+        <td><%= ventum.caja %></td>
+        <td><%= ventum.serie %></td>
+        <td><%= ventum.numero %></td>
+        <td><%= ventum.cod_cli %></td>
+        <td><%= ventum.ruc %></td>
+        <td><%= ventum.placa %></td>
+        <td><%= ventum.odometro %></td>
+        <td><%= ventum.cod_prod %></td>
+        <td><%= ventum.cantidad %></td>
+        <td><%= ventum.precio %></td>
+        <td><%= ventum.importe %></td>
+        <td><%= ventum.igv %></td>
+        <td><%= ventum.fpago %></td>
+        <td><%= ventum.dolat %></td>
+        <td><%= ventum.implista %></td>
+        <td><%= ventum.cod_tar %></td>
+        <td><%= ventum.km %></td>
+        <td><%= ventum.chofer %></td>
+        <td><%= ventum.tk_devol %></td>
+        <td><%= ventum.cod_sucu %></td>
+        <td><%= ventum.isla %></td>
+        <td><%= ventum.dni_cli %></td>
+        <td><%= link_to 'Show', ventum %></td>
+        <td><%= link_to 'Edit', edit_ventum_path(ventum) %></td>
+        <td><%= link_to 'Destroy', ventum, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Ventum', new_ventum_path %>
+
+<h2>Importar Archivo  "*.csv"</h2>
+
+<%= form_tag import_venta_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Importar " %>
+<% end %>
+
+
+ Download:
+  <%= link_to "CSV", venta_path(format: "csv"), multipart: true  %> 
+  
+  
+

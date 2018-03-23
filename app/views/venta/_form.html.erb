@@ -1,0 +1,36 @@
+<%= simple_form_for(@ventum) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :td %>
+    <%= f.input :fecha %>
+    <%= f.input :turno %>
+    <%= f.input :cod_emp %>
+    <%= f.input :caja %>
+    <%= f.input :serie %>
+    <%= f.input :numero %>
+    <%= f.input :cod_cli %>
+    <%= f.input :ruc %>
+    <%= f.input :placa %>
+    <%= f.input :odometro %>
+    <%= f.input :cod_prod %>
+    <%= f.input :cantidad %>
+    <%= f.input :precio %>
+    <%= f.input :importe %>
+    <%= f.input :igv %>
+    <%= f.input :fpago %>
+    <%= f.input :dolat %>
+    <%= f.input :implista %>
+    <%= f.input :cod_tar %>
+    <%= f.input :km %>
+    <%= f.input :chofer %>
+    <%= f.input :tk_devol %>
+    <%= f.input :cod_sucu %>
+    <%= f.input :isla %>
+    <%= f.input :dni_cli %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

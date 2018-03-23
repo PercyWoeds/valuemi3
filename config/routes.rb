@@ -1,5 +1,6 @@
   Mnygo::Application.routes.draw do
 
+  resources :venta
   resources :ccostos
   resources :destinos
   resources :viatico_details
@@ -72,9 +73,14 @@
     resources :viatico_details, except: [:index,:show], controller: "viaticos/viatico_details"
     
   end 
-  resource :viaticos do 
+  
+  
+  resources :viaticos do 
     collection { get :rpt_viatico_pdf    }
     collection { get :update_inicial}
+  end 
+  resources :ventas  do
+    collection { post :import }
   end 
   
     
