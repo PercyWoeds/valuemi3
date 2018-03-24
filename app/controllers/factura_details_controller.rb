@@ -1,0 +1,2 @@
+class FacturaDetailsController < ApplicationController
+end

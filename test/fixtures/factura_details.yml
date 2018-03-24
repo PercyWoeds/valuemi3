@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  factura_id: 1
+  sellvale_id: 1
+  price: 1.5
+  price_discount: 1.5
+  quantity: 1.5
+  total: 1.5
+
+two:
+  factura_id: 1
+  sellvale_id: 1
+  price: 1.5
+  price_discount: 1.5
+  quantity: 1.5
+  total: 1.5

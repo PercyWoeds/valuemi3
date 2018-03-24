@@ -74,7 +74,15 @@
     resources :viatico_details, except: [:index,:show], controller: "viaticos/viatico_details"
     
   end 
-  
+resources :facturas do
+    resources :factura_details, except: [:index,:show], controller: "facturas/facturas_details"
+    collection { post :discontinue }
+    collection do 
+      put :discontinue 
+    end 
+    
+  end 
+    
   
   resources :viaticos do 
     collection { get :rpt_viatico_pdf    }
@@ -497,6 +505,7 @@ end
   match 'facturas/ac_guias/:company_id' => 'facturas#ac_guias', via: [:get, :post]
   
   match 'facturas/new/:company_id' => 'facturas#new', via: [:get, :post]
+  match 'facturas/new2/:company_id' => 'facturas#new2', via: [:get, :post]
   match 'facturas/export/:company_id' => 'facturas#export', via: [:get, :post]
   match 'facturas/export2/:company_id' => 'facturas#export2', via: [:get, :post]
   match 'facturas/export3/:company_id' => 'facturas#export3', via: [:get, :post]
@@ -513,6 +522,8 @@ end
   match 'companies/facturas/generar3/:company_id' => 'facturas#generar3', via: [:get, :post]
   match 'facturas/generar4/:company_id' => 'facturas#generar4', via: [:get, :post]
   match 'facturas/generar5/:company_id' => 'facturas#generar5', via: [:get, :post]
+  
+  match 'facturas/newfactura2/:factura_id' => 'facturas#newfactura2', via: [:get, :post]
   #match 'serviceorders/rpt_serviceorder_all_pdf/:id' => 'serviceorders#rpt_serviceorder_all_pdf', via: [:get, :post]
 
   

@@ -1,0 +1,23 @@
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %> &raquo;
+  <%= link_to "Invoices", "/companies/facturas/#{@company.id}" %>
+</div>
+
+<h1>
+  <%= image_tag("invoice_48.png", :class => "vmiddle") %>
+  Nuevo Documento con descuento 
+</h1>
+
+<p>
+  Para crear una nuevo documento, por favor llenar el siguiente formulario. Los campos marcados con <strong>*</strong> son obligatorios
+  
+</p>
+
+<%= render 'form2' %>
+
+<%= hr() %>
+
+<div class="button">
+  <%= link_to 'Regresar', "/companies/facturas/#{@company.id}" %>
+</div>

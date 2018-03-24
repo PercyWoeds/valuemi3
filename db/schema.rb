@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180323225953) do
+ActiveRecord::Schema.define(version: 20180324171823) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -639,6 +639,19 @@ ActiveRecord::Schema.define(version: 20180323225953) do
     t.integer  "ccosto_id"
   end
 
+  create_table "factura_details", force: :cascade do |t|
+    t.integer  "factura_id"
+    t.integer  "sellvale_id"
+    t.integer  "producto_id"
+    t.float    "price"
+    t.float    "price_discount"
+    t.float    "quantity"
+    t.float    "total"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.integer  "product_id"
+  end
+
   create_table "facturas", force: :cascade do |t|
     t.integer  "company_id"
     t.integer  "location_id"
@@ -672,6 +685,7 @@ ActiveRecord::Schema.define(version: 20180323225953) do
     t.float    "detraccion"
     t.integer  "numero2"
     t.integer  "document_id"
+    t.string   "descuento"
   end
 
   create_table "fiveparameters", force: :cascade do |t|
@@ -1710,6 +1724,7 @@ ActiveRecord::Schema.define(version: 20180323225953) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.float    "dolar"
+    t.string   "processed"
   end
 
   create_table "servicebuys", force: :cascade do |t|

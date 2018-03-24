@@ -568,6 +568,10 @@ class FacturasController < ApplicationController
     @customer = @invoice.customer
     @tipodocumento = @invoice.document 
     
+    if @invoice.descuento == "1"
+      @factura_details = @invoice.factura_details 
+    end 
+    
     $lcruc = "20424092941" 
     
     $lcTipoDocumento = @invoice.document.descripshort
@@ -608,10 +612,34 @@ class FacturasController < ApplicationController
   def new
     @pagetitle = "Nueva factura"
     @action_txt = "Create"
+    $Action= "create"
+    @invoice = Factura.new
+    @invoice[:code] = "#{generate_guid3()}"
+    @invoice[:processed] = false
+    @invoice[:descuento] = "0"
+    @company = Company.find(params[:company_id])
+    @invoice.company_id = @company.id
+    
+    @locations = @company.get_locations()
+    @divisions = @company.get_divisions()
+    @payments = @company.get_payments()
+    @services = @company.get_services()
+    @deliveryships = @invoice.my_deliverys 
+    @tipofacturas = @company.get_tipofacturas() 
+    @monedas = @company.get_monedas()
+    @tipodocumento = @company.get_documents()
+    @ac_user = getUsername()
+    @invoice[:user_id] = getUserId()
+  end
+  def new2
+    @pagetitle = "Nueva factura"
+    @action_txt = "Create"
+    
     
     @invoice = Factura.new
     @invoice[:code] = "#{generate_guid3()}"
     @invoice[:processed] = false
+    @invoice[:descuento] = "1"
     
     @company = Company.find(params[:company_id])
     @invoice.company_id = @company.id
@@ -627,6 +655,27 @@ class FacturasController < ApplicationController
     @ac_user = getUsername()
     @invoice[:user_id] = getUserId()
   end
+def newfactura2
+    
+    @company = Company.find(1)
+    @factura = Factura.find(params[:factura_id])
+    @customer = Customer.find(@factura.customer_id) 
+    
+    
+    $lcContratoId = @customer.id
+    $lcCode  = @customer.account
+    $lcNameCode = @customer.name 
+    
+    $lcFacturaId= @factura.id 
+    
+    
+    @detalleitems =  Sellvale.where(processed:"0",cod_cli: @customer.account)
+    @factura_detail = Factura.new
+
+
+  
+  end 
+
 
   # GET /invoices/1/edit
   def edit
@@ -668,7 +717,6 @@ class FacturasController < ApplicationController
 
 
     
-    
     @invoice[:subtotal] = @invoice.get_subtotal(items)
     begin
       @invoice[:tax] = @invoice.get_tax(items, @invoice[:customer_id])
@@ -679,7 +727,7 @@ class FacturasController < ApplicationController
     @invoice[:balance] = @invoice[:total]
     @invoice[:pago]    = 0
     @invoice[:charge]  = 0
-    
+    @invoice[:descuento] = "1"
     
     
     
@@ -1419,7 +1467,62 @@ class FacturasController < ApplicationController
       invoice_headers  = [["Fecha : ",$lcHora]]    
       invoice_headers
   end
- 
+ def discontinue
+    
+    @facturasselect = Sellvale.find(params[:products_ids])
+
+    for item in @facturasselect
+        begin
+          a = item.id
+          b = Product.find_by(code: item.cod_prod)             
+          descuento =  item.implista - item.importe.to_f
+          preciolista = item.precio.to_f + descuento
+          
+          new_invoice_detail = FacturaDetail.new(factura_id: $lcFacturaId  ,sellvale_id: item.id , product_id: b.id ,price:preciolista, price_discount: item.precio, quantity: item.cantidad,total: item.importe)
+          new_invoice_detail.save
+          a= Sellvale.find(item.id)
+          a.processed ='1'
+          a.save
+          
+        end              
+    end
+    
+    @invoice = Factura.find($lcFacturaId)
+    
+    @invoice[:subtotal] = @invoice.get_subtotal2.round(2)
+    
+    lcTotal = @invoice[:subtotal] * 1.18
+    @invoice[:total] = lcTotal.round(2)
+    
+    lcTax =@invoice[:total] - @invoice[:subtotal]
+    @invoice[:tax] = lcTax.round(2)
+    
+    @invoice[:balance] = @invoice[:total]
+    @invoice[:pago] = 0
+    @invoice[:charge] = 0
+    @invoice[:descuento] = "1"
+    
+    respond_to do |format|
+      if @invoice.save
+        # Create products for kit
+        
+        @invoice.correlativo
+        
+        
+        # Check if we gotta process the invoice
+        
+        format.html { redirect_to(@invoice, :notice => 'Invoice was successfully created.') }
+        format.xml  { render :xml => @invoice, :status => :created, :location => @invoice }
+      else
+        format.html { render :action => "new" }
+        format.xml  { render :xml => @invoice.errors, :status => :unprocessable_entity }
+      end
+    end
+    
+    
+    
+     
+  end   
 
 
 

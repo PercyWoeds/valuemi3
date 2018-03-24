@@ -20,6 +20,7 @@ class Factura < ActiveRecord::Base
   has_many   :delivery 
   has_many   :invoice_services
   has_many   :customer_payment_details
+  has_many   :factura_details 
   
    TABLE_HEADERS = ["TD",
                       "Documento",
@@ -170,6 +171,23 @@ class Factura < ActiveRecord::Base
     return tax
   end
 
+
+  def get_subtotal2
+  
+    
+    invoices = FacturaDetail.where(["factura_id = ? ", self.id ])
+    ret = 0
+    
+    for invoice in invoices
+
+        
+          ret += invoice.total 
+        
+    end
+   
+    
+    return ret
+  end
   
   def delete_products()
     invoice_services = InvoiceService.where(factura_id: self.id)
@@ -281,6 +299,7 @@ class Factura < ActiveRecord::Base
     return @itemproducts
   end
   
+   
   def get_guias    
     @itemguias = Deliveryship.find_by_sql(['Select deliveries.id,deliveries.code,deliveries.description 
      from deliveryships INNER JOIN deliveries ON deliveryships.delivery_id =  deliveries.id where deliveries.remision=2 and  deliveryships.factura_id = ?', self.id ])

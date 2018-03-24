@@ -70,6 +70,7 @@
 <%= render "customers/show" %>
 
 <%= hr() %>
+<% if @invoice.descuento == '0'%>
 
 <h3>
   Detalle servicios
@@ -96,6 +97,7 @@
     </tr>
   </thead>
   <tbody>
+    
     <% for productItem in @invoice.get_products() %>
       <tr>
         <td class="bordered_bottom bordered_right">
@@ -147,6 +149,7 @@
   </tbody>
 </table>
 <br />
+
 
 <h3>
   Detalle guias
@@ -232,6 +235,76 @@
   </div>
   <%= hr() %>
 <% end %>
+
+<% else%>
+<div class="button">
+
+<%= link_to "Agregar Item","/facturas/newfactura2/#{@invoice.id}" %>
+</div> 
+
+ </div>  
+  <tbody>
+    <table>
+    <%  @factura_details.each do |quote| %>
+      <tr>
+        <td class="bordered_bottom bordered_right">
+          <%= link_to quote.id   %>
+        </td>
+        <td class="bordered_bottom bordered_right">
+          <%= money(quote.total) %>
+        </td>
+        <td class="bordered_bottom bordered_right">
+          <%= quote.price_discount %>
+        </td>
+        <td class="bordered_bottom bordered_right">
+          <%= money(quote.quantity) %>%
+        </td>
+        <td class="bordered_bottom bordered_right">
+          <%= money(quote.total) %>
+        </td>
+        
+        
+          
+          <td><%= link_to 'Eliminar',[@invoice,quote], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+    
+    <tr>
+      <td colspan="5" class="bordered_bottom bordered_right">
+        &nbsp;
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4" class="bordered_bottom bordered_right bold">
+        Subtotal:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@invoice.subtotal) %>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4" class="bordered_bottom bordered_right bold">
+        Tax:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@invoice.tax) %>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4" class="bordered_bottom bordered_right bold">
+        Total:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@invoice.total) %>
+      </td>
+    </tr>
+    
+</table>
+</tbody>
+
+
+<% end %>
+
 
 <% if @invoice.comments != "" %>
   <div>

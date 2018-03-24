@@ -1,0 +1,183 @@
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %> &raquo;
+  <%= link_to "purchaseorders", "/companies/facturas/#{@company.id}" %>
+</div>
+
+<h3>
+  <%= image_tag("invoice_48.png", :class => "vmiddle") %>
+  Nueva factura 
+</h3>
+
+<p>
+  Para crear una nueva orden de compra, por favor llenar el siguiente formulario. Los campos marcados con <strong>*</strong> son obligatorios
+  
+</p>
+
+<% if @factura.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@factura.errors.count, "error") %> prohibited this purchaseorder from being saved:</h2>
+
+    <ul>
+    <% @factura.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+  <%= hr() %>
+
+<div class="mid_box bordered_right">
+  
+    <h4>
+       Informacion factura 
+    </h4>
+
+    <div class="field">
+      <label for="ac_supplier" class="bold"> Codigo Cuenta Cliente *</label><br />
+      
+      <%= $lcCode %>
+     <%= $lcNameCode %>
+    </div>
+
+    <%= hr() %>
+
+    <p class="bold big">
+      Detalle de productos 
+    </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th class="small bordered_bottom bordered_right">
+          Fecha
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          Cod.Emp
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          Turno
+        </th>        
+        <th class="small bordered_bottom bordered_right">
+          Serie 
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          Número 
+        </th>        
+        <th class="small bordered_bottom bordered_right">
+          Placa
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          Producto
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          Cant.
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          Precio
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          Importe
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          Descuento 
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          Importe Pre.Lista
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          Seleccionar
+        </th>
+        
+      </tr>
+    </thead>
+    <tbody>
+      
+      <%=  form_tag discontinue_facturas_path,method: :post  %>
+      
+      <% for item in @detalleitems %>
+        <tr>
+          <td class="small bordered_bottom bordered_right" style="width: 50px;">
+            <%= item.fecha.strftime("%d/%m/%Y") %>
+          </td>
+       
+
+          <td class="small bordered_bottom bordered_right" style="width: 50px;">
+            <%= item.cod_emp %>
+          </td>
+          <td class="small bordered_bottom bordered_right" style="width: 50px;">
+            <%= item.turno %>
+          </td>
+          <td class="small bordered_bottom bordered_right" style="width: 50px;">
+            <%= item.serie %>
+          </td>
+          <td class="small bordered_bottom bordered_right" style="width: 50px;">
+            <%= item.numero %>
+          </td>
+          <td class="small bordered_bottom bordered_right" style="width: 50px;">
+            <%= item.placa %>
+          </td>
+          <td class="small bordered_bottom bordered_right" style="width: 50px;">
+            <%= item.cod_prod %>
+          </td>
+          <td class="small bordered_bottom bordered_right" style="width: 50px;">
+            <%= money(item.cantidad) %>
+          </td>
+          
+          
+          <td class="small bordered_bottom bordered_right" style="width: 100px;">
+            <%= money(item.precio) %>
+          </td>
+          <td class="small bordered_bottom bordered_right" style="width: 100px;">
+            <%= money(item.importe) %>
+          </td>
+          <td class="small bordered_bottom bordered_right" style="width: 100px;">
+            
+            <% descuento =  item.implista - item.importe.to_f %>
+            <%= money(descuento) %>
+          </td>
+          
+          
+          <td class="small bordered_bottom bordered_right" style="width: 100px;">
+            <%= money(item.implista) %>
+
+          </td>
+          
+           <td class="bordered_right bordered_bottom right">
+            <%= check_box_tag "products_ids[]", item.id     %>
+          </td>          
+
+        </tr>
+      <% end %>
+
+    </tbody>
+  </table>
+
+
+    <%= hr() %>
+    <div class="field">
+     <strong>Observaciones:</strong><br />
+     <input type="text_area" name="comments" value="" style = "width: 80px" >         
+    </div> 
+    <%= hr() %>
+  
+    
+   <%=  submit_tag "Grabar detalle "%>
+
+  
+
+</div>
+
+
+<%= br() %>
+<br />
+
+<%= render 'layouts/autocomplete' %>
+
+
+<%= hr() %>
+
+<div class="button">
+  <%= link_to 'Back', "/companies/purchases/#{@company.id}" %>
+</div>
