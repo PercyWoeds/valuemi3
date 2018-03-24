@@ -639,7 +639,7 @@ class FacturasController < ApplicationController
     @invoice = Factura.new
     @invoice[:code] = "#{generate_guid3()}"
     @invoice[:processed] = false
-    @invoice[:descuento] = "1"
+    
     
     @company = Company.find(params[:company_id])
     @invoice.company_id = @company.id
