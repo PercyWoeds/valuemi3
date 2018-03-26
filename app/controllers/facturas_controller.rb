@@ -1506,10 +1506,7 @@ def newfactura2
       if @invoice.save
         # Create products for kit
         
-        @invoice.correlativo
-        
-        
-        # Check if we gotta process the invoice
+                # Check if we gotta process the invoice
         
         format.html { redirect_to(@invoice, :notice => 'Invoice was successfully created.') }
         format.xml  { render :xml => @invoice, :status => :created, :location => @invoice }
