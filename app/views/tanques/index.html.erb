@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1> Tanques</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Product</th>
+      <th>Saldo inicial</th>
+      <th>Varilla</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @tanques.each do |tanque| %>
+      <tr>
+        <td><%= tanque.code %></td>
+        <td><%= tanque.product.name %></td>
+        <td><%= tanque.saldo_inicial %></td>
+        <td><%= tanque.varilla %></td>
+        <td><%= link_to 'Show', tanque %></td>
+        <td><%= link_to 'Edit', edit_tanque_path(tanque) %></td>
+        <td><%= link_to 'Destroy', tanque, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'Nuevo Tanque', new_tanque_path %>

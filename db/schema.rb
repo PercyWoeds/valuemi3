@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180324171823) do
+ActiveRecord::Schema.define(version: 20180827233035) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -906,6 +906,13 @@ ActiveRecord::Schema.define(version: 20180324171823) do
     t.integer  "moneda"
   end
 
+  create_table "islands", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "items", force: :cascade do |t|
     t.integer  "unit_id"
     t.decimal  "price",                   precision: 14, scale: 2, default: 0.0
@@ -1472,6 +1479,8 @@ ActiveRecord::Schema.define(version: 20180324171823) do
     t.string   "turno"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "tanque_id"
+    t.integer  "island_id"
   end
 
   create_table "puntos", force: :cascade do |t|
@@ -1921,15 +1930,27 @@ ActiveRecord::Schema.define(version: 20180324171823) do
   end
 
   create_table "tanks", force: :cascade do |t|
+    t.string   "code"
     t.string   "comments"
+    t.float    "saldo_inicial"
+    t.float    "varilla"
     t.integer  "product_id"
     t.integer  "company_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   add_index "tanks", ["company_id"], name: "index_tanks_on_company_id", using: :btree
   add_index "tanks", ["product_id"], name: "index_tanks_on_product_id", using: :btree
+
+  create_table "tanques", force: :cascade do |t|
+    t.string   "code"
+    t.integer  "product_id"
+    t.float    "saldo_inicial"
+    t.float    "varilla"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
 
   create_table "tempcps", force: :cascade do |t|
     t.datetime "fecha2"

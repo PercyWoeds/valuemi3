@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Islands</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @islands.each do |island| %>
+      <tr>
+        <td><%= island.code %></td>
+        <td><%= island.name %></td>
+        <td><%= link_to 'Show', island %></td>
+        <td><%= link_to 'Edit', edit_island_path(island) %></td>
+        <td><%= link_to 'Destroy', island, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Island', new_island_path %>

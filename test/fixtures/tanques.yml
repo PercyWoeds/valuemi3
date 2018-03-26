@@ -5,11 +5,9 @@ one:
   product_id: 1
   saldo_inicial: 1.5
   varilla: 1.5
-  product_id: 1
 
 two:
   code: MyString
   product_id: 1
   saldo_inicial: 1.5
   varilla: 1.5
-  product_id: 1

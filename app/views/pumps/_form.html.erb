@@ -12,25 +12,22 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :fuel %><br>
+    <%= f.label :fuel ,"Surtidor "%><br>
     <%= f.text_field :fuel %>
   </div>
   <div class="field">
-    <%= f.label :pump01 %><br>
-    <%= f.text_field :pump01 %>
-  </div>
-  <div class="field">
-    <%= f.label :tank_id %><br>
-    <%= f.number_field :tank_id %>
-  </div>
-  <div class="field">
-    <%= f.label :product_id %><br>
-    <%= f.number_field :product_id %>
-  </div>
-  <div class="field">
-    <%= f.label :price_buy %><br>
-    <%= f.text_field :price_buy %>
-  </div>
+    <%= f.label :tanque_id, "Tanque:" %><br>
+    <%= f.collection_select :tanque_id, @tanques, :id, :code, :prompt => true %>
+    </div>
+    <div class="field">
+    <%= f.label :product_id, "Producto:" %><br>
+    <%= f.collection_select :product_id, @products, :id, :name, :prompt => true %>
+    </div>
+    <div class="field">
+    <%= f.label :isla_id, "Isla:" %><br>
+    <%= f.collection_select :island_id, @islas, :id, :code, :prompt => true %>
+    </div>
+    
   <div class="field">
     <%= f.label :price_sell %><br>
     <%= f.text_field :price_sell %>
@@ -43,22 +40,8 @@
     <%= f.label :le_ac_gln %><br>
     <%= f.text_field :le_ac_gln %>
   </div>
-  <div class="field">
-    <%= f.label :gln %><br>
-    <%= f.text_field :gln %>
-  </div>
-  <div class="field">
-    <%= f.label :date1 %><br>
-    <%= f.datetime_select :date1 %>
-  </div>
-  <div class="field">
-    <%= f.label :employee_id %><br>
-    <%= f.number_field :employee_id %>
-  </div>
-  <div class="field">
-    <%= f.label :turno %><br>
-    <%= f.text_field :turno %>
-  </div>
+  
+ 
   <div class="actions">
     <%= f.submit %>
   </div>

@@ -1,18 +1,28 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Comments:</strong>
-  <%= @tank.comments %>
+  <strong>Code:</strong>
+  <%= @tank.code %>
 </p>
 
 <p>
   <strong>Product:</strong>
-  <%= @tank.product %>
+  <%= @tank.product_id %>
 </p>
 
 <p>
-  <strong>Company:</strong>
-  <%= @tank.company %>
+  <strong>Saldo inicial:</strong>
+  <%= @tank.saldo_inicial %>
+</p>
+
+<p>
+  <strong>Varilla:</strong>
+  <%= @tank.varilla %>
+</p>
+
+<p>
+  <strong>Product:</strong>
+  <%= @tank.product_id %>
 </p>
 
 <%= link_to 'Edit', edit_tank_path(@tank) %> |

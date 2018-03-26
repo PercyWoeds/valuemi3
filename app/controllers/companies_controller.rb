@@ -117,6 +117,13 @@ class CompaniesController < ApplicationController
     @pagetitle = @company[:name]
     @locations = Location.where(company_id: @company.id)
   end 
+  def parte
+    @company = Company.find(params[:id])
+    set_company(@company)
+    
+    @pagetitle = @company[:name]
+    @locations = Location.where(company_id: @company.id)
+  end 
   
   def planilla 
     @company = Company.find(params[:id])

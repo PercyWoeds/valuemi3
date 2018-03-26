@@ -1,5 +1,10 @@
   Mnygo::Application.routes.draw do
 
+  resources :tanques
+  resources :tanks
+  resources :tanks
+  resources :islands
+  resources :islands
   resources :sellvales
   resources :venta
   resources :ccostos
@@ -56,7 +61,6 @@
   resources :ajusts
   resources :viaticos 
 
-  resources :tanks
   resources :employees
   resources :pumps
   resources :supplier_payments
@@ -445,7 +449,7 @@ end
   match 'viaticos/ac_employees/:company_id' => 'viaticos#ac_employees', via: [:get, :post]
   match 'viaticos/ac_user/:company_id' => 'viaticos#ac_user', via: [:get, :post]
   match 'viaticos/ac_customers/:company_id' => 'viaticos#ac_customers', via: [:get, :post]
-  match 'viaticos/new/:company_id' => 'viaticos#new', via: [:get, :post]
+  match 'viaticos/new/s:company_id' => 'viaticos#new', via: [:get, :post]
   match 'viaticos/new2/:company_id' => 'viaticos#new2', via: [:get, :post]
   match 'viaticos/do_email/:id' => 'viaticos#do_email', via: [:get, :post]
   match 'viaticos/do_process/:id' => 'viaticos#do_process', via: [:get, :post]
@@ -890,6 +894,7 @@ end
   match 'companies/license/:id' => 'companies#license', via: [:get, :post]
   match 'companies/components/:id' => 'companies#components', via: [:get, :post]
   match 'companies/cpagar/:id' => 'companies#cpagar', via: [:get, :post]
+  match 'companies/parte/:id' => 'companies#parte', via: [:get, :post]
   match 'companies/ccobrar/:id' => 'companies#ccobrar', via: [:get, :post]
   match 'companies/showcase/:id' => 'companies#showcase', via: [:get, :post]
   match 'companies/planilla/:id' => 'companies#planilla', via: [:get, :post]

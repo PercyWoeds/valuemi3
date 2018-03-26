@@ -1,0 +1,25 @@
+<%= simple_form_for(@tanque) do |f| %>
+  <%= f.error_notification %>
+  
+    <div class="field">
+      <%= f.label :code, "Code:" %><br>
+      <%= f.text_field :code %>
+    </div>
+    
+    <div class="field">
+    <%= f.label :product_id, "Producto:" %><br>
+    <%= f.collection_select :product_id, @products, :id, :name, :prompt => true %>
+    </div>
+      <div class="field">
+    <%= f.label :saldo_inicial, "Saldo Inicial:" %><br>
+    <%= f.number_field :saldo_inicial  %>
+    </div>
+      <div class="field">
+      <%= f.label :varilla, "Varilla:" %><br>
+      <%= f.number_field :varilla  %>
+    </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

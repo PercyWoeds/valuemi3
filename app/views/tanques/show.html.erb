@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @tanque.code %>
+</p>
+
+<p>
+  <strong>Product:</strong>
+  <%= @tanque.product.name %>
+</p>
+
+<p>
+  <strong>Saldo inicial:</strong>
+  <%= @tanque.saldo_inicial %>
+</p>
+
+<p>
+  <strong>Varilla:</strong>
+  <%= @tanque.varilla %>
+</p>
+
+<%= link_to 'Edit', edit_tanque_path(@tanque) %> |
+<%= link_to 'Back', tanques_path %>

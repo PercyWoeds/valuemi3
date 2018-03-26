@@ -1489,10 +1489,10 @@ def newfactura2
     
     @invoice = Factura.find($lcFacturaId)
     
-    @invoice[:subtotal] = @invoice.get_subtotal2.round(2)
+    @invoice[:total] = @invoice.get_subtotal2.round(2)
     
-    lcTotal = @invoice[:subtotal] * 1.18
-    @invoice[:total] = lcTotal.round(2)
+    lcTotal = @invoice[:subtotal]  / 1.18
+    @invoice[:subtotal] = lcTotal.round(2)
     
     lcTax =@invoice[:total] - @invoice[:subtotal]
     @invoice[:tax] = lcTax.round(2)

@@ -1,12 +1,9 @@
-<%= simple_form_for(@tank) do |f| %>
+<%= simple_form_for(@island) do |f| %>
   <%= f.error_notification %>
 
   <div class="form-inputs">
     <%= f.input :code %>
-    <%= f.input :descrip %>
-    <%= f.input :saldo_inicial %>
-    <%= f.input :varilla %>
-    <%= f.input :product_id %>
+    <%= f.input :name %>
   </div>
 
   <div class="form-actions">

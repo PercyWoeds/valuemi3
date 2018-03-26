@@ -1,0 +1,107 @@
+<div class="mid_box bordered_right">
+
+
+
+  <h3>
+    <%= image_tag("invoice_32.png", :class => "vmiddle") %>
+    <%= link_to "Varillaje", "/companies/serviceorders/#{@company.id}" %>
+  </h3>
+
+  <p>
+     Agregar, editar or eliminar facturas para tu negocio.
+  </p>
+  
+  <%= hr() %>
+
+  <h3>
+    <%= image_tag("invoice_32.png", :class => "vmiddle") %>
+    <%= link_to "Registro de Ventas", "/companies/purchaseorders/#{@company.id}" %>
+  </h3>
+
+  <p>
+     Agregar, editar or eliminar facturas para tu negocio.
+  </p>
+  
+  <%= hr() %>
+
+    <h3>
+    <%= image_tag("invoice_32.png", :class => "vmiddle") %>
+    <%= link_to "Facturas", "/companies/purchases/#{@company.id}" %>
+  </h3>
+  <p>
+     Agregar, editar or eliminar facturas para tu negocio.
+  </p>
+    <%= hr() %>  
+
+
+  <h3>
+    <%= image_tag("products_32.png", :class => "vmiddle") %>
+    <%= link_to "Productos", "/companies/products/#{@company.id}" %>
+  </h3>
+
+  <p>
+    Agregar, editar or eliminar los productos o servicios  que tu negocio ofrece.
+  </p>
+
+ 
+  <%= hr() %>
+
+  <h3>
+    <%= image_tag("product_category_32.png", :class => "vmiddle") %>
+    <%= link_to "Categorias", "/companies/products_categories/#{@company.id}" %>
+  </h3>
+
+  <p>
+     Agregar, editar or eliminar las categorias para tus productos.
+  </p>
+
+
+
+</div>
+
+<div class="mid_box">
+  
+  <h3>
+  <div>
+    <%= image_tag("clients_32.png", :class => "vmiddle") %>
+    <%= link_to "Isla", islands_path %>
+        </div>
+  </h3>
+  <p>
+     Agregar, editar or eliminar Isla
+     
+
+<%= hr() %>
+<h3>
+  <div>
+    <%= image_tag("clients_32.png", :class => "vmiddle") %>
+    <%= link_to "Tanques", tanques_path %>
+        </div>
+  </h3>
+  <p>
+     Agregar, editar or eliminar Tanques
+     
+
+<%= hr() %>
+
+
+  <h3>
+    <%= image_tag("supplier_32.png", :class => "vmiddle") %>
+    <%= link_to "Surtidor", pumps_path %>
+  </h3>
+
+  <p>
+     Agregar, editar or eliminar surtidor para tu eess.
+  </p>
+  
+ 
+    <%= hr() %>
+    
+  <h3>
+    <%= image_tag("reports_32.png", :class => "vmiddle") %>
+    <%= link_to "Reportes", "/companies/reports_compras/#{@company.id}" %>
+  </h3>
+
+  <p>
+    Reportes de tu negocio.
+  </p>

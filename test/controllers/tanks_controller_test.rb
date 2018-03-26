@@ -18,7 +18,7 @@ class TanksControllerTest < ActionController::TestCase
 
   test "should create tank" do
     assert_difference('Tank.count') do
-      post :create, tank: { comments: @tank.comments, company_id: @tank.company_id, product_id: @tank.product_id }
+      post :create, tank: { code: @tank.code, product_id: @tank.product_id, product_id: @tank.product_id, saldo_inicial: @tank.saldo_inicial, varilla: @tank.varilla }
     end
 
     assert_redirected_to tank_path(assigns(:tank))
@@ -35,7 +35,7 @@ class TanksControllerTest < ActionController::TestCase
   end
 
   test "should update tank" do
-    patch :update, id: @tank, tank: { comments: @tank.comments, company_id: @tank.company_id, product_id: @tank.product_id }
+    patch :update, id: @tank, tank: { code: @tank.code, product_id: @tank.product_id, product_id: @tank.product_id, saldo_inicial: @tank.saldo_inicial, varilla: @tank.varilla }
     assert_redirected_to tank_path(assigns(:tank))
   end
 

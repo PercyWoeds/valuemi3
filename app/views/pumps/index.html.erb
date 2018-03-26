@@ -6,17 +6,14 @@
   <thead>
     <tr>
       <th>Fuel</th>
-      <th>Pump01</th>
-      <th>Tank</th>
-      <th>Product</th>
-      <th>Price buy</th>
+      <th>Isla</th>
+      <th>Tanque</th>
+      <th>Producto</th>
+      
       <th>Price sell</th>
       <th>Le an gln</th>
       <th>Le ac gln</th>
-      <th>Gln</th>
-      <th>Date1</th>
-      <th>Employee</th>
-      <th>Turno</th>
+      
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -25,17 +22,14 @@
     <% @pumps.each do |pump| %>
       <tr>
         <td><%= pump.fuel %></td>
-        <td><%= pump.pump01 %></td>
-        <td><%= pump.tank_id %></td>
-        <td><%= pump.product_id %></td>
-        <td><%= pump.price_buy %></td>
+        <td><%= pump.island.code %></td>
+        <td><%= pump.tanque.code %></td>
+        <td><%= pump.product.name %></td>
+        
         <td><%= pump.price_sell %></td>
         <td><%= pump.le_an_gln %></td>
         <td><%= pump.le_ac_gln %></td>
-        <td><%= pump.gln %></td>
-        <td><%= pump.date1 %></td>
-        <td><%= pump.employee_id %></td>
-        <td><%= pump.turno %></td>
+        
         <td><%= link_to 'Show', pump %></td>
         <td><%= link_to 'Edit', edit_pump_path(pump) %></td>
         <td><%= link_to 'Destroy', pump, method: :delete, data: { confirm: 'Are you sure?' } %></td>
