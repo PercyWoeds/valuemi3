@@ -1491,7 +1491,7 @@ def newfactura2
     
     @invoice[:total] = @invoice.get_subtotal2.round(2)
     
-    lcTotal = @invoice[:subtotal]  / 1.18
+    lcTotal = @invoice[:total]  / 1.18
     @invoice[:subtotal] = lcTotal.round(2)
     
     lcTax =@invoice[:total] - @invoice[:subtotal]
