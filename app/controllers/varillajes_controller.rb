@@ -61,9 +61,7 @@ class VarillajesController < ApplicationController
     end
   end
   
-  def
-  end 
-
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_varillaje
@@ -74,4 +72,5 @@ class VarillajesController < ApplicationController
     def varillaje_params
       params.require(:varillaje).permit(:tanque_id, :product_id, :inicial, :compras, :directo, :consumo, :transfe, :saldo, :varilla, :dife_dia, :fecha, :documento)
     end
+    
 end
