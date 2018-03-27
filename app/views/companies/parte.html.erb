@@ -1,5 +1,6 @@
 <div class="mid_box bordered_right">
 
+<% if @current_user.level = "admin" %>
   <h3>
     <%= image_tag("invoice_32.png", :class => "vmiddle") %>
     <%= link_to "Parte Diario", "/companies/serviceorders/#{@company.id}" %>
@@ -10,11 +11,11 @@
   </p>
   
   <%= hr() %>
-
+<%end %>
 
   <h3>
     <%= image_tag("invoice_32.png", :class => "vmiddle") %>
-    <%= link_to "Varillaje", "/companies/serviceorders/#{@company.id}" %>
+    <%= link_to "Varillaje", varillajes_path %>
   </h3>
 
   <p>

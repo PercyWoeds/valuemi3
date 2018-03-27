@@ -1,5 +1,6 @@
   Mnygo::Application.routes.draw do
 
+  resources :varillajes
   resources :afericions
   resources :ventaisla_details
   resources :ventaislas

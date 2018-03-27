@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  tanque_id: 1
+  product_id: 1
+  inicial: 1.5
+  compras: 1.5
+  directo: 1.5
+  consumo: 1.5
+  transfe: 1.5
+  saldo: 
+  varilla: 1.5
+  dife_dia: MyString
+  fecha: 2018-03-27 20:58:42
+  documento: MyString
+
+two:
+  tanque_id: 1
+  product_id: 1
+  inicial: 1.5
+  compras: 1.5
+  directo: 1.5
+  consumo: 1.5
+  transfe: 1.5
+  saldo: 
+  varilla: 1.5
+  dife_dia: MyString
+  fecha: 2018-03-27 20:58:42
+  documento: MyString

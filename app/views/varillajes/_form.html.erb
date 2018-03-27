@@ -1,0 +1,126 @@
+<%= simple_form_for(@varillaje) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    
+          <div class="field">
+      <%= f.label :fecha , "Fecha *", :class => "bold" %><br />
+
+      <% if @current_user.level = "admin" %>
+        <%= f.text_field :fecha, value: Time.zone.now.strftime("%d/%m/%Y") %>
+      <% else %>
+        <%= f.text_field :fecha, value: Time.zone.now.strftime("%d/%m/%Y"), :readonly => true %>
+      <% end %>
+      </div>
+
+<label for="ac_manguera" class="bold">Manguera*</label><br />
+      <input type="text" name="ac_manguera" id="ac_manguera" value="<% if @ac_manguera %><%= @ac_manguera %><% end %>" />
+      <div class="small">
+        Ingrese una termino de busqueda 
+      </div>
+      <br />
+
+      <div class="small">
+        <strong>Seleccionar manguera:</strong>
+        <span id="selected_manguera"><% if @ac_manguera %><%= @ac_manguera %><% else %><!-- i --><% end %></span>
+      </div>
+     
+     <strong>Producto :</strong><br />
+
+    <input type="text" name="ac_product_name" id="ac_product_name" value="" class="tf_short" readonly />
+    <div class="small">
+      Precio del  producto 
+    </div>
+    <br />
+    
+    <strong>Compras :</strong><br />
+
+    <input type="text" name="ac_compras" id="ac_compras" value="" class="tf_short" readonly />
+    <div class="small">
+      Compras del  producto 
+    </div>
+    <br />  
+    
+     <strong> Directo:</strong><br />
+
+    <input type="text" name="ac_directo" id="ac_directo" value="" class="tf_short" readonly />
+      
+      
+    <div class="small">
+      Ventas Directas del sistema
+    </div>
+    
+    <br />
+    <strong> Consumo interno:</strong><br />
+
+    <input type="text" name="ac_consumo" id="ac_consumo" value="" class="tf_short" readonly />
+      
+      
+    <div class="small">
+      Consumo inteerno del sistema
+    </div>
+    
+    <br />
+    <strong> Saldo:</strong><br />
+
+    <input type="text" name="ac_saldo" id="ac_saldo" value="" class="tf_short" readonly />
+      
+      
+    <div class="small">
+      Saldo ventas del sistema
+    </div>
+    
+    <br />
+    
+    
+      <div class="field">
+      <%= f.label :varilla, "Medida *", :class => "bold"  %><br />
+      <%= f.input_field :varilla   %>  
+      </div>
+    <div class="field">
+      <%= f.label :documento, "Documento *", :class => "bold"  %><br />
+      <%= f.input_field :documento   %>  
+      </div>
+
+    <br />
+     
+     </input>
+    
+
+  <div class="actions">
+      
+      <%= f.hidden_field :tanque_id,    :id => "ac_manguera_id" %>
+      <%= f.hidden_field :product_id, :id => "ac_product_id" %>
+      
+    
+      <%= f.submit %>
+    </div>
+    
+    <div class="small">
+      Once you're done adding products, don't forget to <strong><%= @action_txt %></strong> your invoice.
+    </div>
+
+<% end %>
+
+
+
+<%= render 'layouts/autocomplete' %>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("#ac_manguera").autocomplete("/varillaje/ac_mangueras", {
+			matchSubset: 1,
+			matchContains: 1,
+      selectFirst: false
+    });
+    
+       $("#ac_manguera").result(function(event, data, formatted) {
+      $("#ac_manguera_id").val(data[2]);
+      $("#ac_product_name").val(data[4]);
+      $("#ac_product_price").val(data[6]);
+      $("#ac_le_an_gln").val(data[8]);
+      $("#ac_product_id").val(data[10]);
+      $("#selected_manguera").html(data[0]);
+    });      
+});
+</script>

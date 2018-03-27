@@ -4,7 +4,9 @@ class SellvalesController < ApplicationController
   # GET /sellvales
   # GET /sellvales.json
   def index
+    
     @sellvales = Sellvale.where(td:"N")
+    
   end
 
   # GET /sellvales/1
