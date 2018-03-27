@@ -238,11 +238,10 @@
 
 <% else%>
 <div class="button">
-
-<%= link_to "Agregar Item","/facturas/newfactura2/#{@invoice.id}" %>
+  <%= link_to "Agregar Item","/facturas/newfactura2/#{@invoice.id}" %>
 </div> 
 
- </div>  
+ 
   <tbody>
     <table>
     <%  @factura_details.each do |quote| %>
@@ -257,7 +256,7 @@
           <%= quote.price_discount %>
         </td>
         <td class="bordered_bottom bordered_right">
-          <%= money(quote.quantity) %>%
+          <%= money(quote.quantity) %>
         </td>
         <td class="bordered_bottom bordered_right">
           <%= money(quote.total) %>

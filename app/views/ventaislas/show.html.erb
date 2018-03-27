@@ -1,0 +1,153 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Fecha:</strong>
+  <%= @ventaisla.fecha %>
+</p>
+
+<p>
+  <strong>Turno:</strong>
+  <%= @ventaisla.turno %>
+</p>
+
+<p>
+  <strong>Employee:</strong>
+  <%= @ventaisla.employee_id %>
+</p>
+
+<p>
+  <strong>Pump:</strong>
+  <%= @ventaisla.pump_id %>
+</p>
+
+<p>
+  <strong>Importe:</strong>
+  <%= @ventaisla.importe %>
+</p>
+
+<p>
+  <strong>Le an gln:</strong>
+  <%= @ventaisla.le_an_gln %>
+</p>
+
+<p>
+  <strong>Le ac gln:</strong>
+  <%= @ventaisla.le_ac_gln %>
+</p>
+
+<p>
+  <strong>Galones:</strong>
+  <%= @ventaisla.galones %>
+</p>
+
+<p>
+  <strong>Precio ven:</strong>
+  <%= @ventaisla.precio_ven %>
+</p>
+
+<%= link_to 'Edit', edit_ventaisla_path(@ventaisla) %> |
+<%= link_to 'Back', ventaislas_path %>
+
+
+
+<h3>
+  Detalle
+</h3>
+
+<table>
+  <thead>
+    <tr>
+      
+      <th>
+        Codigo
+      </th>
+      <th>
+        Descrip
+      </th>
+      
+      <th>
+        Precio
+      </th>
+      
+      <th>
+        Lectura Inicial
+      </th>
+      <th>
+        Lectura Final 
+      </th>
+      
+      <th>
+        Lectura Cantidad
+      </th>
+      <th>
+        Importe
+        Total 
+      </th>
+      
+    </tr>
+  </thead>
+  <tbody>
+
+
+    <%  @ventaisla_details.each do |detalle| %>
+    
+    <tr>
+          
+          <td class="small bordered_bottom bordered_right">
+            
+            <%= link_to detalle.pump.fuel %>
+            
+          </td>
+          
+          <td class="small bordered_bottom bordered_right">
+            <%= detalle.product.name %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= detalle.price  %>              
+          </td>
+          
+          <td class="small bordered_bottom bordered_right">
+            <%= detalle.le_an_gln  %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= detalle.le_ac_gln  %>              
+          </td>
+          
+          <td class="small bordered_bottom bordered_right">
+            <%= detalle.quantity  %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= detalle.total   %>              
+          </td>
+          
+          
+            
+       <td><%= link_to 'Eliminar',[@ventaisla,detalle], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+
+      </tr>    
+          
+          
+          
+             <tr>
+  
+         
+     
+        </tr>
+    
+    <% end %>
+
+</tbody>
+</table>
+<br />
+
+
+
+<div class="button">
+<%= link_to 'Agregar Item', new_ventaisla_ventaisla_detail_path(@ventaisla) %>
+<%= link_to 'Editar', edit_ventaisla_path(@ventaisla) %> 
+<%= link_to 'Regresar', ventaislas_path %>
+</div> 
+
+
+
+

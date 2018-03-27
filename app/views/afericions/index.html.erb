@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listado Afericiones</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Fecha</th>
+      <th>Turno</th>
+      <th>Employee</th>
+      <th>Tanque</th>
+      <th>Documento</th>
+      <th>Cantidad</th>
+      <th>Importe</th>
+      <th>Concepto</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @afericions.each do |afericion| %>
+      <tr>
+        <td class="small bordered_bottom bordered_right"><%= doDate(afericion.fecha) %></td>
+        <td class="small bordered_bottom bordered_right"><%= afericion.turno %></td>
+        <td><%= afericion.employee_id %></td>
+        <td><%= afericion.tanque_id %></td>
+        <td><%= afericion.documento %></td>
+        <td><%= afericion.quantity %></td>
+        <td><%= afericion.importe %></td>
+        <td><%= afericion.concepto %></td>
+        <td><%= link_to 'Ver', afericion %></td>
+        <td><%= link_to 'Editar', edit_afericion_path(afericion) %></td>
+        <td><%= link_to 'Eliminar', afericion, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Afericion', new_afericion_path %>

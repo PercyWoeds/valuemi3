@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Pump:</strong>
+  <%= @ventaisla_detail.pump_id %>
+</p>
+
+<p>
+  <strong>Le an gln:</strong>
+  <%= @ventaisla_detail.le_an_gln %>
+</p>
+
+<p>
+  <strong>Le ac gln:</strong>
+  <%= @ventaisla_detail.le_ac_gln %>
+</p>
+
+<p>
+  <strong>Price:</strong>
+  <%= @ventaisla_detail.price %>
+</p>
+
+<p>
+  <strong>Quantity:</strong>
+  <%= @ventaisla_detail.quantity %>
+</p>
+
+<p>
+  <strong>Total:</strong>
+  <%= @ventaisla_detail.total %>
+</p>
+
+<%= link_to 'Edit', edit_ventaisla_detail_path(@ventaisla_detail) %> |
+<%= link_to 'Back', ventaisla_details_path %>

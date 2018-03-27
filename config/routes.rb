@@ -1,5 +1,8 @@
   Mnygo::Application.routes.draw do
 
+  resources :afericions
+  resources :ventaisla_details
+  resources :ventaislas
   resources :tanques
   resources :tanks
   resources :tanks
@@ -76,6 +79,11 @@
 
   resources :viaticos do
     resources :viatico_details, except: [:index,:show], controller: "viaticos/viatico_details"
+    
+  end 
+  
+  resources :ventaislas  do
+    resources :ventaisla_details, except: [:index,:show], controller: "ventaislas/ventaisla_details"
     
   end 
 resources :facturas do
@@ -972,6 +980,9 @@ end
 
   # Sessions
   resources :sessions
+
+  match 'ventaisla/ac_mangueras' => 'ventaislas#ac_mangueras', via: [:get, :post]
+  resources :ventaislas
   
 
   # Frontpage

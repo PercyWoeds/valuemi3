@@ -1,0 +1,91 @@
+<%= simple_form_for [@ventaisla, @ventaisla_detail] do |f| %>
+
+    <label for="ac_manguera" class="bold">Manguera*</label><br />
+      <input type="text" name="ac_manguera" id="ac_manguera" value="<% if @ac_manguera %><%= @ac_manguera %><% end %>" />
+      
+      
+      <div class="small">
+        Ingrese una termino de busqueda 
+      </div>
+      <br />
+
+      <div class="small">
+        <strong>Seleccionar manguera:</strong>
+        <span id="selected_manguera"><% if @ac_manguera %><%= @ac_manguera %><% else %><!-- i --><% end %></span>
+        
+      </div>
+     
+     
+     <strong>Producto :</strong><br />
+
+    <input type="text" name="ac_product_name" id="ac_product_name" value="" class="tf_short" readonly />
+    <div class="small">
+      Precio del  producto 
+    </div>
+    <br />
+    
+    <strong>Precio :</strong><br />
+
+    <input type="text" name="ac_product_price" id="ac_product_price" value="" class="tf_short" readonly />
+    <div class="small">
+      Precio del  producto 
+    </div>
+    <br />  
+    
+     <strong>Lectura Inicio:</strong><br />
+
+    <input type="text" name="ac_le_an_gln" id="ac_le_an_gln" value="" class="tf_short" readonly />
+      
+      
+    <div class="small">
+      Lectura anterior del  producto 
+    </div>
+    
+    <br />
+    
+      <div class="field">
+      <%= f.label :le_ac_gln, "Lectura final *", :class => "bold"  %><br />
+      <%= f.input_field :le_ac_gln   %>  
+      
+    </div>
+
+     
+    <br />
+     
+     </input>
+    
+
+  <div class="actions">
+      
+      <%= f.hidden_field :pump_id,    :id => "ac_manguera_id" %>
+      <%= f.hidden_field :product_id, :id => "ac_product_id" %>
+      
+    
+      <%= f.submit %>
+    </div>
+    
+    <div class="small">
+      Once you're done adding products, don't forget to <strong><%= @action_txt %></strong> your invoice.
+    </div>
+<% end %>
+
+<%= render 'layouts/autocomplete' %>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("#ac_manguera").autocomplete("/ventaisla/ac_mangueras", {
+			matchSubset: 1,
+			matchContains: 1,
+      selectFirst: false
+    });
+    
+       $("#ac_manguera").result(function(event, data, formatted) {
+      $("#ac_manguera_id").val(data[2]);
+      $("#ac_product_name").val(data[4]);
+      $("#ac_product_price").val(data[6]);
+      $("#ac_le_an_gln").val(data[8]);
+      $("#ac_product_id").val(data[10]);
+      $("#selected_manguera").html(data[0]);
+    });      
+});
+</script>

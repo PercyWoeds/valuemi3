@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180827233035) do
+ActiveRecord::Schema.define(version: 20180827233042) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -75,6 +75,19 @@ ActiveRecord::Schema.define(version: 20180827233035) do
     t.string   "full_address"
     t.integer  "address2_id"
     t.integer  "customer_id"
+  end
+
+  create_table "afericions", force: :cascade do |t|
+    t.datetime "fecha"
+    t.string   "turno"
+    t.integer  "employee_id"
+    t.integer  "tanque_id"
+    t.string   "documento"
+    t.float    "quantity"
+    t.float    "importe"
+    t.string   "concepto"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "afps", force: :cascade do |t|
@@ -2165,6 +2178,34 @@ ActiveRecord::Schema.define(version: 20180827233035) do
     t.string   "company_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "ventaisla_details", force: :cascade do |t|
+    t.integer  "pump_id"
+    t.float    "le_an_gln"
+    t.float    "le_ac_gln"
+    t.float    "price"
+    t.float    "quantity"
+    t.float    "total"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.integer  "ventaisla_id"
+    t.integer  "product_id"
+  end
+
+  create_table "ventaislas", force: :cascade do |t|
+    t.datetime "fecha"
+    t.string   "turno"
+    t.integer  "employee_id"
+    t.integer  "pump_id"
+    t.float    "importe"
+    t.float    "le_an_gln"
+    t.float    "le_ac_gln"
+    t.float    "galones"
+    t.float    "precio_ven"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.integer  "ventaisla_id"
   end
 
   create_table "viatico_details", force: :cascade do |t|

@@ -1,5 +1,15 @@
 <div class="mid_box bordered_right">
 
+  <h3>
+    <%= image_tag("invoice_32.png", :class => "vmiddle") %>
+    <%= link_to "Parte Diario", "/companies/serviceorders/#{@company.id}" %>
+  </h3>
+
+  <p>
+     Visualizar parte diario 
+  </p>
+  
+  <%= hr() %>
 
 
   <h3>
@@ -15,7 +25,7 @@
 
   <h3>
     <%= image_tag("invoice_32.png", :class => "vmiddle") %>
-    <%= link_to "Registro de Ventas", "/companies/purchaseorders/#{@company.id}" %>
+    <%= link_to "Registro de Ventas", sellvales_path  %>
   </h3>
 
   <p>
@@ -26,7 +36,16 @@
 
     <h3>
     <%= image_tag("invoice_32.png", :class => "vmiddle") %>
-    <%= link_to "Venta Combustible ", "/companies/purchases/#{@company.id}" %>
+    <%= link_to "Venta Combustible ",ventaislas_path %>
+  </h3>
+  <p>
+     Agregar, editar or eliminar lecturas de ventas de combustible para tu negocio.
+  </p>
+    <%= hr() %>  
+
+    <h3>
+    <%= image_tag("invoice_32.png", :class => "vmiddle") %>
+    <%= link_to "Afericion ",afericions_path %>
   </h3>
   <p>
      Agregar, editar or eliminar lecturas de ventas de combustible para tu negocio.
@@ -34,26 +53,6 @@
     <%= hr() %>  
 
 
-  <h3>
-    <%= image_tag("products_32.png", :class => "vmiddle") %>
-    <%= link_to "Productos", "/companies/products/#{@company.id}" %>
-  </h3>
-
-  <p>
-    Agregar, editar or eliminar los productos o servicios  que tu negocio ofrece.
-  </p>
-
- 
-  <%= hr() %>
-
-  <h3>
-    <%= image_tag("product_category_32.png", :class => "vmiddle") %>
-    <%= link_to "Categorias", "/companies/products_categories/#{@company.id}" %>
-  </h3>
-
-  <p>
-     Agregar, editar or eliminar las categorias para tus productos.
-  </p>
 
 
 

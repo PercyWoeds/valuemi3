@@ -1,0 +1,5 @@
+<% if @pumps %>
+  <% for pump in @pumps %>
+    <%= pump.fuel %>|BRK|<%= pump.id %>|BRK|<%= pump.product.name %>|BRK|<%= pump.product.price %>|BRK|<%= pump.le_an_gln %>|BRK|<%= pump.product.id %>                
+  <% end %>
+<% end %>

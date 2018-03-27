@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  fecha: 2018-03-26 22:01:34
+  turno: MyString
+  employee_id: 1
+  pump_id: 1
+  importe: 1.5
+  le_an_gln: 1.5
+  le_ac_gln: 1.5
+  galones: 1.5
+  precio_ven: 1.5
+
+two:
+  fecha: 2018-03-26 22:01:34
+  turno: MyString
+  employee_id: 1
+  pump_id: 1
+  importe: 1.5
+  le_an_gln: 1.5
+  le_ac_gln: 1.5
+  galones: 1.5
+  precio_ven: 1.5

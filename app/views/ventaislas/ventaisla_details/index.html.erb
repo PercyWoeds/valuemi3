@@ -1,0 +1,37 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listado Ventaisla Details</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Pump</th>
+      <th>Le an gln</th>
+      <th>Le ac gln</th>
+      <th>Price</th>
+      <th>Quantity</th>
+      <th>Total</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @ventaisla_details.each do |ventaisla_detail| %>
+      <tr>
+        <td><%= ventaisla_detail.pump_id %></td>
+        <td><%= ventaisla_detail.le_an_gln %></td>
+        <td><%= ventaisla_detail.le_ac_gln %></td>
+        <td><%= ventaisla_detail.price %></td>
+        <td><%= ventaisla_detail.quantity %></td>
+        <td><%= ventaisla_detail.total %></td>
+        <td><%= link_to 'Show', ventaisla_detail %></td>
+        
+        <td><%= link_to 'Destroy', ventaisla_detail, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Ventaisla detail', new_ventaisla_detail_path %>

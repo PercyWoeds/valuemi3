@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  fecha: 2018-03-27 19:45:34
+  turno: MyString
+  employee_id: 1
+  tanque_id: 1
+  documento: MyString
+  quantity: 1.5
+  importe: 1.5
+  concepto: MyString
+
+two:
+  fecha: 2018-03-27 19:45:34
+  turno: MyString
+  employee_id: 1
+  tanque_id: 1
+  documento: MyString
+  quantity: 1.5
+  importe: 1.5
+  concepto: MyString

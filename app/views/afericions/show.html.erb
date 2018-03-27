@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Fecha:</strong>
+  <%= @afericion.fecha %>
+</p>
+
+<p>
+  <strong>Turno:</strong>
+  <%= @afericion.turno %>
+</p>
+
+<p>
+  <strong>Employee:</strong>
+  <%= @afericion.employee_id %>
+</p>
+
+<p>
+  <strong>Tanque:</strong>
+  <%= @afericion.tanque.code %>
+</p>
+
+<p>
+  <strong>Documento:</strong>
+  <%= @afericion.documento %>
+</p>
+
+<p>
+  <strong>Quantity:</strong>
+  <%= @afericion.quantity %>
+</p>
+
+<p>
+  <strong>Importe:</strong>
+  <%= @afericion.importe %>
+</p>
+
+<p>
+  <strong>Concepto:</strong>
+  <%= @afericion.concepto %>
+</p>
+
+<%= link_to 'Edit', edit_afericion_path(@afericion) %> |
+<%= link_to 'Back', afericions_path %>

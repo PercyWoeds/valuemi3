@@ -23,15 +23,12 @@
     <%= f.label :product_id, "Producto:" %><br>
     <%= f.collection_select :product_id, @products, :id, :name, :prompt => true %>
     </div>
+    
     <div class="field">
     <%= f.label :isla_id, "Isla:" %><br>
     <%= f.collection_select :island_id, @islas, :id, :code, :prompt => true %>
     </div>
     
-  <div class="field">
-    <%= f.label :price_sell %><br>
-    <%= f.text_field :price_sell %>
-  </div>
   <div class="field">
     <%= f.label :le_an_gln %><br>
     <%= f.text_field :le_an_gln %>

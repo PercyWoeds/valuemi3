@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  pump_id: 1
+  le_an_gln: 1.5
+  le_ac_gln: 1.5
+  price: 1.5
+  quantity: 1.5
+  total: 1.5
+
+two:
+  pump_id: 1
+  le_an_gln: 1.5
+  le_ac_gln: 1.5
+  price: 1.5
+  quantity: 1.5
+  total: 1.5

@@ -1,0 +1,37 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listado Venta Isla</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Fecha</th>
+      <th>Turno</th>
+      <th>Employee</th>
+      <th>Galones</th>
+      <th>Importe</th>
+      
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @ventaislas.each do |ventaisla| %>
+      <tr>
+        <td><%= ventaisla.fecha.strftime("%d/%m/%Y") %></td>
+        <td><%= ventaisla.turno %></td>
+        <td><%= ventaisla.employee.full_name %></td>
+        <td><%= ventaisla.galones %></td>
+        <td><%= ventaisla.importe %></td>
+        
+        <td><%= link_to 'Ver', ventaisla %></td>
+        <td><%= link_to 'Editar', edit_ventaisla_path(ventaisla) %></td>
+        <td><%= link_to 'Eliminar', ventaisla, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Ventaisla', new_ventaisla_path %>

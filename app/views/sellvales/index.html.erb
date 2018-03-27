@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Sellvales</h1>
+<h1>Listado Vales de Creditos </h1>
 
 <table>
   <thead>
@@ -13,25 +13,13 @@
       <th>Serie</th>
       <th>Numero</th>
       <th>Cod cli</th>
-      <th>Ruc</th>
+      
       <th>Placa</th>
       <th>Odometro</th>
       <th>Cod prod</th>
       <th>Cantidad</th>
       <th>Precio</th>
       <th>Importe</th>
-      <th>Igv</th>
-      <th>Fpago</th>
-      <th>Dolat</th>
-      <th>Implista</th>
-      <th>Cod tar</th>
-      <th>Km</th>
-      <th>Chofer</th>
-      <th>Tk devol</th>
-      <th>Cod sucu</th>
-      <th>Isla</th>
-      <th>Dni cli</th>
-      <th>Clear</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -39,36 +27,33 @@
   <tbody>
     <% @sellvales.each do |sellvale| %>
       <tr>
-        <td><%= sellvale.td %></td>
-        <td><%= sellvale.fecha %></td>
-        <td><%= sellvale.turno %></td>
-        <td><%= sellvale.cod_emp %></td>
-        <td><%= sellvale.caja %></td>
-        <td><%= sellvale.serie %></td>
-        <td><%= sellvale.numero %></td>
-        <td><%= sellvale.cod_cli %></td>
-        <td><%= sellvale.ruc %></td>
-        <td><%= sellvale.placa %></td>
-        <td><%= sellvale.odometro %></td>
-        <td><%= sellvale.cod_prod %></td>
-        <td><%= sellvale.cantidad %></td>
-        <td><%= sellvale.precio %></td>
-        <td><%= sellvale.importe %></td>
-        <td><%= sellvale.igv %></td>
-        <td><%= sellvale.fpago %></td>
-        <td><%= sellvale.dolat %></td>
-        <td><%= sellvale.implista %></td>
-        <td><%= sellvale.cod_tar %></td>
-        <td><%= sellvale.km %></td>
-        <td><%= sellvale.chofer %></td>
-        <td><%= sellvale.tk_devol %></td>
-        <td><%= sellvale.cod_sucu %></td>
-        <td><%= sellvale.isla %></td>
-        <td><%= sellvale.dni_cli %></td>
-        <td><%= sellvale.clear %></td>
-        <td><%= link_to 'Show', sellvale %></td>
-        <td><%= link_to 'Edit', edit_sellvale_path(sellvale) %></td>
-        <td><%= link_to 'Destroy', sellvale, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td class="small bordered_bottom bordered_right"><%= sellvale.td %></td>
+        <% if sellvale.fecha != nil %>
+        <td class="small bordered_bottom bordered_right"> <%= sellvale.fecha.strftime("%d/%m/%Y") %></td>
+        <% else %>
+        <td class="small bordered_bottom bordered_right"> <%= sellvale.fecha %></td>
+        <% end %>
+        
+        <td class="small bordered_bottom bordered_right" ><%= sellvale.turno %></td>
+        <td class="small bordered_bottom bordered_right"><%= sellvale.cod_emp %></td>
+        <td class="small bordered_bottom bordered_right"><%= sellvale.caja %></td>
+        <td class="small bordered_bottom bordered_right"><%= sellvale.serie %></td>
+        <td class="small bordered_bottom bordered_right"><%= sellvale.numero %></td>
+        <td class="small bordered_bottom bordered_right"><%= sellvale.cod_cli %></td>
+        
+        <td class="small bordered_bottom bordered_right"><%= sellvale.placa %></td>
+        <td class="small bordered_bottom bordered_right"><%= sellvale.odometro %></td>
+        <td class="small bordered_bottom bordered_right"><%= sellvale.cod_prod %></td>
+        <td class="small bordered_bottom bordered_right"><%= sellvale.cantidad %></td>
+        <td class="small bordered_bottom bordered_right"><%= sellvale.precio %></td>
+        <td class="small bordered_bottom bordered_right"><%= sellvale.importe %></td>
+        
+        <td><%= link_to 'Ver', sellvale %></td>
+        <td><%= link_to 'Editar', edit_sellvale_path(sellvale) %></td>
+        
+        <td><%= link_to 'Eliminar', sellvale, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        
+        
       </tr>
     <% end %>
   </tbody>
