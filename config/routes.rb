@@ -81,13 +81,18 @@
   resources :viaticos do
     resources :viatico_details, except: [:index,:show], controller: "viaticos/viatico_details"
     
+  end
+  
+  resources :facturas do 
+    collection { get :reportes}
   end 
+    
   
   resources :ventaislas  do
     resources :ventaisla_details, except: [:index,:show], controller: "ventaislas/ventaisla_details"
-    
+     
   end 
-resources :facturas do
+   resources :facturas do
     resources :factura_details, except: [:index,:show], controller: "facturas/facturas_details"
     collection { post :discontinue }
     collection do 
@@ -375,7 +380,11 @@ end
   match 'companies/reports/:company_id' => 'reports#reports', via: [:get, :post]
 
   match 'companies/reports/rpt_caja2_pdf/:company_id' => 'reports#rpt_caja2_pdf', via: [:get, :post]
-  match 'companies/reports/rpt_viatico_pdf/:company_id' => 'reports#rpt_viatico_pdf', via: [:get, :post]  
+  match 'companies/reports/rpt_viatico_pdf/:company_id' => 'reports#rpt_viatico_pdf', via: [:get, :post]
+  
+  match 'companies/reports/reports_parte/:company_id' => 'reports#reports_parte', via: [:get, :post]    
+  match 'companies/reports/rpt_parte_1/:company_id' => 'reports#rpt_parte_1', via: [:get, :post]    
+  match 'companies/reports/rpt_parte_2/:company_id' => 'reports#rpt_parte_2', via: [:get, :post]    
   # Company users
 
   match 'company_users/ac_users' => 'company_users#ac_users', via: [:get, :post]
@@ -776,7 +785,9 @@ end
   match 'customer_payments/rpt_ccobrar11_pdf/:id' => 'customer_payments#rpt_ccobrar11_pdf', via: [:get, :post]
   
   match 'companies/customer_payments/:company_id' => 'customer_payments#list_customerpayments', via: [:get, :post]  
-
+  
+  match 'companies/reports/rpt_ordenes1_pdf/:company_id' => 'reports#rpt_ordenes1_pdf', via: [:get, :post]
+  
   resources :customer_payments
 
   match 'inventories_detaisl/additems/:company_id' => 'additems#list', via: [:get, :post]  

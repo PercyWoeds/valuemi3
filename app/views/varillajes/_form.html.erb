@@ -9,70 +9,15 @@
       <% if @current_user.level = "admin" %>
         <%= f.text_field :fecha, value: Time.zone.now.strftime("%d/%m/%Y") %>
       <% else %>
-        <%= f.text_field :fecha, value: Time.zone.now.strftime("%d/%m/%Y"), :readonly => true %>
+        <%= f.text_field :fecha, value: Time.zone.now.strftime("%d/%m/%Y")  %>
       <% end %>
       </div>
-
-<label for="ac_manguera" class="bold">Manguera*</label><br />
-      <input type="text" name="ac_manguera" id="ac_manguera" value="<% if @ac_manguera %><%= @ac_manguera %><% end %>" />
-      <div class="small">
-        Ingrese una termino de busqueda 
+      <div class="field">
+      <%= f.label :tipo , "Tanque :", :class => "bold" %><br />
+      <%= f.collection_select :tanque_id, @tanques, :id, :code, :prompt => true %>
       </div>
-      <br />
 
-      <div class="small">
-        <strong>Seleccionar manguera:</strong>
-        <span id="selected_manguera"><% if @ac_manguera %><%= @ac_manguera %><% else %><!-- i --><% end %></span>
-      </div>
-     
-     <strong>Producto :</strong><br />
 
-    <input type="text" name="ac_product_name" id="ac_product_name" value="" class="tf_short" readonly />
-    <div class="small">
-      Precio del  producto 
-    </div>
-    <br />
-    
-    <strong>Compras :</strong><br />
-
-    <input type="text" name="ac_compras" id="ac_compras" value="" class="tf_short" readonly />
-    <div class="small">
-      Compras del  producto 
-    </div>
-    <br />  
-    
-     <strong> Directo:</strong><br />
-
-    <input type="text" name="ac_directo" id="ac_directo" value="" class="tf_short" readonly />
-      
-      
-    <div class="small">
-      Ventas Directas del sistema
-    </div>
-    
-    <br />
-    <strong> Consumo interno:</strong><br />
-
-    <input type="text" name="ac_consumo" id="ac_consumo" value="" class="tf_short" readonly />
-      
-      
-    <div class="small">
-      Consumo inteerno del sistema
-    </div>
-    
-    <br />
-    <strong> Saldo:</strong><br />
-
-    <input type="text" name="ac_saldo" id="ac_saldo" value="" class="tf_short" readonly />
-      
-      
-    <div class="small">
-      Saldo ventas del sistema
-    </div>
-    
-    <br />
-    
-    
       <div class="field">
       <%= f.label :varilla, "Medida *", :class => "bold"  %><br />
       <%= f.input_field :varilla   %>  
@@ -87,12 +32,7 @@
      </input>
     
 
-  <div class="actions">
-      
-      <%= f.hidden_field :tanque_id,    :id => "ac_manguera_id" %>
-      <%= f.hidden_field :product_id, :id => "ac_product_id" %>
-      
-    
+    <div class="actions">
       <%= f.submit %>
     </div>
     

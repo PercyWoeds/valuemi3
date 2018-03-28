@@ -2948,6 +2948,17 @@ def get_purchases_pendientes_day_value(fecha1,fecha2,value = "total_amount",clie
     
  end 
  
+ # Parte diario
+ 
+ def  get_parte_1(fecha) 
+   puts fecha
+   
+     @varilla = Varillaje.where(["fecha >= ? and fecha <= ? ", "#{fecha} 00:00:00","#{fecha} 23:59:59"  ])
+   
+    return @varilla 
+ end 
+ 
+ 
 end
 
 

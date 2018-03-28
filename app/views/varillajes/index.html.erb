@@ -24,8 +24,8 @@
   <tbody>
     <% @varillajes.each do |varillaje| %>
       <tr>
-        <td><%= varillaje.tanque_id %></td>
-        <td><%= varillaje.product_id %></td>
+        <td><%= varillaje.tanque.code %></td>
+        <td><%= varillaje.tanque.product.name %></td>
         <td><%= varillaje.inicial %></td>
         <td><%= varillaje.compras %></td>
         <td><%= varillaje.directo %></td>

@@ -1,0 +1,223 @@
+<html>
+<body>
+    
+  
+  <h4 ><center> Parte Diario </center>   </h4>
+  <h5><center> Fecha: <%= @fecha %> </center></h5>
+  <font size="2" face="Courier New" >  
+  
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+  <tr bgcolor="#B4D7F7">
+    <td width="5%"> Tanque  </td>
+    <td width="15%"> Producto  </td>
+    <td width="10%"> Inicial</td>
+    <td width="10%">  Compras </td>
+    <td width="10%"> Directo</td>
+    <td width="10%"> Consumo</td>
+    <td width="10%"> Venta</td>
+    <td width="10%"> Stock Final </td>
+    <td width="10%"> Varilla</td>
+    <td width="10%"> Dife_dia </td>
+  </tr>
+  </table>
+  
+  
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+      <% nroitem = 1%>
+       <% for  product0 in @parte_rpt %>
+                   <%  producto_value = product0.tanque.product.id%>
+    
+                    <td width= "5%" ><%=  product0.tanque.code %></td>
+                    <td width= "15%" ><%=  product0.tanque.product.name %></td>
+                    <td width = "10%" align ="right"><%= sprintf("%.2f",product0.inicial.to_s)   %></td>
+                    <td width = "10%" align ="right"><%= sprintf("%.2f",product0.get_compras(@fecha,producto_value))   %></td>
+                    <td width = "10%" align ="right"><%= sprintf("%.2f",product0.directo.to_s)   %> </td>
+                    <td width = "10%" align ="right"><%= sprintf("%.2f",product0.consumo.to_s)   %></td>
+                    <td width = "10%" align ="right"><%= sprintf("%.2f",product0.get_ventas(@fecha,product0.tanque.product.code))  %></td>
+                    <% saldo =  product0.inicial + product0.get_compras(@fecha,producto_value)  - product0.get_ventas(@fecha,product0.tanque.product.code) %>
+                    <td width = "10%" align ="right"><%= sprintf("%.2f",saldo.to_s)   %></td>
+                    <td width = "10%" align ="right"><%= sprintf("%.3f",product0.varilla.to_s)   %></td>
+                    <% dife =  product0.varilla - saldo %>
+                    <td width = "10%" align ="right"><%= sprintf("%.2f",dife.to_s)   %></td>
+                    </tr>
+                    <% nroitem = nroitem+1 %>
+         <%end %>
+               
+        <hr>  
+     </table>
+     
+     <% a= @parte_rpt.first %>
+     <% venta_1 =  a.get_ventas_contometros(@fecha) %>
+     <% venta_2 =  a.get_ventas_contometros_efectivo(@fecha) %>
+     <% venta_3 =  a.get_ventas_contometros_tarjeta(@fecha) %>
+     <% venta_4 =  a.get_ventas_contometros_creditos(@fecha) %>
+     <% venta_5 =  venta_2+ venta_3 +venta_4 %>
+     <% venta_6 =  venta_1 - venta_5 %>
+     
+     <hr>
+<table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+  <tr bgcolor="#B4D7F7">
+    
+    <td width="100%"> VENTAS DEL DIA  </td>
+    
+  </tr>
+  </table>
+  
+    <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+      <tr>
+            <td width= "25%" align ="left">** CONTOMETROS            : </td>
+            <td width= "25%" > <%=  sprintf("%.2f",venta_1) %></td>
+            
+            <td width = "25%" align ="left">  &#9475;   CREDITO COMBUSTIBLES        :  </td>
+            <td width = "25%" align ="right"><%= sprintf("%.2f",venta_4)   %></td>
+            
+          </tr>
+          
+            <tr>
+            <td width= "25%" align ="left">   AFERICION            : </td>
+            <td width= "25%" > (-)</td>
+            
+            <td width = "25%" align ="left">  &#9475;   CREDITO PRODUCTOS        :  </td>
+            <td width = "25%" align ="right"> </td>
+            
+            </tr>
+            <tr>
+            <td width= "25%" align ="left">   CONSUMO INTERNO            : </td>
+            <td width= "25%" >                                 (-)</td>
+            
+            <td width = "25%" align ="left">  &#9475;   DESPACHO ADELANTADO        :  </td>
+            <td width = "25%" align ="right"> </td>
+            
+            </tr>
+            
+            <tr>
+            <td width= "25%" align ="left">   DIFERENCIA PRECIO            : </td>
+            <td width= "25%" >                                 </td>
+            
+            <td width = "25%" align ="left">  &#9475;   TARJETA COMBUSTIBLES    :  </td>
+            <td width = "25%" align ="right">  <%= sprintf("%.2f",venta_3)  %></td>
+            
+            </tr>
+            
+            <tr>
+            <td width= "25%" align ="left">   DESCUENTO            : </td>
+            <td width= "25%" >                                (-) </td>
+            
+            <td width = "25%" align ="left">  &#9475;   EFECTIVO SOLES    :  </td>
+            <td width = "25%" align ="right"><%= sprintf("%.2f",venta_2)  %> </td>
+            
+            </tr>
+            <tr>
+            <td width= "25%" align ="left">   VENTA COMBUSTIBLES        S/.  : </td>
+            <td width= "25%" align= "right">          <%=    sprintf("%.2f",venta_1) %>                   </td>
+            
+            <td width = "25%" align ="left">  &#9475;   EFECTIVO DOLAR    :  </td>
+            <td width = "25%" align ="right"> </td>
+            
+            </tr>
+            <tr>
+            <td width= "25%" align ="left">   DESCUENTO            : </td>
+            <td width= "25%" >                                (-) </td>
+            
+            <td width = "25%" align ="left">  &#9475;       </td>
+            <td width = "25%" align ="right"> </td>
+            
+            </tr>
+            
+            <tr>
+            <td width= "25%" align ="left">** PRODUCTOS            : </td>
+            <td width= "25%" >                                </td>
+            
+            <td width = "25%" align ="left">  &#9475;   FALTANTES    :  </td>
+            <td width = "25%" align ="right"> </td>
+            
+            </tr>
+            
+            <tr>
+            <td width= "25%" align ="left">  RESTAURANTE            : </td>
+            <td width= "25%" >                                </td>
+            
+            <td width = "25%" align ="left">  &#9475;   SOBRANTES  :  </td>
+            <td width = "25%" align ="right"> </td>
+            
+            </tr>
+            
+            <tr>
+            <td width= "25%" align ="left">  MARKET            : </td>
+            <td width= "25%" >                                </td>
+            
+            <td width = "25%" align ="left">  &#9475;  :  </td>
+            <td width = "25%" align ="right"> </td>
+            
+            </tr>
+            <tr>
+            <td width= "25%" align ="left">      VENTA PRODUCTOS    S/. : </td>
+            <td width= "25%" >                                </td>
+            
+            <td width = "25%" align ="left">  &#9475;  :  </td>
+            <td width = "25%" align ="right"> </td>
+            
+            </tr>
+    </table>
+    
+    
+    <hr>
+    <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+            
+            <tr>
+            <td width= "25%" align ="left">  TOTAL VENTAS            : </td>
+            <td width= "25%" align ="right" ><%= sprintf("%.2f",venta_1) %>                                </td>
+            
+            <td width = "25%" align ="left">  &#9475; TOTAL SUSTENTOS :  </td>
+            <td width = "25%" align ="right"> <%= sprintf("%.2f",venta_5) %>                                </td>
+            
+            </tr>
+            <tr>
+            <td width= "25%" align ="right">   DIFERENCIA       S/. : </td>
+            <td width= "25%" >                                </td>
+            
+            <td width = "25%" align ="left">  &#9475;  :  </td>
+            <td width = "25%" align ="left">  <%=    sprintf("%.2f",venta_6) %>                   </td>
+            
+            </tr>
+    </table>
+     
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+  
+  <tr bgcolor="#B4D7F7">
+    <td width="100%"> COBRANZAS  </td>
+  </tr>
+  
+  </table>
+     
+    <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+      
+            <tr>
+            <td width= "25%" align ="left">  INGRESOS DEL DIA           : </td>
+            <td width= "25%" align ="left">  EFECTIVOS           : </td>
+            <td width = "25%" align ="left"> :  </td>
+            <td width = "25%" align ="right">:  </td>
+            </tr>
+            <tr>
+            <td width= "25%" align ="left">  INGRESOS ANTERIORES           : </td>
+            <td width= "25%" align ="left">  DEPOSITOS           : </td>
+            <td width = "25%" align ="left"> :  </td>
+            <td width = "25%" align ="right">:  </td>
+            </tr>
+            
+    </table>
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+  
+  <tr bgcolor="#B4D7F7">
+    <td width="100%"> TOTAL A BANCOS   </td>
+    
+  </tr>
+  
+  </table>
+     
+    
+    
+    </body>
+      
+      </html>
+      

@@ -3,7 +3,7 @@
 <% if @current_user.level == "admin" %>
   <h3>
     <%= image_tag("invoice_32.png", :class => "vmiddle") %>
-    <%= link_to "Parte Diario", "/companies/serviceorders/#{@company.id}" %>
+    <%= link_to "Parte Diario", "/companies/reports/reports_parte/#{@company.id}" %>
   </h3>
 
   <p>
@@ -26,7 +26,7 @@
 
   <h3>
     <%= image_tag("invoice_32.png", :class => "vmiddle") %>
-    <%= link_to "Registro de Ventas", sellvales_path  %>
+    <%= link_to "Vales de creditos", sellvales_path  %>
   </h3>
 
   <p>
