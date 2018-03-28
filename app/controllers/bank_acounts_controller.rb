@@ -21,6 +21,8 @@ class BankAcountsController < ApplicationController
   
   def new
     @bank_acount = BankAcount.new
+    @monedas= Moneda.all 
+    @bancos = Bank.all 
   end
 
   # GET /deliverys/1/edit
