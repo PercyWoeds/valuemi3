@@ -100,6 +100,22 @@ class Varillaje < ActiveRecord::Base
     return ret
  
  end 
+ def get_customer_payments(fecha1,fecha2)
+    @facturas =   CustomerPayment.find_by_sql(['Select customer_payments.id,customer_payment_details.total,
+customer_payments.code  as code_liq,facturas.code,facturas.customer_id,facturas.fecha,
+facturas.moneda_id,customer_payments.bank_acount_id,
+customer_payment_details.factory,
+customer_payments.fecha1
+from customer_payment_details   
+INNER JOIN facturas ON   customer_payment_details.factura_id = facturas.id
+INNER JOIN customer_payments ON customer_payments.id = customer_payment_details.customer_payment_id  
+WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by customer_payments.code', "#{fecha1} 00:00:00",
+"#{fecha2} 23:59:59" ])  
+    
+    return @facturas   
+    
+ end
+ 
  
 
 end

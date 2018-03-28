@@ -53,6 +53,7 @@
      <% venta_4 =  a.get_ventas_contometros_creditos(@fecha) %>
      <% venta_5 =  venta_2+ venta_3 +venta_4 %>
      <% venta_6 =  venta_1 - venta_5 %>
+     <% bancos  =  a.get_customer_payments(@fecha,@fecha) %>
      
      <hr>
 <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
@@ -192,18 +193,48 @@
      
     <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
       
-            <tr>
+      <tr>
             <td width= "25%" align ="left">  INGRESOS DEL DIA           : </td>
             <td width= "25%" align ="left">  EFECTIVOS           : </td>
             <td width = "25%" align ="left"> :  </td>
             <td width = "25%" align ="right">:  </td>
             </tr>
+            <% total_bancos = 0 %>
+       <% for productItem in bancos %>
+      <tr>
+        <td class="bordered_bottom bordered_right">
+          <%=  productItem.code_liq   %>
+        </td>
+
+        <td class="bordered_bottom bordered_right">
+          <%=  productItem.get_customer(productItem.customer_id) %>
+        </td>
+        
+         <td class="bordered_bottom bordered_right">
+          <%=  productItem.fecha.strftime("%d/%m/%Y")   %>
+        </td>
+         <td class="bordered_bottom bordered_right">
+          <%=  productItem.code    %>
+        </td>
+        <td class="bordered_bottom bordered_right">
+            <%=  productItem.bank_acount.number  %>
+        </td>
+
+        <td class="bordered_bottom bordered_right" align="left" >
+          <%= money(productItem.total) %>
+        </td>
+        <% total_bancos+= productItem.total %>
+      </tr>
+    <% end %>
+   
+            
       
     </table>
-  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+  <table style='font-family:"Courier New", Courier, monospace; font-size:100% ;width:100%'>
   
   <tr bgcolor="#B4D7F7">
-    <td width="100%"> TOTAL A BANCOS   </td>
+    <td width="80%"> TOTAL A BANCOS   </td>
+    <td width="20%" align='right'> <%= sprintf("%.2f",total_bancos) %>   </td>
     
   </tr>
   
