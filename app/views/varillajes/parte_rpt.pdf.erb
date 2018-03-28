@@ -33,7 +33,7 @@
                     <td width = "10%" align ="right"><%= sprintf("%.2f",product0.get_compras(@fecha,producto_value))   %></td>
                     <td width = "10%" align ="right"><%= sprintf("%.2f",product0.directo.to_s)   %> </td>
                     <td width = "10%" align ="right"><%= sprintf("%.2f",product0.consumo.to_s)   %></td>
-                    <td width = "10%" align ="right"><%= sprintf("%.2f",product0.get_ventas(@fecha,product0.tanque.product.code))  %></td>
+                    <td width = "10%" align ="right"><%= sprintf("%.2f",product0.get_ventas(@fecha,product0.tanque.product.id))  %></td>
                     <% saldo =  product0.inicial + product0.get_compras(@fecha,producto_value)  - product0.get_ventas(@fecha,product0.tanque.product.code) %>
                     <td width = "10%" align ="right"><%= sprintf("%.2f",saldo.to_s)   %></td>
                     <td width = "10%" align ="right"><%= sprintf("%.3f",product0.varilla.to_s)   %></td>
