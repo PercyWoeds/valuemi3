@@ -93,13 +93,15 @@ class Varillaje < ActiveRecord::Base
          
         ret=0  
         for detalle in facturas
-            ret += detalle.implista
+            ret += detalle.importe.to_f
        end 
     end 
 
     return ret
  
  end 
+ 
+ 
  def get_customer_payments(fecha1,fecha2)
     @facturas =   CustomerPayment.find_by_sql(['Select customer_payments.id,customer_payment_details.total,
 customer_payments.code  as code_liq,facturas.code,facturas.customer_id,facturas.fecha,
