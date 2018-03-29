@@ -44,7 +44,10 @@ class Sellvale < ActiveRecord::Base
                   lcTotal  = lcTotal0.round(2)  
                   lcDocumentId =3
             else
-                  lcDocumentId = 11
+                  lcDocumentId = 3
+                  lcVenta= 0
+                  lcTax = 0
+                  lcTotal = 0
             end 
           lcFecha = row['fecha']
           
