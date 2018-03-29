@@ -45,7 +45,7 @@ class Sellvale < ActiveRecord::Base
                   lcDocumentId =3
             else
                   lcDocumentId = 3
-                  lcVVenta= 0
+                  lcVventa= 0
                   lcTax = 0
                   lcTotal = 0
             end 
