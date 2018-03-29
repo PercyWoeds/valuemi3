@@ -85,6 +85,8 @@ class Varillaje < ActiveRecord::Base
     return ret
  
  end 
+ 
+ 
  def  get_ventas_contometros_creditos(fecha) 
 
      facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N" ])
@@ -94,6 +96,22 @@ class Varillaje < ActiveRecord::Base
         ret=0  
         for detalle in facturas
             ret += detalle.importe.to_f
+       end 
+    end 
+
+    return ret
+ 
+ end 
+ 
+ def  get_ventas_contometros_descuento(fecha) 
+
+     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N" ])
+     
+     if facturas
+         
+        ret=0  
+        for detalle in facturas
+            ret += detalle.implista - detalle.importe.to_f
        end 
     end 
 

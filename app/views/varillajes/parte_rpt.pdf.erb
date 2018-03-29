@@ -52,9 +52,11 @@
      <% venta_3 =  a.get_ventas_contometros_tarjeta(@fecha) %>
      <% venta_4 =  a.get_ventas_contometros_creditos(@fecha) %>
      <% venta_5 =  venta_2+ venta_3 +venta_4 %>
-     <% venta_6 =  venta_1 - venta_5 %>
-     <% bancos  =  a.get_customer_payments(@fecha,@fecha) %>
      
+     <% bancos  =  a.get_customer_payments(@fecha,@fecha) %>
+     <% venta_7 =  a.get_ventas_contometros_descuento(@fecha) %>
+     <% venta_8 =  venta_1 - venta_7 %>
+     <% venta_6 =  venta_5 - venta_8 %>
      <hr>
 <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
   <tr bgcolor="#B4D7F7">
@@ -102,7 +104,7 @@
             
             <tr>
             <td width= "25%" align ="left">   DESCUENTO            : </td>
-            <td width= "25%" >                                (-) </td>
+            <td width= "25%" >       <%= sprintf("%.2f",venta_7)  %>   (-) </td>
             
             <td width = "25%" align ="left">  &#9475;   EFECTIVO SOLES    :  </td>
             <td width = "25%" align ="right"><%= sprintf("%.2f",venta_2)  %> </td>
@@ -167,7 +169,7 @@
             
             <tr>
             <td width= "25%" align ="left">  TOTAL VENTAS            : </td>
-            <td width= "25%" align ="right" ><%= sprintf("%.2f",venta_1) %>                                </td>
+            <td width= "25%" align ="right" ><%= sprintf("%.2f",venta_8) %>                                </td>
             
             <td width = "25%" align ="left">  &#9475; TOTAL SUSTENTOS :  </td>
             <td width = "25%" align ="right"> <%= sprintf("%.2f",venta_5) %>                                </td>
