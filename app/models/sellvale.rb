@@ -45,7 +45,7 @@ class Sellvale < ActiveRecord::Base
                   lcDocumentId =3
             else
                   lcDocumentId = 3
-                  lcVenta= 0
+                  lcVVenta= 0
                   lcTax = 0
                   lcTotal = 0
             end 
@@ -54,7 +54,7 @@ class Sellvale < ActiveRecord::Base
          a= Factura.new(company_id:1,location_id:1, division_id: 1, customer_id: lcCustomerId , description: "", comments:"", code: lcCode ,
          subtotal: lcVventa , tax: lcTax , total: lcTotal, processed: "0", date_processed: Date.today, user_id: 1, fecha: lcFecha, 
          serie: row['serie'], numero:  row['numero'], payment_id: 8,  charge: 0, balance: lcTotal, moneda_id: 2, 
-         observ: "VENTA PLAYA", fecha2: lcFecha, detraccion: 0, numero2: "", document_id: lcDocumentId, descuento: 0)
+         observ: "VENTA PLAYA", fecha2: lcFecha, detraccion: 0, numero2: "", document_id: 3, descuento: 0)
          a.save 1
          
          
