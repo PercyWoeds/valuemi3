@@ -55,7 +55,7 @@ class Sellvale < ActiveRecord::Base
          subtotal: lcVventa , tax: lcTax , total: lcTotal, processed: "0", date_processed: Date.today, user_id: 1, fecha: lcFecha, 
          serie: row['serie'], numero:  row['numero'], payment_id: 8,  charge: 0, balance: lcTotal, moneda_id: 2, 
          observ: "VENTA PLAYA", fecha2: lcFecha, detraccion: 0, numero2: "", document_id: 3, descuento: 0)
-         a.save 1
+         a.save
          
          
           
