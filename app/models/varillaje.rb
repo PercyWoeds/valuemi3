@@ -116,7 +116,7 @@ class Varillaje < ActiveRecord::Base
  
  def  get_ventas_contometros_producto_todo(fecha,producto) 
 
-     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and cod_prod = ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "1" ,"N",producto])
+     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and cod_prod = ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59",producto])
      
      if facturas
          
