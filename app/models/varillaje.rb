@@ -41,7 +41,27 @@ class Varillaje < ActiveRecord::Base
     return ret
  
  end 
+     
+ def  get_ventas_importe(fecha,producto) 
+
+     facturas = Ventaisla.where(["fecha >= ? and fecha <= ?  " , "#{fecha} 00:00:00","#{fecha} 23:59:59" ])
+     
+     if facturas
+         
+        ret=0  
+        for detalle in facturas
+        
+              factura_detalle = VentaislaDetail.where(["ventaisla_id = ? and product_id = ?" , detalle.id,producto ])
+                for detalle in factura_detalle
+                    ret += detalle.total.round(2)*-1
+                end     
+            
+        end 
+    end 
+
+    return ret
  
+ end 
     
  def  get_ventas_directo(fecha,producto) 
 
@@ -77,6 +97,23 @@ class Varillaje < ActiveRecord::Base
     return ret
  
  end 
+ 
+ def  get_ventas_contometros_producto(fecha,producto) 
+
+     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and fpago = ? and td <> ? and cod_prod = ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "1" ,"N",producto])
+     
+     if facturas
+         
+        ret=0  
+        for detalle in facturas
+            ret += detalle.importe.to_f
+       end 
+    end 
+
+    return ret
+ 
+ end 
+ 
  def  get_ventas_contometros_efectivo(fecha) 
 
      facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and fpago = ? and td <> ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "1" ,"N"])
@@ -92,6 +129,7 @@ class Varillaje < ActiveRecord::Base
     return ret
  
  end 
+ 
  def  get_ventas_contometros_tarjeta(fecha) 
 
      facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and fpago <> ?  and td <> ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "1" ,"N"])

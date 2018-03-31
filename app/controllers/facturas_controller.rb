@@ -677,6 +677,7 @@ class FacturasController < ApplicationController
     @ac_user = getUsername()
     @invoice[:user_id] = getUserId()
   end
+  
 def newfactura2
     
     @company = Company.find(1)
@@ -713,7 +714,7 @@ def newfactura2
     @deliveryships = @invoice.my_deliverys 
 
     @products_lines = @invoice.products_lines
-    @tipoventas = Tipoventa.all 
+    @tipoventas = Tipoventum.all 
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()

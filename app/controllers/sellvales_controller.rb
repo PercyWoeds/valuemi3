@@ -5,7 +5,7 @@ class SellvalesController < ApplicationController
   # GET /sellvales.json
   def index
     
-    @sellvales = Sellvale.where(td:"N")
+    @sellvales = Sellvale.where(td:"N").order('fecha DESC')
     
   end
 

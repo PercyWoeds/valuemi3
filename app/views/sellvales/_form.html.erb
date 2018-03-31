@@ -75,6 +75,12 @@
     </div>
     
     <div class="field">
+      <%= f.label :implista , "Importe Lista  "%><br />
+      <%= f.number_field :implista, class: :text_field, step: :any %>
+    </div>
+    
+    
+    <div class="field">
       <%= f.label :tipo,"Tipo Vale "%><br>
       <%= f.collection_select :tipo, @creditos, :id, :nombre, :prompt => true %>
     </div>
