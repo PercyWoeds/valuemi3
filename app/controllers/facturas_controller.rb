@@ -250,11 +250,11 @@ class FacturasController < ApplicationController
   
     if(@company.can_view(current_user))
 
-         @invoices = Factura.all.order('id DESC').where("document_id <> 2 ").paginate(:page => params[:page])
+         @invoices = Factura.all.order('id DESC').where("document_id <> 3 ").paginate(:page => params[:page])
         if params[:search]
           @invoices = Factura.search(params[:search]).order('id DESC').paginate(:page => params[:page])
         else
-          @invoices = Factura.where("document_id <> 2 ").order('id DESC').paginate(:page => params[:page]) 
+          @invoices = Factura.where("document_id <> 3 ").order('id DESC').paginate(:page => params[:page]) 
         end
 
     
