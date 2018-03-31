@@ -127,7 +127,7 @@ class Varillaje < ActiveRecord::Base
  
  def  get_ventas_contometros_descuento(fecha) 
 
-     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N" ])
+     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ? and tipo <> 2  " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N" ])
      
      if facturas
          
@@ -164,7 +164,7 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
  
  def  get_ventas_vale_contado(fecha) 
 
-     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ? and tipo  = ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","2" ])
+     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ? and tipo  = ?  " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","2" ])
      
      if facturas
          
