@@ -129,7 +129,7 @@ class FacturasController < ApplicationController
         price = parts[2]
         discount = parts[3]
         
-        product = Service.find(id.to_i)
+        product = Product.find(id.to_i)
         product[:i] = i
         product[:quantity] = quantity.to_f
         product[:price] = price.to_f
@@ -642,6 +642,8 @@ class FacturasController < ApplicationController
     @divisions = @company.get_divisions()
     @payments = @company.get_payments()
     @services = @company.get_services()
+    @products = @company.get_products()
+    
     @deliveryships = @invoice.my_deliverys 
     @tipofacturas = @company.get_tipofacturas() 
     @monedas = @company.get_monedas()
@@ -735,6 +737,7 @@ def newfactura2
     @divisions = @company.get_divisions()
     @payments  = @company.get_payments()    
     @services  = @company.get_services()
+    @products = @company.get_products()
     @tipoventas = Tipoventum.all 
 
     

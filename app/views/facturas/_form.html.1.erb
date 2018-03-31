@@ -158,13 +158,13 @@
 
 <div class="mid_box">
   <h4>
-    Agregar Productos   
+    Agregar Servicios  
   </h4>
   
   <form method="get" action="/services" onsubmit="addItemToInvoice2(); return false;">
     
-    <strong>Producto:</strong><br />
-    <%= select_tag(:ac_item_id,options_from_collection_for_select(@products,'id','name') ) %>
+    <strong>Servicio:</strong><br />
+    <%= select_tag(:ac_item_id,options_from_collection_for_select(@services,'id','name') ) %>
     <div class="small">
       Ingrese un termino de busqueda para encontrar un producto.
     </div>
