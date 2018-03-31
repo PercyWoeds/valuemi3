@@ -181,6 +181,25 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
     return ret
  
  end 
+ def  get_ventas_vale_directo(fecha) 
+
+     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ? and tipo  = ?  " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","3" ])
+     
+     if facturas
+         
+        ret=0  
+        for detalle in facturas
+          if detalle.implista >0
+            ret += detalle.implista - detalle.importe.to_f
+          else
+             ret += detalle.importe.to_f
+          end 
+       end 
+    end 
+
+    return ret
+ 
+ end 
  
 
 end

@@ -646,7 +646,7 @@ class FacturasController < ApplicationController
     @tipofacturas = @company.get_tipofacturas() 
     @monedas = @company.get_monedas()
     @tipodocumento = @company.get_documents()
-    @tipoventas = Tipoventa.all 
+    @tipoventas = Tipoventum.all 
     @ac_user = getUsername()
     @invoice[:user_id] = getUserId()
   end

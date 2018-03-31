@@ -61,7 +61,7 @@
     
     <div class="field">
       <%= f.label :cod_prod, "Producto "%><br />
-      <%= f.collection_select :cod_prod, @products, :id, :name, :prompt => true %>
+      <%= f.collection_select :cod_prod, @products, :code, :name, :prompt => true %>
     </div>
     
     <div class="field">
