@@ -54,6 +54,7 @@ class SellvalesController < ApplicationController
     @sellvale[:fpago] = 1
     @sellvale[:td] = "N"
     @sellvale[:implista] = 0
+    @sellvale[:processed] = 0
     
     lcImporte = @sellvale[:cantidad] *@sellvale[:precio].to_f 
     @sellvale[:importe] = lcImporte.to_s
@@ -81,7 +82,7 @@ class SellvalesController < ApplicationController
     @sellvale[:fpago] = 1
     @sellvale[:td] = "N"
     @sellvale[:implista] = 0
-    
+    @sellvale[:processed] = 0
     
     respond_to do |format|
       if @sellvale.update(sellvale_params)
