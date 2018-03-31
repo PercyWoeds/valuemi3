@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180827233043) do
+ActiveRecord::Schema.define(version: 20180827233049) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -265,6 +265,13 @@ ActiveRecord::Schema.define(version: 20180827233043) do
   create_table "concepts", force: :cascade do |t|
     t.string   "descrip"
     t.string   "code"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "creditos", force: :cascade do |t|
+    t.string   "code"
+    t.string   "nombre"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -699,6 +706,8 @@ ActiveRecord::Schema.define(version: 20180827233043) do
     t.integer  "numero2"
     t.integer  "document_id"
     t.string   "descuento"
+    t.integer  "tipoventa"
+    t.integer  "tipoventa_id"
   end
 
   create_table "fiveparameters", force: :cascade do |t|
@@ -1747,6 +1756,7 @@ ActiveRecord::Schema.define(version: 20180827233043) do
     t.datetime "updated_at", null: false
     t.float    "dolar"
     t.string   "processed"
+    t.string   "tipo"
   end
 
   create_table "servicebuys", force: :cascade do |t|
@@ -2004,6 +2014,14 @@ ActiveRecord::Schema.define(version: 20180827233043) do
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "tipoventa", force: :cascade do |t|
+    t.string   "code"
+    t.string   "nombre"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.integer  "tipoventa_id"
   end
 
   create_table "tms", force: :cascade do |t|

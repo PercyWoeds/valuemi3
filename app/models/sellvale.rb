@@ -1,5 +1,7 @@
 class Sellvale < ActiveRecord::Base
-    
+ validates_uniqueness_of :numero
+ validates_presence_of :fecha,:turno,:td,:caja,:serie,:numero,:cod_cli,:placa,:cod_prod,:placa,:cod_prod,:cantidad,:precio,:tipo 
+ validates_uniqueness_of :numero, scope: :serie
     
     def self.import(file)
           CSV.foreach(file.path, headers: true, encoding:'iso-8859-1:utf-8') do |row|
@@ -50,11 +52,12 @@ class Sellvale < ActiveRecord::Base
                   lcTotal = 0
             end 
           lcFecha = row['fecha']
+          lcTipoVale ='1'
           
          a= Factura.new(company_id:1,location_id:1, division_id: 1, customer_id: lcCustomerId , description: "", comments:"", code: lcCode ,
          subtotal: lcVventa , tax: lcTax , total: lcTotal, processed: "0", date_processed: Date.today, user_id: 1, fecha: lcFecha, 
          serie: row['serie'], numero:  row['numero'], payment_id: 8,  charge: 0, balance: lcTotal, moneda_id: 2, 
-         observ: "VENTA PLAYA", fecha2: lcFecha, detraccion: 0, numero2: "", document_id: 3, descuento: 0)
+         observ: "VENTA PLAYA", fecha2: lcFecha, detraccion: 0, numero2: "", document_id: 3, descuento: 0,tipo: lcTipoVale )
          a.save
          
          

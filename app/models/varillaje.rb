@@ -19,6 +19,8 @@ class Varillaje < ActiveRecord::Base
     return ret
  
  end 
+ 
+    
  def  get_ventas(fecha,producto) 
 
      facturas = Ventaisla.where(["fecha >= ? and fecha <= ?  " , "#{fecha} 00:00:00","#{fecha} 23:59:59" ])
@@ -39,6 +41,26 @@ class Varillaje < ActiveRecord::Base
     return ret
  
  end 
+ 
+    
+ def  get_ventas_directo(fecha,producto) 
+
+     facturas = Factura.where(["fecha >= ? and fecha <= ? and tipoventa = 2" , "#{fecha} 00:00:00","#{fecha} 23:59:59" ])
+     
+     if facturas
+    ret=0  
+        for factura in facturas
+                factura_detalle = FacturaDetail.where(["factura_id = ? and product_id = ?" , factura.id,producto ])
+                for detalle in factura_detalle
+                    ret += detalle.quantity.round(2)
+                end     
+        end
+    end 
+
+    return ret
+ 
+ end 
+ 
  
  def  get_ventas_contometros(fecha) 
 
@@ -89,7 +111,7 @@ class Varillaje < ActiveRecord::Base
  
  def  get_ventas_contometros_creditos(fecha) 
 
-     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N" ])
+     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ?  and tipo = ?" , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","1" ])
      
      if facturas
          
@@ -111,7 +133,11 @@ class Varillaje < ActiveRecord::Base
          
         ret=0  
         for detalle in facturas
+            if detalle.implista >0
             ret += detalle.implista - detalle.importe.to_f
+          else
+             ret += detalle.importe.to_f
+          end
        end 
     end 
 
@@ -136,6 +162,25 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
     
  end
  
+ def  get_ventas_vale_contado(fecha) 
+
+     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ? and tipo  = ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","2" ])
+     
+     if facturas
+         
+        ret=0  
+        for detalle in facturas
+          if detalle.implista >0
+            ret += detalle.implista - detalle.importe.to_f
+          else
+             ret += detalle.importe.to_f
+          end 
+       end 
+    end 
+
+    return ret
+ 
+ end 
  
 
 end

@@ -1,34 +1,85 @@
+<% if @sellvale.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@sellvale.errors.count, "error") %> prohibited this viatico from being saved:</h2>
+    <ul>
+    <% @sellvale.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= hr() %>
+
+
 <%= simple_form_for(@sellvale) do |f| %>
-  <%= f.error_notification %>
+
 
   <div class="form-inputs">
-    <%= f.input :td %>
-    <%= f.input :fecha %>
-    <%= f.input :turno %>
-    <%= f.input :cod_emp %>
-    <%= f.input :caja %>
-    <%= f.input :serie %>
-    <%= f.input :numero %>
-    <%= f.input :cod_cli %>
-    <%= f.input :ruc %>
-    <%= f.input :placa %>
-    <%= f.input :odometro %>
-    <%= f.input :cod_prod %>
-    <%= f.input :cantidad %>
-    <%= f.input :precio %>
-    <%= f.input :importe %>
-    <%= f.input :igv %>
-    <%= f.input :fpago %>
-    <%= f.input :dolat %>
-    <%= f.input :implista %>
-    <%= f.input :cod_tar %>
-    <%= f.input :km %>
-    <%= f.input :chofer %>
-    <%= f.input :tk_devol %>
-    <%= f.input :cod_sucu %>
-    <%= f.input :isla %>
-    <%= f.input :dni_cli %>
-    <%= f.input :clear %>
+    
+    
+    <div class="field">
+      <%= f.label :fecha, "Fecha *", :class => "bold" %><br />
+      <%= f.date_field :fecha %>
+    </div>
+    
+    <div class="field">
+      <%= f.label :turno,"Turno "%><br>
+      <%= f.select :turno, options_for_select([["TURNO 1",1],["TURNO 2",2],["TURNO 3",3]]) %>
+    </div>
+    
+    <div class="field">
+      <%= f.label :cod_emp, "Empleado "%><br />
+      <%= f.collection_select :cod_emp, @employees, :id, :full_name, :prompt => true %>
+    </div>
+    
+    
+    <div class="field">
+      <%= f.label :caja, "Caja *", :class => "bold" %><br />
+      <%= f.text_field :caja %>
+    </div>
+    
+    <div class="field">
+      <%= f.label :serie, "Serie *", :class => "bold" %><br />
+      <%= f.text_field :serie %>
+    </div>
+    
+    <div class="field">
+      <%= f.label :numero, "Numero *", :class => "bold" %><br />
+      <%= f.text_field :numero %>
+    </div>
+    
+    <div class="field">
+      <%= f.label :cod_cli, "Cliente "%><br />
+      <%= f.collection_select :cod_cli, @customers, :account, :name, :prompt => true %>
+    </div>
+    
+    <div class="field">
+      <%= f.label :placa, "Placa *", :class => "bold" %><br />
+      <%= f.text_field :placa %>
+    </div>
+    
+    <div class="field">
+      <%= f.label :cod_prod, "Producto "%><br />
+      <%= f.collection_select :cod_prod, @products, :id, :name, :prompt => true %>
+    </div>
+    
+    <div class="field">
+      <%= f.label :cantidad, "Cantidad "%><br />
+      <%= f.number_field :cantidad, class: :text_field, step: :any %>
+    </div>
+    
+    <div class="field">
+      <%= f.label :precio , "Precio  "%><br />
+      <%= f.number_field :precio, class: :text_field, step: :any %>
+    </div>
+    
+    <div class="field">
+      <%= f.label :tipo,"Tipo Vale "%><br>
+      <%= f.collection_select :tipo, @creditos, :id, :nombre, :prompt => true %>
+    </div>
+    
+    
   </div>
 
   <div class="form-actions">

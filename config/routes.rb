@@ -1,5 +1,7 @@
   Mnygo::Application.routes.draw do
 
+  resources :tipoventa
+  resources :creditos
   resources :varillajes
   resources :afericions
   resources :ventaisla_details

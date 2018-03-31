@@ -1,0 +1,2 @@
+module TipoventaHelper
+end

@@ -250,11 +250,11 @@ class FacturasController < ApplicationController
   
     if(@company.can_view(current_user))
 
-         @invoices = Factura.all.order('id DESC').paginate(:page => params[:page])
+         @invoices = Factura.all.order('id DESC').where("document_id <> 2 ").paginate(:page => params[:page])
         if params[:search]
           @invoices = Factura.search(params[:search]).order('id DESC').paginate(:page => params[:page])
         else
-          @invoices = Factura.all.order('id DESC').paginate(:page => params[:page]) 
+          @invoices = Factura.where("document_id <> 2 ").order('id DESC').paginate(:page => params[:page]) 
         end
 
     
@@ -323,7 +323,6 @@ class FacturasController < ApplicationController
         
         $lcFecha =f.fecha.strftime("%Y-%m-%d")   
         
-
 
       newsubdia =Csubdiario.new(:csubdia=>$lcSubdiario,:ccompro=>$lastcompro1,:cfeccom=>$lcFecha, :ccodmon=>"MN",
         :csitua=>"F",:ctipcam=>"0.00",:cglosa=>f.code,:csubtotal=>f.subtotal,:ctax=>f.tax,:ctotal=>f.total,
@@ -647,6 +646,7 @@ class FacturasController < ApplicationController
     @tipofacturas = @company.get_tipofacturas() 
     @monedas = @company.get_monedas()
     @tipodocumento = @company.get_documents()
+    @tipoventas = Tipoventa.all 
     @ac_user = getUsername()
     @invoice[:user_id] = getUserId()
   end
@@ -671,6 +671,7 @@ class FacturasController < ApplicationController
     @tipofacturas = @company.get_tipofacturas() 
     @monedas = @company.get_monedas()
     @tipodocumento = @company.get_documents()
+    @tipoventas = Tipoventum.all 
     @ac_user = getUsername()
     @invoice[:user_id] = getUserId()
   end
@@ -710,6 +711,7 @@ def newfactura2
     @deliveryships = @invoice.my_deliverys 
 
     @products_lines = @invoice.products_lines
+    @tipoventas = Tipoventa.all 
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
@@ -733,7 +735,7 @@ def newfactura2
     @divisions = @company.get_divisions()
     @payments  = @company.get_payments()    
     @services  = @company.get_services()
-
+    @tipoventas = Tipoventum.all 
 
     
     @invoice[:subtotal] = @invoice.get_subtotal(items)
@@ -801,6 +803,7 @@ def newfactura2
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
+    @tipoventas = Tipoventum.all 
     
     @invoice[:subtotal] = @invoice.get_subtotal(items)
     @invoice[:tax] = @invoice.get_tax(items, @invoice[:customer_id])
@@ -1283,8 +1286,6 @@ def newfactura2
           table_content << row
           end 
           
-          
-          
 
           result = pdf.table table_content, {:position => :center,
                                         :header => true,
@@ -1320,9 +1321,6 @@ def newfactura2
       end 
       #totales 
       
-      
-      
-
       pdf 
 
     end
@@ -1544,7 +1542,7 @@ def newfactura2
 
   private
   def factura_params
-    params.require(:factura).permit(:company_id,:location_id,:division_id,:customer_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:payment_id,:fecha,:preciocigv,:tipo,:observ,:moneda_id,:detraccion,:factura2,:description,:document_id)
+    params.require(:factura).permit(:company_id,:location_id,:division_id,:customer_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:payment_id,:fecha,:preciocigv,:tipo,:observ,:moneda_id,:detraccion,:factura2,:description,:document_id,:tipoventa_id)
   end
 
 end

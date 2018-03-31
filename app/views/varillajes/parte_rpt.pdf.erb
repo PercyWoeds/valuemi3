@@ -31,7 +31,7 @@
                     <td width= "15%" ><%=  product0.tanque.product.name %></td>
                     <td width = "10%" align ="right"><%= sprintf("%.2f",product0.inicial.to_s)   %></td>
                     <td width = "10%" align ="right"><%= sprintf("%.2f",product0.get_compras(@fecha,producto_value))   %></td>
-                    <td width = "10%" align ="right"><%= sprintf("%.2f",product0.directo.to_s)   %> </td>
+                    <td width = "10%" align ="right"><%= sprintf("%.2f",product0.get_ventas_directo(@fecha,producto_value))   %> </td>
                     <td width = "10%" align ="right"><%= sprintf("%.2f",product0.consumo.to_s)   %></td>
                     <td width = "10%" align ="right"><%= sprintf("%.2f",product0.get_ventas(@fecha,product0.tanque.product.id))  %></td>
                     <% saldo =  product0.inicial + product0.get_compras(@fecha,producto_value)  - product0.get_ventas(@fecha,product0.tanque.product.id) %>
@@ -51,12 +51,16 @@
      <% venta_2 =  a.get_ventas_contometros_efectivo(@fecha) %>
      <% venta_3 =  a.get_ventas_contometros_tarjeta(@fecha) %>
      <% venta_4 =  a.get_ventas_contometros_creditos(@fecha) %>
-     <% venta_5 =  venta_2+ venta_3 +venta_4 %>
+     
      
      <% bancos  =  a.get_customer_payments(@fecha,@fecha) %>
      <% venta_7 =  a.get_ventas_contometros_descuento(@fecha) %>
+     <% venta_9 =  a.get_ventas_vale_contado(@fecha) %>
+     <% venta_5 =  venta_2+ venta_3 +venta_4 + venta_9 %>
+     
      <% venta_8 =  venta_1 - venta_7 %>
      <% venta_6 =  venta_5 - venta_8 %>
+     
      <hr>
 <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
   <tr bgcolor="#B4D7F7">
@@ -88,8 +92,8 @@
             <td width= "25%" align ="left">   CONSUMO INTERNO            : </td>
             <td width= "25%" >                                 (-)</td>
             
-            <td width = "25%" align ="left">  &#9475;   DESPACHO ADELANTADO        :  </td>
-            <td width = "25%" align ="right"> </td>
+            <td width = "25%" align ="left">  &#9475;   VALE CONTADO        :  </td>
+            <td width = "25%" align ="right"> <%= sprintf("%.2f",venta_9)   %></td>
             
             </tr>
             

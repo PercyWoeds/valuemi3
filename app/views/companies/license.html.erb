@@ -184,7 +184,7 @@
  <%end%>
  
    <% if @current_user.level = "admin" %>
-<%= hr() %>
+
 
   <h3>
         <div>
@@ -196,6 +196,37 @@
      Agregar, editar or eliminar empleados
   </p>
  <% end %>
+
+ 
+
+
+<%= hr() %>
+
+  <h3>
+        <div>
+          <%= image_tag("divisions_32.png", :class => "vmiddle") %>
+          <%= link_to "Tipo Vale credito  ", creditos_path %>
+        </div>
+  </h3>
+  <p>
+     Agregar, editar or eliminar tipo vales
+  </p>
+ 
+
+
+<%= hr() %>
+
+  <h3>
+        <div>
+          <%= image_tag("divisions_32.png", :class => "vmiddle") %>
+          <%= link_to "Tipo Venta   ", tipoventa_path %>
+        </div>
+  </h3>
+  <p>
+     Agregar, editar or eliminar tipo vales
+  </p>
+ 
+</div>
 
  
 </div>

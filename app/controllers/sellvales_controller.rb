@@ -17,10 +17,27 @@ class SellvalesController < ApplicationController
   # GET /sellvales/new
   def new
     @sellvale = Sellvale.new
+    
+    @documents = Document.all 
+    @employees = Employee.all 
+    @customers = Customer.all 
+    @creditos = Credito.all
+    @products = Product.where(products_category_id:1)
+    @sellvale[:fecha]  = Date.today
+    
+    
+    
   end
 
   # GET /sellvales/1/edit
   def edit
+    
+    @documents = Document.all 
+    @employees = Employee.all 
+    @customers = Customer.all 
+    @creditos = Credito.all
+    @products = Product.where(products_category_id:1)
+    
   end
 
   # POST /sellvales
@@ -28,6 +45,20 @@ class SellvalesController < ApplicationController
   def create
     @sellvale = Sellvale.new(sellvale_params)
 
+    @documents = Document.all 
+    @employees = Employee.all 
+    @customers = Customer.all 
+    @creditos = Credito.all
+    @products = Product.where(products_category_id:1)
+    
+    @sellvale[:fpago] = 1
+    @sellvale[:td] = "N"
+    @sellvale[:implista] = 0
+    
+    lcImporte = @sellvale[:cantidad] *@sellvale[:precio].to_f 
+    @sellvale[:importe] = lcImporte.to_s
+    
+    
     respond_to do |format|
       if @sellvale.save
         format.html { redirect_to @sellvale, notice: 'Sellvale was successfully created.' }
@@ -42,6 +73,16 @@ class SellvalesController < ApplicationController
   # PATCH/PUT /sellvales/1
   # PATCH/PUT /sellvales/1.json
   def update
+    @documents = Document.all 
+    @employees = Employee.all 
+    @customers = Customer.all 
+    @creditos = Credito.all
+    @products = Product.where(products_category_id:1)
+    @sellvale[:fpago] = 1
+    @sellvale[:td] = "N"
+    @sellvale[:implista] = 0
+    
+    
     respond_to do |format|
       if @sellvale.update(sellvale_params)
         format.html { redirect_to @sellvale, notice: 'Sellvale was successfully updated.' }
@@ -76,6 +117,6 @@ class SellvalesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def sellvale_params
-      params.require(:sellvale).permit(:td, :fecha, :turno, :cod_emp, :caja, :serie, :numero, :cod_cli, :ruc, :placa, :odometro, :cod_prod, :cantidad, :precio, :importe, :igv, :fpago, :dolat, :implista, :cod_tar, :km, :chofer, :tk_devol, :cod_sucu, :isla, :dni_cli, :clear)
+      params.require(:sellvale).permit(:td, :fecha, :turno, :cod_emp, :caja, :serie, :numero, :cod_cli, :ruc, :placa, :odometro, :cod_prod, :cantidad, :precio, :importe, :igv, :fpago, :dolat, :implista, :cod_tar, :km, :chofer, :tk_devol, :cod_sucu, :isla, :dni_cli, :clear,:tipo)
     end
 end

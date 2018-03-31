@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Tipoventa</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Nombre</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @tipoventa.each do |tipoventum| %>
+      <tr>
+        <td><%= tipoventum.code %></td>
+        <td><%= tipoventum.nombre %></td>
+        <td><%= link_to 'Show', tipoventum %></td>
+        <td><%= link_to 'Edit', edit_tipoventum_path(tipoventum) %></td>
+        <td><%= link_to 'Destroy', tipoventum, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Tipoventum', new_tipoventum_path %>
