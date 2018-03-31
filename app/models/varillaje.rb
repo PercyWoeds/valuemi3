@@ -114,6 +114,21 @@ class Varillaje < ActiveRecord::Base
  
  end 
  
+ def  get_ventas_contometros_producto_todo(fecha,producto) 
+
+     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and cod_prod = ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "1" ,"N",producto])
+     
+     if facturas
+         
+        ret=0  
+        for detalle in facturas
+            ret += detalle.importe.to_f
+       end 
+    end 
+
+    return ret
+ 
+ end 
  def  get_ventas_contometros_efectivo(fecha) 
 
      facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and fpago = ? and td <> ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "1" ,"N"])
