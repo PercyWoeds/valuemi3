@@ -33,7 +33,7 @@
                     <td width= "10%" ><%=  product0.tanque.product.name %></td>
                     <td width = "8%" align ="right"><%= sprintf("%.2f",product0.inicial.to_s)   %></td>
                     <td width = "8%" align ="right"><%= sprintf("%.2f",product0.get_compras(@fecha,producto_value))   %></td>
-                    <td width = "8%" align ="right"> </td>
+                    <td width = "8%" align ="right"><%= sprintf("%.2f",product0.get_ventas_vale_directo_producto(@fecha,producto_value))   %> </td>
                         <td width = "10%" align ="right"><%= sprintf("%.2f",product0.get_ventas(@fecha,product0.tanque.product.id))  %></td>
                     <% saldo =  product0.inicial + product0.get_compras(@fecha,producto_value)  - product0.get_ventas(@fecha,product0.tanque.product.id) %>
                     <td width = "8%" align ="right"><%= sprintf("%.2f",saldo.to_s)   %></td>
@@ -145,7 +145,7 @@
             <td width= "25%" >                                (-) </td>
             
             <td width = "25%" align ="left">  &#9475; VENTAS DIRECTAS      </td>
-            <td width = "25%" align ="right"><% sprintf("%.2f",venta_10)   %> </td>
+            <td width = "25%" align ="right"><%= sprintf("%.2f",venta_10)   %> </td>
             
             </tr>
             
