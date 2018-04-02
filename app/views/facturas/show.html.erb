@@ -244,14 +244,24 @@
  
   <tbody>
     <table>
+      
+      <tr>
+        <th> Codigo</th>
+        <th> Descripcion</th>
+        <th> Precio </th>
+        <th> Cantidad</th>
+        <th> Total </th>
+      </tr>
+      
     <%  @factura_details.each do |quote| %>
       <tr>
         <td class="bordered_bottom bordered_right">
-          <%= link_to quote.id   %>
+          <%= link_to quote.product.code   %>
         </td>
         <td class="bordered_bottom bordered_right">
-          <%= money(quote.total) %>
+          <%= quote.product.name  %>
         </td>
+        
         <td class="bordered_bottom bordered_right">
           <%= quote.price_discount %>
         </td>

@@ -1,0 +1,2 @@
+module TipofaltantesHelper
+end

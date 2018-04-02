@@ -1,0 +1,38 @@
+<%= simple_form_for(@faltante) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    
+    
+    <div class="field">
+    <label class="bold"> REMITENTE *</label><br />      
+          <%= f.select :employee_id,options_from_collection_for_select(@employees,'id','full_name'),:style => "width:200px" %>
+    </div>   
+    
+    <div class="field">
+    <label class="bold"> REMITENTE *</label><br />      
+          <%= f.select :employee_id,options_from_collection_for_select(@employees,'id','full_name'),:style => "width:200px" %>
+    </div>   
+    
+    <%= f.input :tipofaltante_id %>
+    
+    <div class="field">
+    <%= f.label :importe ,"Importe "%><br />
+    <%= f.text_area :importe %>
+    </div>
+    
+    <div class="field">
+      <%= f.label :descrip ,"Descripcion "%><br />
+    <%= f.text_field :descrip %>}
+    </div>
+    <div class="field">
+      <%= f.label :comments ,"Comentario "%><br />
+    <%= f.text_area :comments %>
+    </div>
+    
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

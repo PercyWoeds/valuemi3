@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  employee_id: 1
+  tipofaltante_id: 1
+  descrip: MyString
+  comments: MyText
+
+two:
+  employee_id: 1
+  tipofaltante_id: 1
+  descrip: MyString
+  comments: MyText

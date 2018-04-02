@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Employee:</strong>
+  <%= @faltante.employee_id %>
+</p>
+
+<p>
+  <strong>Tipofaltante:</strong>
+  <%= @faltante.tipofaltante_id %>
+</p>
+
+<p>
+  <strong>Descrip:</strong>
+  <%= @faltante.descrip %>
+</p>
+
+<p>
+  <strong>Comments:</strong>
+  <%= @faltante.comments %>
+</p>
+
+<%= link_to 'Edit', edit_faltante_path(@faltante) %> |
+<%= link_to 'Back', faltantes_path %>
