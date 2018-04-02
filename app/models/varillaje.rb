@@ -120,15 +120,42 @@ class Varillaje < ActiveRecord::Base
      
      if facturas
          
+        ret  = 0  
+        ret2 = 0
+        for detalle in facturas
+            ret  += detalle.importe.to_f
+            ret2 += detalle.implista
+            
+       end 
+               
+    end 
+
+    return ret
+ 
+ end 
+ 
+  
+ def  get_ventas_contometros_descuento_producto(fecha,producto) 
+
+     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ? and tipo <> ? and cod_prod = ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","3",producto ])
+     
+     if facturas
+         
         ret=0  
         for detalle in facturas
-            ret += detalle.importe.to_f
+            if detalle.implista > 0
+            ret += detalle.implista - detalle.importe.to_f
+          else
+             ret += 0
+          end
        end 
     end 
 
     return ret
  
  end 
+ 
+ 
  def  get_ventas_contometros_efectivo(fecha) 
 
      facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and fpago = ? and td <> ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "1" ,"N"])
@@ -189,7 +216,7 @@ class Varillaje < ActiveRecord::Base
             if detalle.implista > 0
             ret += detalle.implista - detalle.importe.to_f
           else
-             ret += detalle.importe.to_f
+             ret += 0
           end
        end 
     end 
