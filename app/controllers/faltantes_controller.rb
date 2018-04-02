@@ -10,22 +10,33 @@ class FaltantesController < ApplicationController
   # GET /faltantes/1
   # GET /faltantes/1.json
   def show
+    @employees = Employee.all
+    @faltantes = Tipofaltante.all
+    
   end
 
   # GET /faltantes/new
   def new
     @faltante = Faltante.new
+    @employees = Employee.all
+    @faltantes = Tipofaltante.all
+    
   end
 
   # GET /faltantes/1/edit
   def edit
+    @employees = Employee.all
+    @faltantes = Tipofaltante.all
+    
   end
 
   # POST /faltantes
   # POST /faltantes.json
   def create
     @faltante = Faltante.new(faltante_params)
-
+    @employees = Employee.all
+    @faltantes = Tipofaltante.all
+    
     respond_to do |format|
       if @faltante.save
         format.html { redirect_to @faltante, notice: 'Faltante was successfully created.' }
@@ -69,6 +80,6 @@ class FaltantesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def faltante_params
-      params.require(:faltante).permit(:employee_id, :tipofaltante_id, :descrip, :comments)
+      params.require(:faltante).permit(:employee_id, :tipofaltante_id, :descrip, :comments,:total,:fecha)
     end
 end

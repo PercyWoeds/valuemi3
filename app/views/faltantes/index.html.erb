@@ -5,8 +5,9 @@
 <table>
   <thead>
     <tr>
-      <th>Employee</th>
-      <th>Tipofaltante</th>
+      <th>Fecha</th>
+      <th>Empleado</th>
+      <th>Faltante</th>
       <th>Descrip</th>
       <th>Comments</th>
       <th colspan="3"></th>
@@ -16,12 +17,17 @@
   <tbody>
     <% @faltantes.each do |faltante| %>
       <tr>
-        <td><%= faltante.employee_id %></td>
-        <td><%= faltante.tipofaltante_id %></td>
+        <td><%= faltante.fecha.strftime("%d/%m/%Y") %></td>
+        <td><%= faltante.employee.full_name %></td>
+        <td><%= faltante.tipofaltante.descrip %></td>
+        <td><%= faltante.total  %></td>
         <td><%= faltante.descrip %></td>
-        <td><%= faltante.comments %></td>
+        
+        
         <td><%= link_to 'Show', faltante %></td>
+        
         <td><%= link_to 'Edit', edit_faltante_path(faltante) %></td>
+        
         <td><%= link_to 'Destroy', faltante, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>

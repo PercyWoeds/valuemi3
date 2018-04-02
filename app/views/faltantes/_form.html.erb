@@ -2,24 +2,27 @@
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    
-    
-    <div class="field">
-    <label class="bold"> REMITENTE *</label><br />      
-          <%= f.select :employee_id,options_from_collection_for_select(@employees,'id','full_name'),:style => "width:200px" %>
-    </div>   
-    
-    <div class="field">
-    <label class="bold"> REMITENTE *</label><br />      
-          <%= f.select :employee_id,options_from_collection_for_select(@employees,'id','full_name'),:style => "width:200px" %>
-    </div>   
-    
-    <%= f.input :tipofaltante_id %>
-    
-    <div class="field">
-    <%= f.label :importe ,"Importe "%><br />
-    <%= f.text_area :importe %>
+<div class="field">
+    <%= f.label :fecha ,"Fecha "%><br />
+    <%= f.date_field :fecha %>
     </div>
+        
+    
+    <div class="field">
+    <label class="bold">Empleado *</label><br />      
+          <%= f.select :employee_id,options_from_collection_for_select(@employees,'id','full_name'),:style => "width:200px" %>
+    </div>   
+    
+    <div class="field">
+    <label class="bold"> Tipo *</label><br />      
+          <%= f.select :tipofaltante_id,options_from_collection_for_select(@faltantes,'id','descrip'),:style => "width:200px" %>
+    </div>   
+    
+    <div class="field">
+    <%= f.label :total ,"Importe "%><br />
+    <%= f.number_field :total, class: :text_field, step: :any %>
+    </div>
+    
     
     <div class="field">
       <%= f.label :descrip ,"Descripcion "%><br />

@@ -63,24 +63,7 @@ class Varillaje < ActiveRecord::Base
  
  end 
     
- def  get_ventas_directo(fecha,producto) 
 
-     facturas = Factura.where(["fecha >= ? and fecha <= ? and tipoventa = 2" , "#{fecha} 00:00:00","#{fecha} 23:59:59" ])
-     
-     if facturas
-    ret=0  
-        for factura in facturas
-                factura_detalle = FacturaDetail.where(["factura_id = ? and product_id = ?" , factura.id,producto ])
-                for detalle in factura_detalle
-                    ret += detalle.quantity.round(2)
-                end     
-        end
-    end 
-
-    return ret
- 
- end 
- 
  
  def  get_ventas_contometros(fecha) 
 
@@ -265,6 +248,8 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
     return ret
  
  end 
+ 
+ 
  def  get_ventas_vale_directo(fecha) 
 
      facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ? and tipo  = ?  " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","3" ])
@@ -273,17 +258,44 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
          
         ret=0  
         for detalle in facturas
-          if detalle.implista >0
-            ret += detalle.implista - detalle.importe.to_f
-          else
              ret += detalle.importe.to_f
-          end 
-       end 
+        end 
     end 
 
     return ret
  
  end 
  
-
+ 
+ def get_afericion_total_dia(fecha)
+     facturas = Afericion.where(["fecha >= ? and fecha <= ?   " , "#{fecha} 00:00:00","#{fecha} 23:59:59" ])
+       ret=0  
+       
+     if facturas
+         
+       for detalle in facturas
+          ret += detalle.importe
+       end 
+       
+     end 
+     
+ end 
+ def get_faltante_total_dia(fecha,tipo)
+     facturas = Faltante.where(["fecha >= ? and fecha <= ?  and tipofaltante_id = ?  " , "#{fecha} 00:00:00","#{fecha} 23:59:59",tipo ])
+       ret=0  
+       
+     if facturas
+         
+       for detalle in facturas
+        if tipo == "1"           
+             ret -= detalle.total 
+         else
+             ret += detalle.total 
+         end 
+       end 
+       
+     end 
+     return ret
+ end 
+ 
 end
