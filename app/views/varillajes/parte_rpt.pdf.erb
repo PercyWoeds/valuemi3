@@ -66,7 +66,7 @@
      <% venta_4 =  a.get_ventas_contometros_creditos(@fecha) %>
      
      
-     <% bancos  =  a.get_customer_payments(@fecha,@fecha) %>
+     <% bancos  =  a.get_customer_payments_1(@fecha) %>
      <% venta_7 =  a.get_ventas_contometros_descuento(@fecha) %>
      <% venta_9 =  a.get_ventas_vale_contado(@fecha) %>
      <% venta_10 =  a.get_ventas_vale_directo(@fecha) %>
@@ -227,12 +227,8 @@
       
       <tr>
             <td width= "100%" align ="left">  INGRESOS DEL DIA           : </td>
-        </tr>
-        <TR>
-            <td width= "25%" align ="left">  EFECTIVOS           : </td>
-            <td width = "25%" align ="left"> :  </td>
-            <td width = "25%" align ="right">:  </td>
-        </TR>
+      </tr>
+        
     </table>
     
     <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>        
@@ -242,25 +238,20 @@
        <% for productItem in bancos %>
        
       <tr>
-        <td width= "10%" align ="left">
-          <%=  productItem.code_liq   %>
-        </td>
-
-        <td width= "30%" align ="left">
-          <%=  productItem.get_customer(productItem.customer_id) %>
+        <td width= "50%" align ="left">
+        
         </td>
         
-         <td width= "10%" align ="left">
-          <%=  productItem.fecha.strftime("%d/%m/%Y")   %>
+        <td width= "20%" align ="left">
+          <%=  productItem.document.description    %>
         </td>
-         <td width= "10%" align ="left">
+         
+        <td width= "10%" align ="left">
           <%=  productItem.code    %>
         </td>
-        <td width= "20%" align ="left">
-          <%=  productItem.bank_acount.number  %>
-        </td>
         
-        <%  if productItem.moneda_id == "1"%>  
+        
+        <%  if productItem.bank_acount.moneda_id == "1"%>  
         
           <td  width= "10%" align ="right">
             0.00
@@ -273,7 +264,7 @@
           <td  width= "10%" align ="right">
             <%= sprintf("%.2f",productItem.total) %>
           </td>
-          <td  width= "0%" align ="right">
+          <td  width= "10%" align ="right">
             0.00
           </td>
           <% total_bancos_soles += productItem.total %>
@@ -283,6 +274,26 @@
     <% end %>
    
     </table>
+    
+    <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+      
+      <tr>
+            <td width= "100%" align ="left">  INGRESOS ANTERIOR           : </td>
+      </tr>
+        
+    </table>
+    
+    <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+      
+      <tr>
+            <td width= "100%" align ="left">  GASTOS VARIOS           : </td>
+      </tr>
+        
+    </table>
+    
+    
+    
+    
     
   <table style='font-family:"Courier New", Courier, monospace; font-size:100% ;width:100%'>
   

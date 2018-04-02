@@ -240,7 +240,11 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
     return @facturas   
     
  end
- 
+ #Datos solo de cabecera de cobranzas
+ def get_customer_payments_1(fecha1)
+     @facturas =  CustomerPayment.where(['fecha1>= ? and fecha1 <= ?', "#{fecha1} 00:00:00","#{fecha1} 23:59:59"])
+ end  
+     
  def  get_ventas_vale_contado(fecha) 
 
      facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ? and tipo  = ?  " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","2" ])
