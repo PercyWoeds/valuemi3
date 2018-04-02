@@ -115,7 +115,7 @@
             
             <tr>
             <td width= "25%" align ="left">   DIFERENCIA PRECIO            : </td>
-            <td width= "25%" >   <%= sprintf("%.2f",venta_7)  %>                                 </td>
+            <td width= "25%" >   <%= sprintf("%.2f",venta_7)  %>             </td>
             
             <td width = "25%" align ="left">  &#9475;   TARJETA COMBUSTIBLES    :  </td>
             <td width = "25%" align ="right">  <%= sprintf("%.2f",venta_3)  %></td>
@@ -226,48 +226,70 @@
     <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
       
       <tr>
-            <td width= "25%" align ="left">  INGRESOS DEL DIA           : </td>
+            <td width= "100%" align ="left">  INGRESOS DEL DIA           : </td>
+        </tr>
+        <TR>
             <td width= "25%" align ="left">  EFECTIVOS           : </td>
             <td width = "25%" align ="left"> :  </td>
             <td width = "25%" align ="right">:  </td>
-            </tr>
-            <% total_bancos = 0 %>
+        </TR>
+    </table>
+    
+    <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>        
+      <% total_bancos_soles = 0 %>
+      <% total_bancos_dolar = 0 %>
+      
        <% for productItem in bancos %>
+       
       <tr>
-        <td class="bordered_bottom bordered_right">
+        <td width= "10%" align ="left">
           <%=  productItem.code_liq   %>
         </td>
 
-        <td class="bordered_bottom bordered_right">
+        <td width= "30%" align ="left">
           <%=  productItem.get_customer(productItem.customer_id) %>
         </td>
         
-         <td class="bordered_bottom bordered_right">
+         <td width= "10%" align ="left">
           <%=  productItem.fecha.strftime("%d/%m/%Y")   %>
         </td>
-         <td class="bordered_bottom bordered_right">
+         <td width= "10%" align ="left">
           <%=  productItem.code    %>
         </td>
-        <td class="bordered_bottom bordered_right">
-            <%=  productItem.bank_acount.number  %>
+        <td width= "20%" align ="left">
+          <%=  productItem.bank_acount.number  %>
         </td>
-
-        <td class="bordered_bottom bordered_right" align="left" >
-          <%= money(productItem.total) %>
-        </td>
-        <% total_bancos+= productItem.total %>
+        
+        <%  if productItem.moneda_id == "1"%>  
+        
+          <td  width= "10%" align ="right">
+            0.00
+          </td>
+          <td  width= "10%" align ="right">
+            <%= sprintf("%.2f",productItem.total) %>
+          </td>
+          <% total_bancos_dolar += productItem.total %>
+        <% else%>
+          <td  width= "10%" align ="right">
+            <%= sprintf("%.2f",productItem.total) %>
+          </td>
+          <td  width= "0%" align ="right">
+            0.00
+          </td>
+          <% total_bancos_soles += productItem.total %>
+        <% end %>
+        
       </tr>
     <% end %>
    
-            
-      
     </table>
+    
   <table style='font-family:"Courier New", Courier, monospace; font-size:100% ;width:100%'>
   
   <tr bgcolor="#B4D7F7">
     <td width="80%"> TOTAL A BANCOS   </td>
-    <td width="20%" align='right'> <%= sprintf("%.2f",total_bancos) %>   </td>
-    
+    <td width="10%" align='right'> <%= sprintf("%.2f",total_bancos_soles) %>   </td>
+    <td width="10%" align='right'> <%= sprintf("%.2f",total_bancos_dolar) %>   </td>
   </tr>
   
   </table>
