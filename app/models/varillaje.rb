@@ -223,11 +223,8 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
          
         ret=0  
         for detalle in facturas
-          if detalle.implista >0
-            ret += detalle.implista - detalle.importe.to_f
-          else
              ret += detalle.importe.to_f
-          end 
+        
        end 
     end 
 
