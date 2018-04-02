@@ -60,7 +60,7 @@
      </table>
      
      <% a= @parte_rpt.first %>
-     <% venta_1 =  a.get_ventas_contometros(@fecha) %>
+     <% venta_1 =  a.get_ventas_contometros(@fecha)  %>
      <% venta_2 =  a.get_ventas_contometros_efectivo(@fecha) %>
      <% venta_3 =  a.get_ventas_contometros_tarjeta(@fecha) %>
      <% venta_4 =  a.get_ventas_contometros_creditos(@fecha) %>
@@ -75,6 +75,7 @@
      
      <% venta_8 =  venta_1 - venta_7 %>
      <% venta_6 =  venta_5 - venta_8 %>
+     <%  venta_11 = venta_1 - venta_7 %>
      
      <hr>
 <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
@@ -131,7 +132,7 @@
             </tr>
             <tr>
             <td width= "25%" align ="left">   VENTA COMBUSTIBLES        S/.  : </td>
-            <td width= "25%" align= "right">          <%=    sprintf("%.2f",venta_1) %>                   </td>
+            <td width= "25%" align= "right">          <%=    sprintf("%.2f",venta_11)  %>                   </td>
             
             <td width = "25%" align ="left">  &#9475;   EFECTIVO DOLAR    :  </td>
             <td width = "25%" align ="right"> </td>
@@ -172,6 +173,16 @@
             <td width = "25%" align ="right"> </td>
             
             </tr>
+            
+            <tr>
+            <td width= "25%" align ="left">  PROMOCION            : </td>
+            <td width= "25%" >                                </td>
+            
+            <td width = "25%" align ="left">  &#9475;  :  </td>
+            <td width = "25%" align ="right"> </td>
+            
+            </tr>
+            
             <tr>
             <td width= "25%" align ="left">      VENTA PRODUCTOS    S/. : </td>
             <td width= "25%" >                                </td>

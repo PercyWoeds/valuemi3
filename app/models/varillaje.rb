@@ -215,8 +215,7 @@ class Varillaje < ActiveRecord::Base
         for detalle in facturas
             if detalle.implista > 0
             ret += detalle.implista - detalle.importe.to_f
-          else
-             ret += 0
+         
           end
        end 
     end 
