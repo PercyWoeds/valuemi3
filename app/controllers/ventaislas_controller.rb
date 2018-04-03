@@ -5,7 +5,7 @@ class VentaislasController < ApplicationController
   # GET /ventaislas
   # GET /ventaislas.json
   def index
-    @ventaislas = Ventaisla.all
+    @ventaislas = Ventaisla.order('fecha DESC,turno')
     
   end
 
