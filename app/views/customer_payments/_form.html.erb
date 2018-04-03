@@ -156,11 +156,46 @@
   
   <%= hr() %>
   
+  <h5>
+    Agregar informacion Cliente
+  </h5>
+  
+
+  <form method="get" action="/purchases" onsubmit="addItemToCustomerPayment(); return false;">     <input type="hidden" name="ac_item_id" id="ac_item_id" value="" />  
+
+    <strong> Fecha :</strong><br />
+    
+    <input type="date" name="fecha1" value="2018-03-20" style = "width: 150px" id="fecha1" >
+    
+    
+    <div class="small">
+      Ingrese un termino de busqueda para obtener documentos 
+    </div>
+    <br />  
+    
+
+    
+    
+    <br />
+    <input type="submit" value="Agregar items " />
+      
+
+  </form>
+  
+  <%= hr() %>
+  
+
   
 </div>
 
 <%= br() %>
 <br />
+
+
+  
+
+
+
 
 <%= render 'layouts/autocomplete' %>
 

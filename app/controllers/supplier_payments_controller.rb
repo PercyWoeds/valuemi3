@@ -1061,9 +1061,12 @@ end
     @supplierpayment = SupplierPayment.new
     @supplierpayment[:code] = "#{generate_guid9()}"
     @supplierpayment[:processed] = false
+    @supplierpayment[:fecha] = Date.today
     
     @company = Company.find(params[:company_id])
+    
     @supplierpayment.company_id = @company.id
+    
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
