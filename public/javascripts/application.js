@@ -1226,6 +1226,66 @@
       alert("Por favor ingrese un documento.");
     }
   }
+//............................................................................
+  // agrega items customer payments
+  //............................................................................
+
+  function addItemToCustomerPayment2() {
+    var item = $("#ac_item").val();
+    
+    if(item != "") {
+      var company_id = $("#customer_payment_company_id").val();
+
+      var importe_cheque = $("#customer_payment_total").val();
+      
+      var item_total = 0;
+      var item_id = "";
+      var fecha1 = $("#ac_fecha1").val();      
+      var factory = 0 ;
+      var compen  = 0 ;
+      var ajuste  = 0 ;
+
+      var items_arr = $("#items").val().split(",");
+
+      if(fecha1 == "") {
+        alert("Por favor ingrese una fecha");
+        }       
+      else {
+        
+        $result = pg_query("SELECT id,balance FROM facturas where balance > 0 and fecha = ? ", [(fecha1)]);
+        alert (fecha1) ;
+    
+      if (!$result) {
+        
+          
+        }
+
+        
+        while($myrow = pg_fetch_assoc($result)) {
+
+            var item_line = $myrow[id] + "|BRK|" + compen  + "|BRK|" + ajuste + "|BRK|"+ factory + "|BRK|"+ $myrow[balance]  + "|BRK|";
+            $("#items").val($("#items").val() + "," + item_line);
+        
+        }
+        
+        
+        
+        
+        listItemsCustomerPayment();
+        
+        $("#ac_item_id").val("");
+        $("#ac_item").val("");
+        $("#ac_item_total").val("");
+        $("#ac_item_factory").val("");
+        $("#ac_item_ajuste").val("");
+        $("#ac_item_compen").val("");
+
+        updateItemTotalCP();
+      }
+    } else {
+      alert("Por favor ingrese un documento.");
+    }
+  }
 
 
   // Update price total for invoice
