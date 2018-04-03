@@ -89,6 +89,7 @@
   
   resources :facturas do 
     collection { get :reportes}
+    collection { get :reportes2}
   end 
     
   

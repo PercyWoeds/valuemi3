@@ -1,0 +1,34 @@
+<%= render 'layouts/charts' %>
+
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %> &raquo;
+  <%= link_to "Reports", "/companies/reports/#{@company.id}" %>
+</div>
+
+<h1>
+  <%= image_tag("reports_48.png", :class => "vmiddle") %>
+  Parte Diario 
+</h1>
+ 
+  
+  
+<%= form_tag(reportes2_facturas_path, :method => "get") do %>
+
+    <div class="field">
+        
+      <input type="date" name="fecha1" value="2018-03-19" style = "width: 150px" >
+
+    </div>
+	
+
+
+<br> 
+ <%= submit_tag "To PDF", :name => "print" %>
+ <%= submit_tag "To Excel", :name => "print" %>
+  
+<% end %>
+
+   
+</html>
+

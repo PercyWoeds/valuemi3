@@ -26,6 +26,25 @@ class FacturasController < ApplicationController
     end
   end
   
+    def reportes2 
+  
+    @company=Company.find(1)          
+    @fecha = params[:fecha1]    
+    
+    @parte_rpt = @company.get_parte_1(@fecha)
+    
+    
+    case params[:print]
+      when "To PDF" then 
+        begin 
+         render  pdf: "Ordenes ",template: "varillajes/parte2_rpt.pdf.erb",locals: {:varillajes => @parte_rpt}
+        
+        end   
+      when "To Excel" then render xlsx: 'exportxls'
+      else render action: "index"
+    end
+  end
+  
 
   def discontinue
     
