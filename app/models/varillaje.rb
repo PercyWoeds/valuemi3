@@ -116,7 +116,6 @@ class Varillaje < ActiveRecord::Base
                
     end 
 
-    return ret
  
  end 
  
@@ -129,12 +128,14 @@ class Varillaje < ActiveRecord::Base
          
         ret=0  
         for detalle in facturas
-            if detalle.implista > 0
-            ret += detalle.implista - detalle.importe.to_f
-          else
-             ret += 0
-          end
-       end 
+             if detalle.implista > detalle.importe 
+                if detalle.implista > 0
+                    ret += detalle.implista - detalle.importe.to_f
+                else
+                    ret += 0
+                end
+            end 
+        end 
     end 
 
     return ret
