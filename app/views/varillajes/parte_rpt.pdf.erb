@@ -73,8 +73,8 @@
      <% venta_13 =  a.get_faltante_total_dia(@fecha,"1") %>
      <% venta_14 =  a.get_faltante_total_dia(@fecha,"2") %>
      
-     <% venta_15 =  a.get_ventas_market(@fecha) %>
-     <% venta_16 =  a.get_ventas_restaurant(@fecha) %>
+     <% venta_15 =  a.get_ventas_market(@fecha) *1.18 %>
+     <% venta_16 =  a.get_ventas_restaurant(@fecha)*1.18 %>
      
      <% venta_17 =  venta_15 + venta_16 %>
      
