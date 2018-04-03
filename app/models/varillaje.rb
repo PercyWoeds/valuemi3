@@ -334,12 +334,12 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
          
        for factura in facturas
           
-          detalles =     FacturaDetail.where(factura_id: factura.id)     
+          detalles = FacturaDetail.where(factura_id: factura.id)     
              
           for   detalle    in detalles
             
-             if detalle.product.products_category_id != 1 or  detalle.product.products_category_id != 3 
-                    ret += detalle.total 
+             if (detalle.product.products_category_id != 1 ||  detalle.product.products_category_id != 3 )
+                ret += detalle.total 
              end 
           end 
           

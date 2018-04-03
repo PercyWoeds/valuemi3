@@ -1252,8 +1252,8 @@
         }       
       else {
         
-        $result = pg_query("SELECT id,balance FROM facturas where balance > 0 and fecha = ? ", [(fecha1)]);
-        alert (fecha1) ;
+        $result = pg_query("SELECT id,balance FROM facturas where balance > 0 and fecha = ? ", [Date.parse(fecha1)]);
+        
     
       if (!$result) {
         
