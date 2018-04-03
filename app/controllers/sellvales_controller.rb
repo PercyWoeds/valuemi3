@@ -81,8 +81,10 @@ class SellvalesController < ApplicationController
     @products = Product.where(products_category_id:1)
     @sellvale[:fpago] = 1
     @sellvale[:td] = "N"
-    @sellvale[:implista] = 0
+    
     @sellvale[:processed] = 0
+    
+    @sellvale[:importe] = @sellvale[:precio].to_f * @sellvale[:cantidad] 
     
     respond_to do |format|
       if @sellvale.update(sellvale_params)
