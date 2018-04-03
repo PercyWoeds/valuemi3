@@ -105,6 +105,11 @@ class Factura < ActiveRecord::Base
         lcnumero = numero.to_s
         Voided.where(:id=>'2').update_all(:numero =>lcnumero)        
   end
+  def correlativo2
+        numero = Voided.find(15).numero.to_i + 1
+        lcnumero = numero.to_s
+        Voided.where(:id=>'15').update_all(:numero =>lcnumero)        
+  end
 
 
   def get_subtotal(items)
@@ -123,7 +128,7 @@ class Factura < ActiveRecord::Base
         total -= total * (discount.to_f / 100)
         
         begin
-          product = Service.find(id.to_i)
+          product = Product.find(id.to_i)
           subtotal += total
         rescue
         end
@@ -153,7 +158,7 @@ class Factura < ActiveRecord::Base
             total -= total * (discount.to_f / 100)
         
             begin
-              product = Service.find(id.to_i)
+              product = Product.find(id.to_i)
               
               if(product)
                 if(product.tax1 and product.tax1 > 0)
@@ -179,8 +184,7 @@ class Factura < ActiveRecord::Base
     ret = 0
     
     for invoice in invoices
-
-        
+    
           ret += invoice.total 
         
     end
@@ -190,7 +194,7 @@ class Factura < ActiveRecord::Base
   end
   
   def delete_products()
-    invoice_services = InvoiceService.where(factura_id: self.id)
+    invoice_services = FacturaDetail.where(factura_id: self.id)
     
     for ip in invoice_services
       ip.destroy
@@ -211,9 +215,9 @@ class Factura < ActiveRecord::Base
         total -= total * (discount.to_f / 100)
         
         begin
-          product = Service.find(id.to_i)
+          product = Product.find(id.to_i)
           
-          new_invoice_product = InvoiceService.new(:factura_id => self.id, :service_id => product.id, :price => price.to_f, :quantity => quantity.to_f, :discount => discount.to_f, :total => total.to_f)
+          new_invoice_product = FacturaDetail.new(:factura_id => self.id, :product_id => product.id, :price => price.to_f, :quantity => quantity.to_f, :discount => discount.to_f, :total => total.to_f)
 
           new_invoice_product.save
 

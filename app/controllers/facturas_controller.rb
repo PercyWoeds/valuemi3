@@ -632,7 +632,9 @@ class FacturasController < ApplicationController
     @action_txt = "Create"
     $Action= "create"
     @invoice = Factura.new
-    @invoice[:code] = "#{generate_guid3()}"
+    
+    @invoice[:code] = "#{generate_guid11()}"
+    
     @invoice[:processed] = false
     @invoice[:descuento] = "0"
     @company = Company.find(params[:company_id])
@@ -712,9 +714,12 @@ def newfactura2
     @payments = @company.get_payments()    
     @services = @company.get_services()
     @deliveryships = @invoice.my_deliverys 
-
+    @tipofacturas = @company.get_tipofacturas() 
     @products_lines = @invoice.products_lines
     @tipoventas = Tipoventum.all 
+    @tipodocumento = @company.get_documents()
+    @monedas = @company.get_monedas()
+    @products = @company.get_products()
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
@@ -740,8 +745,10 @@ def newfactura2
     @services  = @company.get_services()
     @products = @company.get_products()
     @tipoventas = Tipoventum.all 
-
-    
+    @tipodocumento = @company.get_documents()
+    @tipofacturas = @company.get_tipofacturas() 
+    @monedas = @company.get_monedas()
+   
     @invoice[:subtotal] = @invoice.get_subtotal(items)
     begin
       @invoice[:tax] = @invoice.get_tax(items, @invoice[:customer_id])
@@ -771,7 +778,7 @@ def newfactura2
         # Create products for kit
         @invoice.add_products(items)
         @invoice.add_guias(items2)
-        @invoice.correlativo
+        @invoice.correlativo2
         # Check if we gotta process the invoice
         @invoice.process()
 

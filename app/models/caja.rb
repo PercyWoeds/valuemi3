@@ -1,3 +1,3 @@
 class Caja < ActiveRecord::Base
-    belongs_to :viatico
+    belongs_to :viaticov
 end

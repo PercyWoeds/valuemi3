@@ -53,6 +53,8 @@ class Varillaje < ActiveRecord::Base
         
               factura_detalle = VentaislaDetail.where(["ventaisla_id = ? and product_id = ?" , detalle.id,producto ])
                 for detalle in factura_detalle
+                
+                
                     ret += detalle.total.round(2)*-1
                 end     
             
@@ -98,8 +100,9 @@ class Varillaje < ActiveRecord::Base
  end 
  
  def  get_ventas_contometros_producto_todo(fecha,producto) 
+     #no incluye ventas directas
 
-     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and cod_prod = ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59",producto])
+     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and cod_prod = ? and tipo <> ?  " , "#{fecha} 00:00:00","#{fecha} 23:59:59",producto,"3"])
      
      if facturas
          
@@ -249,7 +252,7 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
  
  end 
  
- def  get_ventas_vale_directo_producto(fecha,producto) 
+ def  get_ventas_vale_directo_producto(fecha,producto,value) 
 
      facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ? and tipo  = ?  and cod_prod  = ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","3",producto ])
      
@@ -257,7 +260,12 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
          
         ret=0  
         for detalle in facturas
-             ret += detalle.importe.to_f
+            if value == "qty"
+                ret += detalle.cantidad.to_f
+            else   
+                ret += detalle.importe.to_f
+            end 
+             
         end 
     end 
 
@@ -294,7 +302,7 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
        end 
        
      end 
-     
+     return ret 
  end 
  def get_faltante_total_dia(fecha,tipo)
      facturas = Faltante.where(["fecha >= ? and fecha <= ?  and tipofaltante_id = ?  " , "#{fecha} 00:00:00","#{fecha} 23:59:59",tipo ])
@@ -313,5 +321,56 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
      end 
      return ret
  end 
+ 
+ 
+ def get_ventas_market(fecha)
+     
+     facturas = Factura.where(["fecha >= ? and fecha <= ?   " , "#{fecha} 00:00:00","#{fecha} 23:59:59" ])
+       ret=0  
+       
+     if facturas
+         
+       for factura in facturas
+          
+          detalles =     FacturaDetail.where(factura_id: factura.id)     
+             
+          for   detalle    in detalles
+            
+             if detalle.product.products_category_id != 1 or  detalle.product.products_category_id != 3 
+                    ret += detalle.total 
+             end 
+          end 
+          
+       end 
+       
+     end 
+     
+     return ret 
+ end 
+ def get_ventas_restaurant(fecha)
+     
+     facturas = Factura.where(["fecha >= ? and fecha <= ?   " , "#{fecha} 00:00:00","#{fecha} 23:59:59" ])
+       ret=0  
+       
+     if facturas
+         
+       for factura in facturas
+          
+          detalles =     FacturaDetail.where(factura_id: factura.id)     
+             
+          for   detalle    in detalles
+            
+             if detalle.product.products_category_id == 3 
+                    ret += detalle.total 
+             end 
+          end 
+          
+       end 
+       
+     end 
+     
+     return ret 
+ end 
+ 
  
 end
