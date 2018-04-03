@@ -1061,7 +1061,7 @@ end
     @supplierpayment = SupplierPayment.new
     @supplierpayment[:code] = "#{generate_guid9()}"
     @supplierpayment[:processed] = false
-    @supplierpayment[:fecha] = Date.today
+    @supplierpayment[:fecha1] = Date.today
     
     @company = Company.find(params[:company_id])
     
