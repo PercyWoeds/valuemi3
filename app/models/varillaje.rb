@@ -54,7 +54,6 @@ class Varillaje < ActiveRecord::Base
               factura_detalle = VentaislaDetail.where(["ventaisla_id = ? and product_id = ?" , detalle.id,producto ])
                 for detalle in factura_detalle
                 
-                
                     ret += detalle.total.round(2)*-1
                 end     
             
@@ -112,10 +111,10 @@ class Varillaje < ActiveRecord::Base
             ret  += detalle.importe.to_f
             ret2 += detalle.implista
             
-       end 
+        end 
                
-    end 
-
+     end 
+     return ret 
  
  end 
  
@@ -128,15 +127,17 @@ class Varillaje < ActiveRecord::Base
          
         ret=0  
         for detalle in facturas
-             if detalle.implista > detalle.importe.to_f
+        
+             
+                 
                 if detalle.implista > 0
                     ret += detalle.implista - detalle.importe.to_f
                 else
                     ret += 0
                 end
-            end 
+            
         end 
-    end 
+     end 
 
     return ret
  
