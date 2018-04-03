@@ -338,7 +338,7 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
              
           for   detalle    in detalles
             
-             if (detalle.product.products_category_id != 1 ||  detalle.product.products_category_id != 3 )
+             if (detalle.product.products_category.id != 1 ||  detalle.product.products_category.id != 3 )
                 ret += detalle.total 
              end 
           end 
