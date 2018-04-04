@@ -109,8 +109,6 @@ class Varillaje < ActiveRecord::Base
         ret2 = 0
         for detalle in facturas
             ret  += detalle.importe.to_f
-            ret2 += detalle.implista
-            
         end 
                
      end 
@@ -339,6 +337,20 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
  
  def get_afericion_total_dia(fecha)
      facturas = Afericion.where(["fecha >= ? and fecha <= ?   " , "#{fecha} 00:00:00","#{fecha} 23:59:59" ])
+       ret=0  
+       
+     if facturas
+         
+       for detalle in facturas
+          ret += detalle.importe
+       end 
+       
+     end 
+     return ret 
+ end 
+ def get_afericion_total_dia_producto(fecha,producto)
+     
+     facturas = Afericion.where(["fecha >= ? and fecha <= ?  and product_id = ?  " , "#{fecha} 00:00:00","#{fecha} 23:59:59",producto ])
        ret=0  
        
      if facturas
