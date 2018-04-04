@@ -27,6 +27,22 @@
 <% bancos  =  a.get_customer_payments_1(@fecha) %>
 
 <% creditos  =  a.get_ventas_creditos_detalle(@fecha) %>
+<% contados  =  a.get_ventas_contado_detalle(@fecha) %>
+<% directas  =  a.get_ventas_directa_detalle(@fecha) %>
+
+<% efectivos  =  a.get_ventas_contometros_efectivo_sustento(@fecha) %>
+<% tarjetas  =  a.get_ventas_contometros_tarjeta_sustento(@fecha) %>
+<% faltantes  =  a.get_faltante_detalle_dia(@fecha,"1") %>
+<% sobrantes  =  a.get_faltante_detalle_dia(@fecha,"2") %>
+
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+  
+  <tr bgcolor="#B4D7F7">
+    <td width="100%"> VALES DE CREDITO  </td>
+  </tr>
+  
+  </table>
+
   
   <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
       <% nroitem = 1%>
@@ -45,6 +61,194 @@
 
                         </tr>
                     <% nroitem = nroitem+1 %>
+         <%end %>
+               
+        <hr>  
+     </table>
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+  
+  <tr bgcolor="#B4D7F7">
+    <td width="100%"> VALES DE CONTADO  </td>
+  </tr>
+  
+  </table>
+
+  
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+      <% nroitem = 1%>
+      
+       <% for  credito in contados  %>
+        
+                    <td width= "5%" ><%=  credito.serie %></td>
+                    <td width= "10%" ><%=  credito.numero  %></td>
+                    <td width = "8%" align ="right"><%= credito.cod_cli   %></td>
+                    <td width = "8%" align ="right"><%= credito.odometro    %></td>
+                    <td width = "10%" align ="right"><%= credito.cod_prod    %> </td>
+                    <td width = "10%" align ="right"><%=  sprintf("%.2f",credito.cantidad.to_s)%></td>
+                    <td width = "8%" align ="right"><%= sprintf("%.2f",credito.precio)   %></td>
+                    <td width = "10%" align ="right"><%= sprintf("%.3f",credito.importe)   %></td>
+                    <td width = "10%" align ="right"><%= sprintf("%.2f",credito.implista.to_s)   %></td>
+
+                        </tr>
+                    <% nroitem = nroitem+1 %>
+         <%end %>
+               
+        <hr>  
+     </table>
+     
+<table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>     
+  <tr bgcolor="#B4D7F7">
+    <td width="100%"> VENTA DIRECTA  </td>
+  </tr>
+  
+  </table>
+
+  
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+      <% nroitem = 1%>
+      
+       <% for  credito in directas  %>
+        
+                    <td width= "5%" ><%=  credito.serie %></td>
+                    <td width= "10%" ><%=  credito.numero  %></td>
+                    <td width = "8%" align ="right"><%= credito.cod_cli   %></td>
+                    <td width = "8%" align ="right"><%= credito.odometro    %></td>
+                    <td width = "10%" align ="right"><%= credito.cod_prod    %> </td>
+                    <td width = "10%" align ="right"><%=  sprintf("%.2f",credito.cantidad.to_s)%></td>
+                    <td width = "8%" align ="right"><%= sprintf("%.2f",credito.precio)   %></td>
+                    <td width = "10%" align ="right"><%= sprintf("%.3f",credito.importe)   %></td>
+                    <td width = "10%" align ="right"><%= sprintf("%.2f",credito.implista.to_s)   %></td>
+
+                        </tr>
+                    <% nroitem = nroitem+1 %>
+         <%end %>
+               
+        <hr>  
+     </table>
+<table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>     
+  <tr bgcolor="#B4D7F7">
+    <td width="100%"> COMBUSTIBLES </td>
+  </tr>
+  
+  </table>
+     
+<table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>     
+  <tr bgcolor="#B4D7F7">
+    <td width="100%"> EFECTIVOS SOLES </td>
+  </tr>
+  
+  </table>
+
+  
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+      <% nroitem = 1%>
+      
+       <% for  credito in efectivos  %>
+        
+                    <td width= "5%" ><%=  credito.serie %></td>
+                    <td width= "10%" ><%=  credito.numero  %></td>
+                    <td width = "8%" align ="right"><%= credito.cod_cli   %></td>
+                    <td width = "8%" align ="right"><%= credito.odometro    %></td>
+                    <td width = "10%" align ="right"><%= credito.cod_prod    %> </td>
+                    <td width = "10%" align ="right"><%=  sprintf("%.2f",credito.cantidad.to_s)%></td>
+                    <td width = "8%" align ="right"><%= sprintf("%.2f",credito.precio)   %></td>
+                    <td width = "10%" align ="right"><%= sprintf("%.3f",credito.importe)   %></td>
+                    <td width = "10%" align ="right"><%= sprintf("%.2f",credito.implista.to_s)   %></td>
+
+                        </tr>
+                    <% nroitem = nroitem+1 %>
+         <%end %>
+               
+        <hr>  
+     </table>
+     
+     
+     
+<table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>     
+  <tr bgcolor="#B4D7F7">
+    <td width="100%"> TARJETA </td>
+  </tr>
+  
+  </table>
+
+  
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+      <% nroitem = 1%>
+      
+       <% for  credito in tarjetas  %>
+        
+                    <td width= "5%" ><%=  credito.serie %></td>
+                    <td width= "10%" ><%=  credito.numero  %></td>
+                    <td width = "8%" align ="right"><%= credito.cod_cli   %></td>
+                    <td width = "8%" align ="right"><%= credito.odometro    %></td>
+                    <td width = "10%" align ="right"><%= credito.cod_prod    %> </td>
+                    <td width = "10%" align ="right"><%=  sprintf("%.2f",credito.cantidad.to_s)%></td>
+                    <td width = "8%" align ="right"><%= sprintf("%.2f",credito.precio)   %></td>
+                    <td width = "10%" align ="right"><%= sprintf("%.3f",credito.importe)   %></td>
+                    <td width = "10%" align ="right"><%= sprintf("%.2f",credito.implista.to_s)   %></td>
+
+                        </tr>
+                    <% nroitem = nroitem+1 %>
+         <%end %>
+               
+        <hr>  
+     </table>
+     
+<table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>     
+  <tr bgcolor="#B4D7F7">
+    <td width="100%"> FALTANTES </td>
+  </tr>
+  
+  </table>
+
+  
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+      <% nroitem = 1%>
+      
+       <% for  faltante in faltantes  %>
+       
+                                   <td width= "5%" ></td>
+                    <td width= "10%" ><%=  faltante.employee.full_name  %></td>
+                    <td width = "8%" align ="right"><%=  faltante.tipofaltante.descrip    %></td>
+                    <td width = "8%" align ="right"><%= credito.odometro    %></td>
+                    <td width = "10%" align ="right"><%= credito.cod_prod    %> </td>
+                    <td width = "10%" align ="right"></td>
+                    <td width = "8%" align ="right"></td>
+                    <td width = "10%" align ="right"><%= sprintf("%.3f",faltante.total)   %></td>
+                    <td width = "10%" align ="right"><%= faltante.descrip   %></td>
+
+                        </tr>
+                    <% nroitem = nroitem +1 %>
+         <%end %>
+               
+        <hr>  
+     </table>
+     
+<table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>     
+  <tr bgcolor="#B4D7F7">
+    <td width="100%"> SOBRANTES </td>
+  </tr>
+  
+  </table>
+
+  
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+      <% nroitem = 1%>
+      
+       <% for  faltante in sobrantes  %>
+       
+                                   <td width= "5%" ></td>
+                    <td width= "10%" ><%=  faltante.employee.full_name  %></td>
+                    <td width = "8%" align ="right"><%=  faltante.tipofaltante.descrip    %></td>
+                    <td width = "8%" align ="right"><%= credito.odometro    %></td>
+                    <td width = "10%" align ="right"><%= credito.cod_prod    %> </td>
+                    <td width = "10%" align ="right"></td>
+                    <td width = "8%" align ="right"></td>
+                    <td width = "10%" align ="right"><%= sprintf("%.3f",faltante.total)   %></td>
+                    <td width = "10%" align ="right"><%= faltante.descrip   %></td>
+
+                        </tr>
+                    <% nroitem = nroitem +1 %>
          <%end %>
                
         <hr>  

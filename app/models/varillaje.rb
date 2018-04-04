@@ -160,6 +160,25 @@ class Varillaje < ActiveRecord::Base
  
  end 
  
+ def  get_ventas_contometros_efectivo_sustento(fecha) 
+
+     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and fpago = ? and td <> ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "1" ,"N"])
+     
+     
+    return facturas
+ 
+ end 
+ def  get_ventas_contometros_tarjeta_sustento(fecha) 
+
+     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and fpago <> ? and td <> ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "1" ,"N"])
+     
+     
+    return facturas
+ 
+ end 
+ 
+ 
+ 
  def  get_ventas_contometros_tarjeta(fecha) 
 
      facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and fpago <> ?  and td <> ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "1" ,"N"])
@@ -202,6 +221,21 @@ class Varillaje < ActiveRecord::Base
  
  end 
  
+  def  get_ventas_contado_detalle(fecha) 
+
+     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ?  and tipo = ?" , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","2" ])
+
+    return facturas
+ 
+ end 
+ 
+  def  get_ventas_directa_detalle(fecha) 
+
+     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ?  and tipo = ?" , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","3" ])
+
+    return facturas
+ 
+ end 
  
  def  get_ventas_contometros_descuento(fecha) 
 
@@ -316,6 +350,7 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
      end 
      return ret 
  end 
+ 
  def get_faltante_total_dia(fecha,tipo)
      facturas = Faltante.where(["fecha >= ? and fecha <= ?  and tipofaltante_id = ?  " , "#{fecha} 00:00:00","#{fecha} 23:59:59",tipo ])
        ret=0  
@@ -332,6 +367,13 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
        
      end 
      return ret
+ end 
+ 
+ def get_faltante_detalle_dia(fecha,tipo)
+     facturas = Faltante.where(["fecha >= ? and fecha <= ?  and tipofaltante_id = ?  " , "#{fecha} 00:00:00","#{fecha} 23:59:59",tipo ])
+       ret=0  
+     
+     return facturas 
  end 
  
  
@@ -363,6 +405,7 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
      
      return ret 
  end 
+ 
  def get_ventas_restaurant(fecha)
      
      facturas = Factura.where(["fecha >= ? and fecha <= ?   " , "#{fecha} 00:00:00","#{fecha} 23:59:59" ])
