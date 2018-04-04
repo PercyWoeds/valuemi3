@@ -317,16 +317,18 @@
   
   <% diferencia = total_bancos_soles - venta_9 - venta_2 - venta_17 -  venta_13 - venta_14  %>
      
+  <% if diferencia !=  0%>   
   <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
   
   <tr bgcolor="#B4D7F7">
     <td width="80%"> DIFERENCIA :   </td>
-    <td width="10%" align='right'> <%= sprintf("%.2f",total_bancos_soles) %>   </td>
-    <td width="10%" align='right'> <%= sprintf("%.2f",total_bancos_dolar) %>   </td>
+    <td width="10%" align='right'> <%= sprintf("%.2f",diferencia) %>   </td>
+    <td width="10%" align='right'>    </td>
   </tr>
   
+  
   </table>
-     
+  <% end %>   
   
   
     
