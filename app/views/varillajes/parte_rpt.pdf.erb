@@ -49,7 +49,7 @@
                     
                     
                     
-                    <td width = "5%" align ="right"><%= sprintf("%.2f",product0.get_ventas_contometros_producto_todo(@fecha,product0.tanque.product.code.to_s))   %></td>
+                    <td width = "5%" align ="right"><%= sprintf("%.2f",product0.get_ventas_contometros_producto_todo(@fecha,product0.tanque.product.code.to_s) + product0.get_ventas_contometros_descuento_producto(@fecha,product0.tanque.product.code.to_s)   )   %></td>
                         </tr>
                     <% nroitem = nroitem+1 %>
          <%end %>
