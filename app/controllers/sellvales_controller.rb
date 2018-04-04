@@ -6,7 +6,7 @@ class SellvalesController < ApplicationController
   def index
     
     if current_user.email == "percywoeds@gmail.com"
-      @sellvales = Sellvale.all.order('fecha DESC')
+      @sellvales = Sellvale.all.order(:fecha,:serie,:numero)
     else   
       @sellvales = Sellvale.where(td:"N").order('fecha DESC')
     end 
