@@ -96,7 +96,7 @@
       <% total_2 = 0%>
       
        <% for  credito in contados  %>
-        
+           <tr>
                     <td width= "5%" ><%=  credito.serie %></td>
                     <td width= "10%" ><%=  credito.numero  %></td>
                     <td width = "8%" align ="right"><%= credito.cod_cli   %></td>
@@ -141,7 +141,7 @@
       <% total_2 = 0%>
       
        <% for  credito in directas  %>
-        
+        <tr>
                     <td width= "5%" ><%=  credito.serie %></td>
                     <td width= "10%" ><%=  credito.numero  %></td>
                     <td width = "8%" align ="right"><%= credito.cod_cli   %></td>
@@ -189,7 +189,7 @@
       <% total_1 = 0 %>
       
        <% for  credito in efectivos  %>
-        
+        <tr>
                     <td width= "5%" ><%=  credito.serie %></td>
                     <td width= "10%" ><%=  credito.numero  %></td>
                     <td width = "8%" align ="right"><%= credito.cod_cli   %></td>
@@ -229,7 +229,7 @@
       <% nroitem = 1%>
       <% total_1 = 0%>
        <% for  credito in tarjetas  %>
-        
+        <tr>
                     <td width= "5%" ><%=  credito.serie %></td>
                     <td width= "10%" ><%=  credito.numero  %></td>
                     <td width = "8%" align ="right"><%= credito.cod_cli   %></td>
@@ -266,7 +266,7 @@
       <% total_1 = 0 %>
       
        <% for  faltante in faltantes  %>
-       
+       <tr>
                                    <td width= "5%" ></td>
                     <td width= "10%" ><%=  faltante.employee.full_name  %></td>
                     <td width = "8%" align ="right"><%=  faltante.tipofaltante.descrip    %></td>
@@ -306,7 +306,7 @@
       <% total_1 = 0 %>
       
        <% for  faltante in sobrantes  %>
-       
+       <tr>
                                    <td width= "5%" ></td>
                     <td width= "10%" ><%=  faltante.employee.full_name  %></td>
                     <td width = "8%" align ="right"><%=  faltante.tipofaltante.descrip    %></td>
