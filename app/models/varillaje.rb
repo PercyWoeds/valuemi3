@@ -280,7 +280,7 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
  end  
  def get_customer_payments_2(fecha1)
      @facturas =  CustomerPayment.where(['fecha1>= ? and fecha1 <= ? and document_id <> 14', "#{fecha1} 00:00:00","#{fecha1} 23:59:59"])
-     return facturas 
+     return @facturas 
  end  
      
  def  get_ventas_vale_contado(fecha) 
