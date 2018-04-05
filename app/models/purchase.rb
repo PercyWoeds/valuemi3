@@ -335,7 +335,8 @@ def get_tax3(items, supplier_id)
         quantity = parts[1]
         price = parts[2]
         discount = parts[3]
-        lcprice_tax = item.price.to_f*1.18      
+        
+        lcprice_tax = price.to_f*1.18      
 
         quantity_1 = (quantity.to_f) * -1
       
