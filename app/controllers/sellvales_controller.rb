@@ -6,9 +6,9 @@ class SellvalesController < ApplicationController
   def index
     
     if current_user.email == "percywoeds@gmail.com"
-      @sellvales = Sellvale.all.order(:fecha,:serie,:numero)
+      @sellvales = Sellvale.all.order(:fecha,:serie,:numero).paginate(:page => params[:page], :per_page => 20)
     else   
-      @sellvales = Sellvale.where(td:"N").order('fecha DESC')
+      @sellvales = Sellvale.where(td:"N").order('fecha DESC').paginate(:page => params[:page], :per_page => 20)
     end 
   end
 
