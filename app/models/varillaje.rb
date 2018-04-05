@@ -160,7 +160,7 @@ class Varillaje < ActiveRecord::Base
  
  def  get_ventas_contometros_efectivo_sustento(fecha) 
 
-     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and fpago = ? and td <> ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "1" ,"N"])
+     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and fpago = ? and td <> ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "1" ,"N"]).order(:serie,:numero)
      
      
     return facturas
@@ -168,7 +168,7 @@ class Varillaje < ActiveRecord::Base
  end 
  def  get_ventas_contometros_tarjeta_sustento(fecha) 
 
-     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and fpago <> ? and td <> ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "1" ,"N"])
+     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and fpago <> ? and td <> ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "1" ,"N"]).order(:serie,:numero)
      
      
     return facturas
@@ -213,7 +213,7 @@ class Varillaje < ActiveRecord::Base
  
  def  get_ventas_creditos_detalle(fecha) 
 
-     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ?  and tipo = ?" , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","1" ])
+     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ?  and tipo = ?" , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","1" ]).order(:serie,:numero)
 
     return facturas
  
@@ -221,7 +221,7 @@ class Varillaje < ActiveRecord::Base
  
   def  get_ventas_contado_detalle(fecha) 
 
-     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ?  and tipo = ?" , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","2" ])
+     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ?  and tipo = ?" , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","2" ]).order(:serie,:numero)
 
     return facturas
  
@@ -229,7 +229,7 @@ class Varillaje < ActiveRecord::Base
  
   def  get_ventas_directa_detalle(fecha) 
 
-     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ?  and tipo = ?" , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","3" ])
+     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ?  and tipo = ?" , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","3" ]).order(:serie,:numero)
 
     return facturas
  
