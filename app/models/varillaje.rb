@@ -4,7 +4,7 @@ class Varillaje < ActiveRecord::Base
     
  def  get_compras(fecha,producto) 
 
-     facturas = Purchase.where(["date1 >= ? and date1 <= ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59" ])
+     facturas = Purchase.where(["date2 >= ? and date2 <= ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59" ])
      
      if facturas
     ret=0  
