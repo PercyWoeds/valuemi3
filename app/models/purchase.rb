@@ -348,7 +348,7 @@ def get_tax3(items, supplier_id)
           product = Product.find(id.to_i)
           
           new_pur_product = PurchaseDetail.new(:purchase_id => self.id, :product_id => product.id,
-          :price_with_tax => lcprice_tax, :price_without_tax=>item.price.to_f,:quantity => quantity_1, :discount => discount.to_f,
+          :price_with_tax => lcprice_tax, :price_without_tax=>price.to_f,:quantity => quantity_1, :discount => discount.to_f,
           :total => total)
           new_pur_product.save
         
