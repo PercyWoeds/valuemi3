@@ -39,6 +39,8 @@
       <% total_2 =  0%>
       
        <% for  contado in @contado_rpt  %>
+       
+       <%if contado.importe.to_f > 0 %>
                   <tr>
                     <td width= "10%" ><%=  contado.fecha.strftime("%d/%m/%Y")  %></td>
                     <td width= "5%" ><%=  contado.serie %>   </td>
@@ -55,7 +57,7 @@
                     <td width = "10%" align ="right"><%= sprintf("%.2f",contado.implista.to_s)   %></td>
                     </tr>
                     
-                    
+            <% end %>        
                     <% total_1 +=  contado.importe.to_f %>
                     <% total_2 +=  contado.implista  %>
                     
