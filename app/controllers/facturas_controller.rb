@@ -10,10 +10,10 @@ class FacturasController < ApplicationController
   def reportes
   
     @company=Company.find(1)          
-    @fecha1 = params[:fecha1]    
-    @fecha2 = params[:fecha2]    
+    @fecha = params[:fecha1]    
     
-    @contado_rpt = @company.get_parte_1(@fecha1,@fecha2)
+    
+    @parte_rpt = @company.get_parte_1(@fecha)
     
     
     case params[:print]
