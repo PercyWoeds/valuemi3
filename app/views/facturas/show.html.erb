@@ -353,13 +353,15 @@
 <%= hr() %>
 <div class="button">
   <%= link_to 'Exportar to PDF', "/facturas/pdf/#{@invoice.id}.pdf" %>
-  <%= link_to 'Send invoice via email', "/facturas/email/#{@invoice.id}" %>
+  <%= link_to 'Enviar factura via email', "/facturas/email/#{@invoice.id}" %>
   
 <% if @invoice.processed =="0" || @invoice.processed==nil %>
   <%= link_to 'Procesar factura', "/facturas/do_process/#{@invoice.id}" %>
   <%= link_to 'Editar', edit_factura_path(@invoice) %>
 <% elsif @invoice.processed =="1" %>  
+
   <%= link_to 'Anular', "/facturas/do_anular/#{@invoice.id}" %>
+  
 <% end %>
 <%= link_to 'Regresar', "/companies/facturas/#{@invoice.company.id}" %>
 </div>

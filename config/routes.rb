@@ -90,6 +90,7 @@
   resources :facturas do 
     collection { get :reportes}
     collection { get :reportes2}
+    collection { get :reportes3}
   end 
     
   
@@ -390,6 +391,7 @@ end
   match 'companies/reports/reports_parte/:company_id' => 'reports#reports_parte', via: [:get, :post]    
   match 'companies/reports/rpt_parte_1/:company_id' => 'reports#rpt_parte_1', via: [:get, :post]    
   match 'companies/reports/rpt_parte_2/:company_id' => 'reports#rpt_parte_2', via: [:get, :post]    
+  match 'companies/reports/rpt_parte_3/:company_id' => 'reports#rpt_parte_3', via: [:get, :post]    
   # Company users
 
   match 'company_users/ac_users' => 'company_users#ac_users', via: [:get, :post]

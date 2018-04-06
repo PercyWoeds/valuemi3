@@ -2957,6 +2957,13 @@ def get_purchases_pendientes_day_value(fecha1,fecha2,value = "total_amount",clie
     return @varilla 
  end 
  
+ def  get_parte_2(fecha1,fecha2) 
+   
+     @contado = Sellvale.where(["fecha >= ? and fecha <= ? and processed = ? and tipo = ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ,"0","2" ]).order(:cod_prod)
+   
+    return @contado
+ end 
+ 
  
 end
 

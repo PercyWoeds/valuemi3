@@ -1,0 +1,3 @@
+
+
+Factura.where('fecha>=? and balance>0 and substring(code,1,4)=?',"2018-03-31","BB04").update_all(balance:0) 

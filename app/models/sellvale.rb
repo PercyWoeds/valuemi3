@@ -64,7 +64,21 @@ class Sellvale < ActiveRecord::Base
           
         end
     end     
-
+    
+    
+  def get_product_name(codigo) 
+      
+      a=Product.find_by(code: codigo)
+      
+      if a
+          
+          return a.name 
+      else 
+          return "Nombre no existe..."
+          
+      end 
+      
+  end       
 
 
 end
