@@ -63,7 +63,10 @@
      <% venta_2 =  a.get_ventas_contometros_efectivo(@fecha) %>
      
      <% venta_3 =  a.get_ventas_contometros_tarjeta(@fecha) %>
+     
      <% venta_4 =  a.get_ventas_contometros_creditos(@fecha) %>
+     
+     <% venta_18 =  a.get_ventas_contometros_contado(@fecha) %>
      
      <% bancos  =  a.get_customer_payments_1(@fecha) %>
      <% bancos2  =  a.get_customer_payments_2(@fecha) %>
@@ -81,9 +84,9 @@
      
      <% venta_17 =  venta_15 + venta_16 %>
      
-     <% venta_5 =  venta_2 + venta_3 + venta_4 + venta_9 + venta_13 + venta_14 +venta_17 %>
+     <% venta_5 =  venta_2 + venta_3 + venta_4 + venta_9 + venta_13 + venta_14 +venta_17 + venta_18 %>
      
-     <% venta_8 =  venta_1  - venta_12 + venta_17 %>
+     <% venta_8 =  venta_1  - venta_12 + venta_17 + venta_18 %>
      <% venta_6 =  venta_5 - venta_8  %>
      <% venta_11 = venta_1 - venta_12  %>
      

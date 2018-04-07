@@ -338,6 +338,22 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
  
  end 
  
+ def  get_ventas_vale_contado(fecha) 
+
+     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ? and tipo  = ?  " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","4" ])
+     
+     if facturas
+         
+        ret=0  
+        for detalle in facturas
+             ret += detalle.importe.to_f
+        end 
+    end 
+
+    return ret
+ 
+ end 
+ 
  
  def get_afericion_total_dia(fecha)
      facturas = Afericion.where(["fecha >= ? and fecha <= ?   " , "#{fecha} 00:00:00","#{fecha} 23:59:59" ])
