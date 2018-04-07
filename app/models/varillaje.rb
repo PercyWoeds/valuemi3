@@ -210,7 +210,7 @@ class Varillaje < ActiveRecord::Base
  
  end 
  
- def  get_ventas_contometros_contado(fecha) 
+ def  get_ventas_contometros_adelantado(fecha) 
 
      facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ?  and tipo = ?" , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","4" ])
      

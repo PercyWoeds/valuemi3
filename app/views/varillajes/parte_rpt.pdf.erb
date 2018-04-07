@@ -66,12 +66,14 @@
      
      <% venta_4 =  a.get_ventas_contometros_creditos(@fecha) %>
      
-     <% venta_18 =  a.get_ventas_contometros_contado(@fecha) %>
+     <% venta_18 =  a.get_ventas_contometros_adelantado(@fecha) %>
      
      <% bancos  =  a.get_customer_payments_1(@fecha) %>
      <% bancos2  =  a.get_customer_payments_2(@fecha) %>
      
      <% venta_7 =  a.get_ventas_contometros_descuento(@fecha) %>
+     
+     
      <% venta_9 =  a.get_ventas_vale_contado(@fecha) %>
      <% venta_10 =  a.get_ventas_vale_directo(@fecha) %>
      
