@@ -18,31 +18,33 @@ totals = []
  Reporte de cuentas proveedores
 </h3	>
 
-<form method="get" action="/facturas/rpt_facturas_all/<%= @company.id %>">
- 	<div class="field">
-    <input type="date" name="fecha1" value="2017-01-02" style = "width: 150px" >
+<%= form_tag(reportes4_facturas_path, :method => "get") do %>
+
+  <div class="field">
+    <input type="date" name="fecha1" value="2018-03-19" style = "width: 150px" >
   </div>
 	<div class="field">
-		<input type="date" name="fecha2" value="2017-01-20" style = "width: 150px" >
+		<input type="date" name="fecha2" value="2018-03-31" style = "width: 150px" >
   </div>
 
   <div class="field">    
   <%= select_tag(:moneda_id, options_from_collection_for_select(@monedas,'id','description')) %>
   </div>
   
-    
-  <input type="submit" value="Ver" />
+
+<br> 
+ <%= submit_tag "To PDF", :name => "print" %>
+ <%= submit_tag "To Excel", :name => "print" %>
   
+<% end %>
 
-  <%=link_to "Excel", excel_facturas_path(:params1=>"fecha1",:params2=>"fecha2",format: "xls")%>
 
-</form>
 
 <br />
 
 
 <div class="button">
-  <%= link_to 'Back', "/companies/faqs/#{@company.id}" %>
+  <%= link_to 'Regresar', "/companies/faqs/#{@company.id}" %>
 
 
 </div>

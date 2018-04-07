@@ -91,6 +91,7 @@
     collection { get :reportes}
     collection { get :reportes2}
     collection { get :reportes3}
+    collection { get :reportes4} #Reporte ventas
   end 
     
   
