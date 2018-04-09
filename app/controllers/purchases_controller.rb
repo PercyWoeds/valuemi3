@@ -2651,6 +2651,7 @@ def build_pdf_header_rpt48(pdf)
     $lcLocationId = @purchaseorder.location_id
     $lcDivisionId = @purchaseorder.division_id
     $lcTipoFacturaCompra = "0"
+    $lcPercepcion = @purchaseorder[:participacion]
 
     @detalleitems =  @company.get_orden_detalle(@purchaseorder.id)
 
@@ -2682,6 +2683,7 @@ def newfactura2
     $lcMoneda  = @purchaseorder.moneda.description
     $lcLocationId = @purchaseorder.location_id
     $lcDivisionId = @purchaseorder.division_id
+    $lcPercepcion = @purchaseorder[:participacion]
 
     $lcTipoFacturaCompra= "1"
     @detalleitems =  @company.get_orden_detalle2(@purchaseorder.id)
@@ -2711,10 +2713,13 @@ def newfactura2
 
     $lcFechaVmto     =  fechas2
     $lcDocumento     =  params[:documento]
+    $lcParticipacion =  params[:participacion]
     
+    puts "Participacion"
+    puts $lcParticipacion 
 
 @purchase = Purchase.new(:company_id=>1,:supplier_id=>$lcProveedorId,:date1=>$lcFechaEmision,:date2=>$lcFechaEmision,:payment_id=>$lcFormaPagoId,:document_id=>$lcDocumentId,:documento=>$lcDocumento,
-:date3 => $lcFechaVmto,:moneda_id => $lcMonedaId,:user_id =>@current_user.id,:purchaseorder_id=>$lcPurchaseOrderId)
+:date3 => $lcFechaVmto,:moneda_id => $lcMonedaId,:user_id =>@current_user.id,:purchaseorder_id=>$lcPurchaseOrderId,:participacion=> $lcParticipacion)
     
     @company = Company.find(1)
     
@@ -2728,6 +2733,7 @@ def newfactura2
     @tipodocumento = @purchase[:document_id]  
 
     @purchase[:tipo] = $lcTipoFacturaCompra
+    @purchase[:participacion] = $lcParticipacion
 
     if $lcTipoFacturaCompra =="1"
       @detalleitems =  @company.get_orden_detalle2($lcPurchaseOrderId)
@@ -2783,7 +2789,7 @@ def newfactura2
     @purchase[:total_amount] = @purchase[:payable_amount] + @purchase[:tax_amount]
     @purchase[:charge]  = 0
     @purchase[:pago] = 0
-    @purchase[:balance] =   @purchase[:total_amount]
+    @purchase[:balance] =   @purchase[:total_amount] + @purchase[:participacion]
     
       curr_seller = User.find(@current_user.id)
       @ac_user = curr_seller.username

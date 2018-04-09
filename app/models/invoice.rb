@@ -23,7 +23,7 @@ class Invoice < ActiveRecord::Base
         
         id = parts[0]
         quantity = parts[1]
-        price = parts[2]
+        price = parts[2] 
         discount = parts[3]
         
         total = price.to_f * quantity.to_i
@@ -31,8 +31,8 @@ class Invoice < ActiveRecord::Base
         
         begin
           product = Product.find(id.to_i)
-          subtotal += total
-        rescue
+          subtotal += total 
+          rescue
         end
       end
     end
@@ -84,6 +84,33 @@ class Invoice < ActiveRecord::Base
     
     return tax
   end
+  
+  def get_total_1(items)
+    total0 = 0
+    
+    for item in items
+      if(item and item != "")
+        parts = item.split("|BRK|")
+        
+        id = parts[0]
+        quantity = parts[1]
+        price = parts[2] 
+        discount = parts[3]
+        
+        total = price.to_f * quantity.to_i
+        total -= total * (discount.to_f / 100)
+        
+        begin
+          product = Product.find(id.to_i)
+          total0 += total 
+          rescue
+        end
+      end
+    end
+    
+    return total0
+  end
+  
   
   def delete_products()
     invoice_products = InvoiceProduct.where(invoice_id: self.id)

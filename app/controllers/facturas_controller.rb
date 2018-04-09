@@ -703,6 +703,9 @@ def reportes4
     
     @invoice[:processed] = false
     @invoice[:descuento] = "0"
+    
+    
+    
     @company = Company.find(params[:company_id])
     @invoice.company_id = @company.id
     
@@ -719,6 +722,9 @@ def reportes4
     @tipoventas = Tipoventum.all 
     @ac_user = getUsername()
     @invoice[:user_id] = getUserId()
+    @invoice[:moneda_id] = 2
+    @invoice[:document_id] = 3
+    
   end
   def new2
     @pagetitle = "Nueva factura"
@@ -802,7 +808,6 @@ def newfactura2
     items2 = params[:items2].split(",")
 
     @invoice = Factura.new(factura_params)
-    
     @company = Company.find(params[:factura][:company_id])
     
     @locations = @company.get_locations()
@@ -815,13 +820,14 @@ def newfactura2
     @tipofacturas = @company.get_tipofacturas() 
     @monedas = @company.get_monedas()
    
-    @invoice[:subtotal] = @invoice.get_subtotal(items)
+    @invoice[:subtotal] = @invoice.get_total_1(items) / 1.18
+    @invoice[:total]   = @invoice.get_total_1(items) 
     begin
-      @invoice[:tax] = @invoice.get_tax(items, @invoice[:customer_id])
+      @invoice[:tax] = @invoice[:total] - @invoice[:subtotal]
     rescue
       @invoice[:tax] = 0
     end
-    @invoice[:total]   = @invoice[:subtotal] + @invoice[:tax]
+    
     @invoice[:balance] = @invoice[:total]
     @invoice[:pago]    = 0
     @invoice[:charge]  = 0

@@ -23,8 +23,9 @@
       
        <div class="field">
       <%= f.label :document_id,"Documento :" %><br />
-      <%= f.select :document_id,options_from_collection_for_select(@tipodocumento,'id','description'),  {style: "width: 140px" } %>
-    </div>
+      <%= f.collection_select :document_id, @tipodocumento, :id, :description, :prompt => true %>
+      
+      </div>
 
       <div class="field">
       <%= f.label :tipo , "Factura :", :class => "bold" %><br />
@@ -83,7 +84,8 @@
 
       <div class="field">
       <%= f.label :moneda_id ,"  "%><br />
-      <%= f.select :moneda_id, options_from_collection_for_select(@monedas,'id','description') %>
+      <%= f.collection_select :moneda_id, @monedas, :id, :description, :prompt => true %>
+      
     </div>
 
      
@@ -163,15 +165,18 @@
   
   <form method="get" action="/services" onsubmit="addItemToInvoice2(); return false;">
     
+    <input type="hidden" name="ac_item_id" id="ac_item_id" value="" />
+    
     <strong>Producto:</strong><br />
-    <%= select_tag(:ac_item_id,options_from_collection_for_select(@products,'id','name') ) %>
+    <input type="text" name="ac_item" id="ac_item" value="" />
     <div class="small">
       Ingrese un termino de busqueda para encontrar un producto.
     </div>
-    <br />
+
     
+
     <strong>Precio:</strong><br />
-    <input type="text" name="ac_item_price" id="ac_item_price" value="" class="tf_short" />
+    <input type="text" name="ac_item_price" id="ac_item_price" value="" class="tf_short" readonly  />
     <div class="small">
       Precio del  producto para agregar una factura.
     </div>
@@ -258,6 +263,9 @@
       $("#selected_seller").html(data[0]);
     });
     
+    
+    
+    
 
     $("#ac_item3").autocomplete("/facturas/ac_guias/<%= @company.id %>", {
       matchSubset: 1,
@@ -270,7 +278,19 @@
       $("#selected_guia").html(data[0]);      
     });
     
+    $("#ac_item").autocomplete("/purchases/ac_products/<%= @company.id %>", {
+      matchSubset: 1,
+      matchContains: 1,
+      selectFirst: false
+    });
+    
+    $("#ac_item").result(function(event, data, formatted) {
+      $("#ac_item_id").val(data[2]);
+      $("#ac_item_price").val(data[4]);
+      updateItemTotal();
+    });
 
+    
     $("#ac_item_quantity").bind("keyup", function() {
       updateItemTotal();
     });

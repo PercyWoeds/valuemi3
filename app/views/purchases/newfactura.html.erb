@@ -1,3 +1,5 @@
+
+
 <div class="breadcrumbs">
   <%= link_to "My companies", "/companies" %> &raquo;
   <%= link_to @company.name, @company %> &raquo;
@@ -26,6 +28,7 @@
   </div>
 <% end %>
 
+
   <%= hr() %>
 
 <div class="mid_box bordered_right">
@@ -53,14 +56,19 @@
 
     <div class="field">
       <strong>Fecha Emision :</strong><br />
-      <input type="date" name="date1" value="2017-10-01" style = "width: 150px" min = $fecha_min >
+      <input type="date" name="date1" value="2018-04-01" style = "width: 150px" min = $fecha_min >
     </div>
 
-      <div class="field">
+    <div class="field">
       <strong>Fecha Entrega :</strong><br />
-      <input type="date" name="date2" value="2017-10-01" style = "width: 150px" >
+      <input type="date" name="date2" value="2018-04-01" style = "width: 150px" >
     </div>
     
+    <div class="field">
+      <strong>Percepcion Venta Interna :</strong><br />
+      <input type="number" name="participacion" value="0.00" min="0"  step="any" style = "width: 150px" >
+        
+    </div>
       
     <div class="field">
       <%=  "Forma de Pago " %><br />
@@ -105,6 +113,10 @@
       </tr>
     </thead>
     <tbody>
+      <% total_1 = 0 %>
+      <% total_2 = 0 %>
+      <% total_3 = 0 %>
+      
       <% for item in @detalleitems %>
         <tr>
           <td class="small bordered_bottom bordered_right" style="width: 220px;">
@@ -130,8 +142,93 @@
 
           </td>
         </tr>
+        
+        <% total_1 += item.total %>
+        
+        
       <% end %>
+      
+      
+      <% total_2 = total_1 *1.18 %>
+      
+      <% total_3 = total_2 - total_1 %>
+        
+    
+    
+    
+    <tr>
+          <td class="small bordered_bottom bordered_right" style="width: 220px;">
+            
+          </td>
+          
+          <td class="small bordered_bottom bordered_right" style="width: 220px;">
+            
+          </td>
+
+          <td class="small bordered_bottom bordered_right">
+            
+          </td>
+          
+          <td class="small bordered_bottom bordered_right">
+            
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            Sub Total :
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= money(total_1) %>
+          </td>
+        </tr>
+        <tr>
+          <td class="small bordered_bottom bordered_right" style="width: 220px;">
+            
+          </td>
+          
+          <td class="small bordered_bottom bordered_right" style="width: 220px;">
+            
+          </td>
+
+          <td class="small bordered_bottom bordered_right">
+            
+          </td>
+          
+          <td class="small bordered_bottom bordered_right">
+            
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            IGV :
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= money(total_3) %>
+          </td>
+        </tr>
+        <tr>
+          <td class="small bordered_bottom bordered_right" style="width: 220px;">
+            
+          </td>
+          
+          <td class="small bordered_bottom bordered_right" style="width: 220px;">
+            
+          </td>
+
+          <td class="small bordered_bottom bordered_right">
+            
+          </td>
+          
+          <td class="small bordered_bottom bordered_right">
+            
+          </td>
+          <td class="small bordered_bottom bordered_right">
+           Total :
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= money(total_2) %>
+          </td>
+        </tr>
     </tbody>
+    
+    
+    
   </table>
 
 

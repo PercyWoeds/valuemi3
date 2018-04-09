@@ -200,7 +200,7 @@
     
     if(isNumeric(quantity) && isNumeric(price) && isNumeric(discount)) {
       
-      var total = quantity * price;
+      var total = quantity * price ;
       
       total -= total * (discount / 100);
 
