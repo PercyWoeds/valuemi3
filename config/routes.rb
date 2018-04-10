@@ -92,6 +92,8 @@
     collection { get :reportes2}
     collection { get :reportes3}
     collection { get :reportes4} #Reporte ventas
+    collection { get :reportes03}
+    collection { get :reportes04}
   end 
     
   
@@ -105,6 +107,7 @@
     collection do 
       put :discontinue 
     end 
+    collection { post :print }
     
   end 
     
@@ -379,6 +382,8 @@ end
   
   match 'companies/reports/rpt_facturas_all/:company_id' => 'reports#rpt_facturas_all', via: [:get, :post]
   match 'companies/reports/rpt_facturas_all2/:company_id' => 'reports#rpt_facturas_all2', via: [:get, :post]
+  match 'companies/reports/rpt_facturas_3/:company_id' => 'reports#rpt_facturas_3', via: [:get, :post]
+  match 'companies/reports/rpt_facturas_4/:company_id' => 'reports#rpt_facturas_4', via: [:get, :post]
 
   match 'companies/reports/rpt_purchase_all/:company_id' => 'reports#rpt_purchase_all', via: [:get, :post]
   match 'companies/reports/rpt_product_all/:company_id' => 'reports#rpt_product_all', via: [:get, :post]

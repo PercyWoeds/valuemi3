@@ -4,8 +4,10 @@ include ServicesHelper
 require "open-uri"
  
 class FacturasController < ApplicationController
+  
+    $: << Dir.pwd  + '/lib'
 
-  before_filter :authenticate_user!, :checkServices
+ # before_filter :authenticate_user!
 
   def reportes
   
@@ -86,6 +88,28 @@ def reportes4
       when "To PDF" then 
         begin 
          render  pdf: "Facturas ",template: "facturas/rventas_rpt.pdf.erb",locals: {:facturass => @facturas_rpt}
+        
+        end   
+      when "To Excel" then render xlsx: 'exportxls'
+      else render action: "index"
+    end
+  end
+  
+def reportes03
+
+
+    @company=Company.find(1)          
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]    
+    @moneda = params[:moneda_id]    
+
+    @facturas_rpt = @company.get_ventas_combustibles(@fecha1,@fecha2)          
+    
+    
+    case params[:print]
+      when "To PDF" then 
+        begin 
+         render  pdf: "Facturas ",template: "facturas/rventas03_rpt.pdf.erb",locals: {:facturass => @facturas_rpt},:orientation      => 'Landscape'
         
         end   
       when "To Excel" then render xlsx: 'exportxls'
@@ -656,7 +680,10 @@ def reportes4
       @factura_details = @invoice.factura_details 
     end 
     
-    $lcruc = "20424092941" 
+    
+    
+    
+    $lcruc = "20555691263" 
     
     $lcTipoDocumento = @invoice.document.descripshort
     parts1 = @invoice.code.split("-")
@@ -1620,6 +1647,49 @@ def newfactura2
     
      
   end   
+
+def print
+          lib = File.expand_path('../../../lib', __FILE__)
+        $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+        puts "ruta******"
+        puts lib 
+        
+        
+        
+        require 'sunat'
+        require './config/config'
+        require './app/generators/invoice_generator'
+        require './app/generators/credit_note_generator'
+        require './app/generators/debit_note_generator'
+        require './app/generators/receipt_generator'
+        require './app/generators/daily_receipt_summary_generator'
+        require './app/generators/voided_documents_generator'
+
+        SUNAT.environment = :test 
+
+        files_to_clean = Dir.glob("*.xml") + Dir.glob("./app/pdf_output/*.pdf") + Dir.glob("*.zip")
+        files_to_clean.each do |file|
+          File.delete(file)
+        end         
+    
+       if $lcMoneda == "D"  
+            $lcFileName=""
+            case_49 = InvoiceGenerator.new(1,3,1,$lg_serie_factura).with_different_currency2
+          #  puts $lcFileName 
+       else
+            case_3  = InvoiceGenerator.new(1,3,1,$lg_serie_factura).with_igv2(true)
+       end 
+    
+        
+        $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
+                
+        send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
+
+        
+        @@document_serial_id =""
+        $aviso=""
+    end 
+
 
 
 

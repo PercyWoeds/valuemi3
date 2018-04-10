@@ -1,0 +1,150 @@
+<html>
+<body>
+    
+  
+  <h4 ><center> Listado de Combustibles </center>   </h4>
+  <center> Desde: <%= @fecha1 %> </center>
+  <center> Hasta: <%= @fecha2 %> </center>
+  <font size="2" face="Courier New" >  
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+  <tr bgcolor="#B4D7F7">
+    
+    <td width="5%">  </td>
+    
+    
+    <td width="16%" align = "center"> Gas 90 </td>
+    
+    
+    <td width="16%" align = "center"> Gas 95 </td>
+    
+    
+    <td width="16%" align = "center"> Diesel 2 </td>
+    
+    
+    <td width="16%" align = "center"> GLP </td>
+    <td width="16%" align = "center"> Totales </td>
+    
+  </tr>
+  </table>
+  
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+    
+  <tr bgcolor="#B4D7F7">
+    
+    <td width="5%"> Fecha </td>
+    <td width="8%"> Cantidad </td>
+    <td width="8%"> Importe</td>
+    
+    <td width="8%"> Cantidad </td>
+    <td width="8%"> Importe </td>
+    
+    <td width="8%"> Cantidad </td>
+    <td width="8%"> Importe</td>
+    
+    <td width="8%"> Cantidad </td>
+    <td width="8%"> Importe </td>
+    
+    <td width="8%"> Cantidad </td>
+    <td width="8%"> Importe </td>
+    
+  </tr>
+  </table>
+
+  
+
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+  
+  <tr bgcolor="#B4D7F7">
+    <td width="100%">   </td>
+  </tr>
+  
+  </table>
+
+  
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+      <% nroitem = 1%>
+      
+      <% total_1 =  0%>
+      <% total_2 =  0%>
+      
+      <% total_3 =  0%>
+      <% total_4 =  0%>
+      
+      <% total_5 =  0%>
+      <% total_6 =  0%>
+      
+      <% total_7 =  0%>
+      <% total_8 =  0%>
+      
+      
+       <% for  detalle in @facturas_rpt   %>
+                  <tr>
+                    <td width= "5%" align ="right"><%=  detalle.fecha.strftime("%d/%m/%Y") %></td>
+                    
+                    <% valor1 = detalle.get_ventas_combustibles_producto(detalle.fecha,2,"gln" )%>
+                    
+
+                    <td width="8%" align ="right">  <%= sprintf("%2f",valor1) %></td>
+                    <td width="8%" align ="right">  <%= sprintf("%2f",detalle.get_ventas_combustibles_producto(detalle.fecha,2,"imp")) %></td>
+                    
+                    <td width="8%" align ="right">  <%= sprintf("%2f",detalle.get_ventas_combustibles_producto(detalle.fecha,3,"gln"))  %></td>
+                    <td width="8%" align ="right">  <%= sprintf("%2f",detalle.get_ventas_combustibles_producto(detalle.fecha,3,"imp")) %></td>
+                    
+                    <td width="8%" align ="right">  <%= sprintf("%2f",detalle.get_ventas_combustibles_producto(detalle.fecha,1,"gln")) %></td>
+                    <td width="8%" align ="right">  <%= sprintf("%2f",detalle.get_ventas_combustibles_producto(detalle.fecha,1,"imp")) %></td>
+                    
+                    <td width="8%" align ="right"> </td>
+                    <td width="8%" align ="right">  </td>
+    
+                    
+                    <td width = "8%" align ="right"><%= sprintf("%.3f",detalle.galones*-1)   %></td>
+                    <td width = "8%" align ="right"><%= sprintf("%.2f",detalle.importe*-1)   %></td>
+                    </tr>
+                    
+                    <% total_1 +=  detalle.get_ventas_combustibles_producto(detalle.fecha,2,"gln") %>
+                    <% total_2 +=  detalle.get_ventas_combustibles_producto(detalle.fecha,2,"imp") %>
+                    
+                    <% total_3 +=  detalle.get_ventas_combustibles_producto(detalle.fecha,3,"gln") %>
+                    <% total_4 +=  detalle.get_ventas_combustibles_producto(detalle.fecha,2,"imp") %>
+                    <% total_5 +=  detalle.get_ventas_combustibles_producto(detalle.fecha,1,"gln") %>
+                    <% total_6 +=  detalle.get_ventas_combustibles_producto(detalle.fecha,1,"imp") %>
+                    
+                    <% total_7 +=  detalle.galones %>
+                    <% total_8 +=  detalle.importe %>
+                    
+                    
+         <%end %>
+         
+                  
+               
+        <hr>  
+     </table>
+     
+    <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+      
+     <tr>
+       
+          <td width = "5%" align ="right">Total </td>
+          
+          <td width = "8%" align ="right"><%= sprintf("%.3f",total_1)   %></td>
+          <td width = "8%" align ="right"><%= sprintf("%.2f",total_2)   %></td>
+          <td width = "8%" align ="right"><%= sprintf("%.3f",total_3)   %></td>
+          <td width = "8%" align ="right"><%= sprintf("%.2f",total_4)   %></td>
+          <td width = "8%" align ="right"><%= sprintf("%.3f",total_5)   %></td>
+          <td width = "8%" align ="right"><%= sprintf("%.2f",total_6)   %></td>
+          <td width="8%"> </td>
+          <td width="8%">  </td>
+    
+          <td width = "8%" align ="right"><%= sprintf("%.2f",total_7*-1)   %></td>
+          <td width = "8%" align ="right"><%= sprintf("%.2f",total_8*-1)   %></td>
+          
+    </tr>
+    
+   </table>
+         
+  
+    
+    </body>
+      
+      </html>
+      

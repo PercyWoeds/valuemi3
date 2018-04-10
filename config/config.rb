@@ -13,7 +13,7 @@ SUNAT.configure do |config|
     s.cert_file   = File.join(Dir.pwd, './app/keys', 'certificado2.crt')
     s.pk_file     = File.join(Dir.pwd, './app/keys', 'CERTIFICADO2.key') 
   end
-p
+
   config.supplier do |s|
     s.legal_name = "INVERSIONES VALUEMI S.A.C."
     s.name       = "Cesar Jaime Manrique Milla"

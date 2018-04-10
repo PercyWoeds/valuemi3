@@ -212,6 +212,17 @@ class User < ActiveRecord::Base
       return user_package[0].package
     end
   end
+  
+  class << self
+    
+  def self.serialize_from_session(key, salt)
+  record = to_adapter.get(key[0].as_json["$oid"])
+  record if record && record.authenticatable_salt == salt
+  end
+  
+end
+
+  
 end
   
 

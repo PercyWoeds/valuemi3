@@ -352,7 +352,14 @@
 
 <%= hr() %>
 <div class="button">
-  <%= link_to 'Exportar to PDF', "/facturas/pdf/#{@invoice.id}.pdf" %>
+  
+   
+			<%= form_tag print_facturas_path do %>
+     	    <%= submit_tag  "Imprimir  ",  :"data-no-turbolink" => true  %>
+			<% end %>		
+	
+  
+  
   <%= link_to 'Enviar factura via email', "/facturas/email/#{@invoice.id}" %>
   
 <% if @invoice.processed =="0" || @invoice.processed==nil %>

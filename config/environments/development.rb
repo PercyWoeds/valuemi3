@@ -6,7 +6,7 @@ Mnygo::Application.configure do
   # since you don't have to restart the webserver when you make code changes.
   config.cache_classes = false
   
-  config.eager_load =false    
+  config.eager_load = false   
   
   # Log error messages when you accidentally call methods on nil.
   config.whiny_nils = true
@@ -24,6 +24,18 @@ Mnygo::Application.configure do
 
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
+  
+  config.action_mailer.delivery_method = :smtp
+  
+ config.action_mailer.smtp_settings = {
+    address:              'send.one.com',
+    port:                 587,
+    domain:               'one.com',
+    user_name:            'factura-electronica@valuemiperu.com',
+    password:             'Factura2016',
+    authentication:       'plain',
+    enable_starttls_auto: true  }
+
 
   #BetterErrors::Middleware.allow_ip! "0.0.0.0/0"
   
