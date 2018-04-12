@@ -2,9 +2,9 @@
 <body>
     
   
-  <h4 ><center> Listado de Combustibles </center>   </h4>
-  <center> Desde: <%= @fecha1 %> </center>
-  <center> Hasta: <%= @fecha2 %> </center>
+  <h4 ><center>  </center>   </h4>
+  <center> Listado de Combustibles Desde: <%= @fecha1 %>  Hasta <%= @fecha2 %></center>
+  
   <font size="2" face="Courier New" >  
   <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
   <tr bgcolor="#B4D7F7">
@@ -81,17 +81,18 @@
                   <tr>
                     <td width= "5%" align ="right"><%=  detalle.fecha.strftime("%d/%m/%Y") %></td>
                     
-                    <% valor1 = detalle.get_ventas_combustibles_producto(detalle.fecha,2,"gln" )%>
-                    
+                    <% valor2 = detalle.get_ventas_combustibles_producto(detalle.fecha,2)%>
+                    <% valor3 = detalle.get_ventas_combustibles_producto(detalle.fecha,3)%>
+                    <% valor1 = detalle.get_ventas_combustibles_producto(detalle.fecha,1)%>
 
-                    <td width="8%" align ="right">  <%= sprintf("%2f",valor1) %></td>
-                    <td width="8%" align ="right">  <%= sprintf("%2f",detalle.get_ventas_combustibles_producto(detalle.fecha,2,"imp")) %></td>
+                    <td width="8%" align ="right">  <%= sprintf("%2f",valor2.quantity) %></td>
+                    <td width="8%" align ="right">  <%= sprintf("%2f",valor2.importe) %></td>
                     
-                    <td width="8%" align ="right">  <%= sprintf("%2f",detalle.get_ventas_combustibles_producto(detalle.fecha,3,"gln"))  %></td>
-                    <td width="8%" align ="right">  <%= sprintf("%2f",detalle.get_ventas_combustibles_producto(detalle.fecha,3,"imp")) %></td>
+                    <td width="8%" align ="right">  <%= sprintf("%2f",valor3.quantity)  %></td>
+                    <td width="8%" align ="right">  <%= sprintf("%2f",valor3.importe) %></td>
                     
-                    <td width="8%" align ="right">  <%= sprintf("%2f",detalle.get_ventas_combustibles_producto(detalle.fecha,1,"gln")) %></td>
-                    <td width="8%" align ="right">  <%= sprintf("%2f",detalle.get_ventas_combustibles_producto(detalle.fecha,1,"imp")) %></td>
+                    <td width="8%" align ="right">  <%= sprintf("%2f",valor1.quantity) %></td>
+                    <td width="8%" align ="right">  <%= sprintf("%2f",valor1.importe) %></td>
                     
                     <td width="8%" align ="right"> </td>
                     <td width="8%" align ="right">  </td>
@@ -101,13 +102,14 @@
                     <td width = "8%" align ="right"><%= sprintf("%.2f",detalle.importe*-1)   %></td>
                     </tr>
                     
-                    <% total_1 +=  detalle.get_ventas_combustibles_producto(detalle.fecha,2,"gln") %>
-                    <% total_2 +=  detalle.get_ventas_combustibles_producto(detalle.fecha,2,"imp") %>
+                    <% total_1 +=  valor2.detalle.quantity %>
+                    <% total_2 +=  valor2.detalle.importe %>
                     
-                    <% total_3 +=  detalle.get_ventas_combustibles_producto(detalle.fecha,3,"gln") %>
-                    <% total_4 +=  detalle.get_ventas_combustibles_producto(detalle.fecha,2,"imp") %>
-                    <% total_5 +=  detalle.get_ventas_combustibles_producto(detalle.fecha,1,"gln") %>
-                    <% total_6 +=  detalle.get_ventas_combustibles_producto(detalle.fecha,1,"imp") %>
+                    <% total_3 +=  valor3.detalle.quantity %>
+                    <% total_4 +=  valor3.detalle.importe %>
+                    
+                    <% total_5 +=  valor1.detalle.quantity %>
+                    <% total_6 +=  valor1.detalle.importe %>
                     
                     <% total_7 +=  detalle.galones %>
                     <% total_8 +=  detalle.importe %>

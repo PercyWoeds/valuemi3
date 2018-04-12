@@ -109,8 +109,19 @@ def reportes03
     case params[:print]
       when "To PDF" then 
         begin 
-         render  pdf: "Facturas ",template: "facturas/rventas03_rpt.pdf.erb",locals: {:facturass => @facturas_rpt},:orientation      => 'Landscape'
-        
+         render  pdf: "Facturas ",template: "facturas/rventas03_rpt.pdf.erb",
+         locals: {:facturass => @facturas_rpt},
+         :orientation      => 'Landscape',
+         
+         :header => {
+           :spacing => 5,
+                           :html => {
+                     :template => 'layouts/pdf-header.html',
+                           right: '[page] of [topage]'
+                  }
+               }
+               
+               
         end   
       when "To Excel" then render xlsx: 'exportxls'
       else render action: "index"
@@ -789,13 +800,12 @@ def newfactura2
     $lcContratoId = @customer.id
     $lcCode  = @customer.account
     $lcNameCode = @customer.name 
-    
+  
     $lcFacturaId= @factura.id 
     
-    
+  
     @detalleitems =  Sellvale.where(processed:"0",cod_cli: @customer.account)
     @factura_detail = Factura.new
-
 
   
   end 
