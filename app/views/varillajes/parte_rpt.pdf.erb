@@ -56,7 +56,7 @@
                         
                     <tr>
                     <td><%= product0.get_ventas_importe(@fecha,product0.tanque.product.id)  %></td>
-                    <td></td><%= product0.get_ventas_contometros_producto_todo(@fecha,product0.tanque.product.code.to_s) %> </td>
+                    <td><%= product0.get_ventas_contometros_producto_todo(@fecha,product0.tanque.product.code.to_s) %> </td>
                     <TD><%= product0.get_afericion_total_dia_producto(@fecha,product0.tanque.id) %> </TD>
                     <TD><%= product0.get_ventas_contometros_descuento_producto(@fecha,product0.tanque.product.code.to_s)     %> </TD> 
                     </tr>    
