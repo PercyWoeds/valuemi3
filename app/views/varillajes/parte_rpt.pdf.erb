@@ -52,12 +52,6 @@
                     <td width = "5%" align ="right"><%= sprintf("%.2f",product0.get_ventas_contometros_producto_todo(@fecha,product0.tanque.product.code.to_s) + product0.get_ventas_contometros_descuento_producto(@fecha,product0.tanque.product.code.to_s)   )   %></td>
                     </tr>
                         
-                    <tr>
-                    <td><%= product0.get_ventas_importe(@fecha,product0.tanque.product.id)  %></td>
-                    <td><%= product0.get_ventas_contometros_producto_todo(@fecha,product0.tanque.product.code.to_s) %> </td>
-                    <TD><%= product0.get_afericion_total_dia_producto(@fecha,product0.tanque.id) %> </TD>
-                    <TD><%= product0.get_ventas_contometros_descuento_producto(@fecha,product0.tanque.product.code.to_s)     %> </TD> 
-                    </tr>    
                     
                     <% nroitem = nroitem+1 %>
          <%end %>
@@ -96,7 +90,7 @@
      
      <% venta_5 =  venta_2 + venta_3 + venta_4 + venta_9 + venta_13 + venta_14 +venta_17 + venta_18 %>
      
-     <% venta_8 =  venta_1  - venta_12 + venta_17 %>
+     <% venta_8 =  venta_1 + venta_17 %>
      <% venta_6 =  venta_5 - venta_8  %>
      <% venta_11 = venta_1 - venta_12  %>
      
@@ -152,7 +146,7 @@
             <td width= "25%" >       (-) </td>
             
             <td width = "25%" align ="left">  &#9475;   EFECTIVO SOLES    :  </td>
-            <td width = "25%" align ="right"><%= sprintf("%.2f",venta_2 + venta_17)  %> </td>
+            <td width = "25%" align ="right"><%= sprintf("%.2f",venta_2 + venta_17 - venta_12)  %> </td>
             
             </tr>
             <tr>
@@ -388,23 +382,7 @@
   
   </table>
   <% end %>   
-  
-  
-    <%= venta_2 %>
-    <%= venta_3 %>
-    <%= venta_4 %>
-    <%= venta_9 %>
-    <%= venta_13 %>
-    <%= venta_14 %>
-    <%= venta_17 %>
-    <%= venta_18 %>
-    <%= venta_8 %>
-    <%= venta_6 %>
+      </body>
     
-    <%= venta_1 %>
-    <%= venta_12 %>
-    <%= venta_17 %>
-    </body>
-      
       </html>
       
