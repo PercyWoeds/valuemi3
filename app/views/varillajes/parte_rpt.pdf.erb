@@ -28,6 +28,7 @@
       <% nroitem = 1%>
        <% for  product0 in @parte_rpt %>
                    <%  producto_value = product0.tanque.product.id%>
+                   <tr>
     
                     <td width= "5%" ><%=  product0.tanque.code %></td>
                     <td width= "10%" ><%=  product0.tanque.product.name %></td>
@@ -52,6 +53,7 @@
                     
                     <td width = "5%" align ="right"><%= sprintf("%.2f",product0.get_ventas_contometros_producto_todo(@fecha,product0.tanque.product.code.to_s) + product0.get_ventas_contometros_descuento_producto(@fecha,product0.tanque.product.code.to_s)   )   %></td>
                         </tr>
+                        
                     <tr>
                     <td><%= product0.get_ventas_importe(@fecha,product0.tanque.product.id)  %></td>
                     <td></td><%= product0.get_ventas_contometros_producto_todo(@fecha,product0.tanque.product.code.to_s) %> </td>
