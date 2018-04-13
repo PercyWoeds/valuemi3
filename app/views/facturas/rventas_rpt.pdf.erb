@@ -51,7 +51,17 @@
                     <td width= "5%" ><%= detalle.document.descripshort  %></td>
                     <td width= "10%" ><%=  detalle.code %>   </td>
                     <td width = "12%" align ="center"><%= detalle.fecha.strftime("%d/%m/%Y")     %></td>
+                    <% if detalle.ruc != nil %>
+                      <td width = "12%" align ="left"><%= detalle.ruc   %> </td>
+                    <% else%>
+                    
+                      <td width = "12%" align ="left"><%= detalle.customer.ruc   %> </td>
+                      
+                    <% end %>
+                    
                     <td width = "25%" align ="left"><%= detalle.customer.name   %> </td>
+                    
+                    
                     <% if detalle.moneda_id == 1 %>
                     <td width = "5%" align ="center"> USD </td>
                     <% else %>
