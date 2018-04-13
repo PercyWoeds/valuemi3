@@ -19,11 +19,14 @@ wb.styles do |s|
     
     wb.add_worksheet(name: "Basic work sheet") do |sheet|
     
-    sheet.add_row ["Td", "Nro.Documento", "Fec.Emision", "Fec.Vmto", "Cliente","Moneda", "Sub Total ","Igv","Importe" ], :style => title 
+    sheet.add_row ["Td", "Nro.Documento", "Fec.Emision", "Fec.Vmto", "R.U.C.","Cliente","Moneda", "Sub Total ","Igv","Importe" ], :style => title 
     
    @facturas_rpt.each do |payment|
-   
-    sheet.add_row [payment.document.descripshort, payment.code,payment.fecha,payment.fecha2,payment.customer.name,payment.moneda.symbol, payment.get_importe_soles1,payment.get_importe_soles2,payment.get_importe_soles], :style => [cadena,cadena,date,date,cadena,cadena,currency,currency,currency]
+     if payment.ruc != nil   
+        sheet.add_row [payment.document.descripshort,payment.code,payment.fecha,payment.fecha2,payment.ruc,payment.customer.name,payment.moneda.symbol, payment.get_importe_soles1,payment.get_importe_soles2,payment.get_importe_soles], :style => [cadena,cadena,date,date,cadena,cadena,currency,currency,currency]
+    else
+        sheet.add_row [payment.document.descripshort, payment.code,payment.fecha,payment.fecha2,payment.customer.ruc,payment.customer.name,payment.moneda.symbol, payment.get_importe_soles1,payment.get_importe_soles2,payment.get_importe_soles], :style => [cadena,cadena,date,date,cadena,cadena,currency,currency,currency]
+    end 
    end
    
    sheet.add_row ["","","","","Totales => ","",@total1,@total2,@total3], :style => [cadena,cadena,date,date,cadena,cadena,currency,currency,currency]
