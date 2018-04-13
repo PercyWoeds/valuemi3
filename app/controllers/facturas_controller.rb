@@ -1049,10 +1049,18 @@ def newfactura2
        for  product in @facturas_rpt
 
             row = []          
-            row << product.document.descripshort
+            row << product.document.deFAacscripshort
             row << product.code
             row << product.fecha.strftime("%d/%m/%Y")            
+            if ruc != nil
+              row << product.ruc 
+            else
+              row << "-"
+              row << product.customer.ruc  
+            end 
+            
             row << product.customer.name  
+            
             if product.moneda_id == 1
               row << "USD"
             else
