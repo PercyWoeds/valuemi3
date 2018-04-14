@@ -83,7 +83,7 @@ class SellvalesController < ApplicationController
     @creditos = Credito.all
     @products = Product.where(products_category_id:1)
     @sellvale[:fpago] = 1
-    @sellvale[:td] = "N"
+    
     
     @sellvale[:processed] = 0
     
