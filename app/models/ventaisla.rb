@@ -31,9 +31,8 @@ class Ventaisla < ActiveRecord::Base
     end 
 def  get_ventas_combustibles_producto(isla,producto,value) 
     
-    lcFecha1= fecha1.strftime('%Y-%m-%d')   
     ret=0  
-    puts lcFecha1 
+    
     
      facturas = VentaislaDetail.where(["ventaisla_id = ? and product_id = ?",isla,producto])
     
