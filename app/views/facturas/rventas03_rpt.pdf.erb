@@ -81,13 +81,13 @@
                   <tr>
                     <td width= "5%" align ="right"><%=  detalle.fecha.strftime("%d/%m/%Y") %></td>
                     
-                    <% valor1 = detalle.get_ventas_combustibles_producto(detalle.fecha,1,"qty")%>
-                    <% valor2 = detalle.get_ventas_combustibles_producto(detalle.fecha,2,"qty")%>
-                    <% valor3 = detalle.get_ventas_combustibles_producto(detalle.fecha,3,"qty")%>
+                    <% valor1 = detalle.get_ventas_combustibles_producto(detalle.id,1,"qty")%>
+                    <% valor2 = detalle.get_ventas_combustibles_producto(detalle.id,2,"qty")%>
+                    <% valor3 = detalle.get_ventas_combustibles_producto(detalle.id,3,"qty")%>
                     
-                    <% valor6 = detalle.get_ventas_combustibles_producto(detalle.fecha,1,"tot")%>
-                    <% valor7 = detalle.get_ventas_combustibles_producto(detalle.fecha,2,"tot")%>
-                    <% valor8 = detalle.get_ventas_combustibles_producto(detalle.fecha,3,"tot")%>
+                    <% valor6 = detalle.get_ventas_combustibles_producto(detalle.id,1,"tot")%>
+                    <% valor7 = detalle.get_ventas_combustibles_producto(detalle.id,2,"tot")%>
+                    <% valor8 = detalle.get_ventas_combustibles_producto(detalle.id,3,"tot")%>
                     
 
                     <td width="8%" align ="right">  <%= sprintf("%2f",valor2) %></td>
