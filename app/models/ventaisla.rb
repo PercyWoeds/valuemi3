@@ -29,18 +29,29 @@ class Ventaisla < ActiveRecord::Base
         return ret
         
     end 
-def  get_ventas_combustibles_producto(fecha1,producto) 
+def  get_ventas_combustibles_producto(fecha1,producto,value) 
     
     lcFecha1= fecha1.strftime('%Y-%m-%d')   
     ret=0  
     puts lcFecha1 
     
-     facturas = Ventaisla.find_by_sql(['Select ventaislas.fecha,sum(quantity) as quantity,sum(total) as importe 
-     from ventaislas
-     INNER JOIN ventaisla_details on ventaislas.id= ventaisla_details.ventaisla_id 
-     WHERE ventaislas.fecha >= ? and ventaislas.fecha <= ? and ventaisla_details.product_id = ?
-     GROUP BY ventaislas.fecha ',"#{lcFecha1} 00:00:00","#{lcFecha1} 23:59:59",producto])
+     facturas = VentaislaDetail.where(["fecha >= ?  and fecha <= ? and ventaisla_details.product_id = ?","#{lcFecha1} 00:00:00","#{lcFecha1} 23:59:59",producto])
     
+    if facturas
+    ret=0  
+    for factura in facturas
+      if value == "qty"
+        ret+= factura.quantity
+      else
+        ret += factura.total 
+    
+      end
+    end
+    
+    end 
+
+    return ret
+  
     
     return facturas
     
