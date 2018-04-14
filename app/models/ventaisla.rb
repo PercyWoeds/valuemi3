@@ -40,9 +40,9 @@ def  get_ventas_combustibles_producto(isla,producto,value)
     ret=0  
     for factura in facturas
       if value == "qty"
-        ret+= factura.quantity
+        ret+= factura.quantity * -1
       else
-        ret += factura.total 
+        ret += factura.total * -1 
     
       end
     end

@@ -90,20 +90,20 @@
                     <% valor8 = detalle.get_ventas_combustibles_producto(detalle.id,3,"tot")%>
                     
 
-                    <td width="8%" align ="right">  <%= sprintf("%2f",valor2) %></td>
-                    <td width="8%" align ="right">  <%= sprintf("%2f",valor7) %></td>
+                    <td width="8%" align ="right">  <%= sprintf("%.2f",valor2) %></td>
+                    <td width="8%" align ="right">  <%= sprintf("%.2f",valor7) %></td>
                     
-                    <td width="8%" align ="right">  <%= sprintf("%2f",valor3)  %></td>
-                    <td width="8%" align ="right">  <%= sprintf("%2f",valor8) %></td>
+                    <td width="8%" align ="right">  <%= sprintf("%.2f",valor3)  %></td>
+                    <td width="8%" align ="right">  <%= sprintf("%.2f",valor8) %></td>
                     
-                    <td width="8%" align ="right">  <%= sprintf("%2f",valor1) %></td>
-                    <td width="8%" align ="right">  <%= sprintf("%2f",valor6) %></td>
+                    <td width="8%" align ="right">  <%= sprintf("%.2f",valor1) %></td>
+                    <td width="8%" align ="right">  <%= sprintf("%.2f",valor6) %></td>
                     
                     <td width="8%" align ="right"> </td>
                     <td width="8%" align ="right">  </td>
     
                     
-                    <td width = "8%" align ="right"><%= sprintf("%.3f",detalle.galones*-1)   %></td>
+                    <td width = "8%" align ="right"><%= sprintf("%.2f",detalle.galones*-1)   %></td>
                     <td width = "8%" align ="right"><%= sprintf("%.2f",detalle.importe*-1)   %></td>
                     </tr>
                     
