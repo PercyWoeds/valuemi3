@@ -654,6 +654,7 @@ end
 
 
   def rpt_stocks4
+    
     @company=Company.find(params[:company_id])      
     @fecha1 = params[:fecha1] 
     @fecha2 = params[:fecha2] 

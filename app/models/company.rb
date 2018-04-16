@@ -2614,6 +2614,74 @@ def get_purchaseorder_detail2(fecha1,fecha2)
         end 
      end 
 
+     #salidas 
+    @ventas  = Factura.where('fecha>= ? and fecha <= ? and substring(code,1,4)= ? ',"#{fecha1} 00:00:00","#{fecha2} 23:59:59","FF02")
+
+     for sal in @ventas
+        $lcFecha     = sal.fecha 
+        $lcDocumento = sal.code
+        $lcDocumentId = "01"
+        
+        @ventasdetail=  FacturaDetail.where(:factura_id=>sal.id)
+
+        for detail in @ventasdetail 
+
+          movdetail  = MovementDetail.find_by(:product_id=>detail.product_id)
+
+          if movdetail        
+             detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>0, :salida=>detail.quantity,
+            :costo_ingreso =>0,:costo_salida =>detail.price,:costo_saldo=>detail.price,:product_id=> detail.product_id,:document_id=> $lcDocumentId,
+            :documento=>$lcDocumento,:tm =>"11",:amount => detail.quantity,:stock_final=> 0, to:"06")
+             detail.save 
+          else     
+          
+            #detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>0,:salida =>detail.quantity,
+            #:price=>detail.price,:product_id=> detail.product_id,:tm=>"3")
+            #detail.save 
+
+          end   
+        end 
+     end 
+     
+     
+    @ventas  = Sellvale.where('fecha>= ? and fecha <= ? ',"#{fecha1} 00:00:00","#{fecha2} 23:59:59").group(:cod_prod)
+
+     for sal in @ventas
+        $lcFecha     = sal.fecha 
+        $lcDocumento = sal.code
+        $lcDocumentId = "12"
+        
+
+        for detail in @ventas
+          if detail.product_id =='02'
+            lcproductid = 2
+          end 
+          
+          if detail.product_id =='03'
+              lcproductid = 3
+          end 
+          
+          if detail.product_id =='05'
+              lcproductid = 1
+          end 
+          
+          movdetail  = MovementDetail.find_by(:product_id=> lcproductid)
+
+          if movdetail        
+             detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>0, :salida=>detail.quantity,
+            :costo_ingreso =>0,:costo_salida =>detail.price,:costo_saldo=>detail.price,:product_id=> lcproductid,:document_id=> $lcDocumentId,
+            :documento=>$lcDocumento,:tm =>"11",:amount => detail.quantity,:stock_final=> 0, to:"06")
+             detail.save 
+          else     
+          
+            #detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>0,:salida =>detail.quantity,
+            #:price=>detail.price,:product_id=> detail.product_id,:tm=>"3")
+            #detail.save 
+
+          end   
+        
+       end 
+     end 
     
     
     @ajuste = Ajust.where('fecha1>= ? and fecha1 <= ?',"#{fecha1} 00:00:00","#{fecha2} 23:59:59")
