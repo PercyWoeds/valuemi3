@@ -1263,8 +1263,9 @@ def get_pendientes_day_customer_detraccion(fecha1,fecha2,cliente)
     
     for factura in facturas
     
+        if factura.detraccion != nil
           ret += factura.detraccion.round(2)
-      
+        end 
       end
     end 
 

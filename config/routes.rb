@@ -94,6 +94,8 @@
     collection { get :reportes4} #Reporte ventas
     collection { get :reportes03}
     collection { get :reportes04}
+    collection { get :exportxls }
+    collection { get :rpt_ccobrar3_pdf  }
   end 
     
   
@@ -125,10 +127,6 @@
     collection { post :import }
   end 
   
-  resources :facturas do
-    collection { get :exportxls }
-    collection { get :rpt_ccobrar3_pdf    }
-  end 
   
   resources :inventarios  do
     collection { post :import }

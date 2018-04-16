@@ -1,0 +1,98 @@
+<html>
+<body>
+    
+ 
+  <h4 ><center>Cuentas por Cobrar   </center>   </h4>
+  
+  <h5><center> Desde: <%= @fecha1 %>  Hasta: <%= @fecha2 %>  </center></h5>
+  
+  <% if @moneda == 2%>
+  <h5><center> Moneda  : Soles </center></h5>  
+  <% else %>
+  <h5><center> Moneda  : Dolares </center></h5>  
+  <% end %>
+  
+  <font size="2" face="Courier New" >  
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+  
+  <tr bgcolor="#B4D7F7">
+    <td width="100%"> DOCUMENTOS PENDIENTES *</td>
+  </tr>
+  
+  </table>
+
+  
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+  <tr bgcolor="#B4D7F7">
+    <td width="5%"> TD </td>
+    <td width="10%"> Numero  </td>
+    <td width="12%"> Fecha </td>
+    <td width="25%"> Cliente </td>
+    <td width="5%"> Mon. </td>
+    <td width="12%"> V.Venta</td>
+    <td width="12%"> IGV </td>
+    <td width="12%"> IMPORTE </td>
+    
+    
+    
+  </tr>
+  </table>
+
+  
+  
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+      <% nroitem = 1%>
+      <% total =  0%>
+      <% lctotal =  0%>5
+      <% total_1 =  0%>
+      <% total_2 =  0%>
+      
+       <% for  detalle in @facturas_rpt  %>
+       
+                    <tr>
+                    <td width= "5%" ><%= detalle.document.descripshort  %></td>
+                    <td width= "10%" ><%=  detalle.code %>   </td>
+                    <td width = "12%" align ="center"><%= detalle.fecha.strftime("%d/%m/%Y")     %></td>
+                    <% if detalle.ruc != nil %>
+                      <td width = "12%" align ="left"><%= detalle.ruc   %> </td>
+                    <% else%>
+                      <td width = "12%" align ="left"><%= detalle.customer.ruc   %> </td>
+                    <% end %>
+                    
+                    <td width = "25%" align ="left"><%= detalle.customer.name   %> </td>
+                    
+                    
+                    <% if detalle.moneda_id == 1 %>
+                    <td width = "5%" align ="center"> USD </td>
+                    <% else %>
+                    <td width = "5%" align ="center"> S/. </td>
+                    <% end %>
+                    
+                    
+                <% if detalle.document_id == 2 %>
+                  <% lctotal = detalle.balance* -1 %>
+                <% else %> 
+                  <% lctotal = detalle.balance %>
+                <% end %>
+                
+                <td width = "12%" align ="right"><%= sprintf("%.2f",lctotal)   %></td>
+                </tr>
+            
+         <% end %>
+
+
+      <hr>  
+     </table>
+     
+     <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+     <tr bgcolor="#B4D7F7">
+          <td width = "70%" align ="center">Totales  </td>
+          <td width = "10%" align ="right"><%= sprintf("%.2f",lctotal)   %></td>
+    </tr>
+   </table>
+
+    
+    </body>
+      
+</html>
+      

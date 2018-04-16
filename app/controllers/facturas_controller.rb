@@ -974,13 +974,17 @@ def newfactura2
     lcmonedadolares ="1"
     lcmonedasoles ="2"
     @facturas_rpt = @company.get_pendientes_cliente(@fecha1,@fecha2,@cliente)    
+    
     @total_cliente_dolares   = @company.get_pendientes_day_customer(@fecha1,@fecha2, @cliente, lcmonedadolares)
     @total_cliente_soles = @company.get_pendientes_day_customer(@fecha1,@fecha2, @cliente,lcmonedasoles)
     @total_cliente_detraccion = @company.get_pendientes_day_customer_detraccion(@fecha1,@fecha2, @cliente)
+    puts @total_cliente_soles
+    
     case params[:print]
       when "To PDF" then 
           redirect_to :action => "rpt_ccobrar3_pdf", :format => "pdf", :fecha1 => params[:fecha1], :fecha2 => params[:fecha2], :customer_id => params[:customer_id] 
-      when "To Excel" then render xlsx: 'exportxls'
+      when "To Excel" then render xlsx: 'rpt_ccobrar3_xls'
+        
       else render action: "index"
     end
   end
