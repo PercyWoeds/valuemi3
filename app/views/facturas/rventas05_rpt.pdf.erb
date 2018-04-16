@@ -85,7 +85,7 @@
                     <td width="8%" align ="right">  <%= detalle.numero %></td>
                     
                     <td width="10%" align ="right">  <%= detalle.cod_prod  %></td>
-                    <td width="10%" align ="right">  <%= detalle.cod_prod  %></td>
+                    <td width="10%" align ="right"> </td>
                     
                     <td width="10%" align ="right">  <%= detalle.cantidad %></td>
                     <td width="10%" align ="right">  <%= detalle.precio %></td>
@@ -94,8 +94,8 @@
                     
                     </tr>
                     
-                    <% total_1 += cantidad %>
-                    <% total_2 += importe.to_f %>
+                    <% total_1 += detalle.cantidad %>
+                    <% total_2 += detalle.importe.to_f %>
                     
          <%end %>
          
