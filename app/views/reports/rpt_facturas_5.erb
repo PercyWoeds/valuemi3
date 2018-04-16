@@ -1,0 +1,47 @@
+<%= render 'layouts/charts' %>
+<%
+invoices_subtotal = 0
+invoices_tax = 0
+invoices_total = 0
+subtotals = []
+taxes = []
+totals = []
+%>
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %> &raquo;
+  <%= link_to "Reports", "/companies/reports/#{@company.id}" %>
+</div>
+
+<h3>
+  <%= image_tag("reports_48.png", :class => "vmiddle") %>
+ Listado de Ventas Combustibles
+</h3	>
+
+<%= form_tag(reportes05_facturas_path, :method => "get") do %>
+
+  <div class="field">
+    <input type="date" name="fecha1" value="2018-03-19" style = "width: 150px" >
+  </div>
+	<div class="field">
+		<input type="date" name="fecha2" value="2018-03-31" style = "width: 150px" >
+  </div>
+
+  
+
+<br> 
+ <%= submit_tag "To PDF", :name => "print" %>
+ <%= submit_tag "To Excel", :name => "print" %>
+  
+<% end %>
+
+
+
+<br />
+
+
+<div class="button">
+  <%= link_to 'Regresar', "/companies/faqs/#{@company.id}" %>
+
+
+</div>
