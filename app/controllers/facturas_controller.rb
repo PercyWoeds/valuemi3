@@ -768,7 +768,9 @@ def reportes05
   def new
     @pagetitle = "Nueva factura"
     @action_txt = "Create"
+    $lcAction="Boleta"
     $Action= "create"
+    
     @invoice = Factura.new
     
     @invoice[:code] = "#{generate_guid11()}"
@@ -801,7 +803,7 @@ def reportes05
   def new2
     @pagetitle = "Nueva factura"
     @action_txt = "Create"
-    
+    $lcAction="Factura"
     
     @invoice = Factura.new
     @invoice[:code] = "#{generate_guid3()}"
@@ -921,7 +923,11 @@ def newfactura2
         # Create products for kit
         @invoice.add_products(items)
         @invoice.add_guias(items2)
-        @invoice.correlativo2
+        if $lcAction == "Boleta"
+          @invoice.correlativo2
+        else
+          @invoice.correlativo
+        end 
         # Check if we gotta process the invoice
         @invoice.process()
 
