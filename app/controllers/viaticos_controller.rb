@@ -26,7 +26,7 @@ before_filter :authenticate_user!
   
      
   def build_pdf_header(pdf)
-      pdf.image "#{Dir.pwd}/public/images/logo2.png", :width => 270        
+      pdf.image "#{Dir.pwd}/public/images/logo3.png", :width => 270        
       pdf.move_down 6        
       pdf.move_down 4
       pdf.move_down 4
