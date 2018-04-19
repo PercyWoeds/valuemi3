@@ -1,5 +1,6 @@
   Mnygo::Application.routes.draw do
 
+  resources :tarjeta
   resources :tipofaltantes
   resources :faltantes
   resources :tipoventa

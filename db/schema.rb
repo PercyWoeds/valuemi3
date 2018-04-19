@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180827233058) do
+ActiveRecord::Schema.define(version: 20180827233059) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1989,6 +1989,13 @@ ActiveRecord::Schema.define(version: 20180827233058) do
     t.float    "varilla"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+  end
+
+  create_table "tarjeta", force: :cascade do |t|
+    t.string   "code"
+    t.string   "nombre"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "tempcps", force: :cascade do |t|

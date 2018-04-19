@@ -5,7 +5,7 @@ class SellvalesController < ApplicationController
   # GET /sellvales.json
   def index
     
-    if current_user.email == "percywoeds@gmail.com"
+    if current_user.email == "percywoeds@gmail.com"  || @current_user.level == "parte"  
       @sellvales = Sellvale.all.order(:fecha,:serie,:numero).paginate(:page => params[:page], :per_page => 20)
     else   
       @sellvales = Sellvale.where(td:"N").order('fecha DESC').paginate(:page => params[:page], :per_page => 20)
@@ -25,6 +25,7 @@ class SellvalesController < ApplicationController
     @employees = Employee.all 
     @customers = Customer.all 
     @creditos = Credito.all
+    @tarjetas = Tarjetum.all 
     @products = Product.where(products_category_id:1)
     @sellvale[:fecha]  = Date.today
     
@@ -39,6 +40,7 @@ class SellvalesController < ApplicationController
     @employees = Employee.all 
     @customers = Customer.all 
     @creditos = Credito.all
+    @tarjetas = Tarjetum.all 
     @products = Product.where(products_category_id:1)
     
   end
@@ -53,10 +55,8 @@ class SellvalesController < ApplicationController
     @customers = Customer.all 
     @creditos = Credito.all
     @products = Product.where(products_category_id:1)
+    @tarjetas = Tarjetum.all 
     
-    @sellvale[:fpago] = 1
-    @sellvale[:td] = "N"
-    @sellvale[:implista] = 0
     @sellvale[:processed] = 0
     
     lcImporte = @sellvale[:cantidad] *@sellvale[:precio].to_f 
@@ -82,7 +82,7 @@ class SellvalesController < ApplicationController
     @customers = Customer.all 
     @creditos = Credito.all
     @products = Product.where(products_category_id:1)
-    @sellvale[:fpago] = 1
+    @tarjetas = Tarjetum.all 
     
     
     @sellvale[:processed] = 0
@@ -123,6 +123,6 @@ class SellvalesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def sellvale_params
-      params.require(:sellvale).permit(:td, :fecha, :turno, :cod_emp, :caja, :serie, :numero, :cod_cli, :ruc, :placa, :odometro, :cod_prod, :cantidad, :precio, :importe, :igv, :fpago, :dolat, :implista, :cod_tar, :km, :chofer, :tk_devol, :cod_sucu, :isla, :dni_cli, :clear,:tipo)
+      params.require(:sellvale).permit(:td, :fecha, :turno, :cod_emp, :caja, :serie, :numero, :cod_cli, :ruc, :placa, :odometro, :cod_prod, :cantidad, :precio, :importe, :igv, :fpago, :dolat, :implista, :cod_tar, :km, :chofer, :tk_devol, :cod_sucu, :isla, :dni_cli, :clear,:tipo,:td)
     end
 end
