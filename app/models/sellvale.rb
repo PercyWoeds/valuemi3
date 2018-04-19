@@ -66,7 +66,7 @@ class Sellvale < ActiveRecord::Base
         #  a.save
         end
         
-         @factura = TmpFactura.select("fecha,MAX(numero) as minimo, MIN(numero) as maximo,sum(total) as total").where('td <> ?',"N").group(:fecha)
+         @factura = TmpFactura.select("fecha,MAX(numero) as minimo, MIN(numero) as maximo,sum(total) as total").where('td <> ?exit',"N").group(:fecha)
          
           @factura.each do |quote|
               lcCode = quote.minimo << " -" << quote.maximo
