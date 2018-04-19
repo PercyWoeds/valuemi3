@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Fecha:</strong>
+  <%= @bankdeposit.fecha %>
+</p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @bankdeposit.code %>
+</p>
+
+<p>
+  <strong>Bank account:</strong>
+  <%= @bankdeposit.bank_account_id %>
+</p>
+
+<p>
+  <strong>Document:</strong>
+  <%= @bankdeposit.document_id %>
+</p>
+
+<p>
+  <strong>Documento:</strong>
+  <%= @bankdeposit.documento %>
+</p>
+
+<p>
+  <strong>Total:</strong>
+  <%= @bankdeposit.total %>
+</p>
+
+<%= link_to 'Edit', edit_bankdeposit_path(@bankdeposit) %> |
+<%= link_to 'Back', bankdeposits_path %>

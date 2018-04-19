@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  fecha: MyString
+  code: MyString
+  bank_account_id: 1
+  document_id: 1
+  documento: MyString
+  total: 1.5
+
+two:
+  fecha: MyString
+  code: MyString
+  bank_account_id: 1
+  document_id: 1
+  documento: MyString
+  total: 1.5

@@ -14,7 +14,7 @@ class Sellvale < ActiveRecord::Base
            if row['cod_cli'] != nil
             row['cod_cli'] =  row['cod_cli'].rjust(11, '0')  
            else
-            row['cod_cli'] =  ""
+            row['cod_cli'] =  "C_000001"
            end 
            
            row['processed'] = "0"
@@ -29,6 +29,7 @@ class Sellvale < ActiveRecord::Base
           else
             lcCustomerId = a.id
           end 
+          
           a = Product.find_by(code: row['code'] )
           if a != nil
             lcCustomerId = a.id
@@ -55,15 +56,35 @@ class Sellvale < ActiveRecord::Base
           lcTipoVale ='1'
           lcRucCliente =row['ruc']
           
+          a= TmpFactura.new(subtotal: lcVventa , tax: lcTax , total: lcTotal, fecha: lcFecha, serie: row['serie'], numero:  row['numero'])
+          a.save
+          
         #  a= Factura.new(company_id:1,location_id:1, division_id: 1, customer_id: lcCustomerId , description: "", comments:"", code: lcCode ,
         #  subtotal: lcVventa , tax: lcTax , total: lcTotal, processed: "0", date_processed: Date.today, user_id: 1, fecha: lcFecha, 
         #  serie: row['serie'], numero:  row['numero'], payment_id: 8,  charge: 0, balance: lcTotal, moneda_id: 2, 
         #  observ: "VENTA PLAYA", fecha2: lcFecha, detraccion: 0, numero2: "", document_id: 3, descuento: 0,tipo: lcTipoVale,ruc:lcRucCliente )
         #  a.save
-         
-         
-          
         end
+        
+         @factura = TmpFactura.select("fecha,MAX(numero) as minimo, MIN(numero) as maximo,sum(total) as total").where('td <> ?',"N").group(:fecha)
+         
+          @factura.each do |quote|
+              lcCode = quote.minimo << " -" << quote.maximo
+              lcVventa = quote.total  / 1.18
+              lcTax =  quote.total - lcVventa
+              lcTotal = quote.total
+              lcRucCliente = " "
+              
+          a = Factura.new(company_id:1,location_id:1, division_id: 1, customer_id: 7 , description: "", comments:"", code: lcCode ,
+          subtotal: lcVventa , tax: lcTax , total: lcTotal, processed: "0", date_processed: Date.today, user_id: 1, fecha: quote.fecha, 
+          serie: "BB02", numero: lcCode, payment_id: 8,  charge: 0, balance: lcTotal, moneda_id: 2, 
+          observ: "VENTA PLAYA", fecha2: quote.fecha, detraccion: 0, numero2: "", document_id: 3, descuento: 0,tipo: 1,ruc:lcRucCliente )
+          a.save
+          lcCode = ""
+        
+          end 
+        
+        
     end     
     
     

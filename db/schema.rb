@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180827233059) do
+ActiveRecord::Schema.define(version: 20180827233061) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -141,6 +141,17 @@ ActiveRecord::Schema.define(version: 20180827233059) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "cuenta"
+  end
+
+  create_table "bankdeposits", force: :cascade do |t|
+    t.string   "fecha"
+    t.string   "code"
+    t.integer  "bank_account_id"
+    t.integer  "document_id"
+    t.string   "documento"
+    t.float    "total"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
   create_table "bankdetails", force: :cascade do |t|
@@ -2053,6 +2064,18 @@ ActiveRecord::Schema.define(version: 20180827233059) do
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.integer  "tipoventa_id"
+  end
+
+  create_table "tmp_facturas", force: :cascade do |t|
+    t.datetime "fecha"
+    t.string   "serie"
+    t.string   "numero"
+    t.float    "subtotal"
+    t.float    "tax"
+    t.float    "total"
+    t.string   "ruc"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "tms", force: :cascade do |t|

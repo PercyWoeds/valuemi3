@@ -1,5 +1,6 @@
   Mnygo::Application.routes.draw do
 
+  resources :bankdeposits
   resources :tarjeta
   resources :tipofaltantes
   resources :faltantes

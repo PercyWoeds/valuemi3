@@ -1,0 +1,2 @@
+module BankdepositsHelper
+end

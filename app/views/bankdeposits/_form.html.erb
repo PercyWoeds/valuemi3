@@ -1,0 +1,67 @@
+<%= simple_form_for(@bankdeposit) do |f| %>
+  <%= f.error_notification %>
+
+  <% if @customerpayment.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@customerpayment.errors.count, "error") %> prohibited this customerpayment from being saved:</h2>
+    <ul>
+    <% @customerpayment.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= hr() %>
+
+<div class="mid_box bordered_right">
+
+  <%= form_for(@customerpayment) do |f| %>
+    <h4>
+       Informacion Orden de Pago 
+    </h4>
+      
+        <div class="field">
+          <%= f.label :fecha1, "Fecha*", :class => "bold" %><br />
+          <%= f.date_field :fecha1, value: Time.now.strftime("%d/%m/%Y") ,:class => "input.tf_short" %>
+        </div>
+
+        </td>
+        <td>  
+        <div class="field">
+          <%= f.label :code, "Code*", :class => "bold" %><br />
+          <%= f.text_field :code, :onclick => "$(this).select();" %>
+        </div>
+    
+  
+    <div class="field">
+      <%= f.label  :bank_acount_id,"Banco:  " , :class => "bold"%><br />
+      <%= f.select :bank_acount_id,options_from_collection_for_select(@bank_acounts,'id','number') %>
+
+    </div>
+    
+
+    <div class="field">
+      <%= f.label  :document_id %><br />
+      <%= f.select :document_id,options_from_collection_for_select(@documents,'id','description') %>
+    </div>
+
+    <div class="field">
+      <%= f.label :documento, "Documento ", :class => "bold" %><br />
+      <%= f.text_field :documento %>
+    </div>
+
+    <div class="field">
+      <%= f.label :total, "Importe Liquidacion ", :class => "bold" %><br />
+      <%= f.text_field :total %>
+    </div>
+    <%= hr() %>
+    
+  <% end %>
+</div>  
+    
+    
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>
