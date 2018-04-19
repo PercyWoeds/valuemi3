@@ -31,6 +31,8 @@
 
 <% efectivos  =  a.get_ventas_contometros_efectivo_sustento(@fecha) %>
 <% tarjetas  =  a.get_ventas_contometros_tarjeta_sustento(@fecha) %>
+<% tarjetas2  =  a.get_ventas_tarjeta_sustento(@fecha) %>
+
 <% faltantes  =  a.get_faltante_detalle_dia(@fecha,"1") %>
 <% sobrantes  =  a.get_faltante_detalle_dia(@fecha,"2") %>
 
@@ -246,6 +248,26 @@
                
         <hr>  
      </table>
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+       <% for  credito in tarjetas2  %>
+        <tr>
+                    <td width= "5%" ><%=credito.serie %></td>
+                    <td width= "10%" ><%=  credito.numero  %></td>
+                    <td width = "8%" align ="right"><%= credito.customer.name   %></td>
+                    <td width = "8%" align ="right"></td>
+                    <td width = "10%" align ="right">Productos </td>
+                    <td width = "10%" align ="right"></td>
+                    <td width = "8%" align ="right"></td>
+                    <td width = "10%" align ="right"><%= sprintf("%.3f",credito.importe)   %></td>
+                    
+
+                        </tr>
+                    <% total_1 += credito.importe.to_f %>
+         <%end %>
+               
+        <hr>  
+     </table>
+     
      <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>     
      <tr>
                     <td width = "80%" align ="right">Total Tarjetas</td>

@@ -175,6 +175,14 @@ class Varillaje < ActiveRecord::Base
  
  end 
  
+ def  get_ventas_tarjeta_sustento(fecha) 
+
+     facturas = Factura.where(["fecha >= ? and fecha <= ?  and tarjeta_id <> 1 and serie = ?" , "#{fecha} 00:00:00","#{fecha} 23:59:59", "1" ,"N","BB04"]).order(:serie,:numero)
+     
+     
+    return facturas
+ 
+ end 
  
  
  def  get_ventas_contometros_tarjeta(fecha) 
@@ -411,7 +419,36 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
  
  def get_ventas_market(fecha)
      
-     facturas = Factura.where(["fecha >= ? and fecha <= ?   " , "#{fecha} 00:00:00","#{fecha} 23:59:59" ])
+     facturas = Factura.where(["fecha >= ? and fecha <= ?  " , "#{fecha} 00:00:00","#{fecha} 23:59:59" ])
+       ret=0  
+       
+     if facturas
+         
+       for factura in facturas
+          
+          detalles = FacturaDetail.where(factura_id: factura.id)     
+             
+          for   detalle    in detalles
+            
+             if (detalle.product.products_category.id != 1  )
+                 if (detalle.product.products_category.id != 3  )
+                 
+                ret += detalle.total 
+                end 
+             end 
+             
+          end 
+          
+       end 
+       
+     end 
+     
+     return ret 
+ end
+ 
+ def get_ventas_market_tarjeta(fecha)
+     
+     facturas = Factura.where(["fecha >= ? and fecha <= ?  and tarjeta_id <> 1 " , "#{fecha} 00:00:00","#{fecha} 23:59:59" ])
        ret=0  
        
      if facturas
@@ -438,6 +475,7 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
      return ret 
  end 
  
+ 
  def get_ventas_restaurant(fecha)
      
      facturas = Factura.where(["fecha >= ? and fecha <= ?   " , "#{fecha} 00:00:00","#{fecha} 23:59:59" ])
@@ -463,5 +501,29 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
      return ret 
  end 
  
+ def get_ventas_restaurant_tarjeta(fecha)
+     
+     facturas = Factura.where(["fecha >= ? and fecha <= ?  and tarjeta_id <> 1 " , "#{fecha} 00:00:00","#{fecha} 23:59:59" ])
+       ret=0  
+       
+     if facturas
+         
+       for factura in facturas
+          
+          detalles =     FacturaDetail.where(factura_id: factura.id)     
+             
+          for   detalle    in detalles
+            
+             if detalle.product.products_category_id == 3 
+                    ret += detalle.total 
+             end 
+          end 
+          
+       end 
+       
+     end 
+     
+     return ret 
+ end 
  
 end
