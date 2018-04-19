@@ -177,7 +177,7 @@ class Varillaje < ActiveRecord::Base
  
  def  get_ventas_tarjeta_sustento(fecha) 
 
-     facturas = Factura.where(["fecha >= ? and fecha <= ?  and tarjeta_id <> 1 and serie = ?" , "#{fecha} 00:00:00","#{fecha} 23:59:59", "1" ,"N","BB04"]).order(:serie,:numero)
+     facturas = Factura.where(["fecha >= ? and fecha <= ?  and tarjeta_id <> 1 and serie = ?" , "#{fecha} 00:00:00","#{fecha} 23:59:59", "BB04"]).order(:serie,:numero)
      
      
     return facturas
