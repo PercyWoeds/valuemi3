@@ -788,6 +788,7 @@ def reportes05
     @payments = @company.get_payments()
     @services = @company.get_services()
     @products = @company.get_products()
+    @tarjetas = Tarjetum.all
     
     @deliveryships = @invoice.my_deliverys 
     @tipofacturas = @company.get_tipofacturas() 
@@ -865,6 +866,7 @@ def newfactura2
     @tipodocumento = @company.get_documents()
     @monedas = @company.get_monedas()
     @products = @company.get_products()
+    @tarjetas = Tarjetum.all
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
@@ -892,6 +894,7 @@ def newfactura2
     @tipodocumento = @company.get_documents()
     @tipofacturas = @company.get_tipofacturas() 
     @monedas = @company.get_monedas()
+    @tarjetas = Tarjetum.all
    
     @invoice[:subtotal] = @invoice.get_total_1(items) / 1.18
     @invoice[:total]   = @invoice.get_total_1(items) 
@@ -964,6 +967,7 @@ def newfactura2
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
     @tipoventas = Tipoventum.all 
+    @tarjetas = Tarjetum.all
     
     @invoice[:subtotal] = @invoice.get_subtotal(items)
     @invoice[:tax] = @invoice.get_tax(items, @invoice[:customer_id])
@@ -1757,7 +1761,7 @@ def print
 
   private
   def factura_params
-    params.require(:factura).permit(:company_id,:location_id,:division_id,:customer_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:payment_id,:fecha,:preciocigv,:tipo,:observ,:moneda_id,:detraccion,:factura2,:description,:document_id,:tipoventa_id)
+    params.require(:factura).permit(:company_id,:location_id,:division_id,:customer_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:payment_id,:fecha,:preciocigv,:tipo,:observ,:moneda_id,:detraccion,:factura2,:description,:document_id,:tipoventa_id,:tarjeta_id)
   end
 
 end

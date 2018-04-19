@@ -82,7 +82,7 @@
       <%= f.text_field :code, :onclick => "$(this).select();" %>
     </div>
 
-      <div class="field">
+    <div class="field">
       <%= f.label :moneda_id ,"  "%><br />
       <%= f.collection_select :moneda_id, @monedas, :id, :description, :prompt => true %>
       
@@ -141,6 +141,13 @@
   
     <%= hr() %>
   
+    <div class="field">
+      <%= f.label :tarjeta_id ,"Forma  de pago"%><br />
+      
+      <%= f.collection_select :tarjeta_id, @tarjetas, :id, :nombre, :prompt => true %>
+      
+    </div>
+
   
     <div class="actions">
       <input type="hidden" name="items" id="items" value="<% if @products_lines %><%= @products_lines %><% end %>" />
