@@ -6,6 +6,8 @@ class Sellvale < ActiveRecord::Base
  validates_uniqueness_of :numero, scope: :serie
     
     def self.import(file)
+        TmpFactura.delete_all 
+        
           CSV.foreach(file.path, headers: true, encoding:'iso-8859-1:utf-8') do |row|
            
            
