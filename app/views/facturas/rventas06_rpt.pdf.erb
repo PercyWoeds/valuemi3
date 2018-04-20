@@ -1,0 +1,74 @@
+<html>
+<body>
+    
+  
+  <h4 ><center>  </center>   </h4>
+  <center> Listado de Vales de Contado Desde: <%= @fecha1 %>  Hasta <%= @fecha2 %></center>
+  
+  
+  <font size="2" face="Courier New" >  
+  
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+  
+  <tr bgcolor="#B4D7F7">
+    <td width="5%"> Serie  </td>
+    <td width="5%"> Numero  </td>
+    
+    <td width="5%"> Cliente  </td>
+    <td width="5%"> Nro.Interno  </td>
+    <td width="5%"> Codigo  </td>
+    <td width="5%"> Cant.  </td>
+    <td width="5%"> Precio  </td>
+    <td width="5%"> Importe   </td>
+  </tr>
+  
+  </table>
+  
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+      <% nroitem = 1%>
+      <% total_1 = 0%>
+      <% total_2 = 0%>
+       <% for  credito in @facturas_rpt  %>
+        <tr>
+                    <td width= "5%" ><%=  credito.serie %></td>
+                    <td width= "10%" ><%=  credito.numero  %></td>
+                    <td width = "8%" align ="right"><%= credito.cod_cli   %></td>
+                    <td width = "8%" align ="right"><%= credito.odometro    %></td>
+                    <td width = "10%" align ="right"><%= credito.cod_prod    %> </td>
+                    
+                    <td width = "10%" align ="right"><%=  sprintf("%.2f",credito.cantidad.to_s)%></td>
+                    <td width = "8%" align ="right"><%= sprintf("%.2f",credito.precio)   %></td>
+                    <td width = "10%" align ="right"><%= sprintf("%.3f",credito.importe)   %></td>
+                    
+
+                        </tr>
+                    <% total_1 += credito.cantidad.to_f %>    
+                    <% total_2 += credito.importe.to_f %>
+                    
+         <%end %>
+               
+        <hr>  
+  </table>
+  <hr>
+     
+    <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+      
+     <tr>
+       
+          <td width = "41%" align ="right">Totales </td>
+          
+          <td width = "10%" align ="right"><%= sprintf("%.3f",total_1)   %></td>
+          <td width = "8%" align ="right"></td>
+          <td width = "10%" align ="right"><%= sprintf("%.2f",total_2)   %></td>
+          
+          
+    </tr>
+    
+   </table>
+         
+  
+    
+    </body>
+      
+      </html>
+      

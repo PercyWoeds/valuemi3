@@ -4,6 +4,7 @@ class Viaticos::ViaticoDetailsController < ApplicationController
   
   before_action :set_viatico_detail, :except=> [:new,:create]
 
+  validates_presence_of :supplier_id 
   
   # GET /viatico_details
   # GET /viatico_details.json

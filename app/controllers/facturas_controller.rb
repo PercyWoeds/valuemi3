@@ -172,15 +172,12 @@ def reportes06
 
     @facturas_rpt = @company.get_ventas_vales(@fecha1,@fecha2,"2")          
     
-    
     case params[:print]
       when "To PDF" then 
         begin 
-         render  pdf: "Facturas ",template: "facturas/rventas05_rpt.pdf.erb",
+         render  pdf: "Facturas ",template: "facturas/rventas06_rpt.pdf.erb",
          locals: {:facturass => @facturas_rpt},
-         :orientation      => 'Landscape',
-         
-         :header => {
+           :header => {
            :spacing => 5,
                            :html => {
                      :template => 'layouts/pdf-header.html',
