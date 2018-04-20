@@ -3078,6 +3078,13 @@ def get_facturas_by_day_value(fecha1,fecha2,moneda,value='total')
        return facturas 
  
   end 
+  def  get_ventas_vales(fecha1,fecha2,tipo) 
+
+      facturas = Sellvale.where(["fecha >= ?  and fecha <=  ?  and td = ? and tipo = ? " , "#{fecha1} 00:00:00","#{fecha2} 23:59:59","N"  ] ).order(:fecha,:cod_prod)
+     
+       return facturas 
+ 
+  end 
   
   
 

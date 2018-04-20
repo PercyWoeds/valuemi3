@@ -76,7 +76,14 @@
     <%= f.label :taxable %>
   </div>
   <div class="actions">
+    <%= f.label :tipo, "Tipo Credito <1: contado 2:Pago Adelantado >" %><br />
+    <%= f.text_field :tipo %>
+  </div>
+ 
+  <div class="actions">
     <%= f.hidden_field :company_id %>
     <%= f.submit %>
   </div>
+ 
+  
 <% end %>

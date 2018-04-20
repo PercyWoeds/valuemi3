@@ -97,6 +97,7 @@
     collection { get :reportes03}
     collection { get :reportes04}
     collection { get :reportes05}
+    collection { get :reportes06}
     collection { get :exportxls }
     collection { get :rpt_ccobrar3_pdf  }
   end 
@@ -386,6 +387,8 @@ end
   match 'companies/reports/rpt_facturas_3/:company_id' => 'reports#rpt_facturas_3', via: [:get, :post]
   match 'companies/reports/rpt_facturas_4/:company_id' => 'reports#rpt_facturas_4', via: [:get, :post]
   match 'companies/reports/rpt_facturas_5/:company_id' => 'reports#rpt_facturas_5', via: [:get, :post]
+  match 'companies/reports/rpt_facturas_6/:company_id' => 'reports#rpt_facturas_6', via: [:get, :post]
+  
   
   match 'companies/reports/rpt_purchase_all/:company_id' => 'reports#rpt_purchase_all', via: [:get, :post]
   match 'companies/reports/rpt_product_all/:company_id' => 'reports#rpt_product_all', via: [:get, :post]
