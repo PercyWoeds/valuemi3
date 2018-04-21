@@ -1,5 +1,6 @@
   Mnygo::Application.routes.draw do
 
+  resources :turnos
   resources :bankdeposits
   resources :tarjeta
   resources :tipofaltantes
@@ -98,6 +99,7 @@
     collection { get :reportes04}
     collection { get :reportes05}
     collection { get :reportes06}
+    collection { get :reportes07}
     collection { get :exportxls }
     collection { get :rpt_ccobrar3_pdf  }
   end 
@@ -388,7 +390,7 @@ end
   match 'companies/reports/rpt_facturas_4/:company_id' => 'reports#rpt_facturas_4', via: [:get, :post]
   match 'companies/reports/rpt_facturas_5/:company_id' => 'reports#rpt_facturas_5', via: [:get, :post]
   match 'companies/reports/rpt_facturas_6/:company_id' => 'reports#rpt_facturas_6', via: [:get, :post]
-  
+  match 'companies/reports/rpt_facturas_7/:company_id' => 'reports#rpt_facturas_7', via: [:get, :post]
   
   match 'companies/reports/rpt_purchase_all/:company_id' => 'reports#rpt_purchase_all', via: [:get, :post]
   match 'companies/reports/rpt_product_all/:company_id' => 'reports#rpt_product_all', via: [:get, :post]
@@ -928,6 +930,7 @@ end
   match 'new_company', to: 'companies#new', via: [:get]
   match 'companies/start/:id' => 'companies#start', via: [:get, :post]
   match 'companies/faqs/:id' => 'companies#faqs', via: [:get, :post]
+  match 'companies/salepoint/:id' => 'companies#salepoint', via: [:get, :post]
   match 'companies/charts/:id' => 'companies#charts', via: [:get, :post]
   match 'companies/license/:id' => 'companies#license', via: [:get, :post]
   match 'companies/components/:id' => 'companies#components', via: [:get, :post]

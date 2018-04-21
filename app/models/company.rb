@@ -198,6 +198,11 @@ def get_facturas_day_value_cliente(fecha1,fecha2,cliente,value = "total",moneda)
        
     return documents
   end
+  def get_documents2()
+     documents = Document.where(company_id: self.id,).order(:descripshort)
+       
+    return documents
+  end
 
   def get_monedas()
      monedas = Moneda.where(company_id: self.id).order(:description)
@@ -3078,9 +3083,25 @@ def get_facturas_by_day_value(fecha1,fecha2,moneda,value='total')
        return facturas 
  
   end 
+  def  get_ventas_adelantado(fecha1,fecha2) 
+
+      facturas = Factura.where(["fecha >= ?  and fecha <=  ?" , "#{fecha1} 00:00:00","#{fecha2} 23:59:59"] ).order(:fecha).joins("INNER JOIN customers ON facturas.customer_id = customers.id AND customers.tipo = '2' ")
+     
+       return facturas 
+ 
+  end 
+  def  get_ventas_directa(fecha1,fecha2) 
+
+      facturas = Factura.where(["fecha >= ?  and fecha <=  ?" , "#{fecha1} 00:00:00","#{fecha2} 23:59:59"] ).order(:fecha).joins("INNER JOIN customers ON facturas.customer_id = customers.id AND customers.tipo = '3' ")
+     
+       return facturas 
+ 
+  end 
+    
+  
   def  get_ventas_vales(fecha1,fecha2,tipo) 
 
-      facturas = Sellvale.where(["fecha >= ?  and fecha <=  ?  and td = ? and tipo = ? " , "#{fecha1} 00:00:00","#{fecha2} 23:59:59","N","3"  ] ).order(:fecha,:cod_prod)
+      facturas = Sellvale.where(["fecha >= ?  and fecha <=  ?  and td = ?  " , "#{fecha1} 00:00:00","#{fecha2} 23:59:59","N"] ).order(:fecha,:cod_prod)
      
        return facturas 
  

@@ -170,12 +170,42 @@ def reportes06
     @fecha2 = params[:fecha2]    
     @moneda = params[:moneda_id]    
 
-    @facturas_rpt = @company.get_ventas_vales(@fecha1,@fecha2,"2")          
+    @facturas_rpt = @company.get_ventas_adelantado(@fecha1,@fecha2)          
     
     case params[:print]
       when "To PDF" then 
         begin 
          render  pdf: "Facturas ",template: "facturas/rventas06_rpt.pdf.erb",
+         locals: {:facturass => @facturas_rpt},
+           :header => {
+           :spacing => 5,
+                           :html => {
+                     :template => 'layouts/pdf-header.html',
+                           right: '[page] of [topage]'
+                  }
+               }
+               
+               
+        end   
+      when "To Excel" then render xlsx: 'reportes05'
+        
+      else render action: "index"
+    end
+  end
+def reportes07
+
+
+    @company=Company.find(1)          
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]    
+    @moneda = params[:moneda_id]    
+
+    @facturas_rpt = @company.get_ventas_directa(@fecha1,@fecha2)          
+    
+    case params[:print]
+      when "To PDF" then 
+        begin 
+         render  pdf: "Facturas ",template: "facturas/rventas07_rpt.pdf.erb",
          locals: {:facturass => @facturas_rpt},
            :header => {
            :spacing => 5,
@@ -415,16 +445,31 @@ def reportes06
     end
   
     if(@company.can_view(current_user))
-
+      
+      
+      if @current_user.level == "colateral"
+        
+         @invoices = Factura.all.order('fecha DESC').paginate(:page => params[:page]).where(serie:"BB04")
+         
+        if params[:search]
+          @invoices = Factura.search(params[:search]).order('fecha DESC').paginate(:page => params[:page]).where(serie:"BB04")
+        else
+          @invoices = Factura.order('fecha DESC').paginate(:page => params[:page]).where(serie:"BB04")
+        end
+        
+        @turno = Turno.first 
+        
+        
+      else 
+        
          @invoices = Factura.all.order('fecha DESC').paginate(:page => params[:page])
         if params[:search]
           @invoices = Factura.search(params[:search]).order('fecha DESC').paginate(:page => params[:page])
         else
           @invoices = Factura.order('fecha DESC').paginate(:page => params[:page]) 
         end
-
-    
-    else
+      end 
+      else
       errPerms()
     end
   end
@@ -824,7 +869,13 @@ def reportes06
     @deliveryships = @invoice.my_deliverys 
     @tipofacturas = @company.get_tipofacturas() 
     @monedas = @company.get_monedas()
-    @tipodocumento = @company.get_documents()
+    
+    if @current_user.level== "colateral"
+      @tipodocumento = @company.get_documents2()
+    else 
+      @tipodocumento = @company.get_documents()
+    end
+    
     @tipoventas = Tipoventum.all 
     @ac_user = getUsername()
     @invoice[:user_id] = getUserId()

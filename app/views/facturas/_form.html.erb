@@ -98,6 +98,15 @@
     </div>
 
     <%= hr() %>
+    
+    
+    <div class="field">
+      <%= f.label :tarjeta_id ,"Forma  de pago"%><br />
+      
+      <%= f.collection_select :tarjeta_id, @tarjetas, :id, :nombre, :prompt => true %>
+      
+    </div>
+
   
     <div class="field">
       <%= f.check_box :processed %>
@@ -141,13 +150,6 @@
   
     <%= hr() %>
   
-    <div class="field">
-      <%= f.label :tarjeta_id ,"Forma  de pago"%><br />
-      
-      <%= f.collection_select :tarjeta_id, @tarjetas, :id, :nombre, :prompt => true %>
-      
-    </div>
-
   
     <div class="actions">
       <input type="hidden" name="items" id="items" value="<% if @products_lines %><%= @products_lines %><% end %>" />

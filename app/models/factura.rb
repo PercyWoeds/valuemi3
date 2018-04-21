@@ -308,8 +308,22 @@ class Factura < ActiveRecord::Base
 
 
   
-  def get_invoices_details
+  def get_invoices_cantidad
+    
+    
+    
+      ret = 0
+    invoices = FacturaDetail.where(["factura_id = ?", self.id])
+    
+    for invoice in invoices
 
+        ret += invoice.quantity
+
+    end
+    
+  
+    
+    return ret
   
     
   end 

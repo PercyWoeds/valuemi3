@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Turnos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Fecha</th>
+      <th>Turno</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @turnos.each do |turno| %>
+      <tr>
+        <td><%= turno.Fecha %></td>
+        <td><%= turno.turno %></td>
+        <td><%= link_to 'Show', turno %></td>
+        <td><%= link_to 'Edit', edit_turno_path(turno) %></td>
+        <td><%= link_to 'Destroy', turno, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Turno', new_turno_path %>

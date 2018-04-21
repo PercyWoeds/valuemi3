@@ -1,0 +1,65 @@
+<div class="mid_box bordered_right">
+
+  
+  <h3>
+    <%= image_tag("invoice_32.png", :class => "vmiddle") %>
+    
+    <%= link_to "Facturas y Boletas", "/companies/facturas/#{@company.id}" %>
+    
+  </h3>
+
+  <p>
+     Agregar, editar or eliminar facturas para tu negocio.
+  </p>
+  
+  <%= hr() %>
+
+  <h3>
+    <%= image_tag("invoice_32.png", :class => "vmiddle") %>
+    <%= link_to "Cierre de Turno ", sellvales_path %>
+  </h3>
+
+  <p>
+     Agregar, editar or eliminar notas de credito para tu negocio.
+  </p>
+  
+  <%= hr() %>
+
+  
+</div>
+
+<div class="mid_box">
+
+  <h3>
+    <%= image_tag("clients_32.png", :class => "vmiddle") %>
+    <%= link_to "Clientes", "/companies/customers/#{@company.id}" %>
+  </h3>
+
+  <p>
+     Agregar, editar or eliminar clientes para tu negocio.
+  </p>
+
+  <%= hr() %>
+
+<%if @current_user.level == "admin" || @current_user.level == "parte"     %>
+  <h3>
+    <%= image_tag("clients_32.png", :class => "vmiddle") %>
+    <%= link_to "Turno", turnos_path %>
+  </h3>
+
+  <p>
+     Agregar, editar or eliminar clientes para tu negocio.
+  </p>
+
+
+  <%= hr() %>
+  <% end %>
+  
+  <h3>
+    <%= image_tag("reports_32.png", :class => "vmiddle") %>
+    <%= link_to "Reportes", "/companies/reports/reports_cventas/#{@company.id}" %>
+  </h3>
+
+  <p>
+    Reportes de tu negocio.
+  </p>
