@@ -95,6 +95,8 @@
     collection { get :reportes2}
     collection { get :reportes3}
     collection { get :reportes4} #Reporte ventas
+    collection { get :reportes5} #Reporte ventas
+    collection { get :reportes6} #Reporte ventas
     collection { get :reportes03}
     collection { get :reportes04}
     collection { get :reportes05}
@@ -102,6 +104,8 @@
     collection { get :reportes07}
     collection { get :exportxls }
     collection { get :rpt_ccobrar3_pdf  }
+    collection { get :rpt_factura_all   }
+    
   end 
     
   
@@ -405,6 +409,9 @@ end
   match 'companies/reports/rpt_parte_1/:company_id' => 'reports#rpt_parte_1', via: [:get, :post]    
   match 'companies/reports/rpt_parte_2/:company_id' => 'reports#rpt_parte_2', via: [:get, :post]    
   match 'companies/reports/rpt_parte_3/:company_id' => 'reports#rpt_parte_3', via: [:get, :post]    
+  match 'companies/reports/rpt_parte_4/:company_id' => 'reports#rpt_parte_4', via: [:get, :post]    
+  match 'companies/reports/rpt_parte_5/:company_id' => 'reports#rpt_parte_5', via: [:get, :post]    
+  
   # Company users
 
   match 'company_users/ac_users' => 'company_users#ac_users', via: [:get, :post]

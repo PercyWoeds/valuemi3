@@ -24,10 +24,20 @@
   <h3>
     Detalle 
   </h3>
+  <p class="big">
+    <%= link_to "Tarjetas de credito", "/companies/reports/rpt_parte_6/#{@company.id}" %>
+  </p>
   
   <p class="big">
     <%= link_to "Vale Contado ", "/companies/reports/rpt_parte_3/#{@company.id}" %>
   </p>
+  <p class="big">
+    <%= link_to "Vale Credito ", "/companies/reports/rpt_parte_4/#{@company.id}" %>
+  </p>
+  <p class="big">
+    <%= link_to "Vale Credito x Cliente ", "/companies/reports/rpt_parte_5/#{@company.id}" %>
+  </p>
+  
   
 
 <div class="mid_box">

@@ -3037,6 +3037,22 @@ def get_purchases_pendientes_day_value(fecha1,fecha2,value = "total_amount",clie
    
     return @contado
  end 
+ def  get_parte_3(fecha1,fecha2) 
+   
+     @contado = Sellvale.where(["fecha >= ? and fecha <= ? and processed = ? and tipo = ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ,"0","1" ]).order(:cod_prod,:fecha)
+   
+    return @contado
+ end 
+ def  get_parte_4(fecha1,fecha2,cliente) 
+   
+     @contado = Sellvale.where(["fecha >= ? and fecha <= ? and processed = ? and tipo = ? and cod_cli = ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ,"0","1",cliente ]).order(:cod_prod,:fecha)
+   
+    return @contado
+ end 
+ 
+ 
+ 
+ 
 def get_facturas_by_day_value(fecha1,fecha2,moneda,value='total')
   
     purchases = Factura.where([" company_id = ? AND fecha >= ? and fecha <= ? and moneda_id = ? ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda , ]).order(:id,:moneda_id)    

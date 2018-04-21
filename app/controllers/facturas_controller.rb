@@ -53,7 +53,7 @@ class FacturasController < ApplicationController
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]    
     
-    @contado_rpt = @company.get_parte_2(@fecha1,@fecha2)
+    @contado_rpt = @company.get_parte_3(@fecha1,@fecha2)
     
     
     case params[:print]
@@ -66,8 +66,30 @@ class FacturasController < ApplicationController
       else render action: "index"
     end
   end
+  
+def reportes4
+  
+    @company=Company.find(1)          
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]    
+    
+    @contado_rpt = @company.get_parte_2(@fecha1,@fecha2)
+    
+    
+    case params[:print]
+      when "To PDF" then 
+        begin 
+         render  pdf: "Parte4 ",template: "varillajes/parte4_rpt.pdf.erb",locals: {:varillajes => @contado_rpt}
+        
+        end   
+      when "To Excel" then render xlsx: 'exportxls'
+      else render action: "index"
+    end
+  end
 
-def reportes4 
+
+
+def rpt_factura_all
     $lcFacturasall = '1'
 
     @company=Company.find(1)          
