@@ -27,7 +27,7 @@
   <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
   
   <tr bgcolor="#B4D7F7">
-    <td width="100%"> VALES DE CONTADO  * PENDIENTES POR FACTURAR *</td>
+    <td width="100%"> VALES DE CREDITO *Todos*</td>
   </tr>
   
   </table>
@@ -43,7 +43,7 @@
        <%if contado.importe.to_f > 0 %>
                   <tr>
                     <td width= "10%" ><%=  contado.fecha.strftime("%d/%m/%Y")  %></td>
-                    <td width= "5%" ><%=  contado.serie %>   </td>
+                    <td width= "5%" > <%=  contado.serie %>   </td>
                     
                     <td width = "8%" align ="right"><%= contado.numero    %></td>
                     
@@ -51,10 +51,13 @@
                     
                     <td width = "10%" align ="left"><%= contado.get_product_name(contado.cod_prod)    %> </td>
                     
+                    
                     <td width = "10%" align ="right"><%=  sprintf("%.2f",contado.cantidad.to_s)%></td>
-                    <td width = "8%" align ="right"><%= sprintf("%.2f",contado.precio)   %></td>
+                    <td width = "8%"  align ="right"><%= sprintf("%.2f",contado.precio)   %></td>
                     <td width = "10%" align ="right"><%= sprintf("%.3f",contado.importe)   %></td>
                     <td width = "10%" align ="right"><%= sprintf("%.2f",contado.implista.to_s)   %></td>
+                    
+                    <td width = "10%" align ="left"><%= contado.get_vale_facturado   %> </td>
                     </tr>
                     
             <% end %>        
@@ -64,6 +67,7 @@
                     
          <%end %>
          
+                  
                   
                
         <hr>  

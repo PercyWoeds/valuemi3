@@ -3030,22 +3030,23 @@ def get_purchases_pendientes_day_value(fecha1,fecha2,value = "total_amount",clie
    
     return @varilla 
  end 
- 
+ #Vale contado 
  def  get_parte_2(fecha1,fecha2) 
    
      @contado = Sellvale.where(["fecha >= ? and fecha <= ? and processed = ? and tipo = ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ,"0","2" ]).order(:cod_prod,:fecha)
    
     return @contado
  end 
- def  get_parte_3(fecha1,fecha2) 
+ #Vale credito todos 
+ def  get_parte_4(fecha1,fecha2) 
    
-     @contado = Sellvale.where(["fecha >= ? and fecha <= ? and processed = ? and tipo = ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ,"0","1" ]).order(:cod_prod,:fecha)
+     @contado = Sellvale.where(["fecha >= ? and fecha <= ? and tipo = ?  and td= ?", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ,"1","N" ]).order(:cod_prod,:fecha)
    
     return @contado
  end 
- def  get_parte_4(fecha1,fecha2,cliente) 
+ def  get_parte_3(fecha1,fecha2,cliente) 
    
-     @contado = Sellvale.where(["fecha >= ? and fecha <= ? and processed = ? and tipo = ? and cod_cli = ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ,"0","1",cliente ]).order(:cod_prod,:fecha)
+     @contado = Sellvale.where(["fecha >= ? and fecha <= ?  and tipo = ? and td = ?  and cod_cli = ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ,"2","N",client ]).order(:cod_prod,:fecha)
    
     return @contado
  end 

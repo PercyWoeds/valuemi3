@@ -106,10 +106,18 @@ class Sellvale < ActiveRecord::Base
   
   def get_vale_facturado
       
-      a = FacturaDetail.find_by(factura_id: self.id)
+      a = FacturaDetail.find_by(sellvale_id: self.id)
       if a 
+         begin 
         b = Factura.find(a.factura_id)
-        return b.code  
+        if b 
+            return b.code  
+        else
+            return ""
+        end 
+        rescue 
+        
+    end 
       else
           return ""
       end
