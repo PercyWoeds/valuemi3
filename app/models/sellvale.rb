@@ -77,18 +77,31 @@ class Sellvale < ActiveRecord::Base
               lcTotal = quote.total
               lcRucCliente = " "
               
-          a = Factura.new(company_id:1,location_id:1, division_id: 1, customer_id: 7 , description: "", comments:"", code: lcCode ,
-          subtotal: lcVventa , tax: lcTax , total: lcTotal, processed: "0", date_processed: Date.today, user_id: 1, fecha: quote.fecha, 
-          serie: "BB02", numero: lcCode, payment_id: 8,  charge: 0, balance: lcTotal, moneda_id: 2, 
-          observ: "VENTA PLAYA", fecha2: quote.fecha, detraccion: 0, numero2: "", document_id: 3, descuento: 0,tipo: 1,ruc:lcRucCliente )
-          a.save
-          lcCode = ""
+     #     a = Factura.new(company_id:1,location_id:1, division_id: 1, customer_id: 7 , description: "", comments:"", code: lcCode ,
+     #     subtotal: lcVventa , tax: lcTax , total: lcTotal, processed: "0", date_processed: Date.today, user_id: 1, fecha: quote.fecha, 
+     #     serie: "BB02", numero: lcCode, payment_id: 8,  charge: 0, balance: lcTotal, moneda_id: 2, 
+     #     observ: "VENTA PLAYA", fecha2: quote.fecha, detraccion: 0, numero2: "", document_id: 3, descuento: 0,tipo: 1,ruc:lcRucCliente )
+     #     a.save
+     #     lcCode = ""
         
           end 
         
         
     end     
     
+  def get_customer_name(codigo) 
+      
+      a=Customer.find_by(account: codigo)
+      
+      if a
+          
+          return a.name 
+      else 
+          return "Codigo no existe"
+          
+      end 
+      
+  end       
     
   def get_product_name(codigo) 
       

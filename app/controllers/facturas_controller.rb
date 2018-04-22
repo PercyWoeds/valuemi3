@@ -92,7 +92,9 @@ def reportes5
     @company=Company.find(1)          
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]    
-    @cliente = params[:customer_id]    
+    @cliente = params[:cod_cli]    
+    
+       
     
     @contado_rpt = @company.get_parte_3(@fecha1,@fecha2,@cliente)
     
@@ -100,7 +102,17 @@ def reportes5
     case params[:print]
       when "To PDF" then 
         begin 
-         render  pdf: "Vale5 ",template: "varillajes/parte5_rpt.pdf.erb",locals: {:varillajes => @contado_rpt}
+         render  pdf: "Vale5 ",template: "varillajes/parte5_rpt.pdf.erb",locals: {:varillajes => @contado_rpt},
+         :orientation      => 'Landscape',
+         :header => {
+           :spacing => 5,
+                           :html => {
+                     :template => 'layouts/pdf-header.html',
+                           right: '[page] of [topage]'
+                  }
+               }
+               
+               
         
         end   
       when "To Excel" then render xlsx: 'exportxls'
