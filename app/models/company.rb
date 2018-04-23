@@ -2714,7 +2714,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
         end 
      end 
      
-     
+    if product1 == 1 
     @ventas  = Sellvale.where('fecha>= ? and fecha <= ? and td<> ? ',"#{fecha1} 00:00:00","#{fecha2} 23:59:59","N")
 
      for sal in @ventas
@@ -2753,7 +2753,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
          lcDocumento = ""
        end 
      end 
-    
+    end 
     
     @ajuste = Ajust.where('fecha1>= ? and fecha1 <= ?',"#{fecha1} 00:00:00","#{fecha2} 23:59:59")
 
