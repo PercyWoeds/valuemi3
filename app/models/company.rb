@@ -2682,7 +2682,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
      end 
      
      
-    @ventas  = Sellvale.where('fecha>= ? and fecha <= ?  and balance > 0 ',"#{fecha1} 00:00:00","#{fecha2} 23:59:59")
+    @ventas  = Sellvale.where('fecha>= ? and fecha <= ? and td<> ? ',"#{fecha1} 00:00:00","#{fecha2} 23:59:59","N")
 
      for sal in @ventas
         $lcFecha     = sal.fecha 
