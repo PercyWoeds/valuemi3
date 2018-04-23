@@ -2468,6 +2468,39 @@ def get_purchaseorder_detail2(fecha1,fecha2)
                 
         end 
      end 
+     #ventas
+    @ventas  = Factura.where('fecha <  ?',"#{fecha1} 00:00:00")  
+    
+     for sal in @ventas      
+        @venta_detail=  FacturaDetail.where(:output_id=>sal.id)
+
+        for detail in @venta_detail 
+        
+          movdetail  = MovementDetail.find_by(:product_id=>detail.product_id)          
+
+          if movdetail
+
+            if detail.quantity == nil
+              movdetail.ingreso += 0   
+            else
+              movdetail.ingreso -= detail.quantity
+              movdetail.amount  -= detail.quantity
+            end
+
+ 
+            movdetail.save           
+
+          else     
+          
+            #detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>0,:salida =>detail.quantity,
+            #:price=>detail.price,:product_id=> detail.product_id,:tm=>"3")
+            #detail.save 
+
+          end
+        
+        end 
+     end 
+
 
      #salidas 
     @sal  = Output.where('fecha <  ?',"#{fecha1} 00:00:00")  
@@ -2686,7 +2719,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
 
      for sal in @ventas
         $lcFecha     = sal.fecha 
-        $lcDocumento = sal.code
+        $lcDocumento = sal.serie << sal.numero 
         $lcDocumentId = "12"
         
 
@@ -2717,7 +2750,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
             #detail.save 
 
           end   
-        
+         lcDocumento = ""
        end 
      end 
     
