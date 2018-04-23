@@ -168,7 +168,7 @@ def reportes7
     case params[:print]
       when "To PDF" then 
         begin 
-         render  pdf: "Vale5 ",template: "varillajes/parte6_rpt.pdf.erb",locals: {:varillajes => @contado_rpt},
+         render  pdf: "Vale5 ",template: "varillajes/parte7_rpt.pdf.erb",locals: {:varillajes => @contado_rpt},
          :orientation      => 'Landscape',
          :header => {
            :spacing => 5,
