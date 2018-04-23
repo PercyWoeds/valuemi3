@@ -2113,6 +2113,38 @@ def get_purchaseorder_detail2(fecha1,fecha2)
         
         end 
      end 
+          #ventas
+    @ventas  = Factura.where('fecha < ?',"#{fecha1} 00:00:00")
+
+     for sal in @ventas  
+        $lcFecha = sal.fecha 
+
+        @ventasdetail=  FacturaDetail.where(:factura_id=>sal.id)
+
+        for detail in @ventasdetail 
+
+          movdetail  = MovementDetail.find_by(:product_id=>detail.product_id)
+
+          if movdetail
+
+            if detail.quantity == nil
+              movdetail.salida = 0   
+            else
+              movdetail.salida += detail.quantity
+            end
+              movdetail.save           
+          else     
+          
+            #detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>0,:salida =>detail.quantity,
+            #:price=>detail.price,:product_id=> detail.product_id,:tm=>"3")
+            #detail.save 
+
+          end   
+        end 
+     end 
+     
+
+     
 
    #actualiza ajustes de inventarios
    
@@ -2472,7 +2504,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
     @ventas  = Factura.where('fecha <  ?',"#{fecha1} 00:00:00")  
     
      for sal in @ventas      
-        @venta_detail=  FacturaDetail.where(:output_id=>sal.id)
+        @venta_detail=  FacturaDetail.where(:factura_id=>sal.id)
 
         for detail in @venta_detail 
         
