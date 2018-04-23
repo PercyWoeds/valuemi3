@@ -2724,15 +2724,15 @@ def get_purchaseorder_detail2(fecha1,fecha2)
         
 
         for detail in @ventas
-          if detail.product_id =='02'
+          if detail.cod_prod =='02'
             lcproductid = 2
           end 
           
-          if detail.product_id =='03'
+          if detail.cod_prod =='03'
               lcproductid = 3
           end 
           
-          if detail.product_id =='05'
+          if detail.cod_prod =='05'
               lcproductid = 1
           end 
           
