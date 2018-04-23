@@ -134,10 +134,21 @@ class Sellvale < ActiveRecord::Base
       else
           return ""
       end
-      
-      
-      
+
   end 
+  def get_tarjeta_name(codigo) 
+      
+      a= Tarjetum.find(codigo)
+      
+      if a
+          
+          return a.nombre
+      else 
+          return "Tarjeta no existe"
+          
+      end 
+      
+  end       
 
 
 end

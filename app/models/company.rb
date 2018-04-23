@@ -3044,6 +3044,7 @@ def get_purchases_pendientes_day_value(fecha1,fecha2,value = "total_amount",clie
    
     return @contado
  end 
+ 
  def  get_parte_3(fecha1,fecha2,cliente) 
    
      @contado = Sellvale.where(["fecha >= ? and fecha <= ?  and tipo = ? and td = ?  and cod_cli = ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ,"1","N",cliente]).order(:cod_prod,:fecha)
@@ -3051,7 +3052,19 @@ def get_purchases_pendientes_day_value(fecha1,fecha2,value = "total_amount",clie
     return @contado
  end 
  
+ def  get_parte_5(fecha1,fecha2) 
+   
+     @contado = Sellvale.where(["fecha >= ? and fecha <= ? and td <> ?  and fpago <> ?", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ,"N","1" ]).order(:cod_prod,:fecha,:fpago)
+   
+    return @contado
+ end 
  
+ def  get_parte_6(fecha1,fecha2) 
+   
+     @contado = Sellvale.where(["fecha >= ? and fecha <= ? and tipo = ?  and td= ?", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ,"2","N" ]).order(:cod_prod,:fecha)
+   
+    return @contado
+ end 
  
  
 def get_facturas_by_day_value(fecha1,fecha2,moneda,value='total')

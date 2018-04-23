@@ -120,6 +120,71 @@ def reportes5
     end
   end
 
+#tarjeta credito por clientes todos 
+def reportes6
+  
+    @company=Company.find(1)          
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]    
+    @cliente = params[:cod_cli]    
+       
+    
+    @contado_rpt = @company.get_parte_5(@fecha1,@fecha2)
+    
+    
+    case params[:print]
+      when "To PDF" then 
+        begin 
+         render  pdf: "Vale5 ",template: "varillajes/parte6_rpt.pdf.erb",locals: {:varillajes => @contado_rpt},
+         :orientation      => 'Landscape',
+         :header => {
+           :spacing => 5,
+                           :html => {
+                     :template => 'layouts/pdf-header.html',
+                           right: '[page] of [topage]'
+                  }
+               }
+               
+               
+        
+        end   
+      when "To Excel" then render xlsx: 'exportxls'
+      else render action: "index"
+    end
+  end
+
+#tarjeta credito por clientes todos 
+def reportes7
+  
+    @company=Company.find(1)          
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]    
+    @cliente = params[:cod_cli]    
+       
+    
+    @contado_rpt = @company.get_parte_6(@fecha1,@fecha2)
+    
+    
+    case params[:print]
+      when "To PDF" then 
+        begin 
+         render  pdf: "Vale5 ",template: "varillajes/parte6_rpt.pdf.erb",locals: {:varillajes => @contado_rpt},
+         :orientation      => 'Landscape',
+         :header => {
+           :spacing => 5,
+                           :html => {
+                     :template => 'layouts/pdf-header.html',
+                           right: '[page] of [topage]'
+                  }
+               }
+               
+               
+        
+        end   
+      when "To Excel" then render xlsx: 'exportxls'
+      else render action: "index"
+    end
+  end
 
 
 def rpt_factura_all
@@ -1856,8 +1921,7 @@ def print
         $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
         puts "ruta******"
         puts lib 
-        
-        
+      
         
         require 'sunat'
         require './config/config'
