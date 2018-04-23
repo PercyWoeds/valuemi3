@@ -2224,7 +2224,38 @@ def get_purchaseorder_detail2(fecha1,fecha2)
         end 
      end 
 
-     #salidas 
+     #ventas
+    @ventas  = Factura.where('fecha>= ? and fecha <= ?',"#{fecha1} 00:00:00","#{fecha2} 23:59:59")
+
+     for sal in @ventas  
+        $lcFecha = sal.fecha 
+
+        @ventasdetail=  FacturaDetail.where(:factura_id=>sal.id)
+
+        for detail in @ventasdetail 
+
+          movdetail  = MovementDetail.find_by(:product_id=>detail.product_id)
+
+          if movdetail
+
+            if detail.quantity == nil
+              movdetail.salida = 0   
+            else
+              movdetail.salida += detail.quantity
+            end
+              movdetail.save           
+          else     
+          
+            #detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>0,:salida =>detail.quantity,
+            #:price=>detail.price,:product_id=> detail.product_id,:tm=>"3")
+            #detail.save 
+
+          end   
+        end 
+     end 
+     
+     
+          #salidas
     @sal  = Output.where('fecha>= ? and fecha <= ?',"#{fecha1} 00:00:00","#{fecha2} 23:59:59")
 
      for sal in @sal 
@@ -2253,6 +2284,8 @@ def get_purchaseorder_detail2(fecha1,fecha2)
           end   
         end 
      end 
+
+     
 # ajustes de inventarios
 
 
@@ -3058,11 +3091,18 @@ def get_purchases_pendientes_day_value(fecha1,fecha2,value = "total_amount",clie
    
     return @contado
  end 
- 
+ #pago adelantado 
  def  get_parte_6(fecha1,fecha2) 
    
      @contado = Sellvale.where(["fecha >= ? and fecha <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59"  ]).order(:cod_prod,:fecha).joins("INNER JOIN customers ON sellvales.cod_cli = customers.account AND customers.tipo = '2' ")
    
+    return @contado
+ end 
+ 
+ #pago adelantado  saldo inicial
+ def  get_parte_6b(fecha1,fecha2) 
+   
+     @contado = Sellvale.where(["fecha < ? ", "#{fecha1} 00:00:00"]).order(:cod_prod,:fecha).joins("INNER JOIN customers ON sellvales.cod_cli = customers.account AND customers.tipo = '2' ")
     return @contado
  end 
  
@@ -3120,6 +3160,18 @@ def get_facturas_by_day_value(fecha1,fecha2,moneda,value='total')
        return facturas 
  
   end 
+  #Saldo inicial 
+  def  get_ventas_adelantado_b(fecha1,fecha2) 
+      ret = 0
+      @facturas = Factura.where(["fecha <  ?" , "#{fecha1} 00:00:00"] ).order(:fecha).joins("INNER JOIN customers ON facturas.customer_id = customers.id AND customers.tipo = '2' ")
+       for detalle in @facturas
+            ret += @facturas.total 
+       end 
+       
+       return ret
+ 
+  end 
+  
   def  get_ventas_directa(fecha1,fecha2) 
 
       facturas = Factura.where(["fecha >= ?  and fecha <=  ?" , "#{fecha1} 00:00:00","#{fecha2} 23:59:59"] ).order(:fecha).joins("INNER JOIN customers ON facturas.customer_id = customers.id AND customers.tipo = '3' ")

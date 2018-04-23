@@ -343,6 +343,40 @@ def reportes07
     end
   end
 
+def reportes08
+
+
+    @company=Company.find(1)          
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]    
+    @moneda = params[:moneda_id]
+    
+
+    @facturas_rpt = @company.get_ventas_adelantado(@fecha1,@fecha2)          
+    @facturas_detalle = @company.get_parte_6(@fecha1,@fecha2)          
+    
+    case params[:print]
+      when "To PDF" then 
+        begin 
+         render  pdf: "Facturas ",template: "facturas/rventas08_rpt.pdf.erb",
+         locals: {:facturass => @facturas_rpt},
+           :header => {
+           :spacing => 5,
+                           :html => {
+                     :template => 'layouts/pdf-header.html',
+                           right: '[page] of [topage]'
+                  }
+               }
+               
+               
+        end   
+      when "To Excel" then render xlsx: 'reportes08'
+        
+      else render action: "index"
+    end
+  end
+
+
   def discontinue
     
     @facturasselect = Factura.find(params[:products_ids])
