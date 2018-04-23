@@ -2718,7 +2718,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
      end 
 
      #salidas 
-    @ventas  = Factura.where('fecha>= ? and fecha <= ? and substring(code,1,4)= ? ',"#{fecha1} 00:00:00","#{fecha2} 23:59:59","FF02")
+    @ventas  = Factura.where('fecha>= ? and fecha <= ? ',"#{fecha1} 00:00:00","#{fecha2} 23:59:59","FF02")
 
      for sal in @ventas
         $lcFecha     = sal.fecha 
