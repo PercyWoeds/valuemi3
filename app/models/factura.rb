@@ -343,6 +343,13 @@ class Factura < ActiveRecord::Base
     
     return @itemproducts
   end
+  def get_products_2 
+    @itemproducts = FacturaDetail.find_by_sql(['Select factura_details.price,
+    	factura_details.quantity,factura_details.discount,factura_details.total,products.name ,products.code 
+  	 from factura_details INNER JOIN products ON factura_details.product_id = products.id where factura_details.factura_id = ?', self.id ])
+    
+    return @itemproducts
+  end
   
    
   def get_guias    

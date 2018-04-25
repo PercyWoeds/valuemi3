@@ -1,4 +1,3 @@
-include UsersHelper
 include CustomersHelper
 include ServicesHelper
 require "open-uri"
@@ -416,7 +415,13 @@ def reportes08
   def pdf
     @invoice = Factura.find(params[:id])
     respond_to do |format|
-      format.html { redirect_to("/facturas/pdf/#{@invoice.id}.pdf") }
+      format.html { 
+        begin 
+         render  pdf: "Facturas ",template: "facturas/ticket_rpt2.pdf.erb",
+         locals: {:facturas => @invoice}
+         
+        end   
+      }
       format.pdf { render :layout => false }
     end
   end
@@ -1333,7 +1338,7 @@ def newfactura2
        for  product in @facturas_rpt
 
             row = []          
-            row << product.document.deFAacscripshort
+            row << product.document.descripshort
             row << product.code
             row << product.fecha.strftime("%d/%m/%Y")            
             if ruc != nil

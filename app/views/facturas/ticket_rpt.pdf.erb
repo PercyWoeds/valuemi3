@@ -1,0 +1,90 @@
+<html>
+<body >
+    
+  <font size="2" face="Courier New" >  
+  
+ <%= @invoice.company.name %>
+ <br>
+ 
+ RUC <%= @invoice.company.ruc %> 
+ <br>
+<%= @invoice.company.address1 %>
+ <br>
+<%= @invoice.company.address2 %> - <%= @invoice.company.city%>
+ <br>
+<% if @invoice.document_id == 7 %>
+  <%= @invoice.document.description %> DE VENTA ELECTRONICA
+   <br>
+<%end  %>
+<% if @invoice.document_id == 2 %>
+  <%= @invoice.document.description%> DE VENTA ELECTRONICA 
+   <br>
+<% end %>
+<%= @invoice.code%>
+ <br>
+CAJERO : <%= @invoice.user.first_name %>
+ <br>
+
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+      <% nroitem = 1%>
+      <% total_1 = 0%>
+      <% total_2 = 0%>
+      
+
+       <% for product  in @invoice.get_products_2  %>
+                <tr>
+                    <td width = "5%" align ="right"> <%= product.code    %> </td>
+                    <td width = "10%" ><%=  product.name %></td>
+                    <td width = "35%" align ="left"><%= sprintf("%.2f",product.quantity)   %></td>
+                    <td width = "8%" align ="right"><%= sprintf("%.2f",product.price)    %></td>
+                    <td width = "10%" align ="right"><%= sprintf("%.3f",product.total)   %></td>
+                </tr>
+                    <% total_1 += product.quantity %>    
+                    
+                    
+         <%end %>
+               
+        <hr>  
+  </table>
+  <hr>
+     
+    <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+      
+     <tr>
+          <td width = "60%" align ="right"> OP.INAFECTA</td>
+          <td width = "40%" align ="right">0.00</td>
+     </tr>
+    
+     <tr>
+          <td width = "60%" align ="right"> OP.GRAVADA :</td>
+          <td width = "40%" align ="right"><%= money(@invoice.subtotal) %></td>
+     </tr>
+     <tr>
+          <td width = "60%" align ="right">I.G.V. S/.</td>
+          <td width = "40%" align ="right"><%= money(@invoice.tax) %></td>
+     </tr>
+     <tr>
+          <td width = "60%" align ="right"> TOTAL S/.</td>
+          <td width = "40%" align ="right"><%= money(@invoice.total) %></td>
+     </tr>
+    
+
+
+   </table>
+         
+ CLIENTE: <%= @invoice.customer.name %>
+  <br>
+Autorizado mediante Resolucion de Intendencia Nro.034-005-0005592/SUNAT del 22/06/2016
+ <br>
+
+<img src="https://chart.googleapis.com/chart?chs=120x120&cht=qr&chl=#{$lcCodigoBarra}&choe=UTF-8">
+
+
+ <br>
+ 
+<%= @invoice.fecha.strftime("%d/%m/%Y") %> 
+
+    </body>
+      
+      </html>
+      

@@ -124,7 +124,7 @@
       put :discontinue 
     end 
     collection { post :print }
-    
+    collection { post :print1 }
   end 
     
   
