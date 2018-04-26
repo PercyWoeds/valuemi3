@@ -7,7 +7,7 @@ class Sellvale < ActiveRecord::Base
     def self.import(file)
         TmpFactura.delete_all 
         
-          CSV.foreach(file.path, headers: true, encoding:'iso-8859-1:utf-8') do |row|
+       CSV.foreach(file.path, headers: true, encoding:'iso-8859-1:utf-8') do |row|
            
            
            row['cod_prod'] =  row['cod_prod'].rjust(2, '0')  
@@ -39,7 +39,7 @@ class Sellvale < ActiveRecord::Base
           
           lcCode = row['serie'] << "-" << row['numero']
           
-          if row['td']!="N"
+           if row['td']!="N"
                   lcVventa0 = row['importe'].to_f / 1.18
                   lcVventa =lcVventa0.round(2)
                   lcTax0   =  row['importe'].to_f  - lcVventa
@@ -57,36 +57,11 @@ class Sellvale < ActiveRecord::Base
           lcTipoVale ='1'
           lcRucCliente =row['ruc']
           
-          a= TmpFactura.new(subtotal: lcVventa , tax: lcTax , total: lcTotal, fecha: lcFecha, serie: row['serie'], numero:  row['numero'])
-          a.save
           
-        #  a= Factura.new(company_id:1,location_id:1, division_id: 1, customer_id: lcCustomerId , description: "", comments:"", code: lcCode ,
-        #  subtotal: lcVventa , tax: lcTax , total: lcTotal, processed: "0", date_processed: Date.today, user_id: 1, fecha: lcFecha, 
-        #  serie: row['serie'], numero:  row['numero'], payment_id: 8,  charge: 0, balance: lcTotal, moneda_id: 2, 
-        #  observ: "VENTA PLAYA", fecha2: lcFecha, detraccion: 0, numero2: "", document_id: 3, descuento: 0,tipo: lcTipoVale,ruc:lcRucCliente )
-        #  a.save
-        end
-        
-         @factura = TmpFactura.select("fecha,MAX(numero) as minimo, MIN(numero) as maximo,sum(total) as total").where('td <> ?',"N").group(:fecha)
-         
-          @factura.each do |quote|
-              lcCode = quote.minimo << " -" << quote.maximo
-              lcVventa = quote.total  / 1.18
-              lcTax =  quote.total - lcVventa
-              lcTotal = quote.total
-              lcRucCliente = " "
-              
-     #     a = Factura.new(company_id:1,location_id:1, division_id: 1, customer_id: 7 , description: "", comments:"", code: lcCode ,
-     #     subtotal: lcVventa , tax: lcTax , total: lcTotal, processed: "0", date_processed: Date.today, user_id: 1, fecha: quote.fecha, 
-     #     serie: "BB02", numero: lcCode, payment_id: 8,  charge: 0, balance: lcTotal, moneda_id: 2, 
-     #     observ: "VENTA PLAYA", fecha2: quote.fecha, detraccion: 0, numero2: "", document_id: 3, descuento: 0,tipo: 1,ruc:lcRucCliente )
-     #     a.save
-     #     lcCode = ""
-        
-          end 
-        
-        
+       
+       end 
     end     
+        
     
   def get_customer_name(codigo) 
       
