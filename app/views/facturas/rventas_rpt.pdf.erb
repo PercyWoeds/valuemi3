@@ -1,16 +1,9 @@
 <html>
 <body>
     
- 
-  <h4 ><center> Documento emitidos  </center>   </h4>
+  <h4 ><center> Documento emitidos Desde: <%= @fecha1 %>  Hasta: <%= @fecha2 %>   </center>   </h4>
+    
   
-  <h5><center> Desde: <%= @fecha1 %>  Hasta: <%= @fecha2 %>  </center></h5>
-  
-  <% if @moneda == 2%>
-  <h5><center> Moneda  : Soles </center></h5>  
-  <% else %>
-  <h5><center> Moneda  : Dolares </center></h5>  
-  <% end %>
   
   <font size="2" face="Courier New" >  
   <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
@@ -25,13 +18,15 @@
   <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
   <tr bgcolor="#B4D7F7">
     <td width="5%"> TD </td>
+    <td width="5%"> Serie  </td>
     <td width="10%"> Numero  </td>
-    <td width="12%"> Fecha </td>
-    <td width="25%"> Cliente </td>
+    <td width="10%"> Fecha </td>
+    <td width="10%"> Ruc </td>
+    <td width="24%"> Cliente </td>
     <td width="5%"> Mon. </td>
-    <td width="12%"> V.Venta</td>
-    <td width="12%"> IGV </td>
-    <td width="12%"> IMPORTE </td>
+    <td width="8%"> V.Venta</td>
+    <td width="8%"> IGV </td>
+    <td width="8%"> IMPORTE </td>
     
     
     
@@ -49,19 +44,11 @@
        
                     <tr>
                     <td width= "5%" ><%= detalle.document.descripshort  %></td>
-                    <td width= "10%" ><%=  detalle.code %>   </td>
-                    <td width = "12%" align ="center"><%= detalle.fecha.strftime("%d/%m/%Y")     %></td>
-                    <% if detalle.ruc != nil %>
-                      <td width = "12%" align ="left"><%= detalle.ruc   %> </td>
-                    <% else%>
-                    
-                      <td width = "12%" align ="left"><%= detalle.customer.ruc   %> </td>
-                      
-                    <% end %>
-                    
-                    <td width = "25%" align ="left"><%= detalle.customer.name   %> </td>
-                    
-                    
+                    <td width= "5%" ><%=  detalle.serie %>   </td>
+                    <td width= "10%" ><%=  detalle.numero %>   </td>
+                    <td width = "10%" align ="center"><%= detalle.fecha.strftime("%d/%m/%Y")     %></td>
+                    <td width = "10%" align ="left"><%= detalle.ruc   %> </td>
+                    <td width = "24%" align ="left"></td>
                     <% if detalle.moneda_id == 1 %>
                     <td width = "5%" align ="center"> USD </td>
                     <% else %>
@@ -78,9 +65,9 @@
                   <% lctax =  detalle.tax %>
                   <% lctotal = detalle.total %>
                 <% end %>
-                <td width = "12%" align ="right"><%= sprintf("%.2f",lcsubtotal)   %></td>
-                <td width = "12%" align ="right"><%= sprintf("%.3f",lctax)   %></td>
-                <td width = "12%" align ="right"><%= sprintf("%.2f",lctotal)   %></td>
+                <td width = "8%" align ="right"><%= sprintf("%.2f",lcsubtotal)   %></td>
+                <td width = "8%" align ="right"><%= sprintf("%.2f",lctax)   %></td>
+                <td width = "8%" align ="right"><%= sprintf("%.2f",lctotal)   %></td>
                 </tr>
             
          <% end %>
@@ -96,10 +83,10 @@
      
      <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
      <tr bgcolor="#B4D7F7">
-          <td width = "70%" align ="center">Totales  </td>
-          <td width = "10%" align ="right"><%= sprintf("%.3f",subtotal)   %></td>
-          <td width = "10%" align ="right"><%= sprintf("%.3f",tax)   %></td>
-          <td width = "10%" align ="right"><%= sprintf("%.2f",total)   %></td>
+          <td width = "76%" align ="center">Totales  </td>
+          <td width = "8%" align ="right"><%= sprintf("%.2f",subtotal)   %></td>
+          <td width = "8%" align ="right"><%= sprintf("%.2f",tax)   %></td>
+          <td width = "8%" align ="right"><%= sprintf("%.2f",total)   %></td>
     </tr>
    </table>
 

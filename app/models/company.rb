@@ -563,33 +563,83 @@ def get_guias_2(fecha1,fecha2)
 ## ESTADO DE CUENTA 
  def get_facturas_day(fecha1,fecha2,moneda)
    
-    @boletas = Sellvale.select("fecha,serie,td,MAX(numero) as minimo, MIN(numero) as maximo,sum(importe2) as total").where('td <> ?',"N").group(:fecha,:td,:ruc)
+  a =  Sellvale.where(["fecha >= ? and fecha<= ? and td <> ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59","N" ])
+  
+  for dato in a 
     
-    @facturas = Factura.where([" company_id = ? AND fecha >= ? and fecha<= ? and moneda_id = ? and substring(code,1,4)<> ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59",moneda,"BB02" ]).order(:id )
+    dato.importe2 = dato.importe.to_f 
+    dato.update_attributes(:importe2=> dato.importe.to_f)
+    
+    puts dato.numero 
+  
+  end 
+   
+    @boletas = Sellvale.select("fecha,td,ruc,MIN(numero) as minimo, MAX(numero) as maximo,sum(importe2) as total").where(["fecha >= ? and fecha<= ? and td<> ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59","N" ]).group(:fecha,:td,:ruc)
+
+  
+    TmpFactura.delete_all
     
     for boleta in @boletas  
     
           lcCode = boleta.minimo << "-" << boleta.maximo 
-          lcSerie = boleta.serie 
-          lcVventa0 = boleta.importe.to_f / 1.18
-          lcVventa =lcVventa0.round(2)
-          lcTax0   =  boleta.importe.to_f  - lcVventa
-          lcTax    = lcTax0
-          lcTotal0 = boleta.importe.to_f 
-          lcTotal  = lcTotal0.round(2)  
-          lcFecha = boleta.fecha
-          lcTd = boleta.td 
-          if boleta.ruc !=""
-            lcRucCliente = boleta.ruc 
-          else
-            lcRucCliente = ""
-          end 
-
-      a= TmpFactura.new(subtotal: lcVventa , tax: lcTax , total: lcTotal, fecha: lcFecha, serie: lcSerie, numero: lcNumero,td: lcTd,ruc: lcRucCliente)
-
+          lcSerie = "BB02"
+          
+          if boleta.total != nil 
+            lcVventa0 = boleta.total / 1.18
+            
+            lcVventa =lcVventa0.round(2)
+            lcTax0   =  boleta.total  - lcVventa
+            lcTax    = lcTax0
+            lcTotal0 = boleta.total
+            lcTotal  = lcTotal0.round(2)  
+            lcFecha = boleta.fecha
+            lcTd = boleta.td 
+            if boleta.ruc !=""
+              lcRucCliente = boleta.ruc 
+            else
+              lcRucCliente = ""
+            end 
+            
+            
+          a= TmpFactura.new(document_id: 3 ,subtotal: lcVventa , tax: lcTax , total: lcTotal, fecha: lcFecha, serie: lcSerie, numero: lcCode,td: lcTd,ruc: lcRucCliente, moneda_id:2)
+          a.save 
+        end 
+      lcCode=""
     end
     
-    return @facturas
+    @facturas = Factura.where([" company_id = ? AND fecha >= ? and fecha<= ? and moneda_id = ? and substring(code,1,4)<> ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59",moneda,"BB02" ]).order(:id )    
+      for boleta in @facturas
+    
+          lcCode = boleta.numero 
+          lcSerie = boleta.serie 
+          
+          if boleta.total != nil 
+            lcVventa0 = boleta.total / 1.18
+            
+            lcVventa =lcVventa0.round(2)
+            lcTax0   =  boleta.total  - lcVventa
+            lcTax    = lcTax0
+            lcTotal0 = boleta.total
+            lcTotal  = lcTotal0.round(2)  
+            lcFecha = boleta.fecha
+            lcTd = boleta.document.descripshort
+            
+            lcRucCliente = boleta.customer.ruc 
+            
+            
+          a= TmpFactura.new(document_id: 3 ,subtotal: lcVventa , tax: lcTax , total: lcTotal, fecha: lcFecha, serie: lcSerie, numero: lcCode,td: lcTd,ruc: lcRucCliente, moneda_id:2)
+          a.save 
+        end 
+      lcCode=""
+    end
+  
+    
+    
+    
+    @tmpfacturas=TmpFactura.all.order(:fecha,:td,:serie)
+    return @tmpfacturas 
+    
+    
     
  end 
  

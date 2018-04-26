@@ -206,8 +206,8 @@ def rpt_factura_all
     case params[:print]
       when "To PDF" then 
         begin 
-         render  pdf: "Facturas ",template: "facturas/rventas_rpt.pdf.erb",locals: {:facturass => @facturas_rpt}
-        
+         render  pdf: "Facturas ",template: "facturas/rventas_rpt.pdf.erb",locals: {:facturas => @facturas_rpt},
+        :orientation      => 'Landscape'
         end   
       when "To Excel" then render xlsx: 'exportxls'
       else render action: "index"
