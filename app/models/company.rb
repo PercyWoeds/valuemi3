@@ -562,8 +562,33 @@ def get_guias_2(fecha1,fecha2)
 
 ## ESTADO DE CUENTA 
  def get_facturas_day(fecha1,fecha2,moneda)
+   
+    @boletas = Sellvale.select("fecha,serie,td,MAX(numero) as minimo, MIN(numero) as maximo,sum(importe2) as total").where('td <> ?',"N").group(:fecha,:td,:ruc)
+    
+    @facturas = Factura.where([" company_id = ? AND fecha >= ? and fecha<= ? and moneda_id = ? and substring(code,1,4)<> ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59",moneda,"BB02" ]).order(:id )
+    
+    for boleta in @boletas  
+    
+          lcCode = boleta.minimo << "-" << boleta.maximo 
+          lcSerie = boleta.serie 
+          lcVventa0 = boleta.importe.to_f / 1.18
+          lcVventa =lcVventa0.round(2)
+          lcTax0   =  boleta.importe.to_f  - lcVventa
+          lcTax    = lcTax0
+          lcTotal0 = boleta.importe.to_f 
+          lcTotal  = lcTotal0.round(2)  
+          lcFecha = boleta.fecha
+          lcTd = boleta.td 
+          if boleta.ruc !=""
+            lcRucCliente = boleta.ruc 
+          else
+            lcRucCliente = ""
+          end 
 
-    @facturas = Factura.where([" company_id = ? AND fecha >= ? and fecha<= ? and moneda_id = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59",moneda ]).order(:id )
+      a= TmpFactura.new(subtotal: lcVventa , tax: lcTax , total: lcTotal, fecha: lcFecha, serie: lcSerie, numero: lcNumero,td: lcTd,ruc: lcRucCliente)
+
+    end
+    
     return @facturas
     
  end 

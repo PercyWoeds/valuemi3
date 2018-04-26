@@ -66,9 +66,7 @@ class Ventaislas::VentaislaDetailsController < ApplicationController
          
          $lcGalones = @ventaisla.get_importe_1("galones")
          $lcImporte = @ventaisla.get_importe_1("total")
-         puts "-------------------"
-         puts $lcGalones
-         puts $lcImporte
+         
          @ventaisla.update_attributes(galones:  $lcGalones ,importe: $lcImporte )
          
          @pump = Pump.find($lcpump_id)
@@ -91,6 +89,13 @@ class Ventaislas::VentaislaDetailsController < ApplicationController
     @employee = Employee.all 
     @valor = Valor.all
     
+         $lcGalones = @ventaisla.get_importe_1("galones")
+         $lcImporte = @ventaisla.get_importe_1("total")
+         
+         @ventaisla.update_attributes(galones:  $lcGalones ,importe: $lcImporte )
+         
+    
+    
     respond_to do |format|
       if @ventaisla_detail.update(ventaisla_detail_params)
         format.html { redirect_to @ventaisla, notice: 'Ventaisla detail was successfully updated.' }
@@ -106,7 +111,12 @@ class Ventaislas::VentaislaDetailsController < ApplicationController
   # DELETE /ventaisla_details/1.json
   def destroy
     @ventaisla_detail.destroy
-       
+    
+     $lcGalones = @ventaisla.get_importe_1("galones")
+     $lcImporte = @ventaisla.get_importe_1("total")
+     
+     @ventaisla.update_attributes(galones:  $lcGalones ,importe: $lcImporte )
+            
     respond_to do |format|
       format.html { redirect_to ventaislas_url, notice: 'Ventaisla detail was successfully destroyed.' }
       format.json { head :no_content }

@@ -237,10 +237,12 @@
 <% end %>
 
 <% else%>
+
+<% if @invoice.processed  != "1" %>
 <div class="button">
   <%= link_to "Agregar Item","/facturas/newfactura2/#{@invoice.id}" %>
 </div> 
-
+<% end %>
  
   <tbody>
     <table>
@@ -272,9 +274,10 @@
           <%= money(quote.total) %>
         </td>
         
-        
-          
+          <% if @invoice.processed  != "1" %>
           <td><%= link_to 'Eliminar',[@invoice,quote], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <% end %>
+          
       </tr>
     <% end %>
     
