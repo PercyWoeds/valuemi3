@@ -39,6 +39,9 @@
       <% nroitem = 1%>
       <% total_1 =  0%>
       <% total_2 =  0%>
+      <% subtotal  =  0%>
+      <% tax   =  0%>
+      <% total =  0%>
       
        <% for  detalle in @facturas_rpt  %>
        
@@ -69,14 +72,15 @@
                 <td width = "8%" align ="right"><%= sprintf("%.2f",lctax)   %></td>
                 <td width = "8%" align ="right"><%= sprintf("%.2f",lctotal)   %></td>
                 </tr>
+                <% subtotal += lcsubtotal %>
+                <% tax += lctax %>
+                <% total += lctotal  %>
+                
             
          <% end %>
 
 
     
-      <% subtotal = @company.get_facturas_day_value(@fecha1,@fecha2, "subtotal",@moneda) %>
-      <% tax = @company.get_facturas_day_value(@fecha1,@fecha2, "tax",@moneda)%>
-      <% total = @company.get_facturas_day_value(@fecha1,@fecha2, "total",@moneda) %>
       
       <hr>  
      </table>

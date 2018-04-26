@@ -609,8 +609,12 @@ def get_guias_2(fecha1,fecha2)
     @facturas = Factura.where([" company_id = ? AND fecha >= ? and fecha<= ? and moneda_id = ? and substring(code,1,4)<> ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59",moneda,"BB02" ]).order(:id )    
       for boleta in @facturas
     
-          lcCode = boleta.numero 
-          lcSerie = boleta.serie 
+          lcCodigo = boleta.code.split("-") 
+          
+          
+          
+          lcCode = lcCodigo[2] 
+          lcSerie = lcCodigo[1] 
           
           if boleta.total != nil 
             lcVventa0 = boleta.total / 1.18
