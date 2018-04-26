@@ -232,6 +232,18 @@ new_purchase = SupplierPaymentDetail.new(:supplier_payment_id => self.id,
     end
   end
   
+  def get_factura
+    
+    invoice_products = SupplierPaymentDetail.where(supplier_payment_id: self.id)
+    
+    if invoice_products.first != nil 
+      return invoice_products.first.purchase.documento 
+    else
+      return "Pendiente"
+    end 
+    
+  end 
+  
   # Process the invoice
   def process
 

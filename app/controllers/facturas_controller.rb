@@ -418,7 +418,8 @@ def reportes08
       format.html { 
         begin 
          render  pdf: "Facturas ",template: "facturas/ticket_rpt2.pdf.erb",
-         locals: {:facturas => @invoice}
+         locals: {:facturas => @invoice},
+         disable_smart_shrinking: false 
          
         end   
       }

@@ -8,6 +8,10 @@
         <th class="bordered_right bordered_bottom" style="width: 350px;">
           Proveedor 
         </th>
+        <th class="bordered_right bordered_bottom" style="width: 350px;">
+          Factura 
+        </th>
+        
         <th class="bordered_right bordered_bottom">
           Total
         </th>
@@ -32,6 +36,10 @@
           <td class="bordered_right bordered_bottom">
             <%=  supplierpayment.supplier.name %>
           </td>
+          <td class="bordered_right bordered_bottom right">
+            <%= supplierpayment.get_factura %>
+          </td>
+          
           <td class="bordered_right bordered_bottom right">
             <%= money(supplierpayment.total) %>
           </td>

@@ -613,8 +613,8 @@ def get_guias_2(fecha1,fecha2)
           
           
           
-          lcCode = lcCodigo[2] 
-          lcSerie = lcCodigo[1] 
+          lcCode = lcCodigo[1] 
+          lcSerie = lcCodigo[0] 
           
           if boleta.total != nil 
             lcVventa0 = boleta.total / 1.18
