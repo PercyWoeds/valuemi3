@@ -9,14 +9,15 @@
   <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
   <tr bgcolor="#B4D7F7">
     <td width="5%"> Serie</td>
-    <td width="15%"> Numero  </td>
-    <td width="10%"> Cod.Cliente</td>
-    <td width="10%"> Nro.Vale </td>
-    <td width="10%"> Producto </td>
-    <td width="10%"> Cantidad </td>
+    <td width="5%"> Numero  </td>
+    <td width="5%"> Cod.Cliente</td>
+    <td width="25%"> Cliente</td>
+    <td width="5%"> Nro.Vale </td>
+    <td width="5%"> Producto </td>
+    <td width="8%"> Cantidad </td>
     <td width="8%"> Precio</td>
-    <td width="10%"> Importe </td>
-    <td width="10%"> Importe Lista </td>
+    <td width="8%"> Importe </td>
+    <td width="8%"> Importe Lista </td>
     
     
   </tr>
@@ -45,22 +46,23 @@
   </table>
 
   
-  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+  <table style='font-family:"Courier New", Courier, monospace; font-size:70% ;width:100%'>
       <% nroitem = 1%>
       <% total_1 =  0%>
       <% total_2 =  0%>
       
        <% for  credito in creditos  %>
                   <tr>
-                    <td width= "5%" ><%=  credito.serie %></td>
-                    <td width= "10%" ><%=  credito.numero  %></td>
-                    <td width = "8%" align ="right"><%= credito.cod_cli   %></td>
-                    <td width = "8%" align ="right"><%= credito.odometro    %></td>
-                    <td width = "10%" align ="right"><%= credito.cod_prod    %> </td>
-                    <td width = "10%" align ="right"><%=  sprintf("%.2f",credito.cantidad.to_s)%></td>
+                    <td width = "5%" ><%=  credito.serie %></td>
+                    <td width = "5%" ><%=  credito.numero  %></td>
+                    <td width = "5%" align ="left"><%= credito.cod_cli   %></td>
+                    <td width = "25%" align ="left"><%= credito.get_cliente(credito.cod_cli)   %></td>
+                    <td width = "5%" align ="left"><%= credito.odometro    %></td>
+                    <td width = "2%" align ="left"><%= credito.cod_prod    %> </td>
+                    <td width = "8%" align ="right"><%=  sprintf("%.2f",credito.cantidad.to_s)%></td>
                     <td width = "8%" align ="right"><%= sprintf("%.2f",credito.precio)   %></td>
-                    <td width = "10%" align ="right"><%= sprintf("%.3f",credito.importe)   %></td>
-                    <td width = "10%" align ="right"><%= sprintf("%.2f",credito.implista.to_s)   %></td>
+                    <td width = "8%" align ="right"><%= sprintf("%.3f",credito.importe)   %></td>
+                    <td width = "8%" align ="right"><%= sprintf("%.2f",credito.implista.to_s)   %></td>
                     </tr>
                     
                     
@@ -92,7 +94,7 @@
   </table>
 
   
-  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+  <table style='font-family:"Courier New", Courier, monospace; font-size:70% ;width:100%'>
       <% nroitem = 1%>
       <% total_1 = 0%>
       <% total_2 = 0%>
@@ -100,14 +102,15 @@
        <% for  credito in contados  %>
            <tr>
                     <td width= "5%" ><%=  credito.serie %></td>
-                    <td width= "10%" ><%=  credito.numero  %></td>
+                    <td width= "5%" ><%=  credito.numero  %></td>
                     <td width = "8%" align ="right"><%= credito.cod_cli   %></td>
-                    <td width = "8%" align ="right"><%= credito.odometro    %></td>
-                    <td width = "10%" align ="right"><%= credito.cod_prod    %> </td>
-                    <td width = "10%" align ="right"><%=  sprintf("%.2f",credito.cantidad.to_s)%></td>
+                    <td width = "25%" align ="left"><%= credito.get_cliente(credito.cod_cli)   %></td>
+                    <td width = "8%" align ="left"><%= credito.odometro    %></td>
+                    <td width = "2%" align ="left"><%= credito.cod_prod    %> </td>
+                    <td width = "8%" align ="right"><%=  sprintf("%.2f",credito.cantidad.to_s)%></td>
                     <td width = "8%" align ="right"><%= sprintf("%.2f",credito.precio)   %></td>
-                    <td width = "10%" align ="right"><%= sprintf("%.3f",credito.importe)   %></td>
-                    <td width = "10%" align ="right"><%= sprintf("%.2f",credito.implista.to_s)   %></td>
+                    <td width = "8%" align ="right"><%= sprintf("%.3f",credito.importe)   %></td>
+                    <td width = "8%" align ="right"><%= sprintf("%.2f",credito.implista.to_s)   %></td>
 
                         </tr>
                     <% total_1 = total_1 + credito.importe.to_f %>
@@ -235,6 +238,7 @@
                     <td width= "5%" ><%=  credito.serie %></td>
                     <td width= "10%" ><%=  credito.numero  %></td>
                     <td width = "8%" align ="right"><%= credito.cod_cli   %></td>
+                    
                     <td width = "8%" align ="right"><%= credito.odometro    %></td>
                     <td width = "10%" align ="right"><%= credito.cod_prod    %> </td>
                     <td width = "10%" align ="right"><%=  sprintf("%.2f",credito.cantidad.to_s)%></td>
