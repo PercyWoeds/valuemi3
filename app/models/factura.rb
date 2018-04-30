@@ -54,7 +54,12 @@ class Factura < ActiveRecord::Base
                      "DOLARES ",
                      "DETRACCION",
                      "OBSERV"]
-  
+  TABLE_HEADERS_TK = ["Cant.",
+                      "Codigo",
+                     "Descripcion",
+                     "V.Unit.",
+                     "Total" ]
+                     
 
   def self.search(search)
       where("code LIKE ?", "%#{search}%") 

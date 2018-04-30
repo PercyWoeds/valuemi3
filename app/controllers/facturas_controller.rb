@@ -413,21 +413,24 @@ def reportes08
 
     # Export invoice to PDF
   def pdf
-    @invoice = Factura.find(params[:id])
-    respond_to do |format|
-      format.html { 
-        begin 
-         render  pdf: "Facturas ",template: "facturas/ticket_rpt2.pdf.erb",
-         locals: {:facturas => @invoice},
-         disable_smart_shrinking: false,
-         :margin => {:top                => 0,                         # default 10 (mm)
-                           :left               => 0,
-                           :right              => 0}
-         
-        end   
-      }
-      format.pdf { render :layout => false }
-    end
+    @invoice = Factura.find($lcIdFactura)
+    @company = Company.find(1)
+    
+        Prawn::Document.generate "app/pdf_output/ticket2.pdf" , :margin => [10,15,12,5]  do |pdf|   
+        
+        pdf.font "Helvetica"
+        pdf = build_header_tk(pdf)
+        pdf = build_body_tk(pdf)
+        
+        $lcFileName =  "app/pdf_output/ticket2.pdf"              
+        end 
+        
+    
+    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
+    send_file("app/pdf_output/ticket2.pdf", :type => 'application/pdf', :disposition => 'inline')
+
+      
+    
   end
   
   # Process an invoice
@@ -957,6 +960,7 @@ def reportes08
   # GET /invoices/1.xml
   def show
     @invoice = Factura.find(params[:id])
+    $lcIdFactura=@invoice.id 
     @customer = @invoice.customer
     @tipodocumento = @invoice.document 
     
@@ -1317,8 +1321,6 @@ def newfactura2
   def build_pdf_body_rpt(pdf)
     
     pdf.text "Facturas Moneda" +" Emitidas : desde "+@fecha1.to_s+ " Hasta: "+@fecha2.to_s , :size => 8 
-
-
     pdf.text ""
     pdf.font "Helvetica" , :size => 6
 
@@ -1462,22 +1464,20 @@ def newfactura2
     end
 
     def build_pdf_footer_rpt(pdf)
-      
                   
       pdf.text "" 
       pdf.bounding_box([0, 20], :width => 535, :height => 40) do
       pdf.draw_text "Company: #{@company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
-
       end
 
       pdf
-      
-  end
+   end    
+   
 
 ##### reporte de pendientes de pago..
 
   def build_pdf_header_rpt2(pdf)
-      pdf.font "Helvetica" , :size => 8
+       pdf.font "Helvetica" , :size => 8
      $lcCli  =  @company.name 
      $lcdir1 = @company.address1+@company.address2+@company.city+@company.state
 
@@ -1511,6 +1511,7 @@ def newfactura2
 
       
       pdf 
+
   end   
 
   def build_pdf_body_rpt2(pdf)
@@ -1528,6 +1529,16 @@ def newfactura2
         headers << cell
       end
 
+    
+      headers = []
+      table_content = []
+
+      Factura::TABLE_HEADERS_TK.each do |header|
+        cell = pdf.make_cell(:content => header)
+        cell.background_color = "FFFFCC"
+        headers << cell
+      end
+
       table_content << headers
 
       nroitem = 1
@@ -1535,6 +1546,7 @@ def newfactura2
       lcmonedadolares = 1
   
       lcDoc='FT'    
+      
       lcCliente = @facturas_rpt.first.customer_id 
       @totalvencido_soles = 0
       @totalvencido_dolar = 0
@@ -1660,8 +1672,6 @@ def newfactura2
           
         end 
           
-          
-       
         end
 
             lcCliente = @facturas_rpt.last.customer_id 
@@ -1960,12 +1970,8 @@ def newfactura2
   end   
 
 def print
-          lib = File.expand_path('../../../lib', __FILE__)
+        lib = File.expand_path('../../../lib', __FILE__)
         $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-        puts "ruta******"
-        puts lib 
-      
-        
         require 'sunat'
         require './config/config'
         require './app/generators/invoice_generator'
@@ -1992,14 +1998,131 @@ def print
     
         
         $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
-                
         send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
-
-        
         @@document_serial_id =""
         $aviso=""
-    end 
+end 
 
+##ticket
+  def build_header_tk(pdf)
+     pdf.font "Helvetica" , :size => 8
+     
+      pdf.text ".INVERSIONES VALUEMI S.A.C."  , :size => 8,  :style => :bold
+      pdf.text ".RUC.:" << @company.ruc   , :size => 8,  :style => :bold
+      
+      pdf.text ".Direccion :Cam. Sector Cruz del Norte I Z Mza. C ", :size => 8
+      pdf.text ".Lote. 5 A.H. Proyecto Integral Alianza ", :size => 8
+      pdf.text ".     (Antes Paradero Huarango 4km )", :size => 8
+      pdf.text ".         (Ovalo Zapallal)", :size => 8
+      pdf.text ".       LIMA-LIMA CARABAYLLO", :size => 8
+      
+      
+    pdf.font "Helvetica" , :size => 8
+    if @invoice.document_id == 1 
+      pdf.text ".        F A C T U R A"
+    end  
+    if @invoice.document_id == 3 
+      pdf.text ".       B O  L E T A "
+    end   
+    pdf.text ".     E L E C T R Ó N I C A "
+    pdf.text ".No.: " <<  @invoice.code 
+    
+    if @invoice.document_id == 1 
+      pdf.text ".Razón Social: " << @invoice.customer.name
+      pdf.text".R.U.C.:"  << @invoice.customer.ruc
+    end
+    
+    if @invoice.document_id == 3 
+      pdf.text ".Cliente : " << @invoice.customer.name
+    end
+    
+    pdf.text ".Fecha Emisión: " << @invoice.fecha.strftime("%d/%m/%Y")
+    
+    pdf.text ".Tipo Moneda: SOL  "
+    pdf 
+    
+ 
+  end   
+
+  def build_body_tk(pdf)
+    
+      headers = []
+      table_content = []
+    
+    
+      nroitem = 1
+      
+       for  product in @invoice.get_products_2 
+            row = []          
+            
+            row << sprintf("%.2f",product.quantity)
+            row << product.code
+            row << product.name 
+            row << sprintf("%.2f",product.price) 
+            row << sprintf("%.2f",product.total) 
+            table_content << row
+            nroitem = nroitem + 1
+        end
+        result = pdf.table table_content, {:position => :left,
+                                        :header => true,
+                                        :width => 210
+                                        } do 
+                                          self.cells.borders = [] 
+                                          columns([0]).align=:center
+                                          columns([1]).align=:left
+                                          columns([2]).align=:left
+                                          columns([3]).align=:left
+                                          columns([4]).align=:right 
+                                        end                                     
+                                        
+            table_content1 = []
+            row =[]
+            row << "OP.GRAVADAS"
+            row << "S/. "
+            row << sprintf("%.2f",@invoice.subtotal) 
+            table_content1 << row
+            
+              
+            row =[]
+            row << "OP.INAFECTAS"
+            row << "S/."
+            row << "0.00"
+            table_content1 << row
+            
+            row =[]
+            row << "IGV."
+            row << "S/."
+            row << sprintf("%.2f",@invoice.tax)
+            table_content1 << row
+            
+            row =[]
+            row << "TOTAL."
+            row << "S/."
+            row << sprintf("%.2f",@invoice.total)
+            table_content1<< row
+             
+        result = pdf.table table_content1, {:position => :left,
+                                        :header => true,
+                                        :width => 210
+                                        } do 
+                                          self.cells.borders = [] 
+                                          columns([0]).align=:center
+                                          columns([1]).align=:left
+                                          columns([2]).align=:left
+                                          
+                                        end                                     
+                                        
+        
+          
+      pdf.move_down 10                                  
+      pdf.image open("https://chart.googleapis.com/chart?chs=120x120&cht=qr&chl=#{$lcCodigoBarra}&choe=UTF-8") 
+      pdf.text Date.today.strftime("%d/%m/%Y") 
+      pdf.text DateTime.now.to_s(:time)
+      pdf.text $lcCodigoBarra                        
+      pdf 
+
+end
+    
 
 
 

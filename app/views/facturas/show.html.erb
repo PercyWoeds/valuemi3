@@ -356,8 +356,12 @@
 <%= hr() %>
 <div class="button">
   
-   
-	<%= link_to 'Imprimir', "/facturas/pdf/#{@invoice.id}" %>
+	<%= form_tag pdf_facturas_path, multipart: true do %>
+	  <%= submit_tag  "Imprimir" , data: { no_turbolink: true } %>
+	<% end %>		
+
+	
+	
   <%= link_to 'Enviar factura via email', "/facturas/email/#{@invoice.id}" %>
   
 <% if @invoice.processed =="0" || @invoice.processed==nil %>

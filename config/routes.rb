@@ -125,6 +125,9 @@
     end 
     collection { post :print }
     collection { post :print1 }
+    collection { post :pdf }
+    
+    
   end 
     
   

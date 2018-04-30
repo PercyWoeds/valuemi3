@@ -1,7 +1,7 @@
 <html>
-<body>
+<body width="50%" >
     
-  <font size="2" face="Courier New" >  
+ <font size="2" face="Courier New" >  
  
   
  <%= @invoice.company.name %>
@@ -34,6 +34,7 @@ CAJERO : <%= @invoice.user.first_name %>
 
        <% for product  in @invoice.get_products_2  %>
                 <tr>
+                    <td width = "10%" ><%=  product.code %></td>
                     <td width = "10%" ><%=  product.name %></td>
                     <td width = "8%" align ="left"><%= sprintf("%.2f",product.quantity)   %></td>
                     <td width = "8%" align ="right"><%= sprintf("%.2f",product.price)    %></td>
