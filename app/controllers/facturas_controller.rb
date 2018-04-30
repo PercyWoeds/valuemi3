@@ -974,8 +974,8 @@ def reportes08
     $lcSerie  = parts1[0]
     $lcNumero = parts1[1]
     
-    $lcIgv = @invoice.tax.to_s
-    $lcTotal = @invoice.total.to_s 
+    $lcIgv = @invoice.tax.round(2).to_s
+    $lcTotal = @invoice.total.round(2).to_s 
     $lcFecha       = @invoice.fecha
     $lcFecha1      = $lcFecha.to_s
 
