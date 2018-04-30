@@ -85,7 +85,7 @@
             </tr>
         </tbody>
     </table>
-    
+    <hr>
     <table width="40%" style="font-size:8px" >
         <tbody>
             <tr>
@@ -93,7 +93,7 @@
             </tr>
             <% for product  in @invoice.get_products_2  %>
             
-            <tr class="border_top">
+            <tr >
                 <td align="center">
                     <%= sprintf("%.2f",product.quantity) %> UND
                 </td>
