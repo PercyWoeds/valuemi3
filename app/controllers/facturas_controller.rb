@@ -78,10 +78,10 @@ def reportes4
     case params[:print]
       when "To PDF" then 
         begin 
-         render  pdf: "Parte4 ",template: "varillajes/parte4_rpt.pdf.erb",locals: {:varillajes => @contado_rpt}
-        
+         render  pdf: "Parte4 ",template: "varillajes/parte4_rpt.pdf.erb",locals: {:varillajes => @contado_rpt},
+         :orientation      => 'Landscape'
         end   
-      when "To Excel" then render xlsx: 'exportxls'
+      when "To Excel" then render xlsx: 'parte4_rpt_xls'
       else render action: "index"
     end
   end
@@ -419,7 +419,10 @@ def reportes08
         begin 
          render  pdf: "Facturas ",template: "facturas/ticket_rpt2.pdf.erb",
          locals: {:facturas => @invoice},
-         disable_smart_shrinking: false 
+         disable_smart_shrinking: false,
+         :margin => {:top                => 0,                         # default 10 (mm)
+                           :left               => 0,
+                           :right              => 0}
          
         end   
       }

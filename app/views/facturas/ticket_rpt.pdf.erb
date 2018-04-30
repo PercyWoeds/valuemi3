@@ -1,7 +1,8 @@
 <html>
-<body >
+<body>
     
   <font size="2" face="Courier New" >  
+ 
   
  <%= @invoice.company.name %>
  <br>
@@ -25,7 +26,7 @@
 CAJERO : <%= @invoice.user.first_name %>
  <br>
 
-  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+  <table style='font-family:"Courier New", Courier, monospace; font-size:60% ;width:50%'>
       <% nroitem = 1%>
       <% total_1 = 0%>
       <% total_2 = 0%>
@@ -33,11 +34,10 @@ CAJERO : <%= @invoice.user.first_name %>
 
        <% for product  in @invoice.get_products_2  %>
                 <tr>
-                    <td width = "5%" align ="right"> <%= product.code    %> </td>
                     <td width = "10%" ><%=  product.name %></td>
-                    <td width = "35%" align ="left"><%= sprintf("%.2f",product.quantity)   %></td>
+                    <td width = "8%" align ="left"><%= sprintf("%.2f",product.quantity)   %></td>
                     <td width = "8%" align ="right"><%= sprintf("%.2f",product.price)    %></td>
-                    <td width = "10%" align ="right"><%= sprintf("%.3f",product.total)   %></td>
+                    <td width = "8%" align ="right"><%= sprintf("%.3f",product.total)   %></td>
                 </tr>
                     <% total_1 += product.quantity %>    
                     

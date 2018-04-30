@@ -123,6 +123,15 @@ class Sellvale < ActiveRecord::Base
       end 
       
   end       
-
+def get_cliente(cliente)
+     a= Customer.find_by(account: cliente)
+     
+    if a
+         return a.name
+    else
+        return "Cliente no existe"
+    end 
+ end 
+ 
 
 end

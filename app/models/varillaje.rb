@@ -526,4 +526,5 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
      return ret 
  end 
  
+ 
 end
