@@ -2064,9 +2064,9 @@ end
             
             if product.quantity > 1
               row = []        
-              row << "( "
-              row << sprintf("%.2f",product.quantity) <<" x "
-              row << sprintf("%.2f",product.price) << " )"
+              row << "( "<< sprintf("%.2f",product.quantity) <<" x " << sprintf("%.2f",product.price) << " )"
+              row << " "
+              row << " "
               table_content << row
             end 
             
