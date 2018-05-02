@@ -1,9 +1,16 @@
 class Company < ActiveRecord::Base
+  
+    $: << Dir.pwd + '/lib'
+    
+    require 'pry'
+    require 'peru_sunat_ruc'
+  
+  
   validates_presence_of :user_id, :name
   
   belongs_to :user
 
-  
+
   has_many :locations
   has_many :suppliers
   has_many :products
@@ -593,14 +600,22 @@ def get_guias_2(fecha1,fecha2)
             lcTotal  = lcTotal0.round(2)  
             lcFecha = boleta.fecha
             lcTd = boleta.td 
-            if boleta.ruc !=""
+            
+            if boleta.ruc != ""
+              
               lcRucCliente = boleta.ruc 
+              ruc_number =  boleta.ruc 
+              puts ruc_number
+              
+            #  lcRazonCliente  = PeruSunatRuc.name_from ruc_number
+            
             else
               lcRucCliente = ""
+              lcRazonCliente = " "
             end 
             
             
-          a= TmpFactura.new(document_id: 3 ,subtotal: lcVventa , tax: lcTax , total: lcTotal, fecha: lcFecha, serie: lcSerie, numero: lcCode,td: lcTd,ruc: lcRucCliente, moneda_id:2)
+          a= TmpFactura.new(document_id: 3 ,subtotal: lcVventa , tax: lcTax , total: lcTotal, fecha: lcFecha, serie: lcSerie, numero: lcCode,td: lcTd,ruc: lcRucCliente,name:lcRazonCliente, moneda_id:2)
           a.save 
         end 
       lcCode=""
@@ -610,15 +625,14 @@ def get_guias_2(fecha1,fecha2)
       for boleta in @facturas
     
           lcCodigo = boleta.code.split("-") 
-          
-          
-          
+
           lcCode = lcCodigo[1] 
           lcSerie = lcCodigo[0] 
           
           if boleta.total != nil 
-            lcVventa0 = boleta.total / 1.18
             
+            
+            lcVventa0 = boleta.total / 1.18
             lcVventa =lcVventa0.round(2)
             lcTax0   =  boleta.total  - lcVventa
             lcTax    = lcTax0
@@ -628,9 +642,17 @@ def get_guias_2(fecha1,fecha2)
             lcTd = boleta.document.descripshort
             
             lcRucCliente = boleta.customer.ruc 
+            lcRazonCliente = boleta.customer.name 
             
             
-          a= TmpFactura.new(document_id: 3 ,subtotal: lcVventa , tax: lcTax , total: lcTotal, fecha: lcFecha, serie: lcSerie, numero: lcCode,td: lcTd,ruc: lcRucCliente, moneda_id:2)
+            
+            if lcSerie.first(2)=="FF"
+               lcDocumentoId  = 1
+            else
+               lcDocumentoId = 3
+            end 
+            
+          a= TmpFactura.new(document_id: lcDocumentoId ,subtotal: lcVventa , tax: lcTax , total: lcTotal, fecha: lcFecha, serie: lcSerie, numero: lcCode,td: lcTd,ruc: lcRucCliente,name:lcRazonCliente, moneda_id:2)
           a.save 
         end 
       lcCode=""
@@ -3253,6 +3275,35 @@ def get_purchases_pendientes_day_value(fecha1,fecha2,value = "total_amount",clie
 def get_facturas_by_day_value(fecha1,fecha2,moneda,value='total')
   
     purchases = Factura.where([" company_id = ? AND fecha >= ? and fecha <= ? and moneda_id = ? ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda , ]).order(:id,:moneda_id)    
+
+    ret = 0
+    for purchase in purchases
+    
+      
+      if (value == "subtotal")
+        
+        
+        ret += purchase.get_importe_soles1
+        
+      elsif(value == "tax")
+      
+        ret += purchase.get_importe_soles2
+        
+      else
+        
+        ret += purchase.get_importe_soles
+      
+      end
+    end
+    
+    return ret
+
+
+  end 
+  
+def get_facturas_by_day_value2(fecha1,fecha2,moneda,value='total')
+  
+    purchases = TmpFactura.where([" fecha >= ? and fecha <= ? and moneda_id = ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda , ]).order(:id,:moneda_id)    
 
     ret = 0
     for purchase in purchases

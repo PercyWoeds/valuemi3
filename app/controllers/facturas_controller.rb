@@ -197,9 +197,9 @@ def rpt_factura_all
 
     @facturas_rpt = @company.get_facturas_day(@fecha1,@fecha2,@moneda)          
     
-    @total1  = @company.get_facturas_by_day_value(@fecha1,@fecha2,@moneda,"subtotal")  
-    @total2  = @company.get_facturas_by_day_value(@fecha1,@fecha2,@moneda,"tax")  
-    @total3  = @company.get_facturas_by_day_value(@fecha1,@fecha2,@moneda,"total")  
+    @total1  = @company.get_facturas_by_day_value2(@fecha1,@fecha2,@moneda,"subtotal")  
+    @total2  = @company.get_facturas_by_day_value2(@fecha1,@fecha2,@moneda,"tax")  
+    @total3  = @company.get_facturas_by_day_value2(@fecha1,@fecha2,@moneda,"total")  
     
     
     
@@ -2055,12 +2055,21 @@ end
        for  product in @invoice.get_products_2 
             row = []          
             
-            row << sprintf("%.2f",product.quantity)
+            
             row << product.code
             row << product.name 
-            row << sprintf("%.2f",product.price) 
             row << sprintf("%.2f",product.total) 
             table_content << row
+            
+            
+            if product.quantity > 1
+              row = []        
+              row << "( "
+              row << sprintf("%.2f",product.quantity) <<" x "
+              row << sprintf("%.2f",product.price) << " )"
+              table_content << row
+            end 
+            
             nroitem = nroitem + 1
         end
         result = pdf.table table_content, {:position => :left,
@@ -2118,7 +2127,7 @@ end
       pdf.image open("https://chart.googleapis.com/chart?chs=120x120&cht=qr&chl=#{$lcCodigoBarra}&choe=UTF-8") 
       pdf.text Date.today.strftime("%d/%m/%Y") 
       pdf.text DateTime.now.to_s(:time)
-      pdf.text $lcCodigoBarra                        
+
       pdf 
 
 end

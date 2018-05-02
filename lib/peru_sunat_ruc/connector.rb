@@ -20,6 +20,7 @@ class PeruSunatRuc::Connector
     # ToDo: Si tiene unresultado valido?
     if page.body.to_s.include? 'ero y volver a ingresar.'
       raise 'Número de RUC Invalido'
+      
     end
   #name: page.at('/html/body/table[1]/tr[1]/td[2]').text.split('-').last.strip,
 
