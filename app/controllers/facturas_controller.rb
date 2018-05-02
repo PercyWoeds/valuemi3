@@ -2064,7 +2064,7 @@ end
             
             if product.quantity > 1
               row = []        
-              row << "( "<< sprintf("%.2f",product.quantity) <<" x " << sprintf("%.2f",product.price) << " )"
+              row << "( " << sprintf("%.2f",product.quantity) << " x " << sprintf("%.2f",product.price) << " )"
               row << " "
               row << " "
               table_content << row
@@ -2079,9 +2079,10 @@ end
                                           self.cells.borders = [] 
                                           columns([0]).align=:center
                                           columns([1]).align=:left
+                                          columns([1]).width = 120
                                           columns([2]).align=:left
-                                          columns([3]).align=:left
-                                          columns([4]).align=:right 
+                                          
+                                          
                                         end                                     
                                         
             table_content1 = []
