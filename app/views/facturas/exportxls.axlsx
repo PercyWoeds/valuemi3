@@ -24,11 +24,11 @@ wb.styles do |s|
     
    @facturas_rpt.each do |detalle|
      
-    sheet.add_row [ detalle.document.descripshort,detalle.serie,detalle.numero,detalle.fecha,detalle.ruc,"S/.",detalle.subtotal,detalle.tax,detalle.total ], :style => [cadena,cadena,cadena,date,cadena,cadena,currency,currency,currency]
+    sheet.add_row [ detalle.document.descripshort,detalle.serie,detalle.numero,detalle.fecha,detalle.ruc,detalle.name,"S/.",detalle.subtotal,detalle.tax,detalle.total ], :style => [cadena,cadena,cadena,date,cadena,cadena,currency,currency,currency]
     
    end
    
-   sheet.add_row ["","","","","Totales => ","",@total1,@total2,@total3], :style => [cadena,cadena,date,date,cadena,cadena,currency,currency,currency]
+   sheet.add_row ["","","","","","Totales => ","",@total1,@total2,@total3], :style => [cadena,cadena,date,date,cadena,cadena,currency,currency,currency]
    
    
 end

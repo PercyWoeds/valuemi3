@@ -606,7 +606,7 @@ def get_guias_2(fecha1,fecha2)
               lcRucCliente = boleta.ruc 
               ruc_number =  boleta.ruc 
               #  lcRazonCliente  = PeruSunatRuc.name_from ruc_number
-             
+             lcRazonCliente = ""
             else
               lcRucCliente = ""
               lcRazonCliente = " "
