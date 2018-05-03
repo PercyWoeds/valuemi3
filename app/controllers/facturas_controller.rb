@@ -2054,36 +2054,36 @@ end
       
        for  product in @invoice.get_products_2 
             row = []          
-            
-            
             row << product.code
             row << product.name 
             row << sprintf("%.2f",product.total) 
             table_content << row
             
             
-            if product.quantity > 1
-              row = []        
-              row << "( " << sprintf("%.2f",product.quantity) << " x " << sprintf("%.2f",product.price) << " )"
-              row << " "
-              row << " "
-              table_content << row
-            end 
+             if product.quantity > 1
+               row = []        
+               row << "( " << sprintf("%.2f",product.quantity) << " x " << sprintf("%.2f",product.price) << " )"
+               row << ""
+               row << ""
+               table_content << row
+             end 
             
             nroitem = nroitem + 1
         end
-        result = pdf.table table_content, {:position => :left,
-                                        :header => true,
+        result = pdf.table table_content,
+                                      { :position => :left,
+                                        :header => false,
                                         :width => 210
                                         } do 
                                           self.cells.borders = [] 
                                           columns([0]).align=:center
+                                          
                                           columns([1]).align=:left
-                                          columns([1]).width = 120
+                                          
                                           columns([2]).align=:left
-                                          
-                                          
-                                        end                                     
+                                          columns([2]).width= 40
+                                        end                       
+                                        
                                         
             table_content1 = []
             row =[]
@@ -2111,7 +2111,8 @@ end
             row << sprintf("%.2f",@invoice.total)
             table_content1<< row
              
-        result = pdf.table table_content1, {:position => :left,
+        result = pdf.table table_content1,
+                                      {:position => :left,
                                         :header => true,
                                         :width => 210
                                         } do 
