@@ -50,7 +50,7 @@
           
             
           
-            <% if @current_user.level == "admin" %>
+          <% if @current_user.level == "admin" %>
             
             <%= link_to "Edit", edit_factura_path(invoice) %>         
               <%= link_to 'Eliminar', invoice, :data=> {:confirm => 'Esta seguro ?'}, :method => :delete %>            

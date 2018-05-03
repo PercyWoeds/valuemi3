@@ -601,7 +601,7 @@ def get_guias_2(fecha1,fecha2)
             lcFecha = boleta.fecha
             lcTd = boleta.td 
             
-            if boleta.ruc.strip  != nil or  boleta.ruc.strip1 != "" or boleta.ruc !="00000000000"
+            if boleta.ruc.strip  != nil  or boleta.ruc !="00000000000"
               
               lcRucCliente = boleta.ruc 
               ruc_number =  boleta.ruc 
