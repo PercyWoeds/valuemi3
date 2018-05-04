@@ -1009,7 +1009,7 @@ def reportes08
         
         
         
-        $lg_fecha   = @invoice.fecha.to_datetime
+        $lg_fecha   = @invoice.fecha.to_date
          lcCode = @invoice.code.split("-")
          a = lcCode[0]
          b = lcCode[1]
