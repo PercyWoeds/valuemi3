@@ -1,12 +1,15 @@
 include CustomersHelper
 include ServicesHelper
-require "open-uri"
- 
-class FacturasController < ApplicationController
-  
-    $: << Dir.pwd  + '/lib'
 
- # before_filter :authenticate_user!
+class FacturasController < ApplicationController
+
+    $: << Dir.pwd  + '/lib'
+    before_action :authenticate_user!
+    
+    require "open-uri"
+   
+ 
+
 
   def reportes
   
@@ -965,43 +968,181 @@ def reportes08
     @tipodocumento = @invoice.document 
     
     if @invoice.descuento == "1"
-      @factura_details = @invoice.factura_details 
+      @factura_details = @invoice.factura_details
     end 
     
     
+    if current_user.level =="colateral"
     
+        $lcruc = "20555691263" 
+        
+        $lcTipoDocumento = @invoice.document.descripshort
+        parts1 = @invoice.code.split("-")
+        $lcSerie  = parts1[0]
+        $lcNumero = parts1[1]
+        
+        $lcIgv = @invoice.tax.round(2).to_s
+        $lcTotal = @invoice.total.round(2).to_s 
+        $lcFecha       = @invoice.fecha
+        $lcFecha1      = $lcFecha.to_s
     
-    $lcruc = "20555691263" 
+              parts = $lcFecha1.split("-")
+              $aa = parts[0]
+              $mm = parts[1]        
+              $dd = parts[2]       
     
-    $lcTipoDocumento = @invoice.document.descripshort
-    parts1 = @invoice.code.split("-")
-    $lcSerie  = parts1[0]
-    $lcNumero = parts1[1]
-    
-    $lcIgv = @invoice.tax.round(2).to_s
-    $lcTotal = @invoice.total.round(2).to_s 
-    $lcFecha       = @invoice.fecha
-    $lcFecha1      = $lcFecha.to_s
+        
+          $lcFecha0 = $aa << "-" << $mm <<"-"<< $dd 
+        
+          if @invoice.document_id == 1 
+            $lcTipoDocCli =  "1"
+          else
+            $lcTipoDocCli =  "6"
+          end 
+            $lcNroDocCli  = @invoice.customer.ruc 
+      
+            $lcCodigoBarra = $lcruc << "|" << $lcTipoDocumento << "|" << $lcSerie << "|" << $lcNumero << "|" <<$lcIgv<< "|" << $lcTotal << "|" << $lcFecha0 << "|" << $lcTipoDocCli << "|" << $lcNroDocCli
+          
+    else   
+      
+        @invoiceitems = FacturaDetail.select(:product_id,"SUM(quantity) as cantidad","SUM(total) as total").where(factura_id: @invoice.id).group(:product_id)
+        
+        
+        
+        $lg_fecha   = @invoice.fecha.to_datetime
+         lcCode = @invoice.code.split("-")
+         a = lcCode[0]
+         b = lcCode[1]
+         
+        
+        $lg_serie_factura = a  
+        $lg_serial_id   = b.to_i
+        $lg_serial_id2  = b
+        puts b 
+        puts $lg_serial_id 
+        puts $lg_serial_id2 
+        puts $lg_fecha 
+        
+        $lcRuc          = @invoice.customer.ruc
+        
+        $lcTd           = @invoice.document.descripshort
+        
+        $lcMail         = @invoice.customer.email
+        $lcMail2        = ""
+        $lcMail3        = ""
+        
+         legal_name_spaces = @invoice.customer.name.lstrip    
+        
+        if legal_name_spaces == nil
+            $lcLegalName    = legal_name_spaces
+        else
+            $lcLegalName = @invoice.customer.name.lstrip    
+        end
+        $lcDirCli       = @invoice.customer.address1
+        $lcDisCli       = @invoice.customer.address2
+        $lcProv         = @invoice.customer.city
+        $lcDep          = @invoice.customer.state
+        
+        ### detalle factura 
+        for  invoiceitems in @invoiceitems 
+        
+        $lcCantidad     = invoiceitems.cantidad   
+        lcPrecio =  invoiceitems.total   / invoiceitems.cantidad   
+        lcPrecioSIGV = lcPrecio /1.18
+        lcValorVenta = invoiceitems.total / 1.18
+        lcTax = invoiceitems.total - lcValorVenta
+        
+        $lcPrecioCigv1  =  lcPrecio * 100
+        
+        $lcPrecioCigv2   = $lcPrecioCigv1.round(0).to_f
+        $lcPrecioCigv   =  $lcPrecioCigv2.to_i 
 
-          parts = $lcFecha1.split("-")
+        $lcPrecioSigv1  =  lcPrecioSIGV * 100
+        $lcPrecioSigv2   = $lcPrecioSigv1.round(0).to_f
+        $lcPrecioSIgv   =  $lcPrecioSigv2.to_i 
+        
+        $lcVVenta1      =  lcValorVenta * 100        
+        $lcVVenta       =  $lcVVenta1.round(0)
+            
+        $lcIgv1         =  lcTax * 100
+        $lcIgv          =  $lcIgv1.round(0)
+        
+        $lcTotal1       =  invoiceitems.total * 100
+        $lcTotal        =  $lcTotal1.round(0)
+        end 
+        #@clienteName1   = Client.where("vcodigo = ?",params[ :$lcClienteInv ])        
+        $lcClienteName = ""
+        
+        $lcDes1   = @invoice.customer.name
+        
+        $lcMoneda = @invoice.moneda_id
+        
+        #$lcGuiaRemision ="NRO.CUENTA BBVA BANCO CONTINENTAL : 0244-0100023293"
+        $lcGuiaRemision = ""
+        $lcPlaca = ""
+        $lcDocument_serial_id =    $lg_serial_id
+        #$lcAutorizacion =""
+        #$lcAutorizacion1=""
+   
+        $lcSerie = a 
+        $lcruc = "20555691263" 
+        
+        if $lcTd == 'FT'
+            $lctidodocumento = '01'
+        end
+        if $lcTd =='BV'
+            $lctidodocumento = '03'
+        end 
+        if $lcTd == 'NC'
+            $lctidodocumento = '07'
+        end 
+        if $lcTd == 'ND'
+            $lctidodocumento = '06'
+        end
+        if @invoice.document.descripshort == "FT"
+          $lcTipoDocCli =  "1"
+        else
+          $lcTipoDocCli =  "6"
+        end 
+         $lcNroDocCli =@invoice.customer.ruc 
+         
+         $lcFecha1codigo      = $lg_fecha.to_s
+
+          parts = $lcFecha1codigo.split("-")
           $aa = parts[0]
           $mm = parts[1]        
           $dd = parts[2]       
+        $lcFechaCodigoBarras = $aa << "-" << $mm << "-" << $dd
+        $lcIGVcode = $lcIgv
+        $lcTotalcode = $lcTotal
+        puts $lcruc
+        puts $lcTd
+        puts $lcSerie
+        puts $lcDocument_seria_id
+        puts $lcIGVcode
+        puts $lcTotalcode
+        puts $lcFechaCodigoBarras
+        puts $lcTipoDocCli
+        puts $lcNroDocCli
+        
+        
+        $lcCodigoBarra = $lcruc << "|" << $lcTd << "|" << $lcSerie << "|" << $lcDocument_serial_id.to_s << "|" <<$lcIGVcode.to_s<< "|" << $lcTotalcode.to_s << "|" << $lcFechaCodigoBarras << "|" << $lcTipoDocCli  << "|" << $lcNroDocCli
+        
+            $lcPercentIgv  =18000   
+          $lcAutorizacion="Autorizado mediante Resolucion de Intendencia Nro.034-005-0005592/SUNAT del 22/06/2016 "
+          $lcCuentas=" El pago del documento sera necesariamente efectuado mediante deposito en cualquiera de las siguientes cuentas bancarias:  
+  BBVA Continental Cuenta Corriente en Moneda Nacional Numero: 0011-0172-01-00041266
+  BBVA Continental Cuenta Corriente en Moneda Extranjera Numero: 0011-0176-01-00063164 
+BCP Cuenta Corriente Moneda Nacional : 191-2167239-0-01
+BCP Cuenta Recaudadora Moneda Nacional : 191-2264838-0-49"  
 
-    
-    $lcFecha0 = $aa << "-" << $mm <<"-"<< $dd 
-    
-    if @invoice.document_id == 1 
-      $lcTipoDocCli =  "1"
-    else
-      $lcTipoDocCli =  "6"
-    end 
-      $lcNroDocCli  = @invoice.customer.ruc 
 
-      
-      
-      $lcCodigoBarra = $lcruc << "|" << $lcTipoDocumento << "|" << $lcSerie << "|" << $lcNumero << "|" <<$lcIgv<< "|" << $lcTotal << "|" << $lcFecha0 << "|" << $lcTipoDocCli << "|" << $lcNroDocCli
-      
+          $lcScop1       =""   
+          $lcScop2       =""
+          $lcCantScop1   =""
+          $lcCantScop2   =""  
+          $lcAutorizacion1=$lcAutorizacion +$lcCuentas  
+      end # colateral 
 
   end
 
@@ -1969,39 +2110,6 @@ def newfactura2
      
   end   
 
-def print
-        lib = File.expand_path('../../../lib', __FILE__)
-        $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-        require 'sunat'
-        require './config/config'
-        require './app/generators/invoice_generator'
-        require './app/generators/credit_note_generator'
-        require './app/generators/debit_note_generator'
-        require './app/generators/receipt_generator'
-        require './app/generators/daily_receipt_summary_generator'
-        require './app/generators/voided_documents_generator'
-
-        SUNAT.environment = :test 
-
-        files_to_clean = Dir.glob("*.xml") + Dir.glob("./app/pdf_output/*.pdf") + Dir.glob("*.zip")
-        files_to_clean.each do |file|
-          File.delete(file)
-        end         
-    
-       if $lcMoneda == "D"  
-            $lcFileName=""
-            case_49 = InvoiceGenerator.new(1,3,1,$lg_serie_factura).with_different_currency2
-          #  puts $lcFileName 
-       else
-            case_3  = InvoiceGenerator.new(1,3,1,$lg_serie_factura).with_igv2(true)
-       end 
-    
-        
-        $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
-        send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
-        @@document_serial_id =""
-        $aviso=""
-end 
 
 ##ticket
   def build_header_tk(pdf)
@@ -2134,6 +2242,162 @@ end
 
 end
     
+        def sendsunat
+        lib = File.expand_path('../../../lib', __FILE__)
+        $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+
+        require 'sunat'
+        require './config/config'
+        require './app/generators/invoice_generator'
+        require './app/generators/credit_note_generator'
+        require './app/generators/debit_note_generator'
+        require './app/generators/receipt_generator'
+        require './app/generators/daily_receipt_summary_generator'
+        require './app/generators/voided_documents_generator'
+
+        SUNAT.environment = :test
+
+        files_to_clean = Dir.glob("*.xml") + Dir.glob("./app/pdf_output/*.pdf") + Dir.glob("*.zip")
+        files_to_clean.each do |file|
+          File.delete(file)
+        end 
+        
+        if $lcMoneda == "D"
+        else
+        case_3 = InvoiceGenerator.new(1, 3, 1, $lg_serie_factura).with_igv(true)
+        end     
+        
+        $lcGuiaRemision =""      
+        @@document_serial_id =""
+        $lg_serial_id=""
+
+    end
+
+    def print
+
+        lib = File.expand_path('../../../lib', __FILE__)
+        $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+        puts lib
+        
+
+        require 'sunat'
+        require './config/config'
+        require './app/generators/invoice_generator'
+        require './app/generators/credit_note_generator'
+        require './app/generators/debit_note_generator'
+        require './app/generators/receipt_generator'
+        require './app/generators/daily_receipt_summary_generator'
+        require './app/generators/voided_documents_generator'
+
+        SUNAT.environment = :production
+
+        files_to_clean = Dir.glob("*.xml") + Dir.glob("./app/pdf_output/*.pdf") + Dir.glob("*.zip")
+        files_to_clean.each do |file|
+          File.delete(file)
+        end         
+    
+       if $lcMoneda == "D"  
+            $lcFileName=""
+            case_49 = InvoiceGenerator.new(1,3,1,$lg_serie_factura).with_different_currency2
+          #  puts $lcFileName 
+       else
+            case_3  = InvoiceGenerator.new(1,3,1,$lg_serie_factura).with_igv2(true)
+       end 
+    
+        
+        $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
+                
+        send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
+
+        
+        @@document_serial_id =""
+        $aviso=""
+    end 
+
+        
+    def sendmail      
+
+        lib = File.expand_path('../../../lib', __FILE__)
+        $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+
+        require 'sunat'
+        require './config/config'
+        require './app/generators/invoice_generator'
+        require './app/generators/credit_note_generator'
+        require './app/generators/debit_note_generator'
+        require './app/generators/receipt_generator'
+        require './app/generators/daily_receipt_summary_generator'
+        require './app/generators/voided_documents_generator'
+
+        SUNAT.environment = :production
+
+        files_to_clean = Dir.glob("*.xml") + Dir.glob("./app/pdf_output/*.pdf") + Dir.glob("*.zip")
+        files_to_clean.each do |file|
+          File.delete(file)
+        end 
+
+        
+         if $lcMoneda == "D"
+            case_49 = InvoiceGenerator.new(7,49,5,$lg_serie_factura).with_different_currency2(true)
+        else
+            case_3 = InvoiceGenerator.new(1, 3, 1,$lg_serie_factura).with_igv3(true)
+        end 
+    
+        $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName        
+        $lcFile2    =File.expand_path('../../../', __FILE__)+ "/"+$lcFilezip
+        
+        ActionCorreo.bienvenido_email(@invoice).deliver
+        if $lcMoneda == "D"
+            @mailing = Mailing.new(:td =>$lcTd, :serie => 'FF02', :numero => $lcDocument_serial_id, :ruc=>$lcRuc, :flag1 => '1')
+        else 
+            @mailing = Mailing.new(:td =>$lcTd, :serie => 'FF01', :numero => $lcDocument_serial_id, :ruc=>$lcRuc, :flag1 => '1')
+        end
+        
+        @mailing.save
+        $lcGuiaRemision =""
+             
+
+    end
+
+
+    def download
+        extension = File.extname(@asset.file_file_name)
+        send_data open("#{@asset.file.expiring_url(10000, :original)}").read, filename: "original_#{@asset.id}#{extension}", type: @asset.file_content_type
+    end
+
+    def xml
+        
+        lib = File.expand_path('../../../lib', __FILE__)
+        $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+
+        require 'sunat'
+        require './config/config'
+        require './app/generators/invoice_generator'
+        require './app/generators/credit_note_generator'
+        require './app/generators/debit_note_generator'
+        require './app/generators/receipt_generator'
+        require './app/generators/daily_receipt_summary_generator'
+        require './app/generators/voided_documents_generator'
+
+        SUNAT.environment = :production
+        files_to_clean = Dir.glob("*.xml") + Dir.glob("./app/pdf_output/*.pdf") + Dir.glob("*.zip")
+
+        files_to_clean.each do |file|
+          File.delete(file)
+        end         
+         if $lcMoneda == "D"
+            case_49 = InvoiceGenerator.new(7,49,5,$lg_serie_factura).with_different_currency2
+        else
+            case_3 = InvoiceGenerator.new(1, 3, 1, $lg_serie_factura).with_igv3(true)
+        end 
+        $lcFile2 =File.expand_path('../../../', __FILE__)+ "/"+$lcFilezip    
+    
+        send_file("#{$lcFile2}",:type =>'application/zip', :disposition => 'inline') 
+        @@document_serial_id =""
+        $aviso=""
+    end 
+    
+
 
 
 

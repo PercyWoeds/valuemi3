@@ -123,6 +123,12 @@
     collection do 
       put :discontinue 
     end 
+    
+    collection { post :sendsunat }
+    collection { post :print }
+    collection { post :xml }
+    collection { post :sendmail }
+    
     collection { post :print }
     collection { post :print1 }
     collection { post :pdf }
@@ -143,7 +149,11 @@
   resources :gastos  do
     collection { post :import }
   end 
-  
+   resources :voideds do
+    collection { post :anular }  
+    collection { post :anular2 }  
+   end 
+
   
   resources :inventarios  do
     collection { post :import }

@@ -88,6 +88,12 @@ gem 'wkhtmltopdf-binary'
 gem 'pry'
 gem 'mechanize'
 
+gem 'numbers_and_words', '~> 0.10.5'
+gem 'savon', '~> 2.11', '>= 2.11.1'
+gem 'rubyzip'
+
+
+
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
