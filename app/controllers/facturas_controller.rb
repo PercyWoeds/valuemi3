@@ -1073,7 +1073,7 @@ def reportes08
         #@clienteName1   = Client.where("vcodigo = ?",params[ :$lcClienteInv ])        
         $lcClienteName = ""
         
-        $lcDes1   = @invoice.customer.name
+        $lcDes1   = invoiceitems.product.name 
         
         $lcMoneda = @invoice.moneda_id
         
