@@ -59,6 +59,7 @@
                     <td width = "25%" align ="left"><%= credito.get_cliente(credito.cod_cli)   %></td>
                     <td width = "5%" align ="left"><%= credito.odometro    %></td>
                     <td width = "2%" align ="left"><%= credito.cod_prod    %> </td>
+                    <td width = "8%" align ="left"><%= credito.get_product_name(credito.cod_prod)    %> </td>
                     <td width = "8%" align ="right"><%=  sprintf("%.2f",credito.cantidad.to_s)%></td>
                     <td width = "8%" align ="right"><%= sprintf("%.2f",credito.precio)   %></td>
                     <td width = "8%" align ="right"><%= sprintf("%.3f",credito.importe)   %></td>
@@ -107,6 +108,7 @@
                     <td width = "25%" align ="left"><%= credito.get_cliente(credito.cod_cli)   %></td>
                     <td width = "8%" align ="left"><%= credito.odometro    %></td>
                     <td width = "2%" align ="left"><%= credito.cod_prod    %> </td>
+                    <td width = "8%" align ="left"><%= credito.get_product_name(credito.cod_prod)    %> </td>
                     <td width = "8%" align ="right"><%=  sprintf("%.2f",credito.cantidad.to_s)%></td>
                     <td width = "8%" align ="right"><%= sprintf("%.2f",credito.precio)   %></td>
                     <td width = "8%" align ="right"><%= sprintf("%.3f",credito.importe)   %></td>
@@ -151,7 +153,8 @@
                     <td width= "10%" ><%=  credito.numero  %></td>
                     <td width = "8%" align ="right"><%= credito.cod_cli   %></td>
                     <td width = "8%" align ="right"><%= credito.odometro    %></td>
-                    <td width = "10%" align ="right"><%= credito.cod_prod    %> </td>
+                    <td width = "2%" align ="right"><%= credito.cod_prod    %> </td>
+                    <td width = "8%" align ="left"><%= credito.get_product_name(credito.cod_prod)    %> </td>
                     <td width = "10%" align ="right"><%=  sprintf("%.2f",credito.cantidad.to_s)%></td>
                     <td width = "8%" align ="right"><%= sprintf("%.2f",credito.precio)   %></td>
                     <td width = "10%" align ="right"><%= sprintf("%.3f",credito.importe)   %></td>
@@ -199,7 +202,8 @@
                     <td width= "10%" ><%=  credito.numero  %></td>
                     <td width = "8%" align ="right"><%= credito.cod_cli   %></td>
                     <td width = "8%" align ="right"><%= credito.odometro    %></td>
-                    <td width = "10%" align ="right"><%= credito.cod_prod    %> </td>
+                    <td width = "2%" align ="right"><%= credito.cod_prod    %> </td>
+                    <td width = "8%" align ="left"><%= credito.get_product_name(credito.cod_prod)    %> </td>
                     <td width = "10%" align ="right"><%=  sprintf("%.2f",credito.cantidad.to_s)%></td>
                     <td width = "8%" align ="right"><%= sprintf("%.2f",credito.precio)   %></td>
                     <td width = "10%" align ="right"><%= sprintf("%.3f",credito.importe)   %></td>
@@ -240,7 +244,8 @@
                     <td width = "8%" align ="right"><%= credito.cod_cli   %></td>
                     
                     <td width = "8%" align ="right"><%= credito.odometro    %></td>
-                    <td width = "10%" align ="right"><%= credito.cod_prod    %> </td>
+                    <td width = "2%" align ="right"><%= credito.cod_prod    %> </td>
+                    <td width = "8%" align ="left"><%= credito.get_product_name(credito.cod_prod)    %> </td>
                     <td width = "10%" align ="right"><%=  sprintf("%.2f",credito.cantidad.to_s)%></td>
                     <td width = "8%" align ="right"><%= sprintf("%.2f",credito.precio)   %></td>
                     <td width = "10%" align ="right"><%= sprintf("%.3f",credito.importe)   %></td>
@@ -297,8 +302,8 @@
                     <td width= "10%" ><%=  faltante.employee.full_name  %></td>
                     <td width = "8%" align ="right"><%=  faltante.tipofaltante.descrip    %></td>
                     <td width = "8%" align ="right"><%= credito.odometro    %></td>
-                    <td width = "10%" align ="right"><%= credito.cod_prod    %> </td>
-                    <td width = "10%" align ="right"></td>
+                    <td width = "2%" align ="right"><%= credito.cod_prod    %> </td>
+                    <td width = "8%" align ="left"><%= credito.get_product_name(credito.cod_prod)    %> </td>
                     <td width = "8%" align ="right"></td>
                     <td width = "10%" align ="right"><%= sprintf("%.3f",faltante.total)   %></td>
                     <td width = "10%" align ="right"><%= faltante.descrip   %></td>
@@ -337,8 +342,8 @@
                     <td width= "10%" ><%=  faltante.employee.full_name  %></td>
                     <td width = "8%" align ="right"><%=  faltante.tipofaltante.descrip    %></td>
                     <td width = "8%" align ="right"><%= credito.odometro    %></td>
-                    <td width = "10%" align ="right"><%= credito.cod_prod    %> </td>
-                    <td width = "10%" align ="right"></td>
+                    <td width = "2%" align ="right"><%= credito.cod_prod    %> </td>
+                    <td width = "8%" align ="left"><%= credito.get_product_name(credito.cod_prod)    %> </td>
                     <td width = "8%" align ="right"></td>
                     <td width = "10%" align ="right"><%= sprintf("%.3f",faltante.total)   %></td>
                     <td width = "10%" align ="right"><%= faltante.descrip   %></td>

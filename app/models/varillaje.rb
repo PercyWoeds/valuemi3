@@ -160,7 +160,7 @@ class Varillaje < ActiveRecord::Base
  
  def  get_ventas_contometros_efectivo_sustento(fecha) 
 
-     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and fpago = ? and td <> ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "1" ,"N"]).order(:serie,:numero)
+     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and fpago = ? and td <> ? and tipo <> ?" , "#{fecha} 00:00:00","#{fecha} 23:59:59", "1" ,"N","2"]).order(:serie,:numero)
      
      
     return facturas
