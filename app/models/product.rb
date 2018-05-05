@@ -46,7 +46,20 @@ end
 
   def self.import(file)
           CSV.foreach(file.path, headers: true, encoding:'iso-8859-1:utf-8') do |row|
-          Product.create! row.to_hash 
+            
+            
+          #Product.create! row.to_hash 
+          a = Product.find_by(code: row['code'] )
+          if a == nil
+            
+          else
+            a.price = row['price']
+            a.save 
+            
+          end 
+          
+          
+          
      end
   end 
 
