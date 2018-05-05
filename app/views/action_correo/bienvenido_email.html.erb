@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h3>Estimado Cliente <%= $lcLegalName %></h3>
+    <p>
+      Por la presente les comunicamos que la empresa INVERSIONES VALUEMI SAC emisora de comprobantes electrónicos le ha emitido el siguiente comprobante correspondiente al despacho del día  
+
+      <table>
+        <tr>
+          <td>TIPO DE DOCUMENTO </td>
+          <td> Factura  </td>
+        </tr>
+        <tr>
+          <td>Nro.Ruc del emisor :</td>
+          <td><%= $lcRuc %></td>
+        </tr>
+        <tr>
+          <td>Fecha de Emision   :</td>
+          <td><%= $lg_fecha %></td>
+        </tr>
+        <tr>
+          <td>Numero de Documento: </td>
+          <td><%= $lcFileNameIni %></td>
+        </tr>
+        
+        <tr>
+          <td>RAZ&Oacute;N SOCIAL: </td>
+          <td> <%= $lcLegalName %> </td>
+        </tr>
+
+      </table>
+
+    </p>
+    <p>  Atentamente,</p>
+    <p> </p>
+    <p> Área de Facturación  </p>  
+  
+    
+    <p>
+
+    </p>
+    <p>.</p>
+    <p></p>
+  </body>
+</html>

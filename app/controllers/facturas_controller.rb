@@ -1044,6 +1044,8 @@ def reportes08
         $lcDep          = @invoice.customer.state
         
         ### detalle factura 
+        
+          
         for  invoiceitems in @invoiceitems 
         
         $lcCantidad     = invoiceitems.cantidad   
@@ -1072,9 +1074,12 @@ def reportes08
         end 
         #@clienteName1   = Client.where("vcodigo = ?",params[ :$lcClienteInv ])        
         $lcClienteName = ""
-        
+      if invoiceitems != nil   
         $lcDes1   = invoiceitems.product.name 
+      else
+        $lcDes1 = ""
         
+      end 
         $lcMoneda = @invoice.moneda_id
         
         #$lcGuiaRemision ="NRO.CUENTA BBVA BANCO CONTINENTAL : 0244-0100023293"
