@@ -71,6 +71,14 @@
               &nbsp;
             <% end %>
           </td>
+          <td class="bordered_right bordered_bottom right">
+            <% if product.price %>
+              <%= product.price %>
+            <% else %>
+              &nbsp;
+            <% end %>
+          </td>
+          
           <td><%= link_to 'Ver', product %></td>
            <% if @current_user.level == "admin"%>
         <td><%= link_to 'Editar', edit_product_path(product) %></td>
