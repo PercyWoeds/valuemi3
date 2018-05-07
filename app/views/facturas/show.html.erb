@@ -276,6 +276,7 @@
         
           <% if @invoice.processed  != "1" %>
           <td><%= link_to 'Eliminar',[@invoice,quote], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          
           <% end %>
           
       </tr>
