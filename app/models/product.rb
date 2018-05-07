@@ -36,17 +36,17 @@ class Product < ActiveRecord::Base
                   "CODIGO",
                   "DESCRIP  ",
                   "UNIDAD",
-                  "UBICACION",
-                     ]
+                  "UBICACION"]
+                     
 
 
 def self.matches(field_name, param)
     where("upper(#{field_name}) like ?", "%#{param}%")
 end
 
-  def self.import(file)
+def self.import(file)
+  
           CSV.foreach(file.path, headers: true, encoding:'iso-8859-1:utf-8') do |row|
-            
             
           #Product.create! row.to_hash 
           a = Product.find_by(code: row['code'] )
@@ -54,13 +54,14 @@ end
             
           else
             a.price = row['price']
-            a.save 
+            
+            if a.save 
+              puts row['code']
+            end 
             
           end 
           
-          
-          
-     end
+          end
   end 
 
   def add_category(category_txt)
