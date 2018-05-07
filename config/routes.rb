@@ -105,7 +105,7 @@
     collection { get :reportes06}
     collection { get :reportes07}
     collection { get :reportes08}
-    
+    collection { get :reportes09}
     collection { get :exportxls }
     collection { get :rpt_ccobrar3_pdf  }
     collection { get :rpt_factura_all   }

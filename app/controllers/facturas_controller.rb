@@ -378,6 +378,40 @@ def reportes08
     end
   end
 
+def reportes09
+
+
+    @company=Company.find(1)          
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]    
+    @moneda = params[:moneda_id]    
+
+    @facturas_rpt = @company.get_ventas_colaterales(@fecha1,@fecha2)          
+    
+    
+    case params[:print]
+      when "To PDF" then 
+        begin 
+         render  pdf: "Facturas ",template: "facturas/rventas09_rpt.pdf.erb",
+         locals: {:facturas => @facturas_rpt},
+         :orientation      => 'Landscape',
+         
+         :header => {
+           :spacing => 5,
+                           :html => {
+                     :template => 'layouts/pdf-header.html',
+                           right: '[page] of [topage]'
+                  }
+               }
+               
+               
+        end   
+      when "To Excel" then render xlsx: 'reporte09xls'
+      else render action: "index"
+    end
+  end
+
+
 
   def discontinue
     

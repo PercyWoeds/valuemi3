@@ -3338,13 +3338,23 @@ def get_facturas_by_day_value2(fecha1,fecha2,moneda,value='total')
  
   end 
   
+  
+  
   def  get_ventas_combustibles_producto(fecha1,fecha2) 
 
       facturas = Sellvale.where(["fecha >= ?  and fecha <=  ?  and td <> ? " , "#{fecha1} 00:00:00","#{fecha2} 23:59:59","N"  ] ).order(:fecha,:cod_prod)
      
        return facturas 
+  end 
+  def  get_ventas_colaterales(fecha1,fecha2) 
+
+     facturas = Factura.where(["fecha >= ?  and fecha <=  ? and substring(code,1,4) = ?" , "#{fecha1} 00:00:00","#{fecha2} 23:59:59","BB04"  ] ).order(:fecha)
+     
+       return facturas 
  
   end 
+  
+  
   def  get_ventas_adelantado(fecha1,fecha2) 
 
       facturas = Factura.where(["fecha >= ?  and fecha <=  ?" , "#{fecha1} 00:00:00","#{fecha2} 23:59:59"] ).order(:fecha).joins("INNER JOIN customers ON facturas.customer_id = customers.id AND customers.tipo = '2' ")
@@ -3380,8 +3390,6 @@ def get_facturas_by_day_value2(fecha1,fecha2,moneda,value='total')
        return facturas 
  
   end 
-  
-  
 
   
  

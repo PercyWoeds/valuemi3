@@ -562,6 +562,93 @@ class Factura < ActiveRecord::Base
         return valor         
   end
   
-  
+    
+  def get_ventas_market(fecha)
+    
+      fecha0 =  fecha.to_date
+      
+     facturas = Factura.where(["fecha >= ? and fecha <= ?   and tarjeta_id = 1  " , "#{fecha0} 00:00:00","#{fecha0} 23:59:59" ])
+       ret=0  
+       
+     if facturas
+         
+       for factura in facturas
+          
+          detalles = FacturaDetail.where(factura_id: factura.id)     
+             
+          for   detalle    in detalles
+            
+             if (detalle.product.products_category.id != 1  )
+                 if (detalle.product.products_category.id != 3  )
+                 
+                ret += detalle.total 
+                end 
+             end 
+             
+          end 
+          
+       end 
+       
+     end 
+     
+     return ret 
+ end
+ def get_ventas_market_tarjeta(fecha)
+   
+     fecha0= fecha.to_date
+     facturas = Factura.where(["fecha >= ? and fecha <= ?  and tarjeta_id <> 1 " , "#{fecha0} 00:00:00","#{fecha0} 23:59:59" ])
+       ret=0  
+       
+     if facturas
+         
+       for factura in facturas
+          
+          detalles = FacturaDetail.where(factura_id: factura.id)     
+             
+          for   detalle    in detalles
+            
+             if (detalle.product.products_category.id != 1  )
+                 if (detalle.product.products_category.id != 3  )
+                 
+                ret += detalle.total 
+                end 
+             end 
+             
+          end 
+          
+       end 
+       
+     end 
+     
+     return ret 
+ end 
+ 
+ 
+ def get_ventas_restaurant(fecha)
+     fecha0 = fecha.to_date 
+     facturas = Factura.where(["fecha >= ? and fecha <= ?   " , "#{fecha0} 00:00:00","#{fecha0} 23:59:59" ])
+       ret=0  
+       
+     if facturas
+         
+       for factura in facturas
+          
+          detalles =     FacturaDetail.where(factura_id: factura.id)     
+             
+          for   detalle    in detalles
+            
+             if detalle.product.products_category_id == 3 
+                    ret += detalle.total 
+             end 
+          end 
+          
+       end 
+       
+     end 
+     
+     return ret 
+ end 
+ 
+
   
 end

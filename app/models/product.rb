@@ -50,16 +50,16 @@ def self.import(file)
             
           #Product.create! row.to_hash 
           a = Product.find_by(code: row['code'] )
-          if a == nil
+          
             
-          else
-            a.price = row['price']
+            if a != nil
             
-            if a.save 
               puts row['code']
+              puts row['price']
+              a.update_attributes(price: row['price'])
+              
             end 
             
-          end 
           
           end
   end 
