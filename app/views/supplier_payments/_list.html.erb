@@ -34,7 +34,7 @@
             <%= link_to supplierpayment.code, supplierpayment, :title => "Ir a factura" %>
           </td>
           <td class="bordered_right bordered_bottom">
-            <%  if supplierpayment.supplier.name != nil%>
+            <%  if supplierpayment.supplier != nil%>
             <%=  supplierpayment.supplier.name %>
             <% else %>
             "Proveedor no existe "
