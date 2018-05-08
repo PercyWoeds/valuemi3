@@ -225,6 +225,8 @@ class Factura < ActiveRecord::Base
     return ret
   end
   
+  
+  
   def delete_products()
     invoice_services = FacturaDetail.where(factura_id: self.id)
     

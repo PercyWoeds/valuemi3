@@ -413,21 +413,21 @@ def reportes09
 
 
 
-  # def discontinue
+  def discontinue
     
-  #   @facturasselect = Factura.find(params[:products_ids])
+    @facturasselect = Factura.find(params[:products_ids])
 
-  #   for item in @guiasselect
-  #       begin
-  #         a = item.id
-  #         b = item.remite_id               
-  #         new_invoice_guia = Deliverymine.new(:mine_id =>$minesid, :delivery_id =>item.id)          
-  #         new_invoice_guia.save
+    for item in @guiasselect
+        begin
+          a = item.id
+          b = item.remite_id               
+          new_invoice_guia = Deliverymine.new(:mine_id =>$minesid, :delivery_id =>item.id)          
+          new_invoice_guia.save
            
         
-  #       end              
-  #   end
-  # end  
+        end              
+    end
+  end  
   def excel
 
     @company=Company.find(1)          
@@ -502,6 +502,7 @@ def reportes09
     @invoice[:processed] = "2"
     
     @invoice.anular 
+    @invoice.delete_products()
     @invoice.delete_guias()
   
     flash[:notice] = "Documento a sido anulado."
@@ -2104,14 +2105,14 @@ def newfactura2
           a = item.id
           b = Product.find_by(code: item.cod_prod)             
           descuento =  item.implista - item.importe.to_f
-          preciolista = item.precio.to_f + descuento
+          preciolista = item.precio.to_f 
           
           new_invoice_detail = FacturaDetail.new(factura_id: $lcFacturaId  ,sellvale_id: item.id , product_id: b.id ,price:preciolista, price_discount: item.precio, quantity: item.cantidad,total: item.importe)
-          new_invoice_detail.save
-          a= Sellvale.find(item.id)
-          a.processed ='1'
-          a.save
-          
+          if new_invoice_detail.save
+            a= Sellvale.find(item.id)
+            a.processed ='1'
+            a.save
+          end 
         end              
     end
     
