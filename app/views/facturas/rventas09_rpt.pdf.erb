@@ -9,7 +9,7 @@
   <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
   <tr bgcolor="#B4D7F7">
     
-    
+    <td width="5%" align = "center">Fecha </td>
     <td width="10%" align = "center">Market </td>
     <td width="10%" align = "center">Tarjeta </td>
     <td width="10%" align = "center">Resturante </td>
@@ -51,7 +51,7 @@
                   <tr>
                     <td width= "5%" align ="right"><%=  detalle.fecha.strftime("%d/%m/%Y") %></td>
                     
-                    <% valor1 = detalle.get_ventas_market(detalle.fecha)%>
+                    <% valor1 = detalle.get_ventas_market(detalle.fecha)- detalle.get_ventas_market_tarjeta(detalle.fecha)%>
                     <% valor2 = detalle.get_ventas_market_tarjeta(detalle.fecha)%>
                     <% valor3 = detalle.get_ventas_restaurant(detalle.fecha)%>
 

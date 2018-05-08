@@ -413,21 +413,21 @@ def reportes09
 
 
 
-  def discontinue
+  # def discontinue
     
-    @facturasselect = Factura.find(params[:products_ids])
+  #   @facturasselect = Factura.find(params[:products_ids])
 
-    for item in @guiasselect
-        begin
-          a = item.id
-          b = item.remite_id               
-          new_invoice_guia = Deliverymine.new(:mine_id =>$minesid, :delivery_id =>item.id)          
-          new_invoice_guia.save
+  #   for item in @guiasselect
+  #       begin
+  #         a = item.id
+  #         b = item.remite_id               
+  #         new_invoice_guia = Deliverymine.new(:mine_id =>$minesid, :delivery_id =>item.id)          
+  #         new_invoice_guia.save
            
         
-         end              
-    end
-  end  
+  #       end              
+  #   end
+  # end  
   def excel
 
     @company=Company.find(1)          

@@ -566,8 +566,10 @@ class Factura < ActiveRecord::Base
   def get_ventas_market(fecha)
     
       fecha0 =  fecha.to_date
+      puts "fecha market"
+      puts fecha0
       
-     facturas = Factura.where(["fecha >= ? and fecha <= ?   and tarjeta_id = 1  " , "#{fecha0} 00:00:00","#{fecha0} 23:59:59" ])
+     facturas = Factura.where(["fecha >= ? and fecha <= ?   " , "#{fecha0} 00:00:00","#{fecha0} 23:59:59" ])
        ret=0  
        
      if facturas
@@ -595,7 +597,7 @@ class Factura < ActiveRecord::Base
  end
  def get_ventas_market_tarjeta(fecha)
    
-     fecha0= fecha.to_date
+     fecha0= fecha.to_date  
      facturas = Factura.where(["fecha >= ? and fecha <= ?  and tarjeta_id <> 1 " , "#{fecha0} 00:00:00","#{fecha0} 23:59:59" ])
        ret=0  
        
