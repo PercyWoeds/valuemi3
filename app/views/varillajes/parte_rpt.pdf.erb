@@ -36,6 +36,7 @@
                     <td width = "8%" align ="right"><%= sprintf("%.2f",product0.get_ventas_vale_directo_producto(@fecha,product0.tanque.product.code.to_s,"qty"))   %> </td>
                     <td width = "10%" align ="right"><%= sprintf("%.2f",product0.get_ventas(@fecha,product0.tanque.product.id))  %></td>
                     <% saldo =  product0.inicial + product0.get_compras(@fecha,producto_value)  - product0.get_ventas(@fecha,product0.tanque.product.id)-product0.get_ventas_vale_directo_producto(@fecha,product0.tanque.product.code.to_s,"qty") %>
+                    
                     <td width = "8%" align ="right"><%= sprintf("%.2f",saldo.to_s)   %></td>
                     <td width = "8%" align ="right"><%= sprintf("%.3f",product0.varilla.to_s)   %></td>
                     <% dife =  product0.varilla - saldo %>
@@ -43,11 +44,11 @@
                     <td width = "5%" align ="right"><%= sprintf("%.2f",dife.to_s)   %></td>
                     
                     
-                    <% dife_soles = product0.get_ventas_importe(@fecha,product0.tanque.product.id) - product0.get_ventas_contometros_producto_todo(@fecha,product0.tanque.product.code.to_s)-  product0.get_ventas_contometros_descuento_producto(@fecha,product0.tanque.product.code.to_s)     %>
+                    <% dife_soles = product0.get_ventas_importe(@fecha,product0.tanque.product.id) - product0.get_ventas_contometros_producto_todo(@fecha,product0.tanque.product.code.to_s)-  product0.get_ventas_contometros_descuento_producto(@fecha,product0.tanque.product.code.to_s) --product0.get_ventas_vale_adelanto_producto(@fecha,product0.tanque.product.code.to_s,"soles")    %>
               
                     
                     <td width = "5%" align ="right"><%= sprintf("%.2f",dife_soles)  %></td>
-                    <td width = "5%" align ="right"><%= sprintf("%.2f",product0.get_ventas_contometros_producto_todo(@fecha,product0.tanque.product.code.to_s) + product0.get_ventas_contometros_descuento_producto(@fecha,product0.tanque.product.code.to_s))   %></td>
+                    <td width = "5%" align ="right"><%= sprintf("%.2f",product0.get_ventas_contometros_producto_todo(@fecha,product0.tanque.product.code.to_s) + product0.get_ventas_contometros_descuento_producto(@fecha,product0.tanque.product.code.to_s))-product0.get_ventas_vale_adelanto_producto(@fecha,product0.tanque.product.code.to_s,"qty")   %></td>
                     </tr>
                         
                     
