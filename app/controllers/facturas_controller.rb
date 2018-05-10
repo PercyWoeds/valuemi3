@@ -2387,14 +2387,7 @@ end
         $lcFile2    =File.expand_path('../../../', __FILE__)+ "/"+$lcFilezip
         
         ActionCorreo.bienvenido_email(@invoice).deliver
-        if $lcMoneda == "D"
-            @mailing = Mailing.new(:td =>$lcTd, :serie => 'FF02', :numero => $lcDocument_serial_id, :ruc=>$lcRuc, :flag1 => '1')
-        else 
-            @mailing = Mailing.new(:td =>$lcTd, :serie => 'FF01', :numero => $lcDocument_serial_id, :ruc=>$lcRuc, :flag1 => '1')
-        end
-        
-        @mailing.save
-        $lcGuiaRemision =""
+         $lcGuiaRemision =""
              
 
     end
