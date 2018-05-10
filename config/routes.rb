@@ -402,6 +402,8 @@ end
   match 'companies/reports/rpt_calmacen10_pdf/:company_id' => 'reports#rpt_calmacen10_pdf', via: [:get, :post]
   match 'companies/reports/rpt_calmacen11_pdf/:company_id' => 'reports#rpt_calmacen11_pdf', via: [:get, :post]
   match 'companies/reports/rpt_calmacen12_pdf/:company_id' => 'reports#rpt_calmacen12_pdf', via: [:get, :post]
+  match 'companies/reports/rpt_calmacen13_pdf/:company_id' => 'reports#rpt_calmacen13_pdf', via: [:get, :post]
+  
   match 'companies/reports/rpt_cajust1_pdf/:company_id' => 'reports#rpt_cajust1_pdf', via: [:get, :post]
   match 'companies/reports/rpt_viatico_pdf/:company_id' => 'reports#rpt_viatico_pdf', via: [:get, :post]
   
@@ -583,6 +585,8 @@ end
 
   match 'facturas/rpt_facturas_all/:company_id' => 'facturas#rpt_facturas_all_pdf', via: [:get, :post]
   match 'facturas/rpt_facturas_all2/:company_id' => 'facturas#rpt_facturas_all2_pdf', via: [:get, :post]
+  
+  match 'facturas/rpt_salidas2_all_pdf/:company_id' => 'facturas#rpt_salidas2_all_pdf', via: [:get, :post]
   
   match 'facturas/rpt_ccobrar2_pdf/:company_id' => 'facturas#rpt_ccobrar2_pdf', via: [:get, :post]
   match 'facturas/rpt_ccobrar3_pdf/:company_id' => 'facturas#rpt_ccobrar3_pdf', via: [:get, :post]

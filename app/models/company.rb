@@ -3066,6 +3066,22 @@ WHERE outputs.employee_id = ?  and products.products_category_id = ?  and output
     return @purchases 
 
 end
+
+
+def get_salidas_day4(fecha1,fecha2)
+  
+    @facturass = Factura.find_by_sql(['Select facturas.*,factura_details.quantity,
+    factura_details.price,factura_details.total,products.name as nameproducto,products.code as codigo,products.unidad
+    from factura_details   
+INNER JOIN facturas ON factura_details.factura_id = facturas.id
+INNER JOIN products ON factura_details.product_id = products.id
+WHERE facturas.fecha >= ? and facturas.fecha <= ?', "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
+ 
+    return @facturas 
+
+end
+
+
 def get_salidas_day3_1(fecha1,fecha2,product,placa)
   
     @purchases = Output.find_by_sql(['Select outputs.*,output_details.quantity,

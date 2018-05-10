@@ -15,22 +15,19 @@ totals = []
 
 <h1>
   <%= image_tag("reports_48.png", :class => "vmiddle") %>
-  Reporte de Salidas por familia 
+  Reporte de Ventas detallado 
 </h1>
 
-<form method="get" action="/outputs/rpt_salidas2_all_pdf/<%= @company.id %>" >   
+<form method="get" action="/facturas/rpt_salidas2_all_pdf/<%= @company.id %>" >   
   <div class="field">
-      <input type="date" name="fecha1" value="2017-01-01" style = "width: 150px" >
+      <input type="date" name="fecha1" value="2018-01-01" style = "width: 150px" >
     </div>
 
 	<div class="field">
-		<input type="date" name="fecha2" value="2017-01-31" style = "width: 150px" >
+		<input type="date" name="fecha2" value="2018-05-10" style = "width: 150px" >
   </div>
 
-  <div class="field">
-    <%= select_tag(:products_category_id,options_from_collection_for_select(@categories,'id','category') ) %>
-  </div>
-
+  
   <input type="submit" value="Ver Reporte " />
   
 </form>

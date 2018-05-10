@@ -2429,6 +2429,189 @@ end
         @@document_serial_id =""
         $aviso=""
     end 
+
+
+  # reporte completo
+  def build_pdf_header_rpt2(pdf)
+      pdf.font "Helvetica" , :size => 8
+     $lcCli  =  @company.name 
+     $lcdir1 = @company.address1+@company.address2+@company.city+@company.state
+
+     $lcFecha1= Date.today.strftime("%d/%m/%Y").to_s
+     $lcHora  = Time.now.to_s
+
+    max_rows = [client_data_headers_rpt.length, invoice_headers_rpt.length, 0].max
+      rows = []
+      (1..max_rows).each do |row|
+        rows_index = row - 1
+        rows[rows_index] = []
+        rows[rows_index] += (client_data_headers_rpt.length >= row ? client_data_headers_rpt[rows_index] : ['',''])
+        rows[rows_index] += (invoice_headers_rpt.length >= row ? invoice_headers_rpt[rows_index] : ['',''])
+      end
+
+      if rows.present?
+
+        pdf.table(rows, {
+          :position => :center,
+          :cell_style => {:border_width => 0},
+          :width => pdf.bounds.width
+        }) do
+          columns([0, 2]).font_style = :bold
+
+        end
+
+        pdf.move_down 10
+      end      
+      pdf 
+  end   
+
+  def build_pdf_body_rpt2(pdf)
+
+    pdf.text "Listado de Salidas desde "+@fecha1.to_s+ " Hasta: "+@fecha2.to_s + "      Stock al : "+Date.today.strftime("%Y-%d-%m") , :size => 8 
+     
+    pdf.font "Helvetica" , :size => 6
+
+      headers = []
+      table_content = []
+
+      Output::TABLE_HEADERS3.each do |header|
+        cell = pdf.make_cell(:content => header)
+        cell.background_color = "FFFFCC"
+        headers << cell
+      end
+
+      table_content << headers
+
+      nroitem=1
+      lcDoc='FT'
+      lcMon='S/.'
+
+      @totales = 0
+      @cantidad = 0
+      nroitem = 1
+
+       for  product in @facturas_rpt
+ 
+            row = []         
+            row << nroitem.to_s
+            row << product.code
+            row << product.fecha.strftime("%d/%m/%Y")
+            row << product.codigo
+            row << product.nameproducto
+            row << product.unidad 
+            
+            row << product.employee.full_name
+            row << product.truck.placa            
+            row << sprintf("%.2f",product.quantity.to_s)
+            row << sprintf("%.2f",product.get_stock(product.product_id).to_s)
+            row << sprintf("%.2f",product.price.to_s)
+
+            calculartotal =product.price*product.quantity
+
+            row << sprintf("%.2f",calculartotal.to_s)
+          
+            table_content << row
+
+            @totales += calculartotal 
+            @cantidad += product.quantity
+
+            nroitem=nroitem + 1
+       
+        end
+      
+      row =[]
+      row << ""
+      row << ""
+      row << ""
+      row << ""
+      row << ""
+      
+      row << ""
+      row << ""
+      
+      row << "TOTALES => "
+      row << sprintf("%.2f",@cantidad.to_s)
+      row << " "
+      row << " "
+      row << sprintf("%.2f",@totales.to_s)
+
+
+      table_content << row
+      
+      result = pdf.table table_content, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width
+                                        } do 
+                                          columns([0]).align=:center
+                                          columns([1]).align=:left
+                                          columns([2]).align=:left
+                                          columns([2]).width = 45
+                                          columns([3]).align=:left
+                                          columns([4]).align=:left
+                                          columns([5]).align=:center  
+                                          columns([6]).align=:left
+                                          columns([7]).align=:left
+                                          columns([8]).align=:right
+                                          columns([8]).width = 50
+                                          columns([9]).align=:right
+                                          columns([9]).width = 50
+                                          columns([10]).align=:right
+                                          columns([10]).width = 50
+                                          columns([11]).align=:right
+                                          columns([11]).width = 50
+                                          
+                                        end                                          
+      pdf.move_down 10      
+      #totales 
+      pdf 
+
+    end
+
+    def build_pdf_footer_rpt2(pdf)
+            data =[ ["Procesado por Almacen ","V.B.Compras ","V.B. Gerente ."],
+               [":",":",":"],
+               [":",":",":"],
+               ["Fecha:","Fecha:","Fecha:"] ]
+
+           
+            pdf.text " "
+            pdf.table(data,:cell_style=> {:border_width=>1} , :width => pdf.bounds.width)
+            pdf.move_down 10          
+
+                        
+      pdf.text "" 
+      pdf.bounding_box([0, 30], :width => 535, :height => 40) do
+      pdf.draw_text "Company: #{@company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
+
+      end
+
+      pdf
+      
+  end
+
+
+# Export serviceorder to PDF
+  def rpt_salidas2_all_pdf
+
+    @company=Company.find(1)          
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]    
+    @categoria = params[:products_category_id]    
+    
+    @facturas_rpt = @company.get_salidas_day4(@fecha1,@fecha2)
+
+    Prawn::Document.generate("app/pdf_output/rpt_factura.pdf") do |pdf|
+        pdf.font "Helvetica"
+        pdf = build_pdf_header_rpt2(pdf)
+        pdf = build_pdf_body_rpt2(pdf)
+        build_pdf_footer_rpt2(pdf)
+        $lcFileName =  "app/pdf_output/rpt_factura.pdf"              
+    end     
+    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
+    send_file("app/pdf_output/rpt_factura.pdf", :type => 'application/pdf', :disposition => 'inline')
+
+  end
+
     
 
 

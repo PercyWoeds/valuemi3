@@ -1381,6 +1381,13 @@ def rpt_facturas_4
     
     @categories = ProductsCategory.all 
   end
+  def rpt_calmacen13_pdf
+      @company = Company.find(params[:company_id])    
+      
+    @pagetitle = "Listado de stocks "    
+    
+    @categories = ProductsCategory.all 
+  end
   
   def rpt_cajust1_pdf
       @company = Company.find(params[:company_id])    
