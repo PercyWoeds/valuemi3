@@ -386,14 +386,14 @@
 			  <%= submit_tag  "XML  " , data: { no_turbolink: true } %>
 			<% end %>		
 		</tr>
-		
-		 <% if current_user.level=='admin' %>
-		  <tr>
+		<tr>
 			<%= form_tag sendmail_facturas_path, multipart: true do %>
 	  		<%= submit_tag  "Correo Electronico  " ,  data: { no_turbolink: true } %>
 			<% end %>
 			</tr>
-			<tr>
+			
+		 <% if current_user.level=='admin' %>
+		  <tr>
 			<%= form_tag anular_voideds_path,  multipart: true, data: { confirm: "Esta seguro de anular este documento ?" } do  %>
 	  		<%= submit_tag  " Anular "  ,  data: { no_turbolink: true } %>
 			<% end %>
