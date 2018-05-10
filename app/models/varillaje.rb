@@ -101,7 +101,7 @@ class Varillaje < ActiveRecord::Base
  def  get_ventas_contometros_producto_todo(fecha,producto) 
      #no incluye ventas directas
 
-     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and cod_prod = ? and tipo <> ?  " , "#{fecha} 00:00:00","#{fecha} 23:59:59",producto,"3"])
+     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and cod_prod = ? and tipo <> ?  or tipo <> ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59",producto,"3","4"])
      
      if facturas
          
@@ -119,7 +119,7 @@ class Varillaje < ActiveRecord::Base
   
  def  get_ventas_contometros_descuento_producto(fecha,producto) 
 
-     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ? and tipo <> ? and cod_prod = ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","3",producto ])
+     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ? and tipo <> ? or tipo <> ?  and cod_prod = ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","3","4",producto ])
      
      if facturas
          
@@ -327,6 +327,26 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
  def  get_ventas_vale_directo_producto(fecha,producto,value) 
 
      facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ? and tipo  = ?  and cod_prod  = ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","3",producto ])
+     
+     if facturas
+         
+        ret=0  
+        for detalle in facturas
+            if value == "qty"
+                ret += detalle.cantidad.to_f
+            else   
+                ret += detalle.importe.to_f
+            end 
+             
+        end 
+    end 
+
+    return ret
+ 
+ end 
+ def  get_ventas_vale_adelanto_producto(fecha,producto,value) 
+
+     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ? and tipo  = ?  and cod_prod  = ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","4",producto ])
      
      if facturas
          
