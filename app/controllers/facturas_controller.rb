@@ -2596,7 +2596,7 @@ end
     @company=Company.find(1)          
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]    
-    @categoria = params[:products_category_id]    
+  
     
     @facturas_rpt = @company.get_salidas_day4(@fecha1,@fecha2)
 
