@@ -2294,7 +2294,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
          producto_value = varilla.tanque.product.id
          @fecha = varilla.fecha.to_date 
          
-         qty  =  varilla.inicial + varilla.get_compras(@fecha,producto_value)  - varilla.get_ventas(@fecha,product0.tanque.product.id)- varilla.get_ventas_vale_directo_producto(@fecha,varilla.tanque.product.code.to_s,"qty")
+         qty  =  varilla.inicial + varilla.get_compras(@fecha,producto_value)  - varilla.get_ventas(@fecha,varilla.tanque.product.id)- varilla.get_ventas_vale_directo_producto(@fecha,varilla.tanque.product.code.to_s,"qty")
         
           movdetail  = MovementDetail.find_by(:product_id=>varilla.product_id)          
 
@@ -2465,7 +2465,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
          producto_value = varilla.tanque.product.id
          @fecha = varilla.fecha.to_date 
          
-         qty  =  varilla.inicial + varilla.get_compras(@fecha,producto_value)  - varilla.get_ventas(@fecha,product0.tanque.product.id)- varilla.get_ventas_vale_directo_producto(@fecha,varilla.tanque.product.code.to_s,"qty")
+         qty  =  varilla.inicial + varilla.get_compras(@fecha,producto_value)  - varilla.get_ventas(@fecha,varilla.tanque.product.id)- varilla.get_ventas_vale_directo_producto(@fecha,varilla.tanque.product.code.to_s,"qty")
         
           movdetail  = MovementDetail.find_by(:product_id=>varilla.product_id)          
 
