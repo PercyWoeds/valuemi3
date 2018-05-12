@@ -1,5 +1,6 @@
   Mnygo::Application.routes.draw do
 
+  resources :depositos
   resources :turnos
   resources :bankdeposits
   resources :tarjeta

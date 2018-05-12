@@ -1,0 +1,67 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Depositos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Company</th>
+      <th>Location</th>
+      <th>Division</th>
+      <th>Bank account</th>
+      <th>Document</th>
+      <th>Documento</th>
+      <th>Customer</th>
+      <th>Tm</th>
+      <th>Total</th>
+      <th>Fecha1</th>
+      <th>Fecha2</th>
+      <th>Nrooperacion</th>
+      <th>Descrip</th>
+      <th>Comments</th>
+      <th>User</th>
+      <th>Processed</th>
+      <th>Date processed</th>
+      <th>Code</th>
+      <th>Bank acount</th>
+      <th>Concept</th>
+      <th>Compen</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @depositos.each do |deposito| %>
+      <tr>
+        <td><%= deposito.company_id %></td>
+        <td><%= deposito.location_id %></td>
+        <td><%= deposito.division_id %></td>
+        <td><%= deposito.bank_account_id %></td>
+        <td><%= deposito.document_id %></td>
+        <td><%= deposito.documento %></td>
+        <td><%= deposito.customer_id %></td>
+        <td><%= deposito.tm %></td>
+        <td><%= deposito.total %></td>
+        <td><%= deposito.fecha1 %></td>
+        <td><%= deposito.fecha2 %></td>
+        <td><%= deposito.nrooperacion %></td>
+        <td><%= deposito.descrip %></td>
+        <td><%= deposito.comments %></td>
+        <td><%= deposito.user_id %></td>
+        <td><%= deposito.processed %></td>
+        <td><%= deposito.date_processed %></td>
+        <td><%= deposito.code %></td>
+        <td><%= deposito.bank_acount_id %></td>
+        <td><%= deposito.concept_id %></td>
+        <td><%= deposito.compen %></td>
+        <td><%= link_to 'Show', deposito %></td>
+        <td><%= link_to 'Edit', edit_deposito_path(deposito) %></td>
+        <td><%= link_to 'Destroy', deposito, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Deposito', new_deposito_path %>

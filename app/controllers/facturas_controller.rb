@@ -2612,10 +2612,6 @@ end
 
   end
 
-    
-
-
-
 
   private
   def factura_params

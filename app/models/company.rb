@@ -2226,11 +2226,11 @@ def get_purchaseorder_detail2(fecha1,fecha2)
           if movdetail
 
             if detail.quantity == nil
-              movdetail.salida = 0   
+              movdetail.stock_inicial += 0   
             else
-              movdetail.salida += detail.quantity
+              movdetail.stock_inicial -= detail.quantity
             end
-              movdetail.save           
+            movdetail.save           
           else     
           
             #detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>0,:salida =>detail.quantity,
@@ -2558,7 +2558,6 @@ def get_purchaseorder_detail2(fecha1,fecha2)
           $lcPreciosinigv = detail.price_without_tax
           movdetail  = MovementDetail.find_by(:product_id=>detail.product_id)
          
-          
           if movdetail
             if detail.quantity == nil
               movdetail.ingreso  += 0   
@@ -2823,7 +2822,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
         $lcDocumento = sal.code
         $lcDocumentId = "01"
         
-        @ventasdetail=  FacturaDetail.where(:factura_id=>sal.id)
+        @ventasdetail=  FacturaDetail.select("sum(quantity) as quantity","avg(price) as price ",:product_id).where(:factura_id=>sal.id).group(:product_id)
 
         for detail in @ventasdetail 
 
@@ -2842,6 +2841,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
 
           end   
         end 
+        $lcDocumento = ""
      end 
      
     if product1 == 1 
