@@ -2289,7 +2289,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
  @varilla = Varillaje.where(["fecha < ? ", "#{fecha1} 00:00:00" ])
  
  
- for varila in @varilla
+ for varilla in @varilla
         
          producto_value = varilla.tanque.product.id
          @fecha = varilla.fecha 
@@ -2460,7 +2460,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
  @varilla = Varillaje.where(["fecha >= ? and fecha <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59"  ])
  
  
- for varila in @varilla
+ for varilla in @varilla
         
          producto_value = varilla.tanque.product.id
          @fecha = varilla.fecha 
