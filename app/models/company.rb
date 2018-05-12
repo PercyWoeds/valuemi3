@@ -2295,7 +2295,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
          @fecha = detalle.fecha.to_date 
          
          qty  =  detalle.inicial + detalle.get_compras(@fecha,producto_value)  - detalle.get_ventas(@fecha,detalle.tanque.product.id)- detalle.get_ventas_vale_directo_producto(@fecha,detalle.tanque.product.code.to_s,"qty")
-         dife =  producto_value.varilla - qty
+         dife =  detalle.varilla - qty
          
           movdetail  = MovementDetail.find_by(:product_id=> producto_value)          
 
@@ -2467,7 +2467,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
          @fecha = detalle.fecha.to_date 
          
          qty  =  detalle.inicial + detalle.get_compras(@fecha,producto_value)  - detalle.get_ventas(@fecha,detalle.tanque.product.id)- detalle.get_ventas_vale_directo_producto(@fecha,detalle.tanque.product.code.to_s,"qty")
-         dife =  producto_value.varilla - qty
+         dife =  detalle.varilla - qty
          
           movdetail  = MovementDetail.find_by(:product_id=>producto_value)          
 
