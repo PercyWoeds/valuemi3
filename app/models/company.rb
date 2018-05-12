@@ -2289,12 +2289,12 @@ def get_purchaseorder_detail2(fecha1,fecha2)
  @varilla = Varillaje.where(["fecha < ? ", "#{fecha1} 00:00:00" ])
  
  
- for varilla in @varilla
+ for detalle  in @varilla
         
-         producto_value = varilla.tanque.product.id
-         @fecha = varilla.fecha.to_date 
+         producto_value = detalle.tanque.product.id
+         @fecha = detalle.fecha.to_date 
          
-         qty  =  varilla.inicial + varilla.get_compras(@fecha,producto_value)  - varilla.get_ventas(@fecha,varilla.tanque.product.id)- varilla.get_ventas_vale_directo_producto(@fecha,varilla.tanque.product.code.to_s,"qty")
+         qty  =  detalle.inicial + detalle.get_compras(@fecha,producto_value)  - detalle.get_ventas(@fecha,detalle.tanque.product.id)- detalle.get_ventas_vale_directo_producto(@fecha,detalle.tanque.product.code.to_s,"qty")
          dife =  producto_value.varilla - qty
          
           movdetail  = MovementDetail.find_by(:product_id=> producto_value)          
@@ -2461,12 +2461,12 @@ def get_purchaseorder_detail2(fecha1,fecha2)
  @varilla = Varillaje.where(["fecha >= ? and fecha <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59"  ])
  
  
- for varilla in @varilla
+ for detalle  in @varilla
         
-         producto_value = varilla.tanque.product.id
-         @fecha = varilla.fecha.to_date 
+         producto_value = detalle.tanque.product.id
+         @fecha = detalle.fecha.to_date 
          
-         qty  =  varilla.inicial + varilla.get_compras(@fecha,producto_value)  - varilla.get_ventas(@fecha,varilla.tanque.product.id)- varilla.get_ventas_vale_directo_producto(@fecha,varilla.tanque.product.code.to_s,"qty")
+         qty  =  detalle.inicial + detalle.get_compras(@fecha,producto_value)  - detalle.get_ventas(@fecha,detalle.tanque.product.id)- detalle.get_ventas_vale_directo_producto(@fecha,detalle.tanque.product.code.to_s,"qty")
          dife =  producto_value.varilla - qty
          
           movdetail  = MovementDetail.find_by(:product_id=>producto_value)          
