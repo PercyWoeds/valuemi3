@@ -2295,7 +2295,8 @@ def get_purchaseorder_detail2(fecha1,fecha2)
          @fecha = varilla.fecha.to_date 
          
          qty  =  varilla.inicial + varilla.get_compras(@fecha,producto_value)  - varilla.get_ventas(@fecha,varilla.tanque.product.id)- varilla.get_ventas_vale_directo_producto(@fecha,varilla.tanque.product.code.to_s,"qty")
-        
+         dife =  producto_value.varilla - qty
+         
           movdetail  = MovementDetail.find_by(:product_id=> producto_value)          
 
           if movdetail
@@ -2305,7 +2306,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
                 movdetail.stock_inicial += 0   
             else
               
-                movdetail.stock_inicial += qty
+                movdetail.stock_inicial += dife 
               
             end
         
@@ -2466,7 +2467,8 @@ def get_purchaseorder_detail2(fecha1,fecha2)
          @fecha = varilla.fecha.to_date 
          
          qty  =  varilla.inicial + varilla.get_compras(@fecha,producto_value)  - varilla.get_ventas(@fecha,varilla.tanque.product.id)- varilla.get_ventas_vale_directo_producto(@fecha,varilla.tanque.product.code.to_s,"qty")
-        
+         dife =  producto_value.varilla - qty
+         
           movdetail  = MovementDetail.find_by(:product_id=>producto_value)          
 
           if movdetail
@@ -2476,10 +2478,10 @@ def get_purchaseorder_detail2(fecha1,fecha2)
                 movdetail.salida += 0  
                 movdetail.ingreso += 0  
             else
-               if qty > 0  
-                 movdetail.ingreso += qty
+               if dife > 0  
+                 movdetail.ingreso += dife
                else
-                 movdetail.salida  += qty
+                 movdetail.salida  += dife 
                end 
             end
         
