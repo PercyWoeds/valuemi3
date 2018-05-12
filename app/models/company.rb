@@ -2292,7 +2292,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
  for varilla in @varilla
         
          producto_value = varilla.tanque.product.id
-         @fecha = varilla.fecha 
+         @fecha = varilla.fecha.to_date 
          
          qty  =  varilla.inicial + varilla.get_compras(@fecha,producto_value)  - varilla.get_ventas(@fecha,product0.tanque.product.id)- varilla.get_ventas_vale_directo_producto(@fecha,varilla.tanque.product.code.to_s,"qty")
         
@@ -2463,7 +2463,7 @@ def get_purchaseorder_detail2(fecha1,fecha2)
  for varilla in @varilla
         
          producto_value = varilla.tanque.product.id
-         @fecha = varilla.fecha 
+         @fecha = varilla.fecha.to_date 
          
          qty  =  varilla.inicial + varilla.get_compras(@fecha,producto_value)  - varilla.get_ventas(@fecha,product0.tanque.product.id)- varilla.get_ventas_vale_directo_producto(@fecha,varilla.tanque.product.code.to_s,"qty")
         
