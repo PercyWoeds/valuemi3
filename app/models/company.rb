@@ -2283,6 +2283,47 @@ def get_purchaseorder_detail2(fecha1,fecha2)
         
         end 
      end 
+ # Varillaje
+ 
+ 
+ @varilla = Varillaje.where(["fecha < ? ", "#{fecha1} 00:00:00" ])
+ 
+ 
+ for varila in @varilla
+        
+         producto_value = varilla.tanque.product.id
+         @fecha = varilla.fecha 
+         
+         qty  =  varilla.inicial + varilla.get_compras(@fecha,producto_value)  - varilla.get_ventas(@fecha,product0.tanque.product.id)- varilla.get_ventas_vale_directo_producto(@fecha,varilla.tanque.product.code.to_s,"qty")
+        
+          movdetail  = MovementDetail.find_by(:product_id=>varilla.product_id)          
+
+          if movdetail
+
+            if qty == nil
+            
+                movdetail.stock_inicial += 0   
+            else
+              
+                movdetail.stock_inicial += qty
+              
+            end
+        
+ 
+            movdetail.save           
+
+          else     
+          
+            #detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>0,:salida =>detail.quantity,
+            #:price=>detail.price,:product_id=> detail.product_id,:tm=>"3")
+            #detail.save 
+
+          end
+        
+        
+ 
+ 
+ end 
 
 
    
@@ -2414,6 +2455,49 @@ def get_purchaseorder_detail2(fecha1,fecha2)
           end   
         end 
      end 
+
+ 
+ @varilla = Varillaje.where(["fecha >= ? and fecha <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59"  ])
+ 
+ 
+ for varila in @varilla
+        
+         producto_value = varilla.tanque.product.id
+         @fecha = varilla.fecha 
+         
+         qty  =  varilla.inicial + varilla.get_compras(@fecha,producto_value)  - varilla.get_ventas(@fecha,product0.tanque.product.id)- varilla.get_ventas_vale_directo_producto(@fecha,varilla.tanque.product.code.to_s,"qty")
+        
+          movdetail  = MovementDetail.find_by(:product_id=>varilla.product_id)          
+
+          if movdetail
+
+            if qty == nil
+            
+                movdetail.salida += 0  
+                movdetail.ingreso += 0  
+            else
+               if qty > 0  
+                 movdetail.ingreso += qty
+               else
+                 movdetail.salida  += qty
+               end 
+            end
+        
+ 
+            movdetail.save           
+
+          else     
+          
+            #detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>0,:salida =>detail.quantity,
+            #:price=>detail.price,:product_id=> detail.product_id,:tm=>"3")
+            #detail.save 
+
+          end
+        
+        
+ 
+ 
+ end 
 
      
 # ajustes de inventarios
