@@ -3451,7 +3451,7 @@ def get_facturas_by_day_value2(fecha1,fecha2,moneda,value='total')
   def  get_ventas_colaterales(fecha1,fecha2)
     
 
-       facturas = Factura.select("fecha, sum(total) as total_price").where(["fecha >= ?  and fecha <=  ? and substring(code,1,4) = ?" , "#{fecha1.to_date}","#{fecha2.to_date}","BB04"  ] ).group(:fecha).order(:fecha)
+       facturas = Factura.select("fecha, sum(total) as total_price").where(["fecha >= ?  and fecha <=  ? and substring(code,1,4) = ?" , "#{fecha1.to_date}","#{fecha2.to_date}","BB04"  ] ).group(:fecha.to_date).order(:fecha)
      
        return facturas 
  
