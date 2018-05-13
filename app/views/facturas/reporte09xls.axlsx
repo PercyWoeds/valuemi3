@@ -1,0 +1,61 @@
+$LOAD_PATH.unshift "#{File.dirname(__FILE__)}/../lib"
+
+require 'axlsx'
+
+p = Axlsx::Package.new
+wb = xlsx_package.workbook
+wb.styles do |s|
+    date = s.add_style(:format_code => "yyyy-mm-dd", :border => Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :right})
+    padded = s.add_style(:format_code => "00#", :border => Axlsx::STYLE_THIN_BORDER)
+    percent = s.add_style(:format_code => '#.##0.00', :border => Axlsx::STYLE_THIN_BORDER)
+    title = s.add_style(:bg_color => "FFFF0000", :fg_color=>"#FF000000",:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :center})
+    cadena =s.add_style(:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :right})
+
+    currency = wb.styles.add_style(:format_code=>"#,##0.#0;[Red]-#,##0.#0",
+                              :border=>Axlsx::STYLE_THIN_BORDER)
+    red_negative = wb.styles.add_style :num_fmt => 8
+    comma = wb.styles.add_style :num_fmt => 3
+    super_funk = wb.styles.add_style :format_code => '[Green]#'
+    
+    wb.add_worksheet(name: "Basic work sheet") do |sheet|
+    @total1 = 0
+    @total2 = 0
+    @total3 = 0
+    @total4 = 0
+    @total5 = 0
+    @total6 = 0
+    @total7 = 0
+    
+    sheet.add_row ["","Ventas " ,"Colaterales", "",  "","","", "" ], :style => title 
+    
+    sheet.add_row ["Fecha","Market" ,"Tarjeta", "Restaurante",  "Lubricentro","Promocion","Lavado", "Totales " ], :style => title 
+    
+    
+   @facturas_rpt.each do |detalle|
+     
+                     valor1 = detalle.get_ventas_market(detalle.fecha)- detalle.get_ventas_market_tarjeta(detalle.fecha)
+                     valor2 = detalle.get_ventas_market_tarjeta(detalle.fecha)
+                     valor3 = detalle.get_ventas_restaurant(detalle.fecha)
+                     valor4 = 0
+                     valor5 = 0 
+                     valor6 = 0 
+                     total  = valor1+valor2+valor3+valor4+valor5+valor6
+                    
+    sheet.add_row [ detalle.fecha,valor1,valor2,valor3,valor4,valor5,valor6,total], :style => [date,currency,currency,currency,currency,currency,currency,currency]
+    
+    @total1 += valor1
+    @total2 += valor2 
+    @total3 += valor3 
+    @total4 += valor4 
+    @total5 += valor5 
+    @total6 += valor6
+    @total7 += total 
+    
+   end
+   
+   sheet.add_row [ "",@total1,@total2,@total3,@total4,@total5,@total6,@total7], :style => [date,currency,currency,currency,currency,currency,currency,currency]
+   
+end
+end 
+
+    
