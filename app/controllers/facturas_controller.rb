@@ -1704,7 +1704,7 @@ def newfactura2
       headers = []
       table_content = []
 
-      Factura::TABLE_HEADERS3.each do |header|
+      Factura::TABLE_HEADERS2.each do |header|
         cell = pdf.make_cell(:content => header)
         cell.background_color = "FFFFCC"
         headers << cell
@@ -2465,7 +2465,7 @@ end
       pdf 
   end   
 
-def build_pdf_body_rpt20(pdf)
+def (pdf)
 
     pdf.text "Listado de Salidas desde "+@fecha1.to_s+ " Hasta: "+@fecha2.to_s + "      Stock al : "+Date.today.strftime("%Y-%d-%m") , :size => 8 
      
