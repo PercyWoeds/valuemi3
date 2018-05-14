@@ -1704,7 +1704,7 @@ def newfactura2
       headers = []
       table_content = []
 
-      Factura::TABLE_HEADERS23.each do |header|
+      Factura::TABLE_HEADERS2.each do |header|
         cell = pdf.make_cell(:content => header)
         cell.background_color = "FFFFCC"
         headers << cell
@@ -1712,14 +1712,7 @@ def newfactura2
 
     
       headers = []
-      table_content = []
-
-      Factura::TABLE_HEADERS_TK.each do |header|
-        cell = pdf.make_cell(:content => header)
-        cell.background_color = "FFFFCC"
-        headers << cell
-      end
-
+      
       table_content << headers
 
       nroitem = 1
