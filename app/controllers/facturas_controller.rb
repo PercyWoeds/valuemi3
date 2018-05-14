@@ -2465,7 +2465,7 @@ end
       pdf 
   end   
 
-  def build_pdf_body_rpt2(pdf)
+def build_pdf_body_rpt20(pdf)
 
     pdf.text "Listado de Salidas desde "+@fecha1.to_s+ " Hasta: "+@fecha2.to_s + "      Stock al : "+Date.today.strftime("%Y-%d-%m") , :size => 8 
      
