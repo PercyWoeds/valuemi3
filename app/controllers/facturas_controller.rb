@@ -2496,7 +2496,7 @@ end
             row << nroitem.to_s
             row << product.code
             row << product.fecha.strftime("%d/%m/%Y")
-            row << product.codigo
+            row << product.product.code 
             row << product.nameproducto
             row << product.unidad 
             
