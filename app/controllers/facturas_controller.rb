@@ -64,7 +64,7 @@ class FacturasController < ApplicationController
          render  pdf: "Ordenes ",template: "varillajes/parte3_rpt.pdf.erb",locals: {:varillajes => @contado_rpt}
         
         end   
-      when "To Excel" then render xlsx: 'exportxls'
+      when "To Excel" then render xlsx: 'parte3_rptxls'
       else render action: "index"
     end
   end
