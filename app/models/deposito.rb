@@ -3,6 +3,7 @@ class Deposito < ActiveRecord::Base
     self.per_page = 20
    
   validates_presence_of :company_id, :total,:user_id,:fecha1 ,:bank_acount_id 
+  
   validates_uniqueness_of :code
    belongs_to :company
   belongs_to :location
@@ -17,7 +18,7 @@ class Deposito < ActiveRecord::Base
   
   def correlativo
         
-        numero = Voided.find(10).numero.to_i + 1
+        numero = Voided.find(16).numero.to_i + 1
         lcnumero = numero.to_s
         Voided.where(:id=>'16').update_all(:numero =>lcnumero)        
   end

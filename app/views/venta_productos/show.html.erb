@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Fecha:</strong>
+  <%= @venta_producto.fecha %>
+</p>
+
+<p>
+  <strong>Document:</strong>
+  <%= @venta_producto.document_id %>
+</p>
+
+<p>
+  <strong>Documento:</strong>
+  <%= @venta_producto.documento %>
+</p>
+
+<p>
+  <strong>Division:</strong>
+  <%= @venta_producto.division_id %>
+</p>
+
+<p>
+  <strong>Total efe:</strong>
+  <%= @venta_producto.total_efe %>
+</p>
+
+<p>
+  <strong>Tarjeta:</strong>
+  <%= @venta_producto.tarjeta_id %>
+</p>
+
+<p>
+  <strong>Total tar:</strong>
+  <%= @venta_producto.total_tar %>
+</p>
+
+<%= link_to 'Edit', edit_venta_producto_path(@venta_producto) %> |
+<%= link_to 'Back', venta_productos_path %>

@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  fecha: 2018-05-15 17:39:32
+  document_id: 1
+  documento: MyString
+  division_id: 1
+  total_efe: 1.5
+  tarjeta_id: 1
+  total_tar: 1.5
+
+two:
+  fecha: 2018-05-15 17:39:32
+  document_id: 1
+  documento: MyString
+  division_id: 1
+  total_efe: 1.5
+  tarjeta_id: 1
+  total_tar: 1.5

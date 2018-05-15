@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Venta Productos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Fecha</th>
+      <th>Document</th>
+      <th>Documento</th>
+      <th>Division</th>
+      <th>Total efe</th>
+      <th>Tarjeta</th>
+      <th>Total tar</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @venta_productos.each do |venta_producto| %>
+      <tr>
+        <td><%= venta_producto.fecha.strftime("%d/%m/%Y") %></td>
+        <td><%= venta_producto.document.description %></td>
+        <td><%= venta_producto.documento %></td>
+        <td><%= venta_producto.division.name %></td>
+        <td><%= venta_producto.total_efe %></td>
+        <td><%= venta_producto.tarjeta_id %></td>
+        <td><%= venta_producto.total_tar %></td>
+        <td><%= link_to 'Show', venta_producto %></td>
+        <td><%= link_to 'Edit', edit_venta_producto_path(venta_producto) %></td>
+        <td><%= link_to 'Destroy', venta_producto, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Venta producto', new_venta_producto_path %>

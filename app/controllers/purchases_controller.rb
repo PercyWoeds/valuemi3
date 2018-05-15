@@ -3134,6 +3134,7 @@ def newfactura2
     @payments  = @company.get_payments()
 
     @tipodocumento = @purchase[:document_id]
+    @purchase[:tiponota] = "1"
     
     if @tipodocumento == 2
       @purchase[:payable_amount] = @purchase.get_subtotal(items) * -1

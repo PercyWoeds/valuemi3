@@ -1,0 +1,70 @@
+<% if @venta_producto.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@venta_producto.errors.count, "error") %> prohibited this customerpayment from being saved:</h2>
+    <ul>
+    <% @venta_producto.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= hr() %>
+
+
+<%= simple_form_for(@venta_producto) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <div class="field">
+          <%= f.label :fecha, "Fecha*", :class => "bold" %><br />
+          <%= f.date_field :fecha  %>
+        </div>
+
+  
+    
+    <div class="field">
+          <%= f.label :code, "Code*", :class => "bold" %><br />
+          <%= f.text_field :code, :onclick => "$(this).select();" %>
+        </div>
+    
+    
+    <div class="field">
+      <%= f.label  :division_id , "Colateral: "%>  <br />
+      
+      <%= f.collection_select :division_id, @divisions, :id, :name, :prompt => true %>
+    </div>
+
+    <div class="field">
+      <%= f.label  :document_id , "Documento"%><br />
+      <%= f.collection_select :document_id, @documents, :id, :description, :prompt => true %>
+    </div>
+    <div class="field">
+      <%= f.label :documento, "Documento ", :class => "bold" %><br />
+      <%= f.text_field :documento %>
+    </div>
+
+    <div class="field">
+      <%= f.label :total_efe, "Importe Efectivo ", :class => "bold" %><br />
+      <%= f.text_field :total_efe %>
+    </div>
+    
+    
+    <div class="field">
+      <%= f.label  :tarjeta_id , "Documento"%><br />
+      
+      <%= f.collection_select :tarjeta_id, @tarjetas, :id, :nombre, :prompt => true %>
+    </div>
+    
+    <div class="field">
+      <%= f.label :total_tar, "Importe Tarjeta ", :class => "bold" %><br />
+      <%= f.text_field :total_tar %>
+    </div>
+    
+    
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

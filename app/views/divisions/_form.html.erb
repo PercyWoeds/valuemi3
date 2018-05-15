@@ -17,7 +17,9 @@
   </div>
   <div class="field">
     <%= f.label :location_id %><br />
-    <%= f.select :location_id, @locations %><br />
+    
+    <%= f.select :location_id, options_from_collection_for_select(@locations,'id','name'),   :style => "width: 200px" %>
+    
   </div>
   <div class="field">
     <%= f.label :description %><br />
