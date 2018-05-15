@@ -33,14 +33,15 @@
   
     <div class="field">
       <%= f.label  :bank_acount_id,"Banco:  " , :class => "bold"%><br />
-      <%= f.select :bank_acount_id,options_from_collection_for_select(@bank_acounts,'id','number') %>
-
+    
+      <%= f.collection_select :bank_acount_id, @bank_acounts, :id, :number, :prompt => true %>
     </div>
     
 
     <div class="field">
       <%= f.label  :document_id %><br />
-      <%= f.select :document_id,options_from_collection_for_select(@documents,'id','description') %>
+      
+        <%= f.collection_select :document_id, @documents, :id, :description, :prompt => true %>
     </div>
 
     <div class="field">

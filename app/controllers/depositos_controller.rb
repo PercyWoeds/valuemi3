@@ -51,16 +51,16 @@ class DepositosController < ApplicationController
      @pagetitle = "Edit customerpayment"
     @action_txt = "Update..."
     
-    @deposito = CustomerPayment.find(params[:id])
+    @deposito = Deposito.find(params[:id])
     @company = @deposito.company
-    @ac_customer = @deposito.customer.name
+    #@ac_customer = @deposito.customer.name
     @ac_user = @deposito.user.username
     @customers = @company.get_customers()
     @servicebuys  = @company.get_servicebuys()
     @payments = @company.get_payments()
     @monedas  = @company.get_monedas()
-     
-    @products_lines = @deposito.services_lines
+    @bank_acounts = @company.get_bank_acounts()        
+    @documents  = @company.get_documents()
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
