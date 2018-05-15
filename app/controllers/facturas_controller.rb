@@ -2097,10 +2097,12 @@ def newfactura2
         begin
           a = item.id
           b = Product.find_by(code: item.cod_prod)             
+          
           descuento =  item.implista - item.importe.to_f
+          precio_descto = importe.to_f / cantidad 
           preciolista = item.precio.to_f 
           
-          new_invoice_detail = FacturaDetail.new(factura_id: $lcFacturaId  ,sellvale_id: item.id , product_id: b.id ,price:preciolista, price_discount: item.precio, quantity: item.cantidad,total: item.importe)
+          new_invoice_detail = FacturaDetail.new(factura_id: $lcFacturaId  ,sellvale_id: item.id , product_id: b.id ,price:preciolista, price_discount: precio_descto, quantity: item.cantidad,total: item.importe)
           if new_invoice_detail.save
             a= Sellvale.find(item.id)
             a.processed ='1'

@@ -1,31 +1,98 @@
-<%= simple_form_for(@deposito) do |f| %>
-  <%= f.error_notification %>
-
-  <div class="form-inputs">
-    <%= f.input :company_id %>
-    <%= f.input :location_id %>
-    <%= f.input :division_id %>
-    <%= f.input :bank_account_id %>
-    <%= f.input :document_id %>
-    <%= f.input :documento %>
-    <%= f.input :customer_id %>
-    <%= f.input :tm %>
-    <%= f.input :total %>
-    <%= f.input :fecha1 %>
-    <%= f.input :fecha2 %>
-    <%= f.input :nrooperacion %>
-    <%= f.input :descrip %>
-    <%= f.input :comments %>
-    <%= f.input :user_id %>
-    <%= f.input :processed %>
-    <%= f.input :date_processed %>
-    <%= f.input :code %>
-    <%= f.input :bank_acount_id %>
-    <%= f.input :concept_id %>
-    <%= f.input :compen %>
-  </div>
-
-  <div class="form-actions">
-    <%= f.button :submit %>
+<% if @deposito.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@deposito.errors.count, "error") %> prohibited this customerpayment from being saved:</h2>
+    <ul>
+    <% @deposito.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
   </div>
 <% end %>
+
+<%= hr() %>
+
+<div class="mid_box bordered_right">
+
+  <%= form_for(@deposito) do |f| %>
+    <h4>
+       Informacion Orden de Pago 
+    </h4>
+      
+        <div class="field">
+          <%= f.label :fecha1, "Fecha*", :class => "bold" %><br />
+          <%= f.date_field :fecha1  %>
+        </div>
+
+        </td>
+        <td>  
+        <div class="field">
+          <%= f.label :code, "Code*", :class => "bold" %><br />
+          <%= f.text_field :code, :onclick => "$(this).select();" %>
+        </div>
+    
+  
+    <div class="field">
+      <%= f.label  :bank_acount_id,"Banco:  " , :class => "bold"%><br />
+      <%= f.select :bank_acount_id,options_from_collection_for_select(@bank_acounts,'id','number') %>
+
+    </div>
+    
+
+    <div class="field">
+      <%= f.label  :document_id %><br />
+      <%= f.select :document_id,options_from_collection_for_select(@documents,'id','description') %>
+    </div>
+
+    <div class="field">
+      <%= f.label :documento, "Documento ", :class => "bold" %><br />
+      <%= f.text_field :documento %>
+    </div>
+
+    <div class="field">
+      <%= f.label :total, "Importe ", :class => "bold" %><br />
+      <%= f.text_field :total %>
+    </div>
+  
+    <%= hr() %>
+    
+    
+    <div class="field">
+      <%= f.label :descrip %><br />
+      <%= f.text_area :descrip %>
+    </div>  
+
+
+    
+     <div class="field">
+      <label for="ac_user" class="bold">Seller*</label><br />
+      <input type="text" name="ac_user" id="ac_user" value="<% if @ac_user %><%= @ac_user %><% end %>" />
+
+      <div class="small">
+      
+      </div>
+      <br />
+
+      <div class="small">
+        <strong>Selected seller:</strong>
+        <span id="selected_seller"><% if @ac_user %><%= @ac_user %><% else %><!-- i --><% end %></span>
+      </div>
+
+    
+  
+    <%= hr() %>
+  
+  
+    <div class="actions">
+      
+      <%= f.hidden_field :company_id %>
+
+      <%= f.submit %>
+    </div>
+    
+    <div class="small">
+      Once you're done adding customers, don't forget to <strong><%= @action_txt %></strong> your customerpayment.
+    </div>
+
+  <% end %>
+</div>
+

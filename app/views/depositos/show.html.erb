@@ -104,6 +104,8 @@
   <strong>Compen:</strong>
   <%= @deposito.compen %>
 </p>
+<div class="button">
+<%= link_to 'Editar', edit_deposito_path(@deposito) %> |
+<%= link_to 'Regresar', depositos_path %>
+</div>
 
-<%= link_to 'Edit', edit_deposito_path(@deposito) %> |
-<%= link_to 'Back', depositos_path %>

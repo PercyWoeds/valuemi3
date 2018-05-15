@@ -215,6 +215,12 @@ module ApplicationHelper
     correlative_number =@voidedlast.serie + "-"+@voidedlast.numero.to_s
     return correlative_number
   end
+ def generate_guid16
+    @voidedlast = Voided.find(16)
+    correlative_number =@voidedlast.serie + "-"+@voidedlast.numero.to_s
+    return correlative_number
+    
+  end
 
   
   # Regresa extensiones para imagenes

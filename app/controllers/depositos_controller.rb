@@ -10,24 +10,92 @@ class DepositosController < ApplicationController
   # GET /depositos/1
   # GET /depositos/1.json
   def show
+    @company = Company.find(1)
+    
+    @bank_acounts = @company.get_bank_acounts()        
+    @monedas  = @company.get_monedas()
+    @documents  = @company.get_documents()
+
   end
 
   # GET /depositos/new
   def new
+    
+    
+    @pagetitle = "Nueva Orden"
+    @action_txt = "Create"
+    
     @deposito = Deposito.new
+    @deposito[:code]="#{generate_guid16()}"  
+    @deposito[:processed] = false
+      
+    @company = Company.find(1)
+    @deposito.company_id = @company.id
+    
+    @locations = @company.get_locations()
+    @divisions = @company.get_divisions()
+    @customers = @company.get_customers()
+    @bank_acounts = @company.get_bank_acounts()        
+    @monedas  = @company.get_monedas()
+    @documents  = @company.get_documents()
+    @concepts = Concept.all 
+
+    @ac_user = getUsername()
+    @deposito[:user_id] = getUserId()
+    @deposito[:fecha1] = Date.today
+    @deposito[:total] = 0.00
   end
 
   # GET /depositos/1/edit
   def edit
+     @pagetitle = "Edit customerpayment"
+    @action_txt = "Update..."
+    
+    @deposito = CustomerPayment.find(params[:id])
+    @company = @deposito.company
+    @ac_customer = @deposito.customer.name
+    @ac_user = @deposito.user.username
+    @customers = @company.get_customers()
+    @servicebuys  = @company.get_servicebuys()
+    @payments = @company.get_payments()
+    @monedas  = @company.get_monedas()
+     
+    @products_lines = @deposito.services_lines
+    
+    @locations = @company.get_locations()
+    @divisions = @company.get_divisions()
   end
 
   # POST /depositos
   # POST /depositos.json
   def create
+    @pagetitle = "Nueva Orden"
+    @action_txt = "Create"
+
+    
     @deposito = Deposito.new(deposito_params)
+    @company = Company.find(params[:deposito][:company_id])
+    
+    @locations = @company.get_locations()
+    @divisions = @company.get_divisions()
+    @customers = @company.get_customers()
+    @bank_acounts = @company.get_bank_acounts()        
+    @monedas  = @company.get_monedas()
+    @documents  = @company.get_documents()
+    @concepts = Concept.all 
+
+    @deposito.processed='1'
+        
+    @deposito.user_id = @current_user.id 
+    @deposito.company_id = 1
+    @deposito.location_id = 1
+    @deposito.division_id = 1
+    
 
     respond_to do |format|
       if @deposito.save
+          @deposito.process()
+         @deposito.correlativo()       
         format.html { redirect_to @deposito, notice: 'Deposito was successfully created.' }
         format.json { render :show, status: :created, location: @deposito }
       else

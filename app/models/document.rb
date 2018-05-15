@@ -22,6 +22,7 @@ class Document < ActiveRecord::Base
   has_many :viaticos 
   has_many :viatico_details
   has_many :tmp_facturas
+  has_many :depositos 
   
   def set_fullname
     self.fullname ="#{self.descripshort} #{self.description}".strip		
