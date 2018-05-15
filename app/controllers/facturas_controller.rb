@@ -2100,7 +2100,7 @@ def newfactura2
           
           descuento =  item.implista - item.importe.to_f
           precio_descto = item.importe.to_f / item.cantidad 
-          preciolista = item.precio.to_f 
+          preciolista = item.implista / item.cantidad 
           
           new_invoice_detail = FacturaDetail.new(factura_id: $lcFacturaId  ,sellvale_id: item.id , product_id: b.id ,price:preciolista, price_discount: precio_descto, quantity: item.cantidad,total: item.importe)
           if new_invoice_detail.save
