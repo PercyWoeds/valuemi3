@@ -82,8 +82,8 @@
      <% venta_14 =  a.get_faltante_total_dia(@fecha,"2") %>
      
      
-     <% venta_15 =  a.get_ventas_market(@fecha)-  a.get_ventas_market_tarjeta(@fecha) + a.get_ventas_colaterales_efe(@fecha,"2")  + a.get_ventas_colaterales_tar(@fecha,"2") %>
-     <% venta_16 =  a.get_ventas_restaurant(@fecha) -a.get_ventas_restaurant_tarjeta(@fecha) + a.get_ventas_colaterales_efe(@fecha,"3")+ a.get_ventas_colaterales_tar(@fecha,"3")  %>
+     <% venta_15 =  a.get_ventas_market(@fecha)-  a.get_ventas_market_tarjeta(@fecha) + a.get_ventas_colaterales_efe(@fecha,"2")   %>
+     <% venta_16 =  a.get_ventas_restaurant(@fecha) -a.get_ventas_restaurant_tarjeta(@fecha) + a.get_ventas_colaterales_efe(@fecha,"3") %>
      
      
      <% venta_19 =  a.get_ventas_market_tarjeta(@fecha)  + a.get_ventas_colaterales_tar(@fecha,"2") %>
