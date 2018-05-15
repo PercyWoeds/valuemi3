@@ -545,33 +545,27 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
  end 
 
  def get_ventas_colaterales_efe(fecha,tipo )
-    
+      ret = 0
      facturas = VentaProducto.where(["fecha >= ? and fecha <= ? and  division_id = ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59",tipo ])
       
        if facturas
-         
        for factura in facturas
-         
-         
-        ret += detalle.total_efe  
-        
-          
+        ret += factura.total_efe  
        end 
-       
      end 
      
      return ret 
  end  
- def get_ventas_colaterales_tar(fecha )
-    
-     facturas = VentaProducto.where(["fecha >= ? and fecha <= ?  " , "#{fecha} 00:00:00","#{fecha} 23:59:59"])
+ def get_ventas_colaterales_tar(fecha,tipo )
+     ret = 0
+     facturas = VentaProducto.where(["fecha >= ? and fecha <= ? and division_id = ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59",tipo])
       
        if facturas
          
        for factura in facturas
          
          
-        ret += detalle.total_tar 
+        ret += factura.total_tar 
         
           
        end 
@@ -583,7 +577,7 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
  def get_deposito(fecha)
      
       
-     depositos = Deposito.where(["fecha >= ? and fecha <= ?  " , "#{fecha} 00:00:00","#{fecha} 23:59:59"])
+     depositos = Deposito.where(["fecha1 >= ? and fecha1 <= ?  " , "#{fecha} 00:00:00","#{fecha} 23:59:59"])
       
      return depositos
      

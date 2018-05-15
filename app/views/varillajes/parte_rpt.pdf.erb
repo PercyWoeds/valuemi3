@@ -82,18 +82,16 @@
      <% venta_14 =  a.get_faltante_total_dia(@fecha,"2") %>
      
      
-     <% venta_15 =  a.get_ventas_market(@fecha)-  a.get_ventas_market_tarjeta(@fecha)   %>
-     <% venta_16 =  a.get_ventas_restaurant(@fecha) -a.get_ventas_restaurant_tarjeta(@fecha)  %>
+     <% venta_15 =  a.get_ventas_market(@fecha)-  a.get_ventas_market_tarjeta(@fecha) + a.get_ventas_colaterales_efe(@fecha,"2")  + a.get_ventas_colaterales_tar(@fecha,"2") %>
+     <% venta_16 =  a.get_ventas_restaurant(@fecha) -a.get_ventas_restaurant_tarjeta(@fecha) + a.get_ventas_colaterales_efe(@fecha,"3")+ a.get_ventas_colaterales_tar(@fecha,"3")  %>
      
      
      <% venta_19 =  a.get_ventas_market_tarjeta(@fecha)  %>
-     <% venta_20 =  a.get_ventas_restaurant_tarjeta(@fecha) %>
-     
-     <% venta_colateral_efe =  a.get_ventas_restaurant_tarjeta(@fecha) %>
-     <% venta_colateral_tar =  a.get_ventas_restaurant_tarjeta(@fecha) %>
+     <% venta_20 =  a.get_ventas_restaurant_tarjeta(@fecha)+  a.get_ventas_colaterales_tar(@fecha,"2") + a.get_ventas_colaterales_tar(@fecha,"3")%>
      
      
-     <% venta_17 =  venta_15 + venta_16 %>
+     
+     <% venta_17 =  venta_15 + venta_16 +  a.get_ventas_colaterales_efe(@fecha,"2") + a.get_ventas_colaterales_efe(@fecha,"3") %>
      
      <% venta_5 =  venta_2 + venta_3 + venta_4 + venta_9 + venta_13 + venta_14 +venta_17 + venta_18+venta_19 +venta_20 %>
      
@@ -316,6 +314,51 @@
     <% end %>
    
     </table>
+    
+    <%  bancos1= a.get_deposito(@fecha) %>
+    
+    <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>        
+      
+       <% for productItem in bancos1 %>
+       
+      <tr>
+        <td width= "50%" align ="left">
+        
+        </td>
+        
+        <td width= "20%" align ="left">
+          <%=  productItem.document.description    %>
+        </td>
+         
+        <td width= "10%" align ="left">
+          <%=  productItem.code    %>
+        </td>
+        
+        
+        <%  if productItem.bank_acount.moneda_id == "1"%>  
+        
+          <td  width= "10%" align ="right">
+            0.00
+          </td>
+          <td  width= "10%" align ="right">
+            <%= sprintf("%.2f",productItem.total) %>
+          </td>
+          <% total_bancos_dolar += productItem.total %>
+        <% else%>
+          <td  width= "10%" align ="right">
+            <%= sprintf("%.2f",productItem.total) %>
+          </td>
+          <td  width= "10%" align ="right">
+            0.00
+          </td>
+          <% total_bancos_soles1 += productItem.total %>
+        <% end %>
+        
+      </tr>
+    <% end %>
+   
+    </table>
+    
     
     <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
       
