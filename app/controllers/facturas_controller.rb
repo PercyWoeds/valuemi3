@@ -2099,7 +2099,7 @@ def newfactura2
           b = Product.find_by(code: item.cod_prod)             
           
           descuento =  item.implista - item.importe.to_f
-          precio_descto = importe.to_f / cantidad 
+          precio_descto = item.importe.to_f / item.cantidad 
           preciolista = item.precio.to_f 
           
           new_invoice_detail = FacturaDetail.new(factura_id: $lcFacturaId  ,sellvale_id: item.id , product_id: b.id ,price:preciolista, price_discount: precio_descto, quantity: item.cantidad,total: item.importe)
