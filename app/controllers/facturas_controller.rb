@@ -1528,12 +1528,10 @@ def newfactura2
             row << product.document.descripshort
             row << product.code
             row << product.fecha.strftime("%d/%m/%Y")            
-            if ruc != nil
-              row << product.ruc 
-            else
-              row << "-"
-              row << product.customer.ruc  
-            end 
+           
+             row << "-"
+             row << product.customer.ruc  
+           
             
             row << product.customer.name  
             
