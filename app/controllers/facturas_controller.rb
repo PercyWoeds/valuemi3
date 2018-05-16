@@ -1528,8 +1528,7 @@ def newfactura2
             row << product.document.descripshort
             row << product.code
             row << product.fecha.strftime("%d/%m/%Y")            
-           
-             row << "-"
+          
              row << product.customer.ruc  
            
             
