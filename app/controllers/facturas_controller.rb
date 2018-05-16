@@ -1975,7 +1975,7 @@ def newfactura2
   def rpt_facturas_all2_pdf
 
     $lcFacturasall = '0'
-    @company=Company.find(params[:company_id])          
+    @company=Company.find(1)          
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]    
     @cliente = params[:customer_id]     
