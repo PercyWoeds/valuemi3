@@ -101,6 +101,15 @@ self.per_page = 20
                     "IMPORTE",
                   ]                      
 
+TABLE_HEADERS70 = [  "ITEM ",
+                     "CODE ",
+                     "CUENTA",
+                     "BANCO ",
+                     "FECHA",        
+                     "FACTURA ",             
+                     "IMPORTE"
+                  ]                      
+
  TABLE_HEADERS8 = ["ITEM",
                      "NRO.",
                      "FECHA",

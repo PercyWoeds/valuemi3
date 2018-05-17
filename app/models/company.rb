@@ -762,7 +762,13 @@ customer_payments.bank_acount_id = ?  and facturas.customer_id = ?',
  end 
 def get_customer_payments_cabecera(fecha1,fecha2)
   
-      @payments = CustomerPayment.where(["company_id= ? and fecha1 >= ? and fecha1 <=?",self.id, "#{fecha1} 00:00:00" ,"#{fecha2} 23:59:59"])
+      @payments = CustomerPayment.where(["company_id= ? and fecha1 >= ? and fecha1 <=? ",self.id, "#{fecha1} 00:00:00" ,"#{fecha2} 23:59:59"])
+      return @payments 
+end 
+
+def get_customer_payments_banco(fecha1,fecha2,banco)
+  
+      @payments = CustomerPayment.where(["company_id= ? and fecha1 >= ? and fecha1 <=? and bank_acount_id = ?",self.id, "#{fecha1} 00:00:00" ,"#{fecha2} 23:59:59",banco])
       return @payments 
 end 
 

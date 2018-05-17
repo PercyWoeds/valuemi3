@@ -1996,7 +1996,7 @@ class CustomerPaymentsController < ApplicationController
         headers2 = []
         table_content2 = []
 
-        CustomerPayment::TABLE_HEADERS7.each do |header|
+        CustomerPayment::TABLE_HEADERS70.each do |header|
           cell = pdf.make_cell(:content => header)
           cell.background_color = "FFFFCC"
           headers2 << cell
@@ -2006,27 +2006,27 @@ class CustomerPaymentsController < ApplicationController
                 
         @totalgeneral_soles = 0
         @totalgeneral_dolar = 0
-        @detalle_bancos = @company.get_customer_payments_value_customer2(@fecha1,@fecha2,@bank_id)  
+        
         row  = []
         
         
-        if @detalle_bancos
+        if @customerpayment_rpt
                 
-        for d in @detalle_bancos
+        for d in @customerpayment_rpt
         
           
               row = []                  
-              row << nroitem.to_s              
+              row << nroitem.to_s       
+              row << d.code 
               row << d.bank_acount.number
-              row << d.get_banco(d.bank_acount.bank_id)  
+              row << d.bank_acount.bank.name  
               row << d.fecha.strftime("%d/%m/%Y") 
-              row << d.code
-              row << d.customer.name 
+              row << d.documento 
               row << sprintf("%.2f",d.total.to_s)
               
               table_content2 << row
 
-              @totalgeneral_soles = @totalgeneral_soles + d.total          
+              @totalgeneral_soles +=  d.total          
 
               nroitem = nroitem + 1      
         end   
@@ -2085,7 +2085,7 @@ class CustomerPaymentsController < ApplicationController
     @fecha2 = params[:fecha2]
     @bank_id = params[:bank_id]
 
-    @customerpayment_rpt = @company.get_customer_payments(@fecha1,@fecha2)  
+    @customerpayment_rpt = @company.get_customer_payments_cabecera(@fecha1,@fecha2)  
     
     Prawn::Document.generate("app/pdf_output/rpt_customerpayment1.pdf") do |pdf|
         pdf.font "Helvetica"        
