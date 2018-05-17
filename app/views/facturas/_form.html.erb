@@ -38,7 +38,7 @@
       <% if @current_user.level == "admin" %>
         <%= f.text_field :fecha, value: Time.zone.now.strftime("%d/%m/%Y") %>
       <% else %>
-        <%= f.text_field :fecha, value: Time.zone.now.strftime("%d/%m/%Y"), :readonly => true %>
+        <%= f.text_field :fecha, value: Time.zone.now.strftime("%d/%m/%Y") %>
       <% end %>
       </div>
 
@@ -85,7 +85,7 @@
       <%= f.text_field :code, :onclick => "$(this).select();" %>
       <% else%>
       <%= f.label :code, "Code*", :class => "bold"  %><br />
-      <%= f.text_field :code, :onclick => "$(this).select();"  , :readonly => true  %>
+      <%= f.text_field :code, :onclick => "$(this).select();"   %>
       
       <% end %>
     </div>
