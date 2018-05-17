@@ -2052,8 +2052,8 @@ class CustomerPaymentsController < ApplicationController
                                           columns([0]).align=:center
                                           columns([1]).align=:left
                                           columns([2]).align=:left
-                                          columns([3]).align=:right
-                                          columns([4]).align=:right
+                                          columns([3]).align=:left
+                                          columns([4]).align=:left
                                           columns([5]).align=:left                                           
                                           columns([6]).align=:right                                          
                                         end

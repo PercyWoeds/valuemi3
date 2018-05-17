@@ -768,7 +768,7 @@ end
 
 def get_customer_payments_banco(fecha1,fecha2,banco)
   
-      @payments = CustomerPayment.where(["company_id= ? and fecha1 >= ? and fecha1 <=? and bank_acount_id = ?",self.id, "#{fecha1} 00:00:00" ,"#{fecha2} 23:59:59",banco])
+      @payments = CustoerPayment.where(["company_id= ? and fecha1 >= ? and fecha1 <=? and bank_acount_id = ?",self.id, "#{fecha1} 00:00:00" ,"#{fecha2} 23:59:59",banco]).order(:fecha1)
       return @payments 
 end 
 

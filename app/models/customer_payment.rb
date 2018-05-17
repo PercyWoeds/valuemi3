@@ -106,7 +106,7 @@ TABLE_HEADERS70 = [  "ITEM ",
                      "CUENTA",
                      "BANCO ",
                      "FECHA",        
-                     "FACTURA ",             
+                     "DOCUMENTO ",             
                      "IMPORTE"
                   ]                      
 
