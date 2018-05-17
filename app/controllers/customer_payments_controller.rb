@@ -2085,7 +2085,7 @@ class CustomerPaymentsController < ApplicationController
     @fecha2 = params[:fecha2]
     @bank_id = params[:bank_id]
 
-    @customerpayment_rpt = @company.get_customer_payments_cabecera(@fecha1,@fecha2)  
+    @customerpayment_rpt = @company.get_customer_payments_banco(@fecha1,@fecha2,@bank_id)  
     
     Prawn::Document.generate("app/pdf_output/rpt_customerpayment1.pdf") do |pdf|
         pdf.font "Helvetica"        

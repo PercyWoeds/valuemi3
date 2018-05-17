@@ -23,11 +23,11 @@ totals = []
 
 <form method="get" action="/customer_payments/rpt_ccobrar8_pdf/<%= @company.id %>">
   <div class="field">
-      <input type="date" name="fecha1" value="2017-01-01" style = "width: 150px" >
+      <input type="date" name="fecha1" value="2018-01-01" style = "width: 150px" >
 
     </div>
   <div class="field">
-    <input type="date" name="fecha2" value="2017-01-31" style = "width: 150px" >
+    <input type="date" name="fecha2" value="2018-05-31" style = "width: 150px" >
     </div>
   <div class="field">
     <%= select_tag(:bank_id,options_from_collection_for_select(@bancos,'id','number') ) %>
