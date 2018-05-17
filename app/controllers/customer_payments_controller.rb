@@ -2020,7 +2020,7 @@ class CustomerPaymentsController < ApplicationController
               row << d.code 
               row << d.bank_acount.number
               row << d.bank_acount.bank.name  
-              row << d.fecha.strftime("%d/%m/%Y") 
+              row << d.fecha1.strftime("%d/%m/%Y") 
               row << d.documento 
               row << sprintf("%.2f",d.total.to_s)
               
