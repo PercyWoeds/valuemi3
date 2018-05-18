@@ -1309,7 +1309,7 @@ def newfactura2
     $lcFacturaId= @factura.id 
     
   
-    @detalleitems =  Sellvale.where(processed:"0",cod_cli: @customer.account)
+    @detalleitems =  Sellvale.where(processed:"0",cod_cli: @customer.account,td:"N")
     @factura_detail = Factura.new
 
   
@@ -2137,7 +2137,7 @@ def newfactura2
           precio_descto = item.importe.to_f / item.cantidad 
           preciolista = item.implista / item.cantidad 
           
-          new_invoice_detail = FacturaDetail.new(factura_id: $lcFacturaId  ,sellvale_id: item.id , product_id: b.id ,price:preciolista, price_discount: precio_descto, quantity: item.cantidad,total: item.importe)
+          new_invoice_detail = FacturaDetail.new(factura_id: $lcIdFactura  ,sellvale_id: item.id , product_id: b.id ,price:preciolista, price_discount: precio_descto, quantity: item.cantidad,total: item.importe)
           if new_invoice_detail.save
             a= Sellvale.find(item.id)
             a.processed ='1'
