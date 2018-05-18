@@ -9,8 +9,9 @@
   </table>
  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
   <tr bgcolor="#B4D7F7">
+    <td width="5%"> Fecha</td>
     <td width="5%"> Serie</td>
-    <td width="10%">Numero</td>
+    <td width="5%">Numero</td>
     <td width="8%"> Cliente</td>
     <td width="8%"> Placa </td>
     <td width="2%">Cod. </td>
@@ -32,8 +33,9 @@
       
        <% for  credito in @contado_rpt1  %>
         <tr>
+                    <td width= "5%" > <%=  credito.fecha.strftime("%d/%m/%Y") %></td>
                     <td width= "5%" > <%=  credito.serie %></td>
-                    <td width= "10%" > <%=  credito.numero  %></td>
+                    <td width= "5%" > <%=  credito.numero  %></td>
                     <td width = "8%" align ="right"><%= credito.cod_cli   %></td>
                     <td width = "8%" align ="right"><%= credito.odometro    %></td>
                     <td width = "2%" align ="right"><%= credito.cod_prod    %> </td>
