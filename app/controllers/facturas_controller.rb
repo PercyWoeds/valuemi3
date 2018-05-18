@@ -2146,7 +2146,7 @@ def newfactura2
         end              
     end
     
-    @invoice = Factura.find($lcFacturaId)
+    @invoice = Factura.find($lcIdFactura)
     
     @invoice[:total] = @invoice.get_subtotal2.round(2)
     
