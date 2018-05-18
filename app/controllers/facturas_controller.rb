@@ -1309,7 +1309,7 @@ def newfactura2
     $lcFacturaId= @factura.id 
     
   
-    @detalleitems =  Sellvale.where(processed:"0",cod_cli: @customer.account,td:"N")
+    @detalleitems =  Sellvale.where(processed:"0",cod_cli: @customer.account,td:"N").order(:fecha)
     @factura_detail = Factura.new
 
   
