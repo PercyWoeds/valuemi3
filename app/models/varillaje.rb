@@ -164,6 +164,8 @@ class Varillaje < ActiveRecord::Base
     return facturas
  
  end 
+  
+ 
  def  get_ventas_contometros_tarjeta_sustento(fecha) 
 
      facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and fpago <> ? and td <> ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "1" ,"N"]).order(:serie,:numero)

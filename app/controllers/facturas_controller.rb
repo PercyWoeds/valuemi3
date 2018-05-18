@@ -30,7 +30,7 @@ class FacturasController < ApplicationController
     end
   end
   
-    def reportes2 
+  def reportes2 
   
     @company=Company.find(1)          
     @fecha = params[:fecha1]    
@@ -96,7 +96,6 @@ def reportes5
     @fecha2 = params[:fecha2]    
     @cliente = params[:cod_cli]    
     
-       
     
     @contado_rpt = @company.get_parte_3(@fecha1,@fecha2,@cliente)
     
@@ -187,7 +186,46 @@ def reportes7
       else render action: "index"
     end
   end
-
+def reportes8
+  
+    @company=Company.find(1)          
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2] 
+  
+    @contado_rpt1 = @company.get_ventas_contometros_efectivo_sustento2(@fecha1,@fecha2)  
+    @contado_rpt2 = @company.get_parte_2(@fecha1,@fecha2) #contadp
+    @contado_rpt4 = @company.get_parte_4(@fecha1,@fecha2) #creditos
+    @contado_rpt5 = @company.get_parte_5(@fecha1,@fecha2) #tarjeta 
+    @contado_rpt6 = @company.get_parte_6(@fecha1,@fecha2) #pago adelantado
+    @contado_rpt7 = @company.get_ventas_vale_directo(@fecha1,@fecha2) #ventas directa
+    #@contado_rpt7 = @company.get_parte_6(@fecha1,@fecha2)
+    
+    
+    case params[:print]
+      when "To PDF" then 
+        begin 
+         render  pdf: "Ordenes ",template: "varillajes/parte8_rpt.pdf.erb",locals: {:varillajes => @parte_rpt},
+         :orientation    => 'Landscape',
+         
+         :header => {
+           :spacing => 5,
+                           :html => {
+                     :template => 'layouts/pdf-header.html',
+                           right: '[page] of [topage]'
+                  }
+               },
+               
+               footer: {
+                              spacing: 30,
+                 line: true
+               }
+               
+        end   
+      when "To Excel" then render xlsx: 'exportxls'
+      else render action: "index"
+    end
+  end
+  
 
 def rpt_factura_all
     $lcFacturasall = '1'

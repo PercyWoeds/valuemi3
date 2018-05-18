@@ -100,6 +100,7 @@
     collection { get :reportes5} #Reporte ventas
     collection { get :reportes6} #Reporte ventas
     collection { get :reportes7} #Reporte ventas
+    collection { get :reportes8} #Reporte ventas
     
     collection { get :reportes03}
     collection { get :reportes04}

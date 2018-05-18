@@ -3340,6 +3340,13 @@ def get_purchases_pendientes_day_value(fecha1,fecha2,value = "total_amount",clie
    
     return @varilla 
  end 
+ def  get_parte_10(fecha1,fecha2)
+   
+     @varilla = Varillaje.where(["fecha >= ? and fecha <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59"  ])
+   
+    return @varilla 
+ end 
+ 
  #Vale contado 
  def  get_parte_2(fecha1,fecha2) 
    
@@ -3350,7 +3357,7 @@ def get_purchases_pendientes_day_value(fecha1,fecha2,value = "total_amount",clie
  #Vale credito todos 
  def  get_parte_4(fecha1,fecha2) 
    
-     @contado = Sellvale.where(["fecha >= ? and fecha <= ? and tipo = ?  and td= ?", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ,"1","N" ]).order(:cod_cli,:fecha,:cod_prod)
+     @contado = Sellvale.where(["fecha >= ? and fecha <= ? and sellvales.tipo = ?  and sellvales.td= ?", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ,"1","N" ]).order(:cod_cli,:fecha,:cod_prod).joins("INNER JOIN customers ON sellvales.cod_cli = customers.account AND customers.tipo <> '2' ")
    
     return @contado
  end 
@@ -3382,7 +3389,24 @@ def get_purchases_pendientes_day_value(fecha1,fecha2,value = "total_amount",clie
      @contado = Sellvale.where(["fecha < ? ", "#{fecha1} 00:00:00"]).order(:cod_prod,:fecha).joins("INNER JOIN customers ON sellvales.cod_cli = customers.account AND customers.tipo = '2' ")
     return @contado
  end 
+ def  get_ventas_contometros_efectivo_sustento2(fecha1,fecha2) 
+
+     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and fpago = ? and td <> ? and tipo <> ?" , "#{fecha1} 00:00:00","#{fecha2} 23:59:59", "1" ,"N","2"]).order(:serie,:numero)
+     
+     
+    return facturas
  
+ end 
+ 
+ 
+  def  get_ventas_vale_directo(fecha1,fecha2) 
+
+     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ? and tipo  = ?  " , "#{fecha1} 00:00:00","#{fecha2} 23:59:59", "N","3" ])
+     
+     
+    return facturas 
+ 
+ end 
  
 def get_facturas_by_day_value(fecha1,fecha2,moneda,value='total')
   

@@ -1,0 +1,382 @@
+<html>
+<body>
+  <h6 ><center>  Desde: <%= @fecha1 %> Hasta: <%= @fecha2 %> </center>   </h6>
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+  <font size="2" face="Courier New" >  
+  <tr bgcolor="#B4D7F7">
+    <td width="100%"> EFECTIVO SOLES  *Todos*</td>
+  </tr>
+  </table>
+ <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+  <tr bgcolor="#B4D7F7">
+    <td width="5%"> Serie</td>
+    <td width="10%">Numero</td>
+    <td width="8%"> Cliente</td>
+    <td width="8%"> Placa </td>
+    <td width="2%">Cod. </td>
+    <td width="8%"> Producto </td>
+    <td width = "10%" >Cantidad</td>
+    <td width = "8%" >Precio</td>
+    <td width="10%"> Importe </td>
+    
+    
+    
+  </tr>
+  </table>
+
+
+  
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+      <% nroitem = 1%>
+      <% total_1 = 0 %>
+      
+       <% for  credito in @contado_rpt1  %>
+        <tr>
+                    <td width= "5%" > <%=  credito.serie %></td>
+                    <td width= "10%" > <%=  credito.numero  %></td>
+                    <td width = "8%" align ="right"><%= credito.cod_cli   %></td>
+                    <td width = "8%" align ="right"><%= credito.odometro    %></td>
+                    <td width = "2%" align ="right"><%= credito.cod_prod    %> </td>
+                    <td width = "8%" align ="left"><%= credito.get_product_name(credito.cod_prod)    %> </td>
+                    <td width = "10%" align ="right"><%=  sprintf("%.2f",credito.cantidad.to_s)%></td>
+                    <td width = "8%" align ="right"><%= sprintf("%.2f",credito.precio)   %></td>
+                    <td width = "10%" align ="right"><%= sprintf("%.3f",credito.importe.to_f)   %></td>
+                    
+
+                        </tr>
+                    <% nroitem = nroitem+1 %>
+                    <% total_1 += credito.importe.to_f %>
+         <%end %>
+               
+        <hr>  
+        
+     </table>
+     
+       <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>     
+         <tr>
+                    <td width = "80%" align ="right">Total Efectivos</td>
+                    <td width = "10%" align ="right"><%= sprintf("%.3f",total_1)   %></td>
+                    <td width = "10%" align ="right"></td>
+                    </tr>
+       </table>
+<table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+  
+  <tr bgcolor="#B4D7F7">
+    <td width="100%"> TARJETA DE  CREDITO *Todos*</td>
+  </tr>
+  
+  </table>
+
+  
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+      <% nroitem = 1%>
+      <% total_1 =  0%>
+      <% total_2 =  0%>
+      
+       <% for  contado in @contado_rpt5  %>
+       
+       <%if contado.importe.to_f > 0 %>
+                  <tr>
+                    <td width= "5%" ><%=  contado.fecha.strftime("%d/%m/%Y")  %></td>
+                    <td width= "23%" > <%=  contado.get_customer_name(contado.cod_cli) %>   </td>
+                    <td width= "3%" > <%=  contado.serie %>   </td>
+                    <td width = "5%" align ="right"><%= contado.numero    %></td>
+                    <td width = "3%" align ="right"><%= contado.cod_prod    %> </td>
+                    <td width = "10%" align ="left"><%= contado.get_product_name(contado.cod_prod)    %> </td>
+                    <td width = "5%" align ="right"><%= contado.get_tarjeta_name(contado.fpago) %></td>
+                    <td width = "8%" align ="right"><%=  sprintf("%.2f",contado.cantidad.to_s)%></td>
+                    <td width = "8%"  align ="right"><%= sprintf("%.2f",contado.precio)   %></td>
+                    <td width = "8%" align ="right"><%= sprintf("%.3f",contado.importe)   %></td>
+                    <td width = "8%" align ="right"><%= sprintf("%.2f",contado.implista.to_s)   %></td>
+                    
+                    </tr>
+                    
+            <% end %>        
+                    <% total_1 +=  contado.importe.to_f %>
+                    <% total_2 +=  contado.implista  %>
+                    
+                    
+         <%end %>
+         
+                  
+                  
+               
+        <hr>  
+     </table>
+      <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+     <tr>
+          <td width = "72%" align ="right">Total tarjetas </td>
+          <td width = "8%" align ="right"><%= sprintf("%.3f",total_1)   %></td>
+          <td width = "8%" align ="right"><%= sprintf("%.2f",total_2)   %></td>
+          <td width = "10%" align ="right"></td>
+    </tr>
+   </table>
+
+     
+    <font size="2" face="Courier New" >  
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+  <tr bgcolor="#B4D7F7">
+    <td width="5%"> Fecha</td>
+    <td width="23%">Cliente</td>
+    <td width="3%"> Serie</td>
+    <td width="5%"> Numero  </td>
+    <td width="3%">Cod. </td>
+    <td width="10%"> Producto </td>
+    <td width = "5%" >Nro.Vale</td>
+    <td width = "5%" >Placa</td>
+    <td width="8%"> Cantidad </td>
+    <td width="8%"> Precio</td>
+    <td width="8%"> Importe </td>
+    <td width="8%"> Importe Lista </td>
+    <td width="10%"> Nro.Factura  </td>
+    
+  </tr>
+  </table>
+
+  
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+  
+  <tr bgcolor="#B4D7F7">
+    <td width="100%"> VALES DE CREDITO *Todos*</td>
+  </tr>
+  
+  </table>
+
+  
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+      <% nroitem = 1%>
+      <% total_1 =  0%>
+      <% total_2 =  0%>
+      <% total_3 =  0%>
+      
+       <% for  contado in @contado_rpt4 %>
+       
+       <%if contado.importe.to_f > 0 %>
+                  <tr>
+                    <td width= "5%" ><%=  contado.fecha.strftime("%d/%m/%Y")  %></td>
+                    <td width= "23%" > <%=  contado.get_customer_name(contado.cod_cli) %>   </td>
+                    <td width= "3%" > <%=  contado.serie %>   </td>
+                    <td width = "5%" align ="right"><%= contado.numero    %></td>
+                    <td width = "3%" align ="right"><%= contado.cod_prod    %> </td>
+                    <td width = "10%" align ="left"><%= contado.get_product_name(contado.cod_prod)    %> </td>
+                    <td width = "5%" align ="right"><%= contado.odometro %></td>
+                    <td width = "5%" align ="right"><%= contado.placa %></td>
+                    
+                    <td width = "8%" align ="right"><%=  sprintf("%.2f",contado.cantidad.to_s)%></td>
+                    <td width = "8%"  align ="right"><%= sprintf("%.2f",contado.precio)   %></td>
+                    <td width = "8%" align ="right"><%= sprintf("%.3f",contado.importe)   %></td>
+                    <td width = "8%" align ="right"><%= sprintf("%.2f",contado.implista.to_s)   %></td>
+                    <td width = "10%" align ="left"><%= contado.get_vale_facturado   %> </td>
+                    </tr>
+                    
+            <% end %>        
+                    <% total_1 +=  contado.importe.to_f %>
+                    <% total_2 +=  contado.implista  %>
+                    <% total_3 +=  contado.cantidad %>
+                  
+         <%end %>
+         
+        <hr>  
+     </table>
+      <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+     <tr>
+          <td width = "58%" align ="right">Total Vales Credito </td>
+          <td width = "8%" align ="right"><%= sprintf("%.3f",total_3)   %></td>
+          <td width = "8%"  align ="right"> </td>
+          <td width = "8%" align ="right"><%= sprintf("%.3f",total_1)   %></td>
+          <td width = "8%" align ="right"><%= sprintf("%.2f",total_2)   %></td>
+          <td width = "10%" align ="right"></td>
+    </tr>
+   </table>
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+  
+  <tr bgcolor="#B4D7F7">
+    <td width="100%"> VALES DE CONTADO *Todos*</td>
+  </tr>
+  
+  </table>
+
+ <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+      <% nroitem = 1%>
+      <% total_1 =  0%>
+      <% total_2 =  0%>
+      
+       <% for  contado in @contado_rpt2  %>
+       
+       <%if contado.importe.to_f > 0 %>
+                  <tr>
+                    <td width= "10%" ><%=  contado.fecha.strftime("%d/%m/%Y")  %></td>
+                    <td width= "5%" > <%=  contado.serie %>   </td>
+                    <td width = "5%" align ="right"><%= contado.numero    %></td>
+                    <td width = "8%" align ="right"><%= contado.cod_cli    %></td>
+                    <td width = "10%" align ="right"><%= contado.get_cliente(contado.cod_cli) %></td>
+                    
+                    <td width = "5%" align ="right"><%= contado.cod_prod    %> </td>
+                    
+                    <td width = "10%" align ="left"><%= contado.get_product_name(contado.cod_prod)    %> </td>
+                    
+                    
+                    <td width = "8%" align ="right"><%=  sprintf("%.2f",contado.cantidad.to_s)%></td>
+                    <td width = "8%"  align ="right"><%= sprintf("%.2f",contado.precio)   %></td>
+                    <td width = "10%" align ="right"><%= sprintf("%.3f",contado.importe)   %></td>
+                    <td width = "10%" align ="right"><%= sprintf("%.2f",contado.implista.to_s)   %></td>
+                    <td width = "10%" align ="left"><%= contado.get_vale_facturado   %> </td>
+                    </tr>
+                    
+            <% end %>        
+                    <% total_1 +=  contado.importe.to_f %>
+                    <% total_2 +=  contado.implista  %>
+                    
+                    
+         <%end %>
+         
+                  
+               
+        <hr>  
+     </table>
+      <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+     <tr>
+          <td width = "70%" align ="right">Total Vales Credito </td>
+          <td width = "10%" align ="right"><%= sprintf("%.3f",total_1)   %></td>
+          <td width = "10%" align ="right"><%= sprintf("%.2f",total_2)   %></td>
+          <td width = "10%" align ="right"></td>
+    </tr>
+   </table>
+   
+   
+  
+  <font size="2" face="Courier New" >  
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+  
+  <tr bgcolor="#B4D7F7">
+    <td width="100%"> VALES ADELANTADO *Todos*</td>
+  </tr>
+  
+  </table>
+
+  
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+      <% nroitem = 1%>
+      <% total_1 = 0%>
+      <% total_2 = 0%>
+      <% total_3 = 0%>
+       <% for  contado in @contado_rpt6  %>
+               
+                 <tr>
+                    <td width= "10%" ><%=  contado.fecha.strftime("%d/%m/%Y")  %></td>
+                    <td width= "5%" > <%=  contado.serie %>   </td>
+                    <td width = "5%" align ="right"><%= contado.numero    %></td>
+                    <td width = "8%" align ="right"><%= contado.cod_cli    %></td>
+                    <td width = "10%" align ="right"><%= contado.get_cliente(contado.cod_cli) %></td>
+                    
+                    <td width = "5%" align ="right"><%= contado.cod_prod    %> </td>
+                    
+                    <td width = "10%" align ="left"><%= contado.get_product_name(contado.cod_prod)    %> </td>
+                    
+                    
+                    <td width = "8%" align ="right"><%=  sprintf("%.2f",contado.cantidad.to_s)%></td>
+                    <td width = "8%"  align ="right"><%= sprintf("%.2f",contado.precio)   %></td>
+                    <td width = "10%" align ="right"><%= sprintf("%.3f",contado.importe)   %></td>
+                    <td width = "10%" align ="right"><%= sprintf("%.2f",contado.implista.to_s)   %></td>
+                    <td width = "10%" align ="left"><%= contado.get_vale_facturado   %> </td>
+                    </tr>
+            
+                    <% total_1 +=  contado.importe.to_f %>
+                    <% total_2 +=  contado.implista  %>
+                    <% total_3 +=  contado.cantidad %>
+                    
+         <%end %>
+               
+        <hr>  
+  </table>
+  <hr>
+     
+    <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+      
+     <tr>
+       
+         <tr>
+          <td width = "58%" align ="right">Total Pago Adelantado </td>
+          <td width = "8%" align ="right"><%= sprintf("%.3f",total_3)   %></td>
+          <td width = "8%"  align ="right"> </td>
+          <td width = "8%" align ="right"><%= sprintf("%.3f",total_1)   %></td>
+          <td width = "8%" align ="right"><%= sprintf("%.2f",total_2)   %></td>
+          <td width = "10%" align ="right"></td>
+    </tr> 
+          
+    </tr>
+    
+   </table>
+         
+  <font size="2" face="Courier New" >  
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+  
+  <tr bgcolor="#B4D7F7">
+    <td width="100%"> VALES DIRECTA *Todos*</td>
+  </tr>
+  
+  </table>
+
+  
+  
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+      <% nroitem = 1%>
+      <% total_1 = 0%>
+      <% total_2 = 0%>
+      <% total_3 = 0%>
+       <% for  contado in @contado_rpt7  %>
+               <%if contado.importe.to_f > 0 %>
+                  <tr>
+                    <td width= "10%" ><%=  contado.fecha.strftime("%d/%m/%Y")  %></td>
+                    <td width= "5%" > <%=  contado.serie %>   </td>
+                    <td width = "5%" align ="right"><%= contado.numero    %></td>
+                    <td width = "8%" align ="right"><%= contado.cod_cli    %></td>
+                    <td width = "10%" align ="right"><%= contado.get_cliente(contado.cod_cli) %></td>
+                    
+                    <td width = "5%" align ="right"><%= contado.cod_prod    %> </td>
+                    
+                    <td width = "10%" align ="left"><%= contado.get_product_name(contado.cod_prod)    %> </td>
+                    
+                    
+                    <td width = "8%" align ="right"><%=  sprintf("%.2f",contado.cantidad.to_s)%></td>
+                    <td width = "8%"  align ="right"><%= sprintf("%.2f",contado.precio)   %></td>
+                    <td width = "10%" align ="right"><%= sprintf("%.3f",contado.importe)   %></td>
+                    <td width = "10%" align ="right"><%= sprintf("%.2f",contado.implista.to_s)   %></td>
+                    <td width = "10%" align ="left"><%= contado.get_vale_facturado   %> </td>
+                    </tr>
+                    
+            <% end %>        
+                    <% total_1 +=  contado.importe.to_f %>
+                    <% total_2 +=  contado.implista  %>
+                    <% total_3 +=  contado.cantidad %>
+                    
+         <%end %>
+               
+        <hr>  
+  </table>
+  <hr>
+     
+    <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+      
+     <tr>
+       
+         <tr>
+          <td width = "58%" align ="right">Total Venta directa</td>
+          <td width = "8%" align ="right"><%= sprintf("%.3f",total_3)   %></td>
+          <td width = "8%"  align ="right"> </td>
+          <td width = "8%" align ="right"><%= sprintf("%.3f",total_1)   %></td>
+          <td width = "8%" align ="right"><%= sprintf("%.2f",total_2)   %></td>
+          <td width = "10%" align ="right"></td>
+    </tr> 
+          
+    </tr>
+    
+   </table>
+  
+  
+  
+    
+    </body>
+      
+      </html>
+      
