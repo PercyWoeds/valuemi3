@@ -35,6 +35,11 @@
       <%= f.label :tipo , "Factura :", :class => "bold" %><br />
       <%= f.select :tipo, options_from_collection_for_select(@tipofacturas,'id','descrip') %>
       </div>
+      
+       <div class="field">
+      <%= f.label :tipoventa_id,"Tipo Venta  " %><br />
+      <%= f.select :tipoventa_id,options_from_collection_for_select(@tipoventas,'id','nombre') %>
+    </div>
 
       <div class="field">
       <%= f.label :fecha , "Fecha *", :class => "bold" %><br />

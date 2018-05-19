@@ -3391,11 +3391,63 @@ def get_purchases_pendientes_day_value(fecha1,fecha2,value = "total_amount",clie
  end 
  def  get_ventas_contometros_efectivo_sustento2(fecha1,fecha2) 
 
-     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and fpago = ? and td <> ? and tipo <> ?" , "#{fecha1} 00:00:00","#{fecha2} 23:59:59", "1" ,"N","2"]).order(:serie,:numero)
+     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and fpago = ? and td <> ? and tipo <> ?" , "#{fecha1} 00:00:00","#{fecha2} 23:59:59", "1" ,"N","2"]).order(:fecha,:serie,:numero)
      
      
     return facturas
  
+ end 
+ 
+ def  get_ventas_contometros(fecha1,fecha2) 
+
+     facturas = Ventaisla.where(["fecha >= ? and fecha <= ? " , "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
+     
+     if facturas
+         
+        ret=0  
+        for detalle in facturas
+            ret += detalle.importe.to_f*-1
+       end 
+    end 
+
+    return ret
+ 
+ end 
+ 
+ 
+ 
+ 
+ def get_ventas_market_total(fecha1,fecha2)
+   
+   facturas  = Factura.where(["fecha >= ? and fecha <= ? and serie = ? " , "#{fecha1} 00:00:00","#{fecha2} 23:59:59","BB04"]).order(:fecha)
+   
+   if facturas
+    ret=0  
+    for factura in facturas
+      
+        ret += factura.total.round(2)
+    
+    end
+   end 
+
+     return ret
+    
+ end 
+ def get_ventas_mayor(fecha1,fecha2,tipoventa)
+   
+   facturas  = Factura.where(["fecha >= ? and fecha <= ? and tipoventa  = ? " , "#{fecha1} 00:00:00","#{fecha2} 23:59:59",tipo]).order(:fecha)
+   
+   if facturas
+    ret=0  
+    for factura in facturas
+      
+        ret += factura.total.round(2)
+    
+    end
+   end 
+
+     return ret
+    
  end 
  
  

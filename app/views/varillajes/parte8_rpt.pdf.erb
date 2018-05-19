@@ -156,7 +156,7 @@
        <%if contado.importe.to_f > 0 %>
                   <tr>
                     <td width= "5%" ><%=  contado.fecha.strftime("%d/%m/%Y")  %></td>
-                    <td width= "23%" > <%= truncate(contado.get_customer_name(contado.cod_cli), :length => 17)  %>   </td>
+                    <td width= "23%" > <%= truncate(contado.get_customer_name(contado.cod_cli), :length => 30)  %>   </td>
                     <td width= "3%" > <%=  contado.serie %>   </td>
                     <td width = "5%" align ="right"><%= contado.numero    %></td>
                     <td width = "3%" align ="right"><%= contado.cod_prod    %> </td>
@@ -373,8 +373,38 @@
     </tr>
     
    </table>
-  
-  
+   
+   
+   <% total_1 = 0 %>
+   <% total_2 = 0 %>
+   <% total_1 = @total_market %>
+   <% total_2 = @total_directa %>
+   <% total_3 = @total_adelantada %>
+    <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:50%'>
+          <tr>
+          <td width = "15%" align ="right">Combustibles</td>
+          <td width = "8%" align ="right"></td>
+          <td width = "15%" align ="right"><%= sprintf("%.2f",total_0)   %></td>
+          </tr> 
+   
+          <tr>
+          <td width = "15%" align ="right">Market Restaurante</td>
+          <td width = "8%" align ="right"></td>
+          <td width = "15%" align ="right"><%= sprintf("%.2f",total_1)   %></td>
+          </tr> 
+   
+            <tr>
+          <td width = "15%" align ="right">Venta Directa</td>
+          <td width = "8%" align ="right"></td>
+          <td width = "15%" align ="right"><%= sprintf("%.2f",total_2)   %></td>
+          </tr> 
+   
+            <tr>
+          <td width = "15%" align ="right">Venta Adelantado</td>
+          <td width = "8%" align ="right"></td>
+          <td width = "15%" align ="right"><%= sprintf("%.2f",total_3)   %></td>
+          </tr> 
+   
   
     
     </body>

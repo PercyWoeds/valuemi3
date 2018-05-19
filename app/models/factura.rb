@@ -15,6 +15,7 @@ class Factura < ActiveRecord::Base
   belongs_to :user
   belongs_to :moneda 
   belongs_to :document
+  belongs_to :tipoventum 
 
   has_many   :deliveryship
   has_many   :delivery 
