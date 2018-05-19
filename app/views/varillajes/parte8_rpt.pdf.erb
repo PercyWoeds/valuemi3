@@ -156,7 +156,7 @@
        <%if contado.importe.to_f > 0 %>
                   <tr>
                     <td width= "5%" ><%=  contado.fecha.strftime("%d/%m/%Y")  %></td>
-                    <td width= "23%" > <%=  contado.get_customer_name(contado.cod_cli) %>   </td>
+                    <td width= "23%" > <%= truncate(contado.get_customer_name(contado.cod_cli), :length => 17)  %>   </td>
                     <td width= "3%" > <%=  contado.serie %>   </td>
                     <td width = "5%" align ="right"><%= contado.numero    %></td>
                     <td width = "3%" align ="right"><%= contado.cod_prod    %> </td>
