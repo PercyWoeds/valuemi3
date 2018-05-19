@@ -3484,7 +3484,7 @@ def get_purchases_pendientes_day_value(fecha1,fecha2,value = "total_amount",clie
  
  def  get_ventas_contometros_adelantado(fecha1,fecha2) 
 
-         facturas = Sellvale.where(["fecha >= ? and fecha <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59"  ]).order(:cod_prod,:fecha).joins("INNER JOIN customers ON sellvales.cod_cli = customers.account AND customers.tipo = '2' ")
+    facturas = Sellvale.where(["fecha >= ? and fecha <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59"  ]).order(:cod_prod,:fecha).joins("INNER JOIN customers ON sellvales.cod_cli = customers.account AND customers.tipo = '2' ")
      if facturas
          
         ret=0  
