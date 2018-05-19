@@ -375,37 +375,45 @@
    </table>
    
    
-   <% total_1 = 0 %>
-   <% total_2 = 0 %>
+   
+   <% total_0 = @total_combus %>
    <% total_1 = @total_market %>
    <% total_2 = @total_directa %>
    <% total_3 = @total_adelantada %>
+   <% total_4 = @total_boletas %>
+   
+   
     <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:50%'>
           <tr>
-          <td width = "15%" align ="right">Combustibles</td>
+          <td width = "15%" align ="right">1.-Combustibles</td>
           <td width = "8%" align ="right"></td>
           <td width = "15%" align ="right"><%= sprintf("%.2f",total_0)   %></td>
           </tr> 
    
           <tr>
-          <td width = "15%" align ="right">Market Restaurante</td>
+          <td width = "15%" align ="right">2.-Market Restaurante</td>
           <td width = "8%" align ="right"></td>
           <td width = "15%" align ="right"><%= sprintf("%.2f",total_1)   %></td>
           </tr> 
    
             <tr>
-          <td width = "15%" align ="right">Venta Directa</td>
+          <td width = "15%" align ="right">3.-Venta Directa</td>
           <td width = "8%" align ="right"></td>
           <td width = "15%" align ="right"><%= sprintf("%.2f",total_2)   %></td>
           </tr> 
    
-            <tr>
-          <td width = "15%" align ="right">Venta Adelantado</td>
+           <tr>
+          <td width = "15%" align ="right">4.-Venta Adelantado</td>
           <td width = "8%" align ="right"></td>
           <td width = "15%" align ="right"><%= sprintf("%.2f",total_3)   %></td>
           </tr> 
    
-  
+          <tr>
+          <td width = "15%" align ="right">5.-Registro Ventas </td>
+          <td width = "8%" align ="right"></td>
+          <td width = "15%" align ="right"><%= sprintf("%.2f",total_4)   %></td>
+          </tr> 
+   
     
     </body>
       

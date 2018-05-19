@@ -3398,7 +3398,28 @@ def get_purchases_pendientes_day_value(fecha1,fecha2,value = "total_amount",clie
  
  end 
  
- def  get_ventas_contometros(fecha1,fecha2) 
+ def  get_ventas_contometros_efectivo(fecha1,fecha2) 
+
+     facturas = Sellvale.where(["fecha >= ? and fecha <= ? and td <> ?  and tipo<> ? and serie = ?" , "#{fecha1} 00:00:00","#{fecha2} 23:59:59","N","2","BB02"])
+     
+     if facturas
+         
+        ret=0  
+        for detalle in facturas
+            ret += detalle.importe.to_f
+       end 
+    end 
+
+    return ret
+ 
+ end 
+ 
+ 
+ def  get_ventas_contometros(fecha1,fecha2)
+   
+   puts "venta contometros"
+   puts fecha1
+   puts fecha2
 
      facturas = Ventaisla.where(["fecha >= ? and fecha <= ? " , "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
      
@@ -3435,7 +3456,7 @@ def get_purchases_pendientes_day_value(fecha1,fecha2,value = "total_amount",clie
  end 
  def get_ventas_mayor(fecha1,fecha2,tipoventa)
    
-   facturas  = Factura.where(["fecha >= ? and fecha <= ? and tipoventa  = ? " , "#{fecha1} 00:00:00","#{fecha2} 23:59:59",tipo]).order(:fecha)
+   facturas  = Factura.where(["fecha >= ? and fecha <= ? and tipoventa  = ? " , "#{fecha1} 00:00:00","#{fecha2} 23:59:59",tipoventa]).order(:fecha)
    
    if facturas
     ret=0  
