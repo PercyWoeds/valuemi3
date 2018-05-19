@@ -3440,7 +3440,7 @@ def get_purchases_pendientes_day_value(fecha1,fecha2,value = "total_amount",clie
  
  def get_ventas_market_total(fecha1,fecha2)
    
-   facturas  = Factura.where(["fecha >= ? and fecha <= ? and serie = ? " , "#{fecha1} 00:00:00","#{fecha2} 23:59:59","BB04"]).order(:fecha)
+   facturas  = Factura.where(["fecha >= ? and fecha <= ? and substring(code,1,4) = ? " , "#{fecha1} 00:00:00","#{fecha2} 23:59:59","BB04"]).order(:fecha)
    
    if facturas
     ret=0  

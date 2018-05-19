@@ -373,7 +373,14 @@
     </tr>
     
    </table>
-   
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+  
+  <tr bgcolor="#B4D7F7">
+    <td width="100%">  RESUMEN </td>
+  </tr>
+  
+  </table>
+ 
    
    
    <% total_0 = @total_combus %>
@@ -410,6 +417,12 @@
    
           <tr>
           <td width = "15%" align ="right">5.-Registro Ventas </td>
+          <td width = "8%" align ="right"></td>
+          <td width = "15%" align ="right"><%= sprintf("%.2f",total_4)   %></td>
+          </tr> 
+          
+          <tr>
+          <td width = "15%" align ="right"> Diferencia.- </td>
           <td width = "8%" align ="right"></td>
           <td width = "15%" align ="right"><%= sprintf("%.2f",total_4)   %></td>
           </tr> 
