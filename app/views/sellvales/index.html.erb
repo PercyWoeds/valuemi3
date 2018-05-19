@@ -49,10 +49,12 @@
         <td class="small bordered_bottom bordered_right"><%= sellvale.importe %></td>
         
         <td><%= link_to 'Ver', sellvale %></td>
+        
+        <% if sellvale.processed != "1"%>
         <td><%= link_to 'Editar', edit_sellvale_path(sellvale) %></td>
         
         <td><%= link_to 'Eliminar', sellvale, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        
+        <%end %>
         
       </tr>
     <% end %>
