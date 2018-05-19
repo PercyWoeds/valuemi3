@@ -3456,7 +3456,7 @@ def get_purchases_pendientes_day_value(fecha1,fecha2,value = "total_amount",clie
  end 
  def get_ventas_mayor(fecha1,fecha2,tipoventa)
    
-   facturas  = Factura.where(["fecha >= ? and fecha <= ? and tipoventa  = ? " , "#{fecha1} 00:00:00","#{fecha2} 23:59:59",tipoventa]).order(:fecha)
+   facturas  = Factura.where(["fecha >= ? and fecha <= ? and tipoventa_id  = ? " , "#{fecha1} 00:00:00","#{fecha2} 23:59:59",tipoventa]).order(:fecha)
    
    if facturas
     ret=0  
