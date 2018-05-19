@@ -387,8 +387,9 @@
    <% total_1 = @total_market %>
    <% total_2 = @total_directa %>
    <% total_3 = @total_adelantada %>
-   <% total_4 = @total_boletas %>
    
+   <% total_4 = @total_boletas %>
+   <% total_5 = total_0 + total_1+ total_2 + total_3 - total_4  %>
    
     <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:50%'>
           <tr>
@@ -424,7 +425,7 @@
           <tr>
           <td width = "15%" align ="right"> Diferencia.- </td>
           <td width = "8%" align ="right"></td>
-          <td width = "15%" align ="right"><%= sprintf("%.2f",total_4)   %></td>
+          <td width = "15%" align ="right"><%= sprintf("%.2f",total_5)   %></td>
           </tr> 
    
     

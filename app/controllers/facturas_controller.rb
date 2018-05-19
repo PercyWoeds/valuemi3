@@ -200,11 +200,14 @@ def reportes8
     @contado_rpt7 = @company.get_ventas_vale_directo(@fecha1,@fecha2) #ventas directa
     
     @total_combus = @company.get_ventas_contometros(@fecha1,@fecha2) #ventas market 
+    
     @total_market = @company.get_ventas_market_total(@fecha1,@fecha2) #ventas market 
+    
     @total_directa = @company.get_ventas_mayor(@fecha1,@fecha2,"3") #ventas market 
     @total_adelantada = @company.get_ventas_mayor(@fecha1,@fecha2,"4") 
     
-    @total_boletas= @company.get_ventas_contometros_efectivo(@fecha1,@fecha2) #ventas boletas reg ventas playa
+    @total_boletas= @company.get_ventas_contometros_efectivo(@fecha1,@fecha2) + @total_market + @total_directa + @total_adelantada  #ventas boletas reg ventas playa
+    
     
     #@contado_rpt7 = @company.get_parte_6(@fecha1,@fecha2)
     
