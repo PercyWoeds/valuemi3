@@ -3354,6 +3354,7 @@ def get_purchases_pendientes_day_value(fecha1,fecha2,value = "total_amount",clie
    
     return @contado
  end 
+ 
  #Vale credito todos 
  def  get_parte_4(fecha1,fecha2) 
    
@@ -3513,6 +3514,23 @@ def get_purchases_pendientes_day_value(fecha1,fecha2,value = "total_amount",clie
 
     return ret
  
+ end 
+ 
+ 
+ 
+ def  get_contado_pendiente(fecha1,fecha2) 
+   
+     @contado = Sellvale.where(["fecha >= ? and fecha <= ?  and tipo = ? and processed = ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ,"2","0" ]).order(:cod_prod,:fecha)
+   
+    return @contado
+ end 
+ 
+ #Vale credito todos pendientes
+ def  get_credito_pendiente(fecha1,fecha2) 
+   
+     @contado = Sellvale.where(["fecha >= ? and fecha <= ? and sellvales.tipo = ?  and sellvales.td= ? and processed = ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ,"1","N","0" ]).order(:cod_cli,:fecha,:cod_prod)
+   
+    return @contado
  end 
  
  
