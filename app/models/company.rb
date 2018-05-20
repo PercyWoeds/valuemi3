@@ -3520,17 +3520,34 @@ def get_purchases_pendientes_day_value(fecha1,fecha2,value = "total_amount",clie
  
  def  get_contado_pendiente(fecha1,fecha2) 
    
-     @contado = Sellvale.where(["fecha >= ? and fecha <= ?  and tipo = ? and processed = ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ,"2","0" ]).order(:cod_prod,:fecha)
+     facturas  = Sellvale.where(["fecha >= ? and fecha <= ?  and tipo = ? and processed = ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ,"2","0" ]).order(:cod_prod,:fecha)
    
-    return @contado
+     if facturas
+         
+        ret=0  
+        for detalle in facturas
+             ret += detalle.importe.to_f
+       end 
+    end 
+
+    return ret
+    
  end 
  
  #Vale credito todos pendientes
  def  get_credito_pendiente(fecha1,fecha2) 
    
-     @contado = Sellvale.where(["fecha >= ? and fecha <= ? and sellvales.tipo = ?  and sellvales.td= ? and processed = ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ,"1","N","0" ]).order(:cod_cli,:fecha,:cod_prod)
-   
-    return @contado
+     facturas  = Sellvale.where(["fecha >= ? and fecha <= ? and sellvales.tipo = ?  and sellvales.td= ? and processed = ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ,"1","N","0" ]).order(:cod_cli,:fecha,:cod_prod)
+     if facturas
+         
+        ret=0  
+        for detalle in facturas
+             ret += detalle.implista
+       end 
+    end 
+
+    return ret
+    
  end 
  
  

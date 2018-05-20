@@ -389,7 +389,7 @@
    <% total_3 = @total_adelantada %>
    
    <% total_4 = @total_boletas %>
-   <% total_5 = total_0 + total_1+ total_2 + total_3 - total_4  %>
+   <% total_5 = total_0 + total_1+ total_2 + total_3 - total_4 -@total_contado_pendiente - @total_credito_pendiente %>
    
     <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:50%'>
           <tr>
@@ -422,6 +422,16 @@
           <td width = "15%" align ="right"><%= sprintf("%.2f",total_4)   %></td>
           </tr> 
           
+          <tr>
+          <td width = "15%" align ="right">6.-Contado sin documento </td>
+          <td width = "8%" align ="right"></td>
+          <td width = "15%" align ="right"><%= sprintf("%.2f",@total_contado_pendiente)   %></td>
+          </tr> 
+          <tr>
+          <td width = "15%" align ="right">7.-Credito sin documento </td>
+          <td width = "8%" align ="right"></td>
+          <td width = "15%" align ="right"><%= sprintf("%.2f",@total_credito_pendiente)   %></td>
+          </tr> 
           
           
           

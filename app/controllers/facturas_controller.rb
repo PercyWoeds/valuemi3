@@ -211,6 +211,10 @@ def reportes8
     
     @total_boletas= @company.get_ventas_contometros_efectivo(@fecha1,@fecha2)  + @total_venta   #ventas boletas reg ventas playa
     
+    
+    @total_contado_pendiente = @company.get_contado_pendiente(@fecha1,@fecha2)
+    @total_credito_pendiente = @company.get_credito_pendiente(@fecha1,@fecha2)
+    
     #@contado_rpt7 = @company.get_parte_6(@fecha1,@fecha2)
     
     
