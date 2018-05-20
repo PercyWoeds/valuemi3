@@ -208,8 +208,7 @@ def reportes8
     @total_adelantada = @total_adelantada_bruta - @company.get_ventas_contometros_adelantado(@fecha1,@fecha2)
     @total_venta = @company.get_ventas_all_series(@fecha1,@fecha2)
     
-    @total_boletas= @company.get_ventas_contometros_efectivo(@fecha1,@fecha2) + @total_market + @total_venta   #ventas boletas reg ventas playa
-    
+    @total_boletas= @company.get_ventas_contometros_efectivo(@fecha1,@fecha2)  + @total_venta   #ventas boletas reg ventas playa
     
     #@contado_rpt7 = @company.get_parte_6(@fecha1,@fecha2)
     
