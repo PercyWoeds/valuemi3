@@ -110,6 +110,26 @@ class Sellvale < ActiveRecord::Base
       end
 
   end 
+  def get_vale_facturado_fecha
+      
+      a = FacturaDetail.find_by(sellvale_id: self.id)
+      if a 
+         begin 
+        b = Factura.find(a.factura_id)
+        if b 
+            return b.fecha  
+        else
+            return ""
+        end 
+        rescue 
+        
+    end 
+      else
+          return ""
+      end
+
+  end 
+  
   def get_tarjeta_name(codigo) 
       
       a= Tarjetum.find(codigo)

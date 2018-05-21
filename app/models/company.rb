@@ -3535,6 +3535,35 @@ def get_purchases_pendientes_day_value(fecha1,fecha2,value = "total_amount",clie
  end 
  
  #Vale credito todos pendientes
+ def  get_credito_out_fecha(fecha1,fecha2) 
+   
+     facturas  = Sellvale.where(["fecha >= ? and fecha <= ? and sellvales.tipo = ?  and sellvales.td= ? and processed = ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ,"1","N","1" ]).order(:cod_cli,:fecha,:cod_prod)
+     if facturas
+         
+        ret=0  
+        for detalle in facturas
+          puts "fuera de fecha "
+          puts detalle.numero
+          
+               fecha_factura = detalle.get_vale_facturado_fecha
+            puts fecha_factura.to_date
+            puts detalle.numero 
+            fecha10 = "#{fecha1} 00:00:00"
+            fecha20 = "#{fecha2} 00:00:00"
+            
+            puts fecha10.to_date
+            puts fecha20.to_date 
+            
+             if fecha_factura.to_date < fecha10.to_date and fecha_factura.to_date > fecha20.to_date
+               ret += detalle.implista
+            end 
+       end 
+    end 
+
+    return ret
+    
+ end 
+ #Vale credito todos pendientes
  def  get_credito_pendiente(fecha1,fecha2) 
    
      facturas  = Sellvale.where(["fecha >= ? and fecha <= ? and sellvales.tipo = ?  and sellvales.td= ? and processed = ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ,"1","N","0" ]).order(:cod_cli,:fecha,:cod_prod)
@@ -3542,7 +3571,11 @@ def get_purchases_pendientes_day_value(fecha1,fecha2,value = "total_amount",clie
          
         ret=0  
         for detalle in facturas
+          puts detalle.numero
+        
              ret += detalle.implista
+             
+             
        end 
     end 
 
