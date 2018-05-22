@@ -3543,17 +3543,21 @@ def get_purchases_pendientes_day_value(fecha1,fecha2,value = "total_amount",clie
         ret=0  
         for detalle in facturas
           
-            fecha_factura = detalle.get_vale_facturado_fecha
-            
-            fecha10 = "#{fecha1} 00:00:00"
-            fecha20 = "#{fecha2} 00:00:00"
+         fecha_factura = detalle.get_vale_facturado_fecha
+       
+            fecha10 = "#{fecha1}"
+            fecha20 = "#{fecha2}"
             
             if fecha_factura != nil 
-            if fecha_factura > fecha20 or fecha_factura < fecha10
+            if fecha_factura != ""
+       
+              if fecha_factura.to_date < fecha10.to_date or fecha_factura.to_date > fecha20.to_date
+        
                 
                 ret += detalle.implista
               
             end 
+          end 
           end 
        end  
     end 
