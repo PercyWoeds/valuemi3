@@ -3542,23 +3542,23 @@ def get_purchases_pendientes_day_value(fecha1,fecha2,value = "total_amount",clie
          
         ret=0  
         for detalle in facturas
-          puts "fuera de fecha "
-          puts detalle.numero
           
             fecha_factura = detalle.get_vale_facturado_fecha
-            puts fecha_factura.to_date
+            puts "formato fecha "
             puts detalle.numero 
             
             fecha10 = "#{fecha1} 00:00:00"
             fecha20 = "#{fecha2} 00:00:00"
             
-            puts fecha10.to_date
-            puts fecha20.to_date 
+            puts "compara fecha .."
+            puts fecha_factura.to_date.strftime("%d/%m/%Y")
             
-             if  fecha_factura.to_date > fecha20.to_date and fecha_factura.to_date < fecha10.to_date 
-               ret += detalle.implista
+            if fecha_factura > fecha20 or fecha_factura < fecha10
+                ret += detalle.implista
+              puts ""
+              puts detalle.implista 
             end 
-       end 
+       end  
     end 
 
     return ret
