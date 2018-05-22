@@ -392,9 +392,11 @@
        <% for  contado in @total_factura_out_fecha_detalle %>
        
        <%if contado.importe.to_f > 0 %>
-     
        
-               <% if fecha_factura < fecha10 or fecha_factura > fecha20%>       
+       
+       <% fecha_factura = contado.get_vale_facturado_fecha %>
+       
+               <% if fecha_factura < fecha10 or fecha_factura > fecha20 %>       
                   <tr>
                     <td width= "5%" ><%=  contado.fecha.strftime("%d/%m/%Y")  %></td>
                     <td width= "23%" > <%= truncate(contado.get_customer_name(contado.cod_cli), :length => 30)  %>   </td>
