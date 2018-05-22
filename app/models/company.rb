@@ -3545,16 +3545,17 @@ def get_purchases_pendientes_day_value(fecha1,fecha2,value = "total_amount",clie
           puts "fuera de fecha "
           puts detalle.numero
           
-               fecha_factura = detalle.get_vale_facturado_fecha
+            fecha_factura = detalle.get_vale_facturado_fecha
             puts fecha_factura.to_date
             puts detalle.numero 
+            
             fecha10 = "#{fecha1} 00:00:00"
             fecha20 = "#{fecha2} 00:00:00"
             
             puts fecha10.to_date
             puts fecha20.to_date 
             
-             if fecha_factura.to_date < fecha10.to_date and fecha_factura.to_date > fecha20.to_date
+             if  fecha_factura.to_date > fecha20.to_date and fecha_factura.to_date < fecha10.to_date 
                ret += detalle.implista
             end 
        end 
