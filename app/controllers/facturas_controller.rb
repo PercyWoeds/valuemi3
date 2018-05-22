@@ -216,9 +216,9 @@ def reportes8
     @total_credito_pendiente = @company.get_credito_pendiente(@fecha1,@fecha2)
     @total_factura_out_fecha = @company.get_credito_out_fecha(@fecha1,@fecha2)
     
-    #@contado_rpt7 = @company.get_parte_6(@fecha1,@fecha2)
+    @total_factura_out_fecha_detalle =@company.get_credito_out_fecha_detalle(@fecha1,@fecha2)
     
-    
+ 
     case params[:print]
       when "To PDF" then 
         begin 
