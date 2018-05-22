@@ -447,7 +447,8 @@
        
        <% fecha_factura = contado.get_vale_facturado_fecha %>
        
-       <% if fecha_factura != "" or fecha_factura != nil%>
+       <% if fecha_factura != "" %>
+       <% if fecha_factura != nil%>
        
                <% if fecha_factura.to_date < fecha10.to_date or fecha_factura.to_date > fecha20.to_date %>       
                   <tr>
@@ -477,6 +478,7 @@
                     <% total_2 +=  contado.implista  %>
                     <% total_3 +=  contado.cantidad %>
          <%end %>         
+         <%end %>
          <%end %>
          <%end %>
          <%end %>
