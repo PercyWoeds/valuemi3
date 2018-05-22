@@ -3596,6 +3596,16 @@ def get_purchases_pendientes_day_value(fecha1,fecha2,value = "total_amount",clie
     
  end 
  
+ #Vale credito todos pendientes
+ def  get_credito_pendiente_detalle(fecha1,fecha2) 
+   
+     facturas  = Sellvale.where(["fecha >= ? and fecha <= ? and sellvales.tipo = ?  and sellvales.td= ? and processed = ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ,"1","N","0" ]).order(:cod_cli,:fecha,:cod_prod)
+    
+
+    return facturas 
+    
+ end 
+ 
  
 def get_facturas_by_day_value(fecha1,fecha2,moneda,value='total')
   

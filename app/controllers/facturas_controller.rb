@@ -213,9 +213,11 @@ def reportes8
     
     
     @total_contado_pendiente = @company.get_contado_pendiente(@fecha1,@fecha2)
-    @total_credito_pendiente = @company.get_credito_pendiente(@fecha1,@fecha2)
+    @total_credito_pendiente_detalle = @company.get_credito_pendiente_detalle(@fecha1,@fecha2)
+    
     @total_factura_out_fecha = @company.get_credito_out_fecha(@fecha1,@fecha2)
     
+    @total_credito_pendiente = @company.get_credito_pendiente(@fecha1,@fecha2)
     @total_factura_out_fecha_detalle =@company.get_credito_out_fecha_detalle(@fecha1,@fecha2)
     
  
