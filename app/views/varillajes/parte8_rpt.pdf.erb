@@ -413,7 +413,10 @@
                     <td width = "8%" align ="right"><%= sprintf("%.2f",contado.implista.to_s)   %></td>
                     <td width = "10%" align ="left"><%= contado.get_vale_facturado   %> </td>
                     <td width = "10%" align ="left"><%= contado.id   %> </td>
+                    <% if contado.get_vale_facturado_fecha != ""%>
                     <td width = "10%" align ="left"><%= contado.get_vale_facturado_fecha.strftime("%d/%m/%Y")   %> </td>
+                    
+                    <%end %>
                     </tr>
                     
             
