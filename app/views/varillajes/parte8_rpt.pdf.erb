@@ -376,13 +376,6 @@
    
    
    
-  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
-  
-  <tr bgcolor="#B4D7F7">
-    <td width="100%"> VALES FACTURADOS CON FECHA FACTURA DIFERENTE </td>
-  </tr>
-  
-  </table>
   
   <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
   
@@ -429,6 +422,13 @@
          
         <hr>  
      </table>
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+  
+  <tr bgcolor="#B4D7F7">
+    <td width="100%"> VALES FACTURADOS CON FECHA FACTURA DIFERENTE </td>
+  </tr>
+  
+  </table>
   
   
  
@@ -447,7 +447,7 @@
        
        <% fecha_factura = contado.get_vale_facturado_fecha %>
        
-       <% if fecha_factura != ""%>
+       <% if fecha_factura != "" or fecha_factura != nil%>
        
                <% if fecha_factura.to_date < fecha10.to_date or fecha_factura.to_date > fecha20.to_date %>       
                   <tr>
@@ -504,6 +504,8 @@
           <td width = "8%" align ="right"></td>
           <td width = "15%" align ="right"><%= sprintf("%.2f",total_0)   %></td>
           </tr> 
+          
+          
    
           <tr>
           <td width = "15%" align ="right">2.-Market Restaurante</td>

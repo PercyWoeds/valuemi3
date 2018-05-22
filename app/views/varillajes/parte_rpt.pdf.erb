@@ -43,7 +43,6 @@
                     
                     <td width = "5%" align ="right"><%= sprintf("%.2f",dife.to_s)   %></td>
                     
-                    
                     <% dife_soles = product0.get_ventas_importe(@fecha,product0.tanque.product.id) - product0.get_ventas_contometros_producto_todo(@fecha,product0.tanque.product.code.to_s)-  product0.get_ventas_contometros_descuento_producto(@fecha,product0.tanque.product.code.to_s)     %>
               
                     

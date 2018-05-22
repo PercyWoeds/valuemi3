@@ -3606,6 +3606,12 @@ def get_purchases_pendientes_day_value(fecha1,fecha2,value = "total_amount",clie
     
  end 
  
+ def get_diferencia_precio_mes()
+   
+    dife_soles = product0.get_ventas_importe(@fecha,product0.tanque.product.id) - product0.get_ventas_contometros_producto_todo(@fecha,product0.tanque.product.code.to_s)-  product0.get_ventas_contometros_descuento_producto(@fecha,product0.tanque.product.code.to_s)    
+    
+ end 
+ 
  
 def get_facturas_by_day_value(fecha1,fecha2,moneda,value='total')
   
