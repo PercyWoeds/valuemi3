@@ -3606,10 +3606,34 @@ def get_purchases_pendientes_day_value(fecha1,fecha2,value = "total_amount",clie
     
  end 
  
- def get_diferencia_precio_mes()
+ def get_diferencia_precio_mes(fecha1)
    
-    dife_soles = product0.get_ventas_importe(@fecha,product0.tanque.product.id) - product0.get_ventas_contometros_producto_todo(@fecha,product0.tanque.product.code.to_s)-  product0.get_ventas_contometros_descuento_producto(@fecha,product0.tanque.product.code.to_s)    
+    dife_soles=0
+    product0 = Varillaje.last 
+    @fecha = fecha1.to_date 
     
+    dife_soles = product0.get_ventas_importe(@fecha,product0.tanque.product.id) - product0.get_ventas_contometros_producto_todo(@fecha,product0.tanque.product.code.to_s)-  product0.get_ventas_contometros_descuento_producto(@fecha,product0.tanque.product.code.to_s)    
+    return dife_soles
+    
+ end 
+ 
+ def  get_ventas_contometros_descuento(fecha) 
+
+     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ? and tipo <> ?  " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","3" ])
+     
+     if facturas
+         
+        ret=0  
+        for detalle in facturas
+            if detalle.implista > 0
+            ret += detalle.implista - detalle.importe.to_f
+         
+          end
+       end 
+    end 
+
+    return ret
+ 
  end 
  
  
@@ -3680,8 +3704,12 @@ def get_facturas_by_day_value2(fecha1,fecha2,moneda,value='total')
        return facturas 
  
   end 
-  
-  
+   def  get_ventas_combustibles_fecha(fecha1,fecha2) 
+
+      facturas = Ventaisla.select("date(ventaislas.fecha) as fecha_venta").where(["fecha >= ?  and fecha <=  ?" , "#{fecha1} 00:00:00","#{fecha2} 23:59:59"] ).order("fecha_venta").group("fecha_venta")
+      return facturas 
+      
+  end 
   
   def  get_ventas_combustibles_producto(fecha1,fecha2) 
 
@@ -3689,6 +3717,7 @@ def get_facturas_by_day_value2(fecha1,fecha2,moneda,value='total')
      
        return facturas 
   end 
+  
   def  get_ventas_colaterales(fecha1,fecha2)
     
 

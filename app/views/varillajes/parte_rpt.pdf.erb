@@ -365,27 +365,42 @@
             <td width= "100%" align ="left">  INGRESOS ANTERIOR           : </td>
       </tr>
       
-    <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>        
+    
+    
       <% total_bancos_soles = 0 %>
       <% total_bancos_dolar = 0 %>
       
-       <% for productItem in bancos2 %>
+      <%  @customerpayment = @company.get_customer_payments(@fecha,@fecha)  %>
+      
+       <% for productItem in  @customerpayment %>
        
+    <table style='font-family:"Courier New", Courier, monospace; font-size:70% ;width:100%'>           
       <tr>
-        <td width= "50%" align ="left">
-        
+        <td width= "10%" align ="left">
+          <%=  productItem.code_liq %>
         </td>
         
-        <td width= "20%" align ="left">
-          <%=  productItem.document.description    %>
+        <td width= "10%" align ="left">
+          <%=  productItem.fecha1.strftime("%d/%m/%Y")      %>
         </td>
          
-        <td width= "10%" align ="left">
+        <td width= "15%" align ="left">
           <%=  productItem.code    %>
         </td>
         
+        <% @cliente_obs = productItem.get_cliente(productItem.customer_id) %>
+        <td width= "10%" align ="left">
+              <%= @cliente_obs.ruc %>
+        </td>      
+        <td width= "25%" align ="left">
+              <%= @cliente_obs.name %>
+        </td>          
+         <td width= "10%" align ="left">
+              <%= sprintf("%.2f",productItem.factory.to_s) %>
+        </td>          
+        <% monedabanco= productItem.get_banco_moneda(productItem.bank_acount_id) %>
         
-        <%  if productItem.bank_acount.moneda_id == "1"%>  
+        <%  if monedabanco == "1" %>  
         
           <td  width= "10%" align ="right">
             0.00
@@ -401,12 +416,12 @@
           <td  width= "10%" align ="right">
             0.00
           </td>
+          
           <% total_bancos_soles += productItem.total %>
         <% end %>
+      </tr>  
         
-      </tr>
-    <% end %>
-     
+      <% end %>
         
     </table>
     
