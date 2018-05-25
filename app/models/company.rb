@@ -3692,8 +3692,9 @@ def get_facturas_by_day_value2(fecha1,fecha2,moneda,value='total')
     
     return ret
 
-
   end 
+  
+  
   
   def  get_ventas_combustibles(fecha1,fecha2) 
 
