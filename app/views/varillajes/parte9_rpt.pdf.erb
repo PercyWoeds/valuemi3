@@ -1,0 +1,105 @@
+<html>
+<body>
+  <h6 ><center> Contometros - Venta   Desde: <%= @fecha1 %> Hasta: <%= @fecha2 %> </center>   </h6>
+  
+    <font size="2" face="Courier New" >  
+    
+    <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+  
+  <tr bgcolor="#B4D7F7">
+    <td width="100%"> Venta Contometros *Todos*</td>
+  </tr>
+  
+  </table>
+
+
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+  <tr bgcolor="#B4D7F7">
+    
+    
+    <td width="5%"> Manguera</td>
+    <td width="42%">Producto </td>
+    <td width="10%" align="center">Lec.Anterior</td>
+    <td width="10%" align="center"> Lec.Actual</td>
+    <td width="10%" align="right"> Cantidad</td>
+    <td width="10%" align="right"> Precio </td>
+    <td width="10%" align="right"> Importe </td>
+    
+    
+  </tr>
+  </table>
+
+  
+  
+  
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+      <% nroitem = 1%>
+      <% total_1 =  0%>
+      <% total_2 =  0%>
+      <% total_3 =  0%>
+       <% for  contado in @contado_rpt  %>
+       
+       
+                  <tr>
+                    <td width= "5%" ><%=  contado.fecha.strftime("%d/%m/%Y")  %></td>
+                    <td width= "23%"> <%=  contado.employee.full_name %>   </td>
+                    <td width= "3%" >    </td>
+                    <td width = "5%" align ="right"><% %></td>
+                    <td width = "3%" align ="right"><% %> </td>
+                    <td width = "10%" align ="left"><%   %> </td>
+                    <td width = "5%" align ="right"><% %></td>
+                    <td width = "8%" align ="right"><%=  sprintf("%.2f",contado.galones * -1)%></td>
+                    <td width = "8%" align ="right"><%   %></td>
+                    <td width = "8%" align ="right"><%    %></td>
+                    <td width = "8%" align ="right"><%= sprintf("%.2f",contado.importe*-1)   %></td>
+                    
+                    </tr>
+                    
+            
+                    
+                    <% total_1 +=  contado.galones*-1 %>
+                    <% total_2 +=  contado.importe*-1  %>
+                    
+                    <% @ventaisla_details= contado.ventaisla_details %>
+                 <%  @ventaisla_details.each do |detalle| %>
+                  <tr>
+                    <td width= "5%" ><%=   detalle.pump.fuel  %></td>
+                    <td width= "23%"> <%=  detalle.product.name  %>   </td>
+                    <td width= "3%" >    </td>
+                    <td width = "5%" align ="right"><% %></td>
+                    <td width = "3%" align ="right"><% %> </td>
+                    <td width = "8%" align ="right"><% %></td>
+                    <td width = "10%" align ="left"><%= sprintf("%.4f",detalle.le_an_gln)   %> </td>
+                    <td width = "10%" align ="right"><%= sprintf("%.4f",detalle.le_ac_gln)    %></td>
+                    <td width = "10%" align ="right"><%=  sprintf("%.2f",detalle.quantity * -1)%></td>
+                    <td width = "10%" align ="right"><%=  sprintf("%.2f",detalle.price) %></td>
+                    <td width = "10%" align ="right"><%= sprintf("%.2f",detalle.quantity* detalle.price )   %></td>
+                    
+                    </tr>          
+                  
+         
+        <% end %>
+        
+      <% end %>                    
+                  
+               
+        <hr>  
+     </table>
+      <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+     <tr>
+          <td width = "60%" align ="right">Total </td>
+
+          <td width = "10%" align ="right"><%=  sprintf("%.2f",total_3) %></td>
+          <td width = "10%" align ="right"><%= sprintf("%.3f",total_1)   %></td>
+          <td width = "10%"  align ="right"></td>
+          <td width = "10%" align ="right"><%= sprintf("%.2f",total_2)   %></td>
+          
+                    
+    </tr>
+   </table>
+
+    
+    </body>
+      
+      </html>
+      

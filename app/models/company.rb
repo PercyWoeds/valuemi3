@@ -3704,6 +3704,7 @@ def get_facturas_by_day_value2(fecha1,fecha2,moneda,value='total')
        return facturas 
  
   end 
+  
    def  get_ventas_combustibles_fecha(fecha1,fecha2) 
 
       facturas = Ventaisla.select("date(ventaislas.fecha) as fecha_venta").where(["fecha >= ?  and fecha <=  ?" , "#{fecha1} 00:00:00","#{fecha2} 23:59:59"] ).order("fecha_venta").group("fecha_venta")

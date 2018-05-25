@@ -101,6 +101,7 @@
     collection { get :reportes6} #Reporte ventas
     collection { get :reportes7} #Reporte ventas
     collection { get :reportes8} #Reporte ventas
+    collection { get :reportes9} #Reporte ventas
     
     collection { get :reportes03}
     collection { get :reportes04}
@@ -438,6 +439,7 @@ end
   match 'companies/reports/rpt_parte_6/:company_id' => 'reports#rpt_parte_6', via: [:get, :post]    
   match 'companies/reports/rpt_parte_7/:company_id' => 'reports#rpt_parte_7', via: [:get, :post]    
   match 'companies/reports/rpt_parte_8/:company_id' => 'reports#rpt_parte_8', via: [:get, :post]    
+  match 'companies/reports/rpt_parte_9/:company_id' => 'reports#rpt_parte_9', via: [:get, :post]    
   # Company users
 
   match 'company_users/ac_users' => 'company_users#ac_users', via: [:get, :post]

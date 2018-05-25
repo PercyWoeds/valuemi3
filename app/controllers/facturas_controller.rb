@@ -186,6 +186,7 @@ def reportes7
       else render action: "index"
     end
   end
+  
 def reportes8
   
     @company=Company.find(1)          
@@ -243,6 +244,39 @@ def reportes8
                
         end   
       when "To Excel" then render xlsx: 'exportxls'
+      else render action: "index"
+    end
+  end
+
+
+def reportes9 
+  
+    @company=Company.find(1)          
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]    
+    @cliente = params[:cod_cli]    
+       
+    
+    @contado_rpt = @company.get_ventas_combustibles(@fecha1,@fecha2)
+    
+    
+    case params[:print]
+      when "To PDF" then 
+        begin 
+         render  pdf: "Vale5 ",template: "varillajes/parte9_rpt.pdf.erb",locals: {:varillajes => @contado_rpt},
+         :orientation      => 'Landscape',
+         :header => {
+           :spacing => 5,
+                           :html => {
+                     :template => 'layouts/pdf-header.html',
+                           right: '[page] of [topage]'
+                  }
+               }
+               
+               
+        
+        end   
+      when "To Excel" then render xlsx: 'parte9_rpt_xls'
       else render action: "index"
     end
   end
