@@ -6,9 +6,9 @@
 #
 # To learn more, check out the README:
 #
-# https://github.com/mileszs/wicked_pdf/blob/master/README.md
-if Rails.env.production?
-  WickedPdf.config = {
-    :exe_path =>'/app/vendor/bundle/ruby/2.4.0/gems/wkhtmltopdf-binary-0.12.3.1/bin/wkhtmltopdf_linux_amd64'
-  }
-end
+# # https://github.com/mileszs/wicked_pdf/blob/master/README.md
+# if Rails.env.production?
+#   WickedPdf.config = {
+#     :exe_path =>'/app/vendor/bundle/ruby/2.4.0/gems/wkhtmltopdf-binary-0.12.3.1/bin/wkhtmltopdf_linux_amd64'
+#   }
+# end
