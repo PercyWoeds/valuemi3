@@ -7,7 +7,8 @@
 # To learn more, check out the README:
 #
 # https://github.com/mileszs/wicked_pdf/blob/master/README.md
-
-WickedPdf.config = {
-  exe_path: "#{ENV['GEM_HOME']}/gems/wkhtmltopdf-binary-edge-#{Gem.loaded_specs['wkhtmltopdf-binary-edge'].2.4.4}/bin/wkhtmltopdf"
-}
+if Rails.env.production?
+  WickedPdf.config = {
+    exe_path: Bundler.which('wkhtmltopdf')
+  }
+end
