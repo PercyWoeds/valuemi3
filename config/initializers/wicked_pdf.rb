@@ -7,3 +7,6 @@
 # To learn more, check out the README:
 #
 # https://github.com/mileszs/wicked_pdf/blob/master/README.md
+WickedPdf.config = {
+  :exe_path =>'/usr/local/rvm/gems/ruby-2.4.4/bin/wkhtmltopdf'
+}
