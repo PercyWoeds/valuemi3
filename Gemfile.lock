@@ -272,6 +272,7 @@ GEM
       railties (>= 4.0)
       sprockets-rails (>= 2.0, < 4.0)
     webrobots (0.1.2)
+    wicked_pdf (1.1.0)
     will_paginate (3.1.6)
     wkhtmltopdf (0.1.2)
     wkhtmltopdf-binary (0.12.3.1)
@@ -320,9 +321,10 @@ DEPENDENCIES
   turbolinks
   uglifier (>= 1.3.0)
   web-console (~> 2.0)
+  wicked_pdf
   will_paginate
-  wkhtmltopdf (~> 0.1.2)
-  wkhtmltopdf-binary (~> 0.12.3)
+  wkhtmltopdf
+  wkhtmltopdf-binary
 
 BUNDLED WITH
    1.16.2

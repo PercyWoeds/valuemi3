@@ -82,8 +82,8 @@ gem "axlsx_rails"
 
 gem  'prawn-qrcode'
  
-gem 'wkhtmltopdf', '~> 0.1.2'
-gem 'wkhtmltopdf-binary', '~> 0.12.3'
+gem 'wkhtmltopdf'
+gem 'wkhtmltopdf-binary'
 
 gem 'pry'
 gem 'mechanize'
@@ -117,3 +117,4 @@ group :production do
 
  gem 'rails_12factor','0.0.2'
 end
+gem "wicked_pdf"
