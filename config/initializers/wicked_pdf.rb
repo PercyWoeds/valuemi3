@@ -9,7 +9,7 @@
 # https://github.com/mileszs/wicked_pdf/blob/master/README.md
 if Rails.env.production?
       WickedPdf.config = {
-         exe_path: ('vendor/bundle/ruby/2.4.0/gems/wkhtmltopdf')
+         exe_path: ('/vendor/bundle/ruby/2.4.0/gems/wkhtmltopdf-0.1.2')
       }
  end
  
