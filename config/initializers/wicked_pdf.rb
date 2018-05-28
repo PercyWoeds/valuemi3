@@ -7,7 +7,7 @@
 # To learn more, check out the README:
 #
 if Rails.env.staging? || Rails.env.production?
-  exe_path = Rails.root.join('bin', 'wkhtmltopdf').to_s
+  exe_path = 'bin/wkhtmltopdf'
 else
   exe_path = Rails.root.join('bin', 'wkhtmltopdf').to_s
   # exe_path = '/usr/local/bin/wkhtmltopdf'
