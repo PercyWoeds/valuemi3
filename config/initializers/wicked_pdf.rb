@@ -9,6 +9,6 @@
 # https://github.com/mileszs/wicked_pdf/blob/master/README.md
 if Rails.env.production?
   WickedPdf.config = {
-    exe_path: '/app/vendor/bundle/bin/wkhtmltopdf'
+   exe_path => Rails.root.join('bin', 'wkhtmltopdf').to_s
   }
 end
