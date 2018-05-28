@@ -275,7 +275,6 @@ GEM
     wicked_pdf (1.1.0)
     will_paginate (3.1.6)
     wkhtmltopdf (0.1.2)
-    wkhtmltopdf-heroku (2.12.4.0)
 
 PLATFORMS
   ruby
@@ -324,7 +323,6 @@ DEPENDENCIES
   wicked_pdf
   will_paginate
   wkhtmltopdf
-  wkhtmltopdf-heroku
 
 BUNDLED WITH
    1.16.2
