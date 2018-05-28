@@ -248,6 +248,7 @@
     <table>
       
       <tr>
+        <th> Id</th>
         <th> Codigo</th>
         <th> Descripcion</th>
         <th> Precio Dscto. </th>
@@ -259,11 +260,11 @@
     <%  @factura_details.each do |quote| %>
       <tr>
         <td class="bordered_bottom bordered_right">
-          <%= link_to quote.id   %>
+          <%=  quote.id   %>
         </td>
         
         <td class="bordered_bottom bordered_right">
-          <%= link_to quote.product.code   %>
+          <%= quote.product.code   %>
         </td>
         <td class="bordered_bottom bordered_right">
           <%= quote.product.name  %>
@@ -273,7 +274,7 @@
         </td>
         
         <td class="bordered_bottom bordered_right">
-          <%= quote.price %>
+          <%= money(quote.price) %>
         </td>
         <td class="bordered_bottom bordered_right">
           <%= money(quote.quantity) %>
