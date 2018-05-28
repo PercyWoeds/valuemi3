@@ -259,6 +259,10 @@
     <%  @factura_details.each do |quote| %>
       <tr>
         <td class="bordered_bottom bordered_right">
+          <%= link_to quote.id   %>
+        </td>
+        
+        <td class="bordered_bottom bordered_right">
           <%= link_to quote.product.code   %>
         </td>
         <td class="bordered_bottom bordered_right">

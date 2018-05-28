@@ -21,11 +21,7 @@
 
     <div class="field">
       
-    <div class="field">
-      <%= f.label :tipoventa_id %><br />
-      <%= f.select :tipoventa_id,options_from_collection_for_select(@tipoventas,'id','nombre') %>
-    </div>
-
+    
        <div class="field">
       <%= f.label :document_id,"Documento :" %><br />
       <%= f.select :document_id,options_from_collection_for_select(@tipodocumento,'id','description'),  {style: "width: 140px" } %>
