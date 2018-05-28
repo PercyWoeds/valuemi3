@@ -83,7 +83,7 @@ gem "axlsx_rails"
 gem  'prawn-qrcode'
  
 gem 'wkhtmltopdf'
- 
+
 
 gem 'pry'
 gem 'mechanize'
