@@ -34,7 +34,7 @@
                     <td width = "8%" align ="right"><%= sprintf("%.2f",product0.inicial.to_s)   %></td>
                     <td width = "8%" align ="right"><%= sprintf("%.2f",product0.get_compras(@fecha,producto_value))   %></td>
                     <td width = "8%" align ="right"><%= sprintf("%.2f",product0.get_ventas_vale_directo_producto(@fecha,product0.tanque.product.code.to_s,"qty"))   %> </td>
-                    <td width = "10%" align ="right"><%= sprintf("%.2f",product0.get_ventas(@fecha,product0.tanque.product.id) - - product0.get_afericion_total_dia_producto_qty(@fecha,product0.tanque.id) )  %></td>
+                    <td width = "10%" align ="right"><%= sprintf("%.2f",product0.get_ventas(@fecha,product0.tanque.product.id) - product0.get_afericion_total_dia_producto_qty(@fecha,product0.tanque.id) )  %></td>
                     <% saldo =  product0.inicial + product0.get_compras(@fecha,producto_value)  - product0.get_ventas(@fecha,product0.tanque.product.id)-product0.get_ventas_vale_directo_producto(@fecha,product0.tanque.product.code.to_s,"qty") - product0.get_afericion_total_dia_producto_qty(@fecha,product0.tanque.id) %>
                     
                     <td width = "8%" align ="right"><%= sprintf("%.2f",saldo.to_s)   %></td>
@@ -47,7 +47,7 @@
               
                     
                     <td width = "5%" align ="right"><%= sprintf("%.2f",dife_soles)  %></td>
-                    <td width = "5%" align ="right"><%= sprintf("%.2f",product0.get_ventas_contometros_producto_todo(@fecha,product0.tanque.product.code.to_s) + product0.get_ventas_contometros_descuento_producto(@fecha,product0.tanque.product.code.to_s) + product0.get_ventas_vale_adelanto_producto(@fecha,product0.tanque.product.code.to_s,"soles"))   %></td>
+                    <td width = "5%" align ="right"><%= sprintf("%.2f",product0.get_ventas_contometros_producto_todo(@fecha,product0.tanque.product.code.to_s) + product0.get_ventas_contometros_descuento_producto(@fecha,product0.tanque.product.code.to_s) + product0.get_ventas_vale_adelanto_producto(@fecha,product0.tanque.product.code.to_s,"soles") -  product0.get_afericion_total_dia_producto(@fecha,product0.tanque.id))   %></td>
                     </tr>
                         
                     
@@ -92,9 +92,9 @@
      
      <% venta_17 =  venta_15 + venta_16  %>
      
-     <% venta_5 =  venta_2 + venta_3 + venta_4 + venta_9 + venta_13 + venta_14 +venta_17 + venta_18 %>
+     <% venta_5 =  venta_2 + venta_3 + venta_4 + venta_9  +venta_17 + venta_18 %>
      
-     <% venta_8 =  venta_1 + venta_17 %>
+     <% venta_8 =  venta_1 + venta_17 - venta_12 %>
      <% venta_6 =  venta_5 - venta_8   %>
      <% venta_11 = venta_1 - venta_12  %>
      
@@ -169,7 +169,7 @@
             <td width= "25%" align ="left">   VENTA COMBUSTIBLES        S/.  : </td>
             <td width= "25%" align= "right">          <%=    sprintf("%.2f",venta_11)  %>                   </td>
             <td width = "25%" align ="left">  &#9475;   EFECTIVO SOLES    :  </td>
-            <td width = "25%" align ="right"><%= sprintf("%.2f",venta_2 + venta_17 - venta_12 - venta_19 -venta_20 ) %> </td>
+            <td width = "25%" align ="right"><%= sprintf("%.2f",venta_2 + venta_17 - venta_19 -venta_20 ) %> </td>
             
             
             
@@ -448,7 +448,7 @@
   </table>
   
   
-  <% diferencia = total_bancos_soles1 - venta_9 - venta_2 - venta_17 -  venta_13 - venta_14  %>
+  <% diferencia = total_bancos_soles1 - venta_9 - venta_2 - venta_17 -  venta_13 + venta_14  %>
      
   <% if diferencia >  0%>   
   <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
