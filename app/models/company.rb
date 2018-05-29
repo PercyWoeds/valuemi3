@@ -35,6 +35,12 @@ def get_facturas_day_cliente(fecha1,fecha2,cliente)
    @dato = Customer.find(id)
    return @dato 
  end 
+ def get_documento_factura(id)
+   
+   @dato = Document.find(id)
+   return @dato 
+ end 
+ 
  def get_pendientes_cliente(fecha1,fecha2,cliente)
 
     @facturas = Factura.where([" balance > 0  and  company_id = ? AND fecha >= ? and fecha<= ? and customer_id = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", cliente ]).order(:customer_id,:moneda_id,:fecha)
@@ -692,6 +698,24 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
     return @facturas   
     
  end
+ def get_customer_payments_client_banco(fecha1,fecha2,customer,banco )
+    @facturas =   CustomerPayment.find_by_sql(['Select customer_payments.id,customer_payment_details.total,
+customer_payments.code  as code_liq,facturas.code,facturas.customer_id,facturas.fecha,
+facturas.moneda_id,customer_payments.bank_acount_id,facturas.document_id ,
+customer_payment_details.factory,
+customer_payments.fecha1
+from customer_payment_details   
+INNER JOIN facturas ON   customer_payment_details.factura_id = facturas.id
+INNER JOIN customer_payments ON customer_payments.id = customer_payment_details.customer_payment_id  
+WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? and facturas.customer_id = ? and customer_payments.bank_acount_id = ? order by customer_payments.code', "#{fecha1} 00:00:00",
+"#{fecha2} 23:59:59",customer,banco ])  
+    
+    return @facturas   
+    
+ end
+ 
+ 
+ 
 
 #total ingresos x banco 
 
@@ -3699,7 +3723,7 @@ def get_facturas_by_day_value2(fecha1,fecha2,moneda,value='total')
   
   def  get_ventas_combustibles(fecha1,fecha2) 
 
-     facturas = Ventaisla.where(["fecha >= ?  and fecha <=  ?  " , "#{fecha1} 00:00:00","#{fecha2} 23:59:59"  ] ).order(:fecha)
+     facturas = Ventaisla.where(["fecha >= ?  and fecha <=  ?  " , "#{fecha1} 00:00:00","#{fecha2} 23:59:59"  ] ).order(:fecha,:turno)
      
        return facturas 
  

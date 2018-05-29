@@ -6,8 +6,15 @@ include ServicebuysHelper
 
 class CustomerPaymentsController < ApplicationController
 
+    $: << Dir.pwd  + '/lib'
+    before_action :authenticate_user!
+    
+    require "open-uri"
+   
 
-  before_filter :authenticate_user!, :checkServices
+    
+  
+
 
   def new1
 
@@ -2573,10 +2580,9 @@ class CustomerPaymentsController < ApplicationController
   
   end
 
-
-
   #####
   
+ 
   
 ##-------------------------------------------------------------------------------------
 ## REPORTE DE ESTADISTICA DE VENTAS
@@ -3001,6 +3007,10 @@ class CustomerPaymentsController < ApplicationController
     send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
     end 
   end
+
+
+
+
 
   
 

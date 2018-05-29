@@ -159,6 +159,13 @@ end
    
  end 
  
+  def get_documento_factura(id)
+   
+   @dato = Document.find(id)
+   return @dato 
+ end 
+ 
+ 
  def get_cliente_customer_payment(id)
 
     @itemproducts = CustomerPaymentDetail.find_by_sql(['Select customer_payment_details.total,

@@ -113,6 +113,7 @@
     collection { get :exportxls }
     collection { get :rpt_ccobrar3_pdf  }
     collection { get :rpt_factura_all   }
+    collection { get :rpt_ccobrar12_all   }
     
   end 
     
@@ -306,6 +307,9 @@ end
       resources :loan_details, except: [:index,:show], controller: "loans/loan_details"
   end 
  
+  resources :customer_payments do 
+    collection { get :rpt_ccobrar12}
+  end 
  
   resources :payrolls do   
   
@@ -394,6 +398,7 @@ end
   match 'companies/reports/rpt_ccobrar9_pdf/:company_id' => 'reports#rpt_ccobrar9_pdf', via: [:get, :post]  
   match 'companies/reports/rpt_ccobrar10_pdf/:company_id' => 'reports#rpt_ccobrar10_pdf', via: [:get, :post]  
   match 'companies/reports/rpt_ccobrar11_pdf/:company_id' => 'reports#rpt_ccobrar11_pdf', via: [:get, :post]  
+  match 'companies/reports/rpt_ccobrar12_pdf/:company_id' => 'reports#rpt_ccobrar12_pdf', via: [:get, :post]  
 
   match 'companies/reports/rpt_calmacen1_pdf/:company_id' => 'reports#rpt_calmacen1_pdf', via: [:get, :post]  
   match 'companies/reports/rpt_calmacen2_pdf/:company_id' => 'reports#rpt_calmacen2_pdf', via: [:get, :post]  

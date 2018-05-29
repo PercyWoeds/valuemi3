@@ -2699,6 +2699,45 @@ def salidas(pdf)
   end
 
 
+  def rpt_ccobrar12_all 
+    
+    $lcxCliente = "1"
+    @company=Company.find(1)      
+    @fecha1 = params[:fecha1]
+    @fecha2 = params[:fecha2]
+    @cliente = params[:customer_id]
+    @banco = params[:bank_id]
+    
+    @ClienteDato = @company.get_cliente(@cliente)
+    $lcNameCliente =@ClienteDato.name
+    $lcRucCliente  =@ClienteDato.ruc
+
+    @customer_rpt = @company.get_customer_payments_client_banco(@fecha1,@fecha2,@cliente,@banco)  
+   
+   
+    
+    case params[:print]
+      when "To PDF" then 
+        begin 
+         render  pdf: "Vale5 ",template: "customer_payments/rpt_ccobrar12_all.pdf.erb",locals: {:varillajes => @customer_rpt},
+                  :header => {
+           :spacing => 5,
+                           :html => {
+                     :template => 'layouts/pdf-header.html',
+                           right: '[page] of [topage]'
+                  }
+               }
+               
+               
+        
+        end   
+      when "To Excel" then render xlsx: 'exportxls'
+      else render action: "index"
+    end
+  end
+  
+  
+      
   private
   def factura_params
     params.require(:factura).permit(:company_id,:location_id,:division_id,:customer_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:payment_id,:fecha,:preciocigv,:tipo,:observ,:moneda_id,:detraccion,:factura2,:description,:document_id,:tipoventa_id,:tarjeta_id)
