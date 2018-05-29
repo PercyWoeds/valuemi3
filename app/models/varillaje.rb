@@ -424,6 +424,21 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
      return ret 
  end 
  
+ def get_afericion_total_dia_producto_qty(fecha,producto)
+     
+     facturas = Afericion.where(["fecha >= ? and fecha <= ?  and tanque_id = ?  " , "#{fecha} 00:00:00","#{fecha} 23:59:59",producto ])
+       ret=0  
+       
+     if facturas
+         
+       for detalle in facturas
+          ret += detalle.quantity
+       end 
+       
+     end 
+     return ret 
+ end 
+ 
  def get_faltante_total_dia(fecha,tipo)
      facturas = Faltante.where(["fecha >= ? and fecha <= ?  and tipofaltante_id = ?  " , "#{fecha} 00:00:00","#{fecha} 23:59:59",tipo ])
        ret=0  
