@@ -30,7 +30,7 @@ wb.styles do |s|
     
       @ventaisla_details= payment.ventaisla_details
                  @ventaisla_details.each do |detalle|
-                    sheet.add_row [detalle.pump.fuel,detalle.product.name,detalle.price,detalle.le_an_gln,detalle.le_ac_gln,detalle.quantity*-1,payment.importe*-1], :style => [cadena,cadena,currency,currency,currency,currency,currency]             
+                    sheet.add_row [detalle.pump.fuel,detalle.product.name,detalle.price,detalle.le_an_gln,detalle.le_ac_gln,detalle.quantity*-1,detalle.importe*-1], :style => [cadena,cadena,currency,currency,currency,currency,currency]             
                  end 
        
     
