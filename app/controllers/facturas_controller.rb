@@ -272,8 +272,6 @@ def reportes9
                            right: '[page] of [topage]'
                   }
                }
-               
-               
         
         end   
       when "To Excel" then render xlsx: 'parte9_rpt_xls'
