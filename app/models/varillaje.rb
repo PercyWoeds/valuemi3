@@ -480,8 +480,8 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
  end
  
  def get_ventas_market_tarjeta(fecha)
-     
-     facturas = Factura.where(["fecha >= ? and fecha <= ?  and tarjeta_id <> 1 " , "#{fecha} 00:00:00","#{fecha} 23:59:59" ])
+     tarjeta = 1 
+     facturas = Factura.where(["fecha >= ? and fecha <= ?  and tarjeta_id <> ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59",tarjeta ])
        ret=0  
        
      if facturas
@@ -493,10 +493,12 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
           for   detalle    in detalles
             
              if (detalle.product.products_category.id != 1  )
-                 if (detalle.product.products_category.id != 3  )
                  
-                ret += detalle.total 
-                end 
+                 if (detalle.product.products_category.id != 3  )
+                  ret += detalle.total 
+                 end 
+                
+                
              end 
              
           end 
