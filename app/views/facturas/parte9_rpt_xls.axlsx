@@ -19,7 +19,7 @@ wb.styles do |s|
     
     wb.add_worksheet(name: "Basic work sheet") do |sheet|
     
-    sheet.add_row ["Manguera", "Producto", "Lec.Anterior", "Lec.Actual","Cantidad","Precio","Importe"], :style => title 
+    sheet.add_row ["Manguera", "Producto", "Precio","Lec.Anterior", "Lec.Actual","Cantidad","Importe"], :style => title 
     
     valor1=0
     
