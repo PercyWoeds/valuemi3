@@ -44,7 +44,7 @@
                   
                     <td width = "10%" align ="right"><%= sprintf("%.2f",venta_neta  )  %></td>
                     
-                    <% saldo =  product0.inicial + compras - ventas_qty - venta_directa_qty - afericion %>
+                    <% saldo =  product0.inicial + compras - ventas_qty - venta_directa_qty + afericion %>
                     
                     <% if @current_user.email == "percywoeds@gmail.com" %>
                     <td>
