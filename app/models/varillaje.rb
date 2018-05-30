@@ -323,10 +323,10 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
  def  get_ventas_vale_contado(fecha) 
 
      facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ? and tipo  = ?  " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","2" ])
-     
+     ret=0  
      if facturas
          
-        ret=0  
+        
         for detalle in facturas
              ret += detalle.importe.to_f
         
@@ -340,10 +340,10 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
  def  get_ventas_vale_directo_producto(fecha,producto,value) 
 
      facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ? and tipo  = ?  and cod_prod  = ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","3",producto ])
-     
+     ret = 0
      if facturas
          
-        ret=0  
+
         for detalle in facturas
             if value == "qty"
                 ret += detalle.cantidad.to_f
@@ -360,10 +360,10 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
  def  get_ventas_vale_adelanto_producto(fecha,producto,value) 
 
      facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ? and tipo  = ?  and cod_prod  = ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","4",producto ])
-     
+     ret=0  
      if facturas
          
-        ret=0  
+        
         for detalle in facturas
             if value == "qty"
                 ret += detalle.cantidad.to_f
