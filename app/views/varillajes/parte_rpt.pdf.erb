@@ -28,19 +28,22 @@
       <% nroitem = 1%>
        <% for  product0 in @parte_rpt %>
                    <%  producto_value = product0.tanque.product.id%>
+                   <% ventas_qty = product0.get_ventas(@fecha,product0.tanque.product.id) %>
+                   <% venta_directa_qty = product0.get_ventas_vale_directo_producto(@fecha,product0.tanque.product.code.to_s,"qty")%>
+                   
+                    <% afericion = product0.get_afericion_total_dia_producto_qty(@fecha,product0.tanque.id) %>
+                    
                    <tr>
                     <td width= "5%" ><%=  product0.tanque.code %></td>
                     <td width= "10%" ><%=  product0.tanque.product.name %></td>
                     <td width = "8%" align ="right"><%= sprintf("%.2f",product0.inicial.to_s)   %></td>
                     <td width = "8%" align ="right"><%= sprintf("%.2f",product0.get_compras(@fecha,producto_value))   %></td>
-                    <td width = "8%" align ="right"><%= sprintf("%.2f",product0.get_ventas_vale_directo_producto(@fecha,product0.tanque.product.code.to_s,"qty"))   %> </td>
-                    <td width = "10%" align ="right"><%= sprintf("%.2f",product0.get_ventas(@fecha,product0.tanque.product.id) - product0.get_afericion_total_dia_producto_qty(@fecha,product0.tanque.id) )  %></td>
+                    <td width = "8%" align ="right"><%= sprintf("%.2f",venta_directa_qty)   %> </td>
+                  
+                    <td width = "10%" align ="right"><%= sprintf("%.2f",ventas_qty - afericion  )  %></td>
                     
-                    <% saldo =  product0.inicial + product0.get_compras(@fecha,producto_value)  - product0.get_ventas(@fecha,product0.tanque.product.id) - product0.get_ventas_vale_directo_producto(@fecha,product0.tanque.product.code.to_s,"qty") - product0.get_afericion_total_dia_producto_qty(@fecha,product0.tanque.id) %>
-                    <% if @current_user.email == "percywoeds@gmail.com" %>
-                    <%  a = product0.get_afericion_total_dia_producto_qty(@fecha,product0.tanque.id)  %>
-                    <%= a %>                 
-                    <% end %>
+                    <% saldo =  product0.inicial + product0.get_compras(@fecha,producto_value)  - ventas_qty - venta_directa_qty - afericion %>
+                    
                     <td width = "8%" align ="right"><%= sprintf("%.2f",saldo.to_s)   %></td>
                     <td width = "8%" align ="right"><%= sprintf("%.3f",product0.varilla.to_s)   %></td>
                     <% dife =  product0.varilla - saldo %>
