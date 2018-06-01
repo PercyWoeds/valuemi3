@@ -32,12 +32,18 @@
   </p>
 <% end %>
 
+
 <% if @invoice.document %>
   <p>
     <b>Documento:</b>
     <%= link_to @invoice.document.description, @invoice.description %>
   </p>
 <% end %>
+
+  <p>
+    <b>Tipo Venta:</b>
+    <%= @invoice.get_tipoventa(@invoice.tipoventa_id) %>
+  </p>
 
 
 <p>
@@ -366,6 +372,9 @@
 <%= hr() %>
 <div class="button" >
   
+  	<%= form_tag print_facturas_path do %>
+     	    <%= submit_tag  "Imprimir formato A4 ",  :"data-no-turbolink" => true  %>
+			<% end %>	
 	
 	<%if  @current_user.level == "admin" || @current_user.level == "parte"     %>
 	

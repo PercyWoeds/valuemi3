@@ -15,7 +15,7 @@ class Factura < ActiveRecord::Base
   belongs_to :user
   belongs_to :moneda 
   belongs_to :document
-  belongs_to :tipoventum 
+  belongs_to :tipoventa 
 
   has_many   :deliveryship
   has_many   :delivery 
@@ -654,6 +654,16 @@ class Factura < ActiveRecord::Base
      return ret 
  end 
  
+ def get_tipoventa(id)
+    
+    a= Tipoventum.find(id)
+    
+    if a
+      return a.nombre
+    else
+      return "-"
+    end 
+ end 
 
   
 end

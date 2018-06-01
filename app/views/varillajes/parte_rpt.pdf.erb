@@ -107,7 +107,7 @@
      <% venta_20 =  a.get_ventas_restaurant_tarjeta(@fecha) + a.get_ventas_colaterales_tar(@fecha,"3")%>
      
      
-     
+  
      <% venta_17 =  venta_15 + venta_16  %>
      
      <% venta_5 =  venta_2 + venta_3 + venta_4 + venta_9  +venta_17 + venta_18 %>
@@ -188,6 +188,7 @@
             <tr>
             <td width= "25%" align ="left">   VENTA COMBUSTIBLES        S/.  : </td>
             <td width= "25%" align= "right">          <%=    sprintf("%.2f",venta_11)  %>                   </td>
+            
             <td width = "25%" align ="left">  &#9475;   EFECTIVO SOLES    :  </td>
             <td width = "25%" align ="right"><%= sprintf("%.2f",venta_2 + venta_17 - venta_19 -venta_20 ) %> </td>
             
@@ -468,7 +469,7 @@
   </table>
 
   
-  <% diferencia = total_bancos_soles1 - venta_9 - venta_2 - venta_17 - venta_19- venta_20 -  venta_13 + venta_14  %>
+  <% diferencia = total_bancos_soles1 - venta_9 - venta_2 + venta_17 - venta_19- venta_20 -  venta_13 + venta_14  %>
      
   <% if diferencia >  0%>   
   <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
