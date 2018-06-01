@@ -68,6 +68,10 @@
       <th>
         Total
       </th>
+      <th>
+        Asignar 
+      </th>
+      
     </tr>
   </thead>
   <tbody>
@@ -75,7 +79,7 @@
     <% for productItem in @purchase.get_products() %>
       <tr>
         <td class="bordered_bottom bordered_right">
-          <%= link_to productItem.name   %>
+          <%=  productItem.name   %>
         </td>
         <td class="bordered_bottom bordered_right">
           <%= money(productItem.price) %>
@@ -83,14 +87,17 @@
         <td class="bordered_bottom bordered_right">
           <%= productItem.quantity %>
         </td>
-
-
+        
         <td class="bordered_bottom bordered_right">
           <%= money(productItem.discount) %>%
         </td>
         <td class="bordered_bottom bordered_right">
           <%= money(productItem.total) %>
         </td>
+
+        <td class="bordered_right bordered_bottom right">
+            <%= check_box_tag "products_ids[]", productItem.id     %>
+        </td>          
       </tr>
     <% end %>
     <tr>
@@ -185,7 +192,13 @@
   <% if @purchase.date1 > @cierre.fecha %>
     <% if @purchase.processed != "1"  %>
     <%= link_to 'Procesar factura', "/purchases/do_process/#{@purchase.id}" %>
+    
+    
     <%end %>
+    <% if @purchase.processed == "1"  %>
+    <%= link_to 'Asignar Cantidad', "/purchases/do_process2/#{@purchase.id}" %>
+    <%end %>
+    
   
   <%end %>
   

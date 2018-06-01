@@ -445,6 +445,7 @@ end
   match 'companies/reports/rpt_parte_7/:company_id' => 'reports#rpt_parte_7', via: [:get, :post]    
   match 'companies/reports/rpt_parte_8/:company_id' => 'reports#rpt_parte_8', via: [:get, :post]    
   match 'companies/reports/rpt_parte_9/:company_id' => 'reports#rpt_parte_9', via: [:get, :post]    
+  match 'companies/reports/rpt_parte_10/:company_id' => 'reports#rpt_parte_10', via: [:get, :post]    
   # Company users
 
   match 'company_users/ac_users' => 'company_users#ac_users', via: [:get, :post]
@@ -765,6 +766,8 @@ end
   match 'purchases/search/:id' => 'purchases#search', via: [:get, :post]
   match 'purchases/cargar/:id'   => 'purchases#cargar', via: [:get, :post]
   match 'purchases/cargar2/:id'   => 'purchases#cargar2', via: [:get, :post]
+  
+  
 
   match 'purchases/do_crear/:id'   => 'purchases#do_crear', via: [:get, :post]
 
@@ -788,6 +791,7 @@ end
   match 'purchases/rpt_purchase2_all/:id' => 'purchases#rpt_purchase2_all', via: [:get, :post]
   match 'purchases/rpt_purchase3_all/:id' => 'purchases#rpt_purchase3_all', via: [:get, :post]
   match 'purchases/rpt_purchase4_all/:id' => 'purchases#rpt_purchase4_all', via: [:get, :post]
+  match 'purchases/do_asignar/:id' => 'purchases#do_asignar', via: [:get, :post]
   
   match 'companies/purchases/:company_id' => 'purchases#list_purchases', via: [:get, :post]  
   
