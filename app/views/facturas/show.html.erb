@@ -377,10 +377,7 @@
 	<% end %>		
 
   
-  	<%= form_tag print_facturas_path do %>
-     	    <%= submit_tag  "Imprimir formato A4 ",  :"data-no-turbolink" => true  %>
-			<% end %>	
-	
+  	
 	<%if  @current_user.level == "admin" || @current_user.level == "parte"     %>
 	
 	<table>

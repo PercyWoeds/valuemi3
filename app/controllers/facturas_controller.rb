@@ -942,54 +942,6 @@ def reportes09
         
       end  
     end 
-    lcFecha='2017-05-30 00:00:00'
-    lcTD="FT"
-    lcSerie = "001"
-    lcNumero= '470'
-    lcRuc='20100082391'
-    
-
-     new_invoice_item= Invoicesunat.new(:cliente =>lcRuc, :fecha => lcFecha ,:td =>lcTD,
-        :serie => lcSerie,:numero => lcNumero,:preciocigv => 0.00 ,:preciosigv =>0.00,:cantidad =>0.00,
-        :vventa => 0.00 ,:igv => 0.00,:importe => 0.00 ,:ruc =>lcRuc,:guia => "",:formapago => "",
-        :description => "",:comments =>"",:descrip =>"",:moneda =>"2" )
-        new_invoice_item.save
-        
-    lcFecha='2017-05-30 00:00:00'
-    lcTD="FT"
-    lcSerie = "001"
-    lcNumero= '472'
-    lcRuc='20600373863'
-    
-     new_invoice_item= Invoicesunat.new(:cliente =>lcRuc, :fecha => lcFecha,:td =>lcTD,
-        :serie => lcSerie,:numero => lcNumero,:preciocigv => 0.00 ,:preciosigv =>0.00,:cantidad =>0.00,
-        :vventa => 0.00 ,:igv => 0.00,:importe => 0.00 ,:ruc =>lcRuc,:guia => "",:formapago => "",
-        :description => "",:comments =>"",:descrip =>"",:moneda =>"2" )
-        new_invoice_item.save
-
-    lcFecha='2017-05-30 00:00:00'
-    lcTD="FT"
-    lcSerie = "001"
-    lcNumero= '530'
-    lcRuc='20506675457'
-    
-     new_invoice_item= Invoicesunat.new(:cliente =>lcRuc, :fecha => lcFecha,:td =>lcTD,
-        :serie => lcSerie,:numero => lcNumero,:preciocigv => 0.00 ,:preciosigv =>0.00,:cantidad =>0.00,
-        :vventa => 0.00 ,:igv => 0.00,:importe => 0.00 ,:ruc =>lcRuc,:guia => "",:formapago => "",
-        :description => "",:comments =>"",:descrip =>"",:moneda =>"2" )
-        new_invoice_item.save
-        
-    lcFecha='2017-05-30 00:00:00'
-    lcTD="FT"
-    lcSerie = "001"
-    lcNumero= '531'
-    lcRuc='20506675457'
-    
-     new_invoice_item= Invoicesunat.new(:cliente =>lcRuc, :fecha => lcFecha,:td =>lcTD,
-        :serie => lcSerie,:numero => lcNumero,:preciocigv => 0.00 ,:preciosigv =>0.00,:cantidad =>0.00,
-        :vventa => 0.00 ,:igv => 0.00,:importe => 0.00 ,:ruc =>lcRuc,:guia => "",:formapago => "",
-        :description => "",:comments =>"",:descrip =>"",:moneda =>"2" )
-        new_invoice_item.save
          
     
     @invoice = Invoicesunat.all
@@ -1288,7 +1240,7 @@ BCP Cuenta Recaudadora Moneda Nacional : 191-2264838-0-49"
     
     @invoice[:processed] = false
     @invoice[:descuento] = "0"
-    
+    @invoice[:tipoventa_id] = 1
     
     
     @company = Company.find(params[:company_id])
