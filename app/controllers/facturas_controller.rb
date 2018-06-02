@@ -8,9 +8,6 @@ class FacturasController < ApplicationController
     
     require "open-uri"
    
- 
-
-
   def reportes
   
     @company=Company.find(1)          
@@ -406,7 +403,6 @@ def reportes06
     end
   end
 def reportes07
-
 
     @company=Company.find(1)          
     @fecha1 = params[:fecha1]    
@@ -2229,11 +2225,11 @@ def newfactura2
       end
     end
     
-    
-    
-     
   end   
 
+  def print_tk 
+    
+  end 
 
 ##ticket
   def build_header_tk(pdf)

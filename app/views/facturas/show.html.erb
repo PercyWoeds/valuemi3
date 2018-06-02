@@ -372,6 +372,11 @@
 <%= hr() %>
 <div class="button" >
   
+  <%= form_tag pdf_facturas_path, multipart: true do %>
+	  <%= submit_tag  "Imprimir" , data: { no_turbolink: true } %>
+	<% end %>		
+
+  
   	<%= form_tag print_facturas_path do %>
      	    <%= submit_tag  "Imprimir formato A4 ",  :"data-no-turbolink" => true  %>
 			<% end %>	
