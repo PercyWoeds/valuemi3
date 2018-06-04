@@ -3851,7 +3851,7 @@ def get_facturas_by_day_value2(fecha1,fecha2,moneda,value='total')
          
         for detalle in facturas
             
-            ret += detalle.importe.to_f
+            ret += detalle.total 
          
           
        end 
