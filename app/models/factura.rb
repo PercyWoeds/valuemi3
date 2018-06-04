@@ -40,6 +40,7 @@ class Factura < ActiveRecord::Base
                      "Ruc",
                      "Cliente",
                      "Moneda",
+                     "Galones",
                      "SUBTOTAL",
                      "IGV.",
                      "TOTAL",
@@ -664,6 +665,20 @@ class Factura < ActiveRecord::Base
       return "-"
     end 
  end 
+ 
+ 
+ def get_galones
+     ret = 0
+     a= FacturaDetail.where(factura_id: self.id)
+     
+          for   detalle    in a
+          
+              ret += detalle.quantity
+          end 
+     
+    return ret 
+   
+ end  
 
   
 end

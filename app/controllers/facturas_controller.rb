@@ -199,11 +199,12 @@ def reportes8
     
     @total_combus = @company.get_ventas_contometros(@fecha1,@fecha2) #ventas market 
     
-    @total_market = @company.get_ventas_market_total(@fecha1,@fecha2)  +@company.get_ventas_colaterales_efe(@fecha1,@fecha2,tipo )+@company.get_ventas_colaterales_tar(@fecha1,@fecha2,tipo )
+    @total_market = @company.get_ventas_market_total(@fecha1,@fecha2)  +@company.get_ventas_colaterales_efe(@fecha1,@fecha2,"2" )+@company.get_ventas_colaterales_tar(@fecha1,@fecha2,"3" )
     
     @total_directa = @company.get_ventas_mayor(@fecha1,@fecha2,"3") #ventas market 
     
     @total_adelantada_bruta = @company.get_ventas_mayor(@fecha1,@fecha2,"4") 
+    
     @total_adelantada = @total_adelantada_bruta - @company.get_ventas_contometros_adelantado(@fecha1,@fecha2)
     
     @total_venta = @company.get_ventas_all_series(@fecha1,@fecha2)
@@ -1559,6 +1560,8 @@ def newfactura2
 
       nroitem=1
       lcDoc='FT'
+      lcGalones = 0
+      galones = 0
       lcsubtotal =  0
       lctax = 0
       lctotal = 0
@@ -1584,17 +1587,22 @@ def newfactura2
               lcsubtotal = product.subtotal * -1
               lctax = product.tax * -1
               lctotal = product.total* -1
+              lcGalones = product.get_galones* -1
+              row << lcGalones
               row << lcsubtotal
               row << lctax
               row << lctotal 
             else
              
-              
+              row << product.get_galones
+              lcGalones = product.get_galones
               row << product.subtotal.to_s
               row << product.tax.to_s
               row << product.total.to_s
             end 
             row << ""
+            
+            galones += lcGalones 
             table_content << row
 
             nroitem=nroitem + 1
@@ -1652,8 +1660,10 @@ def newfactura2
       row << ""
       row << ""
       row << ""
+      row << ""
       row << "TOTALES => "
       row << ""
+      row << galones.round(2).to_s
       row << subtotal.round(2).to_s
       row << tax.round(2).to_s
       row << total.round(2).to_s

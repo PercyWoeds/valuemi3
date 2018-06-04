@@ -3425,10 +3425,43 @@ def get_purchases_pendientes_day_value(fecha1,fecha2,value = "total_amount",clie
  
  #pago adelantado  saldo inicial
  def  get_parte_6b(fecha1,fecha2) 
-   
-     @contado = Sellvale.where(["fecha < ? ", "#{fecha1} 00:00:00"]).order(:cod_prod,:fecha).joins("INNER JOIN customers ON sellvales.cod_cli = customers.account AND customers.tipo = '2' ")
-    return @contado
+    ret= 0
+    @contado = Sellvale.where(["fecha < ? ", "#{fecha1} 00:00:00"]).order(:cod_prod,:fecha).joins("INNER JOIN customers ON sellvales.cod_cli = customers.account AND customers.tipo = '2' ")
+   if facturas
+    
+    for factura in @contado 
+      
+        ret += factura.total.round(2)
+    
+    end
+   end 
+
+     return ret
+     
+
  end 
+ 
+  
+ def get_ventas_mayor_anterior(fecha1,fecha2,tipoventa)
+   
+   
+   facturas  = Factura.where(["fecha >= ? and fecha < ? and tipoventa_id  = ? " , "#{fecha1} 00:00:00","#{fecha2} 00:00:00",tipoventa]).order(:fecha)
+   
+   if facturas
+    ret=0  
+    for factura in facturas
+      
+        ret += factura.total.round(2)
+    
+    end
+   end 
+
+     return ret
+    
+ end 
+ 
+ 
+ 
  def  get_ventas_contometros_efectivo_sustento2(fecha1,fecha2) 
 
      facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and fpago = ? and td <> ? and tipo <> ?" , "#{fecha1} 00:00:00","#{fecha2} 23:59:59", "1" ,"N","2"]).order(:fecha,:serie,:numero)
