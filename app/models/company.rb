@@ -3856,7 +3856,7 @@ def get_facturas_by_day_value2(fecha1,fecha2,moneda,value='total')
   
   def  get_ventas_directa(fecha1,fecha2) 
 
-      facturas = Factura.where(["fecha >= ?  and fecha <=  ?" , "#{fecha1} 00:00:00","#{fecha2} 23:59:59"] ).order(:fecha).joins("INNER JOIN customers ON facturas.customer_id = customers.id AND customers.tipo = '3' ")
+      facturas = Factura.where(["fecha >= ?  and fecha <=  ? and tipoventa_id = ?" , "#{fecha1} 00:00:00","#{fecha2} 23:59:59","3"] ).order(:fecha)
      
        return facturas 
  
