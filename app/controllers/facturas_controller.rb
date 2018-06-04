@@ -207,7 +207,7 @@ def reportes8
     
     @total_directa = @company.get_ventas_mayor(@fecha1,@fecha2,"3") #ventas market 
     
-    @total_adelantada_bruta = @company.get_ventas_mayor(@fecha1,@fecha2,"4") 
+    @total_adelantada_bruta = @company.get_ventas_adelantado_suma(@fecha1,@fecha2) 
     
     @total_adelantada = @contado_adel1 -@contado_adel0 + @total_adelantada_bruta - @company.get_ventas_contometros_adelantado(@fecha1,@fecha2)
     

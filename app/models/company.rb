@@ -3842,6 +3842,26 @@ def get_facturas_by_day_value2(fecha1,fecha2,moneda,value='total')
        return facturas 
  
   end 
+  
+  def  get_ventas_adelantado_suma(fecha1,fecha2) 
+
+      facturas = Factura.where(["fecha >= ?  and fecha <=  ?" , "#{fecha1} 00:00:00","#{fecha2} 23:59:59"] ).order(:fecha).joins("INNER JOIN customers ON facturas.customer_id = customers.id AND customers.tipo = '2' ")
+     ret=0 
+        if facturas
+         
+        for detalle in facturas
+            
+            ret += detalle.importe.to_f
+         
+          
+       end 
+    end 
+
+    return ret
+ 
+  end 
+  
+  
   #Saldo inicial 
   def  get_ventas_adelantado_b(fecha1,fecha2) 
       ret = 0
