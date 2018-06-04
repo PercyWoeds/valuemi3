@@ -3427,11 +3427,12 @@ def get_purchases_pendientes_day_value(fecha1,fecha2,value = "total_amount",clie
  def  get_parte_6b(fecha1,fecha2) 
     ret= 0
     @contado = Sellvale.where(["fecha < ? ", "#{fecha1} 00:00:00"]).order(:cod_prod,:fecha).joins("INNER JOIN customers ON sellvales.cod_cli = customers.account AND customers.tipo = '2' ")
-   if facturas
+    
+   if @contado 
     
     for factura in @contado 
       
-        ret += factura.total.round(2)
+        ret += factura.importe.to_f
     
     end
    end 

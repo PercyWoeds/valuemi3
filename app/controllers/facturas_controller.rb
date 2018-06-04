@@ -195,6 +195,10 @@ def reportes8
     @contado_rpt4 = @company.get_parte_4(@fecha1,@fecha2) #creditos
     @contado_rpt5 = @company.get_parte_5(@fecha1,@fecha2) #tarjeta 
     @contado_rpt6 = @company.get_parte_6(@fecha1,@fecha2) #pago adelantado
+    @contado_adel0 = @company.get_parte_6b(@fecha1,@fecha2) # total saldo vales adelantados inicial
+    @fecha0 = "2018-03-01"
+    @contado_adel1 = @company.get_ventas_mayor_anterior(@fecha0,@fecha1,"4") # total saldo facturas adelantadas inicial
+    
     @contado_rpt7 = @company.get_ventas_vale_directo(@fecha1,@fecha2) #ventas directa
     
     @total_combus = @company.get_ventas_contometros(@fecha1,@fecha2) #ventas market 
@@ -205,7 +209,7 @@ def reportes8
     
     @total_adelantada_bruta = @company.get_ventas_mayor(@fecha1,@fecha2,"4") 
     
-    @total_adelantada = @total_adelantada_bruta - @company.get_ventas_contometros_adelantado(@fecha1,@fecha2)
+    @total_adelantada = @contado_adel1 -@contado_adel0 + @total_adelantada_bruta - @company.get_ventas_contometros_adelantado(@fecha1,@fecha2)
     
     @total_venta = @company.get_ventas_all_series(@fecha1,@fecha2)
     
