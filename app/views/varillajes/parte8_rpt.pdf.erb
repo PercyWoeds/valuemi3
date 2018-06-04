@@ -495,7 +495,7 @@
    
        <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
       <% nroitem = 1%>
-      <% total_1 =  0%>
+      <% total_descuento =  0%>
       
        <% for  contado in @total_venta_combustible_fecha %>
                 <%  diferencia = @company.get_ventas_contometros_descuento(contado.fecha_venta) %>
@@ -518,7 +518,7 @@
                     </tr>
                     
             
-                    <% total_1 +=  diferencia %>
+                    <% total_descuento +=  diferencia %>
                     
          <%end %>         
        
@@ -532,8 +532,10 @@
    <% total_1 = @total_market %>
    <% total_2 = @total_directa %>
    <% total_3 = @total_adelantada %>
-   
    <% total_4 = @total_boletas %>
+   <% total_5 = total_1 %>
+   
+   
    <% total_5 = total_0 + total_1+ total_2 + total_3 - total_4 -@total_contado_pendiente - @total_credito_pendiente -  @total_factura_out_fecha%>
    
    
@@ -554,6 +556,11 @@
           <td width = "15%" align ="right"><%= sprintf("%.2f",total_0)   %></td>
           </tr> 
           
+          <tr>
+          <td width = "15%" align ="right">1.1- Diferencia precio </td>
+          <td width = "8%" align ="right"></td>
+          <td width = "15%" align ="right"><%= sprintf("%.2f",total_descuento)   %></td>
+          </tr> 
           
    
           <tr>

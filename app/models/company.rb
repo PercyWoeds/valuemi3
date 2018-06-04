@@ -3494,6 +3494,38 @@ def get_purchases_pendientes_day_value(fecha1,fecha2,value = "total_amount",clie
      return ret
  end 
  
+ def get_ventas_colaterales_efe(fecha1,fecha2,tipo )
+      ret = 0
+     facturas = VentaProducto.where(["fecha >= ? and fecha <= ? and  division_id = ? " , "#{fecha1} 00:00:00","#{fecha2} 23:59:59",tipo ])
+      
+       if facturas
+       for factura in facturas
+        ret += factura.total_efe  
+       end 
+     end 
+     
+     return ret 
+ end  
+ def get_ventas_colaterales_tar(fecha1,fecha2,tipo )
+     ret = 0
+     facturas = VentaProducto.where(["fecha >= ? and fecha <= ? and division_id = ? " , "#{fecha1} 00:00:00","#{fecha2} 23:59:59",tipo])
+      
+       if facturas
+         
+       for factura in facturas
+         
+         
+        ret += factura.total_tar 
+        
+          
+       end 
+       
+     end 
+     
+     return ret 
+ end  
+ 
+ 
  
  def get_ventas_all_series(fecha1,fecha2)
    
@@ -3638,7 +3670,7 @@ def get_purchases_pendientes_day_value(fecha1,fecha2,value = "total_amount",clie
  #Vale credito todos pendientes
  def  get_credito_pendiente_detalle(fecha1,fecha2) 
    
-     facturas  = Sellvale.where(["fecha >= ? and fecha <= ? and sellvales.tipo = ?  and sellvales.td= ? and processed = ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ,"1","N","0" ]).order(:cod_cli,:fecha,:cod_prod)
+     facturas  = Sellvale.where(["fecha >= ? and fecha <= ? and sellvales.tipo = ?  and sellvales.td= ? and processed = ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ,"1","N","0" ]).order(:cod_cli,:fecha,:cod_prod).joins("INNER JOIN customers ON sellvales.cod_cli = customers.account AND customers.tipo <> '2' ")
     
 
     return facturas 
