@@ -1565,6 +1565,7 @@ def newfactura2
       nroitem=1
       lcDoc='FT'
       lcGalones = 0
+      lcGalones1 = 0
       galones = 0
       lcsubtotal =  0
       lctax = 0
@@ -1591,8 +1592,9 @@ def newfactura2
               lcsubtotal = product.subtotal * -1
               lctax = product.tax * -1
               lctotal = product.total* -1
-              lcGalones = product.get_galones* -1
-              row << lcGalones
+              lcGalones = product.get_galones
+              lcGalones1 = lcGalones *-1 
+              row << lcGalones 
               row << lcsubtotal
               row << lctax
               row << lctotal 

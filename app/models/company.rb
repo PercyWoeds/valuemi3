@@ -3613,7 +3613,7 @@ def get_purchases_pendientes_day_value(fecha1,fecha2,value = "total_amount",clie
          
         ret=0  
         for detalle in facturas
-             ret += detalle.implista
+             ret += detalle.importe.to_f
        end 
     end 
 
