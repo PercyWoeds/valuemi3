@@ -203,7 +203,7 @@ def reportes8
     
     @total_combus = @company.get_ventas_contometros(@fecha1,@fecha2) #ventas market 
     
-    @total_market = @company.get_ventas_market_total(@fecha1,@fecha2)  +@company.get_ventas_colaterales_efe(@fecha1,@fecha2,"2" )+@company.get_ventas_colaterales_tar(@fecha1,@fecha2,"3" )
+    @total_market = @company.get_ventas_market_total(@fecha1,@fecha2)  +@company.get_ventas_colaterales_efe(@fecha1,@fecha2,"2" )+@company.get_ventas_colaterales_tar(@fecha1,@fecha2,"2" )  +@company.get_ventas_colaterales_efe(@fecha1,@fecha2,"3" )+@company.get_ventas_colaterales_tar(@fecha1,@fecha2,"3" )
     
     @total_directa = @company.get_ventas_mayor(@fecha1,@fecha2,"3") #ventas market 
     
