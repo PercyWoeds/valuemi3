@@ -585,7 +585,7 @@ def get_guias_2(fecha1,fecha2)
 ## ESTADO DE CUENTA 
  def get_facturas_day(fecha1,fecha2,moneda)
    
-  a =  Sellvale.where(["fecha >= ? and fecha<= ? and td <> ? and importe2 IS NULL ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59","N" ])
+  a =  Sellvale.where(["fecha >= ? and fecha<= ? and td <> ? and importe2 IS NOT NULL ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59","N" ])
   
   for dato in a 
     
@@ -3660,7 +3660,6 @@ def get_purchases_pendientes_day_value(fecha1,fecha2,value = "total_amount",clie
        
               if fecha_factura.to_date < fecha10.to_date or fecha_factura.to_date > fecha20.to_date
         
-                
                 ret += detalle.implista
               
             end 
@@ -3673,10 +3672,57 @@ def get_purchases_pendientes_day_value(fecha1,fecha2,value = "total_amount",clie
     
  end 
  
+ 
+ # Facturas todos pendientes
+ def  get_credito_out_fecha2(fecha1,fecha2,tipo) 
+   
+     facturas  = Factura.where(["fecha >= ? and fecha <= ? and tipo = ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ,tipo ]).order(:fecha)
+     if facturas
+         
+        ret=0  
+        for detalle in facturas
+        
+         @factura_details = detalle.factura_details
+         
+        for quote in   @factura_details 
+       
+            fecha10 = "#{fecha1}"
+            fecha20 = "#{fecha2}"
+            
+            if quote.sellvale != nil 
+            fecha_vale = quote.sellvale.fecha 
+            
+            if fecha_vale != nil 
+                if fecha_vale != ""
+           
+                  if fecha_vale.to_date < fecha10.to_date or fecha_vale.to_date > fecha20.to_date
+            
+                    ret += detalle.total 
+                  
+                 end 
+               end 
+            end 
+           end
+         end 
+       end  
+    end 
+
+    return ret
+    
+ end 
+ 
+ 
  #Vale credito todos pendientes
  def  get_credito_out_fecha_detalle(fecha1,fecha2) 
    
      facturas  = Sellvale.where(["fecha >= ? and fecha <= ? and sellvales.tipo = ?  and sellvales.td= ? and processed = ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ,"1","N","1" ]).order(:cod_cli,:fecha,:cod_prod)
+     
+    return facturas 
+    
+ end 
+ def  get_credito_out_fecha_detalle2(fecha1,fecha2,tipo) 
+   
+     facturas  = Factura.where(["fecha >= ? and fecha <= ? and  tipo = ?   ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ,tipo ]).order(:fecha)
      
     return facturas 
     

@@ -220,9 +220,12 @@ def reportes8
     @total_credito_pendiente_detalle = @company.get_credito_pendiente_detalle(@fecha1,@fecha2)
     
     @total_factura_out_fecha = @company.get_credito_out_fecha(@fecha1,@fecha2)
+    @total_factura_out_fecha2 = @company.get_credito_out_fecha2(@fecha1,@fecha2,"1")
     
     @total_credito_pendiente = @company.get_credito_pendiente(@fecha1,@fecha2)
     @total_factura_out_fecha_detalle =@company.get_credito_out_fecha_detalle(@fecha1,@fecha2)
+    
+    @total_factura_out_fecha_detalle2 =@company.get_credito_out_fecha_detalle2(@fecha1,@fecha2,"1")
     
     @total_venta_combustible_fecha = @company.get_ventas_combustibles_fecha(@fecha1,@fecha2)
  
