@@ -8,20 +8,17 @@
 
 <h1>
   <%= image_tag("reports_48.png", :class => "vmiddle") %>
-  Parte Diario 
+  
 </h1>
  
-<%= form_tag(reportes_facturas_path, :method => "get") do %>
+  
+  
+<%= form_tag(reportes11_facturas_path, :method => "get") do %>
 
     <div class="field">
-      Desde    
-      <input type="date" name="fecha1" value="2018-03-19" style = "width: 150px" >
-
-    </div>
-	<div class="field">
-    Hasta     
-      <input type="date" name="fecha2" value="2018-03-19" style = "width: 150px" >
-
+        
+      <input type="date" name="fecha1" value="2018-05-01" style = "width: 150px" >
+      <input type="date" name="fecha2" value="2018-05-31" style = "width: 150px" >
     </div>
 	
 

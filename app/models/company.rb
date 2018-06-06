@@ -3463,6 +3463,14 @@ def get_purchases_pendientes_day_value(fecha1,fecha2,value = "total_amount",clie
     
  end 
  
+ def  get_ventas_contometros_all(fecha1,fecha2) 
+
+     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  " , "#{fecha1} 00:00:00","#{fecha2} 23:59:59"]).order(:fecha,:serie,:numero)
+     
+     
+    return facturas
+ 
+ end 
  
  
  def  get_ventas_contometros_efectivo_sustento2(fecha1,fecha2) 
