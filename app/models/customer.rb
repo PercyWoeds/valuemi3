@@ -1,6 +1,6 @@
 class Customer < ActiveRecord::Base
   validates_presence_of :company_id, :name
-    validates_uniqueness_of :ruc
+  validates_uniqueness_of :ruc,:account 
   
   belongs_to :company
   
