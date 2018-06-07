@@ -152,6 +152,7 @@
                     <td width= "5%" ><%=  credito.serie %></td>
                     <td width= "10%" ><%=  credito.numero  %></td>
                     <td width = "8%" align ="right"><%= credito.cod_cli   %></td>
+                    <td width = "25%" align ="left"><%= credito.get_cliente(credito.cod_cli)   %></td>
                     <td width = "8%" align ="right"><%= credito.odometro    %></td>
                     <td width = "2%" align ="right"><%= credito.cod_prod    %> </td>
                     <td width = "8%" align ="left"><%= credito.get_product_name(credito.cod_prod)    %> </td>
