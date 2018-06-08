@@ -325,7 +325,7 @@ def reportes12
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2] 
   
-    @parte_rpt = @company.get_ventas_contometros_all(@fecha1,@fecha2)  
+    @parte_rpt = @company.get_parte_10(@fecha1,@fecha2)  
     
     case params[:print]
       when "To PDF" then 

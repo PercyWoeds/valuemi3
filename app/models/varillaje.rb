@@ -381,7 +381,6 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
      facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ? and tipo  = ?  and cod_prod  = ? " , "#{fecha1} 00:00:00","#{fecha2} 23:59:59", "N","3",producto ])
      ret = 0
      if facturas
-         
 
         for detalle in facturas
             if value == "qty"

@@ -3,7 +3,7 @@
     
   
   <h4 ><center> Parte Diario </center>   </h4>
-  <h5><center> Fecha: <%= @fecha %> </center></h5>
+  <h5><center> Desde: <%= @fecha1 %> Hasta <%= @fecha2 %> </center></h5>
   <font size="2" face="Courier New" >  
   
   <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
@@ -30,7 +30,7 @@
                    <%  producto_value = product0.tanque.product.id %>
                    <% compras = product0.get_compras2(@fecha1,@fecha2,producto_value) %>
                    <% ventas_qty = 0%>
-                   <% venta_directa_qty = product0.get_ventas_vale_directo_producto2(@fecha,product0.tanque.product.code.to_s,"qty")%>
+                   <% venta_directa_qty = product0.get_ventas_vale_directo_producto2(@fecha1,@fecha2,product0.tanque.product.code.to_s,"qty")%>
                    <% afericion = 0 %>
                    <% venta_neta = ventas_qty - afericion %>
                    
@@ -270,93 +270,7 @@
         
     </table>
     
-    <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>        
-      <% total_bancos_soles1 = 0 %>
-      <% total_bancos_dolar = 0 %>
-      
-       <% for productItem in bancos %>
-       
-      <tr>
-        <td width= "50%" align ="left">
-        
-        </td>
-        
-        <td width= "20%" align ="left">
-          <%=  productItem.document.description    %>
-        </td>
-         
-        <td width= "10%" align ="left">
-          <%=  productItem.code    %>
-        </td>
-        
-        
-        <%  if productItem.bank_acount.moneda_id == "1"%>  
-        
-          <td  width= "10%" align ="right">
-            0.00
-          </td>
-          <td  width= "10%" align ="right">
-            <%= sprintf("%.2f",productItem.total) %>
-          </td>
-          <% total_bancos_dolar += productItem.total %>
-        <% else%>
-          <td  width= "10%" align ="right">
-            <%= sprintf("%.2f",productItem.total) %>
-          </td>
-          <td  width= "10%" align ="right">
-            0.00
-          </td>
-          <% total_bancos_soles1 += productItem.total %>
-        <% end %>
-        
-      </tr>
-    <% end %>
-   
-    </table>
     
-    <%  bancos1= a.get_deposito(@fecha) %>
-    
-    <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>        
-      
-       <% for productItem in bancos1 %>
-       
-      <tr>
-        <td width= "50%" align ="left">
-        
-        </td>
-        
-        <td width= "20%" align ="left">
-          <%=  productItem.document.description    %>
-        </td>
-         
-        <td width= "10%" align ="left">
-          <%=  productItem.code    %>
-        </td>
-        
-        
-        <%  if productItem.bank_acount.moneda_id == "1"%>  
-        
-          <td  width= "10%" align ="right">
-            0.00
-          </td>
-          <td  width= "10%" align ="right">
-            <%= sprintf("%.2f",productItem.total) %>
-          </td>
-          <% total_bancos_dolar += productItem.total %>
-        <% else%>
-          <td  width= "10%" align ="right">
-            <%= sprintf("%.2f",productItem.total) %>
-          </td>
-          <td  width= "10%" align ="right">
-            0.00
-          </td>
-          <% total_bancos_soles1 += productItem.total %>
-        <% end %>
-        
-      </tr>
-    <% end %>
-   
-    </table>
     
     
     <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
@@ -366,8 +280,8 @@
       </tr>
       
     
-    
       <% total_bancos_soles = 0 %>
+      <% total_bancos_soles1 = 0 %>
       <% total_bancos_dolar = 0 %>
       
       <%  @customerpayment = @company.get_customer_payments_3(@fecha1,@fecha2)  %>

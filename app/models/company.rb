@@ -3487,6 +3487,11 @@ def get_purchases_pendientes_day_value(fecha1,fecha2,value = "total_amount",clie
  
  end 
  
+ def get_productos_comb
+   
+   @product = Product.where(products_category_id: 1).order(:code)
+   return @product 
+ end 
  
  def  get_ventas_contometros_efectivo_sustento2(fecha1,fecha2) 
 
