@@ -710,7 +710,7 @@ customer_payments.fecha1
 from customer_payment_details   
 INNER JOIN facturas ON   customer_payment_details.factura_id = facturas.id
 INNER JOIN customer_payments ON customer_payments.id = customer_payment_details.customer_payment_id  
-WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? and customer_payments.document_id <> 14 order by customer_payments.code', "#{fecha1} 00:00:00",
+WHERE factura.tipoventa_id <> ? and customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? and customer_payments.document_id <> 14 order by customer_payments.code',"3", "#{fecha1} 00:00:00",
 "#{fecha2} 23:59:59" ])  
     
     return @facturas   
