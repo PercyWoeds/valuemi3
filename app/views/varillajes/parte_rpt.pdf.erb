@@ -46,14 +46,6 @@
                     
                     <% saldo =  product0.inicial + compras - ventas_qty - venta_directa_qty + afericion %>
                     
-                    <% if @current_user.email == "percywoeds@gmail.com" %>
-                    <td>
-                      
-                    ventas <%= ventas_qty %>
-                    vta directa <%= venta_directa_qty %>
-                    afericion <%= afericion %>
-                    </td>
-                    <% end %>
                     
                     <td width = "8%" align ="right"><%= sprintf("%.2f",saldo.to_s)   %></td>
                     <td width = "8%" align ="right"><%= sprintf("%.3f",product0.varilla.to_s)   %></td>
@@ -116,19 +108,6 @@
      <% venta_6 =  venta_5 - venta_8 %>
      <% venta_11 = venta_1 - venta_12  %>
      
-     <% if @current_user.email == "percywoeds@gmail.com" %>
-     
-     
-     venta 15  <%= venta_15 %>
-     venta 16  <%= venta_16 %>
-     
-     venta 19  <%= venta_19 %>
-     venta 20  <%= venta_20 %>
-     venta 2  <%= venta_2 %>
-     venta 17  <%= venta_17 %>
-     venta 12  <%= venta_12 %>
-     
-    <% end %>
      
      <hr>
 <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
