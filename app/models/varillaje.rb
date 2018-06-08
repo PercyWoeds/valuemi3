@@ -19,6 +19,23 @@ class Varillaje < ActiveRecord::Base
     return ret
  
  end 
+ def  get_compras2(fecha1,fecha2,producto) 
+
+     facturas = Purchase.where(["date2 >= ? and date2 <= ?  and tiponota <> ? " , "#{fecha1} 00:00:00","#{fecha2} 23:59:59","3" ])
+     
+     if facturas
+    ret=0  
+        for factura in facturas
+                factura_detalle = PurchaseDetail.where(["purchase_id = ? and product_id = ?" , factura.id,producto ])
+                for detalle in factura_detalle
+                    ret += detalle.grifo.round(2)
+                end     
+        end
+    end 
+
+    return ret
+ 
+ end 
  
     
  def  get_ventas(fecha,producto) 
@@ -357,6 +374,30 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
     return ret
  
  end 
+ 
+ 
+ def  get_ventas_vale_directo_producto2(fecha1,fecha2,producto,value) 
+
+     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ? and tipo  = ?  and cod_prod  = ? " , "#{fecha1} 00:00:00","#{fecha2} 23:59:59", "N","3",producto ])
+     ret = 0
+     if facturas
+         
+
+        for detalle in facturas
+            if value == "qty"
+                ret += detalle.cantidad.to_f
+            else   
+                ret += detalle.importe.to_f
+            end 
+             
+        end 
+    end 
+
+    return ret
+ 
+ end 
+
+ 
  def  get_ventas_vale_adelanto_producto(fecha,producto,value) 
 
      facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ? and tipo  = ?  and cod_prod  = ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","4",producto ])
@@ -382,6 +423,21 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
  def  get_ventas_vale_directo(fecha) 
 
      facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ? and tipo  = ?  " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","3" ])
+     
+     if facturas
+         
+        ret=0  
+        for detalle in facturas
+             ret += detalle.importe.to_f
+        end 
+    end 
+
+    return ret
+ 
+ end 
+ def  get_ventas_vale_directo2(fecha1,fecha2) 
+
+     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ? and tipo  = ?  " , "#{fecha1} 00:00:00","#{fecha2} 23:59:59", "N","3" ])
      
      if facturas
          

@@ -27,18 +27,18 @@
   <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
       <% nroitem = 1%>
        <% for  product0 in @parte_rpt %>
-                   <%  producto_value = product0.tanque.product.id%>
-                   <% compras = product0.get_compras(@fecha,producto_value) %>
-                   <% ventas_qty = product0.get_ventas(@fecha,product0.tanque.product.id) %>
-                   <% venta_directa_qty = product0.get_ventas_vale_directo_producto(@fecha,product0.tanque.product.code.to_s,"qty")%>
-                   <% afericion = product0.get_afericion_total_dia_producto_qty(@fecha,product0.tanque.id) %>
+                   <%  producto_value = product0.tanque.product.id %>
+                   <% compras = product0.get_compras2(@fecha1,@fecha2,producto_value) %>
+                   <% ventas_qty = 0%>
+                   <% venta_directa_qty = product0.get_ventas_vale_directo_producto2(@fecha,product0.tanque.product.code.to_s,"qty")%>
+                   <% afericion = 0 %>
                    <% venta_neta = ventas_qty - afericion %>
                    
                     
                    <tr>
                     <td width= "5%" ><%=  product0.tanque.code %></td>
                     <td width= "10%" ><%=  product0.tanque.product.name %></td>
-                    <td width = "8%" align ="right"><%= sprintf("%.2f",product0.inicial.to_s)   %></td>
+                    <td width = "8%" align ="right"><%= 0.00   %></td>
                     <td width = "8%" align ="right"><%= sprintf("%.2f",compras )   %></td>
                     <td width = "8%" align ="right"><%= sprintf("%.2f",venta_directa_qty)   %> </td>
                   
@@ -46,26 +46,18 @@
                     
                     <% saldo =  product0.inicial + compras - ventas_qty - venta_directa_qty + afericion %>
                     
-                    <% if @current_user.email == "percywoeds@gmail.com" %>
-                    <td>
-                      
-                    ventas <%= ventas_qty %>
-                    vta directa <%= venta_directa_qty %>
-                    afericion <%= afericion %>
-                    </td>
-                    <% end %>
                     
                     <td width = "8%" align ="right"><%= sprintf("%.2f",saldo.to_s)   %></td>
-                    <td width = "8%" align ="right"><%= sprintf("%.3f",product0.varilla.to_s)   %></td>
-                    <% dife =  product0.varilla - saldo %>
+                    <td width = "8%" align ="right"><%= 0.00   %></td>
+                    <% dife =  0 %>
                     
                     <td width = "5%" align ="right"><%= sprintf("%.2f",dife.to_s)   %></td>
                     
-                    <% dife_soles = product0.get_ventas_importe(@fecha,product0.tanque.product.id) - product0.get_ventas_contometros_producto_todo(@fecha,product0.tanque.product.code.to_s)-  product0.get_ventas_contometros_descuento_producto(@fecha,product0.tanque.product.code.to_s)  - product0.get_afericion_total_dia_producto(@fecha,product0.tanque.id)   %>
+                    <% dife_soles = 0  %>
               
                     
                     <td width = "5%" align ="right"><%= sprintf("%.2f",dife_soles)  %></td>
-                    <td width = "5%" align ="right"><%= sprintf("%.2f",product0.get_ventas_contometros_producto_todo(@fecha,product0.tanque.product.code.to_s) + product0.get_ventas_contometros_descuento_producto(@fecha,product0.tanque.product.code.to_s) + product0.get_ventas_vale_adelanto_producto(@fecha,product0.tanque.product.code.to_s,"soles") -  product0.get_afericion_total_dia_producto(@fecha,product0.tanque.id))   %></td>
+                    <td width = "5%" align ="right">0.00</td>
                     </tr>
                         
                     
@@ -76,35 +68,35 @@
      </table>
      
      <% a= @parte_rpt.first %>
-     <% venta_1 =  a.get_ventas_contometros(@fecha)  %>
+     <% venta_1 =  0.00 %>
      
-     <% venta_2 =  a.get_ventas_contometros_efectivo(@fecha) %>
+     <% venta_2 =  0.00 %>
      
-     <% venta_3 =  a.get_ventas_contometros_tarjeta(@fecha) %>
+     <% venta_3 =  0.00 %>
      
-     <% venta_4 =  a.get_ventas_contometros_creditos(@fecha) %>
+     <% venta_4 =  0.00 %>
      
-     <% venta_18 =  a.get_ventas_contometros_adelantado(@fecha) %>
+     <% venta_18 =  0.00 %>
      
-     <% bancos  =  a.get_customer_payments_1(@fecha) %>
-     <% bancos2  =  a.get_customer_payments_2(@fecha) %>
+     <% bancos  =  0.00 %>
+     <% bancos2 = 0.00 %>
      
-     <% venta_7 =  a.get_ventas_contometros_descuento(@fecha) %>
+     <% venta_7 =  0.00 %>
      
-     <% venta_9 =  a.get_ventas_vale_contado(@fecha) %>
-     <% venta_10 =  a.get_ventas_vale_directo(@fecha) %>
+     <% venta_9 =  0.00 %>
+     <% venta_10 =  a.get_ventas_vale_directo2(@fecha1,@fecha2) %>
      
-     <% venta_12 =  a.get_afericion_total_dia(@fecha) %>
-     <% venta_13 =  a.get_faltante_total_dia(@fecha,"1") %>
-     <% venta_14 =  a.get_faltante_total_dia(@fecha,"2") %>
-     
-     
-     <% venta_15 =  a.get_ventas_market(@fecha) + a.get_ventas_colaterales_efe(@fecha,"2") + a.get_ventas_colaterales_tar(@fecha,"2")  %>
-     <% venta_16 =  a.get_ventas_restaurant(@fecha)  + a.get_ventas_colaterales_efe(@fecha,"3") + a.get_ventas_colaterales_tar(@fecha,"3") %>
+     <% venta_12 =  0.00 %>
+     <% venta_13 =  0.00 %>
+     <% venta_14 =  0.00 %>
      
      
-     <% venta_19 =  a.get_ventas_market_tarjeta(@fecha) + a.get_ventas_colaterales_tar(@fecha,"2") %>
-     <% venta_20 =  a.get_ventas_restaurant_tarjeta(@fecha) + a.get_ventas_colaterales_tar(@fecha,"3")%>
+     <% venta_15 =  0.00  %>
+     <% venta_16 =  0.00 %>
+     
+     
+     <% venta_19 =  0.00 %>
+     <% venta_20 =  0.00 %>
      
      
   
@@ -116,19 +108,6 @@
      <% venta_6 =  venta_5 - venta_8 %>
      <% venta_11 = venta_1 - venta_12  %>
      
-     <% if @current_user.email == "percywoeds@gmail.com" %>
-     
-     
-     venta 15  <%= venta_15 %>
-     venta 16  <%= venta_16 %>
-     
-     venta 19  <%= venta_19 %>
-     venta 20  <%= venta_20 %>
-     venta 2  <%= venta_2 %>
-     venta 17  <%= venta_17 %>
-     venta 12  <%= venta_12 %>
-     
-    <% end %>
      
      <hr>
 <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
@@ -391,7 +370,7 @@
       <% total_bancos_soles = 0 %>
       <% total_bancos_dolar = 0 %>
       
-      <%  @customerpayment = @company.get_customer_payments_2(@fecha,@fecha)  %>
+      <%  @customerpayment = @company.get_customer_payments_3(@fecha1,@fecha2)  %>
       
        <% for productItem in  @customerpayment %>
        
