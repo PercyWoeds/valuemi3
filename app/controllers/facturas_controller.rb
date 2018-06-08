@@ -319,6 +319,38 @@ def reportes11
     end
   end
 
+def reportes12
+  
+    @company=Company.find(1)          
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2] 
+  
+    @parte_rpt = @company.get_ventas_contometros_all(@fecha1,@fecha2)  
+    
+    case params[:print]
+      when "To PDF" then 
+        begin 
+         render  pdf: "Ordenes ",template: "varillajes/parte12_rpt.pdf.erb",locals: {:varillajes => @parte_rpt},
+         :orientation    => 'Landscape',
+         
+         :header => {
+           :spacing => 5,
+                           :html => {
+                     :template => 'layouts/pdf-header.html',
+                           right: '[page] of [topage]'
+                  }
+               },
+               
+               footer: {
+                              spacing: 30,
+                 line: true
+               }
+               
+        end   
+      when "To Excel" then render xlsx: 'parte12_rpt_xls'
+      else render action: "index"
+    end
+  end
 
 
 

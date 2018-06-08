@@ -30,7 +30,7 @@
                    <%  producto_value = product0.tanque.product.id%>
                    <% compras = product0.get_compras(@fecha,producto_value) %>
                    <% ventas_qty = product0.get_ventas(@fecha,product0.tanque.product.id) %>
-                   <% venta_directa_qty = 0 %>
+                   <% venta_directa_qty = product0.get_ventas_vale_directo_producto(@fecha,product0.tanque.product.code.to_s,"qty")%>
                    <% afericion = product0.get_afericion_total_dia_producto_qty(@fecha,product0.tanque.id) %>
                    <% venta_neta = ventas_qty - afericion %>
                    
@@ -92,7 +92,7 @@
      <% venta_7 =  a.get_ventas_contometros_descuento(@fecha) %>
      
      <% venta_9 =  a.get_ventas_vale_contado(@fecha) %>
-     <% venta_10 = 0 %>
+     <% venta_10 =  a.get_ventas_vale_directo(@fecha) %>
      
      <% venta_12 =  a.get_afericion_total_dia(@fecha) %>
      <% venta_13 =  a.get_faltante_total_dia(@fecha,"1") %>
