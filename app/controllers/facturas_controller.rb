@@ -347,7 +347,40 @@ def reportes12
                }
                
         end   
-      when "To Excel" then render xlsx: 'parte12_rpt_xls'
+      when "To Excel" then render xlsx: 'parte13_rpt_xls'
+      else render action: "index"
+    end
+  end
+
+def reportes13
+  
+    @company=Company.find(1)          
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2] 
+  
+    @contado_rpt1 = @company.get_ventas_contometros_descuento_detalle(@fecha1,@fecha2)  
+    
+    case params[:print]
+      when "To PDF" then 
+        begin 
+         render  pdf: "Ordenes ",template: "varillajes/parte13_rpt.pdf.erb",locals: {:varillajes => @contado_rpt1},
+         :orientation    => 'Landscape',
+         
+         :header => {
+           :spacing => 5,
+                           :html => {
+                     :template => 'layouts/pdf-header.html',
+                           right: '[page] of [topage]'
+                  }
+               },
+               
+               footer: {
+                              spacing: 30,
+                 line: true
+               }
+               
+        end   
+      when "To Excel" then render xlsx: 'parte13_rpt_xls'
       else render action: "index"
     end
   end

@@ -3816,6 +3816,14 @@ def get_purchases_pendientes_day_value(fecha1,fecha2,value = "total_amount",clie
     return ret
  
  end 
+ def  get_ventas_contometros_descuento_detalle(fecha1,fecha2) 
+
+     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ? and tipo <> ?  " , "#{fecha1} 00:00:00","#{fecha2} 23:59:59", "N","3" ])
+     
+
+    return facturas
+ 
+ end 
  
  
 def get_facturas_by_day_value(fecha1,fecha2,moneda,value='total')
