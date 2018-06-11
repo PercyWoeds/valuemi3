@@ -41,7 +41,7 @@
       
        <% for  contado in @contado_rpt  %>
        
-       <%if contado.importe.to_f > 0 and contado.customer.tipo <> "2" %>
+       <%if contado.importe.to_f > 0 and contado.customer.tipo != "2" %>
                   <tr>
                     <td width= "10%" ><%=  contado.fecha.strftime("%d/%m/%Y")  %></td>
                     <td width= "5%" > <%=  contado.serie %>   </td>
