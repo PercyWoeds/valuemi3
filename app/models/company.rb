@@ -3400,7 +3400,7 @@ def get_purchases_pendientes_day_value(fecha1,fecha2,value = "total_amount",clie
  end 
  def  get_parte_10(fecha1,fecha2)
    
-     @varilla = Varillaje.select("fecha,tanque_id").where(["fecha >= ? and fecha <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59"  ]).group(:fecha)
+     @varilla = Varillaje.select("fecha,tan").where(["fecha >= ? and fecha <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59"  ]).group(:fecha)
    
     return @varilla 
  end 
@@ -3415,7 +3415,7 @@ def get_purchases_pendientes_day_value(fecha1,fecha2,value = "total_amount",clie
  
  #Vale credito todos 
  def  get_parte_4(fecha1,fecha2) 
-     @contado = Sellvale.where(["fecha >= ? and fecha <= ? and sellvales.tipo = ?  and sellvales.td= ?", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ,"1","N" ]).order(:cod_cli,:fecha,:cod_prod)
+     @contado = Sellvale.where(["fecha >= ? and fecha <= ? and sellvales.tipo = ?  and sellvales.td= ?", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ,"1","N" ]).order(:cod_cli,:fecha,:cod_prod).joins("INNER JOIN customers ON sellvales.cod_cli = customers.account AND customers.tipo <> '2' ")
     return @contado
  end 
  
