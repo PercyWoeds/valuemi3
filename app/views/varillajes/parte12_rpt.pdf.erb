@@ -27,14 +27,15 @@
   <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
       <% nroitem = 1%>
        <% for  product0 in @parte_rpt %>
+       
+                   
                    <%  producto_value = product0.tanque.product.id %>
-                   <% compras = product0.get_compras2(@fecha1,@fecha2,producto_value) %>
+                   <% compras = product0.get_compras3(@fecha1,@fecha2,producto_value) %>
                    <% ventas_qty = 0%>
                    <% venta_directa_qty = product0.get_ventas_vale_directo_producto2(@fecha1,@fecha2,product0.tanque.product.code.to_s,"qty")%>
                    <% afericion = 0 %>
                    <% venta_neta = ventas_qty - afericion %>
-                   
-                    
+
                    <tr>
                     <td width= "5%" ><%=  product0.tanque.code %></td>
                     <td width= "10%" ><%=  product0.tanque.product.name %></td>
@@ -44,7 +45,7 @@
                   
                     <td width = "10%" align ="right"><%= sprintf("%.2f",venta_neta  )  %></td>
                     
-                    <% saldo =  product0.inicial + compras - ventas_qty - venta_directa_qty + afericion %>
+                    <% saldo =  product0.get_inicial(@fecha1,producto_value,product0.tanque.product.code.to_s) + compras - ventas_qty - venta_directa_qty + afericion %>
                     
                     
                     <td width = "8%" align ="right"><%= sprintf("%.2f",saldo.to_s)   %></td>

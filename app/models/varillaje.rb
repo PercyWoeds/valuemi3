@@ -19,6 +19,7 @@ class Varillaje < ActiveRecord::Base
     return ret
  
  end 
+ 
  def  get_compras2(fecha1,fecha2,producto) 
 
      facturas = Purchase.where(["date2 >= ? and date2 <= ?  and tiponota <> ? " , "#{fecha1} 00:00:00","#{fecha2} 23:59:59","3" ])
@@ -37,7 +38,61 @@ class Varillaje < ActiveRecord::Base
  
  end 
  
+ def  get_compras3(fecha1,fecha2,producto) 
+
+     facturas = Purchase.where(["date2 >= ? and date2 <= ? " , "#{fecha1} 00:00:00","#{fecha2} 23:59:59"])
+     
+     if facturas
+    ret=0  
+        for factura in facturas
+                factura_detalle = PurchaseDetail.where(["purchase_id = ? and product_id = ?" , factura.id,producto ])
+                for detalle in factura_detalle
+                    ret += detalle.mayorista.round(2)
+                end     
+        end
+    end 
+
+    return ret
+ 
+ end 
+ 
+def  get_inicial(fecha1,producto,producto2) 
+
+     facturas = Purchase.where(["date2 < ?  " , "#{fecha1} 00:00:00"])
+     compras = 0   
+     ventas = 0
+     saldo = 0
+     
+     if facturas
     
+        for factura in facturas
+                factura_detalle = PurchaseDetail.where(["purchase_id = ? and product_id = ?" , factura.id,producto ])
+                for detalle in factura_detalle
+                    compras += detalle.mayorista.round(2)
+                end     
+        end
+    end 
+
+     facturas = Sellvale.where(["fecha < ? and td = ? and tipo  = ?  and cod_prod  = ? " , "#{fecha1} 00:00:00", "N","3",producto2 ])
+     
+     if facturas
+
+        for detalle in facturas
+        
+                ventas += detalle.cantidad
+        end 
+    end 
+
+    saldo =  compras - ventas  
+    return saldo 
+    
+    
+    
+    
+    
+ 
+ end 
+ 
  def  get_ventas(fecha,producto) 
 
      facturas = Ventaisla.where(["fecha >= ? and fecha <= ?  " , "#{fecha} 00:00:00","#{fecha} 23:59:59" ])
