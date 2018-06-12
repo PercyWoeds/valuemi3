@@ -176,7 +176,7 @@
   </table>
      
   
-    <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+    <table style='font-family:"Courier New", Courier, monospace; font-size:70% ;width:100%'>
       
       <% total_bancos_soles = 0 %>
       <% total_bancos_soles1 = 0 %>
@@ -191,6 +191,9 @@
         <td width= "10%" align ="left">
           <%=  productItem.code_liq %>
         </td>
+        <td width= "10%" align ="left">
+          <%=  productItem.bank_acount.number  %>
+        </td>
         
         <td width= "10%" align ="left">
           <%=  productItem.fecha1.strftime("%d/%m/%Y")      %>
@@ -201,15 +204,10 @@
         </td>
         
         <% @cliente_obs = productItem.get_cliente(productItem.customer_id) %>
-        <td width= "10%" align ="left">
-              <%= @cliente_obs.ruc %>
-        </td>      
         <td width= "25%" align ="left">
               <%= @cliente_obs.name %>
         </td>          
-         <td width= "10%" align ="left">
-              <%= sprintf("%.2f",productItem.factory.to_s) %>
-        </td>          
+        
         <% monedabanco= productItem.get_banco_moneda(productItem.bank_acount_id) %>
         
         <%  if monedabanco == "1" %>  
