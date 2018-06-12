@@ -46,7 +46,7 @@
                   
                     <td width = "10%" align ="right"><%= sprintf("%.2f",venta_directa_qty  )  %></td>
                     
-                    <% saldo =  product0.get_inicial(@fecha1,producto_value,product0.tanque.product.code.to_s) + compras - ventas_qty - venta_directa_qty + afericion %>
+                    <% saldo =  product0.get_inicial(@fecha1,producto_value,product0.tanque.product.code.to_s) + compras + compras_otros - ventas_qty - venta_directa_qty + afericion %>
                     
                     
                     <td width = "8%" align ="right"><%= sprintf("%.2f",saldo.to_s)   %></td>
