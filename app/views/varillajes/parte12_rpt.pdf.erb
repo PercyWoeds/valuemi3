@@ -122,13 +122,10 @@
       
       <% for  credito in venta_10  %>
       
-      
-                 <%if xcod == credito.cod_prod%>
-            
                     <tr>
-                    <td width= "5%" ><%=  credito.serie %></td>
-                    <td width= "5%" ><%=  credito.numero  %></td>
-                    <td width = "17%" align ="left"><%= credito.get_cliente(credito.cod_cli)   %></td>
+                    <td width = "5%" ><%=  credito.serie %></td>
+                    <td width = "5%" ><%=  credito.numero  %></td>
+                    <td width = "33%" align ="left"><%= credito.get_cliente(credito.cod_cli)   %></td>
                     <td width = "8%" align ="left"><%= credito.odometro    %></td>
                     <td width = "2%" align ="left"><%= credito.cod_prod    %> </td>
                     <td width = "15%" align ="left"><%= credito.get_product_name(credito.cod_prod)    %> </td>
@@ -144,19 +141,6 @@
                     <% total_2 = total_2 + credito.implista  %>
                     <% xcod = credito.cod_prod %>
                     
-                  <%else%>
-                  
-                    <tr>
-                      <td width = "76%" align ="right">"TOTAL PRODUCTO "</td>
-                      <td width = "8%" align ="right"><%= sprintf("%.2f",total_0)   %></td>
-                      <td width = "8%" align ="right"><%= sprintf("%.2f",total_1)   %></td>
-                      <td width = "8%" align ="right"><%= sprintf("%.2f",total_2)   %></td>
-                    </tr>
-                    
-                    <% total0 += total_0 %>
-                    <% total1 += total_1 %>
-                    <% total2 += total_2 %>
-                  <%end %>
                     
          <%end %>
          
@@ -164,17 +148,7 @@
              
       
     </table>
-    
-    <hr>
-    <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
-    <tr>
-        <td width = "76%" align ="right">"TOTAL PRODUCTO "</td>
-        <td width = "8%" align ="right"><%= sprintf("%.2f",total_0)   %></td>
-        <td width = "8%" align ="right"><%= sprintf("%.2f",total_1)   %></td>
-        <td width = "8%" align ="right"><%= sprintf("%.2f",total_2)   %></td>
-      </tr>
-         
-    </table>
+   
     <hr>
     
     <% total0 += total_0 %>
@@ -301,7 +275,7 @@
   
   
   
-  <% diferencia = total_bancos_soles1 - ( venta_9 +venta_2 + venta_17 -venta_19- venta_20) + venta_13 - venta_14 %>
+  <% diferencia = total_bancos_soles - ( venta_9 +venta_2 + venta_17 -venta_19- venta_20) + venta_13 - venta_14 %>
      
   <% if diferencia !=  0%>   
   <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
