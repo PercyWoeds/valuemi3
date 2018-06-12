@@ -136,6 +136,10 @@ WHERE purchase_details.product_id = ?',params[:id] ])
       table_content << headers
 
       nroitem=1
+      tot_grifo = 0
+      tot_mayorista = 0
+      tot_quantity = 0
+      
 
       for ordencompra in @rpt_detalle_purchase
 
@@ -180,13 +184,36 @@ WHERE purchase_details.product_id = ?',params[:id] ])
             row << $lcPercepcion
             row << $lcBalance
             table_content << row
-        
+            tot_quantity += orden.quantity
+            tot_grifo += orden.grifo
+            tot_mayorista += orden.mayorista
+            
             nroitem=nroitem + 1
         end
         
        end 
       end
         
+          row = []
+            row << ""
+            row << ""
+            row << ""
+            row << ""
+            row << tot_quantity.to_s 
+            row << tot_grifo.to_s
+            row << tot_mayorista.to_s
+            
+            row << ""
+            row << ""
+            
+            row << "0.00"
+    
+            row << " "
+            row << " "
+            row << " "
+            row << " "
+            table_content << row
+          
       
 
 
