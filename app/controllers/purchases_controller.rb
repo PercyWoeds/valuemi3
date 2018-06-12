@@ -149,6 +149,9 @@ WHERE purchase_details.product_id = ?',params[:id] ])
 
 
        for  orden in @orden_compra1
+       
+         if orden.product.products_category_id == 1
+       
             row = []
             row << nroitem.to_s
             row << $lcProveedor 
@@ -181,8 +184,10 @@ WHERE purchase_details.product_id = ?',params[:id] ])
             nroitem=nroitem + 1
         end
         
-
+       end 
       end
+        
+      
 
 
       result = pdf.table table_content, {:position => :center,
