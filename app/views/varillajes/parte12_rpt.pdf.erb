@@ -123,9 +123,10 @@
       <% for  credito in venta_10  %>
       
                     <tr>
+                    <td width = "5%" ><%=  credito.fecha.strftime("%d%m%Y")  %></td>
                     <td width = "5%" ><%=  credito.serie %></td>
                     <td width = "5%" ><%=  credito.numero  %></td>
-                    <td width = "33%" align ="left"><%= credito.get_cliente(credito.cod_cli)   %></td>
+                    <td width = "28%" align ="left"><%= credito.get_cliente(credito.cod_cli)   %></td>
                     <td width = "8%" align ="left"><%= credito.odometro    %></td>
                     <td width = "2%" align ="left"><%= credito.cod_prod    %> </td>
                     <td width = "15%" align ="left"><%= credito.get_product_name(credito.cod_prod)    %> </td>
@@ -174,24 +175,9 @@
   
   </table>
      
+  
     <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
       
-      <tr>
-            <td width= "100%" align ="left">  INGRESOS DEL DIA           : </td>
-      </tr>
-        
-    </table>
-    
-    
-    
-    
-    <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
-      
-      <tr>
-            <td width= "100%" align ="left">  INGRESOS ANTERIOR           : </td>
-      </tr>
-      
-    
       <% total_bancos_soles = 0 %>
       <% total_bancos_soles1 = 0 %>
       <% total_bancos_dolar = 0 %>
@@ -251,23 +237,11 @@
         
     </table>
     
-    <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
-      
-      <tr>
-            <td width= "100%" align ="left">  GASTOS VARIOS           : </td>
-      </tr>
-        
-    </table>
-    
-    
-    
-    
-    
   <table style='font-family:"Courier New", Courier, monospace; font-size:100% ;width:100%'>
   
   <tr bgcolor="#B4D7F7">
     <td width="80%"> TOTAL A BANCOS   </td>
-    <td width="10%" align='right'> <%= sprintf("%.2f",total_bancos_soles1) %>   </td>
+    <td width="10%" align='right'> <%= sprintf("%.2f",total_bancos_soles) %>   </td>
     <td width="10%" align='right'> <%= sprintf("%.2f",total_bancos_dolar) %>   </td>
   </tr>
   
@@ -275,9 +249,9 @@
   
   
   
-  <% diferencia = total_bancos_soles - ( venta_9 +venta_2 + venta_17 -venta_19- venta_20) + venta_13 - venta_14 %>
+  <% diferencia = total_bancos_soles - total_1  %>
      
-  <% if diferencia !=  0%>   
+  <% if diferencia !=  0 %>   
   <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
   
   <tr bgcolor="#B4D7F7">
