@@ -21,9 +21,13 @@
     
   </tr>
   </table>
+  <% total_compras =0 %>
+  <% total_compras2 =0 %>
+  <% venta_neta0  = 0 %>
+  <% total_directa = 0 %>
+  <% venta_neta0 = 0 %>
   
-  
-  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+  <table style='font-family:"Courier New", Courier, monospace; font-size:70% ;width:100%'>
       <% nroitem = 1%>
        <% for  product0 in @parte_rpt %>
                    <%  producto_value = product0.tanque.product.id %>
@@ -49,15 +53,37 @@
                     <td width = "8%" align ="right"><%= sprintf("%.2f",saldo.to_s)   %></td>
                     <td width = "8%" align ="right"><%= sprintf("%.2f",venta_neta.to_s)   %></td>
                     <% dife =  0 %>
-              
-                        </tr>
+                    </tr>
                         
                     
                     <% nroitem = nroitem+1 %>
+                    <% total_compras += compras %>
+                    <% total_compras2 += compras_otros %>
+                    <% total_directa += venta_directa_qty %>
+                    <% venta_neta0 += venta_neta %>
          <%end %>
                
-        <hr>  
-     </table>
+      </table>
+     
+     <hr>
+     <table style='font-family:"Courier New", Courier, monospace; font-size:70% ;width:100%'>
+  
+  
+     <tr>
+                   <td width= "5%" ></td>
+                    <td width= "10%" > TOTAL </td>
+                    <td width = "8%" align ="right"></td>
+                    <td width = "8%" align ="right"><%= sprintf("%.2f",total_compras )   %></td>
+                    <td width = "8%" align ="right"><%= sprintf("%.2f",total_compras2)   %> </td>
+                    <td width = "8%" align ="right"> 0.00 </td>
+                    <td width = "10%" align ="right"><%= sprintf("%.2f",total_directa  )  %></td>
+                    <td width = "8%" align ="right"></td>
+                    <td width = "8%" align ="right"><%= sprintf("%.2f",venta_neta0.to_s)   %></td>
+                    
+    </tr>
+  
+  </table>
+  
      
      <% a= @parte_rpt.first %>
      <% venta_1 =  0.00 %>
@@ -144,11 +170,10 @@
                     
                     
          <%end %>
-         
-         
-             
       
     </table>
+    
+  
    
     <hr>
     
