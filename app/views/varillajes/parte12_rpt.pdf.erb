@@ -12,8 +12,8 @@
     <td width="15%"> Producto  </td>
     <td width="10%"> Inicial</td>
     <td width="10%">  Compras </td>
-    <td width="10%"> Directo</td>
-    <td width="10%"> Venta</td>
+    <td width="10%"> Otros</td>
+    <td width="10%"> Vta.Directa</td>
     <td width="10%"> Stock Final </td>
     <td width="10%"> Medicion</td>
     <td width="5%"> Dife_dia </td>
@@ -31,6 +31,7 @@
                    
                    <%  producto_value = product0.tanque.product.id %>
                    <% compras = product0.get_compras3(@fecha1,@fecha2,producto_value) %>
+                   <% compras_otros = product0.get_compras3(@fecha1,@fecha2,producto_value) %>
                    <% ventas_qty = 0%>
                    <% venta_directa_qty = product0.get_ventas_vale_directo_producto2(@fecha1,@fecha2,product0.tanque.product.code.to_s,"qty")%>
                    <% afericion = 0 %>
@@ -41,9 +42,9 @@
                     <td width= "10%" ><%=  product0.tanque.product.name %></td>
                     <td width = "8%" align ="right"><%= 0.00   %></td>
                     <td width = "8%" align ="right"><%= sprintf("%.2f",compras )   %></td>
-                    <td width = "8%" align ="right"><%= sprintf("%.2f",venta_directa_qty)   %> </td>
+                    <td width = "8%" align ="right"><%= sprintf("%.2f",compras_otros)   %> </td>
                   
-                    <td width = "10%" align ="right"><%= sprintf("%.2f",venta_neta  )  %></td>
+                    <td width = "10%" align ="right"><%= sprintf("%.2f",venta_directa_qty  )  %></td>
                     
                     <% saldo =  product0.get_inicial(@fecha1,producto_value,product0.tanque.product.code.to_s) + compras - ventas_qty - venta_directa_qty + afericion %>
                     

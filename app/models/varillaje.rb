@@ -38,20 +38,31 @@ class Varillaje < ActiveRecord::Base
  
  end 
  
- def  get_compras3(fecha1,fecha2,producto) 
+ def  get_compras3(fecha1,fecha2,producto,tipo ) 
 
      facturas = Purchase.where(["date2 >= ? and date2 <= ? " , "#{fecha1} 00:00:00","#{fecha2} 23:59:59"])
      
      if facturas
     ret=0  
+    
+     if tipo == "1"
         for factura in facturas
-                factura_detalle = PurchaseDetail.where(["purchase_id = ? and product_id = ?" , factura.id,producto ])
+                factura_detalle = PurchaseDetail.where(["purchase_id = ? and product_id = ? and document_id <> 8" , factura.id,producto ])
                 for detalle in factura_detalle
                     ret += detalle.mayorista.round(2)
                 end     
         end
+      else 
+        for factura in facturas
+                factura_detalle = PurchaseDetail.where(["purchase_id = ? and product_id = ? and document_id = 8" , factura.id,producto ])
+                for detalle in factura_detalle
+                    ret += detalle.mayorista.round(2)
+                end     
+        end
+        
+       end
     end 
-
+ 
     return ret
  
  end 
