@@ -60,9 +60,10 @@ class Varillaje < ActiveRecord::Base
  def  get_compras4(fecha1,fecha2,producto) 
 
      facturas = Purchase.where(["date2 >= ? and date2 <= ?  and document_id <> ?" , "#{fecha1} 00:00:00","#{fecha2} 23:59:59","8"])
+     ret=0  
      
      if facturas
-     ret=0  
+     
     
      
         for factura in facturas

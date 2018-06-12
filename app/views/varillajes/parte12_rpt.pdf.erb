@@ -33,8 +33,9 @@
                    <%  producto_value = product0.tanque.product.id %>
                    <% inicial = product0.get_inicial(@fecha1,producto_value,product0.tanque.product.code.to_s)  %>
                    
-                   <% compras = product0.get_compras3(@fecha1,@fecha2,producto_value) %>
-                   <% compras_otros = product0.get_compras4(@fecha1,@fecha2,producto_value) %>
+                   <% compras = product0.get_compras4(@fecha1,@fecha2,producto_value) %>
+                   <% compras_otros = product0.get_compras3(@fecha1,@fecha2,producto_value) %>
+                   
                    <% ventas_qty = 0%>
                    <% venta_directa_qty = product0.get_ventas_vale_directo_producto2(@fecha1,@fecha2,product0.tanque.product.code.to_s,"qty")%>
                    <% afericion = 0 %>
