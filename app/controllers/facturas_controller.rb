@@ -331,9 +331,7 @@ def reportes12
       when "To PDF" then 
         begin 
          render  pdf: "Ordenes ",template: "varillajes/parte12_rpt.pdf.erb",locals: {:varillajes => @parte_rpt},
-         :orientation    => 'Landscape',
-         
-         :header => {
+                  :header => {
            :spacing => 5,
                            :html => {
                      :template => 'layouts/pdf-header.html',

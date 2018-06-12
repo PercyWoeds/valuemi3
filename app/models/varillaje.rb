@@ -45,7 +45,6 @@ class Varillaje < ActiveRecord::Base
      if facturas
      ret=0  
     
-     
         for factura in facturas
                 factura_detalle = PurchaseDetail.where(["purchase_id = ? and product_id = ? " , factura.id,producto ])
                 for detalle in factura_detalle
@@ -346,13 +345,22 @@ def  get_inicial(fecha1,producto,producto2)
  
  end 
  
-  def  get_ventas_directa_detalle(fecha) 
+ def  get_ventas_directa_detalle(fecha) 
 
-     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ?  and tipo = ?" , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","3" ]).order(:serie,:numero)
+     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ?  and tipo = ?" , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","3" ]).order(:cod_prod,:serie,:numero)
 
     return facturas
  
  end 
+ 
+  def  get_ventas_directa_detalle2(fecha1,fecha2) 
+
+     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ?  and tipo = ?" , "#{fecha1} 00:00:00","#{fecha2} 23:59:59", "N","3" ]).order(:cod_prod,:serie,:numero)
+
+    return facturas
+ 
+ end 
+ 
  
  def  get_ventas_contometros_descuento(fecha) 
 
