@@ -155,6 +155,8 @@ WHERE purchase_details.product_id = ?',params[:id] ])
             row << $lcNumero 
             row << $lcFecha.strftime("%d/%m/%Y")        
             row << orden.quantity.to_s
+            row << orden.grifo.to_s
+            row << orden.mayorista.to_s
 
             if orden.product 
               row << orden.product.code
@@ -199,6 +201,8 @@ WHERE purchase_details.product_id = ?',params[:id] ])
                                           columns([9]).align=:right
                                           columns([10]).align=:right
                                           columns([11]).align=:right
+                                          columns([12]).align=:right
+                                          columns([13]).align=:right
                                         end
 
       pdf.move_down 10      
@@ -225,8 +229,8 @@ WHERE purchase_details.product_id = ?',params[:id] ])
     @tiporeporte =params[:tiporeporte]
 
     @rpt_detalle_purchase = @company.get_purchases_day_tipo(@fecha1,@fecha2,@tiporeporte)
-
-    Prawn::Document.generate("app/pdf_output/orden_1.pdf") do |pdf|
+    Prawn::Document.generate "app/pdf_output/orden_1.pdf" , :page_layout => :landscape do |pdf|    
+        
         pdf.font "Helvetica"
         pdf = build_pdf_header9(pdf)
         pdf = build_pdf_body9(pdf)
