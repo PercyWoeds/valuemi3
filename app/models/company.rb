@@ -3400,7 +3400,7 @@ def get_purchases_pendientes_day_value(fecha1,fecha2,value = "total_amount",clie
  end 
  
  def  get_parte_10(fecha1,fecha2)
-    @varilla = Varillaje.select("date(fecha) as fecha,tanque_id").where(["fecha >= ? and fecha <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59"  ]).group("fecha,tanque_id")
+    @varilla = Varillaje.select("tanque_id").where(["fecha >= ? and fecha <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59"  ]).group("tanque_id")
     return @varilla 
  end 
  
