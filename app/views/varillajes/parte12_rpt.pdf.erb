@@ -27,9 +27,9 @@
   <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
       <% nroitem = 1%>
        <% for  product0 in @parte_rpt %>
-       
-                   
                    <%  producto_value = product0.tanque.product.id %>
+                   <% inicial = product0.get_inicial(@fecha1,producto_value,product0.tanque.product.code.to_s)  %>
+                   
                    <% compras = product0.get_compras3(@fecha1,@fecha2,producto_value) %>
                    <% compras_otros = product0.get_compras4(@fecha1,@fecha2,producto_value) %>
                    <% ventas_qty = 0%>
@@ -40,7 +40,7 @@
                    <tr>
                     <td width= "5%" ><%=  product0.tanque.code %></td>
                     <td width= "10%" ><%=  product0.tanque.product.name %></td>
-                    <td width = "8%" align ="right"><%= 0.00   %></td>
+                    <td width = "8%" align ="right"><%= sprintf("%.2f",inicial )    %></td>
                     <td width = "8%" align ="right"><%= sprintf("%.2f",compras )   %></td>
                     <td width = "8%" align ="right"><%= sprintf("%.2f",compras_otros)   %> </td>
                   
