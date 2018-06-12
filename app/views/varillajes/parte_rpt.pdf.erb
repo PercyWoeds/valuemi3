@@ -57,7 +57,7 @@
               
                     
                     <td width = "5%" align ="right"><%= sprintf("%.2f",dife_soles)  %></td>
-                    <td width = "5%" align ="right"><%= sprintf("%.2f",product0.get_ventas_contometros_producto_todo(@fecha,product0.tanque.product.code.to_s) + product0.get_ventas_contometros_descuento_producto(@fecha,product0.tanque.product.code.to_s) + product0.get_ventas_vale_adelanto_producto(@fecha,product0.tanque.product.code.to_s,"soles") -  product0.get_afericion_total_dia_producto(@fecha,product0.tanque.id))   %></td>
+                    <td width = "5%" align ="right"><%= sprintf("%.2f",product0.get_ventas_contometros_producto_todo(@fecha,product0.tanque.product.code.to_s) + product0.get_ventas_contometros_descuento_producto(@fecha,product0.tanque.product.code.to_s) -  product0.get_afericion_total_dia_producto(@fecha,product0.tanque.id))   %></td>
                     </tr>
                         
                     
