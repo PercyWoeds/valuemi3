@@ -191,6 +191,85 @@
               </tr>
             
     </table>
+    
+    
+    
+    <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+      <% nroitem = 1%>
+      
+      <% totalf_1 =  0%>
+      <% totalf_2 =  0%>
+      <% totalf_3 =  0%>
+      
+      <% fecha10 = "#{@fecha1}" %>
+      <% fecha20 = "#{@fecha2}" %>
+      
+       <% for  contado in @total_factura_out_fecha_detalle2 %>
+       
+       <%if contado.total > 0 %>
+       
+        <%@factura_details = contado.factura_details %>
+         
+       <%  @factura_details.each do |quote| %>
+       
+       <% if quote.sellvale != nil %>
+       
+       <% fecha_factura =  quote.sellvale.fecha  %>
+       
+       <% if fecha_factura != "" %>
+       <% if fecha_factura != nil%>
+       
+               <% if fecha_factura.to_date < fecha10.to_date or fecha_factura.to_date > fecha20.to_date %>       
+                  <tr>
+                    <td width= "5%" ><%=  quote.sellvale.fecha.strftime("%d/%m/%Y")  %></td>
+                    <td width= "23%" > <%= truncate(quote.sellvale.get_customer_name(quote.sellvale.cod_cli), :length => 30)  %>   </td>
+                    <td width= "3%" > <%=  quote.sellvale.serie %>   </td>
+                    <td width = "5%" align ="right"><%= quote.sellvale.numero    %></td>
+                    <td width = "3%" align ="right"><%= quote.sellvale.cod_prod    %> </td>
+                    <td width = "10%" align ="left"><%= quote.sellvale.get_product_name(quote.sellvale.cod_prod)    %> </td>
+                    <td width = "5%" align ="right"><%= quote.sellvale.odometro %></td>
+                    <td width = "5%" align ="right"><%= quote.sellvale.placa %></td>
+                    
+                    <td width = "8%" align ="right"><%=  sprintf("%.2f",quote.sellvale.cantidad.to_s)%></td>
+                    <td width = "8%"  align ="right"><%= sprintf("%.2f",quote.sellvale.precio)   %></td>
+                    <td width = "8%" align ="right"><%= sprintf("%.3f",quote.sellvale.importe)   %></td>
+                    <td width = "8%" align ="right"><%= sprintf("%.2f",quote.sellvale.implista.to_s)   %></td>
+                    <td width = "10%" align ="left"><%= quote.sellvale.get_vale_facturado   %> </td>
+                    <td width = "10%" align ="left"><%= quote.sellvale.id   %> </td>
+                    
+                    <% if quote.sellvale.get_vale_facturado_fecha != ""%>
+                    <td width = "10%" align ="left"><%= quote.sellvale.get_vale_facturado_fecha.strftime("%d/%m/%Y")   %> </td>
+                    
+                    <%end %>
+                    </tr>
+            
+                    <% totalf_1 +=  quote.sellvale.importe.to_f %>
+                    <% totalf_2 +=  quote.sellvale.implista  %>
+                    <% totalf_3 +=  quote.sellvale.cantidad %>
+         <%end %>         
+         <%end %>
+         <%end %>
+         <%end %>
+         <%end %>
+         <%end %>
+         <%end %>
+         <% @total_factura_out = totalf_1 %>
+         
+        <hr>  
+     </table>
+  
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+  
+  <tr bgcolor="#B4D7F7">
+    <td width="80%"> TOTAL  :   </td>
+    <td width="10%" align='right'> <%= sprintf("%.2f",totalf_3) %>   </td>
+    <td width="10%" align='right'>   </td>
+    <td width="10%" align='right'> <%= sprintf("%.2f",totalf_1) %>   </td>
+    <td width="10%" align='right'><%= sprintf("%.2f",totalf_2) %>    </td>
+  </tr>
+  
+  
+  </table>
      
   <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
   
@@ -211,9 +290,9 @@
       
        <% for productItem in  @customerpayment %>
        
-    <table style='font-family:"Courier New", Courier, monospace; font-size:70% ;width:100%'>           
+    <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>           
       <tr>
-        <td width= "10%" align ="left">
+        <td width= "5%" align ="left">
           <%=  productItem.code_liq %>
         </td>
         <td width= "10%" align ="left">
@@ -224,7 +303,7 @@
           <%=  productItem.fecha1.strftime("%d/%m/%Y")      %>
         </td>
          
-        <td width= "15%" align ="left">
+        <td width= "8%" align ="left">
           <%=  productItem.code    %>
         </td>
         

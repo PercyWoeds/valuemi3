@@ -327,6 +327,8 @@ def reportes12
   
     @parte_rpt = @company.get_parte_10(@fecha1,@fecha2)  
     
+    @total_factura_out_fecha_detalle2 =@company.get_credito_out_fecha_detalle2(@fecha1,@fecha2,"3")
+    
     case params[:print]
       when "To PDF" then 
         begin 
