@@ -41,7 +41,7 @@
                    <% venta_directa_qty = product0.get_ventas_vale_directo_producto2(@fecha1,@fecha2,product0.tanque.product.code.to_s,"qty")%>
                    <% afericion = 0 %>
                    <% venta_neta =product0.get_ventas_vale_directo_producto2(@fecha1,@fecha2,product0.tanque.product.code.to_s,"soles")%>
-                   <% saldo =  product0.get_inicial(@fecha1,producto_value,product0.tanque.product.code.to_s) + compras + compras_otros - ventas_qty - venta_directa_qty + afericion %>
+                   <% saldo =  inicial + compras + compras_otros - ventas_qty - venta_directa_qty -salidas %>
                    
                    
                    <tr>
@@ -151,7 +151,7 @@
       <% for  credito in venta_10  %>
       
                     <tr>
-                    <td width = "5%" ><%=  credito.fecha.strftime("%d%m%Y")  %></td>
+                    <td width = "5%" ><%=  credito.fecha.strftime("%d/%m/%Y")  %></td>
                     <td width = "5%" ><%=  credito.serie %></td>
                     <td width = "5%" ><%=  credito.numero  %></td>
                     <td width = "28%" align ="left"><%= credito.get_cliente(credito.cod_cli)   %></td>
