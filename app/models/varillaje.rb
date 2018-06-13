@@ -38,6 +38,8 @@ class Varillaje < ActiveRecord::Base
  
  end 
  
+ 
+ 
  def  get_compras3(fecha1,fecha2,producto) 
 
      facturas = Purchase.where(["date2 >= ? and date2 <= ? and document_id = ? " , "#{fecha1} 00:00:00","#{fecha2} 23:59:59","8"])
@@ -57,6 +59,7 @@ class Varillaje < ActiveRecord::Base
     return ret
  
  end 
+ 
  def  get_compras4(fecha1,fecha2,producto) 
 
      facturas = Purchase.where(["date2 >= ? and date2 <= ?  and document_id <> ?" , "#{fecha1} 00:00:00","#{fecha2} 23:59:59","8"])
@@ -81,11 +84,13 @@ class Varillaje < ActiveRecord::Base
  
 def  get_inicial(fecha1,producto,producto2) 
 
-     facturas = Purchase.where(["date2 < ?  " , "#{fecha1} 00:00:00"])
+    
      compras = 0   
      ventas = 0
+     salidas = 0
      saldo = 0
      
+     facturas = Purchase.where(["date2 < ?  " , "#{fecha1} 00:00:00"]) 
      if facturas
     
         for factura in facturas
@@ -105,8 +110,21 @@ def  get_inicial(fecha1,producto,producto2)
                 ventas += detalle.cantidad
         end 
     end 
+    
+    facturas = Output.where(["fecha < ?  " , "#{fecha1} 00:00:00"]) 
+     if facturas
+    
+        for factura in facturas
+                factura_detalle = OutputDetail.where(["output_id = ? and product_id = ?" , factura.id,producto ])
+                for detalle in factura_detalle
+                    salidas += detalle.quantity.round(2)
+                end     
+        end
+    end 
 
-    saldo =  compras - ventas  
+    
+
+    saldo =  compras - salidas- ventas  
     return saldo 
     
     
@@ -136,6 +154,29 @@ def  get_inicial(fecha1,producto,producto2)
     return ret
  
  end 
+ 
+ def  get_salidas(fecha1,fecha2,producto) 
+
+     facturas = Output.where(["fecha >= ? and fecha <= ? " , "#{fecha1} 00:00:00","#{fecha2} 23:59:59"])
+     ret=0  
+     
+     if facturas
+     
+    
+     
+        for factura in facturas
+                factura_detalle = OutputDetail.where(["output_id = ? and product_id = ? " , factura.id,producto ])
+                for detalle in factura_detalle
+                    ret += detalle.quantity.round(2)
+                end     
+        end
+     
+    end 
+ 
+    return ret
+ 
+ end 
+ 
      
  def  get_ventas_importe(fecha,producto) 
 
