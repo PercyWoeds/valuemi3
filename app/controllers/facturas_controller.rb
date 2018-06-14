@@ -2818,7 +2818,7 @@ def salidas(pdf)
     case params[:print]
       when "To PDF" then 
         begin 
-         render  pdf: "Vale5 ",template: "customer_payments/rpt_ccobrar13_all.pdf.erb",locals: {:varillajes => @customerpayment_rpt},
+         render  pdf: "ReporteCancelaciones",template: "customer_payments/rpt_ccobrar13_all.pdf.erb",locals: {:varillajes => @customerpayment_rpt},
                   :header => {
            :spacing => 5,
                            :html => {
