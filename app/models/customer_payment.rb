@@ -379,7 +379,7 @@ def get_payments2(tipoventa)
       INNER JOIN facturas ON   customer_payment_details.factura_id = facturas.id
       WHERE  customer_payment_details.customer_payment_id = ?', self.id ])
   else
-  @itemproducts = CustomerPaymentDetail.find_by_sql(['Select customer_payment_details.total,
+      @itemproducts = CustomerPaymentDetail.find_by_sql(['Select customer_payment_details.total,
       facturas.code,facturas.customer_id,facturas.fecha,customer_payment_details.factory,
       customer_payment_details.ajuste,customer_payment_details.compen
       from customer_payment_details   
