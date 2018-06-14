@@ -36,7 +36,7 @@
                   
                   
                 <table style='font-family:"Courier New", Courier, monospace; font-size:70% ;width:100%'>
-                <% for productItem in detalle.get_payments() %>
+                <% for productItem in detalle.get_payments2(detalle.tipoventa) %>
                 
                   <tr>  
                     <td width = "18%" ><%= detalle.get_cuenta(detalle.bank_acount.id)    %></td>
@@ -47,7 +47,7 @@
                     
                     <td width = "8%" align ="right"><%= sprintf("%.2f",productItem.ajuste.to_s)    %> </td>
                     <td width = "8%" align ="right"><%= sprintf("%.2f",productItem.total.to_s)  %> </td>
-                    <td width = "8%" align ="right"><%= detalle.nrooperacion  %> </td>
+                    <td width = "8%" align ="right"><%= detalle.code   %> </td>
                   
                   </tr>
                   
@@ -62,15 +62,14 @@
        
    
                
-        <hr>  
-  </table>
-  <hr>
      
+  </table>
+  <hr> 
     <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
       
      <tr>
        
-          <td width = "41%" align ="right">Totales </td>
+          <td width = "76%" align ="right">Totales </td>
           
           <td width = "8%" align ="right"><%= sprintf("%.2f",tajuste.to_s)    %> </td>
           <td width = "8%" align ="right"><%= sprintf("%.2f",ttotal.to_s)    %></td>
@@ -80,7 +79,7 @@
     </tr>
     
    </table>
-         
+  <hr>       
   
     
     </body>
