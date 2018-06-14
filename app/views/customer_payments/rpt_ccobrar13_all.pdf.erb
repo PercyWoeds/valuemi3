@@ -33,7 +33,8 @@
                 <tr>
                     <td width = "5%" align ="right"><%= nroitem.to_s    %> </td>
                     <td width = "5%" ><%=  detalle.code %> </td>
-                    <td width = "30%" ><%= detalle.get_banco(detalle.bank_acount.bank_id)    %></td>
+                    <td width = "30%" ><%= detalle.get_banco(detalle.bank_acount.bank.id)    %></td>
+                    <td width = "30%" ><%= detalle.get_cuenta(detalle.bank_acount.id)    %></td>
                     <td width = "30%" ><%= detalle.get_moneda(detalle.bank_acount.moneda_id)  %></td>
                 
                 </tr>
@@ -45,15 +46,16 @@
                
                  
                 <% for productItem in detalle.get_payments() %>
-                  
+                
                   <tr>  
                     <td width = "5%" align ="right"><%= detalle.fecha1.strftime("%d/%m%Y")  %> </td>
                     <td width ="10%" align ="right"><%= detalle.code  %> </td>
-                    <td width ="10%" align ="right"><%= productItem.get_customer(productItem.customer_id) %>  </td>
-                    <td width = "5%" align ="right"><%= sprintf("%.2f",productItem.factory.to_s) %> </td>
-                    <td width = "5%" align ="right"><%= sprintf("%.2f",productItem.compen.to_s)  %> </td>
-                    <td width = "5%" align ="right"><%= sprintf("%.2f",productItem.ajuste.to_s)    %> </td>
-                    <td width = "5%" align ="right"><%= sprintf("%.2f",productItem.total.to_s)  %> </td>
+                    <td width ="10%" align ="left"><%= productItem.get_customer(productItem.customer_id) %>  </td>
+                    <td width = "8%" align ="right"><%= sprintf("%.2f",productItem.factory.to_s) %> </td>
+                    <td width = "8%" align ="right"><%= sprintf("%.2f",productItem.compen.to_s)  %> </td>
+                    <td width = "8%" align ="right"><%= sprintf("%.2f",productItem.ajuste.to_s)    %> </td>
+                    <td width = "8%" align ="right"><%= sprintf("%.2f",productItem.total.to_s)  %> </td>
+                    <td width = "8%" align ="right"><%= detalle.nrooperacion  %> </td>
                   
                   </tr>
                   

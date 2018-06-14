@@ -2808,12 +2808,17 @@ def salidas(pdf)
     @company=Company.find(1)      
     @fecha1 = params[:fecha1]
     @fecha2 = params[:fecha2]
+    @banco_select = params[:cbox1]
+    @banco = params[:bank_acount_id]
+    @tiporeporte = params[:tiporeporte]
     
+    if @banco_select == "1"
+      @customerpayment_rpt = @company.get_customer_payments_cabecera2(@fecha1,@fecha2,@banco)  
+    else
+      @customerpayment_rpt = @company.get_customer_payments_cabecera(@fecha1,@fecha2)  
+    end 
+    puts @banco_select
     
-    
-    @customerpayment_rpt = @company.get_customer_payments_cabecera(@fecha1,@fecha2)  
-   
-   
     
     case params[:print]
       when "To PDF" then 
