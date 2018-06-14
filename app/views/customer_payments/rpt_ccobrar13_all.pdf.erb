@@ -26,22 +26,22 @@
       <% total_2 = 0%>
       
         
-         <% for  detalle in @customerpayment_rpt %>
-              
-                
                   <% tfactory = 0 %>
                   <% tcompen = 0 %>
                   <% tajuste = 0 %>
                   <% ttotal =  0 %>
                   
                   
-                <table style='font-family:"Courier New", Courier, monospace; font-size:70% ;width:100%'>
+         <% for  detalle in @customerpayment_rpt %>
+         
+         
+               <table style='font-family:"Courier New", Courier, monospace; font-size:70% ;width:100%'>
                 <% for productItem in detalle.get_payments2(@tiporeporte) %>
                 
                   <tr>  
                     <td width = "18%" ><%= detalle.get_cuenta(detalle.bank_acount.id)    %></td>
                     <td width = "10%" ><%= detalle.get_moneda(detalle.bank_acount.moneda_id)  %></td>
-                    <td width = "5%" align ="right"><%= detalle.fecha1.strftime("%d/%m%Y")  %> </td>
+                    <td width = "5%" align ="right"><%= productItem.fecha.strftime("%d/%m%Y")  %> </td>
                     <td width ="8%" align ="right"><%= productItem.code  %> </td>
                     <td width ="35%" align ="left"><%= productItem.get_customer(productItem.customer_id) %>  </td>
                     
