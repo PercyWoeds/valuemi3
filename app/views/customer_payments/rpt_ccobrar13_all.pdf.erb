@@ -36,7 +36,7 @@
                   
                   
                 <table style='font-family:"Courier New", Courier, monospace; font-size:70% ;width:100%'>
-                <% for productItem in detalle.get_payments2(detalle.tipoventa) %>
+                <% for productItem in detalle.get_payments2(@tiporeporte) %>
                 
                   <tr>  
                     <td width = "18%" ><%= detalle.get_cuenta(detalle.bank_acount.id)    %></td>
