@@ -27,17 +27,7 @@
       
         
          <% for  detalle in @customerpayment_rpt %>
-               <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
-                <tr>
-                    <td width = "5%" align ="right"><%= nroitem.to_s    %> </td>
-                    <td width = "10%" ><%=  detalle.code %> </td>
-                    <td width = "30%" ><%= detalle.get_banco(detalle.bank_acount.bank.id)    %></td>
-                    <td width = "30%" ><%= detalle.get_cuenta(detalle.bank_acount.id)    %></td>
-                    <td width = "30%" ><%= detalle.get_moneda(detalle.bank_acount.moneda_id)  %></td>
-                
-                </tr>
-                </table>
-                
+              
                 
                   <% tfactory = 0 %>
                   <% tcompen = 0 %>
