@@ -2802,6 +2802,38 @@ def salidas(pdf)
       else render action: "index"
     end
   end
+  def reportes30 
+    
+    $lcxCliente = "1"
+    @company=Company.find(1)      
+    @fecha1 = params[:fecha1]
+    @fecha2 = params[:fecha2]
+    
+    
+    
+    @customerpayment_rpt = @company.get_customer_payments_cabecera(@fecha1,@fecha2)  
+   
+   
+    
+    case params[:print]
+      when "To PDF" then 
+        begin 
+         render  pdf: "Vale5 ",template: "customer_payments/rpt_ccobrar13_all.pdf.erb",locals: {:varillajes => @customerpayment_rpt},
+                  :header => {
+           :spacing => 5,
+                           :html => {
+                     :template => 'layouts/pdf-header.html',
+                           right: '[page] of [topage]'
+                  }
+               }
+               
+               
+        
+        end   
+      when "To Excel" then render xlsx: 'rpt_cobrar13'
+      else render action: "index"
+    end
+  end
   
   
       

@@ -76,8 +76,14 @@
   </thead>
   <tbody>
   
+  <%=  form_tag discontinue_facturas_path,method: :post  %>
+  
     <% for productItem in @purchase.get_products() %>
       <tr>
+        <td class="bordered_bottom bordered_right">
+          <%=  productItem.id   %>
+        </td>
+        
         <td class="bordered_bottom bordered_right">
           <%=  productItem.name   %>
         </td>
@@ -100,6 +106,9 @@
         </td>          
       </tr>
     <% end %>
+    
+    
+    
     <tr>
       <td colspan="5" class="bordered_bottom bordered_right">
         &nbsp;
@@ -206,3 +215,4 @@
   
   <%= link_to 'Regresar', "/companies/purchases/#{@purchase.company.id}" %>
 </div>
+

@@ -396,14 +396,14 @@ def get_tax3(items, supplier_id)
     if self.tipo == "1"
       @itemproducts = PurchaseDetail.find_by_sql(['Select purchase_details.price_with_tax as price,purchase_details.quantity,
       purchase_details.discount,purchase_details.price_without_tax as price2,purchase_details.total,
-      servicebuys.name  from purchase_details INNER JOIN servicebuys ON 
+      servicebuys.name,purchase_details.id  from purchase_details INNER JOIN servicebuys ON 
       purchase_details.product_id = servicebuys.id where purchase_details.purchase_id = ?', self.id ])
 
     else
 
     @itemproducts = PurchaseDetail.find_by_sql(['Select purchase_details.price_with_tax as price,purchase_details.quantity,
       purchase_details.discount,purchase_details.price_without_tax as price2,purchase_details.total,
-      products.name  from purchase_details INNER JOIN products ON 
+      products.name,purchase_details.id  from purchase_details INNER JOIN products ON 
       purchase_details.product_id = products.id where purchase_details.purchase_id = ?', self.id ])
       
     

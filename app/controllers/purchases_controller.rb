@@ -3306,7 +3306,7 @@ def newfactura2
   end
 
   
-
+  
   
   private
   def purchase_params

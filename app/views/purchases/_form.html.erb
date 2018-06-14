@@ -165,6 +165,20 @@
      Cantidad del producto para agregar una factura.
     </div>
     <br />
+    <strong>Grifo:</strong><br />
+    <input type="text" name="ac_item_grifo" id="ac_item_grifo" value="0" class="tf_short" />
+    <div class="small">
+     Cant. Grifo del producto
+    </div>
+    <br />
+    <strong>Mayorista:</strong><br />
+    <input type="text" name="ac_item_mayorista" id="ac_item_mayorista" value="0" class="tf_short" />
+    <div class="small">
+     Cant. Mayorista del producto 
+    </div>
+    <br />
+    
+    
     
     <strong>Discount %:</strong><br />
     <input type="text" name="ac_item_discount" id="ac_item_discount" value="0" class="tf_short" />
@@ -245,9 +259,10 @@
       updateItemTotal();
     });
     
-    $("#ac_item_discount").bind("keyup", function() {
+    $("#ac_item_grifo").bind("keyup", function() {
       updateItemTotal();
     });
+    
     
     <% if @products_lines %>
     alert 'holas products_lines';
