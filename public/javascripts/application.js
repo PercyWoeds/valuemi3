@@ -195,13 +195,16 @@
   // Update price total for invoice
   function updateItemTotal() {
     var quantity = $("#ac_item_quantity").val();
+    
     var grifo = $("#ac_item_grifo").val();
     var mayorista = $("#ac_item_mayorista").val();
     
     var price = $("#ac_item_price").val();
     var discount = $("#ac_item_discount").val();
     
-    if(isNumeric(quantity) && isNumeric(price) && isNumeric(discount)  && isNumeric(grifo) && isNumeric(mayorista) ) {
+    alert (mayorista); 
+    
+    if (isNumeric(quantity) && isNumeric(price) && isNumeric(discount)  && isNumeric(grifo) && isNumeric(mayorista) ) {
       
       var total = quantity * price ;
       
@@ -211,6 +214,7 @@
 
       $("#ac_item_total").html(total);
       $("#ac_item_mayorista").html(mayorista);
+      
       
     } else {
       $("#ac_item_total").html("0.00");

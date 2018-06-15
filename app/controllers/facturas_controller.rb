@@ -2811,8 +2811,12 @@ def salidas(pdf)
     @banco_select = params[:cbox1]
     @banco = params[:bank_acount_id]
     @tiporeporte = params[:tiporeporte]
+    
     puts "Tipo Reporte"
     puts @tiporeporte 
+    puts "banco select "
+    puts @banco_select
+    
     
     if @banco_select == "1"
       @customerpayment_rpt = @company.get_customer_payments_cabecera2(@fecha1,@fecha2,@banco)  

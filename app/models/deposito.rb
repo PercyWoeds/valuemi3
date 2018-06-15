@@ -2,10 +2,10 @@ class Deposito < ActiveRecord::Base
     
     self.per_page = 20
    
-  validates_presence_of :company_id, :total,:user_id,:fecha1 ,:bank_acount_id 
+  validates_presence_of :company_id, :total,:user_id,:fecha1 ,:bank_acount_id,:document_id  
   
   validates_uniqueness_of :code
-   belongs_to :company
+  belongs_to :company
   belongs_to :location
   belongs_to :division
   belongs_to :customer 

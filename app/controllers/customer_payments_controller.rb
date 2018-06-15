@@ -973,7 +973,7 @@ class CustomerPaymentsController < ApplicationController
                 row << $lcFecha1 
                 row << "FT"
                 row << productItem.code 
-                row << productItem.fecha1.strftime("%d/%m/%Y")  
+                row << productItem.fecha.strftime("%d/%m/%Y")  
                 
                 @cliente_obs = productItem.get_cliente(productItem.customer_id)
                 
