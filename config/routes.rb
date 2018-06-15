@@ -110,6 +110,7 @@
     collection { get :reportes07}
     collection { get :reportes08}
     collection { get :reportes09}
+    collection { get :reportes10}
     collection { get :reportes11}
     collection { get :reportes12}
     collection { get :reportes13}
@@ -429,7 +430,7 @@ end
   match 'companies/reports/rpt_facturas_6/:company_id' => 'reports#rpt_facturas_6', via: [:get, :post]
   match 'companies/reports/rpt_facturas_7/:company_id' => 'reports#rpt_facturas_7', via: [:get, :post]
   match 'companies/reports/rpt_facturas_8/:company_id' => 'reports#rpt_facturas_8', via: [:get, :post]
-  
+  match 'companies/reports/rpt_facturas_9/:company_id' => 'reports#rpt_facturas_9', via: [:get, :post]
   
   match 'companies/reports/rpt_purchase_all/:company_id' => 'reports#rpt_purchase_all', via: [:get, :post]
   match 'companies/reports/rpt_product_all/:company_id' => 'reports#rpt_product_all', via: [:get, :post]

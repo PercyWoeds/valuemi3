@@ -577,7 +577,6 @@ def reportes08
 
 def reportes09
 
-
     @company=Company.find(1)          
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]    
@@ -604,6 +603,38 @@ def reportes09
                
         end   
       when "To Excel" then render xlsx: 'reporte09xls'
+      else render action: "index"
+    end
+  end
+
+
+def reportes10
+
+    @company=Company.find(1)          
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]    
+    @moneda = params[:moneda_id]    
+
+    @facturas_rpt = @company.get_ventas_all(@fecha1,@fecha2)          
+    
+    
+    case params[:print]
+      when "To PDF" then 
+        begin 
+         render  pdf: "Facturas ",template: "facturas/rventas10_rpt.pdf.erb",
+         :orientation      => 'Landscape',
+         locals: {:facturas => @facturas_rpt},
+            :header => {
+           :spacing => 5,
+                           :html => {
+                     :template => 'layouts/pdf-header.html',
+                           right: '[page] of [topage]'
+                  }
+               }
+               
+               
+        end   
+      when "To Excel" then render xlsx: 'reporte10xls'
       else render action: "index"
     end
   end
@@ -2750,7 +2781,6 @@ def salidas(pdf)
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]    
   
-    
     @facturas_rpt = @company.get_salidas_day4(@fecha1,@fecha2)
 
     Prawn::Document.generate("app/pdf_output/rpt_factura.pdf") do |pdf|

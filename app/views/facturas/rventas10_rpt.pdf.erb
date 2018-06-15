@@ -1,0 +1,90 @@
+<html>
+<body>
+    
+  
+  <h4 ><center>  </center>   </h4>
+  <center> Listado de Ventas Documentos Emitidos   Desde: <%= @fecha1 %>  Hasta <%= @fecha2 %></center> 
+  * Solo Facturas 
+  
+  <font size="2" face="Courier New" >  
+  
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+  
+  <tr bgcolor="#B4D7F7">
+    <td width = "5%" align ="right">Fecha </td>
+    <td width = "5%" >Numero</td>
+    <td width = "5%" align ="right"> Ruc</td>
+    <td width = "35%" align ="left">Cliente </td>
+    
+    
+    <td width = "10%" align ="right">Cantidad</td>
+    <td width = "10%" align ="right"> Precio</td>
+    <td width = "10%" align ="right">Subtotal </td>
+    <td width = "10%" align ="right">I.G.V. </td>
+    <td width = "10%" align ="right">Importe </td>
+    
+
+  </tr>
+  
+  </table>
+  
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+      <% nroitem = 1%>
+      <% total_0 = 0%>
+      <% total_1 = 0%>
+      <% total_2 = 0%>
+      <% total_3 = 0%>
+      <% precio = 0%>
+       <% for  credito in @facturas_rpt  %>
+                <tr>
+                    <td width = "5%" align ="right"><%= credito.fecha.strftime("%d/%m/%Y")    %> </td>
+                    <td width = "5%" ><%=  credito.code  %></td>
+                    <td width = "5%" align ="right"><%= credito.customer.ruc    %></td>
+                    <td width = "35%" align ="left"><%= credito.customer.name   %></td>
+                    
+                    <td width = "10%" align ="right"><%= sprintf("%.3f",credito.get_invoices_cantidad)   %></td>
+                    <% cantidad = credito.get_invoices_cantidad %>
+                    <% if  cantidad > 0 %>
+                    <% precio = credito.total / cantidad %>
+                    <% else %>
+                    <% precio = 0 %>
+                    <% end %>
+                    
+                    
+                    <td width = "10%" align ="right"><%= sprintf("%.3f",precio)   %></td>
+                    <td width = "10%" align ="right"><%= sprintf("%.3f",credito.subtotal)   %></td>
+                    <td width = "10%" align ="right"><%= sprintf("%.3f",credito.tax)   %></td>
+                    <td width = "10%" align ="right"><%= sprintf("%.3f",credito.total)   %></td>
+                </tr>
+                    <% total_0 += credito.get_invoices_cantidad %>    
+                    <% total_1 += credito.subtotal %>
+                    <% total_2 += credito.tax %>
+                    <% total_3 += credito.total %>
+                    
+         <%end %>
+               
+        <hr>  
+  </table>
+  <hr>
+     
+    <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+      
+     <tr>
+       
+          <td width = "50%" align ="right">Totales </td>
+          <td width = "10%" align ="right"><%= sprintf("%.3f",total_0)   %></td>
+          <td width = "10%" align ="right"></td>
+          <td width = "10%" align ="right"><%= sprintf("%.3f",total_1)   %></td>
+          <td width = "10%" align ="right"><%= sprintf("%.3f",total_2)   %></td>
+          <td width = "10%" align ="right"><%= sprintf("%.3f",total_3)   %></td>
+  
+    </tr>
+    
+   </table>
+         
+  
+    
+    </body>
+      
+      </html>
+      

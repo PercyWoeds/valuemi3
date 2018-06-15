@@ -3971,6 +3971,13 @@ def get_facturas_by_day_value2(fecha1,fecha2,moneda,value='total')
        return facturas 
  
   end 
+  def  get_ventas_all(fecha1,fecha2) 
+
+      facturas = Factura.where(["fecha >= ?  and fecha <=  ? and substring(code,1,2) <> ? "  , "#{fecha1} 00:00:00","#{fecha2} 23:59:59","BB"] ).order(:fecha,:code)
+     
+       return facturas 
+ 
+  end 
     
   
   def  get_ventas_vales(fecha1,fecha2,tipo) 
