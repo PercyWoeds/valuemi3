@@ -2809,7 +2809,7 @@ def salidas(pdf)
     @fecha1 = params[:fecha1]
     @fecha2 = params[:fecha2]
     @banco_select = params[:cbox1]
-    @banco = params[:bank_acount_id]
+    @banco = params[:bank_id]
     @tiporeporte = params[:tiporeporte]
     
     puts "Tipo Reporte"
@@ -2819,9 +2819,11 @@ def salidas(pdf)
     
     
     if @banco_select == "1"
-      @customerpayment_rpt = @company.get_customer_payments_cabecera2(@fecha1,@fecha2,@banco)  
-    else
       @customerpayment_rpt = @company.get_customer_payments_cabecera(@fecha1,@fecha2)  
+      
+    else
+      
+      @customerpayment_rpt = @company.get_customer_payments_cabecera2(@fecha1,@fecha2,@banco)  
     end 
     puts @banco_select
     
