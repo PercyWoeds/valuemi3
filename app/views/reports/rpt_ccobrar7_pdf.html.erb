@@ -23,19 +23,19 @@ totals = []
 
 <form method="get" action="/customer_payments/rpt_ccobrar7_pdf/<%= @company.id %>">
   <div class="field">
-      <input type="date" name="fecha1" value="2007-01-10" style = "width: 150px" >
+      <input type="date" name="fecha1" value="2018-01-01" style = "width: 150px" >
 
     </div>
   <div class="field">
-    <input type="date" name="fecha2" value="2017-01-20" style = "width: 150px" >
+    <input type="date" name="fecha2" value="2018-06-15" style = "width: 150px" >
     </div>
   <div class="field">
     <%= select_tag(:customer_id,options_from_collection_for_select(@customers,'id','name') ) %>
   </div>
 
     
-  <input type="submit" value="Ver" class="small_btn" />
-  <a href="/customer_payments/rpt_ccobrar7_pdf/<%= @company.id %>" > Generar Reporte </a>
+  <input type="submit" value="Generar Reporte "/>
+  
 </form>
 
 <br />

@@ -51,6 +51,7 @@ self.per_page = 20
   TABLE_HEADERS3 = ["ITEM",
                      "NRO.",
                      "FECHA",
+                     "CTA.BANCO",
                      "TD",
                      "DOC.",
                      "FEC.DOC.",

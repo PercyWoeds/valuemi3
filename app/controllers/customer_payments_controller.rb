@@ -970,6 +970,7 @@ class CustomerPaymentsController < ApplicationController
                 end 
                 
                 row << $lcCode
+                row << productItem.bank_acount.number
                 row << $lcFecha1 
                 row << "FT"
                 row << productItem.code 
