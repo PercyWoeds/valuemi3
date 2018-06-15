@@ -9,10 +9,11 @@
   <tr bgcolor="#B4D7F7">
     <td width = "18%" align ="left">Banco </td>
     <td width = "10%" align ="center">Moneda</td>
-        <td width = "5%" >Fecha</td>
+    <td width = "5%" >Fec.Comp.</td>
     <td width = "8%" align ="left"> Numero </td>
+    <td width = "5%" >Fec.Doc.</td>
     <td width = "35%" align ="left">Cliente</td>
-    <td width = "8%" align ="right"> Ajuste </td>
+    
     <td width = "8%" align ="right">Importe </td>
     <td width = "8%" align ="right">Nro.Doc.</td>
    </tr>
@@ -41,11 +42,11 @@
                   <tr>  
                     <td width = "18%" ><%= detalle.get_cuenta(detalle.bank_acount.id)    %></td>
                     <td width = "10%" ><%= detalle.get_moneda(detalle.bank_acount.moneda_id)  %></td>
-                    <td width = "5%" align ="right"><%= productItem.fecha.strftime("%d/%m%Y")  %> </td>
+                    <td width ="8%" align ="right"><%= detalle.fecha1.strftime("%d/%m/%Y")  %> </td>
                     <td width ="8%" align ="right"><%= productItem.code  %> </td>
+                    <td width = "5%" align ="right"><%= productItem.fecha.strftime("%d/%m%Y")  %> </td>
                     <td width ="35%" align ="left"><%= productItem.get_customer(productItem.customer_id) %>  </td>
                     
-                    <td width = "8%" align ="right"><%= sprintf("%.2f",productItem.ajuste.to_s)    %> </td>
                     <td width = "8%" align ="right"><%= sprintf("%.2f",productItem.total.to_s)  %> </td>
                     <td width = "8%" align ="right"><%= detalle.code   %> </td>
                   

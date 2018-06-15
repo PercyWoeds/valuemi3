@@ -2812,12 +2812,6 @@ def salidas(pdf)
     @banco = params[:bank_id]
     @tiporeporte = params[:tiporeporte]
     
-    puts "Tipo Reporte"
-    puts @tiporeporte 
-    puts "banco select "
-    puts @banco_select
-    
-    
     if @banco_select == "1"
       @customerpayment_rpt = @company.get_customer_payments_cabecera(@fecha1,@fecha2)  
       
