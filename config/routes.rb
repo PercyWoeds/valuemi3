@@ -115,6 +115,7 @@
     collection { get :reportes12}
     collection { get :reportes13}
     collection { get :reportes30}
+    collection { get :reportes31}
     
     collection { get :exportxls }
     collection { get :rpt_ccobrar3_pdf  }

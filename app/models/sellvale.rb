@@ -1,7 +1,7 @@
 class Sellvale < ActiveRecord::Base
  validates_uniqueness_of :numero
  validates_presence_of :fecha,:turno,:td,:caja,:serie,:numero,:cod_cli,:placa,:cod_prod,:placa,:cod_prod,:cantidad,:precio,:tipo,:td ,:fpago  
- validates_uniqueness_of :numero, scope: :serie
+ 
  
  belongs_to :factura_detail
     

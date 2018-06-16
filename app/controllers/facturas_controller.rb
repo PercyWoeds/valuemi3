@@ -652,6 +652,38 @@ def reportes10
   end
 
 
+def reportes31 
+  
+    @company=Company.find(1)          
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2] 
+  
+    @facturas = @company.get_venta_detallado(@fecha1,@fecha2)  
+   
+    case params[:print]
+      when "To PDF" then 
+        begin 
+         render  pdf: "Ventas",template: "varillajes/ventas_detalle_rpt.pdf.erb",locals: {:varillajes => @facturas },
+                  :header => {
+           :spacing => 5,
+                           :html => {
+                     :template => 'layouts/pdf-header.html',
+                           right: '[page] of [topage]'
+                  }
+               },
+               
+               footer: {
+                              spacing: 30,
+                 line: true
+               }
+               
+        end   
+      when "To Excel" then render xlsx: 'parte13_rpt_xls'
+      else render action: "index"
+    end
+  end
+
+
 
   def discontinue
     
