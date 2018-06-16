@@ -202,7 +202,6 @@
     var price = $("#ac_item_price").val();
     var discount = $("#ac_item_discount").val();
     
-    alert (mayorista); 
     
     if (isNumeric(quantity) && isNumeric(price) && isNumeric(discount)  && isNumeric(grifo) && isNumeric(mayorista) ) {
       

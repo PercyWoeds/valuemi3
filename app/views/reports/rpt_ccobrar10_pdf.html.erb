@@ -30,8 +30,9 @@ totals = []
       <input type="date" name="fecha2" value="2018-05-31" style = "width: 150px" >
     </div>
     <div>
-<div class="field">
-  
+      
+      
+ <div class="field">
   
   <%= check_box_tag("cbox1", value = "1", checked = false, options = {})  %> Todos los bancos 
   
@@ -43,6 +44,8 @@ totals = []
     <%= select_tag(:bank_id,options_from_collection_for_select(@bancos,'id','number') ) %>
   </div>
   
+  
+ 
   
   <p>
   <label for="tiporeporte"> Tipo de Reporte:</label><br>

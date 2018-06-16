@@ -614,9 +614,21 @@ def reportes10
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]    
     @moneda = params[:moneda_id]    
-
-    @facturas_rpt = @company.get_ventas_all(@fecha1,@fecha2)          
     
+    
+    @cbox1 = params[:cbox1]    
+    @cbox2 = params[:cbox2]    
+    
+    @cliente  = params[:customer_id]    
+    
+    
+    
+    
+   if @cbox1 == "1"
+    @facturas_rpt = @company.get_ventas_all(@fecha1,@fecha2)          
+   else
+    @facturas_rpt = @company.get_ventas_all2(@fecha1,@fecha2,@cliente)          
+   end 
     
     case params[:print]
       when "To PDF" then 

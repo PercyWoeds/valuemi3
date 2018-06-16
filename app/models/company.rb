@@ -725,7 +725,7 @@ customer_payments.fecha1
 from customer_payment_details   
 INNER JOIN facturas ON   customer_payment_details.factura_id = facturas.id
 INNER JOIN customer_payments ON customer_payments.id = customer_payment_details.customer_payment_id  
-WHERE facturas.tipoventa_id = ? and customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? and customer_payments.document_id <> 14 order by customer_payments.code',"3", "#{fecha1} 00:00:00",
+WHERE facturas.tipoventa_id = ? and customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? and customer_payments.document_id <> 14 order by customer_payments.code',"2", "#{fecha1} 00:00:00",
 "#{fecha2} 23:59:59" ])  
     
     return @facturas   
@@ -3971,9 +3971,17 @@ def get_facturas_by_day_value2(fecha1,fecha2,moneda,value='total')
        return facturas 
  
   end 
+  
   def  get_ventas_all(fecha1,fecha2) 
 
       facturas = Factura.where(["fecha >= ?  and fecha <=  ? and substring(code,1,2) <> ? "  , "#{fecha1} 00:00:00","#{fecha2} 23:59:59","BB"] ).order(:fecha,:code)
+     
+       return facturas 
+ 
+  end 
+  def  get_ventas_all2(fecha1,fecha2,customer) 
+
+      facturas = Factura.where(["fecha >= ?  and fecha <=  ? and substring(code,1,2) <> ?  and customer_id = ?"  , "#{fecha1} 00:00:00","#{fecha2} 23:59:59","BB",customer] ).order(:fecha,:code)
      
        return facturas 
  

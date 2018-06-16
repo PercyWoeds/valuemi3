@@ -1114,6 +1114,8 @@ def rpt_facturas_4
     @pagetitle = "Facturas por Cliente"    
     @customers = @company.get_customers()
     @monedas = Moneda.all 
+    @productos = Product.where(products_category_id: 1)
+    
   end 
 
   def rpt_facturas_all

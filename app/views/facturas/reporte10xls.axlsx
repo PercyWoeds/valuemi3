@@ -19,17 +19,22 @@ wb.styles do |s|
     
     wb.add_worksheet(name: "Basic work sheet") do |sheet|
     
-    sheet.add_row ["Fecha","TD", "Serie", "Numero", "Cod.Cli.","Cliente","Cod.Prod.","Producto", "Cantidad ","Precio","Importe","Imp.Lista","Facturado","Tipo" ], :style => title 
+    tot_0 =0
+    tot_1 = 0
+    tot_2 = 0
+    tot_3 = 0
+    
+    sheet.add_row ["Fecha","Documento","R.U.C.","Cliente","Cantidad ","Precio","Subtotal","I.G.V.","Importe" ], :style => title 
     
    @facturas_rpt.each do |payment|
      
-      cantidad = credito.get_invoices_cantidad
+      cantidad = payment.get_invoices_cantidad
                      if  cantidad > 0
                         precio = payment.total / cantidad 
                      else
-                        preecio = 0
+                        precio = 0
                      end
-    sheet.add_row [payment.fecha,payment.code,payment.customer.ruc,payment.customer.name ,precio,payment.subtotal,payment.tax,payment.total], :style => [date,cadena,cadena,cadena,currency,currency,currency,currency,currency]
+    sheet.add_row [payment.fecha,payment.code,payment.customer.ruc,payment.customer.name,cantidad,precio,payment.subtotal,payment.tax,payment.total], :style => [date,cadena,cadena,cadena,currency,currency,currency,currency,currency,currency]
     
     tot_0 += cantidad
     
@@ -39,7 +44,9 @@ wb.styles do |s|
     
    end
    
-   sheet.add_row [payment.fecha,payment.code,payment.customer.ruc,payment.customer.name ,precio,payment.subtotal,payment.tax,payment.total], :style => [date,cadena,cadena,cadena,cadena,cadena,cadena,cadena,currency,currency,currency,currency,cadena,cadena]
+   tot_4 = 0
+   blanco = ""
+   sheet.add_row [blanco,blanco,blanco,blanco,tot_0,tot_4,tot_1,tot_2,tot_3], :style => [cadena,cadena,cadena,cadena,currency,currency,currency,currency,currency]
    
 end
 end 
