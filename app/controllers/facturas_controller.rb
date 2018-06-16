@@ -1653,6 +1653,7 @@ def newfactura2
     company_id = @invoice[:company_id]
     if @invoice.destroy
       @invoice.delete_guias()
+      @invoice.delete_facturas()
     end   
 
 
