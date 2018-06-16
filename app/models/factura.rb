@@ -289,13 +289,28 @@ class Factura < ActiveRecord::Base
   end
   
 
- def delete_guias()
+  def delete_guias()
     invoice_guias = Deliveryship.where(factura_id: self.id)
     
     for ip in invoice_guias
       ip.destroy
     end
   end
+  
+  def delete_facturas()
+    invoice_guias = FacturaDetail.where(factura_id: self.id)
+    
+    for ip in invoice_guias
+    
+      sellvale_process = Sellvale.find(ip.sellvale.id)
+      sellvale_process.processed = "0"
+      if sellvale.save
+        ip.destroy
+      end 
+      
+    end
+  end
+  
 
   def identifier
     return "#{self.code} - #{self.customer.name}"
