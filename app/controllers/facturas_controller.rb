@@ -2336,7 +2336,7 @@ def newfactura2
           precio_descto = item.importe.to_f / item.cantidad 
           preciolista = item.implista / item.cantidad 
           
-          new_invoice_detail = FacturaDetail.new(factura_id: $lcFacturaid  ,sellvale_id: item.id , product_id: b.id ,price:preciolista, price_discount: precio_descto, quantity: item.cantidad,total: item.importe)
+          new_invoice_detail = FacturaDetail.new(factura_id: $lcFacturaId  ,sellvale_id: item.id , product_id: b.id ,price:preciolista, price_discount: precio_descto, quantity: item.cantidad,total: item.importe)
           
           if new_invoice_detail.save
             a= Sellvale.find(item.id)
@@ -2346,7 +2346,7 @@ def newfactura2
         end              
     end
     
-    @invoice = Factura.find($lcFacturaid)
+    @invoice = Factura.find($lcFacturaId)
     
     @invoice[:total] = @invoice.get_subtotal2.round(2)
     
