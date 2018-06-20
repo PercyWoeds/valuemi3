@@ -82,8 +82,8 @@ before_filter :authenticate_user!
               row << sprintf("%.2f",product.importe)
             end
             if product.tm.to_i != 6
-              lcDato = product.tranportorder.code << " - " << product.tranportorder.truck.placa<<" - " << product.tranportorder.get_placa(product.tranportorder.truck2_id)
-              row << lcDato 
+              
+              row << product.gasto.descrip
               row << product.detalle
               row << product.tranportorder.get_punto(product.tranportorder.ubication_id)
             else
