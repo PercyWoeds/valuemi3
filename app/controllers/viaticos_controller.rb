@@ -35,7 +35,7 @@ before_filter :authenticate_user!
         pdf.stroke_bounds
         pdf.move_down 15
         pdf.font "Helvetica", :style => :bold do
-          pdf.text "R.U.C: 20424092941", :align => :center
+          pdf.text "R.U.C: 20555691263", :align => :center
           pdf.text "LIQUIDACION DE VIATICOS", :align => :center
           pdf.text "#{@viatico.code}", :align => :center,
                                  :style => :bold
