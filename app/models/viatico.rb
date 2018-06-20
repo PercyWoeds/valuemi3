@@ -254,17 +254,17 @@ self.per_page = 20
     return "#{self.code} "
   end
   def get_viaticos
-      @viaticos = ViaticoDetail.where("viatico_id = ? ",self.id).order(:destino_id,:id,:document_id)
+      @viaticos = ViaticoDetail.where("viatico_id = ? ",self.id).order(:destino_id,:gasto_id,:id,:document_id)
   end
 
   def get_viaticos_cheque
       lcCheque = 6
-      @viaticos = ViaticoDetail.where("viatico_id = ? and document_id = ?",self.id, lcCheque).order(:destino_id,:id,:document_id)
+      @viaticos = ViaticoDetail.where("viatico_id = ? and document_id = ?",self.id, lcCheque).order(:destino_id,:gasto_id,:id,:document_id)
   end
 
   def get_viaticos_lima
       lcCheque = 6
-      @viaticos = ViaticoDetail.where("viatico_id = ? and document_id <> ? and destino_id = ? ",self.id, lcCheque,1).order(:destino_id,:id,:document_id)
+      @viaticos = ViaticoDetail.where("viatico_id = ? and document_id <> ? and destino_id = ? ",self.id, lcCheque,1).order(:destino_id,:gasto_id,:id,:document_id)
   end
   
   def get_viaticos_provincia

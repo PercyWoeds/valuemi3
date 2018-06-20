@@ -212,7 +212,7 @@ before_filter :authenticate_user!
                                           columns([9]).align=:left 
                                         end
 
-      pdf.move_down 10  
+      pdf.move_down 5
       pdf
 
     end
