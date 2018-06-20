@@ -269,7 +269,7 @@ self.per_page = 20
   
   def get_viaticos_provincia
       lcCheque = 6
-      @viaticos = ViaticoDetail.where("viatico_id = ? and document_id <> ? and destino_id = ?",self.id, lcCheque,2).order(:destino_id,:id,:document_id)
+      @viaticos = ViaticoDetail.where("viatico_id = ? and document_id <> ? and destino_id = ?",self.id, lcCheque,2).order(:destino_id,gasto_id,:id,:document_id)
   end
   
 

@@ -678,7 +678,7 @@ def reportes31
                }
                
         end   
-      when "To Excel" then render xlsx: 'parte13_rpt_xls'
+      when "To Excel" then render xlsx: 'ventas_detalle_rpt'
       else render action: "index"
     end
   end
@@ -1222,7 +1222,7 @@ def reportes31
   # GET /invoices/1.xml
   def show
     @invoice = Factura.find(params[:id])
-    $lcIdFactura=@invoice.id 
+    
     @customer = @invoice.customer
     @tipodocumento = @invoice.document 
     
@@ -2336,7 +2336,8 @@ def newfactura2
           precio_descto = item.importe.to_f / item.cantidad 
           preciolista = item.implista / item.cantidad 
           
-          new_invoice_detail = FacturaDetail.new(factura_id: $lcIdFactura  ,sellvale_id: item.id , product_id: b.id ,price:preciolista, price_discount: precio_descto, quantity: item.cantidad,total: item.importe)
+          new_invoice_detail = FacturaDetail.new(factura_id: $lcFacturaid  ,sellvale_id: item.id , product_id: b.id ,price:preciolista, price_discount: precio_descto, quantity: item.cantidad,total: item.importe)
+          
           if new_invoice_detail.save
             a= Sellvale.find(item.id)
             a.processed ='1'
