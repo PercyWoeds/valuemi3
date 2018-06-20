@@ -199,8 +199,6 @@
             <td width= "25%" align ="left">  RESTAURANTE            : </td>
             <td width= "25%" >  <%=   sprintf("%.2f",venta_16)  %>                              </td>
             
-            <td width = "25%" align ="left">  &#9475;   FALTANTES    :  </td>
-            <td width = "25%" align ="right"> <%=    sprintf("%.2f",venta_13)  %> </td>
             
             
             </tr>
@@ -208,8 +206,6 @@
             <tr>
             <td width= "25%" align ="left">  MARKET            : </td>
             <td width= "25%" >  <%=   sprintf("%.2f",venta_15)  %>                              </td>
-            <td width = "25%" align ="left">  &#9475;   SOBRANTES  :  </td>
-            <td width = "25%" align ="right"><%=   sprintf("%.2f",venta_14)  %>  </td>
             
             
             </tr>
@@ -253,6 +249,26 @@
             
             </tr>
     </table>
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+  <tr bgcolor="#B4D7F7">
+    <td width="100%"> FALTANTE/SOBRANTE  </td>
+  </tr>
+  </table>
+  
+    <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+      <tr>
+        <td width = "75%" align ="left">
+      </tr>
+      <tr>
+            <td width = "25%" align ="left">  &#9475;   FALTANTES    :  </td>
+            <td width = "25%" align ="right"> <%=    sprintf("%.2f",venta_13)  %> </td>
+      </tr>
+      <tr>
+            <td width = "25%" align ="left">  &#9475;   SOBRANTES  :  </td>
+            <td width = "25%" align ="right"><%=   sprintf("%.2f",venta_14)  %>  </td>
+        
+      </tr>  
+    </table>    
      
   <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
   
