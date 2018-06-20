@@ -199,6 +199,8 @@
             <td width= "25%" align ="left">  RESTAURANTE            : </td>
             <td width= "25%" >  <%=   sprintf("%.2f",venta_16)  %>                              </td>
             
+            <td width = "25%" align ="left">  &#9475;  VENTA ADELANTADA :  </td>
+            <td width = "25%" align ="right">   <%=   sprintf("%.2f",venta_18)  %>                              </td>
             
             
             </tr>
@@ -206,15 +208,15 @@
             <tr>
             <td width= "25%" align ="left">  MARKET            : </td>
             <td width= "25%" >  <%=   sprintf("%.2f",venta_15)  %>                              </td>
-            
+            <td width = "25%" align ="left">  &#9475;   </td>
             
             </tr>
             
             <tr>
             <td width= "25%" align ="left">  PROMOCION            : </td>
             <td width= "25%" >                                </td>
-            <td width = "25%" align ="left">  &#9475;  VENTA ADELANTADA :  </td>
-            <td width = "25%" align ="right">   <%=   sprintf("%.2f",venta_18)  %>                              </td>
+            <td width = "25%" align ="left">  &#9475;   </td>
+            <td width = "25%" align ="right">              </td>
             
             </tr>
             
@@ -256,19 +258,30 @@
   </table>
   
     <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+    
+    
+    
       <tr>
-        <td width = "75%" align ="left">
-      </tr>
-      <tr>
+            <td width = "50%" align ="left">
             <td width = "25%" align ="left">  &#9475;   FALTANTES    :  </td>
             <td width = "25%" align ="right"> <%=    sprintf("%.2f",venta_13)  %> </td>
       </tr>
       <tr>
+            <td width = "50%" align ="left">
             <td width = "25%" align ="left">  &#9475;   SOBRANTES  :  </td>
             <td width = "25%" align ="right"><%=   sprintf("%.2f",venta_14)  %>  </td>
         
-      </tr>  
+      </tr>
+      
+      <tr>
+            <td width = "50%" align ="left">
+            <td width = "25%" align ="left">  &#9475;   TOTALES :  </td>
+            <td width = "25%" align ="right"><%=   sprintf("%.2f",venta_14+venta_13)  %>  </td>
+        
+      </tr>
+      
     </table>    
+    
      
   <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
   
