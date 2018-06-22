@@ -1,0 +1,185 @@
+<html>
+<body>
+  <h6 ><center>  Desde: <%= @fecha1 %> Hasta: <%= @fecha2 %> </center>   </h6>
+
+  <table style='font-family:"Courier New", Courier, monospace; font-size:60% ;width:100%'>
+  
+  <tr bgcolor="#B4D7F7">
+     <td width="28%" align= "center">DOCUMENTO</td> 
+     <td width="6%"></td> 
+     <td width="21%" align="center">ENTRADAS</td> 
+     <td width="21%" align="center">SALIDAS</td> 
+     <td width="24%" align="center" >SALDO FINAL</td> 
+     
+ </tr>
+ </table> 
+ 
+  <table style='font-family:"Courier New", Courier, monospace; font-size:60% ;width:100%'>
+  <tr bgcolor="#B4D7F7">
+      
+     <td width="8%">FECHA</td> 
+     <td width="4%">TIPO  </td> 
+     <td width="6%">SERIE</td> 
+     <td width="10%">NUMERO</td> 
+     <td width="6%">OP.</td> 
+     
+     <td width="7%">CANTIDAD </td> 
+     <td width="7%">COSTO UNITARIO</td>                      
+     <td width="7%">COSTO TOTAL         </td> 
+     
+     <td width="7%">CANTIDAD  </td> 
+     <td width="7%">COSTO UNITARIO</td>                      
+     <td width="7%">COSTO TOTAL         </td>                      
+     
+     <td width="8%">CANTIDAD </td> 
+     <td width="8%">COSTO UNITARIO </td> 
+     <td width="8%">TOTAL           </td> 
+    </tr>
+  
+  </table>
+
+  
+  <table style='font-family:"Courier New", Courier, monospace; font-size:60% ;width:100%'>
+      <% nroitem = 1%>
+      <% @cantidad1 =  0%>
+      <% @cantidad2 =  0%>
+      <% @cantidad3 =  0%>
+      <% @cantidad4 =  0%>
+      <% @cantidad5 =  0%>
+      <% @cantidad6 =  0%>
+      
+      <% if @movements %>
+      
+            <% lcProduct = @movements.first.product_id %>
+            <% lcProductCode = @movements.first.product.code %>
+            <% lcProductName = @movements.first.product.name %>
+            <tr bgcolor="#B4D7F7">
+             <td width= "8%" > <%=lcProductCode   %></td>
+             <td width= "4%" > <%=lcProductName %> </td>
+             
+             
+             
+            </tr>
+            
+        
+            <% for  stock in @movements %>
+            
+            <% if lcProduct == stock.product_id %>
+            
+            
+            <tr>
+               <td width= "8%" > <%=stock.fecha.strftime("%d-%m-%Y") %></td>                
+               <td width= "4%" > <%=stock.document.descripshort %> </td>
+               <td width= "6%" >  </td> 
+               <td width= "10%" > <%=stock.documento %>  </td>                           
+               
+               <td width= "6%" > <%=stock.tm %> </td>
+
+                
+                <% if stock.ingreso != 0 %>    
+                <td width= "7%" align="right" > <%= sprintf("%.2f",stock.ingreso.to_s)  %> </td>
+                <td width= "7%" align="right"><%=sprintf("%.2f",stock.costo_ingreso.to_s) %> </td>
+                <% total1 = stock.ingreso*stock.costo_ingreso %>
+                <td width= "7%" align="right"> <%=sprintf("%.2f",total1.to_s)%> </td>
+                <td width= "7%" align="right"> </td>
+                <td width= "7%" align="right"> </td>
+                <td width= "7%" align="right"> </td>
+                <%total2 = 0%>
+
+                <% else%>
+                <td width= "7%" align="right"> </td>
+                <td width= "7%" align="right"> </td>
+                <td width= "7%" align="right"> </td>
+                
+                <td width= "7%" align="right"><%= sprintf("%.2f",stock.salida.to_s ) %></td>
+                <td width= "7%" align="right"><%= sprintf("%.2f",stock.costo_salida.to_s)%> </td>
+                <% total1 = 0%>
+                <% total2 = stock.salida*stock.costo_salida%>
+                <td width= "7%" align="right"> <%=sprintf("%.2f",total2.to_s)%> </td>
+                <% end %>
+                
+                <td width= "8%" align="right"> <%= sprintf("%.2f",stock.stock_final.to_s)%> </td>
+                <td width= "8%" align="right"> <%= sprintf("%.2f",stock.costo_saldo.to_s)%> </td>
+                <% total3 = stock.stock_final*stock.costo_saldo%>
+                <td width= "8%" align="right"> <%= sprintf("%.2f",total3.to_s)%> </td>  
+
+              </tr>
+              
+              <% @cantidad1 += stock.ingreso  %>
+              <% @cantidad2 += total1 %>
+              <% @cantidad3 += stock.salida %>
+              <% @cantidad4 += total2 %>
+              
+            
+            <% else %>
+            
+            <% lcProduct = stock.product_id %>
+            
+            <tr bgcolor="#B4D7F7">
+             <td width= "8%" > </td>
+             <td width= "4%" > </td>
+             <td width= "6%" > </td>
+             <td width= "10%"> TOTALES </td>  </td>
+             <td width= "6%" ></td>
+             
+             
+             <td width= "7%" align="right"><%= sprintf("%.2f",@cantidad1.to_s) %></td>
+             <td width= "7%" >  </td>
+             <td width= "7%" align="right"> <%=sprintf("%.2f",@cantidad2.to_s)%> </td>
+             
+             <td width= "7%" align="right"> <%=sprintf("%.2f",@cantidad3.to_s)%> </td>
+             <td width= "7%" >  </td>
+             <td width= "7%" align="right"> <%=sprintf("%.2f",@cantidad4.to_s)%> </td>
+             
+             <td width= "8%" > </td>
+             <td width= "8%" > </td>
+             <td width= "8%" > </td>
+             </tr>
+            
+            <%@cantidad1=0%>
+            <%@cantidad2=0%>
+                        
+            <%@cantidad3=0%>
+            <%@cantidad4=0%>                        
+                                    
+            <tr bgcolor="#B4D7F7">
+               <td width= "5%" > <%=stock.product.code  %></td>
+               <td width= "5%" > <%=stock.product.name %> </td>
+            </tr>
+            
+            <%end%>
+            
+        <%end  %>
+             
+              <% @cantidad5 += stock.stock_final %>
+              <% @cantidad6 += total3 %>
+               
+            <tr bgcolor="#B4D7F7">
+             <td width= "8%" > </td>
+             <td width= "4%" > </td>
+             <td width= "6%" > </td>
+             <td width= "10%"> TOTALES  </td>
+             <td width= "6%" > </td>
+             
+             
+             <td width= "7%" align="right"><%= sprintf("%.2f",@cantidad1.to_s) %></td>
+             <td width= "7%" >  </td>
+             <td width= "7%" align="right"> <%=sprintf("%.2f",@cantidad2.to_s)%> </td>
+             
+             <td width= "7%" align="right"> <%=sprintf("%.2f",@cantidad3.to_s)%> </td>
+             <td width= "7%" >  </td>
+             <td width= "7%" align="right"> <%=sprintf("%.2f",@cantidad4.to_s)%> </td>
+             
+             
+             <td width= "8%" > </td>
+             <td width= "8%" > </td>
+             <td width= "8%" > </td>
+             </tr>
+                <hr>  
+                
+        <% end %>        
+     </table>
+      
+    </body>
+      
+ </html>

@@ -129,6 +129,11 @@
     resources :ventaisla_details, except: [:index,:show], controller: "ventaislas/ventaisla_details"
      
   end 
+  
+  resources :stocks do 
+    collection { get :rpt_stocks4 }
+  end 
+  
    resources :facturas do
     resources :factura_details, except: [:index,:show], controller: "facturas/facturas_details"
     collection { post :discontinue }

@@ -655,7 +655,7 @@ end
 
   def rpt_stocks4
     
-    @company=Company.find(params[:company_id])      
+    @company=Company.find(1)      
     @fecha1 = params[:fecha1] 
     @fecha2 = params[:fecha2] 
     @categoria =params[:products_category_id]
@@ -663,26 +663,30 @@ end
     @namecategoria= @company.get_categoria_name(@categoria)            
 
     @movements = @company.get_stocks_inventarios3(@fecha1,@fecha2,@categoria)   
-      
-    Prawn::Document.generate("app/pdf_output/stocks4.pdf") do |pdf|            
-
-        pdf.font_families.update("Open Sans" => {
-          :normal => "app/assets/fonts/OpenSans-Regular.ttf",
-          :italic => "app/assets/fonts/OpenSans-Italic.ttf",
-        })
-        pdf.start_new_page(:size => "A3")
-        pdf.font "Open Sans",:size =>6
+    
+    case params[:print]
+      when "To PDF" then 
+        begin 
+         render  pdf: "Facturas ",template: "stocks/rpt_stocks4.pdf.erb",
+         :orientation      => 'Landscape',
+         locals: {:facturass => @movements },
+           :header => {
+           :spacing => 5,
+                           :html => {
+                     :template => 'layouts/pdf-header.html',
+                           right: '[page] of [topage]'
+                  }
+               }
+               
+               
+        end   
+      when "To Excel" then render xlsx: 'rpt_stocks4xls'
         
-        pdf = build_pdf_header4(pdf)
-        pdf = build_pdf_body4(pdf)
-        build_pdf_footer4(pdf)
-        $lcFileName =  "app/pdf_output/stocks4.pdf"      
-        
-    end     
-
-    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName    
-    send_file("app/pdf_output/stocks4.pdf", :type => 'application/pdf', :disposition => 'inline')
+      else render action: "index"
+    end
+    
     MovementDetail.delete_all 
+    
   end
 
 

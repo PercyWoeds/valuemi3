@@ -2925,8 +2925,8 @@ def get_purchaseorder_detail2(fecha1,fecha2)
                     movdetail.costo_ingreso = $lcPreciosinigv * @dolar.compra
                     $lcprice = $lcPreciosinigv * @dolar.compra
                   else
-                    movedetail.costo_ingreso = 0      
-                    $lcprice = 0
+                    movdetail.costo_ingreso = $lcPreciosinigv      
+                    $lcprice = $lcPreciosinigv 
                   end 
 
                 end    

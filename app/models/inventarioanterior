@@ -1,0 +1,43 @@
+<%else%>
+              
+               <% lcProduct = stock.product_id %>
+               <% @cantidad5 += stock.stock_final %>
+               <% @cantidad6 += total3 %>
+               
+                <tr>
+              <td width= "5%" > <%= stock.fecha.strftime("%d%m%Y") %> </td>               
+               <td width= "5%" ><%= stock.document.descripshort %> </td>
+               <td width= "5%" > </td>
+               <td width= "5%" ><%= stock.documento %> </td>                            
+               <td width= "5%" ><%= stock.tm %> </td>
+
+                <td width= "5%" > <%= sprintf("%.2f",stock.ingreso.to_s)%> </td>
+                  
+                <td width= "5%" ><%= sprintf("%.2f",stock.costo_ingreso.to_s)%> </td>
+                
+                <%total1 = stock.ingreso*stock.costo_ingreso%>
+                <td width= "5%" > <%= sprintf("%.2f",total1.to_s) %> </td>
+              
+                <td width= "5%" > <%= sprintf("%.2f",stock.salida.to_s)%> </td>
+
+                <td width= "5%" > <%= sprintf("%.2f",stock.costo_salida.to_s) %> </td>
+
+                <%total2 = stock.salida*stock.costo_salida%>
+                
+                <td width= "5%" > <%= sprintf("%.2f",total2.to_s) %> </td>
+              
+              
+              <td width= "5%" > <%= sprintf("%.2f",stock.stock_final.to_s)%> </td>
+              <td width= "5%" ><%= sprintf("%.2f",stock.costo_saldo.to_s)%> </td>
+              <% total3 = stock.stock_final*stock.costo_saldo %>
+              <td width= "5%" ><%= sprintf("%.2f",total3.to_s) %> </td>
+              
+              </tr>
+              
+
+             <%  @cantidad1 += stock.ingreso %>
+             <% @cantidad2 += total1 %>
+              <% @cantidad3 += stock.salida %>
+              <% @cantidad4 += total2 %>
+            
+            
