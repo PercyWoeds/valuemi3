@@ -1419,6 +1419,8 @@ def rpt_facturas_4
     @pagetitle = "Listado de Compras  "    
     @products = @company.get_products()
     @categories = ProductsCategory.all 
+    @suppliers = @company.get_suppliers()
+    
   end
 
   def rpt_purchaseorder2_all_all
@@ -1433,12 +1435,15 @@ def rpt_facturas_4
       @company = Company.find(params[:company_id])    
     @pagetitle = "Listado de Productos "    
     @products = @company.get_products()
+    @suppliers = @company.get_suppliers()
     
   end
   def rpt_purchase2_all
       @company = Company.find(params[:company_id])    
     @pagetitle = "Listado de Productos "    
     @products = @company.get_products()
+    @suppliers = @company.get_suppliers()
+    
     
   end
   def rpt_purchase3_all

@@ -19,8 +19,18 @@ class FacturasController < ApplicationController
     case params[:print]
       when "To PDF" then 
         begin 
-         render  pdf: "Ordenes ",template: "varillajes/parte_rpt.pdf.erb",locals: {:varillajes => @parte_rpt}
+         render  pdf: "Ordenes ",template: "varillajes/parte_rpt.pdf.erb",locals: {:varillajes => @parte_rpt},
+         :header => {
+           :spacing => 5,
+                           :html => {
+                     :template => 'layouts/pdf-header.html',
+                           right: '[page] of [topage]'
+                  }
+               }
+               
+               
         
+             
         end   
       when "To Excel" then render xlsx: 'exportxls'
       else render action: "index"

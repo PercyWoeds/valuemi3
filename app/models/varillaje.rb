@@ -422,6 +422,76 @@ def  get_inicial(fecha1,producto,producto2)
     return ret
  
  end 
+
+ def  get_saldo_final_combustible(fecha2,producto,producto1,producto2)
+     
+     
+   parts = fecha2.split("-")
+   puts "anio"
+   puts parts[0]
+   puts "mes"
+   puts parts[1] 
+   puts "dia "
+   puts parts[2] 
+   
+   anio = parts[0] 
+   mes = parts[1]
+   
+   
+   fecha1 = parts[0]  << "-" << parts[1]  << "-01" 
+   puts "fecha 1"
+   puts fecha1 
+   
+   #Ventas 
+   saldo_final = 0 
+   $i = 1
+   $num = parts[2].to_i 
+   
+   fechax= fecha1.to_date 
+   puts "inicial "
+   puts fechax
+   
+   
+   until $i > $num  do
+    puts("Inside the loop i = #$i" )
+    puts "fecha x" 
+    puts fechax     
+       wvar  = Varillaje.find_by(["fecha >= ? and fecha<=? and tanque_id = ?", "#{fechax} 00:00:00","#{fechax} 23:59:59",producto2]) 
+       
+       if wvar == nil    
+           inicial = 0
+           varilla =0
+           dife = 0
+       else 
+           inicial = wvar.inicial 
+           varilla = wvar.varilla 
+           compras = self.get_compras(fechax,producto)
+            ventas_qty = self.get_ventas(fechax,producto)
+            afericion = self.get_afericion_total_dia_producto_qty(fechax,producto2)
+            saldo =  self.inicial + compras - ventas_qty + afericion 
+            dife =  self.varilla - saldo 
+            puts "datos..."
+            puts inicial
+            puts varilla
+            puts compras
+            puts ventas_qty
+            puts afericion
+            puts saldo
+            puts dife 
+                
+          end 
+        
+    
+     puts dife         
+    saldo_final += dife 
+    fechax = fechax.to_date + 1.day 
+    $i +=1;
+   end 
+     
+    return  saldo_final 
+        
+
+ end 
  
  
  def get_customer_payments(fecha1,fecha2)

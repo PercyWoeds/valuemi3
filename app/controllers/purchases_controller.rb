@@ -259,8 +259,17 @@ WHERE purchase_details.product_id = ?',params[:id] ])
     @fecha1 =params[:fecha1]
     @fecha2 =params[:fecha2]
     @tiporeporte =params[:tiporeporte]
-
-    @rpt_detalle_purchase = @company.get_purchases_day_tipo(@fecha1,@fecha2,@tiporeporte)
+    
+    supplier_select = params[:cbox1]
+    proveedor = params[:supplier_id]
+    
+    
+    if supplier_select == "1"
+        @rpt_detalle_purchase = @company.get_purchases_day_tipo(@fecha1,@fecha2,@tiporeporte)    
+    else
+        @rpt_detalle_purchase = @company.get_purchases_day_tipo2(@fecha1,@fecha2,@tiporeporte,proveedor)    
+    end 
+    
     Prawn::Document.generate "app/pdf_output/orden_1.pdf" , :page_layout => :landscape do |pdf|    
         
         pdf.font "Helvetica"
@@ -838,7 +847,19 @@ WHERE purchase_details.product_id = ?',params[:id] ])
     @fecha2 = params[:fecha2]    
     @tiporeporte =params[:tiporeporte]
     
-    @facturas_rpt = @company.get_purchases_day_tipo(@fecha1,@fecha2,@tiporeporte)
+    supplier_select = params[:cbox1]
+    proveedor = params[:supplier_id]
+    
+    
+    if supplier_select == "1"
+        @facturas_rpt = @company.get_purchases_day_tipo(@fecha1,@fecha2,@tiporeporte)
+    else
+        @facturas_rpt = @company.get_purchases_day_tipo2(@fecha1,@fecha2,@tiporeporte,proveedor)
+    end 
+    
+    
+    
+    
 
      
 

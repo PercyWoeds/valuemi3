@@ -2,23 +2,23 @@
 <body>
     
   
-  <h4 ><center> Parte Diario </center>   </h4>
-  <h5><center> Fecha: <%= @fecha %> </center></h5>
+  <h4 ><center> Parte Diario:  <%= @fecha %>   </center>   </h4>
   <font size="2" face="Courier New" >  
   
   <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
   <tr bgcolor="#B4D7F7">
     <td width="5%"> Tanque  </td>
-    <td width="15%"> Producto  </td>
+    <td width="10%"> Producto  </td>
     <td width="10%"> Inicial</td>
     <td width="10%">  Compras </td>
-    <td width="10%"> Directo</td>
+    <td width="4%"> Directo</td>
     <td width="10%"> Venta</td>
     <td width="10%"> Stock Final </td>
     <td width="10%"> Medicion</td>
-    <td width="5%"> Dife_dia </td>
-    <td width="5%"> Dife_cont </td>
-    <td width="5%"> Ventas S/.</td>
+    <td width="8%"> Dife_dia </td>
+    <td width="8%"> Dife_mes </td>
+    <td width="8%"> Dife_cont </td>
+    <td width="10%"> Ventas S/.</td>
     
   </tr>
   </table>
@@ -36,28 +36,24 @@
                    
                     
                    <tr>
-                    <td width= "5%" ><%=  product0.tanque.code %></td>
-                    <td width= "10%" ><%=  product0.tanque.product.name %></td>
-                    <td width = "8%" align ="right"><%= sprintf("%.2f",product0.inicial.to_s)   %></td>
-                    <td width = "8%" align ="right"><%= sprintf("%.2f",compras )   %></td>
-                    <td width = "8%" align ="right"><%= sprintf("%.2f",venta_directa_qty)   %> </td>
-                  
+                    <td width = "5%" ><%=  product0.tanque.code %></td>
+                    <td width = "10%" ><%=  product0.tanque.product.name %></td>
+                    <td width = "10%" align ="right"><%= sprintf("%.2f",product0.inicial.to_s)   %></td>
+                    <td width = "10%" align ="right"><%= sprintf("%.2f",compras )   %></td>
+                    <td width = "4%" align ="right"><%= sprintf("%.2f",venta_directa_qty)   %> </td>
                     <td width = "10%" align ="right"><%= sprintf("%.2f",venta_neta  )  %></td>
-                    
                     <% saldo =  product0.inicial + compras - ventas_qty - venta_directa_qty + afericion %>
-                    
-                    
-                    <td width = "8%" align ="right"><%= sprintf("%.2f",saldo.to_s)   %></td>
-                    <td width = "8%" align ="right"><%= sprintf("%.3f",product0.varilla.to_s)   %></td>
+                    <td width = "10%" align ="right"><%= sprintf("%.2f",saldo.to_s)   %></td>
+                    <td width = "10%" align ="right"><%= sprintf("%.3f",product0.varilla.to_s)   %></td>
                     <% dife =  product0.varilla - saldo %>
-                    
-                    <td width = "5%" align ="right"><%= sprintf("%.2f",dife.to_s)   %></td>
-                    
+                    <td width = "8%" align ="right"><%= sprintf("%.2f",dife.to_s)   %></td>
                     <% dife_soles = product0.get_ventas_importe(@fecha,product0.tanque.product.id) - product0.get_ventas_contometros_producto_todo(@fecha,product0.tanque.product.code.to_s)-  product0.get_ventas_contometros_descuento_producto(@fecha,product0.tanque.product.code.to_s)  - product0.get_afericion_total_dia_producto(@fecha,product0.tanque.id)   %>
-              
                     
-                    <td width = "5%" align ="right"><%= sprintf("%.2f",dife_soles)  %></td>
-                    <td width = "5%" align ="right"><%= sprintf("%.2f",product0.get_ventas_contometros_producto_todo(@fecha,product0.tanque.product.code.to_s) + product0.get_ventas_contometros_descuento_producto(@fecha,product0.tanque.product.code.to_s) -  product0.get_afericion_total_dia_producto(@fecha,product0.tanque.id))   %></td>
+                    <% dife_mes = product0.get_saldo_final_combustible(@fecha,product0.tanque.product.id,product0.tanque.product.code.to_s,product0.tanque.id) %>
+                    
+                    <td width = "8%" align ="right"><%=  sprintf("%.2f",dife_mes.to_s)   %></td>
+                    <td width = "8%" align ="right"><%= sprintf("%.2f",dife_soles.to_s)  %></td>
+                    <td width = "10%" align ="right"><%= sprintf("%.2f",product0.get_ventas_contometros_producto_todo(@fecha,product0.tanque.product.code.to_s) + product0.get_ventas_contometros_descuento_producto(@fecha,product0.tanque.product.code.to_s) -  product0.get_afericion_total_dia_producto(@fecha,product0.tanque.id))   %></td>
                     </tr>
                         
                     

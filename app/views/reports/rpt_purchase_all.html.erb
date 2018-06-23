@@ -37,6 +37,16 @@ totals = []
   </select>
 </p>
 
+<div class="field">
+  <%= check_box_tag("cbox1", value = "1", checked = true , options = {})  %> Todos los proveedores 
+ </div>
+ 
+ <div class="field">
+    <%= select_tag(:supplier_id,options_from_collection_for_select(@suppliers,'id','name') ) %>
+ </div>
+ 
+ 
+
   <input type="submit" value="Generar"  />
   
 </form>
