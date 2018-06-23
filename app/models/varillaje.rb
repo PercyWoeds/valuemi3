@@ -468,8 +468,8 @@ def  get_inicial(fecha1,producto,producto2)
            compras = self.get_compras(fechax,producto)
             ventas_qty = self.get_ventas(fechax,producto)
             afericion = self.get_afericion_total_dia_producto_qty(fechax,producto2)
-            saldo =  self.inicial + compras - ventas_qty + afericion 
-            dife =  self.varilla - saldo 
+            saldo =  inicial + compras - ventas_qty + afericion 
+            dife =  varilla - saldo 
             puts "datos..."
             puts inicial
             puts varilla
