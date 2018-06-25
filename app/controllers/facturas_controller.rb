@@ -1095,7 +1095,7 @@ def reportes31
         lcPsigv1= lcPsigv*1.18
         lcPcigv = lcPsigv1.round(2)
         lcCantidad= productItem.quantity
-        lcDescrip << productItem.name 
+        lcDescrip =  productItem.name 
         
         a = ""        
         lcDes1 = ""
