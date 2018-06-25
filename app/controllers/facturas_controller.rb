@@ -2589,7 +2589,7 @@ end
         end 
 
         
-         if $lcMoneda == "D"
+        if $lcMoneda == "D"
             case_49 = InvoiceGenerator.new(7,49,5,$lg_serie_factura).with_different_currency2(true)
         else
             case_3 = InvoiceGenerator.new(1, 3, 1,$lg_serie_factura).with_igv3(true)
