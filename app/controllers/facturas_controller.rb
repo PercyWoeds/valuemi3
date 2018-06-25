@@ -1101,33 +1101,6 @@ def reportes31
         a = ""        
         lcDes1 = ""
 
-        begin
-          a << " "
-              for guia in f.get_guias2(f.id)
-              a << " GT: " <<  guia.code << " "
-              if guia.description == nil
-                
-              else  
-                  a << " " << guia.description                   
-              end   
-              existe1 = f.get_guias_remision(guia.id)
-                if existe1.size > 0 
-                  a<<  "\n GR:" 
-                  for guias in  f.get_guias_remision(guia.id)    
-                     a<< guias.delivery.code<< ", " 
-                  end     
-                end      
-              end
-              existe2 = f.get_guiasremision2(f.id)
-              if existe2.size > 0
-              a << "\n GR : "
-                for guia in f.get_guiasremision2(f.id)
-                  a << guia.code << "  "            
-                end
-              end 
-            lcDes1 << a
-            lcComments = ""
-        end
         
         new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td =>lcTD,
         :serie => lcSerie,:numero => lcNumero,:preciocigv => lcPcigv ,:preciosigv =>lcPsigv,:cantidad =>lcCantidad,
