@@ -367,6 +367,7 @@ class Factura < ActiveRecord::Base
     
     return @itemproducts
   end
+  
   def get_products_2 
     @itemproducts = FacturaDetail.find_by_sql(['Select factura_details.price,
     	factura_details.quantity,factura_details.discount,factura_details.total,products.name ,products.code 

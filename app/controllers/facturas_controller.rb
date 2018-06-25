@@ -1089,7 +1089,7 @@ def reportes31
         lcComments = ""
         lcDes1 = ""
         
-        for productItem in f.get_products2(f.id)
+        for productItem in f.get_products_2
 
         lcPsigv= productItem.price
         lcPsigv1= lcPsigv*1.18
