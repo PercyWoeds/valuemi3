@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180827233074) do
+ActiveRecord::Schema.define(version: 20180827233075) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -979,6 +979,7 @@ ActiveRecord::Schema.define(version: 20180827233074) do
     t.float    "preciocigv"
     t.float    "preciosigv"
     t.integer  "moneda"
+    t.string   "codigo"
   end
 
   create_table "islands", force: :cascade do |t|

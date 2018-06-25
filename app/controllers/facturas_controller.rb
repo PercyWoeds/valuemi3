@@ -1095,9 +1095,8 @@ def reportes31
         lcPsigv1= lcPsigv*1.18
         lcPcigv = lcPsigv1.round(2)
         lcCantidad= productItem.quantity
-        lcDescrip = ""
-        lcDescrip << productItem.name + "\n"
-        lcDescrip << lcDes
+        lcDescrip << productItem.name 
+        
         a = ""        
         lcDes1 = ""
 
@@ -1105,7 +1104,7 @@ def reportes31
         new_invoice_item= Invoicesunat.new(:cliente => lcRuc, :fecha => lcFecha,:td =>lcTD,
         :serie => lcSerie,:numero => lcNumero,:preciocigv => lcPcigv ,:preciosigv =>lcPsigv,:cantidad =>lcCantidad,
         :vventa => lcVventa,:igv => lcIGV,:importe => lcImporte,:ruc =>lcRuc,:guia => lcGuia,:formapago =>lcFormapago,
-        :description => lcDescrip,:comments => lcComments,:descrip =>lcDes1,:moneda =>lcMoneda )
+        :description => lcDescrip,:comments => lcComments,:descrip =>lcDescrip,:moneda =>lcMoneda,:codigo=> productItem.code)
         new_invoice_item.save
         
       end  
