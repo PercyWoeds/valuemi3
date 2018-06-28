@@ -36,15 +36,16 @@ class Factura < ActiveRecord::Base
 
   TABLE_HEADERS2 = ["TD",
                       "Documento",
-                     "Fecha",
-                     "Ruc",
-                     "Cliente",
-                     "Moneda",
-                     "Galones",
-                     "SUBTOTAL",
-                     "IGV.",
-                     "TOTAL",
-                     "ESTADO"]
+                     "Fec.Emision",
+                     "Fec.Vmto",
+                     "Dias",
+                     "C L I E N T E ",
+                     "Mon. ",
+                     "Soles",
+                     "Dolares",
+                     "Detraccion",
+                     "Vencido."]
+                     
   TABLE_HEADERS3 = ["TD",
                       "Documento",
                      "Fecha",

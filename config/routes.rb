@@ -114,12 +114,17 @@
     collection { get :reportes11}
     collection { get :reportes12}
     collection { get :reportes13}
+    collection { get :reportes14}
+    
     collection { get :reportes30}
     collection { get :reportes31}
     
     collection { get :exportxls }
+    collection { get :rpt_ccobrar2_pdf  }
     collection { get :rpt_ccobrar3_pdf  }
+    
     collection { get :rpt_factura_all   }
+    
     collection { get :rpt_ccobrar12_all   }
     
   end 

@@ -17,8 +17,8 @@ totals = []
   <%= image_tag("reports_48.png", :class => "vmiddle") %>
  Reporte de cuentas clientes 
 </h3	>
-
-<form method="get" action="/facturas/rpt_ccobrar2_pdf/<%= @company.id %>">
+ <%= form_tag(reportes14_facturas_path, :method => "get") do %>
+ 
  	<div class="field">
       <input type="date" name="fecha1" value="2018-01-01" style = "width: 150px" >
 
@@ -27,14 +27,14 @@ totals = []
 		<input type="date" name="fecha2" value="2018-05-31" style = "width: 150px" >
     </div>
 
-    
-  <input type="submit" value="Generar" class="btn" />
-  <a href="/facturas/rpt_ccobrar2_pdf/<%= @company.id %>" >Generar Reporte </a>
-</form>
+  <%= submit_tag "To PDF", :name => "print" %>
+  <%= submit_tag "To Excel", :name => "print" %>
+     
+<% end %>
 
 <br />
 
 
 <div class="button">
-  <%= link_to 'Back', "/companies/ccobrar/#{@company.id}" %>
+  <%= link_to 'Regresar', "/companies/ccobrar/#{@company.id}" %>
 </div>

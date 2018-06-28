@@ -585,7 +585,7 @@ def get_guias_2(fecha1,fecha2)
 ## ESTADO DE CUENTA 
  def get_facturas_day(fecha1,fecha2,moneda)
    
-  a =  Sellvale.where(["fecha >= ? and fecha<= ? and td <> ? and importe2 IS NOT NULL ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59","N" ])
+  a =  Sellvale.where(["fecha >= ? and fecha<= ? and td <> ? and importe2 IS NOT NULL ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59","N" ]).order(:fecha)
   
   for dato in a 
     
@@ -634,7 +634,7 @@ def get_guias_2(fecha1,fecha2)
       lcCode=""
     end
     
-    @facturas = Factura.where([" company_id = ? AND fecha >= ? and fecha<= ? and moneda_id = ? and substring(code,1,4)<> ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59",moneda,"BB02" ]).order(:id )    
+    @facturas = Factura.where([" company_id = ? AND fecha >= ? and fecha<= ? and moneda_id = ? and substring(code,1,4)<> ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59",moneda,"BB02" ]).order(:fecha)    
       for boleta in @facturas
     
           lcCodigo = boleta.code.split("-") 
@@ -3435,9 +3435,20 @@ def get_purchases_pendientes_day_value(fecha1,fecha2,value = "total_amount",clie
  
  #Vale credito todos 
  def  get_parte_4(fecha1,fecha2) 
-     @contado = Sellvale.where(["fecha >= ? and fecha <= ? and sellvales.tipo = ?  and sellvales.td= ?", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ,"1","N" ]).order(:cod_cli,:fecha,:cod_prod).joins("INNER JOIN customers ON sellvales.cod_cli = customers.account AND customers.tipo <> '2' ")
-     #@contado = Sellvale.where(["fecha >= ? and fecha <= ? and sellvales.tipo = ?  and sellvales.td= ?", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ,"1","N" ]).order(:cod_cli,:fecha,:cod_prod)
-    return @contado
+#@purchases2 = Output.find_by_sql(['Select outputs.*,output_details.quantity,
+ #   output_details.price,output_details.total,products.name as nameproducto,products.code as codigo,products.unidad
+#    from output_details   
+#INNER JOIN outputs ON output_details.output_id = outputs.id
+#INNER JOIN products ON output_details.product_id = products.id
+#WHERE products.products_category_id = ?  and outputs.fecha >= ? and outputs.fecha <= ?',product, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
+
+
+     @contado = Sellvale.find_by_sql(['Select sellvales.* 
+     from sellvales
+     INNER JOIN customers ON sellvales.cod_cli = customers.account 
+     WHERE sellvales.fecha >= ? and sellvales.fecha <= ? order by fecha ',"#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
+     
+     return @contado
  end 
  
  def  get_parte_3(fecha1,fecha2,cliente) 
@@ -3449,7 +3460,7 @@ def get_purchases_pendientes_day_value(fecha1,fecha2,value = "total_amount",clie
  
  def  get_parte_5(fecha1,fecha2) 
    
-     @contado = Sellvale.where(["fecha >= ? and fecha <= ? and td <> ?  and fpago <> ?", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ,"N","1" ]).order(:cod_prod,:fecha,:fpago)
+     @contado = Sellvale.where(["fecha >= ? and fecha <= ? and td <> ?  and fpago <> ?", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ,"N","1" ]).order(:fecha,:fpago)
    
     return @contado
  end 

@@ -68,8 +68,8 @@ class FacturasController < ApplicationController
     case params[:print]
       when "To PDF" then 
         begin 
-         render  pdf: "Ordenes ",template: "varillajes/parte3_rpt.pdf.erb",locals: {:varillajes => @contado_rpt}
-        
+         render  pdf: "Ordenes ",template: "varillajes/parte3_rpt.pdf.erb",locals: {:varillajes => @contado_rpt},
+        :orientation      => 'Landscape'
         end   
       when "To Excel" then render xlsx: 'parte3_rpt_xls'
       else render action: "index"
@@ -84,7 +84,6 @@ def reportes4
     
     @contado_rpt = @company.get_parte_4(@fecha1,@fecha2)
     
-    
     case params[:print]
       when "To PDF" then 
         begin 
@@ -95,6 +94,8 @@ def reportes4
       else render action: "index"
     end
   end
+  
+  
 #Vale credito por clientes todos 
 def reportes5
   
@@ -395,6 +396,30 @@ def reportes13
     end
   end
 
+def reportes14
+  
+    @company=Company.find(1)          
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2] 
+  
+
+    @company.actualizar_fecha2
+    @company.actualizar_detraccion 
+
+    @facturas_rpt = @company.get_pendientes_day(@fecha1,@fecha2)  
+
+    
+    case params[:print]
+    
+      when "To PDF" then 
+          begin 
+          redirect_to :action => "rpt_ccobrar2_pdf", :format => "pdf", :fecha1 => params[:fecha1], :fecha2 => params[:fecha2], :customer_id => params[:customer_id] 
+          end 
+      when "To Excel" then render xlsx: 'rpt_ccobrar2_xls'
+      else render action: "index"
+    end
+  end
+
 
 
 def rpt_factura_all
@@ -576,7 +601,6 @@ def reportes08
                            right: '[page] of [topage]'
                   }
                }
-               
                
         end   
       when "To Excel" then render xlsx: 'reportes08'
@@ -1926,10 +1950,7 @@ def newfactura2
         headers << cell
       end
 
-    
-      headers = []
-      
-      table_content << headers
+     table_content << headers
 
       nroitem = 1
       lcmonedasoles   = 2
@@ -2002,11 +2023,7 @@ def newfactura2
               row << sprintf("%.2f",product.detraccion.to_s)
             end
             row << product.get_vencido 
-            
-             
-            
             table_content << row
-
             nroitem = nroitem + 1
 
           else
@@ -2039,7 +2056,7 @@ def newfactura2
             row << product.code
             row << product.fecha.strftime("%d/%m/%Y")
             row << product.fecha2.strftime("%d/%m/%Y")
-              dias = (product.fecha2.to_date - product.fecha.to_date).to_i 
+            dias = (product.fecha2.to_date - product.fecha.to_date).to_i 
             
             row << dias 
             row << product.customer.name
@@ -2211,10 +2228,11 @@ def newfactura2
     send_file("app/pdf_output/rpt_factura.pdf", :type => 'application/pdf', :disposition => 'inline')
   end
 
+
   ###pendientes de pago 
   def rpt_ccobrar2_pdf
     $lcxCliente ="0"
-    @company=Company.find(params[:company_id])      
+    @company=Company.find(1)      
     
       @fecha1 = params[:fecha1]  
       @fecha2 = params[:fecha2]
