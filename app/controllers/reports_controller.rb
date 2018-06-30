@@ -1500,7 +1500,7 @@ def rpt_facturas_4
   def rpt_parte_4
     @company = Company.find(params[:company_id])    
     @pagetitle = "Reportes de Ordenes "    
-    @customers = @company.get_customers_pago()
+    @customers = @company.get_customers()
     @monedas=@company.get_monedas    
   end
   def rpt_parte_5
@@ -1518,7 +1518,7 @@ def rpt_facturas_4
   def rpt_parte_7
     @company = Company.find(params[:company_id])    
     @pagetitle = "Reportes de Ordenes "    
-    @customers = @company.get_customers()
+    @customers = @company.get_customers_pago()
     @monedas=@company.get_monedas    
   end
   

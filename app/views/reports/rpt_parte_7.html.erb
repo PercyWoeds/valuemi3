@@ -20,7 +20,17 @@
         <input type="date" name="fecha2" value="2018-04-21" style = "width: 150px" >
     </div>
 	
-<br> 
+<br>
+
+ <div class="field">
+      <%= check_box_tag("cbox1", value = "1", checked = true , options = {})  %> Todos los clientes pago adelantado 
+    </div>
+
+	<div class="field">
+    <%= select_tag(:customer_id,options_from_collection_for_select(@customers,'id','name') ) %>
+ </div>
+ 
+ 
  <%= submit_tag "To PDF", :name => "print" %>
  <%= submit_tag "To Excel", :name => "print" %>
   

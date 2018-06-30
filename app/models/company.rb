@@ -3447,7 +3447,7 @@ def get_purchases_pendientes_day_value(fecha1,fecha2,value = "total_amount",clie
      
      return @contado
  end 
- def  get_parte_4_1(fecha1,fecha2,customer) 
+ def  get_parte_6_1(fecha1,fecha2,customer) 
    
      @contado = Sellvale.find_by_sql(['Select sellvales.* 
      from sellvales
@@ -3477,6 +3477,8 @@ def get_purchases_pendientes_day_value(fecha1,fecha2,value = "total_amount",clie
    
     return @contado
  end 
+ 
+
  
  #pago adelantado  saldo inicial
  def  get_parte_6b(fecha1,fecha2) 

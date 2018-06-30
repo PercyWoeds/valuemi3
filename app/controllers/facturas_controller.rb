@@ -81,14 +81,9 @@ def reportes4
     @company=Company.find(1)          
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]    
-    @customer = params[:customer_id]    
-    @cliente_select = params[:cbox1]
     
-    if @cliente_select == "1"
-        @contado_rpt = @company.get_parte_4(@fecha1,@fecha2)
-    else
-      @contado_rpt = @company.get_parte_4_1(@fecha1,@fecha2,@customer)
-    end 
+    
+    @contado_rpt = @company.get_parte_4(@fecha1,@fecha2)
     
     
     
@@ -176,10 +171,18 @@ def reportes7
     @company=Company.find(1)          
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]    
-    @cliente = params[:cod_cli]    
+    @cliente_select = params[:cbox1]    
+    @customer = params[:customer_id]
+    
+    
        
     
-    @contado_rpt = @company.get_parte_6(@fecha1,@fecha2)
+    if @cliente_select == "1"
+        @contado_rpt = @company.get_parte_6(@fecha1,@fecha2)
+    else
+      @contado_rpt = @company.get_parte_6_1(@fecha1,@fecha2,@customer)
+    end 
+    
     
     
     case params[:print]
