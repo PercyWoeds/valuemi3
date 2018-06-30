@@ -124,7 +124,49 @@ def self.import(file)
     end
     
     return name
+
   end
+
+def get_ventaisla_detail_qty(fecha1,fecha2,producto)
+
+    facturas = Ventaisla.where(["fecha >= ? and fecha<= ?  ", 
+       "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
+    ret = 0
+    
+      for factura in facturas      
+                
+          @detail = VentaislaDetail.where(ventaisla_id:factura.id, product_id: producto)
+
+          for d in @detail 
+             ret  += d.quantity * -1 
+            
+          end 
+
+      end
+
+      return ret
+ end 
+ 
+def get_ventaisla_detail_importe(fecha1,fecha2,producto)
+
+    facturas = Ventaisla.where(["fecha >= ? and fecha <= ?  ", 
+       "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
+    ret = 0
+    
+      for factura in facturas      
+                
+          @detail = VentaislaDetail.where(ventaisla_id:factura.id, product_id: producto)
+
+          for d in @detail 
+             ret  += d.quantity * d.price * -1 
+            
+          end 
+
+      end
+
+      return ret
+ end 
+
   
   
 private

@@ -81,8 +81,16 @@ def reportes4
     @company=Company.find(1)          
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]    
+    @customer = params[:customer_id]    
+    @cliente_select = params[:cbox1]
     
-    @contado_rpt = @company.get_parte_4(@fecha1,@fecha2)
+    if @cliente_select == "1"
+        @contado_rpt = @company.get_parte_4(@fecha1,@fecha2)
+    else
+      @contado_rpt = @company.get_parte_4_1(@fecha1,@fecha2,@customer)
+    end 
+    
+    
     
     case params[:print]
       when "To PDF" then 
@@ -275,7 +283,7 @@ def reportes9
        
     
     @contado_rpt = @company.get_ventas_combustibles(@fecha1,@fecha2)
-    
+    @producto = @company.get_productos_comb 
     
     case params[:print]
       when "To PDF" then 

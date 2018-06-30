@@ -29,9 +29,6 @@
   </tr>
   </table>
 
-  
-  
-  
   <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
       <% nroitem = 1%>
       <% total_1 =  0%>
@@ -54,9 +51,7 @@
                     <td width = "8%" align ="right"><%= sprintf("%.2f",contado.importe*-1)   %></td>
                     
                     </tr>
-                    
-            
-                    
+
                     <% total_1 +=  contado.galones*-1 %>
                     <% total_2 +=  contado.importe*-1  %>
                     
@@ -74,10 +69,8 @@
                     <td width = "10%" align ="right"><%=  sprintf("%.2f",detalle.quantity * -1)%></td>
                     <td width = "10%" align ="right"><%=  sprintf("%.2f",detalle.price) %></td>
                     <td width = "10%" align ="right"><%= sprintf("%.2f",detalle.quantity* detalle.price )   %></td>
-                    
                     </tr>          
                   
-         
         <% end %>
         
       <% end %>                    
@@ -85,17 +78,52 @@
                
         <hr>  
      </table>
-      <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
-     <tr>
+     <br>
+     
+     
+   <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+     <tr bgcolor="#B4D7F7">
           <td width = "60%" align ="right">Total </td>
 
           <td width = "10%" align ="right"><%=  sprintf("%.2f",total_3) %></td>
           <td width = "10%" align ="right"><%= sprintf("%.3f",total_1)   %></td>
           <td width = "10%"  align ="right"></td>
           <td width = "10%" align ="right"><%= sprintf("%.2f",total_2)   %></td>
-          
-                    
     </tr>
+   </table>
+   
+   <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:30%' align="center" border="1">
+     
+    <tr  bgcolor="#B4D7F7">
+          <th width = "30%" align ="center"> Resumen </td>
+          <th width = "10%" align ="right"> Galones </td>
+          <th width = "10%" align ="right"> Importe </td>
+    </tr>
+    <%  tot1 = 0%>  
+    <%  tot2 = 0%>
+    <%  for producto in @producto %> 
+   
+     <tr >
+       
+          <td width = "30%" align ="center"><%= producto.name  %> </td>
+
+          <td width = "10%" align ="right"><%=  sprintf("%.2f",producto.get_ventaisla_detail_qty(@fecha1,@fecha2,producto.id)) %></td>
+          
+          <td width = "10%" align ="right"><%=  sprintf("%.2f",producto.get_ventaisla_detail_importe(@fecha1,@fecha2,producto.id)) %></td>
+          
+    </tr>
+    <% tot1 += producto.get_ventaisla_detail_qty(@fecha1,@fecha2,producto.id)%>
+    <% tot2 += producto.get_ventaisla_detail_importe(@fecha1,@fecha2,producto.id) %>     
+    <% end %>
+    
+    <tr>
+          <td width = "30%" align ="center"> Totales  </td>
+          <td width = "10%" align ="right"><%= sprintf("%.2f",tot1)  %></td>
+          <td width = "10%" align ="right"><%= sprintf("%.2f",tot2) %></td>
+      
+      
+    </tr>
+    
    </table>
 
     

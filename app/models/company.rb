@@ -1875,6 +1875,10 @@ def get_purchases_pendientes_day_supplier(fecha1,fecha2,value,moneda)
 
     return customers
   end
+  def get_customers_pago()
+    customers = Customer.where(company_id: self.id,tipo:"2").order(:name)
+    return customers
+  end
   
   # Get value for customer in year
   def get_invoices_value_customer(customer, year, value)
@@ -3443,6 +3447,15 @@ def get_purchases_pendientes_day_value(fecha1,fecha2,value = "total_amount",clie
      
      return @contado
  end 
+ def  get_parte_4_1(fecha1,fecha2,customer) 
+   
+     @contado = Sellvale.find_by_sql(['Select sellvales.* 
+     from sellvales
+     INNER JOIN customers ON sellvales.cod_cli = customers.account 
+     WHERE sellvales.fecha >= ? and sellvales.fecha <= ?  and sellvales.td = ? and sellvales.tipo = ?  and customers.tipo <> ? and customers.id = ?  order by fecha ',"#{fecha1} 00:00:00","#{fecha2} 23:59:59","N","1","2",customer ])
+     
+     return @contado
+ end 
  
  def  get_parte_3(fecha1,fecha2,cliente) 
    
@@ -3546,10 +3559,6 @@ def get_purchases_pendientes_day_value(fecha1,fecha2,value = "total_amount",clie
  
  def  get_ventas_contometros(fecha1,fecha2)
    
-   puts "venta contometros"
-   puts fecha1
-   puts fecha2
-
      facturas = Ventaisla.where(["fecha >= ? and fecha <= ? " , "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
      
      if facturas
