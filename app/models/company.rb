@@ -3435,18 +3435,11 @@ def get_purchases_pendientes_day_value(fecha1,fecha2,value = "total_amount",clie
  
  #Vale credito todos 
  def  get_parte_4(fecha1,fecha2) 
-#@purchases2 = Output.find_by_sql(['Select outputs.*,output_details.quantity,
- #   output_details.price,output_details.total,products.name as nameproducto,products.code as codigo,products.unidad
-#    from output_details   
-#INNER JOIN outputs ON output_details.output_id = outputs.id
-#INNER JOIN products ON output_details.product_id = products.id
-#WHERE products.products_category_id = ?  and outputs.fecha >= ? and outputs.fecha <= ?',product, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
-
-
+   
      @contado = Sellvale.find_by_sql(['Select sellvales.* 
      from sellvales
      INNER JOIN customers ON sellvales.cod_cli = customers.account 
-     WHERE sellvales.fecha >= ? and sellvales.fecha <= ?  and td = ? and tipo = ?order by fecha ',"#{fecha1} 00:00:00","#{fecha2} 23:59:59","N","1" ])
+     WHERE sellvales.fecha >= ? and sellvales.fecha <= ?  and td = ? and tipo = ? order by fecha ',"#{fecha1} 00:00:00","#{fecha2} 23:59:59","N","1" ])
      
      return @contado
  end 
