@@ -3446,7 +3446,7 @@ def get_purchases_pendientes_day_value(fecha1,fecha2,value = "total_amount",clie
      @contado = Sellvale.find_by_sql(['Select sellvales.* 
      from sellvales
      INNER JOIN customers ON sellvales.cod_cli = customers.account 
-     WHERE sellvales.fecha >= ? and sellvales.fecha <= ? order by fecha ',"#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
+     WHERE sellvales.fecha >= ? and sellvales.fecha <= ?  and td = ? and tipo = ?order by fecha ',"#{fecha1} 00:00:00","#{fecha2} 23:59:59","N","1" ])
      
      return @contado
  end 
