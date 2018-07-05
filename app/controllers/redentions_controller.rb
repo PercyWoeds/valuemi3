@@ -1,0 +1,2 @@
+class RedentionsController < ApplicationController
+end

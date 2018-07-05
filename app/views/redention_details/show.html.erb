@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Factura:</strong>
+  <%= @redention_detail.factura_id %>
+</p>
+
+<p>
+  <strong>Product:</strong>
+  <%= @redention_detail.product_id %>
+</p>
+
+<p>
+  <strong>Price:</strong>
+  <%= @redention_detail.price %>
+</p>
+
+<p>
+  <strong>Quantity:</strong>
+  <%= @redention_detail.quantity %>
+</p>
+
+<p>
+  <strong>Total:</strong>
+  <%= @redention_detail.total %>
+</p>
+
+<p>
+  <strong>Discount:</strong>
+  <%= @redention_detail.discount %>
+</p>
+
+<%= link_to 'Edit', edit_redention_detail_path(@redention_detail) %> |
+<%= link_to 'Back', redention_details_path %>

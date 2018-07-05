@@ -1,0 +1,95 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Redentions</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Company</th>
+      <th>Location</th>
+      <th>Division</th>
+      <th>Customer</th>
+      <th>Desscription</th>
+      <th>Comments</th>
+      <th>Code</th>
+      <th>Subtotal</th>
+      <th>Tax</th>
+      <th>Total</th>
+      <th>Processed</th>
+      <th>Return</th>
+      <th>Date processed</th>
+      <th>User</th>
+      <th>Fecha</th>
+      <th>Serie</th>
+      <th>Numero</th>
+      <th>Payment</th>
+      <th>Factura</th>
+      <th>Tipo</th>
+      <th>Pago</th>
+      <th>Charge</th>
+      <th>Balance</th>
+      <th>Moneda</th>
+      <th>Observ</th>
+      <th>Fecha2</th>
+      <th>Year mounth</th>
+      <th>Detraccion</th>
+      <th>Numero2</th>
+      <th>Document</th>
+      <th>Descuento</th>
+      <th>Tipoventa</th>
+      <th>Tipoventa</th>
+      <th>Ruc</th>
+      <th>Tarjeta</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @redentions.each do |redention| %>
+      <tr>
+        <td><%= redention.company_id %></td>
+        <td><%= redention.location_id %></td>
+        <td><%= redention.division_id %></td>
+        <td><%= redention.customer_id %></td>
+        <td><%= redention.desscription %></td>
+        <td><%= redention.comments %></td>
+        <td><%= redention.code %></td>
+        <td><%= redention.subtotal %></td>
+        <td><%= redention.tax %></td>
+        <td><%= redention.total %></td>
+        <td><%= redention.processed %></td>
+        <td><%= redention.return %></td>
+        <td><%= redention.date_processed %></td>
+        <td><%= redention.user_id %></td>
+        <td><%= redention.fecha %></td>
+        <td><%= redention.serie %></td>
+        <td><%= redention.numero %></td>
+        <td><%= redention.payment_id %></td>
+        <td><%= redention.factura_id %></td>
+        <td><%= redention.tipo %></td>
+        <td><%= redention.pago %></td>
+        <td><%= redention.charge %></td>
+        <td><%= redention.balance %></td>
+        <td><%= redention.moneda_id %></td>
+        <td><%= redention.observ %></td>
+        <td><%= redention.fecha2 %></td>
+        <td><%= redention.year_mounth %></td>
+        <td><%= redention.detraccion %></td>
+        <td><%= redention.numero2 %></td>
+        <td><%= redention.document_id %></td>
+        <td><%= redention.descuento %></td>
+        <td><%= redention.tipoventa %></td>
+        <td><%= redention.tipoventa_id %></td>
+        <td><%= redention.ruc %></td>
+        <td><%= redention.tarjeta_id %></td>
+        <td><%= link_to 'Show', redention %></td>
+        <td><%= link_to 'Edit', edit_redention_path(redention) %></td>
+        <td><%= link_to 'Destroy', redention, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Redention', new_redention_path %>

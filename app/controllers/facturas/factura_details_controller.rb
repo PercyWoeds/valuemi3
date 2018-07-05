@@ -5,9 +5,7 @@ class Facturas::FacturasDetailsController < ApplicationController
   before_action :set_factura_detail, :except=> [:new,:create]
 
   
-    
-    
-def destroy
+  def destroy
      if @factura_detail.destroy
     
              a = Sellvale.find(@factura_detail.sellvale_id)

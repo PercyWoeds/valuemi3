@@ -1,0 +1,75 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  company_id: 1
+  location_id: 1
+  division_id: 1
+  customer_id: 1
+  desscription: MyText
+  comments: MyText
+  code: MyString
+  subtotal: 1.5
+  tax: 
+  total: 1.5
+  processed: MyString
+  return: MyString
+  date_processed: 2018-07-04 17:48:07
+  user_id: 1
+  fecha: 2018-07-04 17:48:07
+  serie: MyString
+  numero: MyString
+  payment_id: MyString
+  factura_id: 1
+  tipo: MyString
+  pago: 1.5
+  charge: 1.5
+  balance: 1.5
+  moneda_id: 1
+  observ: MyText
+  fecha2: 2018-07-04 17:48:07
+  year_mounth: MyString
+  detraccion: 1.5
+  numero2: 1
+  document_id: 1
+  descuento: MyString
+  tipoventa: 1
+  tipoventa_id: 1
+  ruc: MyString
+  tarjeta_id: 1
+
+two:
+  company_id: 1
+  location_id: 1
+  division_id: 1
+  customer_id: 1
+  desscription: MyText
+  comments: MyText
+  code: MyString
+  subtotal: 1.5
+  tax: 
+  total: 1.5
+  processed: MyString
+  return: MyString
+  date_processed: 2018-07-04 17:48:07
+  user_id: 1
+  fecha: 2018-07-04 17:48:07
+  serie: MyString
+  numero: MyString
+  payment_id: MyString
+  factura_id: 1
+  tipo: MyString
+  pago: 1.5
+  charge: 1.5
+  balance: 1.5
+  moneda_id: 1
+  observ: MyText
+  fecha2: 2018-07-04 17:48:07
+  year_mounth: MyString
+  detraccion: 1.5
+  numero2: 1
+  document_id: 1
+  descuento: MyString
+  tipoventa: 1
+  tipoventa_id: 1
+  ruc: MyString
+  tarjeta_id: 1

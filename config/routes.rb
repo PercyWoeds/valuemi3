@@ -1,5 +1,7 @@
   Mnygo::Application.routes.draw do
 
+  resources :redention_details
+  resources :redentions
   resources :venta_productos
   resources :depositos
   resources :turnos
