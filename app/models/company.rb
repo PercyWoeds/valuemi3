@@ -3211,7 +3211,7 @@ def get_salidas_day(fecha1,fecha2,product)
 INNER JOIN outputs ON output_details.output_id = outputs.id
 INNER JOIN products ON output_details.product_id = products.id
 WHERE output_details.product_id = ?  and outputs.fecha > ? and outputs.fecha < ?
-order by output.fecha',product, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
+order by outputs.fecha',product, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
  
     return @purchases 
 
@@ -3225,7 +3225,7 @@ def get_salidas_day2(fecha1,fecha2,product)
 INNER JOIN outputs ON output_details.output_id = outputs.id
 INNER JOIN products ON output_details.product_id = products.id
 WHERE products.products_category_id = ?  and outputs.fecha >= ? and outputs.fecha <= ?
-order by output.fecha',product, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
+order by outputs.fecha',product, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
  
     return @purchases 
 
@@ -3239,7 +3239,7 @@ def get_salidas_day3(fecha1,fecha2,product,empleado)
 INNER JOIN outputs ON output_details.output_id = outputs.id
 INNER JOIN products ON output_details.product_id = products.id
 WHERE outputs.employee_id = ?  and products.products_category_id = ?  and outputs.fecha >= ? and outputs.fecha <= ?
-order by output.fecha',empleado,product, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
+order by outputs.fecha',empleado,product, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
  
     return @purchases 
 
@@ -3254,7 +3254,7 @@ def get_salidas_day4(fecha1,fecha2)
     INNER JOIN facturas ON factura_details.factura_id = facturas.id
     INNER JOIN products ON factura_details.product_id = products.id
     WHERE facturas.fecha >= ? and facturas.fecha <= ? 
-    order by output.fecha', "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
+    order by outputs.fecha', "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
  
     return @facturas 
 
@@ -3269,7 +3269,7 @@ def get_salidas_day3_1(fecha1,fecha2,product,placa)
 INNER JOIN outputs ON output_details.output_id = outputs.id
 INNER JOIN products ON output_details.product_id = products.id
 WHERE outputs.truck_id = ?  and products.products_category_id = ?  and outputs.fecha >= ? and outputs.fecha <= ?
-order by output.fecha',placa,product, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
+order by outputs.fecha',placa,product, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
  
     return @purchases 
 
@@ -3282,7 +3282,7 @@ def get_salidas_day3_2(fecha1,fecha2,placa)
 INNER JOIN outputs ON output_details.output_id = outputs.id
 INNER JOIN products ON output_details.product_id = products.id
 WHERE outputs.truck_id = ?  and outputs.fecha >= ? and outputs.fecha <= ?
-order by output.fecha ',placa, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
+order by outputs.fecha ',placa, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
  
     return @purchases 
 
@@ -3298,7 +3298,7 @@ def get_ingresos_day(fecha1,fecha2,product)
 INNER JOIN purchases ON purchase_details.purchase_id = purchases.id
 INNER JOIN products ON purchase_details.product_id = products.id
 WHERE purchase_details.product_id = ?  and purchases.date1 > ? and purchases.date1 < ? 
-order by purchase.date1 ' ,product, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
+order by purchases.date1 ' ,product, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
  
     return @purchases 
 end
@@ -3313,7 +3313,7 @@ def get_ingresos_day2(fecha1,fecha2,product)
 INNER JOIN purchases ON purchase_details.purchase_id = purchases.id
 INNER JOIN products ON purchase_details.product_id = products.id
 WHERE products.products_category_id = ?  and purchases.date1 >= ? and purchases.date1 <= ? and purchases.processed = ?
-ORDER BY products.code,purchase.date1  ',product, "#{fecha1} 00:00:00","#{fecha2} 23:59:59","1" ])
+ORDER BY products.code,purchases.date1  ',product, "#{fecha1} 00:00:00","#{fecha2} 23:59:59","1" ])
   
     return @purchases 
 
