@@ -588,10 +588,10 @@ class Factura < ActiveRecord::Base
     
     if self.moneda_id == 2
           if self.document_id   == 2
-                  valor = self.total*-1
+                  valor = self.balance*-1
                     
           else  
-                  valor = self.total 
+                  valor = self.balance 
           
            end   
             

@@ -25,7 +25,7 @@ wb.styles do |s|
     sheet.add_row ["", "Pendientes de Pago ", "Desde", @fecha1, "Hasta:",@fecha2,"", "","","" ], :style => title1
     
     
-    sheet.add_row ["Td", "Nro.Documento", "Fec.Emision", "Fec.Vmto", "R.U.C.","Cliente","Moneda", "Soles ","Dolares","Detraccion","Vencido" ], :style => title 
+    sheet.add_row ["Td", "Nro.Documento", "Fec.Emision", "Fec.Vmto", "R.U.C.","Cliente","Moneda", "Soles ","Dolares","Saldo","Vencido" ], :style => title 
     
     valor=0
    @facturas_rpt.each do |payment|
