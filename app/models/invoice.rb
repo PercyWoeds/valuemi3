@@ -110,7 +110,11 @@ class Invoice < ActiveRecord::Base
     
     return total0
   end
-  
+  def correlativo      
+        numero = Voided.find(13).numero.to_i + 1
+        lcnumero = numero.to_s
+        Voided.where(:id=>'13').update_all(:numero =>lcnumero)        
+  end
   
   def delete_products()
     invoice_products = InvoiceProduct.where(invoice_id: self.id)
@@ -129,6 +133,9 @@ class Invoice < ActiveRecord::Base
         quantity = parts[1]
         price = parts[2]
         discount = parts[3]
+        puntos = parts[4]
+        
+       
         
         total = price.to_f * quantity.to_i
         total -= total * (discount.to_f / 100)
@@ -136,7 +143,7 @@ class Invoice < ActiveRecord::Base
         begin
           product = Product.find(id.to_i)
           
-          new_invoice_product = InvoiceProduct.new(:invoice_id => self.id, :product_id => product.id, :price => price.to_f, :quantity => quantity.to_i, :discount => discount.to_f, :total => total.to_f)
+          new_invoice_product = InvoiceProduct.new(:invoice_id => self.id, :product_id => product.id, :price => price.to_f, :quantity => quantity.to_i, :discount => discount.to_f, :total => total.to_f, :punto => puntos.to_i)
           new_invoice_product.save
 
         rescue
@@ -171,6 +178,7 @@ class Invoice < ActiveRecord::Base
       ip.product[:quantity] = ip.quantity
       ip.product[:discount] = ip.discount
       ip.product[:total]    = ip.total
+      
       #products.push("#{ip.product.id}|BRK|#{ip.product.curr_quantity}|BRK|#{ip.product.curr_price}|BRK|#{ip.product.curr_discount}")
       products.push("#{ip.product.id}|BRK|#{ip.product.quantity}|BRK|#{ip.product.price}|BRK|#{ip.product.discount}")
     end
@@ -178,6 +186,15 @@ class Invoice < ActiveRecord::Base
 
     return products.join(",")
   end
+  
+   def processed_color
+    if(self.processed == "1")
+      return "green"
+    else
+      return "red"
+    end
+  end
+  
   
     def get_processed
     if(self.processed == "1")

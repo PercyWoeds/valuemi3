@@ -1,5 +1,5 @@
 <p class="bold big">
-  Products:
+  Producto|s:
 </p>
 
 
@@ -7,16 +7,20 @@
     <thead>
       <tr>
         <th class="small bordered_bottom bordered_right">
-          Product
+          Producto
         </th>
         <th class="small bordered_bottom bordered_right">
-          Price
+          Precio 
         </th>
         <th class="small bordered_bottom bordered_right">
-          Quantity
+          Puntos 
+        </th>
+        
+        <th class="small bordered_bottom bordered_right">
+          Cantidad
         </th>
         <th class="small bordered_bottom bordered_right">
-          Discount
+          Dscto
         </th>
         <th class="small bordered_bottom bordered_right">
           Total
@@ -31,8 +35,12 @@
             [<a href="#" onclick="removeItemFromInvoice(<%= product.i %>); return false;" title="Remove product from invoice">X</a>]
           </td>
           <td class="small bordered_bottom bordered_right">
-            $<%= money(product.price) %>
+            <%= money(product.price) %>
           </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= money(product.punto) %>
+          </td>
+          
           <td class="small bordered_bottom bordered_right">
             <%= product.quantity %>
           </td>
@@ -40,7 +48,7 @@
             <%= money(product.discount) %>%
           </td>
           <td class="small bordered_bottom bordered_right">
-            $<%= money(product.CurrTotal) %>
+            <%= money(product.CurrTotal) %>
           </td>
         </tr>
       <% end %>

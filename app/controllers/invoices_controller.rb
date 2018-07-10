@@ -74,12 +74,14 @@ class InvoicesController < ApplicationController
         quantity = parts[1]
         price = parts[2]
         discount = parts[3]
+        puntos = parts[4]
         
         product = Product.find(id.to_i)
         product[:i] = i
         product[:quantity] = quantity.to_i
         product[:price] = price.to_f
         product[:discount] = discount.to_f
+        product[:punto] = puntos.to_f
         
         total = product[:price] * product[:quantity]
         total -= total * (product[:discount] / 100)
@@ -294,6 +296,7 @@ class InvoicesController < ApplicationController
         
         # Check if we gotta process the invoice
         @invoice.process()
+        @invoice.correlativo()
         
         format.html { redirect_to(@invoice, :notice => 'Invoice was successfully created.') }
         format.xml  { render :xml => @invoice, :status => :created, :location => @invoice }

@@ -595,7 +595,7 @@ def get_guias_2(fecha1,fecha2)
   
   end 
    
-   @boletas = Sellvale.select("fecha,td,cod_prod,ruc,MIN(numero) as minimo, MAX(numero) as maximo,sum(importe2) as total").where(["fecha >= ? and fecha<= ? and td<> ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59","N" ]).group(:fecha,:td,:cod_prod,:ruc)
+   @boletas = Sellvale.select("fecha,td,cod_prod,ruc,MIN(numero) as minimo, MAX(numero) as maximo,sum(importe2) as total").where(["fecha >= ? and fecha<= ? and td<> ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59","N" ]).group(:fecha,:td,:ruc)
   # @boletas = Sellvale.select("fecha,td,cod_prod,ruc,MIN(numero) as minimo, MAX(numero) as maximo,sum(importe2) as total").where(["fecha >= ? and fecha<= ? and td<> ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59","N" ]).group(:fecha,:td,:serie,:numero,:cod_prod,:ruc)
     TmpFactura.delete_all
     

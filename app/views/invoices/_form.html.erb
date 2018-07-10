@@ -24,10 +24,7 @@
       
       <input type="text" name="ac_customer" id="ac_customer" value="<% if @ac_customer %><%= @ac_customer %><% end %>" />
       
-      <div class="small">
-        <a href="#" onclick="createCustomerInvoice(); return false;">+ Crear nuevo cliente</a>
-      </div>
-
+      
       <div class="small">
         Ingrese una termino de busqueda para encontrar un cliente.
       </div>
@@ -131,7 +128,7 @@
   <form method="get" action="/products" onsubmit="addItemToInvoice(); return false;">
     <input type="hidden" name="ac_item_id" id="ac_item_id" value="" />
     
-    <strong>Product:</strong><br />
+    <strong>Producto :</strong><br />
     <input type="text" name="ac_item" id="ac_item" value="" />
     <div class="small">
       Ingrese un termino de busqueda para encontrar un producto.
@@ -144,6 +141,12 @@
       Precio del  producto para agregar una factura.
     </div>
     <br />
+    <strong>Puntos :</strong><br />
+    <input type="text" name="ac_item_puntos" id="ac_item_puntos" value="" class="tf_short" readonly />
+    <div class="small">
+      Puntos del  producto .
+    </div>
+    <br />
     
     <strong>Cantidad:</strong><br />
     <input type="text" name="ac_item_quantity" id="ac_item_quantity" value="1" class="tf_short" />
@@ -152,8 +155,9 @@
     </div>
     <br />
     
-    <strong>Discount %:</strong><br />
-    <input type="text" name="ac_item_discount" id="ac_item_discount" value="0" class="tf_short" />
+    
+    <strong>Discount :</strong><br />
+    <input type="text" name="ac_item_discount" id="ac_item_discount" value="0" class="tf_short"  />
     <div class="small">
       Descuento % del producto para agregar una factura.
     </div>
@@ -241,6 +245,7 @@
     $("#ac_item").result(function(event, data, formatted) {
       $("#ac_item_id").val(data[2]);
       $("#ac_item_price").val(data[4]);
+      $("#ac_item_puntos").val(data[12]);
       
       updateItemTotal();
     });
