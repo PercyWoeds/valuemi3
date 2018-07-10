@@ -234,6 +234,7 @@
       var price = $("#ac_item_price").val();
       var discount = $("#ac_item_discount").val();    
       var puntos  = $("#ac_item_puntos").val();    
+      
       var items_arr = $("#items").val().split(",");
 
       if(quantity == "" || !isNumeric(quantity)) {

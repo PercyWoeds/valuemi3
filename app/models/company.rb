@@ -595,7 +595,7 @@ def get_guias_2(fecha1,fecha2)
   
   end 
    
-   @boletas = Sellvale.select("fecha,td,cod_prod,ruc,MIN(numero) as minimo, MAX(numero) as maximo,sum(importe2) as total").where(["fecha >= ? and fecha<= ? and td<> ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59","N" ]).group(:fecha,:td,:ruc)
+   @boletas = Sellvale.select("fecha,td,ruc,MIN(numero) as minimo, MAX(numero) as maximo,sum(importe2) as total").where(["fecha >= ? and fecha<= ? and td<> ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59","N" ]).group(:fecha,:td,:ruc)
   # @boletas = Sellvale.select("fecha,td,cod_prod,ruc,MIN(numero) as minimo, MAX(numero) as maximo,sum(importe2) as total").where(["fecha >= ? and fecha<= ? and td<> ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59","N" ]).group(:fecha,:td,:serie,:numero,:cod_prod,:ruc)
     TmpFactura.delete_all
     
@@ -614,7 +614,7 @@ def get_guias_2(fecha1,fecha2)
             lcTotal   = lcTotal0.round(2)  
             lcFecha   = boleta.fecha
             lcTd      = boleta.td 
-            lcCodProd = boleta.cod_prod 
+            
             
             if boleta.ruc.strip  != nil  or boleta.ruc !="00000000000"
               
@@ -627,7 +627,7 @@ def get_guias_2(fecha1,fecha2)
               lcRazonCliente = " "
             end 
             
-          a= TmpFactura.new(document_id: 3 ,subtotal: lcVventa , tax: lcTax , total: lcTotal, fecha: lcFecha, serie: lcSerie, numero: lcCode,td: lcTd,ruc: lcRucCliente,name:lcRazonCliente, moneda_id:2,cod_prod:lcCodProd)
+          a= TmpFactura.new(document_id: 3 ,subtotal: lcVventa , tax: lcTax , total: lcTotal, fecha: lcFecha, serie: lcSerie, numero: lcCode,td: lcTd,ruc: lcRucCliente,name:lcRazonCliente, moneda_id:2)
           a.save 
         end 
       lcCode=""
