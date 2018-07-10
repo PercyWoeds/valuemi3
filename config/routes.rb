@@ -435,6 +435,8 @@ end
   match 'companies/reports/rpt_calmacen13_pdf/:company_id' => 'reports#rpt_calmacen13_pdf', via: [:get, :post]
   
   match 'companies/reports/rpt_cajust1_pdf/:company_id' => 'reports#rpt_cajust1_pdf', via: [:get, :post]
+  match 'companies/reports/reports_redention/:company_id' => 'reports#rpt_redention_pdf', via: [:get, :post]
+  
   match 'companies/reports/rpt_viatico_pdf/:company_id' => 'reports#rpt_viatico_pdf', via: [:get, :post]
   
   match 'companies/reports/rpt_facturas_all/:company_id' => 'reports#rpt_facturas_all', via: [:get, :post]
