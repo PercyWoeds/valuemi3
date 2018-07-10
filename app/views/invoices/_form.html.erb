@@ -33,10 +33,15 @@
       </div>
       <br />
 
-      <div class="small">
+      <div >
         <strong>Seleccionar cliente:</strong>
         <span id="selected_customer"><% if @ac_customer %><%= @ac_customer %><% else %><!-- i --><% end %></span>
+        </div>
+      <div >
+        <strong>Puntos :</strong>
+        <span id="ac_customer_saldo"><% if @ac_customer %><%= @ac_customer %><% else %><!-- i --><% end %></span>
       </div>
+      
     </div>
     
     <div class="field">
@@ -133,7 +138,7 @@
     </div>
     <br />
     
-    <strong>Price:</strong><br />
+    <strong>Precio:</strong><br />
     <input type="text" name="ac_item_price" id="ac_item_price" value="" class="tf_short" />
     <div class="small">
       Precio del  producto para agregar una factura.
@@ -206,6 +211,7 @@
     $("#ac_customer").result(function(event, data, formatted) {
       $("#ac_customer_id").val(data[2]);
       $("#selected_customer").html(data[0]);
+      $("#ac_customer_saldo").html(data[4]);
     });
     
     $("#ac_kit").autocomplete("/invoices/ac_kit/<%= @company.id %>", {

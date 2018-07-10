@@ -18,6 +18,7 @@ class Ventaislas::VentaislaDetailsController < ApplicationController
   # GET /ventaisla_details/new
   def new
     @ventaisla_detail = VentaislaDetail.new
+    
     @employee = Employee.all.order(:full_name).where(active:"1")
     @valor = Valor.all
     @ventaisla_detail[:le_an_gln] = 0

@@ -4,7 +4,7 @@
   <h3>
     <%= image_tag("invoice_32.png", :class => "vmiddle") %>
     
-    <%= link_to "Facturas y Boletas", "/companies/facturas/#{@company.id}" %>
+    <%= link_to "Redencion de Puntos", "/companies/invoices/#{@company.id}" %>
     
   </h3>
 
@@ -12,19 +12,6 @@
      Agregar, editar or eliminar facturas para tu negocio.
   </p>
   
-  <%= hr() %>
-
-  <h3>
-    <%= image_tag("invoice_32.png", :class => "vmiddle") %>
-    <%= link_to "Cierre de Turno ", sellvales_path %>
-  </h3>
-
-  <p>
-     Agregar, editar or eliminar notas de credito para tu negocio.
-  </p>
-  
-  <%= hr() %>
-
   
 </div>
 
@@ -42,17 +29,8 @@
   <%= hr() %>
 
 <%if @current_user.level == "admin" || @current_user.level == "parte"     %>
-  <h3>
-    <%= image_tag("clients_32.png", :class => "vmiddle") %>
-    <%= link_to "Turno", turnos_path %>
-  </h3>
-
-  <p>
-     Agregar, editar or eliminar clientes para tu negocio.
-  </p>
-
-
-  <%= hr() %>
+  
+  
   <% end %>
   
   <h3>
@@ -63,3 +41,4 @@
   <p>
     Reportes de tu negocio.
   </p>
+</div>

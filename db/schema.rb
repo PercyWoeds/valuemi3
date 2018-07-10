@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180827233077) do
+ActiveRecord::Schema.define(version: 20180827233089) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -408,6 +408,7 @@ ActiveRecord::Schema.define(version: 20180827233077) do
     t.string   "name"
     t.string   "ruc"
     t.integer  "tipo"
+    t.integer  "saldo"
   end
 
   create_table "dato_laws", force: :cascade do |t|
@@ -1523,6 +1524,7 @@ ActiveRecord::Schema.define(version: 20180827233077) do
     t.string   "ubicacion"
     t.float    "quantity"
     t.float    "currtotal"
+    t.integer  "punto"
   end
 
   create_table "products_categories", force: :cascade do |t|
@@ -1760,6 +1762,60 @@ ActiveRecord::Schema.define(version: 20180827233077) do
     t.integer  "division_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+  end
+
+  create_table "redention_details", force: :cascade do |t|
+    t.integer  "factura_id"
+    t.integer  "product_id"
+    t.float    "price"
+    t.float    "quantity"
+    t.float    "total"
+    t.float    "discount"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.integer  "redention_id"
+  end
+
+  create_table "redentions", force: :cascade do |t|
+    t.integer  "company_id"
+    t.integer  "location_id"
+    t.integer  "division_id"
+    t.integer  "customer_id"
+    t.string   "description"
+    t.text     "comments"
+    t.string   "code"
+    t.float    "subtotal"
+    t.float    "tax"
+    t.float    "total"
+    t.string   "processed"
+    t.string   "return"
+    t.datetime "date_processed"
+    t.integer  "user_id"
+    t.datetime "fecha"
+    t.string   "serie"
+    t.string   "numero"
+    t.integer  "payment_id"
+    t.integer  "factura_id"
+    t.string   "tipo"
+    t.string   "pago"
+    t.float    "charge"
+    t.float    "balance"
+    t.integer  "moneda_id"
+    t.string   "observ"
+    t.datetime "fecha2"
+    t.string   "year_mounth"
+    t.float    "detraccion"
+    t.string   "numero2"
+    t.integer  "document_id"
+    t.float    "descuento"
+    t.string   "tipoventa"
+    t.integer  "tipoventa_id"
+    t.string   "ruc"
+    t.integer  "tarjeta_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.string   "state"
+    t.string   "number"
   end
 
   create_table "remisions", force: :cascade do |t|
@@ -2113,6 +2169,7 @@ ActiveRecord::Schema.define(version: 20180827233077) do
     t.integer  "document_id"
     t.integer  "moneda_id"
     t.string   "name"
+    t.string   "cod_prod"
   end
 
   create_table "tms", force: :cascade do |t|

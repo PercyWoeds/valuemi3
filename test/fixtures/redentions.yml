@@ -5,34 +5,35 @@ one:
   location_id: 1
   division_id: 1
   customer_id: 1
-  desscription: MyText
+  customer_id: 1
+  description: MyString
   comments: MyText
   code: MyString
   subtotal: 1.5
-  tax: 
+  tax: 1.5
   total: 1.5
   processed: MyString
   return: MyString
-  date_processed: 2018-07-04 17:48:07
+  date_processed: 2018-07-06 14:56:43
   user_id: 1
-  fecha: 2018-07-04 17:48:07
+  fecha: 2018-07-06 14:56:43
   serie: MyString
   numero: MyString
-  payment_id: MyString
+  payment_id: 1
   factura_id: 1
   tipo: MyString
-  pago: 1.5
+  pago: MyString
   charge: 1.5
   balance: 1.5
   moneda_id: 1
-  observ: MyText
-  fecha2: 2018-07-04 17:48:07
+  observ: MyString
+  fecha2: 2018-07-06 14:56:43
   year_mounth: MyString
   detraccion: 1.5
-  numero2: 1
+  numero2: MyString
   document_id: 1
-  descuento: MyString
-  tipoventa: 1
+  descuento: 1.5
+  tipoventa: MyString
   tipoventa_id: 1
   ruc: MyString
   tarjeta_id: 1
@@ -42,34 +43,35 @@ two:
   location_id: 1
   division_id: 1
   customer_id: 1
-  desscription: MyText
+  customer_id: 1
+  description: MyString
   comments: MyText
   code: MyString
   subtotal: 1.5
-  tax: 
+  tax: 1.5
   total: 1.5
   processed: MyString
   return: MyString
-  date_processed: 2018-07-04 17:48:07
+  date_processed: 2018-07-06 14:56:43
   user_id: 1
-  fecha: 2018-07-04 17:48:07
+  fecha: 2018-07-06 14:56:43
   serie: MyString
   numero: MyString
-  payment_id: MyString
+  payment_id: 1
   factura_id: 1
   tipo: MyString
-  pago: 1.5
+  pago: MyString
   charge: 1.5
   balance: 1.5
   moneda_id: 1
-  observ: MyText
-  fecha2: 2018-07-04 17:48:07
+  observ: MyString
+  fecha2: 2018-07-06 14:56:43
   year_mounth: MyString
   detraccion: 1.5
-  numero2: 1
+  numero2: MyString
   document_id: 1
-  descuento: MyString
-  tipoventa: 1
+  descuento: 1.5
+  tipoventa: MyString
   tipoventa_id: 1
   ruc: MyString
   tarjeta_id: 1

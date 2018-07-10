@@ -1,0 +1,2 @@
+module ValidateSuggestedProductControllerHelper
+end

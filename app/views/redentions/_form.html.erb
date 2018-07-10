@@ -1,45 +1,57 @@
-<%= simple_form_for(@redention) do |f| %>
-  <%= f.error_notification %>
+<div class="container-fluid" id="redention-form">
+  <div class="row">
 
-  <div class="form-inputs">
-    <%= f.input :company_id %>
-    <%= f.input :location_id %>
-    <%= f.input :division_id %>
-    <%= f.input :customer_id %>
-    <%= f.input :desscription %>
-    <%= f.input :comments %>
-    <%= f.input :code %>
-    <%= f.input :subtotal %>
-    <%= f.input :tax %>
-    <%= f.input :total %>
-    <%= f.input :processed %>
-    <%= f.input :return %>
-    <%= f.input :date_processed %>
-    <%= f.input :user_id %>
-    <%= f.input :fecha %>
-    <%= f.input :serie %>
-    <%= f.input :numero %>
-    <%= f.input :payment_id %>
-    <%= f.input :factura_id %>
-    <%= f.input :tipo %>
-    <%= f.input :pago %>
-    <%= f.input :charge %>
-    <%= f.input :balance %>
-    <%= f.input :moneda_id %>
-    <%= f.input :observ %>
-    <%= f.input :fecha2 %>
-    <%= f.input :year_mounth %>
-    <%= f.input :detraccion %>
-    <%= f.input :numero2 %>
-    <%= f.input :document_id %>
-    <%= f.input :descuento %>
-    <%= f.input :tipoventa %>
-    <%= f.input :tipoventa_id %>
-    <%= f.input :ruc %>
-    <%= f.input :tarjeta_id %>
-  </div>
+    <div class="panel-body">
+      <%= form_for(@redention) do |f| %>
+        <% if @redention.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(@redention.errors.count, "error") %> prohibited this redention from being saved:</h2>
 
-  <div class="form-actions">
-    <%= f.button :submit %>
+            <ul>
+            <% @redention.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <div class="row">
+          <div class="col-xs-5 col-md-4">
+            <div class="form-group">
+              <div class="col-xs-6 col-md-4 text-left">
+                <%= f.label :number, "Número" %>
+              </div>
+              <div class="col-xs-6 col-md-4">
+                <%= f.text_field :number, placeholder: "Número", class: "form-control" %>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-6 col-xs-offset-1 col-md-4 col-md-offset-4">
+            <div class="form-group">
+              <div class="col-xs-4 col-md-4 text-right">
+                <%= f.label :fecha, "Fecha" %>
+              </div>
+              <div class="col-xs-8 col-md-6 text-right">
+                <%= f.date_field :fecha, placeholder: "Fecha", class: "form-control" %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr>
+        <br>
+        <div class="panel-body" id="redention-details">
+          <%= (@redention.redention_details.count > 0) ? render(partial: 'table', locals: { redention: @redention, show_actions: true }) : 'No hay detalles cargados' %>
+        </div>
+        <div class="row">
+          <div class="col-xs-2 col-xs-offset-5 text-center">
+            <%= link_to "Nuevo detalle", new_redention_detail_path(redention_id: @redention.id), remote: true, class: "btn btn-info" %>
+          </div>
+        </div>
+        <br>
+        <% message = (action_name == 'edit') ? "Volver" : "Aceptar" %>
+        <%= f.submit message, class: "btn btn-success" %>
+      <% end %>
+      <div class="modal fade" id="new-detail-modal" title="Modal"></div>
+    </div>
   </div>
-<% end %>
+</div>

@@ -1,6 +1,5 @@
 class RedentionDetail < ActiveRecord::Base
-    
-    belongs_to :redention 
+belongs_to :redention 
 	belongs_to :product 
 
 	validates :product_id, presence: true
@@ -21,4 +20,8 @@ class RedentionDetail < ActiveRecord::Base
 			item ? item.price : 0
 		end
 	end
-end
+	
+	end 
+	
+	
+	

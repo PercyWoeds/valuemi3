@@ -1,1 +1,1 @@
-json.array! @redentions, partial: 'redentions/redention', as: :redention
+json.array! @sales, partial: 'sales/sale', as: :sale

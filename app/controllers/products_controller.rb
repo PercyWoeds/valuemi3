@@ -80,6 +80,7 @@ class ProductsController < ApplicationController
     @product[:quantity_transit] = 0
     @product[:company_id] = params[:company_id]
     @product[:price] = 0
+    @product[:puntos] = 0
     
     @company    = Company.find(params[:company_id])
     @suppliers  = @company.get_suppliers()
@@ -394,7 +395,7 @@ def build_pdf_header(pdf)
 
   private
   def products_params
-    params.require(:product).permit(:code, :name, :category, :cost,:price,:price2,:tax1_name, :tax1,:tax2_name,:tax2, :tax3_name,:tax3 ,:quantity,:reorder,:description,:comments,:company_id,:marca_id,:modelo_id,:products_category_id,:unidad,:ubicacion)
+    params.require(:product).permit(:code, :name, :category, :cost,:price,:price2,:tax1_name, :tax1,:tax2_name,:tax2, :tax3_name,:tax3 ,:quantity,:reorder,:description,:comments,:company_id,:marca_id,:modelo_id,:products_category_id,:unidad,:ubicacion,:puntos)
   end
   
 

@@ -1283,8 +1283,6 @@ def reportes31
       
         @invoiceitems = FacturaDetail.select(:product_id,"SUM(quantity) as cantidad","SUM(total) as total").where(factura_id: @invoice.id).group(:product_id)
         
-        
-        
         $lg_fecha   = @invoice.fecha.to_date
          lcCode = @invoice.code.split("-")
          a = lcCode[0]

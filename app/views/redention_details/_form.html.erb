@@ -1,16 +1,37 @@
-<%= simple_form_for(@redention_detail) do |f| %>
-  <%= f.error_notification %>
-
-  <div class="form-inputs">
-    <%= f.input :factura_id %>
-    <%= f.input :product_id %>
-    <%= f.input :price %>
-    <%= f.input :quantity %>
-    <%= f.input :total %>
-    <%= f.input :discount %>
-  </div>
-
-  <div class="form-actions">
-    <%= f.button :submit %>
-  </div>
-<% end %>
+<div class="modal-body">
+      <%= form_for :redention_details, url: redention_details_url, method: :post, remote: true do |f| %>
+        <div class="row">
+          <div class="col-xs-5">
+            <div class="form-group">
+                <%= f.label :item_id, class: "sr-only" %>
+                <%= f.text_field :item, placeholder: "Artículo", class: "form-control", value: nil %>
+                <%= f.hidden_field :product_id %>
+                <%= hidden_field_tag :item_description  %>
+            </div>
+          </div>
+          <div class="col-xs-2">
+            <div class="form-group">
+                <%= f.label :quantity, class: "sr-only" %>
+                <%= f.text_field :quantity, placeholder: "Cant.", class: "form-control" %>
+            </div>
+          </div>
+          <div class="col-xs-2">
+            <div class="form-group">
+                <%= f.label :price, class: "sr-only" %>
+                <%= f.text_field :price, placeholder: "Precio", class: "form-control" %>
+            </div>
+          </div>
+          <div class="col-xs-2">
+            <div class="form-group">
+                <%= f.label :subtotal, class: "sr-only" %>
+                <%= f.text_field :subtotal, placeholder: "0", class: "form-control", disabled: true %>
+            </div>
+          </div>
+        </div>
+        
+          <%= f.submit "Aceptar", class: "btn btn-primary" %>
+      <% end %>
+    </div>
+    <div class="modal-footer">
+      <%= link_to "Cancelar", "#", class: "btn btn-danger", "data-dismiss": "modal" %>
+    </div>

@@ -1,74 +1,68 @@
 class RedentionDetailsController < ApplicationController
-  before_action :set_redention_detail, only: [:show, :edit, :update, :destroy]
+	
+    before_action :set_redention, only: [:new, :create, :destroy]	
 
-  # GET /redention_details
-  # GET /redention_details.json
-  def index
-    @redention_details = RedentionDetail.all
-  end
+	def new
+		@redention_details = @redention.redention_details.build
+		@redention_details.product = Item.first
+	end
 
-  # GET /redention_details/1
-  # GET /redention_details/1.json
-  def show
-  end
+	def create
+		item_exists = false
+		item_id = params[:redention_details][:product_id].to_i
+		@redention.redention_details.each do |detail|
+			if detail.item_id == item_id
+				# Ya existe el item en la factura, agregar cantidad
+				item_exists = true
+				@redention_detail = detail
+				@saved_redention_detail = detail.id
+				break
+			end
+		end
+		if item_exists
+			@redention_detail.quantity += params[:redention_details][:quantity].to_i
+			@redention_detail.price = params[:redention_details][:price].to_f
+			@redention_detail.save!
+		else
+			redention_detail = redentionDetail.new(redention_details_params)
+			if @redention.redention_details.last.nil?
+				redention_detail.number = 1
+			else
+				redention_detail.number = @redention.redention_details.last.number + 1
+			end
+			@redention.redention_details << redention_detail
+		end
+		@redention.save!
+	end
 
-  # GET /redention_details/new
-  def new
-    @redention_detail = RedentionDetail.new
-  end
+	def edit
+		@redention_detail = redentionDetail.find(params[:id])
+	end
 
-  # GET /redention_details/1/edit
-  def edit
-  end
+	def update
+	end
 
-  # POST /redention_details
-  # POST /redention_details.json
-  def create
-    @redention_detail = RedentionDetail.new(redention_detail_params)
+	def destroy
+		@redention_detail = redentionDetail.find(params[:id])
+		@redention_detail.destroy
 
-    respond_to do |format|
-      if @redention_detail.save
-        format.html { redirect_to @redention_detail, notice: 'Redention detail was successfully created.' }
-        format.json { render :show, status: :created, location: @redention_detail }
-      else
-        format.html { render :new }
-        format.json { render json: @redention_detail.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+		respond_to do |format|
+			format.js { render layout: false }
+		end
+	end
 
-  # PATCH/PUT /redention_details/1
-  # PATCH/PUT /redention_details/1.json
-  def update
-    respond_to do |format|
-      if @redention_detail.update(redention_detail_params)
-        format.html { redirect_to @redention_detail, notice: 'Redention detail was successfully updated.' }
-        format.json { render :show, status: :ok, location: @redention_detail }
-      else
-        format.html { render :edit }
-        format.json { render json: @redention_detail.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /redention_details/1
-  # DELETE /redention_details/1.json
-  def destroy
-    @redention_detail.destroy
-    respond_to do |format|
-      format.html { redirect_to redention_details_url, notice: 'Redention detail was successfully destroyed.' }
-      format.json { head :no_content }
-    end
-  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_redention_detail
-      @redention_detail = RedentionDetail.find(params[:id])
+    def set_redention
+      @redention = Redention.find(params[:redention_id].to_i)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def redention_detail_params
-      params.require(:redention_detail).permit(:factura_id, :product_id, :price, :quantity, :total, :discount)
+    def redention_details_params
+      params.require(:redention_details).permit(:id, :redention_id, :item_id, :item_description, :number, :quantity, :price, :_destroy)
     end
 end
+
+
+

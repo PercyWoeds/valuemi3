@@ -134,7 +134,7 @@ class InvoicesController < ApplicationController
   
   # Autocomplete for customers
   def ac_customers
-    @customers = Customer.where(["company_id = ? AND (email iLIKE ? OR name iLIKE ?)", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])
+    @customers = Customer.where(["company_id = ? AND (ruc iLIKE ? OR name iLIKE ?)", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])
    
     render :layout => false
   end
@@ -226,7 +226,7 @@ class InvoicesController < ApplicationController
     @action_txt = "Create"
     
     @invoice = Invoice.new
-    @invoice[:code] = "I_#{generate_guid()}"
+    @invoice[:code] = "BA06-#{generate_guid()}"
     @invoice[:processed] = false
     
     @company = Company.find(params[:company_id])

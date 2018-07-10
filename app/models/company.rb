@@ -26,7 +26,7 @@ class Company < ActiveRecord::Base
   
 def get_facturas_day_cliente(fecha1,fecha2,cliente)
    
-    @facturas = Factura.where(["total> 0  and  company_id = ? AND fecha >= ? and fecha<= ? and customer_id = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", cliente ]).order(:customer_id,:moneda_id,:fecha)
+    @facturas = Factura.where(["total <> 0  and  company_id = ? AND fecha >= ? and fecha<= ? and customer_id = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", cliente ]).order(:customer_id,:moneda_id,:fecha)
     return @facturas
     
  end 
@@ -595,9 +595,8 @@ def get_guias_2(fecha1,fecha2)
   
   end 
    
-    @boletas = Sellvale.select("fecha,td,ruc,MIN(numero) as minimo, MAX(numero) as maximo,sum(importe2) as total").where(["fecha >= ? and fecha<= ? and td<> ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59","N" ]).group(:fecha,:td,:ruc)
-
-  
+   @boletas = Sellvale.select("fecha,td,cod_prod,ruc,MIN(numero) as minimo, MAX(numero) as maximo,sum(importe2) as total").where(["fecha >= ? and fecha<= ? and td<> ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59","N" ]).group(:fecha,:td,:cod_prod,:ruc)
+  # @boletas = Sellvale.select("fecha,td,cod_prod,ruc,MIN(numero) as minimo, MAX(numero) as maximo,sum(importe2) as total").where(["fecha >= ? and fecha<= ? and td<> ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59","N" ]).group(:fecha,:td,:serie,:numero,:cod_prod,:ruc)
     TmpFactura.delete_all
     
     for boleta in @boletas  
@@ -608,13 +607,14 @@ def get_guias_2(fecha1,fecha2)
           if boleta.total != nil 
             lcVventa0 = boleta.total / 1.18
             
-            lcVventa =lcVventa0.round(2)
-            lcTax0   =  boleta.total  - lcVventa
-            lcTax    = lcTax0
-            lcTotal0 = boleta.total
-            lcTotal  = lcTotal0.round(2)  
-            lcFecha = boleta.fecha
-            lcTd = boleta.td 
+            lcVventa  = lcVventa0.round(2)
+            lcTax0    = boleta.total  - lcVventa
+            lcTax     = lcTax0
+            lcTotal0  = boleta.total
+            lcTotal   = lcTotal0.round(2)  
+            lcFecha   = boleta.fecha
+            lcTd      = boleta.td 
+            lcCodProd = boleta.cod_prod 
             
             if boleta.ruc.strip  != nil  or boleta.ruc !="00000000000"
               
@@ -627,8 +627,7 @@ def get_guias_2(fecha1,fecha2)
               lcRazonCliente = " "
             end 
             
-            
-          a= TmpFactura.new(document_id: 3 ,subtotal: lcVventa , tax: lcTax , total: lcTotal, fecha: lcFecha, serie: lcSerie, numero: lcCode,td: lcTd,ruc: lcRucCliente,name:lcRazonCliente, moneda_id:2)
+          a= TmpFactura.new(document_id: 3 ,subtotal: lcVventa , tax: lcTax , total: lcTotal, fecha: lcFecha, serie: lcSerie, numero: lcCode,td: lcTd,ruc: lcRucCliente,name:lcRazonCliente, moneda_id:2,cod_prod:lcCodProd)
           a.save 
         end 
       lcCode=""
@@ -674,7 +673,7 @@ def get_guias_2(fecha1,fecha2)
     
     
     
-    @tmpfacturas=TmpFactura.all.order(:fecha,:td,:serie)
+    @tmpfacturas=TmpFactura.all.order(:fecha,:td,:serie,:numero)
     return @tmpfacturas 
     
     

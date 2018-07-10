@@ -5,11 +5,12 @@ class CreateRedentions < ActiveRecord::Migration
       t.integer :location_id
       t.integer :division_id
       t.integer :customer_id
-      t.text :desscription
+      t.integer :customer_id
+      t.string :description
       t.text :comments
       t.string :code
       t.float :subtotal
-      t.total :tax
+      t.float :tax
       t.float :total
       t.string :processed
       t.string :return
@@ -18,21 +19,21 @@ class CreateRedentions < ActiveRecord::Migration
       t.datetime :fecha
       t.string :serie
       t.string :numero
-      t.string :payment_id
+      t.integer :payment_id
       t.integer :factura_id
       t.string :tipo
-      t.float :pago
+      t.string :pago
       t.float :charge
       t.float :balance
       t.integer :moneda_id
-      t.text :observ
+      t.string :observ
       t.datetime :fecha2
       t.string :year_mounth
       t.float :detraccion
-      t.integer :numero2
+      t.string :numero2
       t.integer :document_id
-      t.string :descuento
-      t.integer :tipoventa
+      t.float :descuento
+      t.string :tipoventa
       t.integer :tipoventa_id
       t.string :ruc
       t.integer :tarjeta_id
