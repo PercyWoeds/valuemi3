@@ -3185,6 +3185,9 @@ def newfactura2
     @payments  = @company.get_payments()
 
     @tipodocumento = @purchase[:document_id]
+    @tiponota = @purchase[:tiponota]
+    
+    
     @purchase[:tiponota] = "1"
     
     if @tipodocumento == 2
