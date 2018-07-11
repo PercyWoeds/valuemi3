@@ -130,6 +130,7 @@
     collection { get :rpt_factura_all   }
     
     collection { get :rpt_ccobrar12_all   }
+    collection { get :rpt_purchase_all   }
     
   end 
     

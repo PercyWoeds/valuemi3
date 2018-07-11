@@ -19,14 +19,17 @@ totals = []
 </h3	>
 
 <form method="get" action="/purchases/rpt_purchase_all/<%= @company.id %>">
+  
+<%= form_tag(rpt_purchase_all_facturas_path, :method => "get") do %>
 
   <div class="field">
-      <input type="date" name="fecha1" value="2018-03-01" style = "width: 150px" >
+      <input type="date" name="fecha1" value="2018-07-01" style = "width: 150px" >
 
     </div>
 	<div class="field">
-		<input type="date" name="fecha2" value="2018-03-31" style = "width: 150px" >
+		<input type="date" name="fecha2" value="2018-07-31" style = "width: 150px" >
   </div>
+
 
   <p>
   <label for="tiporeporte"> Tipo de Reporte:</label><br>
@@ -45,11 +48,11 @@ totals = []
     <%= select_tag(:supplier_id,options_from_collection_for_select(@suppliers,'id','name') ) %>
  </div>
  
- 
 
-  <input type="submit" value="Generar"  />
-  
-</form>
+  <%= submit_tag "To PDF", :name => "print" %>
+  <%= submit_tag "To Excel", :name => "print" %>
+     
+<% end %>
 
 <br />
 

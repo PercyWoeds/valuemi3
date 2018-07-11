@@ -857,13 +857,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
         @facturas_rpt = @company.get_purchases_day_tipo2(@fecha1,@fecha2,@tiporeporte,proveedor)
     end 
     
-    
-    
-    
-
-     
-
-        Prawn::Document.generate("app/pdf_output/rpt_factura.pdf") do |pdf|
+            Prawn::Document.generate("app/pdf_output/rpt_factura.pdf") do |pdf|
             pdf.font "Helvetica"
             pdf = build_pdf_header_rpt8(pdf)
             pdf = build_pdf_body_rpt8(pdf)
