@@ -50,6 +50,8 @@ gem 'simple_form', '~> 3.3', '>= 3.3.1'
 
 gem 'rails_autolink', '~> 1.1', '>= 1.1.6'
 
+gem 'jquery-turbolinks'
+
 
 # Use unicorn as the web server
 # gem 'unicorn'

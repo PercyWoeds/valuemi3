@@ -1,15 +1,61 @@
+<% if @expense.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@expense.errors.count, "error") %> prohibited this customerpayment from being saved:</h2>
+    <ul>
+    <% @expense.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= hr() %>
+
+
+
 <%= simple_form_for(@expense) do |f| %>
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.input :code %>
-    <%= f.input :gasto_id %>
-    <%= f.input :documento %>
-    <%= f.input :descrip %>
-    <%= f.input :importe %>
-    <%= f.input :fecha %>
-    <%= f.input :document_id %>
-  </div>
+    
+    <div class="field">
+        <%= f.label :fecha, "Fecha*", :class => "bold" %><br />
+          <%= f.date_field :fecha  %>
+    </div>
+
+    <div class="field">
+          <%= f.label :code, "Code*", :class => "bold" %><br />
+          <%= f.text_field :code, :onclick => "$(this).select();" %>
+    </div>
+    
+    <div class="field">
+      <%= f.label  :gasto_id , "Gasto: "%>  <br />
+      
+      <%= f.collection_select :gasto_id, @gastos, :id, :fullcuenta, :prompt => true %>
+    </div>
+    
+    <div class="field">
+      <%= f.label  :document_id , "Documento Id"%><br />
+      <%= f.collection_select :document_id, @documents, :id, :description, :prompt => true %>
+    </div>
+    
+    <div class="field">
+      <%= f.label :documento, "Documento ", :class => "bold" %><br />
+      <%= f.text_field :documento %>
+    </div>
+    
+    <div class="field">
+      <%= f.label :descrip, "Description ", :class => "bold" %><br />
+      <%= f.text_field :descrip %>
+    </div>
+
+
+    <div class="field">
+      <%= f.label :importe, "Importe Efectivo ", :class => "bold" %><br />
+      <%= f.text_field :importe %>
+    </div>
+    
+      </div>
 
   <div class="form-actions">
     <%= f.button :submit %>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180827233092) do
+ActiveRecord::Schema.define(version: 20180827233093) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -697,6 +697,18 @@ ActiveRecord::Schema.define(version: 20180827233092) do
     t.string   "full_name2"
     t.string   "cusspp"
     t.integer  "ccosto_id"
+  end
+
+  create_table "expenses", force: :cascade do |t|
+    t.string   "code"
+    t.integer  "gasto_id"
+    t.string   "documento"
+    t.text     "descrip"
+    t.float    "importe"
+    t.datetime "fecha"
+    t.integer  "document_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "factura_details", force: :cascade do |t|

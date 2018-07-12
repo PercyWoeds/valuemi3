@@ -1,4 +1,9 @@
 
+$(document).on('turbolinks:load', function() {
+  $(function(){ $(document).foundation(); });
+});
+
+
 // Document ready (on load)
   function documentReady() {
     fixPngs();

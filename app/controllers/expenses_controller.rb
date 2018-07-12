@@ -15,17 +15,23 @@ class ExpensesController < ApplicationController
   # GET /expenses/new
   def new
     @expense = Expense.new
+    @gastos = Gasto.all 
+    @documents = Document.all
   end
 
   # GET /expenses/1/edit
   def edit
+    @gastos = Gasto.all 
+    @documents = Document.all
   end
 
   # POST /expenses
   # POST /expenses.json
   def create
     @expense = Expense.new(expense_params)
-
+    @gastos = Gasto.all 
+    @documents = Document.all
+    
     respond_to do |format|
       if @expense.save
         format.html { redirect_to @expense, notice: 'Expense was successfully created.' }
