@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  code: MyString
+  gasto_id: 1
+  documento: MyString
+  descrip: MyText
+  importe: 1.5
+  fecha: 2018-07-11 21:48:56
+  document_id: 1
+
+two:
+  code: MyString
+  gasto_id: 1
+  documento: MyString
+  descrip: MyText
+  importe: 1.5
+  fecha: 2018-07-11 21:48:56
+  document_id: 1

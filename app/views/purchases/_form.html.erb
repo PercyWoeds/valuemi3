@@ -171,11 +171,12 @@
      Cant. Grifo del producto
     </div>
     <br />
-    <strong>Mayorista:</strong><br />
-    <input type="text" name="ac_item_mayorista" id="ac_item_mayorista" value="0" class="tf_short"  readonly />
-    <div class="small">
-     Cant. Mayorista del producto 
+    
+    <div>
+      <strong>Mayorista :</strong><br />
+      <span id="ac_item_mayorista">0.00</span>
     </div>
+
     <br />
     
     <strong>Discount %:</strong><br />
@@ -245,20 +246,23 @@
     $("#ac_item").result(function(event, data, formatted) {
       $("#ac_item_id").val(data[2]);
       $("#ac_item_price").val(data[4]);
-      updateItemTotal();
+      updateItemTotalSupplier();
     });
 
     
     $("#ac_item_quantity").bind("keyup", function() {
-      updateItemTotal();
+      updateItemTotalSupplier();
+      
     });
     
     $("#ac_item_price").bind("keyup", function() {
-      updateItemTotal();
+      updateItemTotalSupplier();
+      
     });
     
     $("#ac_item_grifo").bind("keyup", function() {
-      updateItemTotal();
+      updateItemTotalSupplier();
+      
     });
     
     

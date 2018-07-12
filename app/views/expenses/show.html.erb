@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @expense.code %>
+</p>
+
+<p>
+  <strong>Gasto:</strong>
+  <%= @expense.gasto_id %>
+</p>
+
+<p>
+  <strong>Documento:</strong>
+  <%= @expense.documento %>
+</p>
+
+<p>
+  <strong>Descrip:</strong>
+  <%= @expense.descrip %>
+</p>
+
+<p>
+  <strong>Importe:</strong>
+  <%= @expense.importe %>
+</p>
+
+<p>
+  <strong>Fecha:</strong>
+  <%= @expense.fecha %>
+</p>
+
+<p>
+  <strong>Document:</strong>
+  <%= @expense.document_id %>
+</p>
+
+<%= link_to 'Edit', edit_expense_path(@expense) %> |
+<%= link_to 'Back', expenses_path %>

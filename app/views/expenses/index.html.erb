@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Expenses</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Gasto</th>
+      <th>Documento</th>
+      <th>Descrip</th>
+      <th>Importe</th>
+      <th>Fecha</th>
+      <th>Document</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @expenses.each do |expense| %>
+      <tr>
+        <td><%= expense.code %></td>
+        <td><%= expense.gasto_id %></td>
+        <td><%= expense.documento %></td>
+        <td><%= expense.descrip %></td>
+        <td><%= expense.importe %></td>
+        <td><%= expense.fecha %></td>
+        <td><%= expense.document_id %></td>
+        <td><%= link_to 'Show', expense %></td>
+        <td><%= link_to 'Edit', edit_expense_path(expense) %></td>
+        <td><%= link_to 'Destroy', expense, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Expense', new_expense_path %>

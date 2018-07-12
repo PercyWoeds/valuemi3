@@ -202,6 +202,33 @@
     var price = $("#ac_item_price").val();
     var discount = $("#ac_item_discount").val();
     
+    if (isNumeric(quantity) && isNumeric(price) && isNumeric(discount)  && isNumeric(grifo) && isNumeric(mayorista) ) {
+      
+      var total = quantity * price ;
+      
+      mayorista = quantity - grifo ;
+      
+      total -= total * (discount / 100);
+
+      $("#ac_item_total").html(total);
+      $("#ac_item_mayorista").html(mayorista);
+      
+      
+    } else {
+      $("#ac_item_total").html("0.00");
+      $("#ac_item_mayorista").html("0.00");
+    }
+  }
+  
+ function updateItemTotalSupplier() {
+  
+    var quantity = $("#ac_item_quantity").val();
+    
+    var grifo = $("#ac_item_grifo").val();
+    var mayorista = $("#ac_item_mayorista").val();
+    
+    var price = $("#ac_item_price").val();
+    var discount = $("#ac_item_discount").val();
     
     if (isNumeric(quantity) && isNumeric(price) && isNumeric(discount)  && isNumeric(grifo) && isNumeric(mayorista) ) {
       
@@ -819,6 +846,10 @@
       var quantity = $("#ac_item_quantity").val();
       var price = $("#ac_item_price").val();
       var discount = $("#ac_item_discount").val();    
+      
+      var grifo = $("#ac_item_grifo").val();    
+      var mayorista = $("#ac_item_mayorista").val();    
+      
       var items_arr = $("#items").val().split(",");
         
       if(quantity == "" || !isNumeric(quantity)) {
@@ -827,8 +858,12 @@
         alert("Por favor ingrese un precio valido");
       } else if(discount == "" || !isNumeric(discount)) {
         alert("Por favor ingrese un descuento valido");
+      } else if(grifo == "" || !isNumeric(grifo)) {
+        alert("Por favor ingrese un grifo valido");
+      } else if(mayorista == "" || !isNumeric(mayorista)) { 
+        alert("Por favor ingrese un mayorista valido");
       } else {
-        var item_line = item_id + "|BRK|" + quantity + "|BRK|" + price + "|BRK|" + discount;
+        var item_line = item_id + "|BRK|" + quantity + "|BRK|" + price + "|BRK|" + discount+ "|BRK|" + grifo + "|BRK|" + mayorista;
         
         $("#items").val($("#items").val() + "," + item_line);
         listItemsPurchase();
@@ -838,6 +873,8 @@
         $("#ac_item_quantity").val("1");
         $("#ac_item_price").val("");
         $("#ac_item_discount").val("0");
+        $("#ac_item_grifo").val("0");
+        $("#ac_item_mayorista").val("0");
         updateItemTotal5();
       }
     } else {

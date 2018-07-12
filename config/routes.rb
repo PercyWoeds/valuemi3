@@ -1,5 +1,6 @@
   Mnygo::Application.routes.draw do
 
+  resources :expenses
   resources :redentions
   resources :redention_details
   resources :redention_details
