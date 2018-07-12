@@ -841,6 +841,7 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
      
      return ret 
  end  
+ 
  def get_ventas_colaterales_tar(fecha,tipo )
      ret = 0
      facturas = VentaProducto.where(["fecha >= ? and fecha <= ? and division_id = ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59",tipo])
@@ -869,6 +870,23 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
      return depositos
      
  end 
+ 
+ def get_gastos_varios(fecha )
+     
+     ret = 0
+     facturas = Expense.where(["fecha >= ? and fecha <= ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59"])
+      
+     if facturas
+         
+       for factura in facturas
+            ret += factura.importe 
+       end 
+       
+     end 
+     
+     return ret 
+ end  
+ 
  
  
 end

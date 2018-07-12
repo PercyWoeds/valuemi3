@@ -221,14 +221,20 @@ module ApplicationHelper
     return correlative_number
     
   end
-def generate_guid17
+ def generate_guid17
     @voidedlast = Voided.find(17)
     correlative_number =@voidedlast.serie + "-"+@voidedlast.numero.to_s
     return correlative_number
     
   end
 
-  
+ def generate_guid18
+    @voidedlast = Voided.find(18)
+    correlative_number = @voidedlast.serie + "-"+@voidedlast.numero.to_s
+    return correlative_number
+    
+  end
+ 
   # Regresa extensiones para imagenes
   def imgTypes()
     return ["gif", "jpg", "jpeg", "png"]

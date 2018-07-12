@@ -15,8 +15,13 @@ class ExpensesController < ApplicationController
   # GET /expenses/new
   def new
     @expense = Expense.new
-    @gastos = Gasto.all 
+    @gastos = Gasto.all.order(:codigo) 
     @documents = Document.all
+    @expense[:fecha]= Date.today 
+    @expense[:code]="#{generate_guid18()}"  
+    @expense[:fecha]= Date.today 
+    @expense[:importe]= 0.00
+    
   end
 
   # GET /expenses/1/edit
@@ -34,6 +39,8 @@ class ExpensesController < ApplicationController
     
     respond_to do |format|
       if @expense.save
+         @expense.correlativo
+        
         format.html { redirect_to @expense, notice: 'Expense was successfully created.' }
         format.json { render :show, status: :created, location: @expense }
       else
