@@ -20,47 +20,21 @@ class Sellvale < ActiveRecord::Base
            end 
            
            row['processed'] = "0"
+           row['fpago'] = "1"
            
-           
-          Sellvale.create! row.to_hash 
-          
-          
           a = Customer.find_by(account: row['cod_cli'] )
           if a == nil
-            lcCustomerId = 7      
+            
           else
-            lcCustomerId = a.id
-          end 
-          
-          a = Product.find_by(code: row['code'] )
-          if a != nil
-            lcCustomerId = a.id
-          end 
-          
-          
-          lcCode = row['serie'] << "-" << row['numero']
-          
-           if row['td']!="N"
-                  lcVventa0 = row['importe'].to_f / 1.18
-                  lcVventa =lcVventa0.round(2)
-                  lcTax0   =  row['importe'].to_f  - lcVventa
-                  lcTax    = lcTax0
-                  lcTotal0 = row['importe'].to_f 
-                  lcTotal  = lcTotal0.round(2)  
-                  lcDocumentId =3
-            else
-                  lcDocumentId = 3
-                  lcVventa= 0
-                  lcTax = 0
-                  lcTotal = 0
+            
+            if a.tipo =="1"
+                row['tipo'] = "2"
+                puts a.name 
             end 
-          lcFecha = row['fecha']
-          lcTipoVale ='1'
-          lcRucCliente =row['ruc']
+          end 
           
-          
-       
-       end 
+             Sellvale.create! row.to_hash 
+         end 
     end     
         
     

@@ -28,8 +28,11 @@
         <td><%= deposito.nrooperacion %></td>
         <td><%= deposito.processed %></td>
         <td><%= link_to 'Ver ', deposito %></td>
+        
+        <%if @current_user.level == "colateral" || @current_user.level == "admin" || @current_user.level == "parte"     %>
         <td><%= link_to 'Editar', edit_deposito_path(deposito) %></td>
         <td><%= link_to 'Eliminar', deposito, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <<% end %>
       </tr>
     <% end %>
   </tbody>
