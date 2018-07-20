@@ -225,16 +225,15 @@
     var quantity = $("#ac_item_quantity").val();
     
     var grifo = $("#ac_item_grifo").val();
-    var mayorista = $("#ac_item_mayorista").val();
     
     var price = $("#ac_item_price").val();
     var discount = $("#ac_item_discount").val();
     
-    if (isNumeric(quantity) && isNumeric(price) && isNumeric(discount)  && isNumeric(grifo) && isNumeric(mayorista) ) {
+    if (isNumeric(quantity) && isNumeric(price) && isNumeric(discount)  && isNumeric(grifo)  ) {
       
       var total = quantity * price ;
       
-      mayorista = quantity - grifo ;
+      var mayorista = quantity - grifo ;
       
       total -= total * (discount / 100);
 
@@ -848,7 +847,7 @@
       var discount = $("#ac_item_discount").val();    
       
       var grifo = $("#ac_item_grifo").val();    
-      var mayorista = $("#ac_item_mayorista").val();    
+      var mayorista  = quantity - grifo ;    
       
       var items_arr = $("#items").val().split(",");
         
@@ -860,8 +859,6 @@
         alert("Por favor ingrese un descuento valido");
       } else if(grifo == "" || !isNumeric(grifo)) {
         alert("Por favor ingrese un grifo valido");
-      } else if(mayorista == "" || !isNumeric(mayorista)) { 
-        alert("Por favor ingrese un mayorista valido");
       } else {
         var item_line = item_id + "|BRK|" + quantity + "|BRK|" + price + "|BRK|" + discount+ "|BRK|" + grifo + "|BRK|" + mayorista;
         
