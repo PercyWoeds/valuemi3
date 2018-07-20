@@ -26,7 +26,7 @@ class SellvalesController < ApplicationController
     @customers = Customer.all 
     @creditos = Credito.all
     @tarjetas = Tarjetum.all 
-    @products = Product.where(products_category_id:1)
+    @products = Product.all 
     @sellvale[:fecha]  = Date.today
     
     
@@ -41,7 +41,7 @@ class SellvalesController < ApplicationController
     @customers = Customer.all 
     @creditos = Credito.all
     @tarjetas = Tarjetum.all 
-    @products = Product.where(products_category_id:1)
+    @products = Product.all 
     
   end
 
