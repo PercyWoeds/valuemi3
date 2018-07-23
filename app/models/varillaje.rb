@@ -339,8 +339,16 @@ def  get_inicial(fecha1,producto,producto2)
  
  
  def  get_ventas_contometros_creditos(fecha) 
-
-     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ?  and tipo = ?" , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","1" ])
+     
+   facturas = Sellvale.find_by_sql(['Select sellvales.* from sellvales    
+     INNER JOIN products ON sellvales.cod_prod = products.code 
+     WHERE products.products_category_id = 1 
+     and sellvales.fecha >= ? 
+     and sellvales.fecha <= ? 
+     and td = ? and tipo = ?
+     ORDER BY sellvales.fecha', "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","1" ])
+     
+  #facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ?  and tipo = ?" , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","1" ])
      
      if facturas
          
@@ -353,6 +361,32 @@ def  get_inicial(fecha1,producto,producto2)
     return ret
  
  end 
+ 
+ def  get_ventas_contometros_creditos_productos(fecha) 
+     
+   facturas = Sellvale.find_by_sql(['Select sellvales.* from sellvales    
+     INNER JOIN products ON sellvales.cod_prod = products.code 
+     WHERE products.products_category_id <> 1 
+     and sellvales.fecha >= ? 
+     and sellvales.fecha <= ? 
+     and td = ? and tipo = ?
+     ORDER BY sellvales.fecha', "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","1" ])
+     
+  #facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ?  and tipo = ?" , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","1" ])
+     
+     if facturas
+         
+        ret=0  
+        for detalle in facturas
+            ret += detalle.implista
+       end 
+    end 
+
+    return ret
+ 
+ end 
+ 
+ 
  
  def  get_ventas_contometros_adelantado(fecha) 
 

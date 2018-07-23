@@ -3371,9 +3371,6 @@ INNER JOIN outputs ON output_details.output_id = outputs.id
 INNER JOIN products ON output_details.product_id = products.id
 WHERE products.products_category_id = ?  and outputs.fecha >= ? and outputs.fecha <= ?',product, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
 
-
-
- 
     return @purchases 
 
 end
