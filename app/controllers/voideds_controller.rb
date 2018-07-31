@@ -29,7 +29,7 @@
         require './app/generators/daily_receipt_summary_generator'
         require './app/generators/voided_documents_generator'
 
-        SUNAT.environment = :production
+        SUNAT.environment = :test 
 
         files_to_clean = Dir.glob("*.xml") + Dir.glob("./app/pdf_output/*.pdf") + Dir.glob("*.zip")
         files_to_clean.each do |file|
@@ -38,11 +38,21 @@
 
         VoidedDocumentsGenerator.new.generate
         
+         lcCodeFactura  = $lcSerie +"-"+$lg_serial_id2
+         puts "codigo factura "
+         puts lcCodeFactura
+     
+        @invoiceinterno = Factura.find_by(code: lcCodeFactura)
+        @invoiceinterno.delete_facturas
+        @invoiceinterno.anular
+        
         $lcFileName2=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
 
         send_file("#{$lcFileName2}", :type => 'application/pdf', :disposition => 'inline')
 
         voided= Voided.new()
+        
+        
         voided.numero=Voided.find(1).numero.to_i + 1
         lcnumero=voided.numero.to_s
         Voided.where(:id=>'1').update_all(:numero =>lcnumero)

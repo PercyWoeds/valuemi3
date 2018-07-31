@@ -1117,6 +1117,15 @@ def rpt_facturas_4
     @productos = Product.where(products_category_id: 1)
     
   end 
+  def rpt_facturas_10
+    @company = Company.find(params[:company_id])
+    @pagetitle = "Facturas por Cliente"    
+    @customers = @company.get_customers()
+    @monedas = Moneda.all 
+    @productos = Product.where(products_category_id: 1)
+    
+  end 
+  
 
   def rpt_facturas_all
     @company = Company.find(params[:company_id])

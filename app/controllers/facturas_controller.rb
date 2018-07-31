@@ -217,7 +217,9 @@ def reportes8
     @contado_rpt4 = @company.get_parte_4(@fecha1,@fecha2) #creditos
     @contado_rpt5 = @company.get_parte_5(@fecha1,@fecha2) #tarjeta 
     @contado_rpt6 = @company.get_parte_6(@fecha1,@fecha2) #pago adelantado
+    
     @contado_adel0 = @company.get_parte_6b(@fecha1,@fecha2) # total saldo vales adelantados inicial
+    
     @fecha0 = "2018-03-01"
     @contado_adel1 = @company.get_ventas_mayor_anterior(@fecha0,@fecha1,"4") # total saldo facturas adelantadas inicial
     
@@ -309,18 +311,19 @@ def reportes9
   end
   
 
-def reportes11
+def rpt_pago_adelantado
   
     @company=Company.find(1)          
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2] 
-  
-    @contado_rpt1 = @company.get_ventas_contometros_all(@fecha1,@fecha2)  
+    
+    
+    @contado_rpt_adelantado = @company.get_pago_adelantado(@fecha1,@fecha2)
     
     case params[:print]
       when "To PDF" then 
         begin 
-         render  pdf: "Ordenes ",template: "varillajes/parte11_rpt.pdf.erb",locals: {:varillajes => @contado_rpt1},
+         render  pdf: "Ordenes ",template: "varillajes/parte13_rpt.pdf.erb",locals: {:varillajes => @contado_rpt_adelantado},
          :orientation    => 'Landscape',
          
          :header => {
@@ -351,7 +354,7 @@ def reportes12
     @parte_rpt = @company.get_parte_10(@fecha1,@fecha2)  
     
     @total_factura_out_fecha_detalle2 =@company.get_credito_out_fecha_detalle2(@fecha1,@fecha2,"3")
-    
+   get_parte_6 
     case params[:print]
       when "To PDF" then 
         begin 
@@ -696,6 +699,43 @@ def reportes10
       else render action: "index"
     end
   end
+def reportes11
+
+    @company=Company.find(1)          
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]    
+    @moneda = params[:moneda_id]    
+    
+    @cbox1 = params[:cbox1]    
+    @cbox2 = params[:cbox2]    
+    @cliente  = params[:customer_id]    
+    
+    
+   if @cbox1 == "1"
+    @facturas_rpt = @company.get_ventas_all(@fecha1,@fecha2)          
+   else
+    @facturas_rpt = @company.get_ventas_all2(@fecha1,@fecha2,@cliente)          
+   end 
+    
+    case params[:print]
+      when "To PDF" then 
+        begin 
+         render  pdf: "Facturas ",template: "facturas/rventas10_rpt.pdf.erb",
+         :orientation      => 'Landscape',
+         locals: {:facturas => @facturas_rpt},
+            :header => {
+           :spacing => 5,
+                           :html => {
+                     :template => 'layouts/pdf-header.html',
+                           right: '[page] of [topage]'
+                  }
+               }
+        end   
+      when "To Excel" then render xlsx: 'reporte10xls'
+      else render action: "index"
+    end
+  end
+
 
 
 def reportes31 
@@ -804,6 +844,7 @@ def reportes31
     @email = params[:email]
     
     Notifier.invoice(@email, @invoice).deliver
+    
     
     flash[:notice] = "The invoice has been sent successfully."
     redirect_to "/facturas/#{@invoice.id}"
@@ -1395,15 +1436,6 @@ def reportes31
         $lcFechaCodigoBarras = $aa << "-" << $mm << "-" << $dd
         $lcIGVcode = $lcIgv
         $lcTotalcode = $lcTotal
-        puts $lcruc
-        puts $lcTd
-        puts $lcSerie
-        puts $lcDocument_seria_id
-        puts $lcIGVcode
-        puts $lcTotalcode
-        puts $lcFechaCodigoBarras
-        puts $lcTipoDocCli
-        puts $lcNroDocCli
         
         
         $lcCodigoBarra = $lcruc << "|" << $lcTd << "|" << $lcSerie << "|" << $lcDocument_serial_id.to_s << "|" <<$lcIGVcode.to_s<< "|" << $lcTotalcode.to_s << "|" << $lcFechaCodigoBarras << "|" << $lcTipoDocCli  << "|" << $lcNroDocCli

@@ -10,7 +10,6 @@ class Company < ActiveRecord::Base
   
   belongs_to :user
 
-
   has_many :locations
   has_many :suppliers
   has_many :products
@@ -4027,6 +4026,69 @@ def get_facturas_by_day_value2(fecha1,fecha2,moneda,value='total')
      
        return facturas 
  
+  end 
+  
+  def get_pago_adelantado(fecha1,fecha2)
+    
+    
+    
+    @contado_adel0 = self.get_parte_6b(fecha1,fecha2) # total saldo vales adelantados inicial
+    
+    @fecha0 = "2018-03-01"
+    @contado_adel1 = self.get_ventas_mayor_anterior(@fecha0,fecha1,"4") # total saldo facturas adelantadas inicial
+    
+    @contado_inicial = @contado_adel1 -@contado_adel0 
+    
+    @factura_adelantada= self.get_ventas_adelantado(fecha1,fecha2) 
+    
+    @contado_rpt6 = self.get_parte_6(fecha1,fecha2) #pago adelantado
+    
+
+    MovementPay.delete_all
+
+    @customerExiste = Customer.where(:tipo=> "2") 
+
+     for existe in @customerExiste
+
+        product =  MovementPay.find_by(:customer_id => existe.id)
+
+        if product 
+        else   
+          
+          detail  = MovementPay.new(:fecha=>fecha1 ,:inicial=>@contado_inicial,:abono=>0,:cargo =>0,:saldo=>0,:customer_id=> existe.id,document_id: "12" ,code:"Inicial" )
+          detail.save       
+          #Facturas adelantadas
+          for pago in @factura_adelantada
+          
+            detail  = MovementPay.new(:fecha=> pago.fecha ,:inicial=>0,:abono=>pago.total ,:cargo =>0 ,:saldo=>0,:customer_id=> existe.customer_id,document_id: pago.document_id,code:pago.code )
+            detail.save       
+          
+          end 
+          
+          
+          
+          # Vales adelantados 
+          for pago in @contado_rpt6 
+          
+            detail  = MovementPay.new(:fecha=> pago.fecha ,:inicial=>0,:abono=>0,:cargo =>pago.importe.to_f ,:saldo=>0,:customer_id=> existe.customer_id,document_id: "12"  ,code: pago.numero )
+            detail.save       
+          
+          end 
+          
+          
+        end         
+        
+        
+     end    
+
+
+     ######################################################################3
+     ##saldo inicial
+     ######################################################################3 
+    detalle = MovementPay.all 
+    
+    return detalle
+    
   end 
 
   

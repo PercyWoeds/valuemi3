@@ -384,7 +384,7 @@
 		<tr>
 			<%= form_tag sendsunat_facturas_path, multipart: true do %>
 			
-	  		<%= submit_tag "Enviar Sunat  " ,  data: { no_turbolink: true }  %>
+	  		<%= submit_tag "Procesar factura  " ,  data: { no_turbolink: true }  %>
 			<% end %>
 			
 		</tr>
@@ -419,13 +419,13 @@
 		<% end %>
 
 	
-<% if @invoice.processed =="0" || @invoice.processed==nil %>
-  <%= link_to 'Procesar factura', "/facturas/do_process/#{@invoice.id}" %>
-  <%= link_to 'Editar', edit_factura_path(@invoice) %>
-<% elsif @invoice.processed =="1" %>  
+<!--<% if @invoice.processed =="0" || @invoice.processed==nil %>-->
+<!--  <%= link_to 'Procesar factura', "/facturas/do_process/#{@invoice.id}" %>-->
 
-  <%= link_to 'Anular', "/facturas/do_anular/#{@invoice.id}" %>
+<!--<% elsif @invoice.processed =="1" %>  -->
+
+<!--  <%= link_to 'Anular', "/facturas/do_anular/#{@invoice.id}" %>-->
   
-<% end %>
+<!--<% end %>-->
 <%= link_to 'Regresar', "/companies/facturas/#{@invoice.company.id}" %>
 </div>
