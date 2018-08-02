@@ -1327,7 +1327,7 @@
     
        def get_pendientes_day(fecha1,fecha2)
     
-          @facturas = Factura.where([" balance > 0  and  company_id = ? AND fecha >= ? and fecha<= ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59"]).order(:customer_id,:moneda_id,:fecha)
+          @facturas = Factura.where([" balance > 0  and  company_id = ? AND fecha >= ? and fecha<= ? and tipoventa_id <> '1' ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59"]).order(:customer_id,:moneda_id,:fecha)
           return @facturas
           
        end 
