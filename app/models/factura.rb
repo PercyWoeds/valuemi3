@@ -311,7 +311,7 @@ class Factura < ActiveRecord::Base
     
       sellvale_process = Sellvale.find(ip.sellvale_id)
       sellvale_process.processed = "0"
-      if sellvale.save
+      if sellvale_process.save
         ip.destroy
       end 
       
