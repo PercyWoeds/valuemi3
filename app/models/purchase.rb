@@ -48,7 +48,6 @@ TABLE_HEADERS2  = ["ITEM ",
                      "Fec.Vmto",
                      "Proveedor",
                      "Moneda",  
-                     "Percepcion",  
                      "SOLES",
                      "DOLARES ",
                      "OBSERV"]

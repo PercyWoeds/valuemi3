@@ -1927,7 +1927,7 @@ def build_pdf_header_rpt48(pdf)
   def build_pdf_body_rpt2(pdf)
     
     pdf.text "Cuentas por Pagar  : desde "+@fecha1.to_s+ " Hasta: "+@fecha2.to_s , :size => 8 
-    pdf.text ""
+    pdf.text "* Solo facturas procesadas"
     pdf.font "Helvetica" , :size => 6
 
       headers = []
@@ -1944,15 +1944,16 @@ def build_pdf_header_rpt48(pdf)
       nroitem=1
       lcmonedasoles   = 2
       lcmonedadolares = 1
-    
+      total_soles = 0
+      total_dolares = 0 
 
       lcDoc='FT'      
 
-       lcCliente = @facturas_rpt.first.supplier_id
+       lcProveedor = @facturas_rpt.first.supplier_id
 
        for  product in @facturas_rpt
         
-          if lcCliente == product.supplier_id
+          if lcProveedor == product.supplier_id
 
             
               fechas2 = product.date2 
@@ -1982,10 +1983,13 @@ def build_pdf_header_rpt48(pdf)
           else
             totals = []            
             total_cliente_soles = 0
-            total_cliente_soles = @company.get_purchases_pendientes_day_value(@fecha1,@fecha2, lcCliente, lcmonedadolares)
+            total_cliente_soles = @company.get_pendientes_day_value_supplier(@fecha1,@fecha2, lcProveedor, lcmonedadolares)
             total_cliente_dolares = 0
-            total_cliente_dolares = @company.get_purchases_pendientes_day_value(@fecha1,@fecha2, lcCliente, lcmonedasoles)
-            
+            total_cliente_dolares = @company.get_pendientes_day_value_supplier(@fecha1,@fecha2, lcProveedor, lcmonedasoles)
+          
+            total_soles += total_cliente_soles
+            total_dolares += total_cliente_dolares
+              
             row =[]
             row << ""
             row << ""
@@ -2037,10 +2041,12 @@ def build_pdf_header_rpt48(pdf)
             total_cliente = 0
 
             total_cliente_soles = 0
-            total_cliente_soles = @company.get_purchases_pendientes_day_value(@fecha1,@fecha2, lcProveedor, lcmonedadolares)
+            total_cliente_soles = @company.get_pendientes_day_value_supplier(@fecha1,@fecha2, lcProveedor, lcmonedadolares)
             total_cliente_dolares = 0
-            total_cliente_dolares = @company.get_purchases_pendientes_day_value(@fecha1,@fecha2, lcProveedor, lcmonedasoles)
+            total_cliente_dolares = @company.get_pendientes_day_value_supplier(@fecha1,@fecha2, lcProveedor, lcmonedasoles)
     
+            total_soles += total_cliente_soles
+            total_dolares += total_cliente_dolares
             
             row =[]
             row << ""
@@ -2054,9 +2060,7 @@ def build_pdf_header_rpt48(pdf)
             row << " "
             table_content << row
               
-          total_soles = @company.get_pendientes_day_value(@fecha1,@fecha2, "total",lcmonedasoles)
-          total_dolares = @company.get_pendientes_day_value(@fecha1,@fecha2, "total",lcmonedadolares)
-      
+          
            if $lcxCliente == "0" 
 
           row =[]
@@ -2194,13 +2198,13 @@ def build_pdf_header_rpt48(pdf)
   def rpt_cpagar3_pdf
 
     $lcxCliente ="1"
-    @company=Company.find(params[:id])          
+    @company=Company.find(params[:company_id])      
+    
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]    
-    @categoria = params[:products_category_id]    
-    @namecategoria = @company.get_categoria_name(@categoria)      
-
-    @facturas_rpt = @company.get_ingresos_day2(@fecha1,@fecha2,@categoria)
+    @supplier = params[:supplier_id]    
+    
+    @facturas_rpt = @company.get_purchases_day_all(@fecha1,@fecha2,@supplier)
 
 
     if @facturas_rpt.size > 0 

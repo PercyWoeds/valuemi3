@@ -324,7 +324,6 @@ def rpt_pago_adelantado
       when "To PDF" then 
         begin 
          render  pdf: "Ordenes ",template: "varillajes/parte13_rpt.pdf.erb",locals: {:varillajes => @contado_rpt_adelantado},
-         :orientation    => 'Landscape',
          
          :header => {
            :spacing => 5,
@@ -2005,8 +2004,13 @@ def newfactura2
       lcDoc='FT'    
       
       lcCliente = @facturas_rpt.first.customer_id 
+      
+      @total_original_soles =0
+      @total_original_dolares =0
+      
       @totalvencido_soles = 0
       @totalvencido_dolar = 0
+      
       
        for  product in @facturas_rpt
        
@@ -2027,32 +2031,53 @@ def newfactura2
             row << product.fecha2.strftime("%d/%m/%Y")
             dias = (product.fecha2.to_date - product.fecha.to_date).to_i 
             
+            dias_vencido = (product.fecha2.to_date - Date.today).to_i 
+            
             row << dias 
+            row << dias_vencido 
             row << product.customer.name
             row << product.moneda.symbol  
+            
+            
 
             if product.moneda_id == 1 
                 if product.document_id   == 2
                   row << "0.00 "
+                  row << sprintf("%.2f",(product.total*-1).to_s)
+                    
+                  row << "0.00 "
                   row << sprintf("%.2f",(product.balance*-1).to_s)
+                  
+                  
                     if(product.fecha2 < Date.today)   
                       @totalvencido_dolar += product.balance*-1
                     end  
+                    
                 else  
                   row << "0.00 "
+                  row << sprintf("%.2f",product.total.to_s)
+                    
+                  row << "0.00 "
                   row << sprintf("%.2f",product.balance.to_s)
+                  
                   if(product.fecha2 < Date.today)   
                       @totalvencido_dolar += product.balance
                   end  
                 end   
             else
                 if product.document_id == 2
+                  row << sprintf("%.2f",(product.total*-1).to_s)
+                  row << "0.00 "
+                    
                   row << sprintf("%.2f",(product.balance*-1).to_s)
                   row << "0.00 "
                   if(product.fecha2 < Date.today)   
                       @totalvencido_soles += product.balance*-1
                   end  
                 else                
+                  row << sprintf("%.2f",product.total.to_s)
+                  row << "0.00 "
+                  
                   row << sprintf("%.2f",product.balance.to_s)
                   row << "0.00 "
                   if(product.fecha2 < Date.today)   
@@ -2068,6 +2093,7 @@ def newfactura2
             else  
               row << sprintf("%.2f",product.detraccion.to_s)
             end
+            
             row << product.get_vencido 
             table_content << row
             nroitem = nroitem + 1
@@ -2084,13 +2110,17 @@ def newfactura2
             row << ""
             row << ""
             row << ""  
-            row << ""  
+            row << ""
+            row << ""
             row << "TOTALES POR CLIENTE=> "            
             row << ""
+            row << " "
+            row << " "
             row << sprintf("%.2f",total_cliente_dolares.to_s)
             row << sprintf("%.2f",total_cliente_soles.to_s)
             row << " "
             row << " "
+            
             
             table_content << row
 
@@ -2103,21 +2133,65 @@ def newfactura2
             row << product.fecha.strftime("%d/%m/%Y")
             row << product.fecha2.strftime("%d/%m/%Y")
             dias = (product.fecha2.to_date - product.fecha.to_date).to_i 
+            dias_vencido = (product.fecha2.to_date - Date.today).to_i 
             
             row << dias 
+            row << dias_vencido  
             row << product.customer.name
             row << product.moneda.symbol  
 
-            if product.moneda_id == 1 
-                row << "0.00 "
-                row << sprintf("%.2f",product.balance.to_s)
+              if product.moneda_id == 1 
+                if product.document_id   == 2
+                  row << "0.00 "
+                  row << sprintf("%.2f",(product.total*-1).to_s)
+                    
+                  row << "0.00 "
+                  row << sprintf("%.2f",(product.balance*-1).to_s)
+                  
+                    if(product.fecha2 < Date.today)   
+                      @totalvencido_dolar += product.balance*-1
+                    end  
+                else  
+                  row << "0.00 "
+                  row << sprintf("%.2f",product.total.to_s)
+                    
+                  row << "0.00 "
+                  row << sprintf("%.2f",product.balance.to_s)
+                  
+                  if(product.fecha2 < Date.today)   
+                      @totalvencido_dolar += product.balance
+                  end  
+                end   
             else
-                row << sprintf("%.2f",product.balance.to_s)
-                row << "0.00 "
-            end 
-            row << sprintf("%.2f",product.detraccion.to_s)
-            row << product.observ
-
+                if product.document_id == 2
+                  row << sprintf("%.2f",(product.total*-1).to_s)
+                  row << "0.00 "
+                    
+                  row << sprintf("%.2f",(product.balance*-1).to_s)
+                  row << "0.00 "
+                  if(product.fecha2 < Date.today)   
+                      @totalvencido_soles += product.balance*-1
+                  end  
+                else                
+                  row << sprintf("%.2f",product.total.to_s)
+                  row << "0.00 "
+                  
+                  row << sprintf("%.2f",product.balance.to_s)
+                  row << "0.00 "
+                  if(product.fecha2 < Date.today)   
+                      @totalvencido_soles += product.balance
+                  end  
+                    
+                end 
+            end
+            if product.detraccion == nil
+              row <<  "0.00"
+            else  
+              row << sprintf("%.2f",product.detraccion.to_s)
+            end
+            
+            row << product.get_vencido 
+            
             
             table_content << row
 
@@ -2141,13 +2215,18 @@ def newfactura2
             row << ""
             row << ""
             row << ""  
-            row << ""          
+            row << ""  
+            row << ""  
             row << "TOTALES POR CLIENTE=> "            
             row << ""
+            row << " "
+            row << " "
+            
             row << sprintf("%.2f",total_cliente_dolares.to_s)
             row << sprintf("%.2f",total_cliente_soles.to_s)                      
             row << " "
             row << " "
+            
             table_content << row
               
           total_soles   = @company.get_pendientes_day_value(@fecha1,@fecha2, "total",lcmonedasoles)
@@ -2161,31 +2240,46 @@ def newfactura2
           row << ""
           row << ""
           row << ""  
+          row << ""  
           row << "TOTALES => "
           row << ""
+          row << " "
+          row << " "
+            
           row << sprintf("%.2f",total_soles.to_s)
           row << sprintf("%.2f",total_dolares.to_s)                    
           row << " "
           row << " "
+            
           table_content << row
           end 
           
 
           result = pdf.table table_content, {:position => :center,
                                         :header => true,
-                                        :width => pdf.bounds.width
+                                        :width => pdf.bounds.width,
+                                        :cell_style => { size: 6 },
+                                        
                                         } do 
                                           columns([0]).align=:center
                                           columns([1]).align=:left
                                           columns([2]).align=:left
                                           columns([3]).align=:left
                                           columns([4]).align=:left
-                                          columns([5]).align=:left   
-                                          columns([6]).align=:right
-                                          columns([7]).align=:right
+                                          columns([5]).align=:left 
+                                          columns([5]).width =30
+                                          columns([6]).align=:left
+                                          columns([7]).align=:left
                                           columns([8]).align=:right
+                                          columns([8]).width =40
                                           columns([9]).align=:right
+                                          columns([9]).width =40
                                           columns([10]).align=:right
+                                          columns([10]).width =40
+                                          columns([11]).align=:right
+                                          columns([11]).width =40
+                                          columns([12]).align=:right
+                                          columns([13]).align=:right
                                         end                                          
                                         
       pdf.move_down 10    
@@ -2288,8 +2382,8 @@ def newfactura2
 
     @facturas_rpt = @company.get_pendientes_day(@fecha1,@fecha2)  
 
-      
-    Prawn::Document.generate("app/pdf_output/rpt_pendientes.pdf") do |pdf|
+    
+    Prawn::Document.generate "app/pdf_output/rpt_pendientes.pdf", :page_layout => :landscape do |pdf|        
         pdf.font "Helvetica"
         pdf = build_pdf_header_rpt2(pdf)
         pdf = build_pdf_body_rpt2(pdf)

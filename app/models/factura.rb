@@ -39,8 +39,14 @@ class Factura < ActiveRecord::Base
                      "Fec.Emision",
                      "Fec.Vmto",
                      "Dias",
+                     "Dias
+                      Vencido",
                      "C L I E N T E ",
                      "Mon. ",
+                     "Imp. Original
+                     Soles",
+                     "Imp. Original
+                      Dolares",
                      "Soles",
                      "Dolares",
                      "Detraccion",

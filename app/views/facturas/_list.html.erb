@@ -62,6 +62,7 @@
               <% if @current_user.level == "admin" %>
               <%= link_to 'Eliminar', invoice,:data=> {:confirm => 'Esta seguro ?'}, :method => :delete %>            
               <% end %>
+              
           <% elsif invoice.processed =="2"%>  
           <%= "** Anulado **" %>
             <% if @current_user.level == "admin" %>

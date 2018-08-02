@@ -3,6 +3,7 @@ class Customer < ActiveRecord::Base
   validates_uniqueness_of :ruc,:account 
   
   belongs_to :company
+  belongs_to :movement_pay 
   
   has_many :invoices
   has_many :manifests

@@ -1403,7 +1403,12 @@ def list_receive_supplierpayments
             row << product.payment.day 
             row << product.document.descripshort 
             row << product.documento
-            row << product.supplier.name  
+            if product.supplier != nil 
+              row << product.supplier.name  
+            else
+              row << ""
+            end 
+            
             row <<  sprintf("%.2f",product.total_amount.to_s)
             table_content << row
 
@@ -1423,7 +1428,8 @@ def list_receive_supplierpayments
                                           columns([4]).align=:left 
                                           columns([5]).align=:left
                                           columns([6]).align=:left
-                                          columns([7]).align=:right
+                                          columns([7]).align=:left
+                                          columns([8]).align=:right 
                                           
                                         end                                          
       pdf.move_down 10      
