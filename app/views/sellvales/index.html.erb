@@ -2,6 +2,12 @@
 
 <h1>Listado Vales</h1>
 
+<%= form_tag(sellvales_path, :method => "get", id: "search-form") do %>
+  <%= text_field_tag :search, params[:search], placeholder: "Buscar vales " %>
+  <%= submit_tag "Buscar: " %>
+<% end %>
+
+
 <table>
   <thead>
     <tr>

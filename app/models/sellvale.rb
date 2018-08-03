@@ -127,6 +127,11 @@ def get_cliente(cliente)
         return "Cliente no existe"
     end 
  end 
+
+def self.search(search)
+  # Title is for the above case, the OP incorrectly had 'name'
+  where("numero  iLIKE ? or cod_cli iLIKE ? ", "%#{search}%","%#{search}%")
+end
  
 
 end
