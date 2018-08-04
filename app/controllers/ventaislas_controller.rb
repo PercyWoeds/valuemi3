@@ -5,7 +5,7 @@ class VentaislasController < ApplicationController
   # GET /ventaislas
   # GET /ventaislas.json
   def index
-    @ventaislas = Ventaisla.order('fecha DESC,turno')
+    @ventaislas = Ventaisla.order('fecha DESC,turno')..paginate(:page => params[:page], :per_page => 20)
     
   end
 

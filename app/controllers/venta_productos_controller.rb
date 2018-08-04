@@ -4,7 +4,7 @@ class VentaProductosController < ApplicationController
   # GET /venta_productos
   # GET /venta_productos.json
   def index
-    @venta_productos = VentaProducto.all
+    @venta_productos = VentaProducto.all.paginate(:page => params[:page], :per_page => 20)
   end
 
   # GET /venta_productos/1

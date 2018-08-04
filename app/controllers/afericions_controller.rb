@@ -4,7 +4,7 @@ class AfericionsController < ApplicationController
   # GET /afericions
   # GET /afericions.json
   def index
-    @afericions = Afericion.all
+    @afericions = Afericion.all.paginate(:page => params[:page], :per_page => 20)
   end
 
   # GET /afericions/1
