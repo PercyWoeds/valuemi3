@@ -372,15 +372,12 @@
 <%= hr() %>
 <div class="button" >
   
-  <%= form_tag pdf_facturas_path, multipart: true do %>
-	  <%= submit_tag  "Imprimir" , data: { no_turbolink: true } %>
-	<% end %>		
 
-  
   	
-	<%if  @current_user.level == "admin" || @current_user.level == "compras"       %>
+	
 	
 	<table>
+	   <%if  @current_user.level == "admin" || @current_user.level == "compras"       %>
 		<tr>
 			<%= form_tag sendsunat_facturas_path, multipart: true do %>
 			

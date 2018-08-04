@@ -4,7 +4,9 @@ class DepositosController < ApplicationController
   # GET /depositos
   # GET /depositos.json
   def index
-    @depositos = Deposito.all
+    @depositos = Deposito.all.paginate(:page => params[:page], :per_page => 20)
+    
+    
   end
 
   # GET /depositos/1
