@@ -1559,7 +1559,7 @@
         
         def get_purchases_day_all(fecha1,fecha2,proveedor)
           
-          @purchases = Purchase.where([" company_id = ? AND date1 >= ? and date1 <= ? and processed = ? and supplier_id = ? and balance > 0 ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59","1",proveedor ]).order(:supplier_id,:moneda_id,:date1)       
+          @purchases = Purchase.where([" company_id = ? AND date1 >= ? and date1 <= ? and processed = ? and supplier_id = ? and round(balance,2) > 0 ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59","1",proveedor ]).order(:supplier_id,:moneda_id,:date1)       
           return @purchases 
         end
         
