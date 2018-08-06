@@ -174,8 +174,7 @@ def reportes7
     @cliente_select = params[:cbox1]    
     @customer = params[:customer_id]
     
-    
-       
+      
     
     if @cliente_select == "1"
         @contado_rpt = @company.get_parte_6(@fecha1,@fecha2)
@@ -353,7 +352,7 @@ def reportes12
     @parte_rpt = @company.get_parte_10(@fecha1,@fecha2)  
     
     @total_factura_out_fecha_detalle2 =@company.get_credito_out_fecha_detalle2(@fecha1,@fecha2,"3")
-   get_parte_6 
+  
     case params[:print]
       when "To PDF" then 
         begin 
