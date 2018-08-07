@@ -2667,7 +2667,7 @@ end
         require './app/generators/daily_receipt_summary_generator'
         require './app/generators/voided_documents_generator'
 
-        SUNAT.environment = :test
+        SUNAT.environment = :production 
 
         files_to_clean = Dir.glob("*.xml") + Dir.glob("./app/pdf_output/*.pdf") + Dir.glob("*.zip")
         files_to_clean.each do |file|
@@ -2702,7 +2702,7 @@ end
         require './app/generators/daily_receipt_summary_generator'
         require './app/generators/voided_documents_generator'
 
-        SUNAT.environment = :test 
+        SUNAT.environment = :production
 
         files_to_clean = Dir.glob("*.xml") + Dir.glob("./app/pdf_output/*.pdf") + Dir.glob("*.zip")
         files_to_clean.each do |file|
@@ -2731,7 +2731,8 @@ end
 
         
     def sendmail      
-
+        @invoice = Factura.find(params[:id])
+        
         lib = File.expand_path('../../../lib', __FILE__)
         $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 

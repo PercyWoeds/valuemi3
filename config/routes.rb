@@ -153,10 +153,7 @@
       put :discontinue 
     end 
     
-    
     collection { post :xml }
-    collection { post :sendmail }
-    
     collection { post :print1 }
     collection { post :pdf }
     
@@ -645,6 +642,7 @@ end
   match 'facturas/do_process/:id' => 'facturas#do_process', via: [:get, :post]
   match 'facturas/print/:id' => 'facturas#print', via: [:get, :post]
   match 'facturas/sendsunat/:id' => 'facturas#sendsunat', via: [:get, :post]
+  match 'facturas/sendmail/:id' => 'facturas#sendmail', via: [:get, :post]
   
   match 'facturas/email/:id' => 'facturas#email', via: [:get, :post]
   match 'facturas/pdf/:id' => 'facturas#pdf', via: [:get, :post]
