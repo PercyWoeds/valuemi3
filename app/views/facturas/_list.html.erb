@@ -47,7 +47,7 @@
 
           <% if invoice.processed =="0" %>
           <%= link_to "Ver", invoice %>                      
-          
+          <%= link_to "Imprimir", "/facturas/print/#{invoice.id}" %>                      
             
           
           <% if @current_user.level == "admin" %>

@@ -2673,7 +2673,7 @@ end
         
         if $lcMoneda == "D"
         else
-        case_3 = InvoiceGenerator.new(1, 3, 1, $lg_serie_factura).with_igv(true)
+        case_3 = InvoiceGenerator.new(1, 3, 2, $lg_serie_factura).with_igv(true)
         end     
         
         $lcGuiaRemision =""      
@@ -2683,10 +2683,10 @@ end
     end
 
     def print
-
+        @invoice = Factura.find(params[:id])
+        
         lib = File.expand_path('../../../lib', __FILE__)
         $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-        puts lib
         
 
         require 'sunat'
@@ -2698,20 +2698,22 @@ end
         require './app/generators/daily_receipt_summary_generator'
         require './app/generators/voided_documents_generator'
 
-        SUNAT.environment = :production
+        SUNAT.environment = :test 
 
         files_to_clean = Dir.glob("*.xml") + Dir.glob("./app/pdf_output/*.pdf") + Dir.glob("*.zip")
         files_to_clean.each do |file|
           File.delete(file)
         end         
-    
+       
        if $lcMoneda == "D"  
             $lcFileName=""
             case_49 = InvoiceGenerator.new(1,3,1,$lg_serie_factura).with_different_currency2
           #  puts $lcFileName 
        else
-            case_3  = InvoiceGenerator.new(1,3,1,$lg_serie_factura).with_igv2(true)
+           puts @invoice.id 
+            case_3  = InvoiceGenerator.new(1,3,1,$lg_serie_factura,@invoice.id).with_igv2(true)
        end 
+    
     
         
         $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName

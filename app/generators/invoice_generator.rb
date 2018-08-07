@@ -5,10 +5,12 @@ class InvoiceGenerator < DocumentGenerator
 
   #$lcAutorizacion1=$lcAutorizacion <<' Datos Adicionales GUIA DE REMISION : '<<$lcGuiaRemision
 
-  def initialize(group, group_case, items, serie)
+  def initialize(group, group_case, items, serie,numero)
     super(group, group_case)
     @items = items
     @serie = serie
+    @numero = numero 
+    
   end 
 
   def with_igv(pdf=false)
@@ -125,27 +127,109 @@ class InvoiceGenerator < DocumentGenerator
         
   protected
       def customer
-       {legal_name:$lcLegalName , ruc: $lcRuc}
+       {legal_name: $lcLegalName, ruc: $lcRuc}
       end
 
   private
    
 
   def data(items = 0, currency = 'PEN')
-    invoice_data = {id: "#{@serie}-#{"%06d" %  $lg_serial_id}", customer: customer, 
-    tax_totals: [{amount: {value: items*$lcIgv, currency: currency}, type: :igv}], legal_monetary_total: {value: $lcTotal * items, currency: currency}, 
-    additional_monetary_totals: [{id: "1001", payable_amount: {value: $lcVVenta * items, currency: currency}}]}
+    
+    @invoice = Factura.find(@numero)
+    @invoiceitems = FacturaDetail.select(:product_id,:price_discount,"SUM(quantity) as cantidad","SUM(total) as total").where(factura_id: @numero).group(:product_id,:price_discount)
+    
+     $lg_fecha   = @invoice.fecha.to_date
+         lcCode = @invoice.code.split("-")
+         a = lcCode[0]
+         b = lcCode[1]
+         
+        lcVVenta1      =  @invoice.subtotal * 100        
+        lcVVenta_a       =  lcVVenta1.round(0)
+            
+        lcIgv1         =  @invoice.tax * 100
+        lcIgv_a          =  lcIgv1.round(0)
+        
+        lcTotal1       =  @invoice.total * 100
+        lcTotal_a        =  lcTotal1.round(0)
+         
+        
+        @lg_serie_factura = a  
+        @lg_serial_id   = b.to_i
+        
+        $lcRuc          = @invoice.customer.ruc
+        
+        $lcTd           = @invoice.document.descripshort
+        
+        $lcMail         = @invoice.customer.email
+        $lcMail2        = ""
+        $lcMail3        = ""
+        
+         legal_name_spaces = @invoice.customer.name.lstrip    
+        
+        if legal_name_spaces == nil
+            $lcLegalName    = legal_name_spaces
+        else
+            $lcLegalName = @invoice.customer.name.lstrip    
+        end
+        $lcDirCli       = @invoice.customer.address1
+        $lcDisCli       = @invoice.customer.address2
+        $lcProv         = @invoice.customer.city
+        $lcDep          = @invoice.customer.state
+        
+        
+        puts @lg_serie_factura
+        puts @lg_serial_id
+        
+        puts "***********"
+        puts lcIgv_a 
+        puts lcTotal_a 
+        puts lcVVenta_a
+        puts @invoice.subtotal 
+        
+        
+    invoice_data = {id: "#{@lg_serie_factura}-#{"%06d" %  @lg_serial_id}", customer: customer, 
+    tax_totals: [{amount: {value: items* lcIgv_a, currency: currency}, type: :igv}], legal_monetary_total: {value: lcTotal_a * items, currency: currency}, 
+    additional_monetary_totals: [{id: "1001", payable_amount: {value: lcVVenta_a * items, currency: currency}}]}
 
       invoice_data[:lines] = []
-      if items > 0
-        invoice_data[:lines] = (1..items).map do |item|
-          {id: item.to_s, quantity: $lcCantidad, line_extension_amount: {value: $lcTotal, currency: currency}, 
-          pricing_reference: {alternative_condition_price: {price_amount: {value: $lcPrecioCigv, currency: currency}}}, 
-          price: {value: $lcPrecioSIgv, currency: currency}, tax_totals: [{amount: {value: $lcTotal, currency: currency}, type: :igv}], 
-          item: {id: item.to_s, description: $lcDes1}}
-        end
+      nro_item = 1 
+      
+        for detalle_item in @invoiceitems
+        
+        lcDes1   = detalle_item.product.name 
+        lcCantidad     = detalle_item.cantidad  
+        lcTotal0 = detalle_item.cantidad * detalle_item.price_discount
+        lcTotal1 = lcTotal0 * 100
+        lcTotal = lcTotal1.round(0)
+        
+        lcPrecio =  detalle_item.total   / detalle_item.cantidad   
+        lcPrecioSIGV = lcPrecio /1.18
+        lcValorVenta = detalle_item.total / 1.18
+        lcTax = detalle_item.total - lcValorVenta
+        
+        lcPrecioCigv1  =  lcPrecio * 100
+        
+        lcPrecioCigv2   = lcPrecioCigv1.round(0).to_f
+        lcPrecioCigv   =  lcPrecioCigv2.to_i 
 
-      end
+        lcPrecioSigv1  =  lcPrecioSIGV * 100
+        lcPrecioSigv2   = lcPrecioSigv1.round(0).to_f
+        lcPrecioSIgv   =  lcPrecioSigv2.to_i 
+        
+        
+              a   =  {id: nro_item.to_s, quantity: lcCantidad, line_extension_amount: {value: lcTotal, currency: currency}, 
+           pricing_reference: {alternative_condition_price: {price_amount: {value: lcPrecioCigv, currency: currency}}}, 
+           price: {value: lcPrecioSIgv, currency: currency}, tax_totals: [{amount: {value: lcTotal, currency: currency}, type: :igv}], 
+           item: {id: nro_item.to_s, description: lcDes1}}
+         
+          invoice_data[:lines] << a 
+          
+          nro_item += 1 
+         
+      
+      end 
+      
+      
       invoice_data
     end
 end 

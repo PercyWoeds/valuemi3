@@ -154,11 +154,9 @@
     end 
     
     collection { post :sendsunat }
-    collection { post :print }
     collection { post :xml }
     collection { post :sendmail }
     
-    collection { post :print }
     collection { post :print1 }
     collection { post :pdf }
     
@@ -645,6 +643,8 @@ end
   match 'facturas/do_anular/:id' => 'facturas#do_anular', via: [:get, :post]
   match 'facturas/do_email/:id' => 'facturas#do_email', via: [:get, :post]
   match 'facturas/do_process/:id' => 'facturas#do_process', via: [:get, :post]
+  match 'facturas/print/:id' => 'facturas#print', via: [:get, :post]
+  
   match 'facturas/email/:id' => 'facturas#email', via: [:get, :post]
   match 'facturas/pdf/:id' => 'facturas#pdf', via: [:get, :post]
   match 'companies/facturas/:company_id' => 'facturas#list_invoices', via: [:get, :post]
