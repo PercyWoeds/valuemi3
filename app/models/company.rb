@@ -598,7 +598,7 @@
         
         end 
          
-         @boletas = Sellvale.select("fecha,td,serie,ruc,MIN(numero) as minimo, MAX(numero) as maximo,sum(importe2) as total").where(["fecha >= ? and fecha<= ? and td<> ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59","N" ]).group(:fecha,:td,:serie,:ruc)
+         @boletas = Sellvale.select("fecha,td,serie,ruc,MIN(numero) as minimo, MAX(numero) as maximo,sum(importe2) as total").where(["fecha >= ? and fecha<= ? and td= ? and  ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59","B" ]).group(:fecha,:td,:serie,:ruc)
         # @boletas = Sellvale.select("fecha,td,cod_prod,ruc,MIN(numero) as minimo, MAX(numero) as maximo,sum(importe2) as total").where(["fecha >= ? and fecha<= ? and td<> ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59","N" ]).group(:fecha,:td,:serie,:numero,:cod_prod,:ruc)
           TmpFactura.delete_all
           
@@ -635,6 +635,45 @@
               end 
             lcCode=""
           end
+          
+         @boletas = Sellvale.select("fecha,td,serie,ruc,MIN(numero) as minimo, MAX(numero) as maximo,sum(importe2) as total").where(["fecha >= ? and fecha<= ? and td= ? and  ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59","F" ]).group(:fecha,:td,:serie,:numero)
+        # @boletas = Sellvale.select("fecha,td,cod_prod,ruc,MIN(numero) as minimo, MAX(numero) as maximo,sum(importe2) as total").where(["fecha >= ? and fecha<= ? and td<> ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59","N" ]).group(:fecha,:td,:serie,:numero,:cod_prod,:ruc)
+         
+          
+          for boleta in @boletas  
+          
+                lcCode = boleta.minimo
+                lcSerie = boleta.serie 
+                
+                if boleta.total != nil 
+                  lcVventa0 = boleta.total / 1.18
+                  
+                  lcVventa  = lcVventa0.round(2)
+                  lcTax0    = boleta.total  - lcVventa
+                  lcTax     = lcTax0
+                  lcTotal0  = boleta.total
+                  lcTotal   = lcTotal0.round(2)  
+                  lcFecha   = boleta.fecha
+                  lcTd      = boleta.td 
+                  
+                  
+                  if boleta.ruc.strip  != nil  or boleta.ruc !="00000000000"
+                    
+                    lcRucCliente = boleta.ruc 
+                    ruc_number =  boleta.ruc 
+                    #  lcRazonCliente  = PeruSunatRuc.name_from ruc_number
+                   lcRazonCliente = ""
+                  else
+                    lcRucCliente = ""
+                    lcRazonCliente = " "
+                  end 
+                  
+                a= TmpFactura.new(document_id: 7 ,subtotal: lcVventa , tax: lcTax , total: lcTotal, fecha: lcFecha, serie: lcSerie, numero: lcCode,td: lcTd,ruc: lcRucCliente,name:lcRazonCliente, moneda_id:2)
+                a.save 
+              end 
+            lcCode=""
+          end
+          
           
           @facturas = Factura.where([" company_id = ? AND fecha >= ? and fecha<= ? and moneda_id = ? and substring(code,1,4)<> ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59",moneda,"BB02" ]).order(:fecha)    
             for boleta in @facturas

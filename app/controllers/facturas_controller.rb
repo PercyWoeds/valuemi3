@@ -2679,6 +2679,8 @@ end
         else
         case_3 = InvoiceGenerator.new(1, 3, 1, $lg_serie_factura,@invoice.id).with_igv(true)
         end     
+         @invoice[:processed] = "1"
+        @invoice.process
         
         $lcGuiaRemision =""      
         @@document_serial_id =""
