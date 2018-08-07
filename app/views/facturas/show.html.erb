@@ -372,22 +372,8 @@
 <%= hr() %>
 <div class="button" >
   
-
-  	
-	
-	
 	<table>
-	   <%if  @current_user.level == "admin" || @current_user.level == "compras"       %>
-		<tr>
-			<%= form_tag sendsunat_facturas_path, multipart: true do %>
-			
-	  		<%= submit_tag "Procesar factura  " ,  data: { no_turbolink: true }  %>
-			<% end %>
-			
-		</tr>
-		
-       <% end %>
-   
+	  
 		<tr>
 			<%= form_tag xml_facturas_path, multipart: true do %>
 			  <%= submit_tag  "XML  " , data: { no_turbolink: true } %>
