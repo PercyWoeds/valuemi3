@@ -2652,6 +2652,9 @@ def newfactura2
 end
     
         def sendsunat
+        @invoice = Factura.find(params[:id])
+        
+                
         lib = File.expand_path('../../../lib', __FILE__)
         $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
@@ -2672,6 +2675,7 @@ end
         end 
         
         if $lcMoneda == "D"
+            
         else
         case_3 = InvoiceGenerator.new(1, 3, 1, $lg_serie_factura,@invoice.id).with_igv(true)
         end     
