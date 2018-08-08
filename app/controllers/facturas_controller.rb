@@ -323,7 +323,7 @@ def rpt_pago_adelantado
       when "To PDF" then 
         begin 
          render  pdf: "Ordenes ",template: "varillajes/parte13_rpt.pdf.erb",locals: {:varillajes => @contado_rpt_adelantado},
-         
+         :orientation    => 'Landscape',
          :header => {
            :spacing => 5,
                            :html => {

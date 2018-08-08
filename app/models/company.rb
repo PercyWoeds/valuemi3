@@ -3528,6 +3528,12 @@
          
           return @contado
        end 
+       def  get_parte_6_gln_detalle(fecha1,fecha2) 
+         
+           @contado = Sellvale.select("sellvales.*,customers.id as customer_id").where(["fecha >= ? and fecha <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59"  ]).order(:fecha).joins("INNER JOIN customers ON sellvales.cod_cli = customers.account AND customers.tipo = '2'  ")
+         
+          return @contado
+       end 
        
     
        
@@ -3549,10 +3555,27 @@
            
     
        end 
+       #pago adelantado  saldo inicial
+       def  get_parte_6_gln(fecha1,fecha2) 
+          ret= 0
+          @contado = Sellvale.where(["fecha < ? ", "#{fecha1} 00:00:00"]).order(:cod_prod,:fecha).joins("INNER JOIN customers ON sellvales.cod_cli = customers.account AND customers.tipo = '2' ")
+          
+         if @contado 
+          
+          for factura in @contado 
+            
+              ret += factura.cantidad 
+          
+          end
+         end 
+    
+           return ret
+           
+    
+       end 
        
         
        def get_ventas_mayor_anterior(fecha1,fecha2,tipoventa)
-         
          
          facturas  = Factura.where(["fecha >= ? and fecha < ? and tipoventa_id  = ? " , "#{fecha1} 00:00:00","#{fecha2} 00:00:00",tipoventa]).order(:fecha)
          
@@ -3569,7 +3592,27 @@
           
        end 
        
-       def  get_ventas_contometros_all(fecha1,fecha2) 
+       def get_ventas_mayor_anterior_gln(fecha1,fecha2,tipoventa)
+         
+         facturas  = Factura.where(["fecha >= ? and fecha < ? and tipoventa_id  = ? " , "#{fecha1} 00:00:00","#{fecha2} 00:00:00",tipoventa]).order(:fecha)
+         
+         if facturas
+          ret=0  
+          for factura in facturas
+              
+                detalle= FacturaDetail.where(factura_id: factura.id)      
+                for detalle_factura in detalle   
+                  ret += detalle_factura.quantity.round(2) 
+                end 
+          end
+         end 
+    
+           return ret
+          
+       end 
+       
+       
+         def  get_ventas_contometros_all(fecha1,fecha2) 
     
            facturas = Sellvale.where(["fecha >= ? and fecha <= ?  " , "#{fecha1} 00:00:00","#{fecha2} 23:59:59"]).order(:fecha,:serie,:numero)
            
@@ -4025,6 +4068,18 @@
                return facturas 
        
         end 
+        def  get_ventas_adelantado_cliente_detalle(fecha1,fecha2,cliente) 
+    
+            facturas = Factura.find_by_sql(['Select facturas.*,customers.id,customers.name,factura_details.quantity,factura_details.price,factura_details.price_discount,factura_details.total 
+                      from facturas 
+                      INNER JOIN customers ON facturas.customer_id = customers.id  
+                      INNER JOIN factura_details ON facturas.id = factura_details.factura_id
+                      WHERE facturas.fecha >= ? and facturas.fecha <= ? and customers.tipo = ?', "#{fecha1} 00:00:00",
+                      "#{fecha2} 23:59:59","2" ])  
+            
+               return facturas 
+       
+        end 
     
         
         def  get_ventas_adelantado_suma(fecha1,fecha2) 
@@ -4094,16 +4149,14 @@
           
           
           
-          @contado_adel0 = self.get_parte_6b(fecha1,fecha2) # total saldo vales adelantados inicial
+          @contado_adel0 = self.get_parte_6_gln(fecha1,fecha2) # total saldo vales adelantados inicial
           
           @fecha0 = "2018-03-01"
-          @contado_adel1 = self.get_ventas_mayor_anterior(@fecha0,fecha1,"4") # total saldo facturas adelantadas inicial
+          @contado_adel1 = self.get_ventas_mayor_anterior_gln(@fecha0,fecha1,"4") # total saldo facturas adelantadas inicial
           
           @contado_inicial = @contado_adel1 -@contado_adel0 
           
-          
-          
-          @contado_rpt6 = self.get_parte_6(fecha1,fecha2) #pago adelantado
+          @contado_rpt6 = self.get_parte_6_gln_detalle(fecha1,fecha2) #pago adelantado detalle 
           
     
           MovementPay.delete_all
@@ -4118,15 +4171,16 @@
                 
               else    
                 
-                detail  = MovementPay.new(:fecha=>fecha1 ,:inicial=>@contado_inicial,:abono=>0,:cargo =>0,:saldo=>0,:customer_id=> existe.id,document_id: "12" ,code:"Inicial",cod_prod: "1",description: existe.name )
+                detail  = MovementPay.new(:fecha=>fecha1 ,:inicial=>@contado_inicial,:abono=>0,:cargo =>0,:saldo=>@contado_inicial,:customer_id=> existe.id,document_id: "12" ,code:"Inicial",cod_prod: "1",description: existe.name)
                 detail.save
                 
-                @factura_adelantada= self.get_ventas_adelantado_cliente(fecha1,fecha2,existe.id) 
+                @factura_adelantada= self.get_ventas_adelantado_cliente_detalle(fecha1,fecha2,"4")
                 
                 #Facturas adelantadas
                 for pago in @factura_adelantada
                 
-                  detail  = MovementPay.new(:fecha=> pago.fecha ,:inicial=>0,:abono=>pago.total ,:cargo =>0 ,:saldo=>0,:customer_id=> pago.customer_id,document_id: pago.document_id,code:pago.code, cod_prod: "1" )
+                  detail  = MovementPay.new(:fecha=> pago.fecha ,:inicial=>0,:abono=>pago.quantity ,:cargo =>0 ,:saldo=>0,:customer_id=> pago.customer_id,document_id: pago.document_id,
+                  code:pago.code, cod_prod: pago.product.code ,price: pago.price,price_discount:pago.price_discount,import: pago.total,import_lista:pago.total)
                   detail.save       
                 
                 end 
@@ -4136,7 +4190,8 @@
                 # Vales adelantados 
                 for pago in @contado_rpt6 
                 
-                  detail  = MovementPay.new(:fecha=> pago.fecha ,:inicial=>0,:abono=>0,:cargo =>pago.importe.to_f ,:saldo=>0,:customer_id=> pago.customer_id  ,document_id: "12",code: pago.serie+"-"+pago.numero , cod_prod: pago.cod_prod)
+                  detail  = MovementPay.new(:fecha=> pago.fecha ,:inicial=>0,:abono=>0,:cargo =>pago.importe.to_f ,:saldo=>0,:customer_id=> pago.customer_id,
+                  document_id: "12",code: pago.serie+"-"+pago.numero , cod_prod: pago.cod_prod,price: pago.precio.to_f,price_discount:pago.precio.to_f,import: pago.importe.to_f,import_lista:pago.implista)
                   detail.save       
                 
                 end 

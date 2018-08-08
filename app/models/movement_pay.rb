@@ -30,5 +30,22 @@ class MovementPay < ActiveRecord::Base
       
   end       
   
+  def get_document_name_short(codigo) 
+      
+      a=Document.find_by(id: codigo)
+      
+      if a
+          
+          return a.descripshort 
+      else 
+          return ".."
+          
+      end 
+      
+  end       
+  
+  
+  
+  
     
 end
