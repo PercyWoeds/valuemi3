@@ -4216,7 +4216,7 @@
           wcosto = 0
         
           for  a in @inv 
-              wkey2 = a.product_id
+              wkey2 = a.customer_id
               
               if wkey1 == wkey2
                 saldo  = wvar + a.abono - a.cargo
@@ -4240,7 +4240,7 @@
              
               else
                 
-                wkey1 = a.product_id     
+                wkey1 = a.customer_id     
                 wvar  = 0
                 saldo  = wvar + a.abono - a.cargo 
                 a.costo_saldo = a.costo_ingreso 

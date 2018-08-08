@@ -1,6 +1,7 @@
 class MovementPay < ActiveRecord::Base
   
   belongs_to :customer 
+  
     
   def get_product_name(codigo) 
       

@@ -18,6 +18,7 @@
         <td width= "8%" > Documento  </td>
         <td width= "3%" > Cod.   </td>
         <td width = "10%" align ="left">Producto </td>
+        
         <td width = "8%"  align ="right">Ingreso </td>
         <td width = "8%" align ="right">Precio</td>
         <td width = "8%" align ="right">Importe</td>
@@ -53,7 +54,7 @@
       
        <% for  contado in @contado_rpt_adelantado %>
        
-                <%  if lcCustomer == contado.customer_id %>
+            <%  if lcCustomer == contado.customer_id %>
                 
               <table style='font-family:"Courier New", Courier, monospace; font-size:60% ;width:100%'>
                   <tr>
@@ -93,35 +94,64 @@
                     <% total_1 +=  contado.abono  %>
                     <% total_2 +=  contado.cargo  %>
                     <% total_3 +=  contado.saldo %>
+                    
                   <%else %> 
                   
+                  
+                     <table style='font-family:"Courier New", Courier, monospace; font-size:70% ;width:100%'>
+                     <tr bgcolor="#B4D7F7">
+                            <td width = "29%" align ="right">Total  </td>
+                            <td width = "8%"  align ="right"><%= sprintf("%.3f",total_1)%> </td>
+                            <td width = "8%" align ="right"></td>
+                            <td width = "8%" align ="right"></td>
+                            <td width = "8%" align ="right"><%= sprintf("%.2f",total_2)   %></td></td>
+                            <td width = "8%" align ="right"></td>
+                            <td width = "8%" align ="right"></td>
+                            <td width = "8%" align ="right"></td>
+                            <td width = "8%" align ="right"></td>
+                            <td width = "8%" align ="right"><%= sprintf("%.3f",total_3)   %></td>
+                            
+                     </tr>
+                     </table>
+
+                    <% total_1 =  0 %>
+                    <% total_2 =  0  %>
+                    <% total_3 =  0 %>
+                    
+                  
                    <% lcCustomer = contado.customer_id %>
-                   table style='font-family:"Courier New", Courier, monospace; font-size:60% ;width:100%'>
-         <tr>
-             <td width= "35%" >CLIENTE</td>
-             <td width= "65%" ><% @contado_rpt_adelantado.first.customer.name %></td>
-             
-             
-        </tr>          
-    </table>     
+                   
+                  <table style='font-family:"Courier New", Courier, monospace; font-size:60% ;width:100%'>
+                      <tr>
+                        <td width= "10%" >CLIENTE : </td>
+                        <td width= "5%" align ="left" ><%= contado.customer.id  %></td>
+                        <td width= "85%"  align ="left"><%= contado.customer.name  %></td>
+                      </tr>          
+                 </table>     
      
                    
                   <%end %> 
+                  
          <%end %>
          
         <hr>  
-     </table>
-      <table style='font-family:"Courier New", Courier, monospace; font-size:70% ;width:100%'>
+     
+     <table style='font-family:"Courier New", Courier, monospace; font-size:70% ;width:100%'>
      <tr bgcolor="#B4D7F7">
-          <td width = "52%" align ="right">Total  </td>
-          <td width = "8%" align ="right"><%= sprintf("%.3f",total_3)   %></td>
-          <td width = "8%"  align ="right"> </td>
-          <td width = "8%" align ="right"><%= sprintf("%.3f",total_1)   %></td>
-          <td width = "8%" align ="right"><%= sprintf("%.2f",total_2)   %></td>
-          <td width = "8%" align ="right"></td>
-          <td width = "8%" align ="right"></td>
-    </tr>
-   </table>
+          <td width = "29%" align ="right">Total  </td>
+
+        <td width = "8%"  align ="right"><%= sprintf("%.3f",total_1)%> </td>
+        <td width = "8%" align ="right"></td>
+        <td width = "8%" align ="right"></td>
+        <td width = "8%" align ="right"><%= sprintf("%.2f",total_2)   %></td></td>
+        <td width = "8%" align ="right"></td>
+        <td width = "8%" align ="right"></td>
+        <td width = "8%" align ="right"></td>
+        <td width = "8%" align ="right"></td>
+        <td width = "8%" align ="right"><%= sprintf("%.3f",total_3)   %></td>
+                            
+     </tr>
+     </table>
 
 
     </body>
