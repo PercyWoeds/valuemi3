@@ -3556,9 +3556,9 @@
     
        end 
        #pago adelantado  saldo inicial
-       def  get_parte_6_gln(fecha1,fecha2) 
+       def  get_parte_6_gln_cliente(fecha1,fecha2,cliente) 
           ret= 0
-          @contado = Sellvale.where(["fecha < ? ", "#{fecha1} 00:00:00"]).order(:cod_prod,:fecha).joins("INNER JOIN customers ON sellvales.cod_cli = customers.account AND customers.tipo = '2' ")
+          @contado = Sellvale.where(["fecha < ?  and cod_cli = ?", "#{fecha1} 00:00:00",cliente]).order(:cod_prod,:fecha).joins("INNER JOIN customers ON sellvales.cod_cli = customers.account AND customers.tipo = '2' ")
           
          if @contado 
           
@@ -3592,9 +3592,9 @@
           
        end 
        
-       def get_ventas_mayor_anterior_gln(fecha1,fecha2,tipoventa)
+       def get_ventas_mayor_anterior_gln_cliente(fecha1,fecha2,tipoventa,cliente)
          
-         facturas  = Factura.where(["fecha >= ? and fecha < ? and tipoventa_id  = ? " , "#{fecha1} 00:00:00","#{fecha2} 00:00:00",tipoventa]).order(:fecha)
+         facturas  = Factura.where(["fecha >= ? and fecha < ? and tipoventa_id  = ?  and customer_id = ?" , "#{fecha1} 00:00:00","#{fecha2} 00:00:00",tipoventa,cliente]).order(:fecha)
          
          if facturas
           ret=0  
@@ -4151,13 +4151,7 @@
           
           
           
-          @contado_adel0 = self.get_parte_6_gln(fecha1,fecha2) # total saldo vales adelantados inicial
-          
-          @fecha0 = "2018-03-01"
-          @contado_adel1 = self.get_ventas_mayor_anterior_gln(@fecha0,fecha1,"4") # total saldo facturas adelantadas inicial
-          
-          @contado_inicial = @contado_adel1 -@contado_adel0 
-          
+         
           @contado_rpt6 = self.get_parte_6_gln_detalle(fecha1,fecha2) #pago adelantado detalle 
           
     
@@ -4172,6 +4166,13 @@
               if product 
                 
               else    
+                
+                @contado_adel0 = self.get_parte_6_gln_cliente(fecha1,fecha2,existe.account) # total saldo vales adelantados inicial
+          
+                @fecha0 = "2018-03-01"
+                @contado_adel1 = self.get_ventas_mayor_anterior_gln_cliente(@fecha0,fecha1,"4",existe.id) # total saldo facturas adelantadas inicial
+                @contado_inicial = @contado_adel1 -@contado_adel0 
+          
                 
                 detail  = MovementPay.new(:fecha=>fecha1 ,:inicial=>@contado_inicial,:abono=>0,:cargo =>0,:saldo=>@contado_inicial,:customer_id=> existe.id,document_id: "12" ,code:"Inicial",cod_prod: "1",description: existe.name,to: 1)
                 detail.save
@@ -4193,7 +4194,7 @@
                 for pago in @contado_rpt6 
                 
                   detail  = MovementPay.new(:fecha=> pago.fecha ,:inicial=>0,:abono=>0,:cargo =>pago.importe.to_f ,:saldo=>0,:customer_id=> pago.customer_id,
-                  document_id: "12",code: pago.serie+"-"+pago.numero , cod_prod: pago.cod_prod,price: pago.precio.to_f,price_discount:pago.precio.to_f,import: pago.importe.to_f,import_lista:pago.implista,to:3)
+                  document_id: "11",code: pago.serie+"-"+pago.numero , cod_prod: pago.cod_prod,price: pago.precio.to_f,price_discount:pago.precio.to_f,import: pago.importe.to_f,import_lista:pago.implista,to:3)
                   detail.save       
                 
                 end 
