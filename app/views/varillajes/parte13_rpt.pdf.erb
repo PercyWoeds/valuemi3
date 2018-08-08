@@ -14,7 +14,7 @@
     <tr bgcolor="#B4D7F7">
         
         <td width= "5%" >Fecha</td>
-        <td width= "3%" > Td  </td>
+        <td width= "2%" > Td  </td>
         <td width= "8%" > Documento  </td>
         <td width= "3%" > Cod.   </td>
         <td width = "10%" align ="left">Producto </td>
@@ -24,11 +24,10 @@
         <td width = "8%" align ="right">Importe</td>
         <td width = "8%" align ="right">Salida </td></td>
         <td width = "8%" align ="right">Precio</td>
-        <td width = "8%" align ="right">Pre.Dscto</td>
         <td width = "8%" align ="right">Importe</td>
         <td width = "8%" align ="right">Imp.Lista </td>
         <td width = "8%" align ="right">Saldo</td>
-        
+        <td width = "8%" align ="right">Imp.Saldo</td>
         
         
     </tr>
@@ -59,7 +58,7 @@
               <table style='font-family:"Courier New", Courier, monospace; font-size:60% ;width:100%'>
                   <tr>
                     <td width= "5%" ><%=  contado.fecha.strftime("%d/%m/%Y")  %></td>
-                    <td width= "3%" > <%= contado.get_document_name_short(contado.document_id)   %>   </td>
+                    <td width= "2%" > <%= contado.get_document_name_short(contado.document_id)   %>   </td>
                     <td width= "8%" > <%=  contado.code %>   </td>
                     <td width= "3%" > <%=  contado.cod_prod %>   </td>
                     <td width = "10%" align ="left"><%= contado.get_product_name(contado.cod_prod)    %> </td>
@@ -76,24 +75,23 @@
                     <td width = "8%" align ="right"><%= sprintf("%.2f",contado.cargo)   %></td>
                     <% if contado.cargo > 0%>
                     <td width = "8%" align ="right"><%=  sprintf("%.2f",contado.price) %></td>
-                    <td width = "8%" align ="right"><%=  sprintf("%.2f",contado.price_discount) %></td>
+                    
                     <td width = "8%" align ="right"><%=  sprintf("%.2f",contado.import) %></td>
                     <td width = "8%" align ="right"><%=  sprintf("%.2f",contado.import_lista) %></td>
                     <% else %>
                     <td width = "8%" align ="right">0.00</td>
                     <td width = "8%" align ="right">0.00</td>
                     <td width = "8%" align ="right">0.00</td>
-                    <td width = "8%" align ="right">0.00</td>
                     
                     <% end %>
                     <td width = "8%" align ="right"><%= sprintf("%.2f",contado.saldo)   %></td>
-                    
-                            </tr>
+                    <td width = "8%" align ="right"><%=  sprintf("%.2f",contado.saldo*contado.price) %></td>      
+                    </tr>
                  </table>               
        
                     <% total_1 +=  contado.abono  %>
                     <% total_2 +=  contado.cargo  %>
-                    <% total_3 +=  contado.saldo %>
+                    
                     
                   <%else %> 
                   
@@ -108,9 +106,8 @@
                             <td width = "8%" align ="right"></td>
                             <td width = "8%" align ="right"></td>
                             <td width = "8%" align ="right"></td>
-                            <td width = "8%" align ="right"></td>
                             <td width = "8%" align ="right"><%= sprintf("%.3f",total_3)   %></td>
-                            
+                            <td width = "8%" align ="right"></td>
                      </tr>
                      </table>
 
@@ -147,9 +144,8 @@
         <td width = "8%" align ="right"></td>
         <td width = "8%" align ="right"></td>
         <td width = "8%" align ="right"></td>
-        <td width = "8%" align ="right"></td>
         <td width = "8%" align ="right"><%= sprintf("%.3f",total_3)   %></td>
-                            
+        <td width = "8%" align ="right"></td>                    
      </tr>
      </table>
 

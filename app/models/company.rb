@@ -4174,7 +4174,7 @@
                 @contado_inicial = @contado_adel1 -@contado_adel0 
           
                 
-                detail  = MovementPay.new(:fecha=>fecha1 ,:inicial=>@contado_inicial,:abono=>0,:cargo =>0,:saldo=>@contado_inicial,:customer_id=> existe.id,document_id: "12" ,code:"Inicial",cod_prod: "1",description: existe.name,to: 1)
+                detail  = MovementPay.new(:fecha=>fecha1 ,:inicial=>@contado_inicial,:abono=>0,:cargo =>0,price:0,:saldo=>@contado_inicial,:customer_id=> existe.id,document_id: "12" ,code:"Inicial",cod_prod: "1",description: existe.name,to: 1)
                 detail.save
                 
                 @contado_rpt6 = self.get_parte_6_gln_detalle(fecha1,fecha2,existe.account) #pago adelantado detalle 
@@ -4184,7 +4184,7 @@
                 #Facturas adelantadas
                 for pago in @factura_adelantada
                 
-                  detail  = MovementPay.new(:fecha=> pago.fecha ,:inicial=>0,:abono=>pago.quantity ,:cargo =>0 ,:saldo=>0,:customer_id=> pago.customer_id,document_id: pago.document_id,
+                  detail  = MovementPay.new(:fecha=> pago.fecha ,:inicial=>0,:abono=>pago.quantity ,price:0,:cargo =>0 ,:saldo=>0,:customer_id=> pago.customer_id,document_id: pago.document_id,
                   code:pago.code, cod_prod: pago.product_code ,price: pago.price,price_discount:pago.price_discount,import: pago.total,import_lista:pago.total,to:2)
                   detail.save       
                 
@@ -4195,7 +4195,7 @@
                 # Vales adelantados 
                 for pago in @contado_rpt6 
                 
-                  detail  = MovementPay.new(:fecha=> pago.fecha ,:inicial=>0,:abono=>0,:cargo =>pago.importe.to_f ,:saldo=>0,:customer_id=> pago.customer_id,
+                  detail  = MovementPay.new(:fecha=> pago.fecha ,:inicial=>0,:abono=>0,:cargo =>pago.importe.to_f ,price:0,:saldo=>0,:customer_id=> pago.customer_id,
                   document_id: "11",code: pago.serie+"-"+pago.numero , cod_prod: pago.cod_prod,price: pago.precio.to_f,price_discount:pago.precio.to_f,import: pago.importe.to_f,import_lista:pago.implista,to:3)
                   detail.save       
                 
