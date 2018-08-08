@@ -4291,6 +4291,122 @@
               return @inv
               
         end 
+        def get_pago_adelantado_cliente(fecha1,fecha2,cliente )
+          
+         
+          MovementPay.delete_all
+    
+          @customerExiste = Customer.where(:tipo=> "2", id: cliente) 
+    
+           for existe in @customerExiste
+    
+              product =  MovementPay.find_by(:customer_id => existe.id)
+    
+              if product 
+                
+              else    
+                
+                @contado_adel0 = self.get_parte_6_gln_cliente(fecha1,fecha2,existe.account) # total saldo vales adelantados inicial
+                puts "vales contado "
+                puts @contado_adel0
+                
+                @fecha0 = "2018-03-01"
+                @contado_adel1 = self.get_ventas_mayor_anterior_gln_cliente(@fecha0,fecha1,"2",existe.id) # total saldo facturas adelantadas inicial
+                @contado_adel1_price = self.get_ventas_mayor_anterior_price_cliente(@fecha0,fecha1,"2",existe.id) # total saldo facturas adelantadas inicial
+                
+                puts "factura saldo "
+                puts @contado_adel1
+                
+                @contado_inicial = @contado_adel1 - @contado_adel0 
+          
+                
+                detail  = MovementPay.new(:fecha=>fecha1 ,:inicial=>0,:abono=>@contado_inicial,:cargo =>0,price: @contado_adel1_price,:saldo=>@contado_inicial,:customer_id=> existe.id,document_id: "12" ,code:"Inicial",cod_prod: "1",description: existe.name,to: 1,import: @contado_adel1* @contado_adel1_price )
+                detail.save
+                
+                @contado_rpt6 = self.get_parte_6_gln_detalle(fecha1,fecha2,existe.account) #pago adelantado detalle 
+                
+                @factura_adelantada= self.get_ventas_adelantado_cliente_detalle(fecha1,fecha2,"2",existe.id)
+                
+                #Facturas adelantadas
+                for pago in @factura_adelantada
+                
+                  detail  = MovementPay.new(:fecha=> pago.fecha ,:inicial=>0,:abono=>pago.quantity ,price:0,:cargo =>0 ,:saldo=>0,:customer_id=> pago.customer_id,document_id: pago.document_id,
+                  code:pago.code, cod_prod: pago.product_code ,price: pago.price,price_discount:pago.price_discount,import: pago.total,import_lista:pago.total,to:2)
+                  detail.save       
+                
+                end 
+                
+                
+                
+                # Vales adelantados 
+                for pago in @contado_rpt6 
+                
+                  detail  = MovementPay.new(:fecha=> pago.fecha ,:inicial=>0,:abono=>0,:cargo =>pago.cantidad ,:saldo=>0,:customer_id=> pago.customer_id,
+                  document_id: "11",code: pago.serie+"-"+pago.numero , cod_prod: pago.cod_prod,price: pago.precio.to_f,price_discount:pago.precio.to_f,import: pago.importe.to_f,import_lista:pago.implista,to:3)
+                  detail.save       
+                
+                end 
+            end 
+          end 
+                
+              
+    
+           ######################################################################3
+           ##saldo inicial
+           ######################################################################3 
+        
+          @inv = MovementPay.order(:customer_id,:fecha,:to)
+    
+      ##
+          wkey1 = ""
+          wkey2 =  @inv.first.customer_id 
+          wvar =0
+          saldo = 0 
+          wcosto = 0
+        
+          for  a in @inv 
+              wkey2 = a.customer_id
+              
+              if wkey1 == wkey2
+                saldo  = wvar + a.abono - a.cargo
+              
+                if a.abono > 0  
+                  a.costo_saldo = a.price 
+                  if a.document_id == 1
+                    wcosto = a.price   
+                  end   
+                end
+                
+                if a.cargo > 0  
+                  a.costo_ingreso = 0 
+                  a.costo_salida  = wcosto
+                end
+                            
+                a.saldo = saldo
+                a.costo_saldo = wcosto 
+                a.save
+                wvar = saldo   
+             
+              else
+                
+                wkey1 = a.customer_id     
+                wvar  = 0
+                saldo  = wvar + a.abono - a.cargo 
+                a.costo_saldo = a.costo_ingreso 
+                a.saldo = saldo
+                a.save 
+                
+                wvar = saldo
+                  
+                if a.to == 2 
+                  wcosto =a.costo_ingreso
+                end 
+              end 
+              end 
+              
+              return @inv
+              
+        end 
         
     
        def get_pendientes_day_value_supplier(fecha1,fecha2,value = "balance",proveedor,moneda)

@@ -316,9 +316,18 @@ def rpt_pago_adelantado
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2] 
     
+    @cbox1 = params[:cbox1]    
+    @cliente  = params[:customer_id]    
     
-    @contado_rpt_adelantado = @company.get_pago_adelantado(@fecha1,@fecha2)
+    puts "xbox1 "
+    puts @cbox1
     
+     if @cbox1 == "1"
+        @contado_rpt_adelantado = @company.get_pago_adelantado(@fecha1,@fecha2)
+     else
+        @contado_rpt_adelantado = @company.get_pago_adelantado_cliente(@fecha1,@fecha2,@cliente)
+     end 
+        
     case params[:print]
       when "To PDF" then 
         begin 
