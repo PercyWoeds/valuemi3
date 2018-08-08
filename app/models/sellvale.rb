@@ -20,15 +20,19 @@ class Sellvale < ActiveRecord::Base
            end 
            
            row['processed'] = "0"
-           row['fpago'] = "1"
            
-          a = Customer.find_by(account: row['cod_cli'] )
+           
+          a = Customer.find_by(account: row['cod_cli'].rjust(11, '0')   )
+          
           if a == nil
             
           else
+          puts "codigo cliente: "
+          puts a.account
             
-            if a.tipo =="1"
+            if a.tipo == 3
                 row['tipo'] = "2"
+                row['fpago'] = "1"
                 puts a.name 
             end 
           end 
