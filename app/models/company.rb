@@ -4320,7 +4320,7 @@
                 @contado_inicial = @contado_adel1 - @contado_adel0 
           
                 
-                detail  = MovementPay.new(:fecha=>fecha1 ,:inicial=>0,:abono=>@contado_inicial,:cargo =>0,price: @contado_adel1_price,:saldo=>@contado_inicial,:customer_id=> existe.id,document_id: "12" ,code:"Inicial",cod_prod: "1",description: existe.name,to: 1,import: @contado_adel1* @contado_adel1_price )
+                detail  = MovementPay.new(:fecha=>fecha1 ,:inicial=>0,:abono=>@contado_inicial,:cargo =>0,price: @contado_adel1_price,:saldo=>@contado_inicial,:customer_id=> existe.id,document_id: "12" ,code:"Inicial",cod_prod: "1",description: existe.name,to: 1,import: @contado_inicial* @contado_adel1_price )
                 detail.save
                 
                 @contado_rpt6 = self.get_parte_6_gln_detalle(fecha1,fecha2,existe.account) #pago adelantado detalle 
