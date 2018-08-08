@@ -4070,10 +4070,12 @@
         end 
         def  get_ventas_adelantado_cliente_detalle(fecha1,fecha2,cliente) 
     
-            facturas = Factura.find_by_sql(['Select facturas.*,customers.id,customers.name,factura_details.quantity,factura_details.price,factura_details.price_discount,factura_details.total 
+            facturas = Factura.find_by_sql(['Select facturas.*,customers.id,customers.name,factura_details.quantity,factura_details.price,factura_details.price_discount,
+                    factura_details.total, products.code as product_code, products.name 
                       from facturas 
                       INNER JOIN customers ON facturas.customer_id = customers.id  
                       INNER JOIN factura_details ON facturas.id = factura_details.factura_id
+                      INNER JOIN products ON  factura_details.product_id = products.id 
                       WHERE facturas.fecha >= ? and facturas.fecha <= ? and customers.tipo = ?', "#{fecha1} 00:00:00",
                       "#{fecha2} 23:59:59","2" ])  
             
@@ -4171,7 +4173,7 @@
                 
               else    
                 
-                detail  = MovementPay.new(:fecha=>fecha1 ,:inicial=>@contado_inicial,:abono=>0,:cargo =>0,:saldo=>@contado_inicial,:customer_id=> existe.id,document_id: "12" ,code:"Inicial",cod_prod: "1",description: existe.name)
+                detail  = MovementPay.new(:fecha=>fecha1 ,:inicial=>@contado_inicial,:abono=>0,:cargo =>0,:saldo=>@contado_inicial,:customer_id=> existe.id,document_id: "12" ,code:"Inicial",cod_prod: "1",description: existe.name,to: 1)
                 detail.save
                 
                 @factura_adelantada= self.get_ventas_adelantado_cliente_detalle(fecha1,fecha2,"4")
@@ -4180,7 +4182,7 @@
                 for pago in @factura_adelantada
                 
                   detail  = MovementPay.new(:fecha=> pago.fecha ,:inicial=>0,:abono=>pago.quantity ,:cargo =>0 ,:saldo=>0,:customer_id=> pago.customer_id,document_id: pago.document_id,
-                  code:pago.code, cod_prod: pago.product.code ,price: pago.price,price_discount:pago.price_discount,import: pago.total,import_lista:pago.total)
+                  code:pago.code, cod_prod: pago.product_code ,price: pago.price,price_discount:pago.price_discount,import: pago.total,import_lista:pago.total,to:2)
                   detail.save       
                 
                 end 
@@ -4191,7 +4193,7 @@
                 for pago in @contado_rpt6 
                 
                   detail  = MovementPay.new(:fecha=> pago.fecha ,:inicial=>0,:abono=>0,:cargo =>pago.importe.to_f ,:saldo=>0,:customer_id=> pago.customer_id,
-                  document_id: "12",code: pago.serie+"-"+pago.numero , cod_prod: pago.cod_prod,price: pago.precio.to_f,price_discount:pago.precio.to_f,import: pago.importe.to_f,import_lista:pago.implista)
+                  document_id: "12",code: pago.serie+"-"+pago.numero , cod_prod: pago.cod_prod,price: pago.precio.to_f,price_discount:pago.precio.to_f,import: pago.importe.to_f,import_lista:pago.implista,to:3)
                   detail.save       
                 
                 end 
@@ -4203,10 +4205,58 @@
            ######################################################################3
            ##saldo inicial
            ######################################################################3 
-          detalle = MovementPay.all.order(:customer_id,:fecha)
-          
-          return detalle
-          
+        
+          @inv = MovementPay.order(:customer_id,:fecha,:to)
+    
+      ##
+          wkey1 = ""
+          wkey2 =  @inv.first.customer_id 
+          wvar =0
+          saldo = 0 
+          wcosto = 0
+        
+          for  a in @inv 
+              wkey2 = a.product_id
+              
+              if wkey1 == wkey2
+                saldo  = wvar + a.abono - a.cargo
+              
+                if a.abono > 0  
+                  a.costo_saldo = a.price 
+                  if a.document_id == 1
+                    wcosto = a.price   
+                  end   
+                end
+                
+                if a.cargo > 0  
+                  a.costo_ingreso = 0 
+                  a.costo_salida  = wcosto
+                end
+                            
+                a.saldo = saldo
+                a.costo_saldo = wcosto 
+                a.save
+                wvar = saldo   
+             
+              else
+                
+                wkey1 = a.product_id     
+                wvar  = 0
+                saldo  = wvar + a.abono - a.cargo 
+                a.costo_saldo = a.costo_ingreso 
+                a.saldo = saldo
+                a.save 
+                
+                wvar = saldo
+                  
+                if a.to == 2 
+                  wcosto =a.costo_ingreso
+                end 
+              end 
+              end 
+              
+              return @inv
+              
         end 
         
     
