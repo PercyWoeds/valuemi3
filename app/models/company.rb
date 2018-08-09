@@ -586,7 +586,8 @@
     
     
       ## ESTADO DE CUENTA 
-       def get_facturas_day(fecha1,fecha2,moneda)
+      
+      def get_facturas_day(fecha1,fecha2,moneda)
          
         a =  Sellvale.where(["fecha >= ? and fecha<= ? and td <> ? and importe2 IS NOT NULL ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59","N" ]).order(:fecha)
         
@@ -594,8 +595,6 @@
           
           dato.importe2 = dato.importe.to_f 
           dato.update_attributes(:importe2=> dato.importe.to_f)
-          
-        
         end 
          
          @boletas = Sellvale.select("fecha,td,serie,ruc,MIN(numero) as minimo, MAX(numero) as maximo,sum(importe2) as total").where(["fecha >= ? and fecha<= ? and td= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59","B" ]).group(:fecha,:td,:serie,:ruc)
@@ -718,11 +717,26 @@
           @tmpfacturas=TmpFactura.all.order(:fecha,:td,:serie,:numero)
           return @tmpfacturas 
           
-          
-          
        end 
        
-    
+      
+      def get_facturas_day3(fecha1,fecha2,moneda)
+        
+        
+        @facturas = Factura.find_by_sql(['Select facturas.*,factura_details.quantity,
+          factura_details.price,factura_details.total,products.name as nameproducto,products.code as codigo,products.unidad
+          from factura_details   
+          INNER JOIN facturas ON factura_details.factura_id = facturas.id
+          INNER JOIN products ON factura_details.product_id = products.id
+          WHERE facturas.fecha >= ? and facturas.fecha <= ?  and moneda_id = ? and substring(facturas.code,1,4)<> ? and products.products_category_id != ?
+          order by facturas.fecha', "#{fecha1} 00:00:00","#{fecha2} 23:59:59",moneda,"BB02","1" ])
+        
+          return @facturas 
+          
+       end 
+      
+      
+      
     
       ## REPORTES DE LIQUIDACION  DE COBRANZA
     

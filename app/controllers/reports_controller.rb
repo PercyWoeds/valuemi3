@@ -1065,9 +1065,16 @@ class ReportsController < ApplicationController
     @company = Company.find(params[:company_id])  
     @pagetitle = "Facturas "    
   end
+  
   def rpt_facturas_all2
     @company = Company.find(params[:company_id])
     @pagetitle = "Facturas por Cliente"    
+    @customers = @company.get_customers()
+    @monedas = Moneda.all 
+  end 
+  def rpt_facturas_all3
+    @company = Company.find(params[:company_id])
+    @pagetitle = "Facturas por Cliente-Detallado"    
     @customers = @company.get_customers()
     @monedas = Moneda.all 
   end 

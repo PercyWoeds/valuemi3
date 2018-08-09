@@ -472,6 +472,35 @@ def rpt_factura_all
     end
   end
   
+def rpt_factura_all3
+    $lcFacturasall = '1'
+
+    @company=Company.find(1)          
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]    
+    @moneda = params[:moneda_id]    
+  
+
+    @facturas_rpt = @company.get_facturas_day3(@fecha1,@fecha2,@moneda)          
+    
+    @total1  = @company.get_facturas_by_day_value2(@fecha1,@fecha2,@moneda,"subtotal")  
+    @total2  = @company.get_facturas_by_day_value2(@fecha1,@fecha2,@moneda,"tax")  
+    @total3  = @company.get_facturas_by_day_value2(@fecha1,@fecha2,@moneda,"total")  
+    
+    
+    
+    case params[:print]
+      when "To PDF" then 
+        begin 
+         render  pdf: "Facturas ",template: "facturas/rventas_rpt3.pdf.erb",locals: {:facturas => @facturas_rpt},
+        :orientation      => 'Landscape'
+        end   
+      when "To Excel" then render xlsx: 'exportxls'
+      else render action: "index"
+    end
+ 
+ end
+  
 def reportes03
 
 
