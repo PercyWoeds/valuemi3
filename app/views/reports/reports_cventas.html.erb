@@ -24,9 +24,14 @@
   <p class="big">
     <%= link_to "Facturas y Notas por cliente ", "/companies/reports/rpt_facturas_all2/#{@company.id}" %>
   </p>
+  
+  <% if @current_user.email == "percywoeds@gmail.com"%>
+  
   <p class="big">
     <%= link_to "Facturas y Notas- Detalle ", "/companies/reports/rpt_facturas_all3/#{@company.id}" %>
   </p>
+  
+  <% end %>
 
   
   <h3>

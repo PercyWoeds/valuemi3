@@ -154,7 +154,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
 
        for  orden in @orden_compra1
        
-         if orden.product.products_category_id == 1
+         #if orden.product.products_category_id == 1
        
             row = []
             row << nroitem.to_s
@@ -189,7 +189,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
             tot_mayorista += orden.mayorista
             
             nroitem=nroitem + 1
-        end
+        #end
         
        end 
       end

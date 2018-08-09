@@ -4228,7 +4228,7 @@
                 #Facturas adelantadas
                 for pago in @factura_adelantada
                 
-                  detail  = MovementPay.new(:fecha=> pago.fecha ,:inicial=>0,:abono=>pago.quantity ,price:0,:cargo =>0 ,:saldo=>0,:customer_id=> pago.customer_id,document_id: pago.document_id,
+                  detail  = MovementPay.new(:fecha=> pago.fecha ,:inicial=>0,:abono=>pago.quantity ,:cargo =>0 ,:saldo=>0,:customer_id=> pago.customer_id,document_id: pago.document_id,
                   code:pago.code, cod_prod: pago.product_code ,price: pago.price,price_discount:pago.price_discount,import: pago.total,import_lista:pago.total,to:2)
                   detail.save       
                 
