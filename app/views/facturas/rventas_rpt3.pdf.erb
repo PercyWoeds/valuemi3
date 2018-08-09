@@ -25,8 +25,9 @@
     <td width="10%"> Codigo </td>
     <td width="24%"> Producto </td>
     <td width="5%"> Mon. </td>
-    <td width="8%"> V.Venta</td>
-    <td width="8%"> IGV </td>
+    <td width="8%"> Cant.</td>
+    <td width="8%"> Precio  </td>
+    
     <td width="8%"> IMPORTE </td>
     
     
@@ -38,6 +39,7 @@
       <% nroitem = 1%>
       <% total_1 =  0%>
       <% total_2 =  0%>
+      
       <% subtotal  =  0%>
       <% tax   =  0%>
       <% total =  0%>
@@ -50,6 +52,7 @@
                     
                     <td width = "10%" align ="center"><%= detalle.fecha.strftime("%d/%m/%Y")     %></td>
                     <td width = "10%" align ="left"><%= detalle.ruc   %> </td>
+                    
                     <td width= "10%" ><%=  detalle.codigo %>   </td>
                     <td width = "24%" align ="left"><%= detalle.nameproducto   %> </td>
                     <% if detalle.moneda_id == 1 %>
@@ -60,20 +63,17 @@
                     
                     
                 <% if detalle.document_id == 2 %>
-                  <% lcsubtotal = detalle.subtotal * -1 %>
-                  <% lctax =  detalle.tax * -1 %>
-                  <% lctotal = detalle.total* -1 %>
+                  <% lctotal = detalle.quantity * detalle.price * -1 %>
+                  
                 <% else %> 
-                  <% lcsubtotal = detalle.subtotal %>
-                  <% lctax =  detalle.tax %>
-                  <% lctotal = detalle.total %>
+                  <% lctotal = detalle.quantity * detalle.price  %>
+                
                 <% end %>
-                <td width = "8%" align ="right"><%= sprintf("%.2f",lcsubtotal)   %></td>
-                <td width = "8%" align ="right"><%= sprintf("%.2f",lctax)   %></td>
+                <td width = "8%" align ="right"><%= sprintf("%.2f",detalle.quantity)   %></td>
+                <td width = "8%" align ="right"><%= sprintf("%.2f",detalle.price)   %></td>
+                
                 <td width = "8%" align ="right"><%= sprintf("%.2f",lctotal)   %></td>
                 </tr>
-                <% subtotal += lcsubtotal %>
-                <% tax += lctax %>
                 <% total += lctotal  %>
                 
             
@@ -88,8 +88,7 @@
      <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
      <tr bgcolor="#B4D7F7">
           <td width = "76%" align ="center">Totales  </td>
-          <td width = "8%" align ="right"><%= sprintf("%.2f",subtotal)   %></td>
-          <td width = "8%" align ="right"><%= sprintf("%.2f",tax)   %></td>
+          
           <td width = "8%" align ="right"><%= sprintf("%.2f",total)   %></td>
     </tr>
    </table>
