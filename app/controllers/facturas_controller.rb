@@ -2052,7 +2052,8 @@ def newfactura2
       
       @totalvencido_soles = 0
       @totalvencido_dolar = 0
-      
+      total_soles = 0
+      total_dolares = 0 
       
        for  product in @facturas_rpt
        
@@ -2158,10 +2159,17 @@ def newfactura2
             row << ""
             row << " "
             row << " "
-            row << sprintf("%.2f",total_cliente_dolares.to_s)
-            row << sprintf("%.2f",total_cliente_soles.to_s)
+            row << sprintf("%.2f",@totalvencido_soles.to_s)
+            row << sprintf("%.2f",@totalvencido_dolar.to_s)                      
             row << " "
             row << " "
+            
+            
+            total_soles += @totalvencido_soles
+            total_dolares += @totalvencido_dolar 
+            
+            @totalvencido_soles = 0
+            @totalvencido_dolares = 0  
             
             
             table_content << row
@@ -2252,6 +2260,7 @@ def newfactura2
             total_cliente_dolares = 0
             total_cliente_dolares = @company.get_pendientes_day_customer(@fecha1,@fecha2, lcCliente, lcmonedasoles)
             
+            
             row =[]
             row << ""
             row << ""
@@ -2264,16 +2273,17 @@ def newfactura2
             row << " "
             row << " "
             
-            row << sprintf("%.2f",total_cliente_dolares.to_s)
-            row << sprintf("%.2f",total_cliente_soles.to_s)                      
+            row << sprintf("%.2f",@totalvencido_soles.to_s)
+            row << sprintf("%.2f",@totalvencido_dolar.to_s)                      
             row << " "
             row << " "
             
             table_content << row
-              
-          total_soles   = @company.get_pendientes_day_value(@fecha1,@fecha2, "total",lcmonedasoles)
-          total_dolares = @company.get_pendientes_day_value(@fecha1,@fecha2, "total",lcmonedadolares)
-      
+            
+            
+         total_soles +=  @totalvencido_soles
+         total_dolares += @totalvencido_dolar
+            
            if $lcxCliente == "0" 
 
           row =[]
