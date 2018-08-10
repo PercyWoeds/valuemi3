@@ -145,7 +145,7 @@ def reportes6
     if @tarjetacheck == "1"
         @contado_rpt = @company.get_parte_5(@fecha1,@fecha2)
     else
-        @contado_rpt = @company.get_parte_5(@fecha1,@fecha2,@tarjeta_id)
+        @contado_rpt = @company.get_parte_5_b(@fecha1,@fecha2,@tarjeta_id)
     end 
     
     case params[:print]
