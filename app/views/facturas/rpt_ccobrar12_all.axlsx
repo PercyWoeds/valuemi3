@@ -1,0 +1,43 @@
+$LOAD_PATH.unshift "#{File.dirname(__FILE__)}/../lib"
+
+require 'axlsx'
+
+p = Axlsx::Package.new
+wb = xlsx_package.workbook
+wb.styles do |s|
+    date = s.add_style(:format_code => "yyyy-mm-dd", :border => Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :right})
+    padded = s.add_style(:format_code => "00#", :border => Axlsx::STYLE_THIN_BORDER)
+    percent = s.add_style(:format_code => '#.##0.00', :border => Axlsx::STYLE_THIN_BORDER)
+    title = s.add_style(:bg_color => "FFFF0000", :fg_color=>"#FF000000",:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :center})
+    cadena =s.add_style(:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :right})
+
+    currency = wb.styles.add_style(:format_code=>"#,##0.#0;[Red]-#,##0.#0",
+                              :border=>Axlsx::STYLE_THIN_BORDER)
+    red_negative = wb.styles.add_style :num_fmt => 8
+    comma = wb.styles.add_style :num_fmt => 3
+    super_funk = wb.styles.add_style :format_code => '[Green]#'
+    
+    wb.add_worksheet(name: "Basic work sheet") do |sheet|
+    
+    sheet.add_row ["Fecha", "Td", "Documento", "R.U.C.", "Razon Social","Factory", "Importe" ], :style => title 
+    
+    @total1=0
+    @total2=0 
+   @customer_rpt.each do |payment|
+   
+        @cliente_obs = payment.get_cliente(payment.customer_id)
+        @documentos  = payment.get_documento_factura(payment.document_id)
+         
+      
+         sheet.add_row [payment.fecha,@documentos.descripshort,payment.code,@cliente_obs.ruc,@cliente_obs.name,payment.factory,payment.total ], :style => [date,cadena,cadena,cadena,cadena,currency,currency]
+        @total1 += payment.factory 
+        @total2 += payment.total 
+   end
+   
+   sheet.add_row ["","","","Totales => ","",@total1,@total2], :style => [cadena,cadena,date,date,cadena,cadena,currency,currency]
+   
+   
+end
+end 
+
+    

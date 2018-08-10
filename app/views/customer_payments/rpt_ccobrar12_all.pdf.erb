@@ -31,8 +31,7 @@
         <%@cliente_obs = credito.get_cliente(credito.customer_id)%>
         <%@documentos  = credito.get_documento_factura(credito.document_id)%>
          
-            <%    @cliente_obs.ruc %>
-            <%     @cliente_obs.name %>
+           
                 <tr>
                     <td width = "5%" align ="right"><%= credito.fecha.strftime("%d/%m/%Y")    %> </td>
                     <td width = "5%" ><%=  @documentos.descripshort %></td>

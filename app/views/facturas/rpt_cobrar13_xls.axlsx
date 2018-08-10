@@ -1,0 +1,38 @@
+$LOAD_PATH.unshift "#{File.dirname(__FILE__)}/../lib"
+
+require 'axlsx'
+
+p = Axlsx::Package.new
+wb = xlsx_package.workbook
+wb.styles do |s|
+    date = s.add_style(:format_code => "yyyy-mm-dd", :border => Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :right})
+    padded = s.add_style(:format_code => "00#", :border => Axlsx::STYLE_THIN_BORDER)
+    percent = s.add_style(:format_code => '#.##0.00', :border => Axlsx::STYLE_THIN_BORDER)
+    title = s.add_style(:bg_color => "FFFF0000", :fg_color=>"#FF000000",:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :center})
+    cadena =s.add_style(:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :right})
+
+    currency = wb.styles.add_style(:format_code=>"#,##0.#0;[Red]-#,##0.#0",
+                              :border=>Axlsx::STYLE_THIN_BORDER)
+    red_negative = wb.styles.add_style :num_fmt => 8
+    comma = wb.styles.add_style :num_fmt => 3
+    super_funk = wb.styles.add_style :format_code => '[Green]#'
+    
+    wb.add_worksheet(name: "Basic work sheet") do |sheet|
+    
+    sheet.add_row ["Banco", "Moneda", "Fec.Compro", "Numero", "Fec.Doc.","Cliente","Importe", "Nro.Doc." ], :style => title 
+    
+   @customerpayment_rpt.each do |payment|
+   
+      for  payment0 in payment.get_payments2(@tiporeporte)
+                
+         sheet.add_row [payment.get_cuenta(payment.bank_acount.id),payment.get_moneda(payment.bank_acount.moneda_id),payment.fecha1,payment0.code,payment0.fecha,payment0.get_customer(payment0.customer_id),payment0.total,payment.code], :style => [cadena,cadena,date,cadena,date,cadena,currency,cadena,cadena]
+     end
+   end
+   
+   sheet.add_row ["","","","","Totales => ","",@total1,@total2,@total3], :style => [cadena,cadena,date,date,cadena,cadena,currency,currency,currency]
+   
+   
+end
+end 
+
+    

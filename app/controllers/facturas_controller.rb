@@ -3061,7 +3061,7 @@ def salidas(pdf)
                
         
         end   
-      when "To Excel" then render xlsx: 'exportxls'
+      when "To Excel" then render xlsx: 'rpt_ccobrar12_all'
       else render action: "index"
     end
   end
@@ -3096,11 +3096,9 @@ def salidas(pdf)
                            right: '[page] of [topage]'
                   }
                }
-               
-               
         
         end   
-      when "To Excel" then render xlsx: 'rpt_cobrar13'
+      when "To Excel" then render xlsx: 'rpt_cobrar13_xls'
       else render action: "index"
     end
   end
