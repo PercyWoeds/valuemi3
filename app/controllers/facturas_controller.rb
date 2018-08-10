@@ -2168,7 +2168,9 @@ def newfactura2
             
             total_soles += @totalvencido_soles
             total_dolares += @totalvencido_dolar 
-            
+            @totalvencido_soles = 0
+            @totalvencido_dolar = 0    
+          
            
             
             table_content << row
@@ -2282,7 +2284,9 @@ def newfactura2
             
          total_soles +=  @totalvencido_soles
          total_dolares += @totalvencido_dolar
-            
+         
+         @totalvencido_soles = 0
+         @totalvencido_dolar = 0    
            if $lcxCliente == "0" 
 
           row =[]
