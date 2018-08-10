@@ -142,7 +142,7 @@ def reportes6
     @tarjetacheck = params[:tarjetacheck]    
     @tarjeta_id = params[:tarjeta_id]    
     
-    if @tarjetacheck == nil
+    if @tarjetacheck == "1"
         @contado_rpt = @company.get_parte_5(@fecha1,@fecha2)
     else
         @contado_rpt = @company.get_parte_5(@fecha1,@fecha2,@tarjeta_id)
