@@ -2049,6 +2049,8 @@ def newfactura2
       
       @total_original_soles =0
       @total_original_dolares =0
+      @total_cliente_soles = 0
+      @total_cliente_dolar = 0
       
       @totalvencido_soles = 0
       @totalvencido_dolar = 0
@@ -2084,6 +2086,7 @@ def newfactura2
             
 
             if product.moneda_id == 1 
+                
                 if product.document_id   == 2
                   row << "0.00 "
                   row << sprintf("%.2f",(product.total*-1).to_s)
@@ -2107,6 +2110,7 @@ def newfactura2
                       @totalvencido_dolar += product.balance
                   end  
                 end   
+                @total_cliente_dolar +=product.balance
             else
                 if product.document_id == 2
                   row << sprintf("%.2f",(product.total*-1).to_s)
@@ -2128,6 +2132,8 @@ def newfactura2
                   end  
                     
                 end 
+                
+                @total_cliente_soles  +=product.balance
             end
             
             
@@ -2160,19 +2166,19 @@ def newfactura2
             row << ""
             row << " "
             row << " "
-            row << sprintf("%.2f",@totalvencido_soles.to_s)
-            row << sprintf("%.2f",@totalvencido_dolar.to_s)                      
+            row << sprintf("%.2f",@total_cliente_soles.to_s)
+            row << sprintf("%.2f",@total_cliente_dolar.to_s)                      
             row << " "
             row << " "
             
             
-            total_soles += @totalvencido_soles
-            total_dolares += @totalvencido_dolar 
-            @totalvencido_soles = 0
-            @totalvencido_dolar = 0    
+            total_soles += @total_cliente_soles
+            total_dolares += @total_cliente_dolar 
+            
+            @total_cliente_soles = 0
+            @total_cliente_dolar = 0    
           
            
-            
             table_content << row
 
             lcCliente = product.customer_id
@@ -2213,6 +2219,7 @@ def newfactura2
                       @totalvencido_dolar += product.balance
                   end  
                 end   
+                @total_cliente_dolar += product.balance 
             else
                 if product.document_id == 2
                   row << sprintf("%.2f",(product.total*-1).to_s)
@@ -2234,6 +2241,7 @@ def newfactura2
                   end  
                     
                 end 
+                @total_cliente_soles += product.balance 
             end
             if product.detraccion == nil
               row <<  "0.00"
@@ -2262,6 +2270,18 @@ def newfactura2
             total_cliente_dolares = @company.get_pendientes_day_customer(@fecha1,@fecha2, lcCliente, lcmonedasoles)
             
             
+                if product.document_id   == 2
+                  
+                    if(product.fecha2 < Date.today)   
+                      @totalvencido_dolar += product.balance*-1
+                    end  
+                else  
+                      @totalvencido_dolar += product.balance
+            
+                end
+            
+            @totalvencido_soles += product.balance
+            
             row =[]
             row << ""
             row << ""
@@ -2274,16 +2294,21 @@ def newfactura2
             row << " "
             row << " "
             
-            row << sprintf("%.2f",@totalvencido_soles.to_s)
-            row << sprintf("%.2f",@totalvencido_dolar.to_s)                      
+            row << sprintf("%.2f",@total_cliente_soles.to_s)
+            row << sprintf("%.2f",@total_cliente_dolar.to_s)                      
             row << " "
             row << " "
             
             table_content << row
             
             
-         total_soles +=  @totalvencido_soles
-         total_dolares += @totalvencido_dolar
+         total_soles   += @total_cliente_soles
+         total_dolares += @total_cliente_dolar
+         
+         @total_cliente_soles = 0
+         @total_cliente_dolar = 0    
+          
+         
          
          @totalvencido_soles = 0
          @totalvencido_dolar = 0    
