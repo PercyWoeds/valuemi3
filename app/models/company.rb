@@ -1938,7 +1938,7 @@
         
         # Get customers for Company
         def get_customers()
-          customers = Customer.where(company_id: self.id).order(:name)
+          customers = Customer.where("company_id =? and tipo <> ?","1","3").order(:name)
     
           return customers
         end
