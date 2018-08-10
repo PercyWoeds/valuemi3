@@ -20,6 +20,20 @@
         <input type="date" name="fecha2" value="2018-04-21" style = "width: 150px" >
     </div>
 	
+	
+    <input type="checkbox" id="tarjetaCheck" name="tarjetaCheck" unchecked /> Todas las tarjetas
+
+    
+   <div class="small">
+        <strong> Tarjetas :</strong>
+        <div class="field">
+          <%= select_tag(:tarjeta_id,options_from_collection_for_select(@tarjetas,'id','nombre') )  %>
+        </div>
+    </div>
+    
+ 
+  
+  
 <br> 
  <%= submit_tag "To PDF", :name => "print" %>
  <%= submit_tag "To Excel", :name => "print" %>

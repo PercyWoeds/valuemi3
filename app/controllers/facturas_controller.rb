@@ -139,10 +139,14 @@ def reportes6
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]    
     @cliente = params[:cod_cli]    
-       
+    @tarjetacheck = params[:tarjetacheck]    
+    @tarjeta_id = params[:tarjeta_id]    
     
-    @contado_rpt = @company.get_parte_5(@fecha1,@fecha2)
-    
+    if @tarjetacheck == nil
+        @contado_rpt = @company.get_parte_5(@fecha1,@fecha2)
+    else
+        @contado_rpt = @company.get_parte_5(@fecha1,@fecha2,@tarjeta_id)
+    end 
     
     case params[:print]
       when "To PDF" then 

@@ -1530,6 +1530,7 @@ def rpt_facturas_4
     @pagetitle = "Reportes de Ordenes "    
     @customers = @company.get_customers()
     @monedas=@company.get_monedas    
+    @tarjetas =  @company.get_tarjetas()
   end
   def rpt_parte_7
     @company = Company.find(params[:company_id])    

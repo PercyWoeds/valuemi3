@@ -32,7 +32,6 @@
        
     
        def get_cliente(id)
-         
          @dato = Customer.find(id)
          return @dato 
        end 
@@ -299,7 +298,14 @@
         def get_unidads()
            unidads = Unidad.all.order(:id)
            return unidads
+        
         end 
+        
+        def get_tarjetas()
+           tarjetas = Tarjetum.all.order(:id)
+           return tarjetas
+        end 
+        
         
         def get_puntos()
           puntos = Punto.all 
@@ -3535,6 +3541,14 @@
          
           return @contado
        end 
+       
+       def  get_parte_5_b(fecha1,fecha2,tarjeta) 
+         
+           @contado = Sellvale.where(["fecha >= ? and fecha <= ? and td <> ?  and fpago <> ?", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ,"N",tarjeta ]).order(:fecha,:fpago)
+         
+          return @contado
+       end 
+       
        #pago adelantado 
        def  get_parte_6(fecha1,fecha2) 
          
