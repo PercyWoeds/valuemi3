@@ -2083,8 +2083,6 @@ def newfactura2
             row << product.customer.name
             row << product.moneda.symbol  
             
-            
-
             if product.moneda_id == 1 
                 
                 if product.document_id   == 2
