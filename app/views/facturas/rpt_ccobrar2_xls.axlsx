@@ -12,7 +12,7 @@ wb.styles do |s|
     title = s.add_style(:bg_color => "ddecfd", :fg_color=>"#FF000000",:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :center})
     title1 = s.add_style(:bg_color => "95c4f9", :fg_color=>"#FF000000",:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :center})
     
-    cadena =s.add_style(:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :right})
+    cadena =s.add_style(:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :left})
 
     currency = wb.styles.add_style(:format_code=>"#,##0.#0;[Red]-#,##0.#0",
                               :border=>Axlsx::STYLE_THIN_BORDER)
@@ -22,21 +22,30 @@ wb.styles do |s|
     
     wb.add_worksheet(name: "Pendientes Pago") do |sheet|
     
-    sheet.add_row ["", "Pendientes de Pago ", "Desde", @fecha1, "Hasta:",@fecha2,"", "","","" ], :style => title1
+    sheet.add_row ["", "Pendientes de Pago ", "Desde", @fecha1, "Hasta:",@fecha2,"", "","","","" ], :style => title1
     
     
     sheet.add_row ["Td", "Nro.Documento", "Fec.Emision", "Fec.Vmto", "R.U.C.","Cliente","Moneda", "Soles ","Dolares","Saldo","Vencido" ], :style => title 
     
     valor=0
+    @total1 = 0
+    @total2 = 0
+    @total3 = 0
+    
    @facturas_rpt.each do |payment|
      if payment.ruc != nil   
-        sheet.add_row [payment.document.descripshort,payment.code,payment.fecha,payment.fecha2,payment.ruc,payment.customer.name,payment.moneda.symbol, payment.get_importe_soles,valor,payment.get_importe_soles_balance], :style => [cadena,cadena,date,date,cadena,cadena,currency,currency,currency]
+        sheet.add_row [payment.document.descripshort,payment.code,payment.fecha,payment.fecha2,payment.ruc,payment.customer.name,payment.moneda.symbol, payment.get_importe_soles,valor,payment.get_importe_soles_balance], :style => [cadena,cadena,date,date,cadena,cadena,currency,currency,currency,currency,currency,currency,cadena]
     else
-        sheet.add_row [payment.document.descripshort, payment.code,payment.fecha,payment.fecha2,payment.customer.ruc,payment.customer.name,payment.moneda.symbol, payment.get_importe_soles,valor,payment.get_importe_soles_balance], :style => [cadena,cadena,date,date,cadena,cadena,currency,currency,currency]
+        sheet.add_row [payment.document.descripshort, payment.code,payment.fecha,payment.fecha2,payment.customer.ruc,payment.customer.name,payment.moneda.symbol, payment.get_importe_soles,valor,payment.get_importe_soles_balance], :style => [cadena,cadena,date,date,cadena,cadena,currency,currency,currency,currency,currency,currency,cadena]
     end 
+    
+    @total1 += payment.get_importe_soles
+    @total2 += valor
+    @total3 += payment.get_importe_soles_balance
+    
    end
    
-   sheet.add_row ["","","","","Totales => ","",@total1,@total2,@total3], :style => [cadena,cadena,date,date,cadena,cadena,currency,currency,currency]
+   sheet.add_row ["","","","","","Totales => ","",@total1,@total2,@total3], :style => [cadena,cadena,date,date,cadena,cadena,currency,currency,currency,currency,currency,currency]
    
    
 end

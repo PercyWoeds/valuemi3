@@ -169,6 +169,7 @@
   end 
   resources :sellvales  do
     collection { post :import }
+    collection { post :import2 }
   end 
   
     

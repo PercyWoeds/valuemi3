@@ -79,7 +79,15 @@
   <%= file_field_tag :file %>
   <%= submit_tag "Importar " %>
 <% end %>
+<% if @current_user.email == "percywoeds@gmail.com" %>
+<h4>Importar Archivo  puntos "*.csv"</h4>
 
+<%= form_tag import2_sellvales_path, multipart: true do %>
+  <%= file_field_tag :file2 %>
+  <%= submit_tag "Importar " %>
+<% end %>
+
+<% end %>
 
  Download:
   <%= link_to "CSV", sellvales_path(format: "csv"), multipart: true  %> 

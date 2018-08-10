@@ -296,7 +296,10 @@ class InvoicesController < ApplicationController
         
         # Check if we gotta process the invoice
         @invoice.process()
+        
         @invoice.correlativo()
+        @invoice.redencion()
+        
         
         format.html { redirect_to(@invoice, :notice => 'Invoice was successfully created.') }
         format.xml  { render :xml => @invoice, :status => :created, :location => @invoice }

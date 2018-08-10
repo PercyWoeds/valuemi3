@@ -5,7 +5,7 @@ class Sellvale < ActiveRecord::Base
  
  belongs_to :factura_detail
     
-    def self.import(file)
+def self.import(file)
         TmpFactura.delete_all 
         
        CSV.foreach(file.path, headers: true, encoding:'iso-8859-1:utf-8') do |row|
@@ -41,6 +41,42 @@ class Sellvale < ActiveRecord::Base
          end 
     end     
         
+def self.import2(file2)
+        TmpFactura.delete_all 
+        
+       CSV.foreach(file2.path, headers: true, encoding:'iso-8859-1:utf-8') do |row|
+           
+           
+           row['numero'] =  row['numero'].rjust(6, '0')  
+           valor = 0
+           
+          a = Customer.find_by(account: row['mcliente'].rjust(8, '0')   )
+          
+          if a == nil
+              a=Customer.new
+              a.company_id= 1
+              a.name = "Cliente Puntos "
+              a.ruc = row['mcliente']
+              a.account = row['mcliente']
+              a.saldo = row['puntos']     
+              a.save  
+     
+          else
+             valor  = a.saldo + row['puntos'].to_i
+             a.saldo = valor 
+             a.save  
+          end 
+          
+          b = Sellvale.find_by(serie: row['serie'] ,numero: row['numero']     )
+          if b != nil 
+            b.mpuntos = row['mcliente'] 
+            b.puntos = row['puntos'].to_i  
+            b.save 
+          end 
+             
+         end 
+    end     
+
     
   def get_customer_name(codigo) 
       

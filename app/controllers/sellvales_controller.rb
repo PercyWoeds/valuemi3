@@ -122,6 +122,11 @@ class SellvalesController < ApplicationController
       Sellvale.import(params[:file])
        redirect_to root_url, notice: "Ventas importadas."
   end 
+  
+  def import2
+      Sellvale.import2(params[:file2])
+       redirect_to root_url, notice: "Ventas importadas."
+  end 
 
   # DELETE /sellvales/1
   # DELETE /sellvales/1.json
