@@ -132,6 +132,8 @@
     
     collection { get :rpt_factura_all3   }
     
+    collection { get :rpt_redencion_1   }
+    
     collection { get :rpt_ccobrar12_all   }
     collection { get :rpt_purchase_all   }
     collection { get :rpt_pago_adelantado   }
@@ -476,7 +478,12 @@ end
   match 'companies/reports/rpt_parte_11/:company_id' => 'reports#rpt_parte_11', via: [:get, :post]    
   match 'companies/reports/rpt_parte_12/:company_id' => 'reports#rpt_parte_12', via: [:get, :post]    
   match 'companies/reports/rpt_parte_13/:company_id' => 'reports#rpt_parte_13', via: [:get, :post]    
+  
   # Company users
+  
+  match 'companies/reports/rpt_redencion_1/:company_id' => 'reports#rpt_redention_1', via: [:get, :post]    
+  match 'companies/reports/rpt_redencion_2/:company_id' => 'reports#rpt_redention_2', via: [:get, :post]    
+  
 
   match 'company_users/ac_users' => 'company_users#ac_users', via: [:get, :post]
   match 'new_company_use', to: 'company_users#new', via: [:get]
@@ -638,7 +645,11 @@ end
   match 'facturas/generar4/:company_id' => 'facturas#generar4', via: [:get, :post]
   match 'facturas/generar5/:company_id' => 'facturas#generar5', via: [:get, :post]
   
+  match 'facturas/rpt_redencion_1/:company_id' => 'facturas#rpt_redencion_1', via: [:get, :post]
+  match 'facturas/rpt_redencion_2/:company_id' => 'facturas#rpt_redencion_2', via: [:get, :post]
+  
   match 'facturas/newfactura2/:factura_id' => 'facturas#newfactura2', via: [:get, :post]
+  
   #match 'serviceorders/rpt_serviceorder_all_pdf/:id' => 'serviceorders#rpt_serviceorder_all_pdf', via: [:get, :post]
 
   

@@ -1947,6 +1947,22 @@
           return customers
         end
         
+        def get_customers_contado()
+          customers = Customer.where(company_id: self.id,tipo:"3").order(:name)
+          return customers
+        end
+        def get_customer_name(customer_id )
+          customers = Customer.find_by(company_id: self.id,id:customer_id)
+
+          return customers
+        end
+        def get_customer_account(customer_id )
+          customers = Customer.find_by(company_id: self.id,id:customer_id)
+
+          return customers.account
+        end
+        
+        
         # Get value for customer in year
         def get_invoices_value_customer(customer, year, value)
           invoices = Invoice.where(["invoices.return = '0' AND company_id = ? AND customer_id = ? AND date_processed >= ? AND date_processed <= ?", self.id, customer.id, "#{year}-01-01 00:00:00", "#{year}-12-31 23:59:59"])
@@ -4198,6 +4214,13 @@
         def  get_ventas_vales(fecha1,fecha2,tipo) 
     
             facturas = Sellvale.where(["fecha >= ?  and fecha <=  ?  and td = ?  " , "#{fecha1} 00:00:00","#{fecha2} 23:59:59","N"] ).order(:fecha,:cod_prod)
+           
+             return facturas 
+       
+        end 
+        def  get_redencion_1(fecha1,fecha2,customer ) 
+    
+            facturas = Sellvale.where(["fecha >= ?  and fecha <=  ?  and mpuntos =?  " , "#{fecha1} 00:00:00","#{fecha2} 23:59:59",customer] ).order(:fecha,:cod_prod)
            
              return facturas 
        

@@ -1583,4 +1583,18 @@ def rpt_facturas_4
     @monedas=@company.get_monedas    
   end
   
+  def rpt_redention_1
+    @company = Company.find(params[:company_id])    
+    @pagetitle = "Reportes de Redencion - 1"    
+    @customers = @company.get_customers_contado()
+    @monedas=@company.get_monedas    
+  end
+  def rpt_redention_2
+    @company = Company.find(params[:company_id])    
+    @pagetitle = "Reportes de Redencion - 2"    
+    @customers = @company.get_customers_contado()
+    @monedas=@company.get_monedas    
+  end
+  
+  
 end

@@ -59,6 +59,7 @@ def self.import2(file2)
               a.ruc = row['mcliente']
               a.account = row['mcliente']
               a.saldo = row['puntos']     
+              a.tipo = '3'
               a.save  
      
           else

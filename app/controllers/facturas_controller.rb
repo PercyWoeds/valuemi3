@@ -3120,6 +3120,36 @@ def salidas(pdf)
     end
   end
   
+ def rpt_redencion_1
+  
+    @company=Company.find(1)          
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]    
+    @customer = params[:customer_id]    
+    
+    @customer_name = @company.get_customer_name(@customer)
+    
+    @redencion_rpt = @company.get_redencion_1(@fecha1,@fecha2,@company.get_customer_account(@customer))
+    
+    
+    case params[:print]
+      when "To PDF" then 
+        begin 
+         render  pdf: "Ordenes ",template: "facturas/redencion1_rpt.pdf.erb",locals: {:redentions => @redencion_rpt},
+        :header => {
+           :spacing => 5,
+                           :html => {
+                     :template => 'layouts/pdf-header.html',
+                           right: '[page] of [topage]'
+                  }
+               }
+        
+        end   
+        
+      else render action: "index"
+    end
+  end
+   
   
       
   private
