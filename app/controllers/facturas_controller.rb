@@ -2148,6 +2148,7 @@ def newfactura2
             total_cliente_dolares = 0
             total_cliente_dolares = @company.get_pendientes_day_customer(@fecha1,@fecha2, lcCliente, lcmonedasoles)
             
+            
             row =[]
             row << ""
             row << ""
@@ -2168,9 +2169,7 @@ def newfactura2
             total_soles += @totalvencido_soles
             total_dolares += @totalvencido_dolar 
             
-            @totalvencido_soles = 0
-            @totalvencido_dolares = 0  
-            
+           
             
             table_content << row
 
