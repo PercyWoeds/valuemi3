@@ -1025,6 +1025,7 @@ class CustomerPaymentsController < ApplicationController
       row << ""
       row << ""
       row << ""
+      row << ""
       row << "TOTALES => "
       row << sprintf("%.2f",@total_factory.to_s)
       row << sprintf("%.2f",@total_soles.to_s)                    
@@ -1044,7 +1045,7 @@ class CustomerPaymentsController < ApplicationController
                                           columns([5]).align=:left
                                           columns([6]).align=:left
                                           columns([7]).align=:left 
-                                          columns([8]).align=:right
+                                          columns([8]).align=:left 
                                           columns([9]).align=:right
                                           columns([10]).align=:right
                                           columns([11]).align=:right
