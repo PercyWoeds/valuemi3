@@ -44,8 +44,6 @@
                    <% venta_directa_qty = 0 %>
                    <% afericion = product0.get_afericion_total_dia_producto_qty(@fecha,product0.tanque.id) %>
                    <% venta_neta = ventas_qty - afericion %>
-                   
-                    
                    <tr>
                     <td width = "5%" ><%=  product0.tanque.code %></td>
                     <td width = "10%" ><%=  product0.tanque.product.name %></td>
