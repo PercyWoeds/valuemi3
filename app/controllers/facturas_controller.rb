@@ -1841,133 +1841,375 @@ def newfactura2
       lcsubtotal =  0
       lctax = 0
       lctotal = 0
+      lcCliente = @facturas_rpt.first.customer_id 
+      
 
+      lcmonedasoles   = 2
+      lcmonedadolares = 1
+  
+
+
+     
+      @total_original_soles =0
+      @total_original_dolares =0
+      @total_cliente_soles = 0
+      @total_cliente_dolar = 0
+      
+      @totalvencido_soles = 0
+      @totalvencido_dolar = 0
+      total_soles = 0
+      total_dolares = 0 
+      precio_ultimo = 0
        for  product in @facturas_rpt
+       
+         if product.balance.round(2) > 0.00
+           
+          if lcCliente == product.customer_id
+
+            fechas2 = product.fecha2 
 
             row = []          
-            row << product.document.descripshort
+            if product.document 
+              row << product.document.descripshort 
+            else
+              row <<  lcDoc 
+            end 
             row << product.code
-            row << product.fecha.strftime("%d/%m/%Y")            
-          
-             row << product.customer.ruc  
-           
+            row << product.fecha.strftime("%d/%m/%Y")
+            row << product.fecha2.strftime("%d/%m/%Y")
+            dias = (product.fecha2.to_date - product.fecha.to_date).to_i 
             
-            row << product.customer.name  
+            dias_vencido = (product.fecha2.to_date - Date.today).to_i 
             
-            if product.moneda_id == 1
-              row << "USD"
+            row << dias 
+            row << dias_vencido 
+            row << product.customer.name
+            
+            if product.get_cantidad > 0
+                precio_ultimo = product.total / product.get_cantidad
             else
-              row << "S/."
+                precio_ultimo = 0 
             end 
-            if product.document_id == 2
-              lcsubtotal = product.subtotal * -1
-              lctax = product.tax * -1
-              lctotal = product.total* -1
-              lcGalones = product.get_galones
-              lcGalones1 = lcGalones *-1 
-              row << lcGalones 
-              row << lcsubtotal
-              row << lctax
-              row << lctotal 
+            row << sprintf("%.2f",(precio_ultimo.round(2)).to_s)            
+            row << product.get_cantidad
+            
+            row << product.moneda.symbol  
+
+            if product.moneda_id == 1 
+                
+                if product.document_id   == 2
+                  row << "0.00 "
+                  row << sprintf("%.2f",(product.total*-1).to_s)
+                    
+                  row << "0.00 "
+                  row << sprintf("%.2f",(product.balance*-1).to_s)
+                  
+                  
+                    if(product.fecha2 < Date.today)   
+                      @totalvencido_dolar += product.balance*-1
+                    end  
+                    
+                else  
+                  row << "0.00 "
+                  row << sprintf("%.2f",product.total.to_s)
+                    
+                  row << "0.00 "
+                  row << sprintf("%.2f",product.balance.to_s)
+                  
+                  if(product.fecha2 < Date.today)   
+                      @totalvencido_dolar += product.balance
+                  end  
+                end   
+                @total_cliente_dolar +=product.balance
             else
-             
-              row << product.get_galones
-              lcGalones = product.get_galones
-              row << product.subtotal.to_s
-              row << product.tax.to_s
-              row << product.total.to_s
-            end 
+                if product.document_id == 2
+                  row << sprintf("%.2f",(product.total*-1).to_s)
+                  row << "0.00 "
+                    
+                  row << sprintf("%.2f",(product.balance*-1).to_s)
+                  row << "0.00 "
+                  if(product.fecha2 < Date.today)   
+                      @totalvencido_soles += product.balance*-1
+                  end  
+                else                
+                  row << sprintf("%.2f",product.total.to_s)
+                  row << "0.00 "
+                  
+                  row << sprintf("%.2f",product.balance.to_s)
+                  row << "0.00 "
+                  if(product.fecha2 < Date.today)   
+                      @totalvencido_soles += product.balance
+                  end  
+                    
+                end 
+                
+                @total_cliente_soles  +=product.balance
+            end
+            
+            
+            if product.detraccion == nil
+              row <<  "0.00"
+            else  
+              row << sprintf("%.2f",product.detraccion.to_s)
+            end
+            
+            row << product.get_vencido 
+            table_content << row
+            nroitem = nroitem + 1
+
+          else
+            totals = []            
+            total_cliente_soles   = 0
+            total_cliente_soles   = @company.get_pendientes_day_customer(@fecha1,@fecha2, lcCliente, lcmonedadolares)
+            total_cliente_dolares = 0
+            total_cliente_dolares = @company.get_pendientes_day_customer(@fecha1,@fecha2, lcCliente, lcmonedasoles)
+            
+            
+            row =[]
             row << ""
+            row << ""
+            row << ""
+            row << ""  
+            row << ""
+            row << ""
+            row << "TOTALES POR CLIENTE=> "            
+            row << ""
+            row << " "
+            row << " "
+            row << " "
+            row << " "
             
-            galones += lcGalones 
+            row << sprintf("%.2f",@total_cliente_soles.to_s)
+            row << sprintf("%.2f",@total_cliente_dolar.to_s)                      
+            row << " "
+            row << " "
+            
+            
+            total_soles += @total_cliente_soles
+            total_dolares += @total_cliente_dolar 
+            
+            @total_cliente_soles = 0
+            @total_cliente_dolar = 0    
+          
+           
             table_content << row
 
-            nroitem=nroitem + 1
-       
+            lcCliente = product.customer_id
+
+
+            row = []          
+            row << lcDoc
+            row << product.code
+            row << product.fecha.strftime("%d/%m/%Y")
+            row << product.fecha2.strftime("%d/%m/%Y")
+            dias = (product.fecha2.to_date - product.fecha.to_date).to_i 
+            dias_vencido = (product.fecha2.to_date - Date.today).to_i 
+            
+            row << dias 
+            row << dias_vencido  
+            row << product.customer.name
+            
+            
+            if product.get_cantidad > 0
+                precio_ultimo = product.total / product.get_cantidad
+            else
+                precio_ultimo = 0 
+            end 
+            row << sprintf("%.2f",(precio_ultimo.round(2)).to_s)            
+            row << product.get_cantidad
+            row << product.moneda.symbol  
+            
+              if product.moneda_id == 1 
+                if product.document_id   == 2
+                  row << "0.00 "
+                  row << sprintf("%.2f",(product.total*-1).to_s)
+                    
+                  row << "0.00 "
+                  row << sprintf("%.2f",(product.balance*-1).to_s)
+                  
+                    if(product.fecha2 < Date.today)   
+                      @totalvencido_dolar += product.balance*-1
+                    end  
+                else  
+                  row << "0.00 "
+                  row << sprintf("%.2f",product.total.to_s)
+                    
+                  row << "0.00 "
+                  row << sprintf("%.2f",product.balance.to_s)
+                  
+                  if(product.fecha2 < Date.today)   
+                      @totalvencido_dolar += product.balance
+                  end  
+                end   
+                @total_cliente_dolar += product.balance 
+            else
+                if product.document_id == 2
+                  row << sprintf("%.2f",(product.total*-1).to_s)
+                  row << "0.00 "
+                    
+                  row << sprintf("%.2f",(product.balance*-1).to_s)
+                  row << "0.00 "
+                  if(product.fecha2 < Date.today)   
+                      @totalvencido_soles += product.balance*-1
+                  end  
+                else                
+                  row << sprintf("%.2f",product.total.to_s)
+                  row << "0.00 "
+                  
+                  row << sprintf("%.2f",product.balance.to_s)
+                  row << "0.00 "
+                  if(product.fecha2 < Date.today)   
+                      @totalvencido_soles += product.balance
+                  end  
+                    
+                end 
+                @total_cliente_soles += product.balance 
+            end
+            if product.detraccion == nil
+              row <<  "0.00"
+            else  
+              row << sprintf("%.2f",product.detraccion.to_s)
+            end
+            
+            row << product.get_vencido 
+            
+            
+            table_content << row
+
+          end 
+          
+        end 
+          
         end
 
+            lcCliente = @facturas_rpt.last.customer_id 
+            totals = []            
+            total_cliente = 0
 
+            total_cliente_soles   = 0
+            total_cliente_soles   = @company.get_pendientes_day_customer(@fecha1,@fecha2, lcCliente, lcmonedadolares)
+            total_cliente_dolares = 0
+            total_cliente_dolares = @company.get_pendientes_day_customer(@fecha1,@fecha2, lcCliente, lcmonedasoles)
+            
+            
+                if product.document_id   == 2
+                  
+                    if(product.fecha2 < Date.today)   
+                      @totalvencido_dolar += product.balance*-1
+                    end  
+                else  
+                      @totalvencido_dolar += product.balance
+            
+                end
+            
+            @totalvencido_soles += product.balance
+            
+            row =[]
+            row << ""
+            row << ""
+            row << ""
+            row << ""  
+            row << ""  
+            row << ""  
+            row << "TOTALES POR CLIENTE=> "            
+            row << ""
+            row << " "
+            row << " "
+            row << " "
+            row << " "
+            
+            row << sprintf("%.2f",@total_cliente_soles.to_s)
+            row << sprintf("%.2f",@total_cliente_dolar.to_s)                      
+            row << " "
+            row << " "
+            
+            table_content << row
+            
+            
+         total_soles   += @total_cliente_soles
+         total_dolares += @total_cliente_dolar
+         
+         @total_cliente_soles = 0
+         @total_cliente_dolar = 0    
+          
+         
+         
+         @totalvencido_soles = 0
+         @totalvencido_dolar = 0    
+           if $lcxCliente == "0" 
 
-      subtotals = []
-      taxes = []
-      totals = []
-      services_subtotal = 0
-      services_tax = 0
-      services_total = 0
+          row =[]
+          row << ""
+          row << ""
+          row << ""
+          row << ""
+          row << ""  
+          row << ""  
+          row << "TOTALES => "
+          row << ""
+          row << " "
+          row << " "
+          row << " "
+          row << " "
+                
+          row << sprintf("%.2f",total_soles.to_s)
+          row << sprintf("%.2f",total_dolares.to_s)                    
+          row << " "
+          row << " "
+            
+          table_content << row
+          end 
+          
 
-    if $lcFacturasall == '1'    
-      subtotal = @company.get_facturas_day_value(@fecha1,@fecha2, "subtotal",@moneda)
-      subtotals.push(subtotal)
-      services_subtotal += subtotal          
-      #pdf.text subtotal.to_s
-    
-    
-      tax = @company.get_facturas_day_value(@fecha1,@fecha2, "tax",@moneda)
-      taxes.push(tax)
-      services_tax += tax
-    
-      #pdf.text tax.to_s
-      
-      total = @company.get_facturas_day_value(@fecha1,@fecha2, "total",@moneda)
-      totals.push(total)
-      services_total += total
-      #pdf.text total.to_s
-
-    else
-        #total x cliente 
-      subtotal = @company.get_facturas_day_value_cliente(@fecha1,@fecha2,@cliente, "subtotal",@moneda)
-      subtotals.push(subtotal)
-      services_subtotal += subtotal          
-      #pdf.text subtotal.to_s
-    
-    
-      tax = @company.get_facturas_day_value_cliente(@fecha1,@fecha2,@cliente, "tax",@moneda,)
-      taxes.push(tax)
-      services_tax += tax
-    
-      #pdf.text tax.to_s
-      
-      total = @company.get_facturas_day_value_cliente(@fecha1,@fecha2,@cliente,"total",@moneda,)
-      totals.push(total)
-      services_total += total
-    
-    end
-
-      row =[]
-      row << ""
-      row << ""
-      row << ""
-      row << ""
-      row << "TOTALES => "
-      row << ""
-      row << galones.round(2).to_s
-      row << subtotal.round(2).to_s
-      row << tax.round(2).to_s
-      row << total.round(2).to_s
-      row << ""
-      table_content << row
-      
-      result = pdf.table table_content, {:position => :center,
+          result = pdf.table table_content, {:position => :center,
                                         :header => true,
-                                        :width => pdf.bounds.width
+                                        :width => pdf.bounds.width,
+                                        :cell_style => { size: 6 },
+                                        
                                         } do 
                                           columns([0]).align=:center
                                           columns([1]).align=:left
                                           columns([2]).align=:left
                                           columns([3]).align=:left
                                           columns([4]).align=:left
-                                          columns([5]).align=:right  
-                                          columns([6]).align=:right
-                                          columns([7]).align=:right
+                                          columns([5]).align=:left 
+                                          columns([5]).width =30
+                                          columns([6]).align=:left
+                                          columns([7]).align=:left
                                           columns([8]).align=:right
+                                          columns([8]).width =40
+                                          columns([9]).align=:right
+                                          columns([9]).width =40
+                                          columns([10]).align=:right
+                                          columns([10]).width =40
+                                          columns([11]).align=:right
+                                          columns([11]).width =40
+                                          columns([12]).align=:right
+                                          columns([13]).align=:right
                                         end                                          
-      pdf.move_down 10      
-
+                                        
+      pdf.move_down 10    
+      
+      precio_ultimo = 0
+      
+      if $lcxCliente == "1" 
+      
+      totalxvencer_soles  = total_cliente_dolares   - @totalvencido_soles
+      totalxvencer_dolar  = total_cliente_soles - @totalvencido_dolar
+      
+      pdf.table([  ["Resumen    "," Soles  ", "Dólares "],
+              ["Total Vencido    ",sprintf("%.2f",@totalvencido_soles.to_s), sprintf("%.2f",@totalvencido_dolar.to_s)],
+              ["Total por Vencer ",sprintf("%.2f",totalxvencer_soles.to_s),sprintf("%.2f",totalxvencer_dolar.to_s)],
+              ["Totales          ",sprintf("%.2f",total_cliente_dolares.to_s),sprintf("%.2f",total_cliente_soles.to_s)]])
+              
+      end 
       #totales 
-
+      
       pdf 
 
     end
+
+       
 
     def build_pdf_footer_rpt(pdf)
                   
