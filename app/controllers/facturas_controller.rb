@@ -1883,7 +1883,7 @@ def newfactura2
             
             row << dias 
             row << dias_vencido 
-            row << product.customer.name.truncate(40, omission: ' ')
+            row << product.customer.name.truncate(35, omission: ' ')
             
             if product.get_cantidad > 0
                 precio_ultimo = product.total / product.get_cantidad
@@ -2320,7 +2320,7 @@ def newfactura2
             
             row << dias 
             row << dias_vencido 
-            row << product.customer.name.truncate(40, omission: ' ')
+            row << product.customer.name.truncate(35, omission: ' ')
             
             if product.get_cantidad > 0
                 precio_ultimo = product.total / product.get_cantidad

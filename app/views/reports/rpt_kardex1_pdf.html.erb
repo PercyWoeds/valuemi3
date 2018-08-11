@@ -16,17 +16,17 @@ totals = []
 
 <h1>
   <%= image_tag("reports_48.png", :class => "vmiddle") %>
-  Formato 13 : Inventario Detallado  
+  Fluctuaciones Combustibles 
 </h1>
 
 
-<%= form_tag(rpt_stocks4_stocks_path, :method => "get") do %>
+<%= form_tag(rpt_kardex1_pdf_stocks_path, :method => "get") do %>
 
   <div class="field">
     <input type="date" name="fecha1" value="2018-03-19" style = "width: 150px" >
   </div>
 	<div class="field">
-		<input type="date" name="fecha2" value="2018-06-21" style = "width: 150px" >
+		<input type="date" name="fecha2" value="2018-08-31" style = "width: 150px" >
   </div>
   
   <div class="field">
@@ -36,7 +36,7 @@ totals = []
  </div>
  
   <div class="field">
-    <%= select_tag(:products_category_id,options_from_collection_for_select(@categories,'id','category') ) %>
+    <%= select_tag(:products_category_id,options_from_collection_for_select(@products,'id','name') ) %>
   </div>
   
  

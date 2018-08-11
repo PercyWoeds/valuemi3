@@ -1595,6 +1595,12 @@ def rpt_facturas_4
     @customers = @company.get_customers_contado()
     @monedas=@company.get_monedas    
   end
+  def rpt_kardex1_pdf
+    @company = Company.find(params[:company_id])    
+    @pagetitle = "Reportes de Redencion - 2"    
+    @products = @company.get_products()
+    
+  end
   
   
 end

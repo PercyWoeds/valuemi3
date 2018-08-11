@@ -148,6 +148,8 @@
   
   resources :stocks do 
     collection { get :rpt_stocks4 }
+    collection { get :rpt_kardex1_pdf }
+    
   end 
   
    resources :facturas do
@@ -479,6 +481,7 @@ end
   match 'companies/reports/rpt_parte_12/:company_id' => 'reports#rpt_parte_12', via: [:get, :post]    
   match 'companies/reports/rpt_parte_13/:company_id' => 'reports#rpt_parte_13', via: [:get, :post]    
   
+  match 'companies/reports/rpt_kardex1_pdf/:company_id' => 'reports#rpt_kardex1_pdf', via: [:get, :post]    
   # Company users
   
   match 'companies/reports/rpt_redencion_1/:company_id' => 'reports#rpt_redention_1', via: [:get, :post]    
