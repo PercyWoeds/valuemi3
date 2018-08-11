@@ -2203,7 +2203,8 @@ def newfactura2
             row << dias 
             row << dias_vencido  
             row << product.customer.name
-            row << product.moneda.symbol  
+            
+            
             if product.get_cantidad > 0
                 precio_ultimo = product.total / product.get_cantidad
             else
@@ -2211,6 +2212,7 @@ def newfactura2
             end 
             row << sprintf("%.2f",(precio_ultimo.round(2)).to_s)            
             row << product.get_cantidad
+            row << product.moneda.symbol  
             
               if product.moneda_id == 1 
                 if product.document_id   == 2
