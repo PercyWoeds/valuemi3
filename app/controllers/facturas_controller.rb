@@ -1657,8 +1657,6 @@ def newfactura2
     @invoice[:charge]  = 0
     @invoice[:descuento] = "1"
     
-    
-    
      parts = (@invoice[:code]).split("-")
      id = parts[0]
      numero2 = parts[1]
@@ -2056,7 +2054,7 @@ def newfactura2
       @totalvencido_dolar = 0
       total_soles = 0
       total_dolares = 0 
-      
+      precio_ultimo = 0
        for  product in @facturas_rpt
        
          if product.balance.round(2) > 0.00
@@ -2081,8 +2079,17 @@ def newfactura2
             row << dias 
             row << dias_vencido 
             row << product.customer.name
-            row << product.moneda.symbol  
             
+            if product.get_cantidad > 0
+                precio_ultimo = product.total / product.get_cantidad
+            else
+                precio_ultimo = 0 
+            end 
+            row << sprintf("%.2f",(precio_ultimo.round(2)).to_s)            
+            row << product.get_cantidad
+            
+            row << product.moneda.symbol  
+
             if product.moneda_id == 1 
                 
                 if product.document_id   == 2
@@ -2164,6 +2171,9 @@ def newfactura2
             row << ""
             row << " "
             row << " "
+            row << " "
+            row << " "
+            
             row << sprintf("%.2f",@total_cliente_soles.to_s)
             row << sprintf("%.2f",@total_cliente_dolar.to_s)                      
             row << " "
@@ -2194,7 +2204,14 @@ def newfactura2
             row << dias_vencido  
             row << product.customer.name
             row << product.moneda.symbol  
-
+            if product.get_cantidad > 0
+                precio_ultimo = product.total / product.get_cantidad
+            else
+                precio_ultimo = 0 
+            end 
+            row << sprintf("%.2f",(precio_ultimo.round(2)).to_s)            
+            row << product.get_cantidad
+            
               if product.moneda_id == 1 
                 if product.document_id   == 2
                   row << "0.00 "
@@ -2291,6 +2308,8 @@ def newfactura2
             row << ""
             row << " "
             row << " "
+            row << " "
+            row << " "
             
             row << sprintf("%.2f",@total_cliente_soles.to_s)
             row << sprintf("%.2f",@total_cliente_dolar.to_s)                      
@@ -2323,7 +2342,9 @@ def newfactura2
           row << ""
           row << " "
           row << " "
-            
+          row << " "
+          row << " "
+                
           row << sprintf("%.2f",total_soles.to_s)
           row << sprintf("%.2f",total_dolares.to_s)                    
           row << " "
@@ -2362,7 +2383,7 @@ def newfactura2
                                         
       pdf.move_down 10    
       
-      
+      precio_ultimo = 0
       
       if $lcxCliente == "1" 
       

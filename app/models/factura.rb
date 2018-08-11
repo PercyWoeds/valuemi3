@@ -40,8 +40,11 @@ class Factura < ActiveRecord::Base
                      "Fec.Vmto",
                      "Dias",
                      "Dias
+                     
                       Vencido",
                      "C L I E N T E ",
+                     "Pre.",
+                     "Cant.",
                      "Mon. ",
                      "Imp. Original
                      Soles",
@@ -488,6 +491,22 @@ class Factura < ActiveRecord::Base
       return "No"
     end
   end
+  
+  
+  
+  def get_cantidad 
+    
+    a= FacturaDetail.where(factura_id: self.id)
+    tot = 0
+    
+    a.each do | item |
+        tot+= item.quantity
+    end 
+    
+    return tot
+    
+  end 
+  
   # Process the invoice
   def process
     if(self.processed == "1" or self.processed == true)          
