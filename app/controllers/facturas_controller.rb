@@ -2444,7 +2444,7 @@ def newfactura2
             
             row << dias 
             row << dias_vencido  
-            row << product.customer.name
+            row << product.customer.name.truncate(35, omission: ' ')
             
             
             if product.get_cantidad > 0
