@@ -1344,7 +1344,8 @@ def reportes31
         $lcTotal = @invoice.total.round(2).to_s 
         $lcFecha       = @invoice.fecha
         $lcFecha1      = $lcFecha.to_s
-    
+        $lg_fecha   = @invoice.fecha.to_date
+        
               parts = $lcFecha1.split("-")
               $aa = parts[0]
               $mm = parts[1]        
