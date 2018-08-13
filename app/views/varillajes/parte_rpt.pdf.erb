@@ -110,7 +110,7 @@
      
      <% venta_2 =  a.get_ventas_contometros_efectivo(@fecha) %>
      
-     <% venta_3 =  a.get_ventas_contometros_tarjeta(@fecha) %>
+     <% venta_3 =  a.get_ventas_contometros_tarjeta(@fecha) a.get_ventas_contometros_tarjeta_factura(@fech) %> 
      
      <% venta_4 =  a.get_ventas_contometros_creditos(@fecha) %>
      <% venta_4_1 =  a.get_ventas_contometros_creditos_productos(@fecha) %>
@@ -211,7 +211,7 @@
             <td width= "25%" align= "right">          <%=    sprintf("%.2f",venta_11)  %>                   </td>
             
             <td width = "25%" align ="left">  &#9475;   EFECTIVO SOLES    :  </td>
-            <td width = "25%" align ="right"><%= sprintf("%.2f",venta_2 + venta_17 - venta_19 - venta_20 - venta_4_1 - venta_descuentos_facturas   ) %> </td>
+            <td width = "25%" align ="right"><%= sprintf("%.2f",venta_2 + venta_17 - venta_19 - venta_20 - venta_4_1   ) %> </td>
             
             
             
