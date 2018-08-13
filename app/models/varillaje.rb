@@ -476,11 +476,10 @@ def  get_inicial(fecha1,producto,producto2)
  
  def  get_ventas_contometros_descuento_facturas(fecha) 
 
-     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ?   " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "F" ])
-     
+     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ?  and fpago = ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "F","1" ])
+     ret = 0
      if facturas
          
-        ret=0  
         for detalle in facturas
             if detalle.implista > 0
             ret += detalle.implista - detalle.importe.to_f
