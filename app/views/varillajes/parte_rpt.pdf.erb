@@ -110,7 +110,7 @@
      
      <% venta_2 =  a.get_ventas_contometros_efectivo(@fecha) %>
      
-     <% venta_3 =  a.get_ventas_contometros_tarjeta(@fecha) a.get_ventas_contometros_tarjeta_factura(@fech) %> 
+     <% venta_3 =  a.get_ventas_contometros_tarjeta(@fecha) + a.get_ventas_contometros_tarjeta_factura(@fecha) %> 
      
      <% venta_4 =  a.get_ventas_contometros_creditos(@fecha) %>
      <% venta_4_1 =  a.get_ventas_contometros_creditos_productos(@fecha) %>
