@@ -110,7 +110,7 @@
      
      <% venta_2 =  a.get_ventas_contometros_efectivo(@fecha) %>
      
-     <% venta_3 =  a.get_ventas_contometros_tarjeta(@fecha) - a.get_ventas_contometros_tarjeta_factura(@fecha) %> 
+     <% venta_3 =  a.get_ventas_contometros_tarjeta(@fecha)  %> 
      
      <% venta_4 =  a.get_ventas_contometros_creditos(@fecha) %>
      <% venta_4_1 =  a.get_ventas_contometros_creditos_productos(@fecha) %>
@@ -254,7 +254,6 @@
             <tr>
             <td width= "25%" align ="left">  MARKET            : </td>
             <td width= "25%" >  <%=   sprintf("%.2f",venta_15)  %>                              </td>
-            <td width = "25%" align ="left">  &#9475;   </td>
             
             <td width= "25%" align ="left">   DESCUENTO       : </td>
             <td width= "25%" >   <%= sprintf("%.2f",venta_descuentos_facturas)  %>  (-)        </td>
