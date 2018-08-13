@@ -345,7 +345,7 @@ def  get_inicial(fecha1,producto,producto2)
          
         ret=0  
         for detalle in facturas
-            ret += detalle.importe.to_f
+            ret += detalle.implista - detalle.importe.to_f 
        end 
     end 
 
