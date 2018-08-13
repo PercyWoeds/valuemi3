@@ -144,9 +144,9 @@
      
      <% venta_5 =  venta_2 + venta_3 + venta_4 + venta_9  +venta_17 + venta_18 %>
      
-     <% venta_8 =  venta_1 + venta_17 - venta_12 + venta_descuentos_facturas %>
+     <% venta_8 =  venta_1 + venta_17 - venta_12 %>
      <% venta_6 =  venta_5 - venta_8 %>
-     <% venta_11 = venta_1 + venta_12 - venta_descuentos_facturas %>
+     <% venta_11 = venta_1 + venta_12  %>
      
      <% total_gastos = a.get_gastos_varios(@fecha) %>
      
@@ -254,6 +254,7 @@
             <tr>
             <td width= "25%" align ="left">  MARKET            : </td>
             <td width= "25%" >  <%=   sprintf("%.2f",venta_15)  %>                              </td>
+            <td width = "25%" align ="left">  &#9475;   </td>
             
             <td width= "25%" align ="left">   DESCUENTO       : </td>
             <td width= "25%" >   <%= sprintf("%.2f",venta_descuentos_facturas)  %>  (-)        </td>
