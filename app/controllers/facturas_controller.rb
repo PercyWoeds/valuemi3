@@ -2369,6 +2369,7 @@ def newfactura2
                   if(product.fecha2 < Date.today)   
                       @totalvencido_soles += product.balance*-1
                   end  
+                  
                 else                
                   row << sprintf("%.2f",product.total.to_s)
                   row << "0.00 "
@@ -2381,7 +2382,12 @@ def newfactura2
                     
                 end 
                 
-                @total_cliente_soles  +=product.balance
+                if product.document_id == 2
+                    @total_cliente_soles  +=product.balance*-1
+                else
+                    @total_cliente_soles  +=product.balance
+                end 
+                
             end
             
             
@@ -2501,7 +2507,12 @@ def newfactura2
                   end  
                     
                 end 
-                @total_cliente_soles += product.balance 
+                if product.document_id == 2
+                    @total_cliente_soles  +=product.balance*-1
+                else
+                    @total_cliente_soles  +=product.balance
+                end 
+                
             end
             if product.detraccion == nil
               row <<  "0.00"
@@ -2540,7 +2551,12 @@ def newfactura2
             
                 end
             
-            @totalvencido_soles += product.balance
+            if product.document_id == 2
+                    @total_cliente_soles  +=product.balance*-1
+                else
+                    @total_cliente_soles  +=product.balance
+                end 
+                
             
             row =[]
             row << ""
@@ -3055,16 +3071,40 @@ end
         files_to_clean.each do |file|
           File.delete(file)
         end         
-       
-       if $lcMoneda == "D"  
-            $lcFileName=""
-            case_49 = InvoiceGenerator.new(1,3,1,$lg_serie_factura,@invoice.id).with_different_currency2
-          #  puts $lcFileName 
-       else
-           puts @invoice.id 
-            case_3  = InvoiceGenerator.new(1,3,1,$lg_serie_factura,@invoice.id).with_igv2(true)
-       end 
-    
+       if @invoice.document_id=="2"
+        #   credit_note_data = { issue_date: Date.new($aa,$mm,$dd), id: $lcNumeroNota, customer: {legal_name:$lcLegalName , ruc:$lcRuc },
+        #                      billing_reference: {id: $lcBillingReference, document_type_code: "01"},
+        #                      discrepancy_response: {reference_id: $lcBillingReference, response_code: "09", description: $lcDescrip},
+        #                      lines: [{id: "1", item: {id: "05", description: $lcDescrip2}, quantity: $lcCantidad, unit: 'GLL', 
+        #                           price: {value: $lcPrecioSIgv}, pricing_reference: $lcPrecioCigv, tax_totals: [{amount: $lcIgv, type: :igv, code: "10"}], line_extension_amount:$lcVVenta }],
+        #                      additional_monetary_totals: [{id: "1001", payable_amount: $lcVVenta}], tax_totals: [{amount: $lcIgv, type: :igv}], legal_monetary_total: $lcTotal}
+        
+
+        # credit_note = SUNAT::CreditNote.new(credit_note_data)
+
+        # if credit_note.valid?                       
+        #   credit_note.to_pdf    
+           
+        #   $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
+        #   send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
+
+        # else
+          
+        #   $aviso = "Invalid document, ignoring output: #{credit_note.errors.messages}"
+
+        # end
+
+           
+       else        
+           if $lcMoneda == "D"  
+                $lcFileName=""
+                case_49 = InvoiceGenerator.new(1,3,1,$lg_serie_factura,@invoice.id).with_different_currency2
+              #  puts $lcFileName 
+           else
+               puts @invoice.id 
+                case_3  = InvoiceGenerator.new(1,3,1,$lg_serie_factura,@invoice.id).with_igv2(true)
+           end 
+        end 
     
         
         $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName

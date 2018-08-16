@@ -243,6 +243,11 @@ GEM
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
     sqlite3 (1.3.13)
+    sunat_books (0.0.3)
+      activesupport (> 4.1)
+      i18n (~> 0.7)
+      prawn (~> 2.0)
+      prawn-table (~> 0.2)
     thin (1.7.2)
       daemons (~> 1.0, >= 1.0.9)
       eventmachine (~> 1.0, >= 1.0.4)
@@ -316,6 +321,7 @@ DEPENDENCIES
   spring
   sprockets (~> 3.7)
   sqlite3
+  sunat_books
   thin
   turbolinks
   uglifier (>= 1.3.0)

@@ -348,7 +348,7 @@ def  get_inicial(fecha1,producto,producto2)
             ret += detalle.implista - detalle.importe.to_f 
        end 
     end 
-
+a
     return ret
  
  end 
