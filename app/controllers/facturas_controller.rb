@@ -1854,8 +1854,6 @@ def newfactura2
       lcmonedasoles   = 2
       lcmonedadolares = 1
   
-
-
      
       @total_original_soles =0
       @total_original_dolares =0
@@ -1869,7 +1867,7 @@ def newfactura2
       precio_ultimo = 0
        for  product in @facturas_rpt
        
-         if product.balance.round(2) > 0.00
+         
            
           if lcCliente == product.customer_id
 
@@ -2085,7 +2083,7 @@ def newfactura2
 
           end 
           
-        end 
+        
           
         end
 
