@@ -1,5 +1,6 @@
 include CustomersHelper
 include ServicesHelper
+require 'sunat_books'
 
 class FacturasController < ApplicationController
 
@@ -123,11 +124,9 @@ def reportes5
                            right: '[page] of [topage]'
                   }
                }
-               
-               
-        
+
         end   
-      when "To Excel" then render xlsx: 'exportxls'
+        when "To Excel" then render xlsx: 'parte4_rpt_xls'
       else render action: "index"
     end
   end
@@ -468,8 +467,15 @@ def rpt_factura_all
     case params[:print]
       when "To PDF" then 
         begin 
-         render  pdf: "Facturas ",template: "facturas/rventas_rpt.pdf.erb",locals: {:facturas => @facturas_rpt},
-        :orientation      => 'Landscape'
+        lcCompany = "20555691263"
+        lcmonth ='03'
+        lcyear = '2018'
+        pdf = SunatBooks::Pdf::Sales.new(company, @facturas_rpt, lcmonth, lcyear)
+        pdf.render
+        
+        #  render  pdf: "Facturas ",template: "facturas/rventas_rpt.pdf.erb",locals: {:facturas => @facturas_rpt},
+        # :orientation      => 'Landscape'
+        
         end   
       when "To Excel" then render xlsx: 'exportxls'
       else render action: "index"
@@ -2541,21 +2547,7 @@ def newfactura2
             total_cliente_dolares = @company.get_pendientes_day_customer(@fecha1,@fecha2, lcCliente, lcmonedasoles)
             
             
-                if product.document_id   == 2
-                  
-                    if(product.fecha2 < Date.today)   
-                      @totalvencido_dolar += product.balance*-1
-                    end  
-                else  
-                      @totalvencido_dolar += product.balance
-            
-                end
-            
-            if product.document_id == 2
-                    @total_cliente_soles  +=product.balance*-1
-                else
-                    @total_cliente_soles  +=product.balance
-                end 
+              
                 
             
             row =[]
@@ -2775,7 +2767,8 @@ def newfactura2
 
     if @facturas_rpt.size > 0 
 
-        Prawn::Document.generate("app/pdf_output/rpt_pendientes.pdf") do |pdf|
+        
+        Prawn::Document.generate "app/pdf_output/rpt_pendientes.pdf", :page_layout => :landscape do |pdf|        
         pdf.font "Helvetica"
         pdf = build_pdf_header_rpt2(pdf)
         pdf = build_pdf_body_rpt2(pdf)
@@ -3331,7 +3324,7 @@ def salidas(pdf)
     end
 
     def build_pdf_footer_rpt2(pdf)
-            data =[ ["Procesado por Almacen ","V.B.Compras ","V.B. Gerente ."],
+            data =[ ["Procesado por Programacion ","V.B.Administracion ","V.B. Gerente ."],
                [":",":",":"],
                [":",":",":"],
                ["Fecha:","Fecha:","Fecha:"] ]

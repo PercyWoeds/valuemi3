@@ -44,7 +44,12 @@
        <% for  detalle in @facturas_rpt  %>
        
                     <tr>
+                      <% if detalle.document != nil%>
                     <td width= "5%" ><%= detalle.document.descripshort  %></td>
+                    <%else %>
+                    <td width= "5%" ><%="SD" %></td>
+                    <%end %>
+                    
                     <td width= "5%" ><%=  detalle.serie %>   </td>
                     <td width= "10%" ><%=  detalle.numero %>   </td>
                     <td width = "10%" align ="center"><%= detalle.fecha.strftime("%d/%m/%Y")     %></td>
