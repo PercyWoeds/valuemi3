@@ -159,6 +159,8 @@ def self.import2(file2)
       end 
       
   end       
+  
+  
 def get_cliente(cliente)
      a= Customer.find_by(account: cliente)
      
