@@ -39,7 +39,7 @@
                    <% salidas = product0.get_salidas(@fecha1,@fecha2,producto_value) %>
                    
                    <% ventas_qty = 0%>
-                   <% venta_directa_qty = product0.get_ventas_vale_directo_producto2(@fecha1,@fecha2,product0.tanque.product.code.to_s,"qty")%>
+                   <% venta_directa_qty = product0.get_ventas_vale_directo_producto2(@fecha1,@fecha2,product0.tanque.product.code.to_s,"qty") - product0.get_ventas_nota_credito(@fecha1,@fecha2,product0.tanque.product.id) %>
                    <% afericion = 0 %>
                    <% venta_neta =product0.get_ventas_vale_directo_producto2(@fecha1,@fecha2,product0.tanque.product.code.to_s,"soles")%>
                    <% saldo =  inicial + compras + compras_otros - ventas_qty - venta_directa_qty -salidas %>
@@ -159,6 +159,7 @@
                     <td width = "8%" align ="left"><%= credito.odometro    %></td>
                     <td width = "2%" align ="left"><%= credito.cod_prod    %> </td>
                     <td width = "15%" align ="left"><%= credito.get_product_name(credito.cod_prod)    %> </td>
+                    
                     <td width = "8%" align ="right"><%=  sprintf("%.2f",credito.cantidad.to_s)%></td>
                     <td width = "8%" align ="right"><%= sprintf("%.2f",credito.precio)   %></td>
                     <td width = "8%" align ="right"><%= sprintf("%.2f",credito.importe)   %></td>
