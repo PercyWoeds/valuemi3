@@ -87,6 +87,29 @@ class Varillaje < ActiveRecord::Base
  
  end 
  
+ 
+ #-------------------------------------------------------------------------------------------------------------------------
+ 
+  def  get_ventas_nota_credito(fecha1,fecha2,producto) 
+
+     facturas = Factura.where(["fecha >= ? and fecha <= ?  and document_id = ? and tipoventa_id = ?" , "#{fecha1} 00:00:00","#{fecha2} 23:59:59","2","2"])
+     ret=0  
+     
+     if facturas
+     
+        for factura in facturas
+                factura_detalle = FacturaDetail.where(["factura_id = ? and product_id = ? " , factura.id,producto ])
+                for detalle in factura_detalle
+                    ret -= detalle.quantity.round(2)
+                end     
+        end
+    end 
+ 
+    return ret
+ 
+ end 
+ 
+ 
 def  get_inicial(fecha1,producto,producto2) 
 
     
@@ -659,8 +682,11 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
 
         for detalle in facturas
             if value == "qty"
+                 
                 ret += detalle.cantidad.to_f
-            else   
+                
+            else
+                
                 ret += detalle.importe.to_f
             end 
              
