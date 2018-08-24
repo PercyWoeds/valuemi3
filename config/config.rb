@@ -10,7 +10,7 @@ SUNAT.configure do |config|
   config.signature do |s|
     s.party_id    = "20555691263"
     s.party_name  = "INVERSIONES VALUEMI S.A.C."
-    s.cert_file   = File.join(Dir.pwd, './app/keys', 'certificado3.crt')
+    s.cert_file   = File.join(Dir.pwd, './app/keys', 'certificate3.crt')
     s.pk_file     = File.join(Dir.pwd, './app/keys', 'CERTIFICADO3.key') 
   end
 
