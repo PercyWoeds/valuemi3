@@ -118,21 +118,21 @@
                     <% end %>
 
 
-                    <%if @current_user.level == "guias" || @current_user.level == "admin"  || @current_user.level == "ventas"%> 
+                    <!--<%if @current_user.level == "guias" || @current_user.level == "admin"  || @current_user.level == "ventas"%> -->
 
-                        <div class="item item-blue col-md-4 col-sm-6 col-xs-6">
-                            <div class="item-inner">
-                                <div class="icon-holder">
-                                    <span aria-hidden="true" class="icon icon_datareport_alt"></span>
-                                </div>
-                                <h3 class="title">Control Logistico </h3>
-                                <p class="intro"> Modulo de control logistico   </p>
-                                <%= link_to "", "/companies/charts/#{@company.id}", class: "link" %><span></span></a>
+                    <!--    <div class="item item-blue col-md-4 col-sm-6 col-xs-6">-->
+                    <!--        <div class="item-inner">-->
+                    <!--            <div class="icon-holder">-->
+                    <!--                <span aria-hidden="true" class="icon icon_datareport_alt"></span>-->
+                    <!--            </div>-->
+                    <!--            <h3 class="title">Control Logistico </h3>-->
+                    <!--            <p class="intro"> Modulo de control logistico   </p>-->
+                    <!--            <%= link_to "", "/companies/charts/#{@company.id}", class: "link" %><span></span></a>-->
 
 
-                            </div>
-                        </div>
-                    <% end %>    
+                    <!--        </div>-->
+                    <!--    </div>-->
+                    <!--<% end %>    -->
 
                     <%if @current_user.level == "ventas" || @current_user.level == "admin" ||  @current_user.level == "parte"  ||  @current_user.level == "compras" %> 
 
