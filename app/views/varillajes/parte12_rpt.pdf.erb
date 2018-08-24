@@ -105,7 +105,11 @@
      <% venta_7 =  0.00 %>
      
      <% venta_9 =  0.00 %>
+     
      <% venta_10 =  a.get_ventas_directa_detalle2(@fecha1,@fecha2) %>
+     <% venta_nota_credito =  a.get_ventas_directa_detalle3(@fecha1,@fecha2) %>
+     
+     
      
      <% venta_12 =  0.00 %>
      <% venta_13 =  0.00 %>
@@ -174,6 +178,31 @@
                     
                     
          <%end %>
+         
+         <% for  credito in venta_nota_credito  %>
+      
+                    <tr>
+                    <td width = "5%" ><%=  credito.fecha.strftime("%d/%m/%Y")  %></td>
+                    <td width = "5%" ><%=  credito.serie %></td>
+                    <td width = "5%" ><%=  credito.numero  %></td>
+                    <td width = "28%" align ="left"><%= credito.get_cliente(credito.cod_cli)   %></td>
+                    <td width = "8%" align ="left"><%= credito.odometro    %></td>
+                    <td width = "2%" align ="left"><%= credito.cod_prod    %> </td>
+                    <td width = "15%" align ="left"><%= credito.get_product_name(credito.cod_prod)    %> </td>
+                    <td width = "8%" align ="right"><%=  sprintf("%.2f",credito.get_qty_nota_credito(credito.id,"cantidad") )%></td>
+                    <td width = "8%" align ="right"><%= sprintf("%.2f",credito.precio)   %></td>
+                    <td width = "8%" align ="right"><%= sprintf("%.2f",credito.get_qty_nota_credito(credito.id,"imp1"))   %></td>
+                    <td width = "8%" align ="right"><%= sprintf("%.2f",credito.get_qty_nota_credito(credito.id,"imp2"))   %></td>
+                    </tr>
+                    <% total_0 -= credito.cantidad %>
+                    <% total_1 -= credito.importe.to_f %>
+                    <% total_2 -= credito.implista  %>
+                    <% xcod = credito.cod_prod %>
+                    
+                    
+         <%end %>
+      
+         
       
     </table>
     

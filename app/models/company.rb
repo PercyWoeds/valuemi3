@@ -36,6 +36,28 @@
          return @dato 
        end 
        
+       def get_qty_nota_credito(id,value )
+        facturas  = FacturaDetail.where(factura_by: id)
+         
+         ret=0 
+         
+         if facturas
+           
+          for factura in facturas
+              if(value == "imp1")
+                ret -= factura.importe.to_f 
+              elsif(value == "imp2")
+                ret -= factura.implista
+              else         
+                ret -= factura.cantidad 
+              end
+              
+          end 
+        end 
+         return ret 
+       end 
+       
+       
        def get_documento_factura(id)
          
          @dato = Document.find(id)

@@ -475,13 +475,24 @@ def  get_inicial(fecha1,producto,producto2)
  
  end 
  
-  def  get_ventas_directa_detalle2(fecha1,fecha2) 
+ def  get_ventas_directa_detalle2(fecha1,fecha2) 
 
      facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ?  and tipo = ?" , "#{fecha1} 00:00:00","#{fecha2} 23:59:59", "N","3" ]).order(:cod_prod,:fecha,:serie,:numero)
 
     return facturas
  
  end 
+ 
+ 
+ def  get_ventas_directa_detalle3(fecha1,fecha2) 
+
+     facturas = Factura.where(["fecha >= ? and fecha <= ?  and document_id = ?" , "#{fecha1} 00:00:00","#{fecha2} 23:59:59", "2" ]).order(:cod_prod,:fecha,:serie,:numero)
+
+    return facturas
+ 
+ end 
+ 
+ 
  
  
  def  get_ventas_contometros_descuento(fecha) 

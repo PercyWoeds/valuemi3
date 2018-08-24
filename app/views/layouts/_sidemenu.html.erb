@@ -61,28 +61,28 @@
         
         <section class="cards-section text-center">
             <div class="container">
-                <h2 class="title">Módulos del sistema</h2>
+                <h2 align="center" class="title">Módulos del sistema</h2>
 
                 <div id="cards-wrapper" class="cards-wrapper row">
                     
                     
-            <%if @current_user.level == "parte" || @current_user.level == "admin" %>
+            <!--<%if @current_user.level == "parte" || @current_user.level == "admin" %>-->
 
-                        <div class="item item-green col-md-4 col-sm-6 col-xs-6">
-                            <div class="item-inner">
-                                <div class="icon-holder">
-                                    <i class="icon fa icon_documents"></i>
-                                </div><!--//icon-holder-->
-                                <h3 class="title">Parte Diario </h3>
-                                <p class="intro">Registro de parte diario </p>
-                                <%= link_to "", "/companies/parte/#{@company.id}", class: "link" %>
-                                 <span></span>
+            <!--            <div class="item item-green col-md-4 col-sm-6 col-xs-6">-->
+            <!--                <div class="item-inner">-->
+            <!--                    <div class="icon-holder">-->
+            <!--                        <i class="icon fa icon_documents"></i>-->
+            <!--                    </div><!--//icon-holder-->
+            <!--                    <h3 class="title">Parte Diario </h3>-->
+            <!--                    <p class="intro">Registro de parte diario </p>-->
+            <!--                    <%= link_to "", "/companies/parte/#{@company.id}", class: "link" %>-->
+            <!--                     <span></span>-->
 
                                 
-                            </div><!--//item-inner-->
-                        </div><!--//item-->
+            <!--                </div><!--//item-inner-->
+            <!--            </div><!--//item-->
 
-                    <% end %>
+            <!--<% end %>-->
 
 
             <%if @current_user.level == "compras" || @current_user.level == "admin" || @current_user.level == "parte" %>
@@ -124,14 +124,14 @@
                             <div class="item-inner">
                                 <div class="icon-holder">
                                     <span aria-hidden="true" class="icon icon_datareport_alt"></span>
-                                </div><!--//icon-holder-->
-                                <h3 class="title">Control de Viajes </h3>
-                                <p class="intro"> Modulo de control de viajes   </p>
+                                </div>
+                                <h3 class="title">Control Logistico </h3>
+                                <p class="intro"> Modulo de control logistico   </p>
                                 <%= link_to "", "/companies/charts/#{@company.id}", class: "link" %><span></span></a>
 
 
-                            </div><!--//item-inner-->
-                        </div><!--//item-->
+                            </div>
+                        </div>
                     <% end %>    
 
                     <%if @current_user.level == "ventas" || @current_user.level == "admin" ||  @current_user.level == "parte"  ||  @current_user.level == "compras" %> 
@@ -161,6 +161,7 @@
                             <%= link_to "", "/companies/salepoint/#{@company.id}", class: "link" %><span></span></a>
                         </div><!--//item-inner-->
                     </div><!--//item-->
+                    
                     <% end %>
                     
                  <%if @current_user.level == "mantenimiento" || @current_user.level == "admin"  %> 
@@ -227,35 +228,35 @@
                     <% end %>
                     
                     
-                    <%if @current_user.level == "rrhh" || @current_user.level == "admin"%> 
+                    <!--<%if @current_user.level == "rrhh" || @current_user.level == "admin"%> -->
 
-                    <div class="item item-primary col-md-4 col-sm-6 col-xs-6">
-                        <div class="item-inner">
-                            <div class="icon-holder">
-                                <span aria-hidden="true" class="icon icon_group"></span>
-                            </div><!--//icon-holder-->
-                            <h3 class="title">Recursos Humanos </h3>
-                            <p class="intro">Gestión de personal </p>
-                            <a><%= link_to "", "/companies/planilla/#{@company.id}", class: "link" %><span></span></a>
-                        </div><!--//item-inner-->
-                    </div><!--//item-->
+                    <!--<div class="item item-primary col-md-4 col-sm-6 col-xs-6">-->
+                    <!--    <div class="item-inner">-->
+                    <!--        <div class="icon-holder">-->
+                    <!--            <span aria-hidden="true" class="icon icon_group"></span>-->
+                    <!--        </div><!--//icon-holder-->
+                    <!--        <h3 class="title">Recursos Humanos </h3>-->
+                    <!--        <p class="intro">Gestión de personal </p>-->
+                    <!--        <a><%= link_to "", "/companies/planilla/#{@company.id}", class: "link" %><span></span></a>-->
+                    <!--    </div><!--//item-inner-->
+                    <!--</div><!--//item-->
 
-                    <% end %>
+                    <!--<% end %>-->
                     
-                <%if  @current_user.level == "admin"%> 
+                <!--<%if  @current_user.level == "admin"%> -->
 
-                    <div class="item item-primary col-md-4 col-sm-6 col-xs-6">
-                        <div class="item-inner">
-                            <div class="icon-holder">
-                                <span aria-hidden="true" class="icon icon_wallet_alt"></span>
-                            </div><!--//icon-holder-->
-                            <h3 class="title">Bancos </h3>
-                            <p class="intro">Gestión de bancos </p>
-                            <a><%= link_to "", "/companies/bancos/#{@company.id}", class: "link" %><span></span></a>
-                        </div><!--//item-inner-->
-                    </div><!--//item-->
+                <!--    <div class="item item-primary col-md-4 col-sm-6 col-xs-6">-->
+                <!--        <div class="item-inner">-->
+                <!--            <div class="icon-holder">-->
+                <!--                <span aria-hidden="true" class="icon icon_wallet_alt"></span>-->
+                <!--            </div><!--//icon-holder-->
+                <!--            <h3 class="title">Bancos </h3>-->
+                <!--            <p class="intro">Gestión de bancos </p>-->
+                <!--            <a><%= link_to "", "/companies/bancos/#{@company.id}", class: "link" %><span></span></a>-->
+                <!--        </div><!--//item-inner-->
+                <!--    </div><!--//item-->
 
-                    <% end %>
+                <!--    <% end %>-->
 
                 </div><!--//cards-->
             </div><!--//cards-->
