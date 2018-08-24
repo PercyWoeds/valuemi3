@@ -66,23 +66,23 @@
                 <div id="cards-wrapper" class="cards-wrapper row">
                     
                     
-            <!--<%if @current_user.level == "parte" || @current_user.level == "admin" %>-->
+            <%if @current_user.level == "parte" || @current_user.level == "admin" %>
 
-            <!--            <div class="item item-green col-md-4 col-sm-6 col-xs-6">-->
-            <!--                <div class="item-inner">-->
-            <!--                    <div class="icon-holder">-->
-            <!--                        <i class="icon fa icon_documents"></i>-->
-            <!--                    </div><!--//icon-holder-->
-            <!--                    <h3 class="title">Parte Diario </h3>-->
-            <!--                    <p class="intro">Registro de parte diario </p>-->
-            <!--                    <%= link_to "", "/companies/parte/#{@company.id}", class: "link" %>-->
-            <!--                     <span></span>-->
+                        <div class="item item-green col-md-4 col-sm-6 col-xs-6">
+                            <div class="item-inner">
+                                <div class="icon-holder">
+                                    <i class="icon fa icon_documents"></i>
+                                </div>
+                                <h3 class="title">Parte Diario </h3>
+                                <p class="intro">Registro de parte diario </p>
+                                <%= link_to "", "/companies/parte/#{@company.id}", class: "link" %>
+                                 <span></span>
 
                                 
-            <!--                </div><!--//item-inner-->
-            <!--            </div><!--//item-->
+                            </div>
+                        </div>
 
-            <!--<% end %>-->
+            <% end %>
 
 
             <%if @current_user.level == "compras" || @current_user.level == "admin" || @current_user.level == "parte" %>
