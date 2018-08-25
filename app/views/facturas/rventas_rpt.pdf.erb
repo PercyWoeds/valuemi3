@@ -1,7 +1,7 @@
 <html>
 <body>
     
-  <h4 ><center> Documento emitidos Desde: <%= @fecha1 %>  Hasta: <%= @fecha2 %>   </center>   </h4>
+  <h4 ><center> REGISTRO DE VENTAS DEL PERIODO  <%= @fecha1 %>  Hasta: <%= @fecha2 %>   </center>   </h4>
     
   
   
@@ -9,24 +9,69 @@
   <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
   
   <tr bgcolor="#B4D7F7">
-    <td width="100%"> DOCUMENTOS EMITIDOS *</td>
+    <td width="100%"> REGISTRO DE VENTAS DEL PERIODO   *</td>
   </tr>
   
   </table>
 
   
   <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+    
   <tr bgcolor="#B4D7F7">
-    <td width="5%"> TD </td>
-    <td width="5%"> Serie  </td>
-    <td width="10%"> Numero  </td>
-    <td width="10%"> Fecha </td>
-    <td width="10%"> Ruc </td>
-    <td width="24%"> Cliente </td>
-    <td width="5%"> Mon. </td>
-    <td width="8%"> V.Venta</td>
-    <td width="8%"> IGV </td>
-    <td width="8%"> IMPORTE </td>
+    
+    <td width="2%" rowspan="2" >Nro.</td>
+    <td width="4%" rowspan="2"> Fecha de Emision del Comprobante   </td>
+    <td width="4%" rowspan="2" > Fecha de Vcmto.</td>
+    <td width="4%" colspan="4"> Comprobante de Pago </td>
+    
+    <td width="4%" colspan="2"> Documento de identidad</td>
+    <td width="20%">Informacion Cliente </td>
+    
+    <td width="4%"  rowspan="2"> Valor Facturado de la Exportacion   </td>
+    
+    
+    <td width="4%" rowspan="2">  Base imponible de la Operacion Gravada </td>
+    <td width="4%" colspan="2"> Importe Total de la Operacion Exonerada o Inafecta   </td>
+    
+    <td width="4%" rowspan="2" >  ISC </td>
+    <td width="4%" rowspan="2">   IGV y/o IPM</td>
+    <td width="4%" rowspan="2" align ="center">  Otros Tributos y Cargos que no forman parte de la Base Imponible </td>
+    <td width="4%" rowspan="2" align="center">Importe Total del Comprobante de Pago    </td>
+    <td width="4%"rowspan="2" align="center"> Tipo Cambio    </td>
+    
+    <td width="4%" colspan="4"> Referencia del Comprobante de Pago o Doc Orig que se modifica</td>
+    
+    <td width="4%"> </td>
+    <td width="4%" rowspan="2">   Ref.Transf. Gratuita </td>
+    
+    
+  </tr>
+  
+    
+  <tr bgcolor="#B4D7F7">
+    
+    
+    
+    <td width="4%"> Tipo <br> (Tabla 10)</td>
+    <td width="3%"> Nro <br>Serie</td>
+    <td width="4%"> Numero	 </td>
+    <td width="4%"> Numero </td >
+    
+    <td width="2%"> Tipo <br>(Tabla 2) </td>
+    <td width="4%"> Numero</td >
+    
+    <td width="15%"> Apellidos y Nombre, Razon Social </td>
+    
+    <td width="4%">  Exonerada </td>
+    <td width="4%">  Inafecto  </td>
+    
+    
+    <td width="4%">   Fecha </td>
+    <td width="4%">   Tipo<br>  (Tabla 10) </td>
+    <td width="4%">   Nro <br>Serie </td>
+    <td width="4%">   Numero  </td>
+    
+    <td width="4%">Fecha Trabajo    </td>
     
     
     
@@ -42,25 +87,35 @@
       <% total =  0%>
       
        <% for  detalle in @facturas_rpt  %>
-       
+                   
                     <tr>
-                      <% if detalle.document != nil%>
-                    <td width= "5%" ><%= detalle.document.descripshort  %></td>
+                    <td width= "2%" align="right"><%= nroitem  %></td>  
+                    <td width = "4%" align ="center"><%= detalle.fecha.strftime("%d/%m/%Y")     %></td>
+                    <td width= "4%" > </td>  
+                    <%if detalle.document != nil %>
+                    <td width= "4%" ><%= detalle.document.tiposunat  %></td>
                     <%else %>
-                    <td width= "5%" ><%="SD" %></td>
+                    <td width= "4%" > 12 </td>
+                    <% end %>
+                    
+                    <td width= "3%" ><%=  detalle.serie %>   </td>
+                    <td width= "4%"><%=  detalle.numero %>   </td>
+                    <td width= "4%"><%=  detalle.numero2 %>   </td>
+                    
+                    <%if detalle.ruc != ""%>
+                    
+                    <td width = "2%" align ="left"> 6 </td>
+                    <td width = "4%" align ="left"><%= detalle.ruc   %> </td>
+                    <td width = "15%" align ="left"><%= detalle.name   %> </td>
+                    <%else %>
+                    <td width = "2%" align ="left"> 0 </td>
+                    <td width = "4%" align ="left">  </td>
+                    <td width = "15%" align ="left">CLIENTE GENERICO </td>
                     <%end %>
                     
-                    <td width= "5%" ><%=  detalle.serie %>   </td>
-                    <td width= "10%" ><%=  detalle.numero %>   </td>
-                    <td width = "10%" align ="center"><%= detalle.fecha.strftime("%d/%m/%Y")     %></td>
-                    <td width = "10%" align ="left"><%= detalle.ruc   %> </td>
                     
-                    <td width = "24%" align ="left"><%= detalle.name   %> </td>
-                    <% if detalle.moneda_id == 1 %>
-                    <td width = "5%" align ="center"> USD </td>
-                    <% else %>
-                    <td width = "5%" align ="center"> S/. </td>
-                    <% end %>
+                    <td width = "2%" align ="left"> </td>
+                    
                     
                     
                 <% if detalle.document_id == 2 %>
@@ -72,14 +127,27 @@
                   <% lctax =  detalle.tax %>
                   <% lctotal = detalle.total %>
                 <% end %>
-                <td width = "8%" align ="right"><%= sprintf("%.2f",lcsubtotal)   %></td>
-                <td width = "8%" align ="right"><%= sprintf("%.2f",lctax)   %></td>
-                <td width = "8%" align ="right"><%= sprintf("%.2f",lctotal)   %></td>
+                
+                <td width = "4%" align ="right"><%= sprintf("%.2f",lcsubtotal)   %></td>
+                <td width = "4%" align ="left"></td> </td> 
+                <td width = "4%" align ="left"></td> </td>     
+                <td width = "4%" align ="left"></td> </td> 
+                <td width = "4%" align ="right"><%= sprintf("%.2f",lctax)   %></td>
+                <td width = "4%" align ="left"></td> </td> 
+                <td width = "4%" align ="right"><%= sprintf("%.2f",lctotal)   %></td>
+                <td width = "4%" align ="left"></td> </td> 
+                <td width = "4%" align ="left"></td> </td> 
+                <td width = "4%" align ="left"></td> </td> 
+                <td width = "4%" align ="left"></td> </td> 
+                <td width = "4%" align ="left"></td> </td> 
+                <td width = "4%" align ="left"></td> </td> 
+                <td width = "4%" align ="left"></td> </td> 
+                
                 </tr>
                 <% subtotal += lcsubtotal %>
                 <% tax += lctax %>
                 <% total += lctotal  %>
-                
+                <% nroitem += 1 %>
             
          <% end %>
 
@@ -91,10 +159,14 @@
      
      <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
      <tr bgcolor="#B4D7F7">
-          <td width = "76%" align ="center">Totales  </td>
-          <td width = "8%" align ="right"><%= sprintf("%.2f",subtotal)   %></td>
-          <td width = "8%" align ="right"><%= sprintf("%.2f",tax)   %></td>
-          <td width = "8%" align ="right"><%= sprintf("%.2f",total)   %></td>
+          <td width = "48%" align ="center">Totales  </td>
+          
+          <td width = "5%" align ="right"><%= sprintf("%.2f",subtotal)   %></td>
+          <td width = "10%" align ="right"></td>
+          <td width = "5%" align ="right"><%= sprintf("%.2f",tax)   %></td>
+          <td width = "4%" align ="right"></td>
+          <td width = "5%" align ="right"><%= sprintf("%.2f",total)   %></td>
+          <td width = "23%" align ="right"></td>
     </tr>
    </table>
 

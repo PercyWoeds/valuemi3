@@ -467,14 +467,14 @@ def rpt_factura_all
     case params[:print]
       when "To PDF" then 
         begin 
-        lcCompany = "20555691263"
-        lcmonth ='03'
-        lcyear = '2018'
-        pdf = SunatBooks::Pdf::Sales.new(company, @facturas_rpt, lcmonth, lcyear)
-        pdf.render
+        # lcCompany = "20555691263"
+        # lcmonth ='03'
+        # lcyear = '2018'
+        # pdf = SunatBooks::Pdf::Sales.new(company, @facturas_rpt, lcmonth, lcyear)
+        # pdf.render
         
-        #  render  pdf: "Facturas ",template: "facturas/rventas_rpt.pdf.erb",locals: {:facturas => @facturas_rpt},
-        # :orientation      => 'Landscape'
+          render  pdf: "Facturas ",template: "facturas/rventas_rpt.pdf.erb",locals: {:facturas => @facturas_rpt},
+             :orientation      => 'Landscape', :page_size => "A3"
         
         end   
       when "To Excel" then render xlsx: 'exportxls'

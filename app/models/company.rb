@@ -625,13 +625,16 @@
           dato.update_attributes(:importe2=> dato.importe.to_f)
         end 
          
+         lcCode=""
+         lcCode1=""
          @boletas = Sellvale.select("fecha,td,serie,ruc,MIN(numero) as minimo, MAX(numero) as maximo,sum(importe2) as total").where(["fecha >= ? and fecha<= ? and td= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59","B" ]).group(:fecha,:td,:serie,:ruc)
         # @boletas = Sellvale.select("fecha,td,cod_prod,ruc,MIN(numero) as minimo, MAX(numero) as maximo,sum(importe2) as total").where(["fecha >= ? and fecha<= ? and td<> ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59","N" ]).group(:fecha,:td,:serie,:numero,:cod_prod,:ruc)
           TmpFactura.delete_all
           
           for boleta in @boletas  
           
-                lcCode = boleta.minimo << "-" << boleta.maximo 
+                lcCode = boleta.minimo 
+                lcCode1= boleta.maximo 
                 lcSerie = boleta.serie 
                 
                 if boleta.total != nil 
@@ -657,7 +660,7 @@
                     lcRazonCliente = " "
                   end 
                   
-                a= TmpFactura.new(document_id: 17 ,subtotal: lcVventa , tax: lcTax , total: lcTotal, fecha: lcFecha, serie: lcSerie, numero: lcCode,td: lcTd,ruc: lcRucCliente,name:lcRazonCliente, moneda_id:2)
+                a= TmpFactura.new(document_id: 17 ,subtotal: lcVventa , tax: lcTax , total: lcTotal, fecha: lcFecha, serie: lcSerie, numero: lcCode,numero2:lcCode1,td: lcTd,ruc: lcRucCliente,name:lcRazonCliente, moneda_id:2)
                 a.save 
               end 
             lcCode=""
@@ -707,7 +710,7 @@
           
                 lcCodigo = boleta.code.split("-") 
     
-                lcCode = lcCodigo[1] 
+                lcCode  = lcCodigo[1] 
                 lcSerie = lcCodigo[0] 
                 
                 if boleta.total != nil 

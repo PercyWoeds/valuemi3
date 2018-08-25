@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180827233100) do
+ActiveRecord::Schema.define(version: 20180827233101) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2209,6 +2209,7 @@ ActiveRecord::Schema.define(version: 20180827233100) do
     t.integer  "moneda_id"
     t.string   "name"
     t.string   "cod_prod"
+    t.string   "numero2"
   end
 
   create_table "tms", force: :cascade do |t|
