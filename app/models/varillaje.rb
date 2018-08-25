@@ -486,7 +486,7 @@ def  get_inicial(fecha1,producto,producto2)
  
  def  get_ventas_directa_detalle3(fecha1,fecha2) 
 
-     facturas = Factura.where(["fecha >= ? and fecha <= ?  and document_id = ?" , "#{fecha1} 00:00:00","#{fecha2} 23:59:59", "2" ]).order(:cod_prod,:fecha,:serie,:numero)
+     facturas = Factura.where(["fecha >= ? and fecha <= ?  and document_id = ?" , "#{fecha1} 00:00:00","#{fecha2} 23:59:59", "2" ]).order(:fecha,:serie,:numero)
 
     return facturas
  
