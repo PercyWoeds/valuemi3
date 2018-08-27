@@ -12,7 +12,7 @@ wb.styles do |s|
     padded = s.add_style(:format_code => "00#", :border => Axlsx::STYLE_THIN_BORDER)
     percent = s.add_style(:format_code => '#.##0.00', :border => Axlsx::STYLE_THIN_BORDER)
     title = s.add_style(:bg_color => "FFFF0000", :fg_color=>"#FF000000",:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :center})
-    cadena =s.add_style(:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :right},:sz => 9, )
+    cadena =s.add_style(:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :left},:sz => 9, )
     currency = wb.styles.add_style(:format_code=>"#,##0.#0;[Red]-#,##0.#0",
                               :border=>Axlsx::STYLE_THIN_BORDER,:sz => 9,)
     red_negative = wb.styles.add_style :num_fmt => 8
@@ -58,7 +58,6 @@ wb.styles do |s|
     
    end
    
-   sheet.add_row ["","","","","","Totales => ","",@total1,@total2,@total3], :style => [cadena,cadena,date,date,cadena,cadena,currency,currency,currency]
    
    
 end
