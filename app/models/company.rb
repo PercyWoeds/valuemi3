@@ -656,11 +656,11 @@
                     #  lcRazonCliente  = PeruSunatRuc.name_from ruc_number
                    lcRazonCliente = ""
                   else
-                    lcRucCliente = ""
-                    lcRazonCliente = " "
+                    lcRucCliente = "0"
+                    lcRazonCliente = "CLIENTE GENERICO "
                   end 
                   
-                a= TmpFactura.new(document_id: 17 ,subtotal: lcVventa , tax: lcTax , total: lcTotal, fecha: lcFecha, serie: lcSerie, numero: lcCode,numero2:lcCode1,td: lcTd,ruc: lcRucCliente,name:lcRazonCliente, moneda_id:2)
+                a= TmpFactura.new(document_id: 17 ,subtotal: lcVventa , tax: lcTax , total: lcTotal, fecha: lcFecha, serie: lcSerie, numero: lcCode,numero2:lcCode1,td: lcTd,ruc: lcRucCliente,name:lcRazonCliente, moneda_id:2,tipo2:"0",tipo10:"12" )
                 a.save 
               end 
             lcCode=""
@@ -694,11 +694,11 @@
                     #  lcRazonCliente  = PeruSunatRuc.name_from ruc_number
                    lcRazonCliente = ""
                   else
-                    lcRucCliente = ""
-                    lcRazonCliente = " "
+                    lcRucCliente = "0"
+                    lcRazonCliente = "CLIENTE GENERICO "
                   end 
                   
-                a= TmpFactura.new(document_id: 16 ,subtotal: lcVventa , tax: lcTax , total: lcTotal, fecha: lcFecha, serie: lcSerie, numero: lcCode,td: lcTd,ruc: lcRucCliente,name:lcRazonCliente, moneda_id:2)
+                a= TmpFactura.new(document_id: 16 ,subtotal: lcVventa , tax: lcTax , total: lcTotal, fecha: lcFecha, serie: lcSerie, numero: lcCode,td: lcTd,ruc: lcRucCliente,name:lcRazonCliente, moneda_id:2,tipo2:"0",tipo10:"12")
                 a.save 
               end 
             lcCode=""
@@ -732,11 +732,16 @@
                   
                   if lcSerie.first(2)=="FF"
                      lcDocumentoId  = 1
+                     lcTipo2 = "6"
                   else
                      lcDocumentoId = 3
+                     lcTipo2 = "6"
+                     lcVventa = lcVventa * -1
+                     lcTax = lcTax * -1
+                     lcTotal = lcTotal * -1
                   end 
                   
-                a= TmpFactura.new(document_id: lcDocumentoId ,subtotal: lcVventa , tax: lcTax , total: lcTotal, fecha: lcFecha, serie: lcSerie, numero: lcCode,td: lcTd,ruc: lcRucCliente,name:lcRazonCliente, moneda_id:2)
+                a= TmpFactura.new(document_id: lcDocumentoId ,subtotal: lcVventa , tax: lcTax , total: lcTotal, fecha: lcFecha, serie: lcSerie, numero: lcCode,td: lcTd,ruc: lcRucCliente,name:lcRazonCliente, moneda_id:2,tipo2: lcTipo2)
                 a.save 
               end 
             lcCode=""
