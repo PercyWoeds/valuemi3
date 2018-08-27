@@ -477,7 +477,7 @@ def rpt_factura_all
              :orientation      => 'Landscape', :page_size => "A3"
         
         end   
-      when "To Excel" then render xlsx: 'exportxls'
+      when "To Excel" then render xlsx: 'rventas_rpt_xls'
       else render action: "index"
     end
   end
