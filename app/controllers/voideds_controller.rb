@@ -41,9 +41,10 @@
          lcCodeFactura  = $lcSerie +"-"+$lg_serial_id2
          puts "codigo factura "
          puts lcCodeFactura
-     
+        
         @invoiceinterno = Factura.find_by(code: lcCodeFactura)
         @invoiceinterno.delete_facturas
+        @invoiceinterno[:processed] = "2"
         @invoiceinterno.anular
         
         $lcFileName2=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName

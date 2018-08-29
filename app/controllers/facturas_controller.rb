@@ -1045,14 +1045,7 @@ def reportes31
     @locations = Location.where(company_id: @company.id).order("name ASC")
     @divisions = Division.where(company_id: @company.id).order("name ASC")
     
-    if(params[:location] and params[:location] != "")
-      @sel_location = params[:location]
-    end
     
-    if(params[:division] and params[:division] != "")
-      @sel_division = params[:division]
-    end
-  
     if(@company.can_view(current_user))
       
       
@@ -1071,14 +1064,31 @@ def reportes31
         
       else 
         
-         @invoices = Factura.all.order('fecha DESC,code  DESC').paginate(:page => params[:page])
+         #@invoices = Factura.all.order('fecha DESC,code  DESC').paginate(:page => params[:page])
          
-        if params[:search]
-          @invoices = Factura.search(params[:search]).order('fecha DESC ,code DESC').paginate(:page => params[:page])
-        else
-          @invoices = Factura.order('fecha DESC ,code  DESC').paginate(:page => params[:page]) 
-        end
+            @invoices  = Factura.joins(:customer).order('fecha DESC,code  DESC').paginate(:page => params[:page])
+  
+                      
+            search = params[:search]
+            
+            unless params[:search].blank?
+            
+              @invoices = Factura.find_by_sql(['Select facturas.*, customers.name 
+                      from facturas 
+                      INNER JOIN customers ON facturas.customer_id = customers.id
+                      where customers.name iLIKE ? or facturas.code ilike ?',"%#{search}%","%#{search}%" ] ).paginate(:page => params[:page])
+            end
+            
+         
+         
+        # if params[:search]
+        #   @invoices = Factura.search(params[:search]).order('fecha DESC ,code DESC').paginate(:page => params[:page])
+        # else
+        #   @invoices = Factura.order('fecha DESC ,code  DESC').paginate(:page => params[:page]) 
+        # end
+        
       end 
+      
       else
       errPerms()
     end

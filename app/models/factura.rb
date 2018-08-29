@@ -73,10 +73,7 @@ class Factura < ActiveRecord::Base
                      "Total" ]
                      
 
-  def self.search(search)
-      where("code LIKE ?", "%#{search}%") 
-        
-  end
+ 
 
 
 
@@ -318,7 +315,13 @@ class Factura < ActiveRecord::Base
         ip.destroy
       end 
       
+      
     end
+    
+    for ip in invoice_guias 
+      ip.destroy
+    end
+    
   end
   
 
@@ -526,6 +529,7 @@ class Factura < ActiveRecord::Base
   
   # Process the invoice
   def anular
+    
     if(self.processed == "2" )          
       self.processed="2"
       self.subtotal =0
