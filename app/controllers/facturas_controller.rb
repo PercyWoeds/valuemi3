@@ -1051,12 +1051,12 @@ def reportes31
       
       if @current_user.level == "colateral"
         
-         @invoices = Factura.all.order('fecha DESC').paginate(:page => params[:page]).where(serie:"BB04")
+         @invoices = Factura.all.order('fecha DESC','serie DESC','code DESC').paginate(:page => params[:page]).where(serie:"BB04")
          
         if params[:search]
-          @invoices = Factura.search(params[:search]).order('fecha DESC').paginate(:page => params[:page]).where(serie:"BB04")
+          @invoices = Factura.search(params[:search]).order('fecha DESC','serie DESC','code DESC').paginate(:page => params[:page]).where(serie:"BB04")
         else
-          @invoices = Factura.order('fecha DESC').paginate(:page => params[:page]).where(serie:"BB04")
+          @invoices = Factura.order('fecha DESC','serie DESC','code DESC').paginate(:page => params[:page]).where(serie:"BB04")
         end
         
         @turno = Turno.first 
