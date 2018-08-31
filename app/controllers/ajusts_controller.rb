@@ -892,6 +892,11 @@ class AjustsController < ApplicationController
 ##
 
   #fin reporte de orden de compra 
+  
+  def import
+      Ajust.import(params[:file])
+       redirect_to root_url, notice: "Ventas importadas."
+  end 
  
   private
   def ajust_params

@@ -76,6 +76,14 @@
 
 <%= will_paginate @ajusts %>
 
+<h2>Importar Archivo  "*.csv"</h2>
+
+<%= form_tag import_ajusts_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Importar " %>
+<% end %>
+
+
 <%= render 'layouts/autocomplete' %>
 
 <script type="text/javascript">

@@ -5,7 +5,7 @@ class Sellvale < ActiveRecord::Base
  
  belongs_to :factura_detail
     
-def self.import(file)
+ def self.import(file)
         TmpFactura.delete_all 
         
        CSV.foreach(file.path, headers: true, encoding:'iso-8859-1:utf-8') do |row|

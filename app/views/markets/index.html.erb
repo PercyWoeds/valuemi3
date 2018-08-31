@@ -1,0 +1,86 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Ventas Market</h1>
+
+<%= form_tag(markets_path, :method => "get", id: "search-form") do %>
+  <%= text_field_tag :search, params[:search], placeholder: "Buscar vales " %>
+  <%= submit_tag "Buscar: " %>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      
+      <th>Td</th>
+      <th>Fecha</th>
+      <th>Turno</th>
+      
+      <th>Caja</th>
+      <th>Serie</th>
+      <th>Numero</th>
+      <th>Cod cli</th>
+      <th>Ruc</th>
+      
+      
+      <th>Cod prod</th>
+      
+      <th>Cantidad</th>
+      <th>Precio</th>
+      <th>Importe</th>
+      
+      
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @markets.each do |market| %>
+      <tr>
+         <td class="small bordered_bottom bordered_right"><%= market.td %></td>
+         <td class="small bordered_bottom bordered_right"><%= market.fecha.strftime("%d/%m/%Y") %></td>
+         <td class="small bordered_bottom bordered_right"><%= market.turno %></td>
+         <td class="small bordered_bottom bordered_right"><%= market.caja %></td>
+         <td class="small bordered_bottom bordered_right"><%= market.serie %></td>
+         <td class="small bordered_bottom bordered_right"><%= market.numero %></td>
+         <td class="small bordered_bottom bordered_right"><%= market.cod_cli %></td>
+         <td class="small bordered_bottom bordered_right"><%= market.ruc %></td>
+        
+         <td class="small bordered_bottom bordered_right"><%= market.cod_prod %></td>
+        
+         <td class="small bordered_bottom bordered_right"><%= market.cantidad %></td>
+         <td class="small bordered_bottom bordered_right"><%= market.precio %></td>
+         <td class="small bordered_bottom bordered_right"><%= market.importe %></td>
+      
+        <td><%= link_to 'Ver', market %></td>
+        <td><%= link_to 'Editar', edit_market_path(market) %></td>
+        <% if @current_user.email == "percywoeds@gmail.com" %>
+        <td><%= link_to 'Eliminar', market, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <%end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= will_paginate @markets %>
+<br>
+
+<%= link_to 'Nuevo ', new_market_path %>
+
+
+
+<h4>Importar Archivo  "*.csv"</h4>
+
+<%= form_tag import_markets_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Importar " %>
+<% end %>
+
+
+
+
+
+
+
+
+
+

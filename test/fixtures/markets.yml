@@ -1,0 +1,57 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  order_id: MyString
+  td: MyString
+  fecha: 2018-08-31 16:48:23
+  turno: MyString
+  cod_emp: MyString
+  caja: MyString
+  serie: MyString
+  numero: MyString
+  cod_cli: MyString
+  ruc: MyString
+  placa: MyString
+  odometro: MyString
+  cod_prod: MyString
+  cod_prod: MyString
+  cantidad: 1.5
+  precio: 1.5
+  importe: 1.5
+  igv: 1.5
+  fpago: MyString
+  dolar: 1.5
+  cod_dep: MyString
+  cod_lin: MyString
+  cod_tar: MyString
+  dolares: MyString
+  precio1: 1.5
+  margen: 1.5
+
+two:
+  order_id: MyString
+  td: MyString
+  fecha: 2018-08-31 16:48:23
+  turno: MyString
+  cod_emp: MyString
+  caja: MyString
+  serie: MyString
+  numero: MyString
+  cod_cli: MyString
+  ruc: MyString
+  placa: MyString
+  odometro: MyString
+  cod_prod: MyString
+  cod_prod: MyString
+  cantidad: 1.5
+  precio: 1.5
+  importe: 1.5
+  igv: 1.5
+  fpago: MyString
+  dolar: 1.5
+  cod_dep: MyString
+  cod_lin: MyString
+  cod_tar: MyString
+  dolares: MyString
+  precio1: 1.5
+  margen: 1.5

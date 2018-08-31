@@ -281,4 +281,40 @@ end
       return "red"
     end
   end
+  
+  def self.import(file)
+  
+          CSV.foreach(file.path, headers: true, encoding:'iso-8859-1:utf-8') do |row|
+            
+          #Product.create! row.to_hash 
+          
+          row['cod_prod'] =  row['cod_prod'].rjust(13, '0')  
+          
+          a = Product.find_by(code: row['cod_prod'] )
+          
+            
+            if  a == nil 
+              
+              puts  row['cod_prod'] 
+              puts  row['category'] 
+              puts  row['nom_prod'] 
+                
+           else 
+            
+              puts  row['cod_prod'] 
+              puts  row['category'] 
+              puts  row['nom_prod'] 
+              puts  a.id 
+              
+              a = AjustDetail.new(ajust_id: 85 ,product_id: a.id, quantity: row['sal_04'] )
+              a.save
+            
+            end 
+            
+          
+          end
+  end 
+
+  
+  
 end

@@ -1244,7 +1244,7 @@ def rpt_facturas_4
       @year = Time.now.year
     end
     
-    @pagetitle = "Yearly sales report - #{@year} - #{@company.name}"
+    @pagetitle = "Cuentas por Pagar "
     
     curr_year = Time.now.year
     c_year = curr_year

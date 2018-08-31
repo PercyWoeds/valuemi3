@@ -2414,23 +2414,22 @@
               end 
            end 
                 #ventas
-          @ventas  = Factura.where('fecha < ?',"#{fecha1} 00:00:00")
+          @ventas  = Market.where('fecha < ?',"#{fecha1} 00:00:00")
+          
+          
     
            for sal in @ventas  
-              $lcFecha = sal.fecha 
-    
-              @ventasdetail=  FacturaDetail.where(:factura_id=>sal.id)
-    
-              for detail in @ventasdetail 
-    
-                movdetail  = MovementDetail.find_by(:product_id=>detail.product_id)
+           
+              @product_id = Product.find_by(code: sal.cod_prod )
+              
+                movdetail  = MovementDetail.find_by(:product_id => @product_id.id )
     
                 if movdetail
     
-                  if detail.quantity == nil
+                  if sal.cantidad == nil
                     movdetail.stock_inicial += 0   
                   else
-                    movdetail.stock_inicial -= detail.quantity
+                    movdetail.stock_inicial -= sal.cantidad
                   end
                   movdetail.save           
                 else     
@@ -2440,7 +2439,7 @@
                   #detail.save 
     
                 end   
-              end 
+              
            end 
            
     
@@ -2599,23 +2598,21 @@
            end 
     
            #ventas
-          @ventas  = Factura.where('fecha>= ? and fecha <= ?',"#{fecha1} 00:00:00","#{fecha2} 23:59:59")
+          @ventas  = Market.where('fecha>= ? and fecha <= ?',"#{fecha1} 00:00:00","#{fecha2} 23:59:59")
     
            for sal in @ventas  
-              $lcFecha = sal.fecha 
-    
-              @ventasdetail=  FacturaDetail.where(:factura_id=>sal.id)
-    
-              for detail in @ventasdetail 
-    
-                movdetail  = MovementDetail.find_by(:product_id=>detail.product_id)
+           
+            if sal == nil 
+            else 
+                @product_id = Product.find_by(code: sal.cod_prod )
+                movdetail  = MovementDetail.find_by(:product_id=> @product_id.id )
     
                 if movdetail
     
-                  if detail.quantity == nil
+                  if sal.cantidad == nil
                     movdetail.salida = 0   
                   else
-                    movdetail.salida += detail.quantity
+                    movdetail.salida += sal.cantidad 
                   end
                     movdetail.save           
                 else     
@@ -2625,7 +2622,8 @@
                   #detail.save 
     
                 end   
-              end 
+            end 
+            
            end 
            
            

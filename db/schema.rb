@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180827233103) do
+ActiveRecord::Schema.define(version: 20180831195941) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1186,6 +1186,38 @@ ActiveRecord::Schema.define(version: 20180827233103) do
     t.integer  "company_id"
   end
 
+  create_table "markets", force: :cascade do |t|
+    t.string   "order_id"
+    t.string   "td"
+    t.datetime "fecha"
+    t.string   "turno"
+    t.string   "cod_emp"
+    t.string   "caja"
+    t.string   "serie"
+    t.string   "numero"
+    t.string   "cod_cli"
+    t.string   "ruc"
+    t.string   "placa"
+    t.string   "odometro"
+    t.string   "cod_prod"
+    t.float    "cantidad"
+    t.float    "precio"
+    t.float    "importe"
+    t.float    "igv"
+    t.string   "fpago"
+    t.float    "dolar"
+    t.string   "cod_dep"
+    t.string   "cod_lin"
+    t.string   "cod_tar"
+    t.string   "dolares"
+    t.float    "precio1"
+    t.float    "margen"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "descrip"
+    t.string   "processed"
+  end
+
   create_table "modelos", force: :cascade do |t|
     t.string   "descrip"
     t.datetime "created_at", null: false
@@ -1570,6 +1602,7 @@ ActiveRecord::Schema.define(version: 20180827233103) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "code"
+    t.string   "cod_dep"
   end
 
   create_table "products_kits", force: :cascade do |t|

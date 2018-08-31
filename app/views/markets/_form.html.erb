@@ -1,0 +1,36 @@
+<%= simple_form_for(@market) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :order_id %>
+    <%= f.input :td %>
+    <%= f.input :fecha %>
+    <%= f.input :turno %>
+    <%= f.input :cod_emp %>
+    <%= f.input :caja %>
+    <%= f.input :serie %>
+    <%= f.input :numero %>
+    <%= f.input :cod_cli %>
+    <%= f.input :ruc %>
+    <%= f.input :placa %>
+    <%= f.input :odometro %>
+    <%= f.input :cod_prod %>
+    <%= f.input :cod_prod %>
+    <%= f.input :cantidad %>
+    <%= f.input :precio %>
+    <%= f.input :importe %>
+    <%= f.input :igv %>
+    <%= f.input :fpago %>
+    <%= f.input :dolar %>
+    <%= f.input :cod_dep %>
+    <%= f.input :cod_lin %>
+    <%= f.input :cod_tar %>
+    <%= f.input :dolares %>
+    <%= f.input :precio1 %>
+    <%= f.input :margen %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

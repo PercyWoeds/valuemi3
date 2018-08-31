@@ -1,5 +1,6 @@
   Mnygo::Application.routes.draw do
 
+  resources :markets
   resources :expenses
   resources :redentions
   resources :redention_details
@@ -171,11 +172,20 @@
     collection { get :rpt_viatico_pdf    }
     collection { get :update_inicial}
   end 
+  
   resources :sellvales  do
     collection { post :import }
     collection { post :import2 }
   end 
+  resources :markets  do
+    collection { post :import }
+    
+  end 
   
+  resources :ajusts  do
+    collection { post :import }
+    
+  end 
     
   resources :gastos  do
     collection { post :import }
