@@ -152,31 +152,7 @@
       <% total_2 = 0 %>
       <% xcod = venta_10.first.cod_prod  %>
       
-      <% for  credito in venta_10  %>
-      
-                    <tr>
-                    <td width = "5%" ><%=  credito.fecha.strftime("%d/%m/%Y")  %></td>
-                    <td width = "5%" ><%=  credito.serie %></td>
-                    <td width = "5%" ><%=  credito.numero  %></td>
-                    <td width = "28%" align ="left"><%= credito.get_cliente(credito.cod_cli)   %></td>
-                    <td width = "8%" align ="left"><%= credito.odometro    %></td>
-                    <td width = "2%" align ="left"><%= credito.cod_prod    %> </td>
-                    <td width = "15%" align ="left"><%= credito.get_product_name(credito.customer_id)    %> </td>
-                    
-                    <td width = "8%" align ="right"><%=  sprintf("%.2f",credito.cantidad.to_s)%></td>
-                    <td width = "8%" align ="right"><%= sprintf("%.2f",credito.precio)   %></td>
-                    <td width = "8%" align ="right"><%= sprintf("%.2f",credito.importe)   %></td>
-                    <td width = "8%" align ="right"><%= sprintf("%.2f",credito.implista.to_s)   %></td>
-
-                    </tr>
-                    
-                    <% total_0 += credito.cantidad %>
-                    <% total_1 = total_1 + credito.importe.to_f %>
-                    <% total_2 = total_2 + credito.implista  %>
-                    <% xcod = credito.cod_prod %>
-                    
-                    
-         <%end %>
+     
          
        
          
