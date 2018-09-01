@@ -306,7 +306,7 @@ end
               puts  row['nom_prod'] 
               puts  a.id 
               
-              a = AjustDetail.new(ajust_id: 85 ,product_id: a.id, quantity: row['sal_04'] )
+              a = AjustDetail.new(ajust_id: 4 ,product_id: a.id, quantity: row['sal_04'] )
               a.save
             
             end 
