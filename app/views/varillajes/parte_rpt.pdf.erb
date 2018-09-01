@@ -123,6 +123,8 @@
      <% venta_7 =  a.get_ventas_contometros_descuento(@fecha) %>
      
       <% venta_descuentos_facturas = a.get_ventas_contometros_tarjeta_factura(@fecha) %>
+      <% venta_descuentos_facturas_efe = a.get_ventas_contometros_descuento_factura_efe(@fecha) %>
+      
      
      <% venta_9 =  a.get_ventas_vale_contado(@fecha) %>
      <% venta_10 = 0 %>
@@ -142,7 +144,7 @@
      
      <% venta_17 =  venta_15 + venta_16  %>
      
-     <% venta_5 =  venta_2 + venta_3 + venta_4 + venta_9  +venta_17 + venta_18 - venta_descuentos_facturas %>
+     <% venta_5 =  venta_2 + venta_3 + venta_4 + venta_9  +venta_17 + venta_18 - venta_descuentos_facturas - venta_descuentos_facturas_efe %>
      
      <% venta_8 =  venta_1 + venta_17 - venta_12 - venta_descuentos_facturas %>
      <% venta_6 =  venta_5 - venta_8 %>
@@ -215,14 +217,14 @@
             <td width= "25%" align= "right">          <%=    sprintf("%.2f",venta_11)  %>                   </td>
             
             <td width = "25%" align ="left">  &#9475;   EFECTIVO SOLES    :  </td>
-            <td width = "25%" align ="right"><%= sprintf("%.2f",venta_2 + venta_17 - venta_19 - venta_20 - venta_4_1 - venta_descuentos_facturas    ) %> </td>
+            <td width = "25%" align ="right"><%= sprintf("%.2f",venta_2 + venta_17 - venta_19 - venta_20 - venta_4_1 - venta_descuentos_facturas -venta_descuentos_facturas_efe   ) %> </td>
             
             
             
             </tr>
             <tr>
             <td width= "25%" align ="left">   DESCUENTO            : </td>
-            <td width= "25%" align ="right">(-)<%= sprintf("%.2f",venta_descuentos_facturas)  %></td>
+            <td width= "25%" align ="right">(-)<%= sprintf("%.2f",venta_descuentos_facturas + venta_descuentos_facturas_efe)  %></td>
             
             <td width = "25%" align ="left">  &#9475;   EFECTIVO DOLAR    :  </td>
             <td width = "25%" align ="right"> </td>
@@ -527,7 +529,7 @@
   
   </table>
   
-  <% diferencia = total_bancos_soles1 - total_gastos - ( venta_9 +venta_2 + venta_17 -venta_19- venta_20 - venta_4_1) + venta_13 - venta_14 + venta_descuentos_facturas %>
+  <% diferencia = total_bancos_soles1 - total_gastos - ( venta_9 +venta_2 + venta_17 -venta_19- venta_20 - venta_4_1) + venta_13 - venta_14 + venta_descuentos_facturas + venta_descuentos_facturas_efe %>
      
   <% if diferencia !=  0%>   
   <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
