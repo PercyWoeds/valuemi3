@@ -730,15 +730,17 @@
                   
                   
                   
-                  if lcSerie.first(2)=="FF"
-                     lcDocumentoId  = 1
-                     lcTipo2 = "6"
-                  else
-                     lcDocumentoId = 3
+                  if boleta.document_id == 2
+                      lcDocumentoId  = boleta.document_id
                      lcTipo2 = "6"
                      lcVventa = lcVventa * -1
                      lcTax = lcTax * -1
                      lcTotal = lcTotal * -1
+                  
+                  else
+                     lcDocumentoId  = boleta.document_id
+                     lcTipo2 = "0"
+                  
                   end 
                   
                 a= TmpFactura.new(document_id: lcDocumentoId ,subtotal: lcVventa , tax: lcTax , total: lcTotal, fecha: lcFecha, serie: lcSerie, numero: lcCode,td: lcTd,ruc: lcRucCliente,name:lcRazonCliente, moneda_id:2,tipo2: lcTipo2)
