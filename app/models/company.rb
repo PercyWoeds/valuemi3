@@ -2335,7 +2335,7 @@
             end 
     
             #ingresos
-           @ing = Purchase.where('date1 <  ? and fecha > ?',"#{fecha1} 00:00:00","2018-08-31 23:59:59")
+           @ing = Purchase.where('date1 <  ? and date1 > ?',"#{fecha1} 00:00:00","2018-08-31 23:59:59")
     
            for ing in @ing    
                 $lcFecha = ing.date1.to_date
