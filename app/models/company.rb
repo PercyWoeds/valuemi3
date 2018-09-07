@@ -2450,7 +2450,7 @@
          #actualiza ajustes de inventarios
          
          
-           @ajuste  = Ajust.where('fecha1 <  ? and fecha > ?',"#{fecha1} 00:00:00","2018-08-31 23:59:59")
+           @ajuste  = Ajust.where('fecha1 <  ? and fecha1 > ?',"#{fecha1} 00:00:00","2018-08-31 23:59:59")
     
            for ajuste  in @ajuste
               @ajustedetail= AjustDetail.where(:ajust_id=>ajuste.id)
