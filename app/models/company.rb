@@ -2297,7 +2297,7 @@
            ##saldo inicial
            ######################################################################3 
     
-           @inv = Inventario.where('fecha < ?',"#{fecha1} 00:00:00")  
+           @inv = Inventario.where('fecha < ? and fecha > ?',"#{fecha1} 00:00:00","2018-08-31 23:59:59")  
     
           
            for inv in @inv       
@@ -2335,7 +2335,7 @@
             end 
     
             #ingresos
-           @ing = Purchase.where('date1 <  ?',"#{fecha1} 00:00:00")
+           @ing = Purchase.where('date1 <  ? and fecha > ?',"#{fecha1} 00:00:00","2018-08-31 23:59:59")
     
            for ing in @ing    
                 $lcFecha = ing.date1.to_date
@@ -2387,7 +2387,7 @@
            end 
     
            #salidas 
-          @sal  = Output.where('fecha <  ?',"#{fecha1} 00:00:00")
+          @sal  = Output.where('fecha <  ? and fecha > ?',"#{fecha1} 00:00:00","2018-08-31 23:59:59")
     
            for sal in @sal     
               @saldetail=  OutputDetail.where(:output_id=>sal.id)
@@ -2416,7 +2416,7 @@
               end 
            end 
                 #ventas
-          @ventas  = Market.where('fecha < ?',"#{fecha1} 00:00:00")
+          @ventas  = Market.where('fecha < ? and fecha > ?',"#{fecha1} 00:00:00","2018-08-31 23:59:59")
           
           
     
@@ -2450,7 +2450,7 @@
          #actualiza ajustes de inventarios
          
          
-           @ajuste  = Ajust.where('fecha1 <  ?',"#{fecha1} 00:00:00")
+           @ajuste  = Ajust.where('fecha1 <  ? and fecha > ?',"#{fecha1} 00:00:00","2018-08-31 23:59:59")
     
            for ajuste  in @ajuste
               @ajustedetail= AjustDetail.where(:ajust_id=>ajuste.id)
@@ -2489,7 +2489,7 @@
        # Varillaje
        
        
-       @varilla = Varillaje.where(["fecha < ? ", "#{fecha1} 00:00:00" ])
+       @varilla = Varillaje.where(["fecha < ? and fecha> ? ", "#{fecha1} 00:00:00","2018-08-31 23:59:59"])
        
        
        for detalle  in @varilla

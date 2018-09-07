@@ -310,6 +310,7 @@ end
   end 
   resources :products_categories   do
     collection { post :import }
+    
 
   end 
 
@@ -960,6 +961,9 @@ end
 
   resources :stocks 
     
+    
+  match 'products/export2/:company_id' => 'products#export2', via: [:get, :post]
+  
   # Products kits
   match 'products_kits/list_items/:company_id' => 'products_kits#list_items', via: [:get, :post]
   match 'products_kits/new/:company_id' => 'products_kits#new', via: [:get, :post]

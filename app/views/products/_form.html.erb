@@ -33,6 +33,20 @@
     </div>
   </div>
 
+<div class="field">
+    <%= f.label :code1, "Codigo Producto 1 (UPC/EAN/ISBN)" %><br />
+    <%= f.text_field :code1 %>
+    <div class="small">
+      Codigo de barras alternativo 1, ingresar aqui.
+    </div>
+  </div>
+  <div class="field">
+    <%= f.label :code2, "Codigo Producto 2 (UPC/EAN/ISBN)" %><br />
+    <%= f.text_field :code2 %>
+    <div class="small">
+      Codigo de barras alternativo 2, ingresar aqui.
+    </div>
+  </div>
   <div class="field">
     <%= f.label :products_category_id %><br />
     <%= f.collection_select :products_category_id, @categories, :id, :category, :prompt => true %>

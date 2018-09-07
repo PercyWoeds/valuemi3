@@ -34,7 +34,13 @@
 <%= link_to 'Nueva Producto', "/products/new/#{@company.id}" %>
 
 <%= link_to "Descargar Excel", products_path(format: "xls") %>
+
+Download:
+
+  <%= link_to "Download as CSV",products_path(format: "csv") %>
   
+  
+   
 </div>
 
 <h2>Importar Archivo  "*.csv"</h2>

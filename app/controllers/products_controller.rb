@@ -52,10 +52,12 @@ class ProductsController < ApplicationController
 
     @company = Company.find_by(user_id: current_user.id)
     @products = @company.get_products2
-    
+    @products_market = Product.where("products_category_id <> 1")
   respond_to do |format|
     format.html
-    format.xls # { send_data @products.to_csv(col_sep: "\t") }
+    format.xls 
+    format.csv { send_data @products.to_csv, filename: "products-#{Date.today}.csv" }
+    
   end
 
   end
@@ -150,6 +152,21 @@ class ProductsController < ApplicationController
     
     if(@product[:tax3] == nil)
       @product[:tax3] = 0
+    end
+    
+    @product[:code] = @product[:code].rjust(13, '0')  
+    
+    if  @product[:code1] == nil 
+      
+      @product[:code1]="0000000000000"
+    else 
+      @product[:code1] = @product[:code1].rjust(13, '0')  
+    end 
+    if    @product[:code2] == nil 
+      @product[:code2]="0000000000000"
+    else 
+    
+      @product[:code2] = @product[:code2].rjust(13, '0')  
     end
     
     if(@company.can_view(current_user))
@@ -379,6 +396,13 @@ def build_pdf_header(pdf)
     #send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
     send_file("app/pdf_output/stocks1.pdf", :type => 'application/pdf', :disposition => 'inline')
   end
+  
+  def export2
+    @product = Product.all
+    
+     send_data @product.to_csv  
+     
+  end 
 
   def client_data_headers
 
@@ -396,7 +420,7 @@ def build_pdf_header(pdf)
 
   private
   def products_params
-    params.require(:product).permit(:code, :name, :category, :cost,:price,:price2,:tax1_name, :tax1,:tax2_name,:tax2, :tax3_name,:tax3 ,:quantity,:reorder,:description,:comments,:company_id,:marca_id,:modelo_id,:products_category_id,:unidad,:ubicacion,:punto)
+    params.require(:product).permit(:code, :name, :category, :cost,:price,:price2,:tax1_name, :tax1,:tax2_name,:tax2, :tax3_name,:tax3 ,:quantity,:reorder,:description,:comments,:company_id,:marca_id,:modelo_id,:products_category_id,:unidad,:ubicacion,:punto,:code1,:code2)
   end
   
 

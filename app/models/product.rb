@@ -3,7 +3,7 @@ class Product < ActiveRecord::Base
   
 
   
-  validates_presence_of :name, :company_id,:products_category_id,:price ,:punto 
+  validates_presence_of :name, :company_id,:products_category_id,:price ,:punto,:code1,:code2  
   validates_numericality_of  :tax1, :tax2, :tax3
   validates_uniqueness_of :code
 
@@ -39,6 +39,17 @@ class Product < ActiveRecord::Base
                   "UBICACION"]
                      
 
+ def self.to_csv
+    attributes = %w{id code code1 code2 name price }
+
+    CSV.generate(headers: true) do |csv|
+      csv << attributes
+
+      all.each do |user|
+        csv << attributes.map{ |attr| user.send(attr) }
+      end
+    end
+  end
 
 def self.matches(field_name, param)
     where("upper(#{field_name}) like ?", "%#{param}%")
@@ -179,8 +190,9 @@ def get_ventaisla_detail_importe(fecha1,fecha2,producto)
       return ret
  end 
 
-  
-  
+
+ 
+
 private
   # ensure that there are no line items referencing this product
   def ensure_not_referenced_by_any_line_item
