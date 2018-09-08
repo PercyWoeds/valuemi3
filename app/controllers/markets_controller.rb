@@ -7,7 +7,7 @@ class MarketsController < ApplicationController
     if params[:search]
         @markets = Market.search(params[:search]).order('fecha DESC').paginate(:page => params[:page], :per_page => 20)
       else
-        @markets = Market.paginate(:page => params[:page], :per_page => 20)
+        @markets = Market.order('fecha DESC').paginate(:page => params[:page], :per_page => 20)
       end
       
   end
