@@ -307,7 +307,10 @@ end
               puts  a.id 
               
               #a = AjustDetail.new(ajust_id: 4 ,product_id: a.id, quantity: row['sal_04'] )
-              a = AjustDetail.new(ajust_id: 4 ,product_id: a.id, cost: row['costo_ult'],  quantity: row['sal_04'] )
+              #a = AjustDetail.new(ajust_id: 4 ,product_id: a.id, cost: row['costo_ult'],  quantity: row['sal_04'] )
+              a = AjustDetail.find_by(ajust_id: 4 ,product_id: a.id)
+              a.cost = row['costo_ult'] 
+              
               a.save
             
             end 
