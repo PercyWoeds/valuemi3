@@ -2450,7 +2450,7 @@
          #actualiza ajustes de inventarios
          
          
-           @ajuste  = Ajust.where('fecha1 <  ? and fecha1 >= ?',"#{fecha1} 00:00:00","2018-08-31 23:59:59")
+           @ajuste  = Ajust.where('fecha1 <  ? and fecha1 >= ?',"#{fecha1} 00:00:00","2018-08-31 00:00:00")
     
            for ajuste  in @ajuste
               @ajustedetail= AjustDetail.where(:ajust_id=>ajuste.id)
@@ -2470,7 +2470,8 @@
                       movdetail.stock_inicial += detail.quantity
                     else
                       movdetail.stock_inicial -= detail.quantity*-1
-                    end     
+                    end 
+                    movdetail.price = detail.cost 
                     
                   end
               
