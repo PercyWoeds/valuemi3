@@ -2297,7 +2297,7 @@
            ##saldo inicial
            ######################################################################3 
     
-           @inv = Inventario.where('fecha < ? and fecha > ?',"#{fecha1} 00:00:00","2018-08-31 23:59:59")  
+           @inv = Inventario.where('fecha < ? and fecha >= ?',"#{fecha1} 00:00:00","2018-08-31 23:59:59")  
     
           
            for inv in @inv       
@@ -2335,7 +2335,7 @@
             end 
     
             #ingresos
-           @ing = Purchase.where('date1 <  ? and date1 > ?',"#{fecha1} 00:00:00","2018-08-31 23:59:59")
+           @ing = Purchase.where('date1 <  ? and date1 >= ?',"#{fecha1} 00:00:00","2018-08-31 23:59:59")
     
            for ing in @ing    
                 $lcFecha = ing.date1.to_date
@@ -2387,7 +2387,7 @@
            end 
     
            #salidas 
-          @sal  = Output.where('fecha <  ? and fecha > ?',"#{fecha1} 00:00:00","2018-08-31 23:59:59")
+          @sal  = Output.where('fecha <  ? and fecha >= ?',"#{fecha1} 00:00:00","2018-08-31 23:59:59")
     
            for sal in @sal     
               @saldetail=  OutputDetail.where(:output_id=>sal.id)
@@ -2464,6 +2464,7 @@
                   if detail.quantity == nil
                   
                     movdetail.stock_inicial += 0   
+                    
                   else
                     if detail.quantity > 0
                       movdetail.stock_inicial += detail.quantity

@@ -175,7 +175,8 @@ class InvoiceGenerator < DocumentGenerator
         $lcDisCli       = @invoice.customer.address2
         $lcProv         = @invoice.customer.city
         $lcDep          = @invoice.customer.state
-        $lcPlaca        =@invoice.description  
+        $lcPlaca        = @invoice.description  
+        $lcGuiaRemision = @invoice.guia 
         
         puts @lg_serie_factura
         puts @lg_serial_id

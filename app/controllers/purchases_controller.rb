@@ -1962,7 +1962,7 @@ def build_pdf_header_rpt48(pdf)
             row << product.document.descripshort
             row << product.documento 
             row << product.date1.strftime("%d/%m/%Y")
-            row << product.date2.strftime("%d/%m/%Y")
+            row << product.date3.strftime("%d/%m/%Y")
             row << product.supplier.name
             row << product.moneda.symbol  
 
