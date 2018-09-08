@@ -162,7 +162,7 @@ class Ajust < ActiveRecord::Base
   end
   
   def get_products    
-    @itemproducts = AjustDetail.find_by_sql(['Select ajust_details.quantity,
+    @itemproducts = AjustDetail.find_by_sql(['Select ajust_details.quantity,ajust_details.cost, 
       products.name,products.id,products.code
     	from ajust_details INNER JOIN products ON ajust_details.product_id = products.id
     	where ajust_details.ajust_id = ?', self.id ])
