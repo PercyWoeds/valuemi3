@@ -16,7 +16,7 @@ class Factura < ActiveRecord::Base
   belongs_to :moneda 
   belongs_to :document
   belongs_to :tipoventa 
-  belongs_to :tarjeta  
+  belongs_to :tarjetum 
 
   has_many   :deliveryship
   has_many   :delivery 
@@ -742,6 +742,15 @@ class Factura < ActiveRecord::Base
     return ret 
    
  end  
+ 
+ def get_nombretarjeta(id)
+    a = Tarjetum.find(id)
+    if a == nil
+        return "No existe"
+    else
+      return a.nombre
+    end 
+ end 
 
   
 end

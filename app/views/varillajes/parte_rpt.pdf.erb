@@ -341,14 +341,16 @@
     <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
     <% total_pago_adelantado = 0 %>
     <%venta_adelantada_parte = a.get_ventas_adelantada(@fecha) %>
+    
     <%  for item in venta_adelantada_parte  %>
        
       <tr>
-            <td width = "25%" align ="left">  &#9475;   VENTAS    :  </td>
-            <td width = "5%" align ="left"> <%= item.code %> </td>
-            <td width = "20%" align ="left"> <%= item.customer.name.lstrip  %> </td>
+            <td width = "10%" align ="left">  &#9475;   VENTAS:  </td>
             
-            <td width = "25%" align ="left">&#9475; <%= item.tarjeta.nombre  %>  </td>
+            <td width = "15%" align ="left"> <%= item.code.strip %> </td>
+            <td width = "25%" align ="left"> <%= item.customer.name.lstrip  %> </td>
+            
+            <td width = "25%" align ="left">&#9475; <%= item.get_nombretarjeta(item.tarjeta_id)  %>  </td>
             <td width = "25%" align ="right"> <%=  sprintf("%.2f",item.total)  %> </td>
       </tr>
       
@@ -357,15 +359,16 @@
   
       <% end %>
       
-      <tr>
+      
+    </table>    
+    <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+    <tr>
             <td width = "50%" align ="left">
             <td width = "25%" align ="left">  &#9475;   TOTALES :  </td>
             <td width = "25%" align ="right"><%=   sprintf("%.2f",total_pago_adelantado)  %>  </td>
         
-      </tr>
-      
-    </table>    
-    
+    </tr>
+    </table>      
      
   <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
   
