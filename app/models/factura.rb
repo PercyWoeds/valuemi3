@@ -2,7 +2,7 @@ class Factura < ActiveRecord::Base
   self.per_page = 20
 
 
-  validates_presence_of :company_id, :customer_id, :code, :user_id,:fecha
+  validates_presence_of :company_id, :customer_id, :code, :user_id,:fecha,:tarjeta_id
 
   validates_uniqueness_of :code
   

@@ -384,7 +384,7 @@ def  get_inicial(fecha1,producto,producto2)
  #venta descuentos 
  def  get_ventas_contometros_descuento_factura_efe(fecha) 
 
-     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and fpago = ?  and td = ?  and tipo = ?" , "#{fecha} 00:00:00","#{fecha} 23:59:59", "1" ,"F","1"])
+     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and fpago = ?  and td = ?  and tipo = ? and implista > 0 " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "1" ,"F","1"])
      ret=0  
      
      if facturas
@@ -398,6 +398,16 @@ def  get_inicial(fecha1,producto,producto2)
     return ret
  
  end 
+ 
+  def  get_ventas_adelantada(fecha) 
+
+     facturas = Factura.where(["fecha >= ? and fecha <= ?  and tipoventa_id = 3 " , "#{fecha} 00:00:00","#{fecha} 23:59:59" ])
+     return facturas 
+ 
+ end 
+ 
+ 
+ 
  
  
  

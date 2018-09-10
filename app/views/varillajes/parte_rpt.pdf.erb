@@ -125,6 +125,7 @@
       <% venta_descuentos_facturas = a.get_ventas_contometros_tarjeta_factura(@fecha) %>
       <% venta_descuentos_facturas_efe = a.get_ventas_contometros_descuento_factura_efe(@fecha) %>
       
+      
      
      <% venta_9 =  a.get_ventas_vale_contado(@fecha) %>
      <% venta_10 = 0 %>
@@ -327,6 +328,39 @@
             <td width = "50%" align ="left">
             <td width = "25%" align ="left">  &#9475;   TOTALES :  </td>
             <td width = "25%" align ="right"><%=   sprintf("%.2f",venta_14+venta_13)  %>  </td>
+        
+      </tr>
+      
+    </table>    
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+  <tr bgcolor="#B4D7F7">
+    <td width="100%"> PAGO ADELANTADO </td>
+  </tr>
+  </table>
+  
+    <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+    <% total_pago_adelantado = 0 %>
+    <%venta_adelantada_parte = a.get_ventas_adelantada(@fecha) %>
+    <%  for item in venta_adelantada_parte  %>
+       
+      <tr>
+            <td width = "25%" align ="left">  &#9475;   VENTAS    :  </td>
+            <td width = "5%" align ="left"> <%= item.code %> </td>
+            <td width = "20%" align ="left"> <%= item.customer.name.lstrip  %> </td>
+            
+            <td width = "25%" align ="left">&#9475; <%= item.tarjeta.nombre  %>  </td>
+            <td width = "25%" align ="right"> <%=  sprintf("%.2f",item.total)  %> </td>
+      </tr>
+      
+      
+      <% total_pago_adelantado += item.total   %>
+  
+      <% end %>
+      
+      <tr>
+            <td width = "50%" align ="left">
+            <td width = "25%" align ="left">  &#9475;   TOTALES :  </td>
+            <td width = "25%" align ="right"><%=   sprintf("%.2f",total_pago_adelantado)  %>  </td>
         
       </tr>
       
