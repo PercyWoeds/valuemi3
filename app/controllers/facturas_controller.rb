@@ -1877,7 +1877,6 @@ def newfactura2
       total_dolares = 0 
       precio_ultimo = 0
        for  product in @facturas_rpt
-       
          
            
           if lcCliente == product.customer_id
@@ -1908,6 +1907,7 @@ def newfactura2
             end 
             row << sprintf("%.2f",(precio_ultimo.round(2)).to_s)            
             row << product.get_cantidad
+            @total_cliente_qty    +=product.get_cantidad
             
             row << product.moneda.symbol  
 
@@ -1960,7 +1960,7 @@ def newfactura2
                 end 
                 
                 @total_cliente_soles  +=product.balance
-                @total_cliente_qty    +=product.get_cantidad
+                
                 
             end
             
@@ -2036,6 +2036,7 @@ def newfactura2
             row << sprintf("%.2f",(precio_ultimo.round(2)).to_s)            
             row << product.get_cantidad
             row << product.moneda.symbol  
+            @total_cliente_qty    +=product.get_cantidad
             
               if product.moneda_id == 1 
                 if product.document_id   == 2
