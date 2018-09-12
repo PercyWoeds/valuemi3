@@ -144,7 +144,7 @@ class Invoice < ActiveRecord::Base
         begin
           product = Product.find(id.to_i)
           
-          new_invoice_product = InvoiceProduct.new(:invoice_id => self.id, :product_id => product.id, :price => price.to_f, :quantity => quantity.to_i, :discount => discount.to_f, :total => total.to_f, :punto => puntos.to_i)
+          new_invoice_product = InvoiceProduct.new(:invoice_id => self.id, :product_id => product.id,:price => price.to_f, :quantity => quantity.to_i, :discount => discount.to_f, :total => total.to_f, :punto => puntos.to_i)
           new_invoice_product.save
           
           
@@ -180,7 +180,7 @@ class Invoice < ActiveRecord::Base
     return "#{self.code} - #{self.customer.name}"
   end
   def get_products    
-    @itemproducts = InvoiceProduct.find_by_sql(['Select invoice_products.price,invoice_products.quantity,invoice_products.discount,invoice_products.total,products.name,invoice_products.punto  from invoice_products INNER JOIN products ON invoice_products.product_id = products.id where invoice_products.invoice_id = ?', self.id ])
+    @itemproducts = InvoiceProduct.find_by_sql(['Select invoice_products.price,invoice_products.price as price_discount,invoice_products.quantity,invoice_products.discount,invoice_products.total,products.name,invoice_products.punto  from invoice_products INNER JOIN products ON invoice_products.product_id = products.id where invoice_products.invoice_id = ?', self.id ])
     puts self.id
 
     return @itemproducts
