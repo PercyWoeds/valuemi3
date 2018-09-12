@@ -1869,6 +1869,7 @@ def newfactura2
       @total_original_dolares =0
       @total_cliente_soles = 0
       @total_cliente_dolar = 0
+      @total_cliente_cantidad = 0
       
       @totalvencido_soles = 0
       @totalvencido_dolar = 0
@@ -1959,6 +1960,8 @@ def newfactura2
                 end 
                 
                 @total_cliente_soles  +=product.balance
+                @total_cliente_qty    +=product.get_cantidad
+                
             end
             
             
@@ -1989,7 +1992,7 @@ def newfactura2
             row << ""
             row << "TOTALES POR CLIENTE=> "            
             row << ""
-            row << " "
+            row << sprintf("%.2f",@total_cliente_qty.to_s)
             row << " "
             row << " "
             row << " "
@@ -2005,7 +2008,7 @@ def newfactura2
             
             @total_cliente_soles = 0
             @total_cliente_dolar = 0    
-          
+            @total_cliente_qty   = 0    
            
             table_content << row
 
@@ -2118,6 +2121,7 @@ def newfactura2
                 end
             
             @totalvencido_soles += product.balance
+            @total_cliente_qty    +=product.get_cantidad
             
             row =[]
             row << ""
@@ -2128,7 +2132,7 @@ def newfactura2
             row << ""  
             row << "TOTALES POR CLIENTE=> "            
             row << ""
-            row << " "
+            row << sprintf("%.2f",@total_cliente_qty.to_s)
             row << " "
             row << " "
             row << " "
