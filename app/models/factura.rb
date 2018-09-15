@@ -3,7 +3,6 @@ class Factura < ActiveRecord::Base
 
 
   validates_presence_of :company_id, :customer_id, :code, :user_id,:fecha
-
   validates_uniqueness_of :code
   
   

@@ -231,6 +231,17 @@
 <br />
 
 <%= hr() %>
+<% if @invoice.guia != nil %>
+  <div>
+    <b>Guia :</b>
+    <br />
+    <br />
+    <%= format_text(@invoice.guia) %>
+  </div>
+  <%= hr() %>
+<% end %>
+
+
 
 <% if @invoice.description != "" %>
   <div>
