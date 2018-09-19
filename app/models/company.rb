@@ -3951,6 +3951,7 @@
        end 
        
        
+       
        # Facturas todos pendientes
        def  get_credito_out_fecha2(fecha1,fecha2,tipo) 
          

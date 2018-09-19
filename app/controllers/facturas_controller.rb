@@ -83,7 +83,6 @@ def reportes4
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]    
     
-    
     @contado_rpt = @company.get_parte_4(@fecha1,@fecha2)
     
     
