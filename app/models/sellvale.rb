@@ -109,7 +109,7 @@ def self.import2(file2)
   
   def get_vale_facturado
       
-      a = FacturaDetail.find_by(sellvale_id: self.id)
+      a = FacturaDetail.find_by(sellvale_id: self.id).last 
       if a 
          begin 
         b = Factura.find(a.factura_id)
