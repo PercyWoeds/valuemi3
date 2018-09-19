@@ -108,11 +108,22 @@ def self.import2(file2)
   end       
   
   def get_vale_facturado
+      puts self.id
       
-      a = FacturaDetail.find_by(sellvale_id: self.id).last 
-      if a 
+      
+      a = FacturaDetail.find_by_sql(["Select facturas.*
+      from facturas 
+      INNER JOIN factura_details  
+      ON  facturas.id = factura_details.factura_id 
+      where factura_details.sellvale_id = ?",self.id])
+      
+      if a
          begin 
-        b = Factura.find(a.factura_id)
+         puts "factura id "
+         puts a.first.factura_id
+         puts "a"
+         b = Factura.find(a.factura_id)
+         
         if b 
             return b.code  
         else

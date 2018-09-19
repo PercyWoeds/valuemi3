@@ -127,7 +127,7 @@
       
       
      
-     <% venta_9 =  a.get_ventas_vale_contado(@fecha) %>
+     <% venta_9 =  a.get_ventas_vale_contado(@fecha)  %>
      <% venta_10 = 0 %>
      
      <% venta_12 =  a.get_afericion_total_dia(@fecha) %>
@@ -190,7 +190,7 @@
             <td width= "25%" >                                 (-)</td>
             
             <td width = "25%" align ="left">  &#9475;   VALE CONTADO        :  </td>
-            <td width = "25%" align ="right"> <%= sprintf("%.2f",venta_9)   %></td>
+            <td width = "25%" align ="right"> <%= sprintf("%.2f",venta_9 - venta_descuentos_facturas -venta_descuentos_facturas_efe)    %></td>
             
             </tr>
             
@@ -218,7 +218,7 @@
             <td width= "25%" align= "right">          <%=    sprintf("%.2f",venta_11)  %>                   </td>
             
             <td width = "25%" align ="left">  &#9475;   EFECTIVO SOLES    :  </td>
-            <td width = "25%" align ="right"><%= sprintf("%.2f",venta_2 + venta_17 - venta_19 - venta_20 - venta_4_1 - venta_descuentos_facturas -venta_descuentos_facturas_efe   ) %> </td>
+            <td width = "25%" align ="right"><%= sprintf("%.2f",venta_2 + venta_17 - venta_19 - venta_20 - venta_4_1    ) %> </td>
             
             
             
