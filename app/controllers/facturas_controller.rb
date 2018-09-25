@@ -1339,7 +1339,7 @@ def reportes31
     @invoice = Factura.find(params[:id])
     @company = Company.find(1)
     @customer = @invoice.customer
-    @customers = @company.get_customers()
+    @customers = @company.get_customers_all()
     
     @tipodocumento = @invoice.document 
     

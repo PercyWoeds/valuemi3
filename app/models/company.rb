@@ -1983,6 +1983,12 @@
           customers = Customer.where(company_id: self.id,tipo:"3").order(:name)
           return customers
         end
+        def get_customers_all()
+          customers = Customer.where(company_id: self.id).order(:name)
+          return customers
+        end
+        
+        
         def get_customer_name(customer_id )
           customers = Customer.find_by(company_id: self.id,id:customer_id)
 
