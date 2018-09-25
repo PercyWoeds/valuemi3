@@ -218,7 +218,7 @@
             <td width= "25%" align= "right">          <%=    sprintf("%.2f",venta_11)  %>                   </td>
             
             <td width = "25%" align ="left">  &#9475;   EFECTIVO SOLES    :  </td>
-            <td width = "25%" align ="right"><%= sprintf("%.2f",venta_2 + venta_17 - venta_19 - venta_20 - venta_4_1  - venta_12  ) %> </td>
+            <td width = "25%" align ="right"><%= sprintf("%.2f",venta_2 + venta_17 - venta_19 - venta_20 - venta_4_1  ) %> </td>
             
             
             
@@ -566,7 +566,7 @@
   
   </table>
   
-  <% diferencia = total_bancos_soles1 - total_gastos - ( venta_9 +venta_2 + venta_17 -venta_19- venta_20 - venta_4_1) + venta_13 - venta_14 + venta_descuentos_facturas + venta_descuentos_facturas_efe %>
+  <% diferencia = total_bancos_soles1 - total_gastos - ( venta_9 +venta_2 + venta_17 -venta_19- venta_20 - venta_4_1) + venta_13 - venta_14 + venta_descuentos_facturas + venta_descuentos_facturas_efe - venta_12 %>
      
   <% if diferencia !=  0%>   
   <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>

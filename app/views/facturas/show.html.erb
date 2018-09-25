@@ -256,48 +256,28 @@
 <% else%>
 
 <% if @invoice.processed  != "1" %>
-<p> </p>  
-<%= form_tag(newfactura2_facturas_path,  :method => "get") do %>
 
-<div><h4>Seleccionar vales de cliente </h4></div>
-
- 
-      <label for="ac_customer" class="bold">Cliente*</label><br />
-      <input type="text" name="ac_customer" id="ac_customer" value="<% if @ac_customer %><%= @ac_customer %><% end %>" />
-      
-      
-      <div class="small">
-        Ingrese una termino de busqueda para encontrar un cliente.
-      </div>
-      <br />
-
-      <div class="small">
-        <strong>Seleccionar cliente:</strong>
-        <span id="selected_customer"><% if @ac_customer %><%= @ac_customer %><% else %><!-- i --><% end %></span>
-        <strong>Codigo Cliente :</strong>
-        <span id="ac_customer_id"><% if @ac_customer %><%= @ac_customer %><% else %><!-- i --><% end %></span>
-        
-      </div>
-    
-  <div class="actions">
-   
+<%= form_tag(newfactura2_facturas_path, method: "get") do %>
+  <%= select_tag(:customer_id,options_from_collection_for_select(@customers,'id','name') ) %>
+  <%= hidden_field_tag "factura_id" , @invoice.id %>
   
   
-  <br> 
- <%= hidden_field_tag :factura_id,  @invoice.id %>
- <%= hidden_field_tag :customer_id, "ac_customer_id" %>
- 
- <div class="button">
- <%= submit_tag "Agregar Vales", :name => "print" %>
-  </div> 
-  </div>
- 
-  
+  <%= submit_tag("Agregar Vale") %>
 <% end %>
 
-   
-  
+
+
+ <div class="field">
     
+ </div>
+ <div class= "button">
+
+
+ 
+ </div>
+  
+ 
+
 <% end %>
 
  

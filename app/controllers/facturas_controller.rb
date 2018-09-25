@@ -1623,11 +1623,10 @@ def newfactura2
     
     @company = Company.find(1)
     @factura = Factura.find(params[:factura_id])
-    @customer = Customer.find(params[:ac_customer_id]) 
+    @customer = Customer.find(params[:customer_id]) 
+    @customer_name = @customer.name
+    @customer_code = @customer.account 
     
-    
-    
-  
     @detalleitems =  Sellvale.where(processed:"0",cod_cli: @customer.account,td:"N").order(:fecha)
     @factura_detail = Factura.new
 
