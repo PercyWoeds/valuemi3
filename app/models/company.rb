@@ -23,7 +23,7 @@
         has_many :ajusts 
         
         
-         def get_facturas_day_cliente(fecha1,fecha2,cliente)
+        def get_facturas_day_cliente(fecha1,fecha2,cliente)
          
           @facturas = Factura.where(["total <> 0  and  company_id = ? AND fecha >= ? and fecha<= ? and customer_id = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", cliente ]).order(:customer_id,:moneda_id,:fecha)
           return @facturas

@@ -1337,8 +1337,10 @@ def reportes31
   # GET /invoices/1.xml
   def show
     @invoice = Factura.find(params[:id])
-    
+    @company = Company.find(1)
     @customer = @invoice.customer
+    @customers = @company.get_customers()
+    
     @tipodocumento = @invoice.document 
     
     if @invoice.descuento == "1"
@@ -1587,18 +1589,43 @@ BCP Cuenta Recaudadora Moneda Nacional : 191-2264838-0-49"
     @invoice[:user_id] = getUserId()
   end
   
+  def new3
+      
+    @pagetitle = "Nueva factura"
+    @action_txt = "Create"
+    $lcAction="Factura"
+    
+    @invoice = Factura.new
+    @invoice[:code] = "#{generate_guid3()}"
+    @invoice[:processed] = false
+    
+    
+    @company = Company.find(params[:company_id])
+    @invoice.company_id = @company.id
+    @customers = @company.get_customers() 
+    
+    @locations = @company.get_locations()
+    @divisions = @company.get_divisions()
+    @payments = @company.get_payments()
+    @services = @company.get_services()
+    @deliveryships = @invoice.my_deliverys 
+    @tipofacturas = @company.get_tipofacturas() 
+    @monedas = @company.get_monedas()
+    @tipodocumento = @company.get_documents()
+    @tipoventas = Tipoventum.all 
+    @ac_user = getUsername()
+    @invoice[:user_id] = getUserId()
+  end
+  
+  
+  
 def newfactura2
     
     @company = Company.find(1)
     @factura = Factura.find(params[:factura_id])
-    @customer = Customer.find(@factura.customer_id) 
+    @customer = Customer.find(params[:ac_customer_id]) 
     
     
-    $lcContratoId = @customer.id
-    $lcCode  = @customer.account
-    $lcNameCode = @customer.name 
-  
-    $lcFacturaId= @factura.id 
     
   
     @detalleitems =  Sellvale.where(processed:"0",cod_cli: @customer.account,td:"N").order(:fecha)
@@ -2720,16 +2747,20 @@ def newfactura2
 
     @facturas_rpt = @company.get_facturas_day_cliente(@fecha1,@fecha2,@cliente)  
 
-
-    Prawn::Document.generate("app/pdf_output/rpt_factura.pdf") do |pdf|
-        pdf.font "Helvetica"
-        pdf = build_pdf_header_rpt(pdf)
-        pdf = build_pdf_body_rpt(pdf)
-        build_pdf_footer_rpt(pdf)
-        $lcFileName =  "app/pdf_output/rpt_factura_all.pdf"              
-    end     
-    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
-    send_file("app/pdf_output/rpt_factura.pdf", :type => 'application/pdf', :disposition => 'inline')
+    if @facturas_rpt != nil 
+    
+        Prawn::Document.generate("app/pdf_output/rpt_factura.pdf") do |pdf|
+            pdf.font "Helvetica"
+            pdf = build_pdf_header_rpt(pdf)
+            pdf = build_pdf_body_rpt(pdf)
+            build_pdf_footer_rpt(pdf)
+            $lcFileName =  "app/pdf_output/rpt_factura_all.pdf"              
+        end     
+        $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
+        send_file("app/pdf_output/rpt_factura.pdf", :type => 'application/pdf', :disposition => 'inline')
+    
+    end 
+    
   end
 
 
@@ -3487,6 +3518,48 @@ def salidas(pdf)
       else render action: "index"
     end
   end
+
+def factura3 
+  
+    @company=Company.find(1)          
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]    
+    @cliente = params[:cod_cli]    
+    
+    @customer = Customer.find_by(account: params[:cod_cli]  ) 
+    @invoice = Factura.new
+    @invoice[:code] = "#{generate_guid3()}"
+    @invoice[:processed] = false
+    
+    
+    @invoice.company_id = @company.id
+    
+    @locations = @company.get_locations()
+    @divisions = @company.get_divisions()
+    @payments = @company.get_payments()
+    @services = @company.get_services()
+    @deliveryships = @invoice.my_deliverys 
+    @tipofacturas = @company.get_tipofacturas() 
+    @monedas = @company.get_monedas()
+    @tipodocumento = @company.get_documents()
+    @tipoventas = Tipoventum.all 
+    @ac_user = getUsername()
+    @invoice[:user_id] = getUserId()
+    
+    
+   
+    case params[:next]
+      when "Continuar" then 
+        begin 
+            
+            @detalleitems =  Sellvale.where(processed:"0",cod_cli: @customer.account,td:"N").order(:fecha)
+            @factura_detail = Factura.new
+        end   
+        
+      else render action: "index"
+    end
+  end
+
    
   
       

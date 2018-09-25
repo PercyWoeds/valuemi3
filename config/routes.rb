@@ -99,6 +99,7 @@
   end
   
   resources :facturas do 
+    collection { get :newfactura2}
     collection { get :reportes}
     collection { get :reportes2}
     collection { get :reportes3}
@@ -138,7 +139,7 @@
     collection { get :rpt_ccobrar12_all   }
     collection { get :rpt_purchase_all   }
     collection { get :rpt_pago_adelantado   }
-    
+        collection { get :factura3 }
   end 
     
   
@@ -640,6 +641,8 @@ end
   
   match 'facturas/new/:company_id' => 'facturas#new', via: [:get, :post]
   match 'facturas/new2/:company_id' => 'facturas#new2', via: [:get, :post]
+  match 'facturas/new3/:company_id' => 'facturas#new3', via: [:get, :post]
+  
   match 'facturas/export/:company_id' => 'facturas#export', via: [:get, :post]
   match 'facturas/export2/:company_id' => 'facturas#export2', via: [:get, :post]
   match 'facturas/export3/:company_id' => 'facturas#export3', via: [:get, :post]
@@ -662,7 +665,7 @@ end
   match 'facturas/rpt_redencion_1/:company_id' => 'facturas#rpt_redencion_1', via: [:get, :post]
   match 'facturas/rpt_redencion_2/:company_id' => 'facturas#rpt_redencion_2', via: [:get, :post]
   
-  match 'facturas/newfactura2/:factura_id' => 'facturas#newfactura2', via: [:get, :post]
+  match 'facturas/newfactura2/:factura_id/:customer_id' => 'facturas#newfactura2', via: [:get, :post]
   
   #match 'serviceorders/rpt_serviceorder_all_pdf/:id' => 'serviceorders#rpt_serviceorder_all_pdf', via: [:get, :post]
 

@@ -1,0 +1,188 @@
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %> &raquo;
+  <%= link_to "Invoices", "/companies/facturas/#{@company.id}" %>
+</div>
+
+<h1>
+  <%= image_tag("reports_48.png", :class => "vmiddle") %>
+  Nuevo Documento 
+</h1>
+
+<p>
+  Para crear una nuevo documento, por favor llenar el siguiente formulario. Los campos marcados con <strong>*</strong> son obligatorios
+  
+</p>
+
+<%= render 'layouts/charts' %>
+
+
+  <%= form_for(@invoice) do |f| %>
+    <h4>
+       Informacion Documento 
+    </h4>
+
+    <div class="field">
+      
+    <div class="field">
+      <%= f.label :document_id,"Documento :" %><br />
+      <%= f.select :document_id,options_from_collection_for_select(@tipodocumento,'id','description'),  {style: "width: 140px" } %>
+    </div>
+
+      <div class="field">
+      <%= f.label :tipo , "Factura :", :class => "bold" %><br />
+      <%= f.select :tipo, options_from_collection_for_select(@tipofacturas,'id','descrip') %>
+      </div>
+      
+       <div class="field">
+      <%= f.label :tipoventa_id,"Tipo Venta  " %><br />
+      <%= f.select :tipoventa_id,options_from_collection_for_select(@tipoventas,'id','nombre') %>
+    </div>
+
+      <div class="field">
+      <%= f.label :fecha , "Fecha *", :class => "bold" %><br />
+
+      <% if @current_user.level = "admin" %>
+        <%= f.text_field :fecha, value: Time.zone.now.strftime("%d/%m/%Y") %>
+      <% else %>
+        <%= f.text_field :fecha, value: Time.zone.now.strftime("%d/%m/%Y") %>
+      <% end %>
+      </div>
+
+    <div class="field">
+      <%= f.label :location_id ,"Local"%><br />
+      <%= f.select :location_id, options_from_collection_for_select(@locations,'id','name') %>    
+    </div>
+
+    <div class="field">
+      <%= f.label :division_id %><br />
+      <%= f.select :division_id,options_from_collection_for_select(@divisions,'id','name') %>
+    </div>
+    <%= hr() %>
+    
+
+      <label for="ac_customer" class="bold">Cliente*</label><br />
+      <input type="text" name="ac_customer" id="ac_customer" value="<% if @ac_customer %><%= @ac_customer %><% end %>" />
+      
+      
+      <div class="small">
+        Ingrese una termino de busqueda para encontrar un cliente.
+      </div>
+      <br />
+
+      <div class="small">
+        <strong>Seleccionar cliente:</strong>
+        <span id="selected_customer"><% if @ac_customer %><%= @ac_customer %><% else %><!-- i --><% end %></span>
+      </div>
+     </div>
+
+     <div class="field">
+      <%= f.label :payment_id,"Forma de Pago " %><br />
+      <%= f.select :payment_id,options_from_collection_for_select(@payments,'id','descrip') %>
+    </div>
+  
+    <%= hr() %>
+        
+
+    <div class="field">
+      <%= f.label :code, "Code*", :class => "bold"  %><br />
+      
+      <%= f.text_field :code, :onclick => "$(this).select();" %>
+      
+    </div>
+
+      <div class="field">
+      <%= f.label :moneda_id ,"  "%><br />
+      <%= f.select :moneda_id, options_from_collection_for_select(@monedas,'id','description') %>
+    </div>
+
+     
+    
+    <%= hr() %>
+  
+    <div class="field">
+      <%= f.check_box :processed %>
+      <%= f.label :processed, "Factura pagada?", :class => "bold" %>
+      <div class="small">
+        Marks wether or not this invoice has been payed and we can deduct the product quantities and count it towards the month's total.
+      </div>
+    </div>
+  
+  
+    <div class="field">
+      <%= f.check_box :return %>
+      <%= f.label :return, :class => "bold" %>
+      <div class="small">
+        Is it a return order?
+      </div>
+    </div>
+    <div class="field">
+      <%= f.label :guia %><br />
+      <%= f.text_field :guia %>
+    </div>  
+      
+    
+    
+    <div class="field">
+      <%= f.label :description %><br />
+      <%= f.text_field :description %>
+    </div>  
+      
+    <%= hr() %>
+
+    <div class="field">
+      <label for="ac_user" class="bold">Seller*</label><br />
+      <input type="text" name="ac_user" id="ac_user" value="<% if @ac_user %><%= @ac_user %><% end %>" />
+
+      <div class="small">
+        Enter a search term to find a user.
+      </div>
+      <br />
+
+      <div class="small">
+        <strong>Selected seller:</strong>
+        <span id="selected_seller"><% if @ac_user %><%= @ac_user %><% else %><!-- i --><% end %></span>
+      </div>
+    </div>
+  
+    <%= hr() %>
+  
+  
+    <div class="actions">
+      <input type="hidden" name="items" id="items" value="<% if @products_lines %><%= @products_lines %><% end %>" />
+      <input type="hidden" name="items2" id="items2" value="<% if @guias_lines %><%= @guias_lines %><% end %>" />
+      
+      <%= f.hidden_field :user_id, :id => "ac_user_id" %>
+      <%= f.hidden_field :customer_id, :id => "ac_customer_id" %>
+      <%= f.hidden_field :company_id %>      
+      <%= f.submit %>
+    </div>
+    
+    <div class="small">
+      Once you're done adding products, don't forget to <strong><%= @action_txt %></strong> your invoice.
+    </div>
+  <% end %>
+
+ 
+  
+  
+<%= form_tag(factura3_facturas_path, :method => "get") do %>
+
+
+
+    <div class="field">
+        <input type="date" name="fecha1" value="2018-03-19" style = "width: 150px" >
+        <input type="date" name="fecha2" value="2018-04-21" style = "width: 150px" >
+    </div>
+	
+  <div class="field">
+    <%= select_tag(:cod_cli,options_from_collection_for_select(@customers,'account','name') ) %>
+  </div>
+<%= submit_tag "Continuar", :name => "next" %>
+<%= submit_tag "Cancelar", :name => "next" %>
+<br> 
+
+<% end %>
+</html>
+<%= hr() %>
+
