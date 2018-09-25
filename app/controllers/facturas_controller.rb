@@ -2860,6 +2860,8 @@ def newfactura2
   end
  def discontinue
     
+    @factura_id = params[:factura_id]
+    
     @facturasselect = Sellvale.find(params[:products_ids])
 
     for item in @facturasselect
@@ -2875,17 +2877,19 @@ def newfactura2
           preciolista0 = item.implista / item.cantidad 
           preciolista  = preciolista0.round(2)
           
-          new_invoice_detail = FacturaDetail.new(factura_id: $lcFacturaId  ,sellvale_id: item.id , product_id: b.id ,price:preciolista, price_discount: precio_descto, quantity: item.cantidad,total: item.importe)
+          new_invoice_detail = FacturaDetail.new(factura_id: @factura_id  ,sellvale_id: item.id , product_id: b.id ,price:preciolista, price_discount: precio_descto, quantity: item.cantidad,total: item.importe)
           
           if new_invoice_detail.save
+              
             a= Sellvale.find(item.id)
             a.processed ='1'
             a.save
+            
           end 
         end              
     end
     
-    @invoice = Factura.find($lcFacturaId)
+    @invoice = Factura.find(@factura_id)
     
     @invoice[:total] = @invoice.get_subtotal2.round(2)
     

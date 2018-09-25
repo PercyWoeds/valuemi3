@@ -94,7 +94,7 @@
     </thead>
     <tbody>
       
-      <%=  form_tag discontinue_facturas_path,method: :post  %>
+      <%=  form_tag discontinue_facturas_path(factura_id: @factura.id),method: :post  %>
       
       <% for item in @detalleitems %>
         <tr>
