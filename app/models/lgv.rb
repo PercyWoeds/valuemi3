@@ -223,7 +223,7 @@ def get_total_inicial(items)
     return "#{self.code} "
   end
   def get_lgvs
-      @lgvs = LgvDetail.where(:lgv_id=> self.id)
+      @lgvs = LgvDetail.where(:lgv_id=> self.id).order("created_at")
   end
   def get_lgvs2
       @lgvs = LgvDelivery.where(:lgv_id=> self.id)
