@@ -392,7 +392,7 @@ class LgvsController < ApplicationController
         table_content3 << row
         
         row = []
-        row  <<  "REEMBOLSO: "
+        row  <<  "SALDO: "
         row  << ""
         row  <<  $lcSaldo
         table_content3 << row
