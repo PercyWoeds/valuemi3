@@ -647,7 +647,7 @@ class LgvsController < ApplicationController
   end
   # Autocomplete for compro
   def ac_compros
-    @compros = Compro.where(["company_id = ? AND code LIKE ?", params[:company_id], "%" + params[:q] + "%"])
+    @compros = Compro.where(["company_id = ? AND code iLIKE ?", params[:company_id], "%" + params[:q] + "%"])
     
     render :layout => false
   end
@@ -745,6 +745,7 @@ class LgvsController < ApplicationController
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
+    @documentos = @company.get_documents()
     
      @transports = @company.get_transports()
      @compros = Compro.all 
@@ -790,7 +791,7 @@ class LgvsController < ApplicationController
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
     @gastos = Gasto.all 
-    
+    @documentos = @company.get_documents()
     begin
       @lgv[:inicial] = 0
     rescue
