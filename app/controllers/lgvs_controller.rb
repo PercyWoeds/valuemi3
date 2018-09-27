@@ -356,7 +356,7 @@ class LgvsController < ApplicationController
      $lcDevuelto  = sprintf("%.2f",@lgv.devuelto.round(2).to_s)  
      $lcReembolso = sprintf("%.2f",@lgv.reembolso.round(2).to_s)  
      $lcDescuento = sprintf("%.2f",@lgv.descuento.round(2).to_s)  
-
+     $lcSaldo = sprintf("%.2f",@lgv.saldo.round(2).to_s)  
      
       
       headers3 = []
@@ -391,6 +391,11 @@ class LgvsController < ApplicationController
         row  <<  $lcReembolso
         table_content3 << row
         
+        row = []
+        row  <<  "REEMBOLSO: "
+        row  << ""
+        row  <<  $lcSaldo
+        table_content3 << row
         
         
         result = pdf.table table_content3, {
