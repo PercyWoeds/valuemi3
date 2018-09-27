@@ -3,10 +3,10 @@
     <thead>
       <tr>
         <th class="bordered_right bordered_bottom" style="width: 100px;">
-          Factura
+          Codigo
         </th>
         <th class="bordered_right bordered_bottom" style="width: 350px;">
-          Cliente
+          Numero
         </th>
         <th class="bordered_right bordered_bottom">
           Total
@@ -28,7 +28,7 @@
       <% for compro in @compros %>
         <tr>
           <td class="bordered_right bordered_bottom">
-            <%= link_to compro.numero, compro, :title => "Ir a factura" %>
+            <%= link_to compro.code, compro, :title => "Ir a factura" %>
           </td>
           <td class="bordered_right bordered_bottom">
             <%= compro.tranportorder.code  %>

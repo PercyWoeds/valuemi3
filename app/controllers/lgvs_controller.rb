@@ -733,7 +733,7 @@ class LgvsController < ApplicationController
   
   
   def new
-    @pagetitle = "New lgv"
+    @pagetitle = "Nueva LGV."
     @action_txt = "Create"
     
     @lgv = Lgv.new

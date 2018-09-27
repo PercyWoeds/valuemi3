@@ -13,19 +13,19 @@ class ComprosController < ApplicationController
 
   # Show compros for a company
   def list_compros
+    
     @company = Company.find(params[:company_id])
-    @pagetitle = "#{@company.name} - compros"
-  
-    if(@company.can_view(current_user))
+    @pagetitle = "#{@company.name} - Viaticos"
+    @filters_display = "block"
+    
+    
      if(params[:search] and params[:search] != "")                     
         
         @compros = Compro.where(["company_id = ? and (detalle  LIKE ? OR code LIKE ?)", @company.id,"%" + params[:search] + "%", "%" + params[:search] + "%"]).order('code').paginate(:page => params[:page]) 
       else
-        @compros = Compro.where(company_id: @company.id).order('code').paginate(:page => params[:page])
+        @compros = Compro.where(company_id: @company.id).order('fecha DESC').paginate(:page => params[:page])
       end
-    else
-      errPerms()
-    end
+    
   end
   
   # GET /compros
@@ -33,7 +33,7 @@ class ComprosController < ApplicationController
   def index
     @pagetitle = "compros"
     
-    @companies = Company.find(:all, :conditions => {:user_id => getUserId()}, :order => "name")
+    @companies = Company.where(user_id: current_user.id).order("name")
     @path = 'compros'
   end
 
