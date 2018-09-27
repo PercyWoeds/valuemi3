@@ -203,7 +203,8 @@ class Factura < ActiveRecord::Base
         price = parts[2] 
         discount = parts[3]
         
-        total = price.to_f * quantity.to_i
+        total0 = price.to_f * quantity.to_i
+        total = total0.round(2)
         total -= total * (discount.to_f / 100)
         
         begin
