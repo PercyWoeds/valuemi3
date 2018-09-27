@@ -234,7 +234,9 @@ module ApplicationHelper
     return correlative_number
     
   end
- 
+  
+  
+  
   # Regresa extensiones para imagenes
   def imgTypes()
     return ["gif", "jpg", "jpeg", "png"]

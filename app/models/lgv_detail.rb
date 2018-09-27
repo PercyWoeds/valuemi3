@@ -4,4 +4,5 @@ class LgvDetail < ActiveRecord::Base
   
     belongs_to :lgv 
     belongs_to :gasto
+    belongs_to :supplier 
 end

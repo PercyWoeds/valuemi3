@@ -164,7 +164,7 @@
                                               
   <form method="get" action="/lgvs" onsubmit="addItemToLgv2(); return false;">
 
-    <strong>Documento :</strong><br />
+        <strong>Documento :</strong><br />
           <input type="text" name="ac_item_compro" id="ac_item_compro" value="" />
           <div class="small">
             Ingrese un termino de busqueda para encontrar un documento 
@@ -208,6 +208,12 @@
     </div>
     
       <br />
+      
+    <br />
+      <%= select_tag :ac_supplier_id, options_from_collection_for_select(@proveedor,'id','name')%>  
+    <br />
+    
+     
     <td>
       <strong> Fecha :</strong><br />
       <input type="date" name="ac_item_fecha" id="ac_item_fecha" min="2017-01-01"><br> 
@@ -215,6 +221,8 @@
     
      <br />
     <td>
+      
+      
       <strong> TD :</strong><br />
       <input type="text" name="ac_item_td" id ="ac_item_td" value="" />
       <div class="small">
@@ -268,7 +276,6 @@
 
 <script type="text/javascript">
   $(document).ready(function() {
-    
     
     
     

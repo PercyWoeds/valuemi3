@@ -420,16 +420,7 @@ class LgvsController < ApplicationController
         pdf.text "" 
         pdf.text "OBSERVACIONES : #{@lgv.comments}", :size => 8, :spacing => 4
 
-        
-       data =[ ["Procesado Asis.Finanzas ","V.B.Contador","V.B.Administracion ","V.B. Gerente ."],
-               [":",":",":",":"],
-               [":",":",":",":"],
-               ["Fecha:","Fecha:","Fecha:","Fecha:"] ]
-
-           
-            pdf.text " "
-            pdf.table(data,:cell_style=> {:border_width=>1} , :width => pdf.bounds.width)
-            pdf.move_down 10          
+      
                   
         pdf.bounding_box([0, 20], :width => 538, :height => 50) do        
         pdf.draw_text "Company: #{@lgv.company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom ]
@@ -746,6 +737,7 @@ class LgvsController < ApplicationController
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
     @documentos = @company.get_documents()
+    @proveedor = @company.get_suppliers()
     
      @transports = @company.get_transports()
      @compros = Compro.all 
@@ -792,6 +784,8 @@ class LgvsController < ApplicationController
     @divisions = @company.get_divisions()
     @gastos = Gasto.all 
     @documentos = @company.get_documents()
+    @proveedor = @company.get_suppliers()
+    
     begin
       @lgv[:inicial] = 0
     rescue
@@ -822,6 +816,7 @@ class LgvsController < ApplicationController
         @lgv.add_products2(items2)  
         # Check if we gotta process the lgv
         @lgv.process()
+        @lgv.correlativo 
         
         format.html { redirect_to(@lgv, :notice => 'lgv was successfully created.') }
         format.xml  { render :xml => @lgv, :status => :created, :location => @lgv }
