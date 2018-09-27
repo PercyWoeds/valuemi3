@@ -1684,6 +1684,7 @@ def newfactura2
    
     @invoice[:subtotal] = @invoice.get_total_1(items) / 1.18
     @invoice[:total]   = @invoice.get_total_1(items) 
+    
     begin
       @invoice[:tax] = @invoice[:total] - @invoice[:subtotal]
     rescue

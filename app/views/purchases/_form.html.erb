@@ -58,7 +58,7 @@
     <div class="field">
       <%= f.label :date3, "Fecha Vmto*", :class => "bold" %><br />
       <%= f.date_field :date3, value: Time.now.strftime("%d/%m/%Y")  %>
-    </div>quit    
+    </div>    
 
 
     <div class="field">
@@ -66,7 +66,12 @@
       <%= f.select :moneda_id, options_from_collection_for_select(@monedas,'id','description'),selected: '1' %>
     </div>
     <div class="field">
-      <%= f.label :participacion ,"  "%><br />
+      <%= f.label :isc ,"I.S.C.  "%><br />
+      <%= f.number_field :isc, class: :text_field, step: :any %>
+    </div>
+    
+    <div class="field">
+      <%= f.label :participacion ,"Participacio / FISE  "%><br />
       <%= f.number_field :participacion, class: :text_field, step: :any %>
     </div>
     

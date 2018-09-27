@@ -130,6 +130,13 @@
         <%= money(@purchase.tax_amount) %>
       </td>
     </tr>
+    
+     <td colspan="4" class="bordered_bottom bordered_right bold">
+        ISC:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@purchase.isc) %>
+      </td>
     <tr>
       <td colspan="4" class="bordered_bottom bordered_right bold">
         Total:
@@ -145,6 +152,8 @@
       <td class="bordered_bottom bordered_right bold right">
         <%= money(@purchase.participacion) %>
       </td>
+     
+      
       
     </tr>
     <tr>

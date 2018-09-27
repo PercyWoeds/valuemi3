@@ -3128,6 +3128,7 @@ def newfactura2
     
     @purchase[:processed] = false
     @purchase[:participacion] = 0
+    @purchase[:isc] = 0
     @company = Company.find(params[:company_id])
     @purchase.company_id = @company.id
     
@@ -3194,6 +3195,8 @@ def newfactura2
     
     @purchase[:tiponota] = "1"
     
+    if  @purchase[:isc] == 0
+    
     if @tipodocumento == 2
       @purchase[:payable_amount] = @purchase.get_subtotal(items) * -1
     else
@@ -3216,6 +3219,35 @@ def newfactura2
     @purchase[:charge]  = 0
     @purchase[:pago] = 0
     @purchase[:balance] =   @purchase[:total_amount]+@purchase[:participacion]
+    
+  else
+    
+    if @tipodocumento == 2
+      @purchase[:payable_amount] = @purchase.get_subtotal(items) * -1
+      @purchase[:total_amount] = (@purchase[:payable_amount]  +@purchase[:isc]) * 1.18  * -1
+     @purchase[:tax_amount]   = @purchase[:total_amount] - @purchase[:payable_amount]
+    
+    else
+      
+      
+      @purchase[:payable_amount] = @purchase.get_subtotal(items)
+      puts @purchase[:payable_amount]
+      
+      @total_amount = (@purchase[:payable_amount]  +@purchase[:isc])
+      
+      @purchase[:total_amount] = (@total_amount  * 1.18)
+      
+      @purchase[:tax_amount]   = @purchase[:total_amount] - @purchase[:payable_amount] -  @purchase[:isc] 
+    
+    end    
+    
+   
+    @purchase[:charge]  = 0
+    @purchase[:pago] = 0
+    @purchase[:balance] =   @purchase[:total_amount]+@purchase[:participacion]
+    
+  end
+    
     @purchase[:tipo]    = 0
     
     
@@ -3336,7 +3368,7 @@ def newfactura2
       :product_id,:unit_id,:price_with_tax,:price_without_tax,:price_public,:quantity,:other,:money_type,
       :discount,:tax1,:payable_amount,:tax_amount,:total_amount,:status,:pricestatus,:charge,:pago,
       :balance,:tax2,:supplier_id,:order1,:plate_id,:user_id,:company_id,:location_id,:division_id,:comments,
-      :processed,:return,:date_processed,:payment_id,:document_id,:documento,:moneda_id,:participacion)
+      :processed,:return,:date_processed,:payment_id,:document_id,:documento,:moneda_id,:participacion,:isc )
   end
 
 end
