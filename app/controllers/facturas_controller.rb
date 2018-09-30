@@ -1388,20 +1388,13 @@ def reportes31
          lcCode = @invoice.code.split("-")
          a = lcCode[0]
          b = lcCode[1]
-         
         
         $lg_serie_factura = a  
         $lg_serial_id   = b.to_i
         $lg_serial_id2  = b
-        puts b 
-        puts $lg_serial_id 
-        puts $lg_serial_id2 
-        puts $lg_fecha 
         
         $lcRuc          = @invoice.customer.ruc
-        
         $lcTd           = @invoice.document.descripshort
-        
         $lcMail         = @invoice.customer.email
         $lcMail2        = ""
         $lcMail3        = ""
@@ -1684,6 +1677,7 @@ def newfactura2
    
     @invoice[:subtotal] = @invoice.get_total_1(items) / 1.18
     @invoice[:total]   = @invoice.get_total_1(items) 
+    
     
     begin
       @invoice[:tax] = @invoice[:total] - @invoice[:subtotal]

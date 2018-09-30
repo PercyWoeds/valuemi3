@@ -177,15 +177,7 @@ class InvoiceGenerator < DocumentGenerator
         $lcDep          = @invoice.customer.state
         $lcPlaca        = @invoice.description  
         $lcGuiaRemision = @invoice.guia 
-        
-        puts @lg_serie_factura
-        puts @lg_serial_id
-        
-        puts "***********"
-        puts lcIgv_a 
-        puts lcTotal_a 
-        puts lcVVenta_a
-        puts @invoice.subtotal 
+       
         
         
     invoice_data = {id: "#{@lg_serie_factura}-#{"%06d" %  @lg_serial_id}", customer: customer, 
@@ -198,14 +190,18 @@ class InvoiceGenerator < DocumentGenerator
         for detalle_item in @invoiceitems
         
         lcDes1   = detalle_item.product.name 
-        lcCantidad     = detalle_item.cantidad  
-        lcTotal0 = detalle_item.cantidad * detalle_item.price_discount
+        lcCantidad     = detalle_item.cantidad.round(2)  
+        #lcTotal0 = detalle_item.cantidad * detalle_item.price_discount
+        lcTotal0 = detalle_item.total.round(2)
         
         lcTotal1 = lcTotal0 * 100
         lcTotal = lcTotal1.round(0)
         
-        lcPrecio =  detalle_item.total   / detalle_item.cantidad   
+        lcPrecio_decim =  detalle_item.total   / detalle_item.cantidad   
+        lcPrecio = lcPrecio_decim.round(2)
+        
         lcPrecioSIGV = lcPrecio /1.18
+        
         lcValorVenta = detalle_item.total / 1.18
         lcTax = detalle_item.total - lcValorVenta
         
