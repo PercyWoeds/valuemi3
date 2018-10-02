@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @note_concept.code %>
+</p>
+
+<p>
+  <strong>Descrip:</strong>
+  <%= @note_concept.descrip %>
+</p>
+
+<p>
+  <strong>Td:</strong>
+  <%= @note_concept.td %>
+</p>
+
+<%= link_to 'Edit', edit_note_concept_path(@note_concept) %> |
+<%= link_to 'Back', note_concepts_path %>

@@ -1,5 +1,6 @@
   Mnygo::Application.routes.draw do
 
+  resources :note_concepts
   resources :markets
   resources :expenses
   resources :redentions

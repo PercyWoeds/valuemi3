@@ -3,13 +3,14 @@
     
   <h4 ><center> Parte Diario - Vales Creditos  -  Desde: <%= @fecha1 %> Hasta: <%= @fecha2 %> </center></h5>  
   
-  <font size="2" face="Courier New" >  
+  <font size="2" face="Courier New" > 
   
   <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
   <tr bgcolor="#B4D7F7">
     <td width="5%"> Fecha</td>
     <td width="2%"> Serie</td>
     <td width="4%"> Numero  </td>
+    <td width="4%"> Nro.Vale  </td>
     <td width="8%"> Cod.Cliente </td>
     <td width="29%"> Cliente  </td>
     <td width="5%"> Cod.Prod </td>
@@ -38,6 +39,11 @@
                     <td width= "5%" ><%=  contado.fecha.strftime("%d/%m/%Y")  %></td>
                     <td width= "2%" > <%=  contado.serie %>   </td>
                     <td width = "4%" align ="right"><%= contado.numero    %></td>
+                    <% if contado.odometro != nil %>
+                        <td width = "4%" align ="right"><%= contado.odometro    %></td>
+                    <% else %>
+                        <td width = "4%" align ="right"> </td>
+                    <% end %>
                     <td width = "8%" align ="right"><%= contado.cod_cli    %></td>
                     <td width = "29%" align ="left"><%= contado.get_cliente(contado.cod_cli) %></td>
                     <td width = "5%" align ="right"><%= contado.cod_prod    %> </td>
