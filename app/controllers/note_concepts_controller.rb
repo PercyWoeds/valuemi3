@@ -69,6 +69,6 @@ class NoteConceptsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def note_concept_params
-      params.require(:note_concept).permit(:code, :descrip, :td)
+      params.require(:note_concept).permit(:code, :descrip, :td,:document_id )
     end
 end

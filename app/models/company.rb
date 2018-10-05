@@ -362,6 +362,12 @@
            tipocambio = Tipocambio.find(fecha1.to_date)
            return tipocambio.venta 
         end 
+        
+        def get_noteconcepts()
+          noteconcepts = NoteConcept.order("code ASC")    
+          
+          return noteconcepts
+        end
         def get_last_tax_name(tax_number)
           product = Product.where(company_id: self.id)
           

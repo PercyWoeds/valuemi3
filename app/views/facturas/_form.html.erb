@@ -26,7 +26,11 @@
       <%= f.collection_select :document_id, @tipodocumento, :id, :description, :prompt => true %>
       
       </div>
-
+ <div class="field">
+      <%= f.label :note_concept_id ,"  "%><br />
+      <%= f.grouped_collection_select :note_concept_id, Document.order(:description), :note_concepts ,:description, :id, :descrip, include_blank: true  %>
+      
+    </div>
       <div class="field">
       <%= f.label :tipo , "Factura :", :class => "bold" %><br />
       <%= f.select :tipo, options_from_collection_for_select(@tipofacturas,'id','descrip') %>
@@ -101,6 +105,7 @@
       
     </div>
 
+   
      
     <div class="field" id="list_items">
       <p class="bold big">Products:</p>

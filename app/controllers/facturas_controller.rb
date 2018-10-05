@@ -1536,6 +1536,7 @@ BCP Cuenta Recaudadora Moneda Nacional : 191-2264838-0-49"
     @payments = @company.get_payments()
     @services = @company.get_services()
     @products = @company.get_products()
+    @noteconcepts = @company.get_noteconcepts()
     @tarjetas = Tarjetum.all
     @tipoventas = Tipoventum.all 
     
@@ -1544,7 +1545,7 @@ BCP Cuenta Recaudadora Moneda Nacional : 191-2264838-0-49"
     @monedas = @company.get_monedas()
     
     if @current_user.level== "colateral"
-      @tipodocumento = @company.get_documents2()
+      @tipodocumento = @company.get_documents2oot()
     else 
       @tipodocumento = @company.get_documents()
     end

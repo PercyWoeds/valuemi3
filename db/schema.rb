@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180927224009) do
+ActiveRecord::Schema.define(version: 20181004235736) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -741,8 +741,8 @@ ActiveRecord::Schema.define(version: 20180927224009) do
     t.string   "return"
     t.datetime "date_processed"
     t.integer  "user_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
     t.datetime "fecha"
     t.string   "serie"
     t.string   "numero"
@@ -765,6 +765,8 @@ ActiveRecord::Schema.define(version: 20180927224009) do
     t.string   "ruc"
     t.integer  "tarjeta_id"
     t.string   "guia"
+    t.integer  "reference_fact"
+    t.integer  "note_concept_id"
   end
 
   create_table "faltantes", force: :cascade do |t|
@@ -1350,6 +1352,15 @@ ActiveRecord::Schema.define(version: 20180927224009) do
     t.integer  "customer_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+  end
+
+  create_table "note_concepts", force: :cascade do |t|
+    t.string   "code"
+    t.string   "descrip"
+    t.string   "td"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "document_id"
   end
 
   create_table "numeras", force: :cascade do |t|
