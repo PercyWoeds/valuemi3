@@ -2621,6 +2621,9 @@
             if sal == nil 
             else 
                 @product_id = Product.find_by(code: sal.cod_prod )
+                
+                if @product_id 
+                
                 movdetail  = MovementDetail.find_by(:product_id=> @product_id.id )
     
                 if movdetail
@@ -2639,7 +2642,7 @@
     
                 end   
             end 
-            
+          end 
            end 
            
            
