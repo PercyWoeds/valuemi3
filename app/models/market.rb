@@ -32,5 +32,30 @@ def self.search(search)
   # Title is for the above case, the OP incorrectly had 'name'
   where("numero  iLIKE ? or cod_cli iLIKE ? ", "%#{search}%","%#{search}%")
 end    
+
+def get_cliente(cliente)
+     a= Customer.find_by(account: cliente)
+     
+    if a
+         return a.name
+    else
+        return "Cliente no existe"
+    end 
+ end 
+ def get_product_name(codigo) 
+      
+      a=Product.find_by(code: codigo)
+      
+      if a
+          
+          return a.name 
+      else 
+          return "Nombre no existe..."
+          
+      end 
+      
+  end    
+    
+    
     
 end
