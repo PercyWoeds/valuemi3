@@ -3565,7 +3565,7 @@
        end 
        
        def  get_venta_detallado(fecha1,fecha2)
-          @varilla =  Factura.select("facturas.id,facturas.code,facturas.subtotal,facturas.tax,facturas.total").where(["fecha >= ? and fecha <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59"  ]).joins("INNER JOIN factura_details ON factura_details.id = facturas.id ")
+          @varilla =  Market.where(["fecha >= ? and fecha <= ?  and tipo = ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ,"2" ]).order(:cod_prod,:fecha)
           return @varilla 
        end 
        
