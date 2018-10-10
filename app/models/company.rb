@@ -710,8 +710,8 @@
             lcCode=""
           end
           
-          
-          @facturas = Factura.where([" company_id = ? AND fecha >= ? and fecha<= ? and moneda_id = ? and substring(code,1,4)<> ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59",moneda,"BB02" ]).order(:fecha)    
+          #modifique las boletas bb02 antes nom aparecian porque las ingresaba para cancelar.
+          @facturas = Factura.where([" company_id = ? AND fecha >= ? and fecha<= ? and moneda_id = ? ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59",moneda ]).order(:fecha)    
             for boleta in @facturas
           
                 lcCodigo = boleta.code.split("-") 
