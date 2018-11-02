@@ -398,7 +398,7 @@ class StocksController < ApplicationController
     pdf.text "FORMATO 13.1: REGISTRO DE INVENTARIO PERMANENTE VALORIZADO - DETALLE DEL INVENTARIO VALORIZADO "
     pdf.text "PERIODO : " +@fecha1.to_s+ " Hasta: "+@fecha2.to_s   , :size => 11 
     pdf.text "RUC : 20555691263  "  
-    pdf.text "APELLIDOS Y NOMBRES, DENOMINACION O RAZON SOCIAL : INVERSIONES VALUEMI S.A.C. "
+    pdf.text "APELLIDOS Y NOMBRES, DENOMINACION O RAZON SOCIAL : GRUPO E & E S.A.C. "
     pdf.text "ESTABLECIMIENTO : ALMACEN"
 
       pdf 

@@ -2,25 +2,24 @@ SUNAT.configure do |config|
   config.credentials do |c|
 
 
-    c.ruc       = "20555691263"
+    c.ruc       = "20514739065"
     c.username  = "FACTURA2"
-    c.password  = "20555691263"
+    c.password  = "20514739065"
    end
 
   config.signature do |s|
-    s.party_id    = "20555691263"
-    s.party_name  = "INVERSIONES VALUEMI S.A.C."
-    s.cert_file   = File.join(Dir.pwd, './app/keys', 'certificate3.crt')
-    s.pk_file     = File.join(Dir.pwd, './app/keys', 'CERTIFICADO3.key') 
+    s.party_id    = "20514739065"
+    s.party_name  = "GRUPO E & E S.A.C."
+    s.cert_file   = File.join(Dir.pwd, './app/keys', 'certificate1.crt')
+    s.pk_file     = File.join(Dir.pwd, './app/keys', 'CERTIFICADO1.key') 
   end
 
   config.supplier do |s|
-    s.legal_name = "INVERSIONES VALUEMI S.A.C."
-    s.name       = "Cesar Jaime Manrique Milla"
-    s.ruc        = "20555691263"
+    s.legal_name = "GRUPO E & E S.A.C."
+    s.name       = ""
+    s.ruc        = "20514739065"
     s.address_id = "150106"
-    s.street     = "CAM.SECTOR CRUZ DEL NORTE I ZONA BAJA MZA. C LOTE. 5
-    A.H. PROYECTO INTEGRAL ALIANZA INDUSTRIAL DE LAS LOMAS "
+    s.street     = "AV. TUPAC AMARU KM. 22.5 LOTE. 7 URB. PUNCHAUCA "
     s.district   = "LIMA - LIMA - CARABAYLLO"
     s.city       = "LIMA"
     s.country    = "PE"

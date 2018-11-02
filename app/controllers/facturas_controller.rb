@@ -2924,7 +2924,7 @@ def newfactura2
   def build_header_tk(pdf)
      pdf.font "Helvetica" , :size => 8
      
-      pdf.text ".INVERSIONES VALUEMI S.A.C."  , :size => 8,  :style => :bold
+      pdf.text ".GRUPO E & E S.A.C."  , :size => 8,  :style => :bold
       pdf.text ".RUC.:" << @company.ruc   , :size => 8,  :style => :bold
       
       pdf.text ".Direccion :Cam. Sector Cruz del Norte I Z Mza. C ", :size => 8
