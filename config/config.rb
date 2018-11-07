@@ -3,7 +3,7 @@ SUNAT.configure do |config|
 
 
     c.ruc       = "20514739065"
-    c.username  = "FACTURA2"
+    c.username  = "GEYE2018"
     c.password  = "20514739065"
    end
 
