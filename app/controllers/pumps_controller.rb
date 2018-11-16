@@ -4,7 +4,7 @@ class PumpsController < ApplicationController
   # GET /pumps
   # GET /pumps.json
   def index
-    @pumps = Pump.all
+    @pumps = Pump.all.order(:id)
   end
 
   # GET /pumps/1
@@ -83,6 +83,6 @@ class PumpsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def pump_params
-      params.require(:pump).permit(:fuel, :pump01, :product_id, :price_buy, :price_sell, :le_an_gln, :le_ac_gln, :gln, :date1, :employee_id, :turno,:tanque_id,:island_id)
+      params.require(:pump).permit(:fuel, :pump01, :product_id, :price_buy, :price_sell, :le_an_gln, :le_ac_gln, :gln, :date1, :employee_id, :turno,:tanque_id,:island_id,:id_surtidor,:id_posicion_manguera)
     end
 end

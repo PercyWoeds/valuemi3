@@ -6,4 +6,7 @@ class Pump < ActiveRecord::Base
     belongs_to :tanque 
     belongs_to :island
     has_many :ventaisla_details 
+    
+    
+    
 end

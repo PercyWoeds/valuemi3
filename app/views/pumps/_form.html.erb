@@ -28,6 +28,14 @@
     <%= f.label :isla_id, "Isla:" %><br>
     <%= f.collection_select :island_id, @islas, :id, :code, :prompt => true %>
     </div>
+  <div class="field">
+    <%= f.label :id_surtidor %><br>
+    <%= f.text_field :id_surtidor %>
+  </div>
+  <div class="field">
+    <%= f.label :id_posicion_manguera %><br>
+    <%= f.text_field :id_posicion_manguera %>
+  </div>
     
   <div class="field">
     <%= f.label :le_an_gln %><br>
