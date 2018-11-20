@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181113204209) do
+ActiveRecord::Schema.define(version: 20181120193332) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1038,6 +1038,30 @@ ActiveRecord::Schema.define(version: 20181113204209) do
   add_index "items", ["tag_ids"], name: "index_items_on_tag_ids", using: :btree
   add_index "items", ["unit_id"], name: "index_items_on_unit_id", using: :btree
   add_index "items", ["updater_id"], name: "index_items_on_updater_id", using: :btree
+
+  create_table "journals", force: :cascade do |t|
+    t.string   "journal"
+    t.integer  "nid_journal"
+    t.datetime "ffecha_journal"
+    t.integer  "nid_surtidor"
+    t.integer  "nlado_surtidor"
+    t.integer  "nid_producto"
+    t.integer  "nposicion_manguera"
+    t.float    "dprecio_journal"
+    t.float    "dvolumen_journal"
+    t.float    "dmonto_journal"
+    t.float    "dcontometrogalon_journal"
+    t.float    "dcontometromoneda_journal"
+    t.datetime "ffechacontable_journal"
+    t.string   "turno"
+    t.integer  "nturno_journal"
+    t.string   "nestadodesp"
+    t.string   "nestadocont"
+    t.float    "ntransactionid_journal"
+    t.float    "ntranfinished_journal"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
 
   create_table "kits_products", force: :cascade do |t|
     t.integer  "product_kit_id"
@@ -2504,6 +2528,7 @@ ActiveRecord::Schema.define(version: 20181113204209) do
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.integer  "ventaisla_id"
+    t.integer  "island_id"
   end
 
   create_table "viatico_details", force: :cascade do |t|

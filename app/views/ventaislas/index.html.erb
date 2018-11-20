@@ -7,6 +7,8 @@
     <tr>
       <th>Fecha</th>
       <th>Turno</th>
+      <th>Isla</th>
+      
       <th>Employee</th>
       <th>Galones</th>
       <th>Importe</th>
@@ -20,6 +22,8 @@
       <tr>
         <td><%= ventaisla.fecha.strftime("%d/%m/%Y") %></td>
         <td><%= ventaisla.turno %></td>
+        <td><%= ventaisla.island.code %></td>
+      
         <td><%= ventaisla.employee.full_name %></td>
         <td><%= ventaisla.galones %></td>
         <td><%= ventaisla.importe %></td>
