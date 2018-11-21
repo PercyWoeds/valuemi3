@@ -185,12 +185,12 @@ def  get_ventas_combustibles_producto(isla,producto,value)
             end 
             
         
-                a = Ventaisla.where(["fecha >= ? and fecha <= ?","#{fecha_venta_isla} 00:00:00","#{fecha_venta_isla} 23:59:59"])
+                @isladetalle = Ventaisla.where(["fecha >= ? and fecha <= ?","#{fecha_venta_isla} 00:00:00","#{fecha_venta_isla} 23:59:59"])
                 puts "fecha venta isla "
                 puts fecha_venta_isla
                 
                 
-                for @isla_detalle in a                  
+                for a in @isladetalle                   
                 
                 total_glns    = @ventaisla_detail.get_venta_total_glns(a.turno,a.island_id)
                 total_importe = @ventaisla_detail.get_venta_total_impo(a.turno,a.island_id)
