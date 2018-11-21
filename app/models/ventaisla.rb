@@ -159,7 +159,10 @@ def  get_ventas_combustibles_producto(isla,producto,value)
             start_date = fecha_venta_isla.strftime("%Y-%m-%d") + " 00:00:00"
             end_date  = fecha_venta_isla.strftime("%Y-%m-%d") + " 23:59:59"
             
-            @venta_isla_id = Ventaisla.find_by("(fecha >= ?) AND (fecha <= ?) and turno = ?  and employee_id = 1 ", start_date , end_date , a ,)
+            
+              (1..3).map do |islas| 
+                  
+            @venta_isla_id = Ventaisla.find_by("(fecha >= ?) AND (fecha <= ?) and turno = ?  and employee_id = 1  and island_id = ?", start_date , end_date , a,islas)
             
             
             if @venta_isla_id 
@@ -185,6 +188,7 @@ def  get_ventas_combustibles_producto(isla,producto,value)
                 end 
             end 
            end 
+       end 
             
         end
     
