@@ -190,7 +190,7 @@ def  get_ventas_combustibles_producto(isla,producto,value)
                 puts fecha_venta_isla
                 
                 
-                for a in @isla_detalle                 
+                for @isla_detalle in a                  
                 
                 total_glns= @ventaisla_detail.get_venta_total_glns(@isla_detalle.turno,@isla_detalle.island_id)
                 total_importe= @ventaisla_detail.get_venta_total_impo(@isla_detalle.turno,@isla_detalle.island_id)
