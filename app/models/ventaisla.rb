@@ -192,9 +192,9 @@ def  get_ventas_combustibles_producto(isla,producto,value)
                 
                 for @isla_detalle in a                  
                 
-                total_glns= @ventaisla_detail.get_venta_total_glns(@isla_detalle.turno,@isla_detalle.island_id)
-                total_importe= @ventaisla_detail.get_venta_total_impo(@isla_detalle.turno,@isla_detalle.island_id)
-                 isla = Ventaisla.find(@isla_detalle.island_id)
+                total_glns    = @ventaisla_detail.get_venta_total_glns(a.turno,a.island_id)
+                total_importe = @ventaisla_detail.get_venta_total_impo(a.turno,a.island_id)
+                 isla = Ventaisla.find(a.island_id)
                  isla.galones = total_glns
                  isla.importe = total_importe
                  isla.save 
