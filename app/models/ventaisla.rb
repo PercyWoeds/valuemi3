@@ -206,8 +206,8 @@ def  get_ventas_combustibles_producto(isla,producto,value)
         end
     
     
-def get_venta_total_glns(turno,isla)
-     facturas = VentaislaDetail.where(["turno =? and  isla = ?", self.id,turno,self.id ]).order(:id)
+def get_venta_total_glns(turno1,isla)
+     facturas = VentaislaDetail.where(["turno =? and  isla = ?", self.id,turno1,self.id ]).order(:id)
           ret = 0 
           if facturas 
           ret=0  
@@ -218,8 +218,8 @@ def get_venta_total_glns(turno,isla)
           return ret    
      
 end 
-def get_venta_total_impo(turno,isla)
-     facturas = VentaislaDetail.where(["turno = ? and isla = ?", self.id,turno,self.id ]).order(:id)
+def get_venta_total_impo(turno1,isla)
+     facturas = VentaislaDetail.where(["turno = ? and isla = ?", self.id,turno1,self.id ]).order(:id)
           ret = 0 
           if facturas 
           ret=0  
