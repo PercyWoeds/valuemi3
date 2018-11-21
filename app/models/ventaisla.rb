@@ -160,9 +160,9 @@ def  get_ventas_combustibles_producto(isla,producto,value)
             end_date  = fecha_venta_isla.strftime("%Y-%m-%d") + " 23:59:59"
             
             
-          @pump_isla = Pump.find_by(id_surtidor: journal.nid_surtidor,id_posicion_manguera: journal.nposicion_manguera)
+            @pump_isla = Pump.find_by(id_surtidor: journal.nid_surtidor,id_posicion_manguera: journal.nposicion_manguera)
                   
-            @venta_isla_id = Ventaisla.find_by("(fecha >= ?) AND (fecha <= ?) and turno = ?  and employee_id = 1  and island_id = ?", start_date , end_date , a,@pumpisla.island_id)
+            @venta_isla_id = Ventaisla.find_by("(fecha >= ?) AND (fecha <= ?) and turno = ?  and employee_id = 1  and island_id = ?", start_date , end_date , a, @pumpisla.island_id)
             
             
             if @venta_isla_id 
