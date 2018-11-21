@@ -134,7 +134,9 @@ def  get_ventas_combustibles_producto(isla,producto,value)
                  end 
             end
          end 
-          
+         
+          @journal  = Journal.select("ffecha_journal,nid_surtidor,nposicion_manguera,dprecio_journal, MAX(dcontometrogalon_journal) as dcontometrogalon_journal,sum(dvolumen_journal) as dvolumen_journal,sum(dmonto_journal) as dmonto_journal ").group(:ffecha_journal,:nid_surtidor,:nposicion_manguera,:dprecio_journal)
+        
           
           for journal in @journal
           
@@ -142,18 +144,13 @@ def  get_ventas_combustibles_producto(isla,producto,value)
           fecha_venta_isla = f1.to_date 
           
           a           = self.turno(f1.to_datetime)
-          pump_id     = self.get_surtidor(journal.nid_surtidor.to_i,journal.nlado_surtidor.to_i,journal.nid_producto.to_i,journal.nposicion_manguera.to_i)
           lectura_ant = journal.dcontometrogalon_journal.to_f - journal.dvolumen_journal.to_f
           lectura_act = journal.dcontometrogalon_journal.to_f
           precio      = journal.dprecio_journal.to_f
           cantidad    = journal.dvolumen_journal.to_f
           importe     =  journal.dmonto_journal.to_f
           
-           if   journal.nid_producto.to_i == 7        
-              producto = "5"
-            else
-              producto = journal.nid_producto
-           end 
+          
             cantidad_total += cantidad
             importe_total += importe 
             start_date = fecha_venta_isla.strftime("%Y-%m-%d") + " 00:00:00"
@@ -171,29 +168,64 @@ def  get_ventas_combustibles_producto(isla,producto,value)
             @venta_isla_id = Ventaisla.find_by("(fecha >= ?) AND (fecha <= ?) and turno = ?  and employee_id = 1  and island_id = ?", start_date , end_date , a, @pump_isla.island_id)
             
             
-            if @venta_isla_id 
-                
-               
-                
+             if @venta_isla_id 
                 
                 xpump_id = Pump.find_by(id_surtidor: journal.nid_surtidor,id_posicion_manguera: journal.nposicion_manguera)
                 
                 if xpump_id
                 puts "venta isla detalle pump  "
                     
-                @ventaisla_detail = VentaislaDetail.new(pump_id: xpump_id.id , le_an_gln: lectura_ant,le_ac_gln: lectura_act,price:precio, quantity: cantidad ,total: importe ,ventaisla_id: @venta_isla_id.id , product_id: producto )
+                @ventaisla_detail = VentaislaDetail.new(pump_id: xpump_id.id , le_an_gln: lectura_ant,le_ac_gln: lectura_act,price:precio, quantity: cantidad ,total: importe ,ventaisla_id: @venta_isla_id.id , product_id: @pump_isla.product_id )
                 @ventaisla_detail.save
                 
-                @venta_isla_id.importe  = importe_total
-                @venta_isla_id.galones  = cantidad 
-                @venta_isla_id.save 
                 end 
+                
             end 
            
-       end 
+            end 
             
+        
+                a = Ventaisla.where(["fecha1 >= ? and fecha1 <= ?",fecha_venta_isla,fecha_venta_isla])
+                
+                
+                for a in @isla_detalle                 
+                
+                total_glns= @ventaisla_detail.get_venta_total_glns(@isla_detalle.turno,@isla_detalle.island_id)
+                total_importe= @ventaisla_detail.get_venta_total_impo(@isla_detalle.turno,@isla_detalle.island_id)
+                 isla = Ventaisla.find(@isla_detalle.island_id)
+                 isla.galones = total_glns
+                 isla.importe = total_importe
+                 isla.save 
+               end 
+                 
+             
+             
+             
         end
     
     
+def get_venta_total_glns(turno,isla)
+     facturas = VentaislaDetail.where(["turno =? and  isla = ?", self.id,turno,self.id ]).order(:id)
+          ret = 0 
+          if facturas 
+          ret=0  
+            for factura in facturas      
+                ret += factura.quantity
+            end
+          end 
+          return ret    
+     
+end 
+def get_venta_total_impo(turno,isla)
+     facturas = VentaislaDetail.where(["turno = ? and isla = ?", self.id,turno,self.id ]).order(:id)
+          ret = 0 
+          if facturas 
+          ret=0  
+            for factura in facturas      
+                ret += factura.total
+            end
+          end 
+          return ret    
+end 
 
 end
