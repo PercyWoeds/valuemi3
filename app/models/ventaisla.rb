@@ -192,8 +192,8 @@ def  get_ventas_combustibles_producto(isla,producto,value)
                 
                 for a in @isladetalle                   
                 
-                total_glns    = a.get_venta_total_glns(a.turno,a.island_id)
-                total_importe = a.get_venta_total_impo(a.turno,a.island_id)
+                total_glns    = a.get_venta_total_glns(a.turno, a.island_id)
+                total_importe = a.get_venta_total_impo(a.turno, a.island_id)
                 
                  isla = Ventaisla.find(a.island_id)
                  isla.galones = total_glns
@@ -205,7 +205,7 @@ def  get_ventas_combustibles_producto(isla,producto,value)
     
     
 def get_venta_total_glns(turno1,isla)
-     facturas = VentaislaDetail.where(["turno =? and  isla = ?", self.id,turno1,self.id ]).order(:id)
+     facturas = VentaislaDetail.where(["turno =? and  isla = ?", turno1,self.id ]).order(:id)
           ret = 0 
           if facturas 
           ret=0  
@@ -217,7 +217,7 @@ def get_venta_total_glns(turno1,isla)
      
 end 
 def get_venta_total_impo(turno1,isla)
-     facturas = VentaislaDetail.where(["turno = ? and isla = ?", self.id,turno1,self.id ]).order(:id)
+     facturas = VentaislaDetail.where(["turno = ? and isla = ?", turno1,self.id ]).order(:id)
           ret = 0 
           if facturas 
           ret=0  
