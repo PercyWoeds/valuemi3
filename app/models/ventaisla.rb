@@ -185,7 +185,7 @@ def  get_ventas_combustibles_producto(isla,producto,value)
             end 
             
         
-                a = Ventaisla.where(["fecha1 >= ? and fecha1 <= ?",fecha_venta_isla,fecha_venta_isla])
+                a = Ventaisla.where(["fecha >= ? and fecha <= ?",fecha_venta_isla,fecha_venta_isla])
                 
                 
                 for a in @isla_detalle                 
