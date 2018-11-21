@@ -67,7 +67,7 @@ def  get_ventas_combustibles_producto(isla,producto,value)
     
        
     
-    def self.turno( date )
+    def self.turno2( date )
           date_str = date.strftime( "%H:%M:%S" )
           turno = "1"
           
@@ -143,7 +143,7 @@ def  get_ventas_combustibles_producto(isla,producto,value)
           f1 = journal.ffecha_journal
           fecha_venta_isla = f1.to_date 
           
-          a           = self.turno(f1.to_datetime)
+          a           = self.turno2(f1.to_datetime)
           lectura_ant = journal.dcontometrogalon_journal.to_f - journal.dvolumen_journal.to_f
           lectura_act = journal.dcontometrogalon_journal.to_f
           precio      = journal.dprecio_journal.to_f
@@ -194,6 +194,7 @@ def  get_ventas_combustibles_producto(isla,producto,value)
                 
                 total_glns    = @ventaisla_detail.get_venta_total_glns(a.turno,a.island_id)
                 total_importe = @ventaisla_detail.get_venta_total_impo(a.turno,a.island_id)
+                
                  isla = Ventaisla.find(a.island_id)
                  isla.galones = total_glns
                  isla.importe = total_importe
