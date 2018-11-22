@@ -109,8 +109,14 @@ def  get_ventas_combustibles_producto(isla,producto,value)
           @islas = Island.all 
           Journal.delete_all 
           
-          CSV.foreach(file.path, headers: true, encoding:'iso-8859-1:utf-8') do |row|
-            
+            CSV.foreach(file.path, headers: true, encoding:'iso-8859-1:utf-8') do |row|
+                    f1 = row['ffecha_journal'] 
+                    puts     row['ffecha_journal']
+                    
+                    puts     row['ffechacontable_journal']
+                    row['turno']     = self.turno2(f1.to_datetime)
+          
+                
             Journal.create! row.to_hash 
             
           end   
@@ -135,21 +141,17 @@ def  get_ventas_combustibles_producto(isla,producto,value)
             end
          end 
          
-          @journal  = Journal.select("ffecha_journal,nid_surtidor,nposicion_manguera,dprecio_journal, MAX(dcontometrogalon_journal) as dcontometrogalon_journal,sum(dvolumen_journal) as dvolumen_journal,sum(dmonto_journal) as dmonto_journal ").group("DATE(ffecha_journal)" ,:nid_surtidor,:nposicion_manguera,:dprecio_journal)
+          @journal  = Journal.select("to_char(ffecha_journal,'dd/MM/yyyy') as ffecha_journal_date ,nid_surtidor,nposicion_manguera,dprecio_journal,turno, MAX(dcontometrogalon_journal) as dcontometrogalon_journal,sum(dvolumen_journal) as dvolumen_journal,sum(dmonto_journal) as dmonto_journal ").group("ffecha_journal_date " ,:turno,:nid_surtidor,:nposicion_manguera,:dprecio_journal)
         
           
           for journal in @journal
-          
-          f1 = journal.ffecha_journal
-          fecha_venta_isla = f1.to_date 
-          
-          a           = self.turno2(f1.to_datetime)
+          fecha_venta_isla =  journal.ffecha_journal_date.to_date  
           lectura_ant = journal.dcontometrogalon_journal.to_f - journal.dvolumen_journal.to_f
           lectura_act = journal.dcontometrogalon_journal.to_f
           precio      = journal.dprecio_journal.to_f
           cantidad    = journal.dvolumen_journal.to_f
           importe     =  journal.dmonto_journal.to_f
-          
+          a           = journal.turno 
           
             cantidad_total += cantidad
             importe_total += importe 
