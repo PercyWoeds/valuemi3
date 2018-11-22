@@ -135,7 +135,7 @@ def  get_ventas_combustibles_producto(isla,producto,value)
             end
          end 
          
-          @journal  = Journal.select("ffecha_journal,nid_surtidor,nposicion_manguera,dprecio_journal, MAX(dcontometrogalon_journal) as dcontometrogalon_journal,sum(dvolumen_journal) as dvolumen_journal,sum(dmonto_journal) as dmonto_journal ").group(:ffecha_journal.to_date ,:nid_surtidor,:nposicion_manguera,:dprecio_journal)
+          @journal  = Journal.select("ffecha_journal,nid_surtidor,nposicion_manguera,dprecio_journal, MAX(dcontometrogalon_journal) as dcontometrogalon_journal,sum(dvolumen_journal) as dvolumen_journal,sum(dmonto_journal) as dmonto_journal ").group("DATE(ffecha_journal)" ,:nid_surtidor,:nposicion_manguera,:dprecio_journal)
         
           
           for journal in @journal
