@@ -135,7 +135,7 @@ def  get_ventas_combustibles_producto(isla,producto,value)
             end
          end 
          
-          @journal  = Journal.select("ffecha_journal,nid_surtidor,nposicion_manguera,dprecio_journal, MAX(dcontometrogalon_journal) as dcontometrogalon_journal,sum(dvolumen_journal) as dvolumen_journal,sum(dmonto_journal) as dmonto_journal ").group(:ffecha_journal,:nid_surtidor,:nposicion_manguera,:dprecio_journal)
+          @journal  = Journal.select("ffecha_journal,nid_surtidor,nposicion_manguera,dprecio_journal, MAX(dcontometrogalon_journal) as dcontometrogalon_journal,sum(dvolumen_journal) as dvolumen_journal,sum(dmonto_journal) as dmonto_journal ").group(:ffecha_journal.to_date ,:nid_surtidor,:nposicion_manguera,:dprecio_journal)
         
           
           for journal in @journal
@@ -205,7 +205,7 @@ def  get_ventas_combustibles_producto(isla,producto,value)
     
     
 def get_venta_total_glns(turno1,isla)
-     facturas = VentaislaDetail.where([" island_id = ?", self.id ]).order(:id)
+     facturas = VentaislaDetail.where([" ventaisla_id = ?", self.id ]).order(:id)
           ret = 0 
           if facturas 
           ret=0  
@@ -217,7 +217,7 @@ def get_venta_total_glns(turno1,isla)
      
 end 
 def get_venta_total_impo(turno1,isla)
-     facturas = VentaislaDetail.where(["island_id = ?",self.id ]).order(:id)
+     facturas = VentaislaDetail.where(["ventaisla_id = ?",self.id ]).order(:id)
           ret = 0 
           if facturas 
           ret=0  
