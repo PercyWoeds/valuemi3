@@ -124,7 +124,7 @@ def  get_ventas_combustibles_producto(isla,producto,value)
           
             
           @journal = Journal.all 
-          send_data @users.to_csv, filename: "journals-#{Date.today}.csv" 
+          send_data @journal.to_csv, filename: "journals-#{Date.today}.csv" 
           
           
           fecha_venta_isla = @journal.first.ffecha_journal
