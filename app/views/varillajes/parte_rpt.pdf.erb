@@ -47,15 +47,36 @@
                    <tr>
                     <td width = "5%" ><%=  product0.tanque.code %></td>
                     <td width = "10%" ><%=  product0.tanque.product.name %></td>
+                    <% if product0.tanque.product.id == 6 %>
                     <td width = "10%" align ="right"><%= sprintf("%.2f",product0.inicial.to_s)   %></td>
+                    <% else %>
+                    <% varilla_gas = product0.inicial * 3.78541   %>
+                    <td width = "10%" align ="right"><%= sprintf("%.2f",varilla_gas.to_s)   %></td>
+                    <% end %>
+                    
+                    
                     <td width = "10%" align ="right"><%= sprintf("%.2f",compras )   %></td>
                     <td width = "4%" align ="right"><%= sprintf("%.2f",venta_directa_qty)   %> </td>
                     <td width = "10%" align ="right"><%= sprintf("%.2f",venta_neta  )  %></td>
                     <% saldo =  product0.inicial + compras - ventas_qty - venta_directa_qty + afericion %>
                     <td width = "10%" align ="right"><%= sprintf("%.2f",saldo.to_s)   %></td>
-                    <td width = "10%" align ="right"><%= sprintf("%.3f",product0.varilla.to_s)   %></td>
-                    <% dife =  product0.varilla - saldo %>
+                    
+                    
+                    
+                    <% if product0.tanque.product.id == 6 %>
+                      <td width = "10%" align ="right"><%= sprintf("%.3f",product0.varilla.to_s)   %></td>
+                      <% dife =  product0.varilla - saldo %>
+                    <% else %>
+                      <% varilla_gas = product0.varilla * 3.78541   %>
+                      <% dife =  varilla_gas - saldo %>
+                      <td width = "10%" align ="right"><%= sprintf("%.3f",varilla_gas.to_s)   %></td>
+                    <% end %>
+                    
+                    
+                    
                     <td width = "8%" align ="right"><%= sprintf("%.2f",dife.to_s)   %></td>
+                    
+                    
                     <% dife_soles = product0.get_ventas_importe(@fecha,product0.tanque.product.id) - product0.get_ventas_contometros_producto_todo(@fecha,product0.tanque.product.code.to_s)-  product0.get_ventas_contometros_descuento_producto(@fecha,product0.tanque.product.code.to_s)  - product0.get_afericion_total_dia_producto(@fecha,product0.tanque.id)   %>
                     
                     <% dife_mes = product0.get_saldo_final_combustible(@fecha,product0.tanque.product.id,product0.tanque.product.code.to_s,product0.tanque.id) %>
