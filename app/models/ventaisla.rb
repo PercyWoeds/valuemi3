@@ -120,8 +120,13 @@ def  get_ventas_combustibles_producto(isla,producto,value)
             Journal.create! row.to_hash 
             
           end   
+          
+          
             
           @journal = Journal.all 
+          send_data @users.to_csv, filename: "journals-#{Date.today}.csv" 
+          
+          
           fecha_venta_isla = @journal.first.ffecha_journal
           
           (1..3).map do |turnos|
