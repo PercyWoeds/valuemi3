@@ -1,5 +1,9 @@
+    
+    
+
 class Ventaisla < ActiveRecord::Base
-      
+    
+        require "open-uri"  
     validates_presence_of :employee_id
     
     
@@ -131,7 +135,9 @@ def  get_ventas_combustibles_producto(isla,producto,value)
             end
         end
         
-        send_data output, :type => "text/csv", :filename=> "file.csv", :disposition => "attachment"
+        
+        
+        
           fecha_venta_isla = @journal.first.ffecha_journal
           
           (1..3).map do |turnos|
