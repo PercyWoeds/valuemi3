@@ -90,14 +90,14 @@
                     <% if product0.tanque.product.id == 6 %>
                     
                      <%puts "GLP" %>
-                     <%puts "Ventas importe" %>
-                     <% puts product0.get_ventas_importe(@fecha,product0.tanque.product.id)  %>
-                     <%puts "Ventas contometros producto" %>
-                     <% puts product0.get_ventas_contometros_producto_todo(@fecha,product0.tanque.product.code.to_s)  %>
-                     <%puts "Ventas contometros descuentos  producto" %>
-                     <% product0.get_ventas_contometros_descuento_producto(@fecha,product0.tanque.product.code.to_s) %>
-                     <%puts "Ventas afericion total dia producto" %>
-                     <% product0.get_afericion_total_dia_producto(@fecha,product0.tanque.id)   %>
+                     <%= "Ventas importe" %>
+                     <%= product0.get_ventas_importe(@fecha,product0.tanque.product.id)  %>
+                     <%= "Ventas contometros producto" %>
+                     <%= product0.get_ventas_contometros_producto_todo(@fecha,product0.tanque.product.code.to_s)  %>
+                     <%= "Ventas contometros descuentos  producto" %>
+                     <%= product0.get_ventas_contometros_descuento_producto(@fecha,product0.tanque.product.code.to_s) %>
+                     <%= "Ventas afericion total dia producto" %>
+                     <%= product0.get_afericion_total_dia_producto(@fecha,product0.tanque.id)   %>
                      <% ------%>
                      
                     <% end %>
