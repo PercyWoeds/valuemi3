@@ -67,6 +67,7 @@ def  get_ventas_combustibles_producto(isla,producto,value)
     TURNO1  = ["06:00:00", "13:59:59"]
     TURNO2  = ["14:00:00", "21:59:59"]
     TURNO30 = ["22:00:00", "23:59:59"]
+    
     TURNO31 = ["00:00:00", "05:59:59"]
     
        
@@ -84,9 +85,11 @@ def  get_ventas_combustibles_producto(isla,producto,value)
       if   date_str >= TURNO30[0] and date_str <= TURNO30[1]
           turno = "3"
       end
+      
       if   date_str >= TURNO31[0] and date_str <= TURNO31[1]
           turno = "3"
       end
+      
       return turno 
     end
     
@@ -118,10 +121,19 @@ def  get_ventas_combustibles_producto(isla,producto,value)
                     puts     row['ffecha_journal']
                     
                     puts     row['ffechacontable_journal']
+                    
                     row['turno']     = self.turno2(f1.to_datetime)
-          
-                
-            Journal.create! row.to_hash 
+                    
+                    date_str = date.strftime( "%H:%M:%S" )
+                    
+                    if   date_str >= TURNO31[0] and date_str <= TURNO31[1]
+                          fecha_hoy = row['ffecha_journal'].to_date - 1  
+                    end
+                    
+                    row['ffecha_journal'] = fecha_hoy
+                    row['ffecha_journal'].to_datetime
+                    
+                    Journal.create! row.to_hash 
             
           end   
           
