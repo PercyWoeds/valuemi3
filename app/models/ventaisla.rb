@@ -118,20 +118,23 @@ def  get_ventas_combustibles_producto(isla,producto,value)
           
             CSV.foreach(file.path, headers: true, encoding:'iso-8859-1:utf-8') do |row|
                     f1 = row['ffecha_journal'] 
-                    puts     row['ffecha_journal']
-                    
-                    puts     row['ffechacontable_journal']
+                 
                     
                     row['turno']     = self.turno2(f1.to_datetime)
                     
-                    date_str = date.strftime( "%H:%M:%S" )
+                    date_str = f1.to_datetime.strftime( "%H:%M:%S" )
                     
                     if   date_str >= TURNO31[0] and date_str <= TURNO31[1]
+                        
+                           puts     row['ffecha_journal']
+                           puts     row['ffechacontable_journal']
+                    
                           fecha_hoy = row['ffecha_journal'].to_date - 1  
+                          row['ffecha_journal'] = fecha_hoy
+                          row['ffecha_journal'].to_datetime
                     end
                     
-                    row['ffecha_journal'] = fecha_hoy
-                    row['ffecha_journal'].to_datetime
+                    row['ffecha_journal'] = row['ffecha_journal'].to_date 
                     
                     Journal.create! row.to_hash 
             
