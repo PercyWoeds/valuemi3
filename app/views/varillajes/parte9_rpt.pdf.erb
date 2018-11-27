@@ -68,7 +68,7 @@
                     <td width = "10%" align ="right"><%= sprintf("%.4f",detalle.le_ac_gln)    %></td>
                     <td width = "10%" align ="right"><%=  sprintf("%.2f",detalle.quantity * -1)%></td>
                     <td width = "10%" align ="right"><%=  sprintf("%.2f",detalle.price) %></td>
-                    <td width = "10%" align ="right"><%= sprintf("%.2f",detalle.quantity* detalle.price )   %></td>
+                    <td width = "10%" align ="right"><%= sprintf("%.2f",detalle.importe * -1 )   %></td>
                     </tr>          
                   
         <% end %>
