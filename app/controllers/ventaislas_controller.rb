@@ -87,8 +87,7 @@ class VentaislasController < ApplicationController
   
   def import
       Ventaisla.import(params[:file])
-       send_file("file.csv", :type => 'text/csv', :disposition => 'inline')
-       redirect_to root_url, notice: "Ventas importadas."
+      redirect_to root_url, notice: "Ventas importadas."
   end 
 
   
