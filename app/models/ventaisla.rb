@@ -131,10 +131,12 @@ def  get_ventas_combustibles_producto(isla,producto,value)
                     
                           fecha_hoy = row['ffecha_journal'].to_date - 1  
                           row['ffecha_journal'] = fecha_hoy
-                          row['ffecha_journal'].to_datetime
+                          
+                    else
+                          row['ffecha_journal'] = f1.to_date 
                     end
                     
-                    row['ffecha_journal'] = row['ffecha_journal'].to_date 
+                    
                     
                     Journal.create! row.to_hash 
             
@@ -165,6 +167,7 @@ def  get_ventas_combustibles_producto(isla,producto,value)
                 puts fecha_venta_isla 
                 
                  if isla_existe 
+                     
                  else 
                   @ventaisla = Ventaisla.new(fecha: fecha_venta_isla, turno: turnos ,employee_id: 1, importe: 0,galones: 0 ,island_id: isla.id )               
                   @ventaisla.save
