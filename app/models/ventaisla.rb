@@ -155,7 +155,7 @@ def  get_ventas_combustibles_producto(isla,producto,value)
         
         
         
-          fecha_venta_isla = @journal.first.ffecha_journal
+          fecha_venta_isla = @journal.last.ffecha_journal
           
           (1..3).map do |turnos|
               
