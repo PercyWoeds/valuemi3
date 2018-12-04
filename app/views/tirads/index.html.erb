@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Tirads</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Employee</th>
+      <th>Turno</th>
+      <th>Fecha</th>
+      <th>Importe</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @tirads.each do |tirad| %>
+      <tr>
+        <td><%= tirad.employee_id %></td>
+        <td><%= tirad.turno %></td>
+        <td><%= tirad.fecha %></td>
+        <td><%= tirad.importe %></td>
+        <td><%= link_to 'Show', tirad %></td>
+        <td><%= link_to 'Edit', edit_tirad_path(tirad) %></td>
+        <td><%= link_to 'Destroy', tirad, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Tirad', new_tirad_path %>

@@ -3559,6 +3559,39 @@ def factura3
     end
   end
 
+
+
+def cuadre01 
+  
+    @company=Company.find(1)          
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]    
+    
+       
+    @contado_rpt = @company.get_ventas_combustibles_fecha_producto(@fecha1,@fecha2)
+    @detalle_ventas_grifero = @company.get_ventas_combustibles_fecha_grifero(@fecha1,@fecha2)
+    @producto = @company.get_productos_comb 
+    
+    case params[:print]
+      when "To PDF" then 
+        begin 
+         render  pdf: "Vale5 ",template: "varillajes/cuadre01_rpt.pdf.erb",locals: {:varillajes => @contado_rpt},
+         :orientation      => 'Landscape',
+         :header => {
+           :spacing => 5,
+                           :html => {
+                     :template => 'layouts/pdf-header.html',
+                           right: '[page] of [topage]'
+                  }
+               }
+        
+        end   
+      when "To Excel" then render xlsx: 'cuadre01_rpt_xls'
+          
+      else render action: "index"
+    end
+  end
+  
    
   
       

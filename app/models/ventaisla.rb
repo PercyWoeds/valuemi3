@@ -253,16 +253,171 @@ def get_venta_total_glns(turno1,isla)
           return ret    
      
 end 
-def get_venta_total_impo(turno1,isla)
-     facturas = VentaislaDetail.where(["ventaisla_id = ?",self.id ]).order(:id)
-          ret = 0 
-          if facturas 
-          ret=0  
+        def get_venta_total_impo(turno1,isla)
+            facturas = VentaislaDetail.where(["ventaisla_id = ?",self.id ]).order(:id)
+             ret = 0 
+            if facturas 
+            ret=0  
             for factura in facturas      
                 ret += factura.total
             end
-          end 
-          return ret    
-end 
+            end 
+            return ret    
+        end 
+
+        def  get_ventas_grifero_turno(fecha1,fecha2,grifero,turno) 
+            facturas = Ventaisla.where(["fecha >= ?  and fecha <=  ? and employee_id = ? and turno = ?  " , "#{fecha1} 00:00:00","#{fecha2} 23:59:59"   , grifero,turno] ).order(:fecha,:turno)
+            return facturas 
+        end 
+        
+        
+        def  get_tirada_grifero_turno(fecha1,fecha2,grifero,turno) 
+            ret = 0
+            facturas = Tirad.where(["fecha >= ?  and fecha <=  ? and employee_id = ? and turno = ?  " , "#{fecha1} 00:00:00","#{fecha2} 23:59:59"   , grifero,turno] ).order(:fecha,:turno)
+            for factura in facturas
+                ret += factura.importe.to_f
+            end
+            return ret
+       
+        end 
+        def  get_ventaplaya_grifero_turno(fecha1,fecha2,grifero,turno) 
+            ret = 0
+            facturas = Sellvale.where(["fecha >= ?  and fecha <=  ? and cod_emp = ? and turno = ?  " , "#{fecha1} 00:00:00","#{fecha2} 23:59:59" , grifero,turno ]).order(:fecha,:turno)
+            for factura in facturas
+                ret += factura.importe.to_f
+            end
+            return ret
+        end 
+        
+      
+      
+      ####
+      def  get_ventas_contometros_efectivo_grifero_turno(fecha,grifero,turno) 
+
+             facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and fpago = ? and td <> ?  and tipo<> ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "1" ,"N","2"])
+             
+             if facturas
+                 
+                ret=0  
+                for detalle in facturas
+                    ret += detalle.importe.to_f
+               end 
+            end 
+        
+            return ret
+         
+        end
+        
+        
+        def  get_ventas_contometros_tarjeta_grifero_turno(fecha,grifero,turno) 
+
+             facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and fpago <> ?  and td <> ?  and tipo = ?" , "#{fecha} 00:00:00","#{fecha} 23:59:59", "1" ,"N","1"])
+             
+             if facturas
+                 
+                ret=0  
+                for detalle in facturas
+                    ret += detalle.importe.to_f
+               end 
+            end 
+        
+            return ret
+         
+         end 
+        
+         def  get_ventas_contometros_creditos_grifero_turno(fecha,grifero,turno ) 
+     
+           facturas = Sellvale.find_by_sql(['Select sellvales.* from sellvales    
+             INNER JOIN products ON sellvales.cod_prod = products.code 
+             WHERE products.products_category_id = 1 
+             and sellvales.fecha >= ? 
+             and sellvales.fecha <= ? 
+             and td = ? and tipo = ?
+             ORDER BY sellvales.fecha', "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","1" ])
+             
+          #facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ?  and tipo = ?" , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","1" ])
+             
+             if facturas
+                 
+                ret=0  
+                for detalle in facturas
+                    ret += detalle.implista
+               end 
+            end 
+        
+            return ret
+         
+         end 
+ 
+         
+         def  get_ventas_contometros_adelantado_grifero_turno(fecha,grifero,turno ) 
+        
+             facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ?  and tipo = ?" , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","4" ])
+             
+             if facturas
+                 
+                ret=0  
+                for detalle in facturas
+                     ret += detalle.implista
+               end 
+            end 
+        
+            return ret
+         
+         end 
+ 
+ 
+          def  get_ventas_vale_contado_grifero_turno(fecha,grifero,turno ) 
+        
+             facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ? and tipo  = ?  " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","2" ])
+             ret=0  
+             if facturas
+                 
+                
+                for detalle in facturas
+                     ret += detalle.importe.to_f
+                
+               end 
+            end 
+        
+            return ret
+         
+         end 
+         
+      
+      ####
+      
+        
+        
+        def  get_ventaplaya_grifero_turno_documento(fecha1,grifero,turno,value="F") 
+          
+             ret = 0
+             
+          facturas = Sellvale.where(["fecha >= ?  and fecha <=  ? and cod_emp = ? and turno = ?   and fpago <> ?" , "#{fecha1} 00:00:00","#{fecha1} 23:59:59"  , grifero,turno ,"1"] ).order(:fecha,:turno)
+          for factura in facturas
+            if (value == "F")
+              ret += factura.importe.to_f
+            elsif(value == "B")
+              ret += factura.importe.to_f
+            else
+              ret += factura.importe.to_f
+            end
+          end
+          
+          return ret
+             
+        end 
+        
+        def get_product(id)        
+            
+            a = Product.find(id)
+            return a.full_name
+            
+            
+        end 
+        
+        
+        
+
 
 end

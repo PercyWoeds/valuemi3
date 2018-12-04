@@ -4244,12 +4244,54 @@
        
         end 
         
-         def  get_ventas_combustibles_fecha(fecha1,fecha2) 
+        
+        
+        
+       def  get_ventas_combustibles_fecha(fecha1,fecha2) 
     
             facturas = Ventaisla.select("date(ventaislas.fecha) as fecha_venta").where(["fecha >= ?  and fecha <=  ?" , "#{fecha1} 00:00:00","#{fecha2} 23:59:59"] ).order("fecha_venta").group("fecha_venta")
             return facturas 
             
         end 
+        
+        def  get_ventas_combustibles_fecha_producto(fecha1,fecha2) 
+    
+            facturas = Ventaisla.find_by_sql(['Select ventaislas.employee_id,ventaislas.turno,ventaisla_details.product_id,
+                    SUM(ventaisla_details.quantity) AS quantity,
+                    SUM(ventaisla_details.total) AS total 
+                      from ventaislas 
+                      INNER JOIN employees ON ventaislas.employee_id = employees.id  
+                      INNER JOIN ventaisla_details ON ventaislas.id = ventaisla_details.ventaisla_id
+                      INNER JOIN products ON  ventaisla_details.product_id = products.id 
+                      WHERE ventaislas.fecha >= ? and ventaislas.fecha <= ? 
+                      GROUP BY ventaislas.fecha,ventaislas.employee_id,ventaislas.turno,ventaisla_details.product_id
+                      ORDER BY ventaislas.fecha,ventaislas.employee_id,ventaislas.turno,ventaisla_details.product_id
+                      ', "#{fecha1} 00:00:00",
+                      "#{fecha2} 23:59:59" ])  
+            
+            return facturas 
+            
+        end 
+
+
+        def  get_ventas_combustibles_fecha_grifero(fecha1,fecha2) 
+    
+            facturas = Ventaisla.find_by_sql(['Select ventaislas.employee_id,ventaislas.turno,
+                    SUM(ventaisla_details.quantity) AS quantity,
+                    SUM(ventaisla_details.total) AS total 
+                      from ventaislas 
+                      INNER JOIN employees ON ventaislas.employee_id = employees.id  
+                      INNER JOIN ventaisla_details ON ventaislas.id = ventaisla_details.ventaisla_id
+                      WHERE ventaislas.fecha >= ? and ventaislas.fecha <= ? 
+                      GROUP BY ventaislas.fecha,ventaislas.turno,ventaislas.employee_id
+                      ORDER BY ventaislas.fecha,ventaislas.turno,ventaislas.employee_id
+                      ', "#{fecha1} 00:00:00",
+                      "#{fecha2} 23:59:59" ])  
+            
+            return facturas 
+            
+        end 
+        
         
         def  get_ventas_combustibles_producto(fecha1,fecha2) 
     

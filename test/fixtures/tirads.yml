@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  employee_id: 1
+  turno: 1
+  fecha: 2018-12-03 17:54:43
+  importe: 1.5
+
+two:
+  employee_id: 1
+  turno: 1
+  fecha: 2018-12-03 17:54:43
+  importe: 1.5

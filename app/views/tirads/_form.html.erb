@@ -1,0 +1,14 @@
+<%= simple_form_for(@tirad) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :employee_id %>
+    <%= f.input :turno %>
+    <%= f.input :fecha %>
+    <%= f.input :importe %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

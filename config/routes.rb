@@ -1,5 +1,6 @@
   Mnygo::Application.routes.draw do
 
+  resources :tirads
   resources :note_concepts
   resources :markets
   resources :expenses
@@ -139,8 +140,11 @@
     
     collection { get :rpt_ccobrar12_all   }
     collection { get :rpt_purchase_all   }
+    
     collection { get :rpt_pago_adelantado   }
         collection { get :factura3 }
+        
+    collection { get :cuadre01   }    
   end 
     
   
@@ -493,6 +497,8 @@ end
   match 'companies/reports/rpt_parte_11/:company_id' => 'reports#rpt_parte_11', via: [:get, :post]    
   match 'companies/reports/rpt_parte_12/:company_id' => 'reports#rpt_parte_12', via: [:get, :post]    
   match 'companies/reports/rpt_parte_13/:company_id' => 'reports#rpt_parte_13', via: [:get, :post]    
+  
+  match 'companies/reports/cuadre_01/:company_id' => 'reports#cuadre_01', via: [:get, :post]    
   
   match 'companies/reports/rpt_kardex1_pdf/:company_id' => 'reports#rpt_kardex1_pdf', via: [:get, :post]    
   # Company users

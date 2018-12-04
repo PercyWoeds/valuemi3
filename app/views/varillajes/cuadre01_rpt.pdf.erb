@@ -1,0 +1,209 @@
+<html>
+<body>
+  <h6 ><center>  Venta   Desde: <%= @fecha1 %> Hasta: <%= @fecha2 %> </center>   </h6>
+  
+    <font size="2" face="Courier New" >  
+    
+    <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+  
+  <tr bgcolor="#B4D7F7">
+    <td width="100%"> Venta Contometros x Griero </td>
+    
+  </tr>
+  
+  </table>
+
+
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+  <tr bgcolor="#B4D7F7">
+    
+    
+    <td width="5%"> Manguera</td>
+    <td width="42%">Producto </td>
+    <td width="10%" align="center">Lec.Anterior</td>
+    <td width="10%" align="center"> Lec.Actual</td>
+    <td width="10%" align="right"> Cantidad</td>
+    <td width="10%" align="right"> Precio </td>
+    <td width="10%" align="right"> Importe </td>
+    
+    
+  </tr>
+  </table>
+
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+      <% nroitem = 1%>
+      <% total_1 =  0%>
+      <% total_2 =  0%>
+      <% total_3 =  0%>
+      
+      
+       <% for  contado in @contado_rpt  %>
+  
+                  <tr>
+                    <td width= "23%"> <%=  contado.employee.full_name %>   </td>
+                    <td width= "3%" >    </td>
+                    <td width = "5%" align ="right"><% %></td>
+                    <td width = "3%" align ="right"><% %> </td>
+                    <td width = "10%" align ="left"><%= contado.get_product(contado.product_id) %> </td>
+                    
+                    <td width = "5%" align ="right"><%= contado.turno %></td>
+                    <td width = "8%" align ="right"><%=  sprintf("%.2f",contado.quantity)%></td>
+                    <td width = "8%" align ="right"><%   %></td>
+                    <td width = "8%" align ="right"><%    %></td>
+                    <td width = "8%" align ="right"><%= sprintf("%.2f",contado.total)   %></td>
+                    </tr>
+
+                    <% total_1 +=  contado.quantity  %>
+                    <% total_2 +=  contado.total  %>
+      <% end %>       
+  </table>
+  
+  
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+     <tr bgcolor="#B4D7F7">
+          <td width = "60%" align ="right">Total </td>
+
+          <td width = "10%" align ="right"> </td>
+          <td width = "10%" align ="right"><%= sprintf("%.3f",total_1)   %></td>
+          <td width = "10%"  align ="right"></td>
+          <td width = "10%" align ="right"><%= sprintf("%.2f",total_2)   %></td>
+    </tr>
+   </table>
+   
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+  <tr bgcolor="#B4D7F7">
+  
+    <td width="5%"> </td>
+    <td width="42%"> Liquidacion  </td>
+    <td width="10%" align="center"></td>
+    <td width="10%" align="center"></td>
+    <td width="10%" align="right"></td>
+    <td width="10%" align="right"> </td>
+    <td width="10%" align="right"> </td>
+    
+    
+  </tr>
+  </table>
+      
+      <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'> 
+      
+      
+       <% for  contado in @detalle_ventas_grifero  %>
+  
+                  <tr>
+                    <td width= "23%"> <%=  contado.employee.full_name %>   </td>
+                    <td width = "5%" > </td>
+                    <td width = "8%" > </td>
+                    <td width = "8%" > </td>
+                    <td width = "11%" align ="right"></td>
+                    <td width = "15%" align ="left"> </td>
+                    <td width = "15%" align ="left"> </td>
+                    <td width = "15%" align ="right"> </td>
+                    
+                    
+                  </tr>
+                  
+                  <tr>
+                    <td width = "23%" align ="right"> </td>
+                    <td width = "5%" align ="right"><%= contado.turno %></td>
+                    <td width = "8%" align ="right"><%=  sprintf("%.2f",contado.quantity)%></td>
+                    <td width = "8%" align ="right"><%= sprintf("%.2f",contado.total)   %></td>
+                    <td width = "11%" align ="right"></td>
+                      <td width = "15%" align ="left"> </td>
+                      <td width = "15%" align ="left"> </td>
+                      
+                      <td width = "15%" align ="right"></td>
+                    
+                   </tr>
+                   
+                   
+              <%      a1 = contado.get_ventas_contometros_efectivo_grifero_turno(@fecha1,contado.employee_id, contado.turno) %>
+              <%      a2 = contado.get_ventas_contometros_tarjeta_grifero_turno(@fecha1,contado.employee_id, contado.turno)  %>
+              <%      a3 = contado.get_ventas_contometros_creditos_grifero_turno(@fecha1,contado.employee_id, contado.turno)  %>
+              <%      a4 = contado.get_ventas_contometros_adelantado_grifero_turno(@fecha1,contado.employee_id, contado.turno)  %>
+              <%      a5 = contado.get_ventas_vale_contado_grifero_turno(@fecha1,contado.employee_id, contado.turno)   %>
+                    
+                    <tr>
+                      <td width = "23%" align ="right"> </td>
+                      <td width = "5%" align ="right"></td>
+                      <td width = "8%" align ="right"></td>
+                      <td width = "8%" align ="right"></td>
+                      <td width = "11%" align ="right"></td>
+                      <td width = "15%" align ="left"> Efectivos : </td>
+                      <td width = "15%" align ="left"> </td>
+                      
+                      <td width = "15%" align ="right"><%= sprintf("%.2f",a1)   %></td>
+                   </tr>
+                   <tr>
+                      <td width = "23%" align ="right"> </td>
+                      <td width = "5%" align ="right"></td>
+                      <td width = "8%" align ="right"></td>
+                      <td width = "8%" align ="right"></td>
+                      <td width = "11%" align ="right"></td>
+                      <td width = "15%" align ="left"> Tarjetas : </td>
+                        <td width = "15%" align ="left"> </td>
+                      <td width = "15%" align ="right"> <%= sprintf("%.2f",a2)   %></td>
+                   </tr>
+                    <tr>
+                      <td width = "23%" align ="right"> </td>
+                      <td width = "5%" align ="right"></td>
+                      <td width = "8%" align ="right"></td>
+                      <td width = "8%" align ="right"></td>
+                       <td width = "11%" align ="right"></td>
+                      <td width = "15%" align ="left"> V.Creditos : </td>
+                        <td width = "15%" align ="left"> </td>
+                      <td width = "15%" align ="right"> <%= sprintf("%.2f",a3)   %></td>
+                   </tr>
+                   <tr>
+                      <td width = "23%" align ="right"> </td>
+                      <td width = "5%" align ="right"></td>
+                      <td width = "8%" align ="right"></td>
+                      <td width = "8%" align ="right"></td>
+                      <td width = "11%" align ="right"></td>
+                      <td width = "15%" align ="left"> V.Contado : </td>
+                        <td width = "15%" align ="left"> </td>
+                      <td width = "15%" align ="right"> <%= sprintf("%.2f",a5)   %></td>
+                   </tr>
+                   
+                    <tr>
+                      <td width = "23%" align ="right"> </td>
+                      <td width = "5%" align ="right"></td>
+                      <td width = "8%" align ="right"></td>
+                      <td width = "8%" align ="right"></td>
+                      
+                      <td width = "11%" align ="right"></td>
+                      <td width = "15%" align ="left"> V.Adelantados : </td>
+                        <td width = "15%" align ="left"> </td>
+                      <td width = "15%" align ="right"> <%= sprintf("%.2f",a4)   %></td>
+                   </tr>
+                  
+                   
+                    <tr>
+                      <td width = "23%" align ="right"> </td>
+                      <td width = "5%" align ="right"></td>
+                      <td width = "8%" align ="right"></td>
+                      <td width = "8%" align ="right"></td>
+                      
+                      <td width = "11%" align ="right"></td>
+                      <td width = "15%" align ="left"> ** Diferencia : </td>
+                        <td width = "15%" align ="left"> </td>
+                      <td width = "15%" align ="right"> <%= sprintf("%.2f",contado.total - a1 + a2 + a3 + a4 + a5)   %></td>
+                   </tr>
+                   
+                   
+                
+      <% end %>                    
+                  
+               
+        <hr>  
+     </table>
+     <br>
+     
+     
+   
+  
+    
+    </body>
+      
+      </html>
+      

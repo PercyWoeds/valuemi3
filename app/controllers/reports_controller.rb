@@ -1601,6 +1601,12 @@ def rpt_facturas_4
     @products = @company.get_products()
     
   end
+  def cuadre_01
+    @company = Company.find(params[:company_id])    
+    @pagetitle = "Reportes de Liquidaciones"    
+    @products = @company.get_products()
+    
+  end
   
   
 end

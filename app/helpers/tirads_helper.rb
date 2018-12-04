@@ -1,0 +1,2 @@
+module TiradsHelper
+end

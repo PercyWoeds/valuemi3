@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Employee:</strong>
+  <%= @tirad.employee_id %>
+</p>
+
+<p>
+  <strong>Turno:</strong>
+  <%= @tirad.turno %>
+</p>
+
+<p>
+  <strong>Fecha:</strong>
+  <%= @tirad.fecha %>
+</p>
+
+<p>
+  <strong>Importe:</strong>
+  <%= @tirad.importe %>
+</p>
+
+<%= link_to 'Edit', edit_tirad_path(@tirad) %> |
+<%= link_to 'Back', tirads_path %>
