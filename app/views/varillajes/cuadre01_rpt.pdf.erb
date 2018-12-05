@@ -110,8 +110,8 @@
                   <tr>
                     <td width = "23%" align ="right"> </td>
                     <td width = "5%" align ="right"><%= contado.turno %></td>
-                    <td width = "8%" align ="right"><%=  sprintf("%.2f",contado.quantity)%></td>
-                    <td width = "8%" align ="right"><%= sprintf("%.2f",contado.total)   %></td>
+                    <td width = "8%" align ="right"><%=  sprintf("%.2f",contado.quantity*-1)%></td>
+                    <td width = "8%" align ="right"><%= sprintf("%.2f",contado.total*-1)   %></td>
                     <td width = "11%" align ="right"></td>
                       <td width = "15%" align ="left"> </td>
                       <td width = "15%" align ="left"> </td>
@@ -191,7 +191,7 @@
                       <td width = "11%" align ="right"></td>
                       <td width = "15%" align ="left"> ** Diferencia : </td>
                         <td width = "15%" align ="left"> </td>
-                      <td width = "15%" align ="right"> <%= sprintf("%.2f",contado.total - a1 + a2 + a3 + a4 + a5)   %></td>
+                      <td width = "15%" align ="right"> <%= sprintf("%.2f", a1 + a2 + a3 + a4 + a5- contado.total)   %></td>
                    </tr>
                    
                    
