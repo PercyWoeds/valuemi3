@@ -3575,7 +3575,7 @@ def cuadre01
     case params[:print]
       when "To PDF" then 
         begin 
-         render  pdf: "Vale5 ",template: "varillajes/cuadre01_rpt.pdf.erb",locals: {:varillajes => @contado_rpt},
+         render  pdf: "Cuadre",template: "varillajes/cuadre01_rpt.pdf.erb",locals: {:varillajes => @contado_rpt},
          :orientation      => 'Landscape',
          :header => {
            :spacing => 5,

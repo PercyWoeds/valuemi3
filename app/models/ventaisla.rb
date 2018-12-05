@@ -294,7 +294,7 @@ end
       ####
       def  get_ventas_contometros_efectivo_grifero_turno(fecha,grifero,turno) 
 
-             facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and fpago = ? and td <> ?  and tipo<> ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "1" ,"N","2"])
+             facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and fpago = ? and td <> ?  and tipo<> ? and cod_emp = ? and turno=? " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "1" ,"N","2",grifero,turno])
              
              if facturas
                  
@@ -311,7 +311,7 @@ end
         
         def  get_ventas_contometros_tarjeta_grifero_turno(fecha,grifero,turno) 
 
-             facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and fpago <> ?  and td <> ?  and tipo = ?" , "#{fecha} 00:00:00","#{fecha} 23:59:59", "1" ,"N","1"])
+             facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and fpago <> ?  and td <> ?  and tipo = ? and cod_emp = ? and turno=?" , "#{fecha} 00:00:00","#{fecha} 23:59:59", "1" ,"N","1",grifero,turno])
              
              if facturas
                  
@@ -332,8 +332,8 @@ end
              WHERE products.products_category_id = 1 
              and sellvales.fecha >= ? 
              and sellvales.fecha <= ? 
-             and td = ? and tipo = ?
-             ORDER BY sellvales.fecha', "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","1" ])
+             and td = ? and tipo = ? and cod_emp = ? and turno = ? 
+             ORDER BY sellvales.fecha', "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","1" ,grifero,turno])
              
           #facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ?  and tipo = ?" , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","1" ])
              
@@ -352,7 +352,7 @@ end
          
          def  get_ventas_contometros_adelantado_grifero_turno(fecha,grifero,turno ) 
         
-             facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ?  and tipo = ?" , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","4" ])
+             facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ?  and tipo = ? and cod_emp = ? and turno = ?" , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","4",grifero,turno ])
              
              if facturas
                  
@@ -369,7 +369,7 @@ end
  
           def  get_ventas_vale_contado_grifero_turno(fecha,grifero,turno ) 
         
-             facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ? and tipo  = ?  " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","2" ])
+             facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ? and tipo  = ? and cod_emp = ? and turno = ?  " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","2",grifero,turno ])
              ret=0  
              if facturas
                  
@@ -416,7 +416,14 @@ end
             
         end 
         
-        
+        def get_code(id)    
+            a= Employee.find(id)    
+            if a 
+            return a.cod_emp 
+            else
+            return "0001"
+            end 
+        end 
         
 
 
