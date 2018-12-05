@@ -51,6 +51,18 @@ TABLE_HEADERS2  = ["ITEM ",
                      "SOLES",
                      "DOLARES ",
                      "OBSERV"]
+                     
+ TABLE_HEADERS3b = ["TD",
+                      "Documento",
+                     "Fecha",
+                     "Fec.Vmto",
+                     "Proveedor",
+                     "Moneda",  
+                     "Percepcion",
+                     "Soles",
+                     "Dolares"
+                    ]
+                                          
 
  TABLE_HEADERS4 = ["TD",
                       "DOCUMENTO",

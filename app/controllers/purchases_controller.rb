@@ -643,7 +643,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
       headers = []
       table_content = []
 
-      Purchase::TABLE_HEADERS3.each do |header|
+      Purchase::TABLE_HEADERS3b.each do |header|
         cell = pdf.make_cell(:content => header)
         cell.background_color = "FFFFCC"
         headers << cell
