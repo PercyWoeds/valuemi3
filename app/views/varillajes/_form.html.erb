@@ -14,7 +14,7 @@
       </div>
       <div class="field">
       <%= f.label :tipo , "Tanque :", :class => "bold" %><br />
-      <%= f.collection_select :tanque_id, @tanques, :id, :code, :prompt => true %>
+      <%= f.collection_select :tanque_id, @tanques, :id, :name ,:prompt => true %>
       </div>
 
 

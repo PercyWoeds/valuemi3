@@ -19,7 +19,7 @@ class VarillajesController < ApplicationController
   # GET /varillajes/new
   def new
     @varillaje = Varillaje.new
-    @tanques = Tanque.all
+    @tanques = Tanque.joins(:product).select("tanques.id, products.name ")
   end
 
   # GET /varillajes/1/edit
