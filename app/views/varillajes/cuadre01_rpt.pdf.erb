@@ -44,13 +44,13 @@
        <% for  contado in @contado_rpt  %>
   
                   <tr>
-                    <td width= "23%"> <%=  contado.employee.full_name %>   </td>
+                    <td width= "23%">    </td>
                     <td width= "3%" >    </td>
                     <td width = "5%" align ="right"><% %></td>
                     <td width = "3%" align ="right"><% %> </td>
                     <td width = "10%" align ="left"><%= contado.get_product(contado.product_id) %> </td>
                     
-                    <td width = "5%" align ="right"><%= contado.turno %></td>
+                    <td width = "5%" align ="right"></td>
                     <td width = "8%" align ="right"><%=  sprintf("%.2f",contado.quantity)%></td>
                     <td width = "8%" align ="right"><%   %></td>
                     <td width = "8%" align ="right"><%    %></td>
