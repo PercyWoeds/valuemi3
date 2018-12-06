@@ -398,7 +398,7 @@ def reportes13
     case params[:print]
       when "To PDF" then 
         begin 
-         render  pdf: "Ordenes ",template: "varillajes/parte13_rpt.pdf.erb",locals: {:varillajes => @contado_rpt1},
+         render  pdf: "Ordenes ",template: "varillajes/parte14_rpt.pdf.erb",locals: {:varillajes => @contado_rpt1},
          :orientation    => 'Landscape',
          
          :header => {
@@ -415,7 +415,7 @@ def reportes13
                }
                
         end   
-      when "To Excel" then render xlsx: 'parte13_rpt_xls'
+      when "To Excel" then render xlsx: 'parte14_rpt_xls'
       else render action: "index"
     end
   end
