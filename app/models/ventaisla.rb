@@ -53,7 +53,7 @@ class Ventaisla < ActiveRecord::Base
                 if xpump_id
                 puts "venta isla detalle pump  "
                     
-                @ventaisla_detail = VentaislaDetail.new(pump_id: xpump_id.id , le_an_gln: lectura_ant,le_ac_gln: lectura_act,price:precio, quantity: cantidad ,total: importe ,ventaisla_id: 1 , product_id: @pump_isla.product_id )
+                @ventaisla_detail = VentaislaDetail.new(pump_id: xpump_id.id , le_an_gln: lectura_ant,le_ac_gln: lectura_act,price:precio, quantity: cantidad ,total: importe ,ventaisla_id: @venta_isla_id.id , product_id: @pump_isla.product_id )
                 @ventaisla_detail.save
                 
                 end 
