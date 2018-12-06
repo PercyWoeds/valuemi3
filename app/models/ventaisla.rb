@@ -25,7 +25,42 @@ class Ventaisla < ActiveRecord::Base
        
     def self.import3(file)
           CSV.foreach(file.path, headers: true, encoding:'iso-8859-1:utf-8') do |row|
-          VentaislaDetail.create! row.to_hash 
+              
+              
+              
+          
+           @pump_isla = Pump.find_by(fuel: row['manguera'])
+           
+           start_date = row['fecha']
+           end_date = row['fecha']
+           turno = row['turno']
+           lectura_ant =  row['inicial']
+           lectura_act =  row['final']
+           precio  =  row['precio']
+           cantidad = row['cantidad']
+           importe = row['importe']
+           empleado = row['employee_id']
+           
+          
+            @venta_isla_id = Ventaisla.find_by("(fecha >= ?) AND (fecha <= ?) and turno = ?  and employee_id = ?  and island_id = ?", start_date , end_date , turnox,empleado, "1")
+            
+            
+             if @venta_isla_id 
+                
+                xpump_id =  Pump.find_by(fuel: row['manguera'])
+                
+                if xpump_id
+                puts "venta isla detalle pump  "
+                    
+                @ventaisla_detail = VentaislaDetail.new(pump_id: xpump_id.id , le_an_gln: lectura_ant,le_ac_gln: lectura_act,price:precio, quantity: cantidad ,total: importe ,ventaisla_id: 1 , product_id: @pump_isla.product_id )
+                @ventaisla_detail.save
+                
+                end 
+                
+            end     
+              
+          
+          
         end
     end         
     
