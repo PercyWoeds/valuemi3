@@ -151,6 +151,9 @@
   resources :ventaislas  do
     resources :ventaisla_details, except: [:index,:show], controller: "ventaislas/ventaisla_details"
      collection { post :import  }
+     collection { post :import2  }
+     collection { post :import3  }
+     
   end 
   
   resources :stocks do 

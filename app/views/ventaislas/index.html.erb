@@ -51,3 +51,14 @@
   <%= submit_tag "Importar " %>
 <% end %>
 
+
+
+<%= form_tag import2_ventaislas_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Importar " %>
+<% end %>
+
+<%= form_tag import3_ventaislas_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Importar " %>
+<% end %>

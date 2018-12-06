@@ -39,6 +39,12 @@ class Sellvale < ActiveRecord::Base
           
              Sellvale.create! row.to_hash 
          end 
+         Sellvale.where(cod_prod:"03").update_all(cod_prod:"05")
+         Sellvale.where(cod_prod:"04").update_all(cod_prod:"03")
+         Sellvale.where(cod_prod:"06").update_all(cod_prod:"04")
+         Sellvale.where(cod_prod:"07").update_all(cod_prod:"05")
+         
+         
     end     
         
 def self.import2(file2)

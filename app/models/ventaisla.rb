@@ -16,7 +16,18 @@ class Ventaisla < ActiveRecord::Base
     
     belongs_to :payroll 
     
+    def self.import2(file)
+          CSV.foreach(file.path, headers: true, encoding:'iso-8859-1:utf-8') do |row|
+          Ventaisla.create! row.to_hash 
+          
+        end
+    end         
        
+    def self.import3(file)
+          CSV.foreach(file.path, headers: true, encoding:'iso-8859-1:utf-8') do |row|
+          VentaislaDetail.create! row.to_hash 
+        end
+    end         
     
     def get_importe_1(value="total")
         

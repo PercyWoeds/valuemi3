@@ -90,6 +90,14 @@ class VentaislasController < ApplicationController
       redirect_to root_url, notice: "Ventas importadas."
   end 
 
+  def import2
+      Ventaisla.import2(params[:file])
+      redirect_to root_url, notice: "Ventas importadas."
+  end 
+  def import3
+      Ventaisla.import3(params[:file])
+      redirect_to root_url, notice: "Ventas importadas."
+  end 
   
   private
     # Use callbacks to share common setup or constraints between actions.
