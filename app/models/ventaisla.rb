@@ -40,6 +40,7 @@ class Ventaisla < ActiveRecord::Base
            cantidad = row['cantidad']
            importe = row['importe']
            empleado = row['employee_id']
+           puts start_date
            
           
             @venta_isla_id = Ventaisla.find_by("(fecha >= ?) AND (fecha <= ?) and turno = ?  and employee_id = ?  and island_id = ?", start_date , end_date , turnox,empleado, "1")
