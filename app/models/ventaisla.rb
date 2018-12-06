@@ -31,8 +31,8 @@ class Ventaisla < ActiveRecord::Base
           
            @pump_isla = Pump.find_by(fuel: row['manguera'])
            
-           start_date = row['fecha']
-           end_date = row['fecha']
+           start_date = row['fecha'].to_date
+           end_date = row['fecha'].to_date
            turnox = row['turno']
            lectura_ant =  row['inicial']
            lectura_act =  row['final']
