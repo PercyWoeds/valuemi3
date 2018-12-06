@@ -33,7 +33,7 @@ class Ventaisla < ActiveRecord::Base
            
            start_date = row['fecha']
            end_date = row['fecha']
-           turno = row['turno']
+           turnox = row['turno']
            lectura_ant =  row['inicial']
            lectura_act =  row['final']
            precio  =  row['precio']
