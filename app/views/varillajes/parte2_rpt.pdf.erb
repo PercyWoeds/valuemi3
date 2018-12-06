@@ -165,7 +165,7 @@
                     <td width = "10%" align ="right"><%=  sprintf("%.2f",credito.cantidad.to_s)%></td>
                     <td width = "8%" align ="right"><%= sprintf("%.2f",credito.precio)   %></td>
                     <td width = "10%" align ="right"><%= sprintf("%.2f",credito.importe)   %></td>
-                    
+                    <td width = "10%" align ="right"><%= sprintf("%.2f",credito.implista)   %></td>
 
                         </tr>
                     <% nroitem = nroitem+1 %>
@@ -207,7 +207,7 @@
                     <td width = "10%" align ="right"><%=  sprintf("%.2f",credito.cantidad.to_s)%></td>
                     <td width = "8%" align ="right"><%= sprintf("%.2f",credito.precio)   %></td>
                     <td width = "10%" align ="right"><%= sprintf("%.2f",credito.importe)   %></td>
-                    
+                    <td width = "10%" align ="right"><%= sprintf("%.2f",credito.implista)   %></td>
 
                         </tr>
                     <% total_1 += credito.importe.to_f %>
