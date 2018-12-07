@@ -25,7 +25,7 @@ wb.styles do |s|
    
       
    
-    sheet.add_row [payment.fecha,payment.get_customer_name(contado.cod_cli),payment.serie,payment.numero,payment.cod_prod,payment.get_product_name(contado.cod_prod), payment.contado.get_tarjeta_name(contado.fpago),payment.cantidad,payment.precio,payment.importe,payment.implista], :style => [date,cadena,cadena,cadena,cadena,cadena,cadena,cadena,currency,currency,currency,currency,cadena]
+    sheet.add_row [payment.fecha,payment.get_customer_name(payment.cod_cli),payment.serie,payment.numero,payment.cod_prod,payment.get_product_name(payment.cod_prod), payment.get_tarjeta_name(payment.fpago),payment.cantidad,payment.precio,payment.importe,payment.implista], :style => [date,cadena,cadena,cadena,cadena,cadena,cadena,cadena,currency,currency,currency,currency,cadena]
     
    end
    
