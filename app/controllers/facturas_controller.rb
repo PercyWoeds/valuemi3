@@ -162,7 +162,7 @@ def reportes6
                
         
         end   
-      when "To Excel" then render xlsx: 'exportxls'
+      when "To Excel" then render xlsx: 'parte_6_rpt_xls'
       else render action: "index"
     end
   end
