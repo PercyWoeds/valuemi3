@@ -3576,7 +3576,6 @@ def cuadre01
       when "To PDF" then 
         begin 
          render  pdf: "Cuadre",template: "varillajes/cuadre01_rpt.pdf.erb",locals: {:varillajes => @contado_rpt},
-         :orientation      => 'Landscape',
          :header => {
            :spacing => 5,
                            :html => {
