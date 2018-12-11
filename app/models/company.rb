@@ -3666,7 +3666,7 @@
        # Ventas grifero 
        def  get_parte_detalle_grifero(fecha1,fecha2,grifero,turno ) 
          
-           @contado = Sellvale.where(["fecha >= ? and fecha <= ?  and  cod_emp = ? and turno = ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ,grifero,turno ]).order(:cod_prod,:fecha)
+           @contado = Sellvale.where(["fecha >= ? and fecha <= ?  and  cod_emp = ? and turno = ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ,grifero,turno ]).order(:fecha,:td)
          
           return @contado
        end 

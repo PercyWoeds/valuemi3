@@ -183,7 +183,7 @@ def get_cliente(cliente)
     end 
  end 
  def get_nombre_empleado(id)
-     a= Empleado.find_by(cod_emp: id)
+     a= Employee.find_by(cod_emp: id)
      
     if a
          return a.full_name
