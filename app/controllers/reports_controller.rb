@@ -1576,6 +1576,13 @@ def rpt_facturas_4
     @customers = @company.get_customers()
     @monedas=@company.get_monedas    
   end
+  
+  def rpt_parte_14
+    @company = Company.find(params[:company_id])    
+    @pagetitle = "Venta de grifero x turno "    
+    @empleados = @company.get_employees()
+    
+  end
   def rpt_redention_pdf
     @company = Company.find(params[:company_id])    
     @pagetitle = "Reportes de Ordenes "    

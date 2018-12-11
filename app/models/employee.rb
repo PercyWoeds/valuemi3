@@ -113,5 +113,11 @@ class Employee < ActiveRecord::Base
       # Title is for the above case, the OP incorrectly had 'name'
       where("idnumber LIKE ? or full_name ilike ? and active = ?", "%#{search}%","%#{search}%","1")
     end
-
+    
+    def self.get_codigo(id)
+        
+        a = Employee.find_by(cod_emp: id )
+        return a.cod_emp
+        
+    end 
 end

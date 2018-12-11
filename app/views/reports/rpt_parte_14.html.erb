@@ -16,6 +16,18 @@
     <div class="field">
         <input type="date" name="fecha1" value="2018-12-01" style = "width: 150px" >
         <input type="date" name="fecha2" value="2018-12-12" style = "width: 150px" >
+        <p>
+            
+            </p>  
+        
+        <div class="field">
+            <%= select_tag(:employee_id,options_from_collection_for_select(@empleados,'id','full_name') ) %>
+        </div>
+        
+        <div class="field">
+          <%=  select_tag(:turno, options_for_select([["TURNO 1",1],["TURNO 2",2],["TURNO 3",3],["TURNO 4",4]])) %>
+        </div>
+    
     </div>
 	
 <br> 

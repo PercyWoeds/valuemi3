@@ -3593,12 +3593,15 @@ def cuadre01
   
     def reportes14 
   
-    @company=Company.find(1)          
+    @company=Company.find(1)      
+    
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]    
+    @grifero  = Employee.get_codigo(params[:employee_id])    
     
-    @contado_rpt = @company.get_parte_2(@fecha1,@fecha2)
+    @turno  = params[:turno]    
     
+    @contado_rpt = @company.get_parte_detalle_grifero(@fecha1,@fecha2,@grifero,@turno)
     
     case params[:print]
       when "To PDF" then 
@@ -3606,7 +3609,7 @@ def cuadre01
          render  pdf: "Ordenes ",template: "varillajes/parte14_rpt.pdf.erb",locals: {:varillajes => @contado_rpt},
         :orientation      => 'Landscape'
         end   
-      when "To Excel" then render xlsx: 'parte14_rpt_xls'
+      when "To Excel" then render xlsx: 'parte4_rpt_xls'
       else render action: "index"
     end
   end
