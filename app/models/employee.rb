@@ -116,7 +116,9 @@ class Employee < ActiveRecord::Base
     
     def self.get_codigo(id)
         
-        a = Employee.find_by(cod_emp: id )
+        a = Employee.find(id )
+        
+        
         return a.cod_emp
         
     end 

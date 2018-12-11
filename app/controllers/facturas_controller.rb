@@ -3600,6 +3600,8 @@ def cuadre01
     @grifero  = Employee.get_codigo(params[:employee_id])    
     
     @turno  = params[:turno]    
+    puts @grifero 
+    puts @turno 
     
     @contado_rpt = @company.get_parte_detalle_grifero(@fecha1,@fecha2,@grifero,@turno)
     
