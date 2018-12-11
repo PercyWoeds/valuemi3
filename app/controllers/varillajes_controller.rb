@@ -7,7 +7,7 @@ class VarillajesController < ApplicationController
   # GET /varillajes
   # GET /varillajes.json
   def index
-    @varillajes = Varillaje.all
+    @varillajes = Varillaje.all.order(:fecha)
   end
 
   # GET /varillajes/1
