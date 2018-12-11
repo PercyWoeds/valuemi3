@@ -3611,7 +3611,7 @@ def cuadre01
          render  pdf: "Ordenes ",template: "varillajes/parte14_rpt.pdf.erb",locals: {:varillajes => @contado_rpt},
         :orientation      => 'Landscape'
         end   
-      when "To Excel" then render xlsx: 'parte4_rpt_xls'
+      when "To Excel" then render xlsx: 'parte14_rpt_xls'
       else render action: "index"
     end
   end
