@@ -1,0 +1,29 @@
+<%= render 'layouts/charts' %>
+
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %> &raquo;
+  <%= link_to "Reports", "/companies/reports/#{@company.id}" %>
+</div>
+
+<h1>
+  <%= image_tag("reports_48.png", :class => "vmiddle") %>
+  Ventas por grifero - detallado 
+</h1>
+ 
+<%= form_tag(reportes14_facturas_path, :method => "get") do %>
+
+    <div class="field">
+        <input type="date" name="fecha1" value="2018-12-01" style = "width: 150px" >
+        <input type="date" name="fecha2" value="2018-12-12" style = "width: 150px" >
+    </div>
+	
+<br> 
+ <%= submit_tag "To PDF", :name => "print" %>
+ <%= submit_tag "To Excel", :name => "print" %>
+  
+<% end %>
+
+   
+</html>
+

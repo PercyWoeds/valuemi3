@@ -3591,7 +3591,26 @@ def cuadre01
     end
   end
   
-   
+    def reportes14 
+  
+    @company=Company.find(1)          
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]    
+    
+    @contado_rpt = @company.get_parte_2(@fecha1,@fecha2)
+    
+    
+    case params[:print]
+      when "To PDF" then 
+        begin 
+         render  pdf: "Ordenes ",template: "varillajes/parte14_rpt.pdf.erb",locals: {:varillajes => @contado_rpt},
+        :orientation      => 'Landscape'
+        end   
+      when "To Excel" then render xlsx: 'parte14_rpt_xls'
+      else render action: "index"
+    end
+  end
+  
   
       
   private
