@@ -80,6 +80,6 @@ class TiradsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def tirad_params
-      params.require(:tirad).permit(:employee_id, :turno, :fecha, :importe)
+      params.require(:tirad).permit(:employee_id, :turno, :fecha, :importe,:documento,:moneda,:isla,:autoriza)
     end
 end

@@ -414,7 +414,7 @@ end
          end 
  
  
-          def  get_ventas_vale_contado_grifero_turno(fecha,grifero,turno ) 
+         def  get_ventas_vale_contado_grifero_turno(fecha,grifero,turno ) 
         
              facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ? and tipo  = ? and cod_emp = ? and turno = ?  " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","2",grifero,turno ])
              ret=0  
@@ -431,6 +431,22 @@ end
          
          end 
          
+         
+          def  get_ventas_tirada_grifero_turno(fecha,grifero,turno ) 
+        
+             facturas = Tirad.where(["fecha >= ? and fecha <= ?  and td = ? and employee_id = ? and turno = ?  " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","2",grifero,turno ])
+             ret=0  
+             if facturas
+                 
+                
+                for detalle in facturas
+                     ret += detalle.importe.to_f
+                
+               end 
+            end 
+        
+            return ret
+         end 
       
       ####
       
