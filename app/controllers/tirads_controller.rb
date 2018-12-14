@@ -4,7 +4,7 @@ class TiradsController < ApplicationController
   # GET /tirads
   # GET /tirads.json
   def index
-    @tirads = Tirad.all.order(:fecha)
+    @tirads = Tirad.all.order(:fecha,:turno)
   end
 
 
