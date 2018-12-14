@@ -17,22 +17,25 @@ class TiradsController < ApplicationController
   # GET /tirads/1
   # GET /tirads/1.json
   def show
+     @employees = Employee.all
   end
 
   # GET /tirads/new
   def new
     @tirad = Tirad.new
+     @employees = Employee.all
   end
 
   # GET /tirads/1/edit
   def edit
+     @employees = Employee.all
   end
 
   # POST /tirads
   # POST /tirads.json
   def create
     @tirad = Tirad.new(tirad_params)
-
+ @employees = Employee.all
     respond_to do |format|
       if @tirad.save
         format.html { redirect_to @tirad, notice: 'Tirad was successfully created.' }
@@ -47,6 +50,7 @@ class TiradsController < ApplicationController
   # PATCH/PUT /tirads/1
   # PATCH/PUT /tirads/1.json
   def update
+    
     respond_to do |format|
       if @tirad.update(tirad_params)
         format.html { redirect_to @tirad, notice: 'Tirad was successfully updated.' }
