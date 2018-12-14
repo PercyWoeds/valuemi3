@@ -186,7 +186,12 @@
     collection { post :import }
     collection { post :import2 }
   end 
+  
   resources :markets  do
+    collection { post :import }
+    
+  end 
+  resources :tirads  do
     collection { post :import }
     
   end 
