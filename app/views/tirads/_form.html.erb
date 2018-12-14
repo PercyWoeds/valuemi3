@@ -15,17 +15,18 @@
     
      
     
-<div class="field">
+    <div class="field">
     <%= f.label :fecha ,"Fecha: "%><br />
     <%= f.date_field :fecha %>
     </div>
         
         
     
-<div class="field">
-    <%= f.label :documento ,"Documento: "%><br />
-    <%= f.date_field :documento  %>
+    <div class="field">
+    <%= f.label :documento ,"documento: "%><br />
+    <%= f.text_field :documento  %>
     </div>
+    
    <div class="field">
     <%= f.label :importe ,"Importe: "%><br />
     <%= f.number_field :importe,class: :text_field, step: :any %>
