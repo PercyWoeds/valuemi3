@@ -16,7 +16,9 @@ class Employee < ActiveRecord::Base
 	has_many :outputs
 	has_many :payroll_details
 	has_many :payrollbonis 
-	has_many :quintos 
+	has_many :quintos
+	has_many :tirads  
+	
 	
     validates_uniqueness_of :idnumber,:cod_emp
     validates_presence_of :company_id, :idnumber, :firstname,:lastname,:fecha_ingreso,:fecha_nacimiento,:sueldo,:categoria_id,:division_id,:ccosto_id,:ocupacion_id,:comision_flujo,:asignacion,:location_id
