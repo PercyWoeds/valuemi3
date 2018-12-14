@@ -9,7 +9,7 @@
     
       
         <div class="field">
-          <%=  select_tag(:turno, options_for_select([["TURNO 1",1],["TURNO 2",2],["TURNO 3",3],["TURNO 4",4]])) %>
+          <%=  f.turno %>
         </div>
     
      
@@ -20,7 +20,7 @@
     </div>
         
    <div class="field">
-    <%= f.label :total ,"Importe "%><br />
+    <%= f.label :importe ,"Importe "%><br />
     <%= f.number_field :importe,class: :text_field, step: :any %>
     </div>
   </div>
