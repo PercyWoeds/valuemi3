@@ -4,8 +4,12 @@
   <div class="form-inputs">
       <div class="field">
     <label class="bold">Empleado *</label><br />      
-          <%= f.select :employee_id,options_from_collection_for_select(@employees,'id','full_name'),:style => "width:200px" %>
+        
+             <%= f.collection_select :employee_id, @employees, :id, :full_name :prompt => true %>
     </div>   
+    
+    
+    
     
       
         <div class="field">
