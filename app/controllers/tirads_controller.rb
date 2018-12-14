@@ -7,6 +7,13 @@ class TiradsController < ApplicationController
     @tirads = Tirad.all
   end
 
+
+  def import
+       Tirad.import(params[:file])
+       redirect_to root_url, notice: "Tiradas importadas."
+  end 
+
+
   # GET /tirads/1
   # GET /tirads/1.json
   def show
