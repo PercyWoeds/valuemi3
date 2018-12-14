@@ -16,7 +16,7 @@
   <tbody>
     <% @tirads.each do |tirad| %>
       <tr>
-        <td><%= tirad.employee_id %></td>
+        <td><%= tirad.employee.full_name %></td>
         <td><%= tirad.turno %></td>
         <td><%= tirad.fecha %></td>
         <td><%= tirad.importe %></td>
