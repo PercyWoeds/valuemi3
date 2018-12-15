@@ -50,9 +50,9 @@
         <td class="small bordered_bottom bordered_right"><%= sellvale.placa %></td>
         <td class="small bordered_bottom bordered_right"><%= sellvale.odometro %></td>
         <td class="small bordered_bottom bordered_right"><%= sellvale.cod_prod %></td>
-        <td class="small bordered_bottom bordered_right"><%= sellvale.cantidad %></td>
+        <td class="small bordered_bottom bordered_right"><%= money(sellvale.cantidad) %></td>
         <td class="small bordered_bottom bordered_right"><%= sellvale.precio %></td>
-        <td class="small bordered_bottom bordered_right"><%= sellvale.importe %></td>
+        <td class="small bordered_bottom bordered_right"><%= money(sellvale.importe) %></td>
         
         <td><%= link_to 'Ver', sellvale %></td>
         
