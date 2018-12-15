@@ -98,7 +98,7 @@ class VentaislasController < ApplicationController
       Ventaisla.import3(params[:file])
       redirect_to root_url, notice: "Ventas importadas."
   end 
-  def import3
+  def import4
       VentaislaDetail.import4(params[:file])
       redirect_to root_url, notice: "Ventas importadas."
   end 
