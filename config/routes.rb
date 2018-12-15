@@ -153,7 +153,7 @@
      collection { post :import  }
      collection { post :import2  }
      collection { post :import3  }
-     
+     collection { post :import4  }
   end 
   
   resources :stocks do 
