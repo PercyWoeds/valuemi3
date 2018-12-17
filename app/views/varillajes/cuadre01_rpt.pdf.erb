@@ -128,7 +128,7 @@
               <%      a4 = contado.get_ventas_contometros_adelantado_grifero_turno(@fecha1,contado.get_code(contado.employee_id), contado.turno)  %>
               <%      a5 = contado.get_ventas_vale_contado_grifero_turno(@fecha1,contado.get_code(contado.employee_id), contado.turno)   %>
               <%      tot_depo = contado.get_ventas_tirada_grifero_turno(@fecha1,contado.employee_id, contado.turno)   %>   
-              <%      tot_lub = contado.get_ventas_lubricantes_creditos_grifero_turno(@fecha1,contado.employee_id, contado.turno)   %>   
+              <%      tot_lub = contado.get_ventas_lubricantes_creditos_grifero_turno(@fecha1,contado.get_code(contado.employee_id), contado.turno)   %>   
               
               <% a1 = 0 %>
               <% a3 = 0 %>
