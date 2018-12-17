@@ -3569,6 +3569,8 @@ def cuadre01
     
        
     @contado_rpt = @company.get_ventas_combustibles_fecha_producto(@fecha1,@fecha2)
+    
+    
     @detalle_ventas_grifero = @company.get_ventas_combustibles_fecha_grifero(@fecha1,@fecha2)
     @producto = @company.get_productos_comb 
     

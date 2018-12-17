@@ -404,6 +404,31 @@ end
          end 
  
          
+         def  get_ventas_lubricantes_creditos_grifero_turno(fecha,grifero,turno ) 
+     
+           facturas = Sellvale.find_by_sql(['Select sellvales.* from sellvales    
+             INNER JOIN products ON sellvales.cod_prod = products.code 
+             WHERE products.products_category_id = 2 
+             and sellvales.fecha >= ? 
+             and sellvales.fecha <= ? 
+             and cod_emp = ? and turno = ? 
+             ORDER BY sellvales.fecha', "#{fecha} 00:00:00","#{fecha} 23:59:59",grifero,turno])
+             
+          #facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ?  and tipo = ?" , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","1" ])
+             
+             if facturas
+                 
+                ret=0  
+                for detalle in facturas
+                    ret += detalle.implista
+               end 
+            end 
+        
+            return ret
+         
+         end 
+         
+         
          def  get_ventas_contometros_adelantado_grifero_turno(fecha,grifero,turno ) 
         
              facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ?  and tipo = ? and cod_emp = ? and turno = ?" , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","4",grifero,turno ])

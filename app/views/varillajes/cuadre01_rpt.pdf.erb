@@ -128,6 +128,8 @@
               <%      a4 = contado.get_ventas_contometros_adelantado_grifero_turno(@fecha1,contado.get_code(contado.employee_id), contado.turno)  %>
               <%      a5 = contado.get_ventas_vale_contado_grifero_turno(@fecha1,contado.get_code(contado.employee_id), contado.turno)   %>
               <%      tot_depo = contado.get_ventas_tirada_grifero_turno(@fecha1,contado.employee_id, contado.turno)   %>   
+              <%      tot_lub = contado.get_ventas_lubricantes_creditos_grifero_turno(@fecha1,contado.employee_id, contado.turno)   %>   
+              
               <% a1 = 0 %>
               <% a3 = 0 %>
               <% a4 = 0 %>
@@ -233,9 +235,21 @@
                       <td width = "8%" align ="right"></td>
                       
                       <td width = "11%" align ="right"></td>
+                      <td width = "15%" align ="left"> Total Lubricante </td> : </td>
+                        <td width = "15%" align ="left"> </td>
+                      <td width = "15%" align ="right"> <%= sprintf("%.2f",tot_lub)   %></td>
+                   </tr>
+                   
+                    <tr>
+                      <td width = "23%" align ="right"> </td>
+                      <td width = "5%" align ="right"></td>
+                      <td width = "8%" align ="right"></td>
+                      <td width = "8%" align ="right"></td>
+                      
+                      <td width = "11%" align ="right"></td>
                       <td width = "15%" align ="left"> ** Diferencia : </td>
                         <td width = "15%" align ="left"> </td>
-                      <td width = "15%" align ="right"> <%= sprintf("%.2f", tot_depo - a7 )   %></td>
+                      <td width = "15%" align ="right"> <%= sprintf("%.2f", tot_depo - a7 - tot_lub )   %></td>
                    </tr>
                    
                    

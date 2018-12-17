@@ -4414,10 +4414,11 @@
         def  get_ventas_vales(fecha1,fecha2,tipo) 
     
             facturas = Sellvale.where(["fecha >= ?  and fecha <=  ?  and td = ?  " , "#{fecha1} 00:00:00","#{fecha2} 23:59:59","N"] ).order(:fecha,:cod_prod)
-           
-             return facturas 
+            return facturas 
        
         end 
+        
+        
         def  get_redencion_1(fecha1,fecha2,customer ) 
     
             facturas = Sellvale.where(["fecha >= ?  and fecha <=  ?  and mpuntos =?  " , "#{fecha1} 00:00:00","#{fecha2} 23:59:59",customer] ).order(:fecha,:cod_prod)
