@@ -33,6 +33,7 @@ class SellvalesController < ApplicationController
   # GET /sellvales/1
   # GET /sellvales/1.json
   def show
+    
   end
 
   # GET /sellvales/new
