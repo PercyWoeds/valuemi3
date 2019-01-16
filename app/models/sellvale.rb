@@ -3,7 +3,27 @@ class Sellvale < ActiveRecord::Base
  validates_presence_of :fecha,:turno,:td,:caja,:serie,:numero,:cod_cli,:placa,:cod_prod,:placa,:cod_prod,:cantidad,:precio,:tipo,:td ,:fpago  
  #validates_uniqueness_of :numero, scope: :serie
  
+ 
  belongs_to :factura_detail
+ 
+ 
+ TABLE_HEADERS9 = ["ITEM",
+                     "CLIENTE",   
+                    "=<2016",                  
+                    "Jul=< 17",
+                    "Ago-2017",             
+                    "Set-2017",
+                    "Oct-2017",
+                    "Nov-2017",
+                    "Dic-2017",
+                    "Ene-2018",             
+                    "Feb-2018",
+                    "Mar-2018",
+                    "Abr-2018",
+                    "May-2018",              
+                    "Jun-2018",
+                    "TOTAL   "]
+ 
     
  def self.import(file)
         TmpFactura.delete_all 
@@ -171,7 +191,19 @@ def self.import2(file2)
       end 
       
   end       
-  
+   def get_empleado_nombre(codigo) 
+      
+      a= Employee.find_by(cod_emp: codigo)
+      
+      if a
+          
+          return a.full_name
+      else 
+          return "Empleado no existe"
+          
+      end 
+      
+  end       
   
 def get_cliente(cliente)
      a= Customer.find_by(account: cliente)

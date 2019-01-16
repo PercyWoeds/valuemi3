@@ -1283,6 +1283,36 @@
         return @facturas
           
        end 
+       
+        def get_employees_asis(fecha1,fecha2)
+         
+          
+         @facturas = Sellvale.find_by_sql(["
+         SELECT   EXTRACT(DAY FROM fecha) as dia ,
+         cod_emp,
+         COUNT(turno) as turno   
+         FROM sellvales
+         WHERE fecha1 >= ? and fecha2  <= ?  
+         GROUP BY 2,1
+         ORDER BY 2,1 ","#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])    
+         
+         
+         Tempasisten.delete_all
+         
+          for f in @facturas
+             if f.customer_id != nil
+              b = Tempasisten.new(dia_month: f.dia , cod_emp: f.cod_emp, turno: f.turno)
+              b.save 
+            end 
+          end 
+         
+         @facturas = Tempasisten.order(:cod_emp,:doa_month) 
+         
+        return @facturas
+          
+       end 
+       
+       
     
        def get_customer_payments_value2(fecha1,fecha2)
     

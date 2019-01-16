@@ -506,6 +506,7 @@ end
   match 'companies/reports/rpt_parte_12/:company_id' => 'reports#rpt_parte_12', via: [:get, :post]    
   match 'companies/reports/rpt_parte_13/:company_id' => 'reports#rpt_parte_13', via: [:get, :post]    
   match 'companies/reports/rpt_parte_14/:company_id' => 'reports#rpt_parte_14', via: [:get, :post]  
+  match 'companies/reports/rpt_parte_15/:company_id' => 'reports#rpt_parte_15', via: [:get, :post]
   
   match 'companies/reports/cuadre_01/:company_id' => 'reports#cuadre_01', via: [:get, :post]    
   

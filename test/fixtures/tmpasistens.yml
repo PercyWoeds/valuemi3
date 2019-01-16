@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  dia_month: 1
+  cod_emp: MyString
+  turno: 1
+
+two:
+  dia_month: 1
+  cod_emp: MyString
+  turno: 1
