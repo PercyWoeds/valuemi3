@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190116202623) do
+ActiveRecord::Schema.define(version: 20190116224314) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1990,6 +1990,7 @@ ActiveRecord::Schema.define(version: 20190116202623) do
     t.float    "importe2"
     t.float    "mpuntos"
     t.float    "puntos"
+    t.integer  "dia"
   end
 
   create_table "servicebuys", force: :cascade do |t|

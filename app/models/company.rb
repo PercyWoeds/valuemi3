@@ -1285,16 +1285,15 @@
        end 
        
         def get_employees_asis(fecha1,fecha2)
-         
+          
 
          @facturas = Sellvale.find_by_sql(["
-         SELECT   EXTRACT(DAY FROM fecha) as dia ,
-         cod_emp,
-         COUNT(turno) as turno   
+         SELECT   dia ,
+         cod_emp,turno
          FROM sellvales
          WHERE fecha >= ? and fecha  <= ?  
-         GROUP BY cod_emp,EXTRACT(DAY FROM fecha) 
-         ORDER BY cod_emp,EXTRACT(DAY FROM fecha) ","#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])    
+         GROUP BY 2,1,3 
+         ORDER BY 2,1,3 ","#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])    
          
          
          Tmpasisten.delete_all
@@ -1306,7 +1305,7 @@
            puts f.turno 
            
              if f.cod_emp != nil
-              b = Tmpasisten.new(dia_month: f.dia , cod_emp: f.cod_emp, turno: f.turno)
+              b = Tmpasisten.new(dia_month: f.dia , cod_emp: f.cod_emp, turno: 1)
               b.save 
             end 
           end 
@@ -1373,6 +1372,19 @@
               fechas2 = factura.fecha 
             end 
               fact.update_attributes(:fecha2=>fechas2)   
+          end 
+    
+       end
+       
+       def actualizar_fecha3
+    
+          facturas = Sellvale.where(:dia => nil )
+          for factura in facturas
+              
+            
+              days = factura.fecha.day 
+              
+              factura.update_attributes(:dia=>days)   
           end 
     
        end

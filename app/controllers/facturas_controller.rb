@@ -450,6 +450,10 @@ def reportes15
     @company=Company.find(1)          
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2] 
+    
+    
+    @company.actualizar_fecha3
+    
   
     @facturas_rpt = @company.get_employees_asis(@fecha1,@fecha2)  
 
