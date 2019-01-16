@@ -8,20 +8,39 @@ class Sellvale < ActiveRecord::Base
  
  
  TABLE_HEADERS9 = ["ITEM",
-                     "CLIENTE",   
-                    "=<2016",                  
-                    "Jul=< 17",
-                    "Ago-2017",             
-                    "Set-2017",
-                    "Oct-2017",
-                    "Nov-2017",
-                    "Dic-2017",
-                    "Ene-2018",             
-                    "Feb-2018",
-                    "Mar-2018",
-                    "Abr-2018",
-                    "May-2018",              
-                    "Jun-2018",
+                     "PERSONAL",   
+                    "01",                  
+                    "02",
+                    "03",             
+                    "04",
+                    "05",
+                    "06",
+                    "07",
+                    "08",             
+                    "09",
+                    "10",
+                    "11",
+                    "12",              
+                    "13",
+                    "14",
+                    "15",
+                    "16",
+                    "17",             
+                    "18",
+                    "19",
+                    "20",
+                    "21",              
+                    "22",
+                    "23",
+                    "24",             
+                    "25",
+                    "26",
+                    "27",
+                    "28",              
+                    "29",
+                    "30",
+                    "31",              
+                    
                     "TOTAL   "]
  
     
@@ -191,20 +210,7 @@ def self.import2(file2)
       end 
       
   end       
-   def get_empleado_nombre(codigo) 
-      
-      a= Employee.find_by(cod_emp: codigo)
-      
-      if a
-          
-          return a.full_name
-      else 
-          return "Empleado no existe"
-          
-      end 
-      
-  end       
-  
+ 
 def get_cliente(cliente)
      a= Customer.find_by(account: cliente)
      

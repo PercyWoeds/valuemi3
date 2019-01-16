@@ -124,6 +124,7 @@
     collection { get :reportes12}
     collection { get :reportes13}
     collection { get :reportes14}
+    collection { get :reportes15}
     
     collection { get :reportes30}
     collection { get :reportes31}
