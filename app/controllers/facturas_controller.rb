@@ -1138,7 +1138,6 @@ def reportes15
 
 
 
-***------------------
 
 def rpt_factura_all
     $lcFacturasall = '1'
