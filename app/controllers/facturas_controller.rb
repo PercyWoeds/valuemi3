@@ -515,7 +515,7 @@ end
 
   def build_pdf_body_rpt15(pdf)
     
-    pdf.text "Resumen Asistencia Personal  "+ "Fecha "+@fecha1.to_s+ " Mes : "+@fecha2.to_s , :size => 11 
+    pdf.text "Resumen Asistencia Personal  "+ "Desde "+@fecha1.to_s+ " Hasta : "+@fecha2.to_s , :size => 11 
     pdf.text ""
     pdf.font "Helvetica" , :size => 6
 
