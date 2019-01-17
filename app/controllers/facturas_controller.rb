@@ -750,6 +750,7 @@ end
             
             row = []
             row << nroitem.to_s        
+            row << customerpayment_rpt.cod_emp 
             row << $lcCliName
             row << sprintf("%.1f",@total_dia01.to_s)
             row << sprintf("%.1f",@total_dia02.to_s)
@@ -1035,6 +1036,7 @@ end
             
             row = []
             row << nroitem.to_s        
+            row << customerpayment_rpt.cod_emp 
             row << $lcCliName
             row << sprintf("%.1f",@total_dia01.to_s)
             row << sprintf("%.1f",@total_dia02.to_s)
@@ -1153,6 +1155,7 @@ end
                                           columns([30]).align=:right
                                           columns([31]).align=:right
                                           columns([32]).align=:right
+                                          
                                         end                                          
       pdf.move_down 10      
       pdf
