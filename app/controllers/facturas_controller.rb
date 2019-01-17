@@ -750,7 +750,6 @@ end
             
             row = []
             row << nroitem.to_s        
-            row << customerpayment_rpt.cod_emp 
             row << $lcCliName
             row << sprintf("%.1f",@total_dia01.to_s)
             row << sprintf("%.1f",@total_dia02.to_s)
@@ -1036,7 +1035,6 @@ end
             
             row = []
             row << nroitem.to_s        
-            row << customerpayment_rpt.cod_emp 
             row << $lcCliName
             row << sprintf("%.1f",@total_dia01.to_s)
             row << sprintf("%.1f",@total_dia02.to_s)
