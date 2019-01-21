@@ -34,7 +34,7 @@
     
     <div class="field">
       <%= f.label :cod_emp, "Empleado "%><br />
-      <%= f.collection_select :cod_emp, @employees, :id, :full_name, :prompt => true %>
+      <%= f.collection_select :cod_emp, @employees, :cod_emp, :full_name, :prompt => true %>
     </div>
     
     
