@@ -44,7 +44,7 @@
        <%if contado.importe.to_f > 0 %>
                   <tr>
                     <td width= "5%" ><%=  contado.fecha.strftime("%d/%m/%Y")  %></td>
-                    <td width= "5%" ><%=  contado.fecha.cod_emp  %></td>
+                    <td width= "5%" ><%=  contado.cod_emp  %></td>
                     <td width= "32%" > <%=  contado.get_customer_name(contado.cod_cli) %>   </td>
                     <td width= "3%" > <%=  contado.serie %>   </td>
                     <td width = "5%" align ="right"><%= contado.numero    %></td>
