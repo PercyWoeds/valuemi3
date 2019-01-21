@@ -111,6 +111,6 @@ class VentaislasController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def ventaisla_params
-      params.require(:ventaisla).permit(:fecha, :turno, :employee_id, :pump_id, :importe, :le_an_gln, :le_ac_gln, :galones, :precio_ven)
+      params.require(:ventaisla).permit(:fecha, :turno, :employee_id, :pump_id, :importe, :le_an_gln, :le_ac_gln, :galones, :precio_ven,:island_id)
     end
 end
