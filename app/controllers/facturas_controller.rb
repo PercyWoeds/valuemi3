@@ -2236,12 +2236,10 @@ def reportes31
         $lcCodigoBarra = $lcruc << "|" << $lcTd << "|" << $lcSerie << "|" << $lcDocument_serial_id.to_s << "|" <<$lcIGVcode.to_s<< "|" << $lcTotalcode.to_s << "|" << $lcFechaCodigoBarras << "|" << $lcTipoDocCli  << "|" << $lcNroDocCli
         
             $lcPercentIgv  =18000   
-          $lcAutorizacion="Autorizado mediante Resolucion de Intendencia Nro.034-005-0005592/SUNAT del 22/06/2016 "
+          $lcAutorizacion=" "
           $lcCuentas=" El pago del documento sera necesariamente efectuado mediante deposito en cualquiera de las siguientes cuentas bancarias:  
-  BBVA Continental Cuenta Corriente en Moneda Nacional Numero: 0011-0172-01-00041266
-  BBVA Continental Cuenta Corriente en Moneda Extranjera Numero: 0011-0176-01-00063164 
-BCP Cuenta Corriente Moneda Nacional : 191-2167239-0-01
-BCP Cuenta Recaudadora Moneda Nacional : 191-2264838-0-49"  
+  BBVA Continental Cuenta Corriente en Moneda Nacional Numero: 168-0100009824
+  "  
 
 
           $lcScop1       =""   
