@@ -1,5 +1,6 @@
   Mnygo::Application.routes.draw do
 
+  resources :tipomovs
   resources :tirads
   resources :note_concepts
   resources :markets

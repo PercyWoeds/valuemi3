@@ -21,6 +21,7 @@ class Viaticos::ViaticoDetailsController < ApplicationController
     @documents = @company.get_documents()
     @cajas = Caja.all      
     @employees = @company.get_employees 
+    @tipomov = Tipomov.all 
   end
 
   # GET /viatico_details/new
@@ -35,6 +36,7 @@ class Viaticos::ViaticoDetailsController < ApplicationController
     @viatico_detail[:fecha] = Date.today 
     @destinos = Destino.all
     @employees = @company.get_employees 
+    @tipomov = Tipomov.all 
     
   end
 
@@ -48,7 +50,7 @@ class Viaticos::ViaticoDetailsController < ApplicationController
     @cajas = Caja.all      
     @destinos = Destino.all
     @employees = @company.get_employees 
-    
+    @tipomov = Tipomov.all 
     @transporte = Tranportorder.find(@viatico_detail.tranportorder_id)
     @ac_item = @transporte.code 
     @ac_item_id = @transporte.id
@@ -82,7 +84,7 @@ class Viaticos::ViaticoDetailsController < ApplicationController
     @cajas = Caja.all      
     @destinos = Destino.all
     @employees = @company.get_employees 
-    
+    @tipomov = Tipomov.all 
     @viatico_detail = ViaticoDetail.new(viatico_detail_params)    
     @viatico_detail.viatico_id  = @viatico.id 
     
@@ -155,7 +157,7 @@ class Viaticos::ViaticoDetailsController < ApplicationController
     @divisions = @company.get_divisions()
     @documents = @company.get_documents()
     @employees = @company.get_employees()
-    
+    @tipomov = Tipomov.all 
     @cajas = Caja.all      
     @destinos = Destino.all
     
@@ -282,6 +284,6 @@ class Viaticos::ViaticoDetailsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def viatico_detail_params
       
-      params.require(:viatico_detail).permit(:fecha, :descrip, :document_id, :numero, :importe, :detalle, :tm, :CurrTotal, :tranportorder_id,:date_processed,:ruc,:supplier_id,:gasto_id,:employee_id,:destino_id,:compro)
+      params.require(:viatico_detail).permit(:fecha, :descrip, :document_id, :numero, :importe, :detalle, :tm, :CurrTotal, :tranportorder_id,:date_processed,:ruc,:supplier_id,:gasto_id,:employee_id,:destino_id,:compro,:tipomov_id)
     end
 end
