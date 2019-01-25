@@ -177,6 +177,55 @@ self.per_page = 20
   end
   
   
+  def get_total_ingreso
+    subtotal = 0
+    
+    @viatico_details = ViaticoDetail.where(viatico_id: self.id)
+    
+    for item in  @viatico_details 
+    
+        if item.tipomov_id == 1
+          total = item.importe
+        else
+          total = 0
+        end
+        
+        begin
+          subtotal += total
+        rescue
+        end
+        
+      end
+  
+    
+    return subtotal
+  end
+  
+  def get_total_egreso
+    subtotal = 0
+    
+    @viatico_details = ViaticoDetail.where(viatico_id: self.id)
+    
+    for item in  @viatico_details 
+    
+        if item.tipomov_id == 2
+          total = item.importe
+        else
+          total = 0
+        end
+        
+        begin
+          subtotal += total
+        rescue
+        end
+        
+      end
+  
+    
+    return subtotal
+  end
+  
+  
   def delete_products()
     invoice_services = ViaticoDetail.where(viatico_id: self.id)
     

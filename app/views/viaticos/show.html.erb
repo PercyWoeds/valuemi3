@@ -97,8 +97,12 @@
       </th>
       
       <th>
-        Total
+        Ingreso 
       </th>
+      <th>
+        Egreso 
+      </th>
+      
     </tr>
   </thead>
   <tbody>
@@ -152,9 +156,26 @@
            <td class="small bordered_bottom bordered_right">
               <%=product.detalle %>
           </td>
+          <% if product.tipomov_id == 1%>
           <td class="small bordered_bottom bordered_right">
             <%= money(product.importe) %>
           </td>
+          <td class="small bordered_bottom bordered_right">
+           0.00
+          </td>
+          
+          <%else%>
+          <td class="small bordered_bottom bordered_right">
+           0.00
+          </td>
+          
+          
+          <td class="small bordered_bottom bordered_right">
+            <%= money(product.importe) %>
+          </td>
+          
+          <% end %>
+          
           <td><%= link_to 'Editar',  edit_viatico_viatico_detail_path(viatico_id: @viatico.id,id: product.id ) %></td>          
           <td><%= link_to 'Eliminar',[@viatico,product], method: :delete, data: { confirm: 'Esta seguro?' } %></td>
           
@@ -162,10 +183,21 @@
     <% end %>
    <tr>
       <td colspan="9" class="bordered_bottom bordered_right bold">
+        Total Ingresos
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@viatico.get_total_ingreso)%>
+      </td>
+    </tr>
+    
+   <tr> 
+    
+   <tr>
+      <td colspan="9" class="bordered_bottom bordered_right bold">
         Total Egresos
       </td>
       <td class="bordered_bottom bordered_right bold right">
-        <%= money(@viatico.total_egreso)%>
+        <%= money(@viatico.get_total_egreso)%>
       </td>
     </tr>
     
