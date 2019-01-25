@@ -4,7 +4,7 @@
   
   <h3>
     <%= image_tag("products_32.png", :class => "vmiddle") %>
-    <%= link_to "Liquidacion Viaticos/Cajas Chicas","/companies/viaticos/#{@company.id}" %>
+    <%= link_to "Liquidacion Cajas ","/companies/viaticos/#{@company.id}" %>
   </h3>
 
   <p>
@@ -13,29 +13,8 @@
 
   <%= hr() %>
 
-  <h3>
-    <%= image_tag("product_kit_32.png", :class => "vmiddle") %>
-    <%= link_to "Liquidacion de viaje por conductor ", "/companies/lgvs/#{@company.id}" %>
-  </h3>
-
-  <p>
-   Agregar, editar or eliminar Liquidacion de viaje por conductor
-  </p>
-
-  <%= hr() %>
-
-  <h3>
-    <%= image_tag("product_kit_32.png", :class => "vmiddle") %>
-    <%= link_to "Liquidacion Comprobantes ", "/companies/compros/#{@company.id}" %>
-  </h3>
-
-  <p>
-   Agregar, editar or eliminar Liquidacion de viaje por conductor
-  </p>
-
-  <%= hr() %>
-
-
+  
+  
 
   
 </div>
@@ -64,25 +43,4 @@
     Reporte de gastos 
   </p>
 
-<%= hr() %>
-  <h3>
-        <div>
-          <%= image_tag("divisions_32.png", :class => "vmiddle") %>
-          <%= link_to "Reporte de viaticos ", "/companies/reports/rpt_viatico_pdf/#{@company.id}" %>
-           
-        </div>
-  </h3>
-  <p>
-    Reporte de viaticos 
-  </p>
-<%= hr() %>
-  <h3>
-        <div>
-          <%= image_tag("divisions_32.png", :class => "vmiddle") %>
-          <%= link_to "Reporte de viaticos en provincia  ", "/companies/employees/#{@company.id}" %>
-        </div>
-  </h3>
-  <p>
-     Reporte de viaticos en provincia 
-  </p>
-
+</div>
