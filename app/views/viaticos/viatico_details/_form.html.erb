@@ -98,11 +98,17 @@
       <%= f.collection_select :tm, @documents , :id, :fullname , :prompt => true %>
     <br />
     
-    <strong>Comprobante :</strong><br />
+    <strong>Comprobante Interno :</strong><br />
     
       <div class="field">
           <%= f.text_field :numero ,:style=> 'width: 200px'%>
       </div>
+      
+    <strong> Documento :</strong><br />  
+      <div class="field">
+          <%= f.text_field :compro ,:style=> 'width: 200px'%>
+      </div>
+    
     
     <div class="small">
       Ingrese un termino de busqueda para encontrar un documento 

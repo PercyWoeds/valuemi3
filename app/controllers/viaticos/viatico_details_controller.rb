@@ -282,6 +282,6 @@ class Viaticos::ViaticoDetailsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def viatico_detail_params
       
-      params.require(:viatico_detail).permit(:fecha, :descrip, :document_id, :numero, :importe, :detalle, :tm, :CurrTotal, :tranportorder_id,:date_processed,:ruc,:supplier_id,:gasto_id,:employee_id,:destino_id)
+      params.require(:viatico_detail).permit(:fecha, :descrip, :document_id, :numero, :importe, :detalle, :tm, :CurrTotal, :tranportorder_id,:date_processed,:ruc,:supplier_id,:gasto_id,:employee_id,:destino_id,:compro)
     end
 end
