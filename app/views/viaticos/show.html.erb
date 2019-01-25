@@ -77,15 +77,13 @@
         Gasto
       </th>
       <th>
-        Vehiculo
+        Compro.
       </th>
-      
+     
       <th>
         OST.
       </th>
-      <th>
-        Desde
-      </th>
+     
       
       <th>
         Fecha
@@ -130,15 +128,12 @@
           </td>
           
          <td class="small bordered_bottom bordered_right">
-            <%= product.tranportorder.truck.placa %>
+            <%= product.tranportorder.numero %>
           </td>
          <td class="small bordered_bottom bordered_right">
             <%= product.tranportorder.code %>
           </td>
 
-         <td class="small bordered_bottom bordered_right">
-            <%= product.tranportorder.get_punto(product.tranportorder.ubication_id) %>
-          </td>
           <td class="small bordered_bottom bordered_right">
              <%if product.gasto %>  
              
@@ -152,7 +147,7 @@
           
           <td class="small bordered_bottom bordered_right">
             
-              <%= product.document.descripshort << "-" << product.numero    %>
+              <%= product.document.descripshort << "-" << product.compro    %>
           </td>
            <td class="small bordered_bottom bordered_right">
               <%=product.detalle %>

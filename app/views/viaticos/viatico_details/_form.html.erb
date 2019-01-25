@@ -92,11 +92,6 @@
 
       </div>
       
-      <strong>Documento:</strong><br />
-    <br />
-      
-      <%= f.collection_select :tm, @documents , :id, :fullname , :prompt => true %>
-    <br />
     
     <strong>Comprobante Interno :</strong><br />
     
@@ -104,7 +99,13 @@
           <%= f.text_field :numero ,:style=> 'width: 200px'%>
       </div>
       
-    <strong> Documento :</strong><br />  
+    <strong>Documento:</strong><br />
+    <br />
+      
+      <%= f.collection_select :tm, @documents , :id, :fullname , :prompt => true %>
+    <br />
+      
+    
       <div class="field">
           <%= f.text_field :compro ,:style=> 'width: 200px'%>
       </div>
