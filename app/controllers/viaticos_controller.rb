@@ -917,13 +917,19 @@ before_filter :authenticate_user!
       @viatico[:total_egreso]= 0 
     end 
     
-    @viatico[:saldo] = @viatico[:inicial] +  @viatico[:total_ing] - @viatico[:total_egreso]
+    @viatico[:saldo] = @viatico.get_total_inicial +  @viatico.get_total_ingreso - @viaticog.get_total_egreso
+    
     
     if(params[:viatico][:user_id] and params[:viatico][:user_id] != "")
       curr_seller = User.find(params[:viatico][:user_id])
       @ac_user = curr_seller.username
     end
+    puts "actualizar..."
     
+    puts @viatico[:inicial]
+    puts @viatico[:total_ing]
+    puts @viatico[:total_egreso]
+    puts @viatico[:saldo]
 
     respond_to do |format|
       if @viatico.save
@@ -991,9 +997,9 @@ before_filter :authenticate_user!
     @viatico[:total_ing] = @viatico.get_total_ingreso
     @viatico[:total_egreso]=  @viatico.get_total_egreso
     
+    @viatico[:saldo] = @viatico.get_total_inicial +  @viatico.get_total_ingreso - @viaticog.get_total_egreso
     
-    @viatico[:saldo] = @viatico[:inicial] +  @viatico[:total_ing] - @viatico[:total_egreso]
-    
+    puts @viatico[:saldo]
     if(params[:viatico][:user_id] and params[:viatico][:user_id] != "")
       curr_seller = User.find(params[:viatico][:user_id])
       @ac_user = curr_seller.username
