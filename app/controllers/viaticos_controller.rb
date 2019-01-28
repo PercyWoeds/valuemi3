@@ -53,6 +53,7 @@ before_filter :authenticate_user!
     pdf.font "Helvetica" , :size => 8
     pdf.text "FECHA :" << @viatico.fecha1.strftime("%d/%m/%Y")  <<    "           CAJA :" << @viatico.caja.descrip  ,:style => :bold;  
     pdf.text "SALDO INICIAL :" << sprintf("%.2f",@viatico.inicial) ,:style => :bold;
+    pdf.text "DETALLE :" + @viatico.comments ;
     pdf.font "Helvetica" , :size => 6      
       headers = []
       table_content = []
