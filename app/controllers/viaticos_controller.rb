@@ -76,17 +76,21 @@ before_filter :authenticate_user!
 
             lccompro =  product.document.descripshort << "-" << product.numero  
             row << lccompro 
-            if product.tm.to_i != 6
-                row << " "
+            
+            if product.tipomov_id == 1
                 row << sprintf("%.2f",product.importe)
+                row << " "
             else
+              row << " "
               row << sprintf("%.2f",product.importe)
+                
             end
+            
             if product.tm.to_i != 6
               
               row << product.gasto.descrip
               row << product.detalle
-              row << product.tranportorder.get_punto(product.tranportorder.ubication_id)
+              row << " "
             else
               row << " "
               row << " "
@@ -126,15 +130,15 @@ before_filter :authenticate_user!
             
             row << lccompro 
             
-            if product.tm.to_i != 6
-                row << " "
+            if product.tipomov_id == 1
                 row << sprintf("%.2f",product.importe)
-    
+                row << " "
             else
+              row << " "
               row << sprintf("%.2f",product.importe)
-              
-            
+                
             end
+
             
             if product.tm.to_i != 6
               
@@ -181,15 +185,15 @@ before_filter :authenticate_user!
             
             row << lccompro 
             
-            if product.tm.to_i != 6
-                row << " "
+            if product.tipomov_id == 1
                 row << sprintf("%.2f",product.importe)
-    
+                row << " "
             else
+              row << " "
               row << sprintf("%.2f",product.importe)
-              
-            
+                
             end
+
             
             if product.tm.to_i != 6
               
