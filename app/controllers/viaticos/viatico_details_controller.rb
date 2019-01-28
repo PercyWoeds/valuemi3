@@ -108,12 +108,12 @@ class Viaticos::ViaticoDetailsController < ApplicationController
     end 
     
     begin
-      @viatico[:total_ing] = @viatico.get_total_ing
+      @viatico[:total_ing] = @viatico.get_total_ingreso
     rescue 
       @viatico[:total_ing] = 0
     end 
     begin 
-      @viatico[:total_egreso]=  @viatico.get_total_sal
+      @viatico[:total_egreso]=  @viatico.get_total_egreso
     rescue 
       @viatico[:total_egreso]= 0 
     end 
@@ -176,12 +176,12 @@ class Viaticos::ViaticoDetailsController < ApplicationController
     end 
     
     begin
-      @viatico[:total_ing] = @viatico.get_total_ing
+      @viatico[:total_ing] = @viatico.get_total_ingreso
     rescue 
       @viatico[:total_ing] = 0
     end 
     begin 
-      @viatico[:total_egreso]=  @viatico.get_total_sal
+      @viatico[:total_egreso]=  @viatico.get_total_egreso
     rescue 
       @viatico[:total_egreso]= 0 
     end 
