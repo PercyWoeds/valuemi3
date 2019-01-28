@@ -989,11 +989,9 @@ before_filter :authenticate_user!
     
     @viatico[:inicial] = @viatico.get_total_inicial 
     @viatico[:total_ing] = @viatico.get_total_ingreso
-        begin 
-      @viatico[:total_egreso]=  @viatico.get_total_egreso
-    rescue 
-      @viatico[:total_egreso]= 0 
-    end 
+    @viatico[:total_egreso]=  @viatico.get_total_egreso
+    
+    
     @viatico[:saldo] = @viatico[:inicial] +  @viatico[:total_ing] - @viatico[:total_egreso]
     
     if(params[:viatico][:user_id] and params[:viatico][:user_id] != "")
