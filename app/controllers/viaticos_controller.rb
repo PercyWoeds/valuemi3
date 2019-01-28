@@ -111,7 +111,7 @@ before_filter :authenticate_user!
             row << ""
             row << ""
             row << ""
-            row << ""
+            
             
             table_content << row
     
@@ -161,8 +161,6 @@ before_filter :authenticate_user!
             row << ""
             row << ""
             row << ""
-            row << ""
-            
             row << ""
             row << ""
             row << ""
@@ -695,7 +693,7 @@ before_filter :authenticate_user!
             row << ""
             row << ""
             row << ""
-            row << "LIMA"
+            row << ""
             row << ""
             row << ""
             row << ""
@@ -740,7 +738,7 @@ before_filter :authenticate_user!
             row << ""
             row << ""
             row << ""
-            row << "PROVINCIA"
+            row << ""
             row << ""
             row << ""
             row << ""
@@ -765,6 +763,7 @@ before_filter :authenticate_user!
                 row << sprintf("%.2f",product.importe)    
             else
               row << sprintf("%.2f",product.importe)
+                row << " "
             end
             
             if product.tm.to_i != 6
