@@ -22,8 +22,7 @@ self.per_page = 20
   
    TABLE_HEADERS = ["ITEM",
                       "FECHA ",
-                     "DESCRIPCION",
-                     "PROVEEDOR/EMPLEADO",
+                      "PROVEEDOR/EMPLEADO",
                      "COMPROBANTE",
                      "INGRESO",
                      "EGRESO",

@@ -119,7 +119,7 @@ before_filter :authenticate_user!
             row = []
             row << nroitem.to_s        
             row << product.fecha.strftime("%d/%m/%Y") 
-            row << product.tranportorder.employee.full_name   
+            
             if product.supplier 
               row << product.supplier.name 
             else
@@ -174,7 +174,7 @@ before_filter :authenticate_user!
             row = []
             row << nroitem.to_s        
             row << product.fecha.strftime("%d/%m/%Y") 
-            row << product.tranportorder.employee.full_name   
+            
             if product.supplier 
               row << product.supplier.name 
             else
@@ -240,8 +240,8 @@ before_filter :authenticate_user!
 
    
 
-   $lcIngreso  = sprintf("%.2f",@viatico.total_ing.round(2).to_s)  
-   $lcEgreso   = sprintf("%.2f",@viatico.total_egreso.round(2).to_s)  
+   $lcIngreso  = sprintf("%.2f",@viatico.get_total_ingreso.round(2).to_s)  
+   $lcEgreso   = sprintf("%.2f",@viatico.get_total_egreso.round(2).to_s)  
    $lcSaldo   = sprintf("%.2f",@viatico.saldo.round(2).to_s)  
 
       data0 = [[" "," "," "," ","TOTALES INGRESOS => ",$lcIngreso ],
@@ -988,9 +988,9 @@ before_filter :authenticate_user!
     
     
     @viatico[:inicial] = @viatico.get_total_inicial 
-    @viatico[:total_ing] = @viatico.get_total_ing
+    @viatico[:total_ing] = @viatico.get_total_ingreso
         begin 
-      @viatico[:total_egreso]=  @viatico.get_total_sal
+      @viatico[:total_egreso]=  @viatico.get_total_egreso
     rescue 
       @viatico[:total_egreso]= 0 
     end 
