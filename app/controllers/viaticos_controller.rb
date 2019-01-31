@@ -1073,7 +1073,8 @@ before_filter :authenticate_user!
   
   private
   def viatico_params
-    params.require(:viatico).permit(:code, :fecha1, :inicial, :total_ing, :total_egreso, :saldo, :comments, :user_id, :company_id, :processed,:caja_id)
+    params.require(:viatico).permit(:code, :fecha1, :inicial, :total_ing, :total_egreso, :saldo, :comments, :user_id, :company_id, :processed,:caja_id,:turno)
+    
   end
 
 end
