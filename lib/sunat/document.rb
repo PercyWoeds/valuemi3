@@ -60,8 +60,8 @@ module SUNAT
         pdf.image "#{self.accounting_supplier_party.logo_path}", :width => 100
         pdf.move_down 6
       end
-      pdf.text "#{self.accounting_supplier_party.party.party_legal_entity.registration_name}", :size => 12,
-                                                                                               :style => :bold
+     # pdf.text "#{self.accounting_supplier_party.party.party_legal_entity.registration_name}", :size => 12,
+      #                                                                                         :style => :bold
       pdf.move_down 4
       pdf.text supplier.street, :size => 10
       pdf.text supplier.district, :size => 10

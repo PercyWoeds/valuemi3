@@ -8,14 +8,14 @@ SUNAT.configure do |config|
    end
 
   config.signature do |s|
-    s.party_id    = "20514739065"
-    s.party_name  = "GRUPO E & E S.A.C."
+    s.party_id    = "20501683109"
+    s.party_name  = "CONSORCIO KINZUKO S.A.C"
     s.cert_file   = File.join(Dir.pwd, './app/keys', 'certificategee.crt')
     s.pk_file     = File.join(Dir.pwd, './app/keys', 'CERTIFICADOGEE.key') 
   end
 
   config.supplier do |s|
-    s.legal_name = "GRUPO E & E S.A.C."
+    s.legal_name = "CONSORCIO KINZUKO S.A.C."
     s.name       = ""
     s.ruc        = "20514739065"
     s.address_id = "150106"
