@@ -27,7 +27,7 @@ before_filter :authenticate_user!
      
   def build_pdf_header(pdf)
     
-      pdf.image "#{Dir.pwd}/public/images/logo2.png", :width => 270        
+      pdf.image "#{Dir.pwd}/public/images/logo.PNG", :width => 270        
       pdf.move_down 6        
       pdf.move_down 4
       pdf.move_down 4
@@ -36,7 +36,7 @@ before_filter :authenticate_user!
         pdf.stroke_bounds
         pdf.move_down 15
         pdf.font "Helvetica", :style => :bold do
-          pdf.text "R.U.C: 20514739065", :align => :center
+          pdf.text "R.U.C: 20501683109", :align => :center
           pdf.text "LIQUIDACION DE CAJA", :align => :center
           pdf.text "#{@viatico.code}", :align => :center,
                                  :style => :bold
