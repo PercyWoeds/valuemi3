@@ -91,10 +91,7 @@ class Viaticos::ViaticoDetailsController < ApplicationController
     @viatico_detail.tranportorder_id = params[:ac_item_id]
     @viatico_detail.supplier_id = params[:ac_supplier_id]
     @viatico_detail.document_id = params[:viatico_detail][:tm]
-    
-    if params[:ac_employee_id] == ""
-        @viatico_detail.employee_id = 64
-    end 
+   
 
     zeros =' 00:00:00'
      @viatico_detail.fecha = params[:viatico_detail][:fecha] << zeros 
