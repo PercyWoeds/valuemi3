@@ -54,6 +54,7 @@ before_filter :authenticate_user!
     pdf.text "FECHA :" << @viatico.fecha1.strftime("%d/%m/%Y")  <<    "           CAJA :" << @viatico.caja.descrip  ,:style => :bold;  
     pdf.text "SALDO INICIAL :" << sprintf("%.2f",@viatico.inicial) ,:style => :bold;
     pdf.text "DETALLE :" + @viatico.comments ;
+    pdf.move_down 5
     pdf.font "Helvetica" , :size => 6      
       headers = []
       table_content = []
@@ -83,12 +84,14 @@ before_filter :authenticate_user!
             
             
             table_content << row
-    
+        @saldo =@viatico.inicial 
+        
        for  product in @viatico.get_viaticos() 
             row = []
             row << nroitem.to_s        
             row << product.fecha.strftime("%d/%m/%Y") 
             
+            row << product.gasto.descrip
             if product.supplier 
               row << product.supplier.name 
             else
@@ -98,18 +101,20 @@ before_filter :authenticate_user!
             lccompro =  product.document.descripshort << "-" << product.numero  
             
             row << lccompro 
+            row << product.detalle
             
             if product.tipomov_id == 1
                 row << sprintf("%.2f",product.importe)
                 row << " "
+                @saldo += product.importe 
             else
               row << " "
               row << sprintf("%.2f",product.importe)
-                
+                @saldo -= product.importe 
             end
             
-              row << product.gasto.descrip
-              row << product.detalle
+              
+              
               row << " "
             
             table_content << row
