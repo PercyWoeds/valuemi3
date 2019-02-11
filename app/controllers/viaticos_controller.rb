@@ -68,39 +68,7 @@ before_filter :authenticate_user!
 
       nroitem=1
       
-       for  product in @viatico.get_viaticos_cheque() 
-            row = []
-            row << nroitem.to_s        
-            row << product.fecha.strftime("%d/%m/%Y") 
-            row << ""
-            row << product.employee.full_name
-
-            lccompro =  product.document.descripshort << "-" << product.numero  
-            row << lccompro 
-            
-            if product.tipomov_id == 1
-                row << sprintf("%.2f",product.importe)
-                row << " "
-            else
-              row << " "
-              row << sprintf("%.2f",product.importe)
-                
-            end
-            
-            if product.tm.to_i != 6
-              
-              row << product.gasto.descrip
-              row << product.detalle
-              row << " "
-            else
-              row << " "
-              row << " "
-              row << " "
-              row << " "
-            end 
-            table_content << row
-            nroitem=nroitem + 1      
-       end 
+ 
        
             row = []
             row << ""
@@ -116,7 +84,7 @@ before_filter :authenticate_user!
             
             table_content << row
     
-       for  product in @viatico.get_viaticos_lima() 
+       for  product in @viatico.get_viaticos() 
             row = []
             row << nroitem.to_s        
             row << product.fecha.strftime("%d/%m/%Y") 
@@ -139,20 +107,11 @@ before_filter :authenticate_user!
               row << sprintf("%.2f",product.importe)
                 
             end
-
             
-            if product.tm.to_i != 6
-              
               row << product.gasto.descrip
               row << product.detalle
-              row << product.tranportorder.get_punto(product.tranportorder.ubication_id)
-            else
               row << " "
-              row << " "
-              row << " "
-              row << " "
-                
-            end 
+            
             table_content << row
             nroitem=nroitem + 1      
         end
@@ -169,48 +128,7 @@ before_filter :authenticate_user!
             
             table_content << row
     
-       for  product in @viatico.get_viaticos_provincia() 
-            row = []
-            row << nroitem.to_s        
-            row << product.fecha.strftime("%d/%m/%Y") 
-            
-            if product.supplier 
-              row << product.supplier.name 
-            else
-              row << product.employee.full_name
-            end 
-            
-            lccompro =  product.document.descripshort << "-" << product.numero  
-            
-            row << lccompro 
-            
-            if product.tipomov_id == 1
-                row << sprintf("%.2f",product.importe)
-                row << " "
-            else
-              row << " "
-              row << sprintf("%.2f",product.importe)
-                
-            end
-
-            
-            if product.tm.to_i != 6
-              
-              row << product.gasto.descrip
-              row << product.detalle
-              
-              row << product.tranportorder.get_punto(product.tranportorder.ubication_id)
-            else
-              row << " "
-              row << " "
-              row << " "
-              row << " "
-                
-            end 
-            table_content << row
-            nroitem=nroitem + 1      
-        end
-
+       
        
 
       result = pdf.table table_content, {:position => :center,

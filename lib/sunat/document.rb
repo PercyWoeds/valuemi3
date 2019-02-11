@@ -53,7 +53,7 @@ module SUNAT
 
     def operation
       raise not_implemented_exception
-    end
+    enderer
 
     def build_pdf_header(pdf)
       if self.accounting_supplier_party.logo_path.present?
