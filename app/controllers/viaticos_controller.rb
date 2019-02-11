@@ -115,7 +115,7 @@ before_filter :authenticate_user!
             
               
               
-              row << " "
+              row << @saldo 
             
             table_content << row
             nroitem=nroitem + 1      

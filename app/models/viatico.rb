@@ -15,7 +15,8 @@ self.per_page = 20
   belongs_to :document 
   
   belongs_to :user
-  belongs_to :caja 
+  belongs_to :caja
+  belongs_to :employee 
 
   has_many   :viatico_details , :dependent => :destroy
   
@@ -24,8 +25,7 @@ self.per_page = 20
                       "FECHA ",
                       "DETALLE",
                      "GASTO",
-                     "DESCRIP",
-                     "COMPROBANTE",
+                      "COMPROBANTE",
                      "DETALLE",
                      "INGRESO ",
                      "EGRESO  ",
