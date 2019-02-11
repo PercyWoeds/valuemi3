@@ -115,7 +115,7 @@ before_filter :authenticate_user!
             
               
               
-              row << @saldo 
+              row << sprintf("%.2f",@saldo) 
             
             table_content << row
             nroitem=nroitem + 1      
@@ -145,11 +145,11 @@ before_filter :authenticate_user!
                                           columns([2]).align=:left                                          
                                           columns([3]).align=:left 
                                           columns([4]).align=:left
-                                          columns([5]).align=:right 
-                                          columns([6]).align=:left  
-                                          columns([7]).align=:left 
-                                          columns([8]).align=:left 
-                                          columns([9]).align=:left 
+                                          columns([5]).align=:left
+                                          columns([6]).align=:right  
+                                          columns([7]).align=:right 
+                                          columns([8]).align=:right 
+                                          
                                         end
 
       pdf.move_down 5
