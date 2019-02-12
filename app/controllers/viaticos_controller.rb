@@ -26,9 +26,9 @@ before_filter :authenticate_user!
   
      
   def build_pdf_header(pdf)
-      @lcFecha1= Date.today.strftime("%d/%m/%Y").to_s
+      @lcFecha1= Date.today.strftime("%d/%m/%Y  %I:%M%p").to_s
       
-      pdf.text "Fecha Actual : " << @lcFecha1 
+      pdf.text "Fecha Actual : " << @lcFecha1  , :size => 7
       pdf.image "#{Dir.pwd}/public/images/logo.PNG", :width => 270        
       pdf.move_down 6        
       pdf.move_down 4
