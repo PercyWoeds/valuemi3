@@ -26,7 +26,7 @@ before_filter :authenticate_user!
   
      
   def build_pdf_header(pdf)
-      @lcFecha1= Date.today.strftime("%d/%m/%Y  %I:%M%p").to_s
+      @lcFecha1= DateTime.now.strftime("%d/%m/%Y  %H:%M").to_s
       
       pdf.text "Fecha Actual : " << @lcFecha1  , :size => 7
       pdf.image "#{Dir.pwd}/public/images/logo.PNG", :width => 270        
@@ -63,6 +63,7 @@ before_filter :authenticate_user!
       Viatico::TABLE_HEADERS.each do |header|
         cell = pdf.make_cell(:content => header)
         cell.background_color = "FFFFCC"
+        cell.style :style_options => {:align => :center}
         headers << cell
       end
 
@@ -79,9 +80,9 @@ before_filter :authenticate_user!
             row << ""
             row << ""
             row << "SALDO INICIAL :" 
+            row << ""
+            row << ""
             row << sprintf("%.2f",@viatico.inicial)
-            row << ""
-            row << ""
             
             
             table_content << row
@@ -129,19 +130,8 @@ before_filter :authenticate_user!
         @lcIngreso  = sprintf("%.2f",@viatico.get_total_ingreso.round(2).to_s)  
         @lcEgreso   = sprintf("%.2f",@viatico.get_total_egreso.round(2).to_s)  
         @lcSaldo   = sprintf("%.2f",@viatico.saldo.round(2).to_s)  
-            row = []
-            row << ""
-            row << ""
-            row << ""
-            row << ""
-            row << ""
-            row << "TOTALES "
-            row << @lcIngreso 
-            row << @lcEgreso
-            row << @lcSaldo 
-            
-            table_content << row
-    
+          
+         
        
        
 
@@ -168,7 +158,15 @@ before_filter :authenticate_user!
 
 
     def build_pdf_footer(pdf)
-
+      
+      pdf.move_down 5
+      data =[ ["TOTALES : ",@lcIngreso ,@lcEgreso ,@lcSaldo ] ]
+           
+        pdf.text " "
+        pdf.table(data,:cell_style=> {:border_width=>1,:font_style => :bold ,:align=>:right} , :width => pdf.bounds.width/3.3,  :position => :right)
+        pdf.move_down 5
+        
+        
         pdf.text ""
         pdf.text "" 
         pdf.text "OBSERVACIONES : #{@viatico.comments}", :size => 8, :spacing => 4
@@ -178,7 +176,6 @@ before_filter :authenticate_user!
                [":",":",":",":"],
                [":",":",":",":"],
                ["Fecha:","Fecha:","Fecha:","Fecha:"] ]
-
            
             pdf.text " "
             pdf.table(data,:cell_style=> {:border_width=>1} , :width => pdf.bounds.width)
