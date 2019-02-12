@@ -26,7 +26,9 @@ before_filter :authenticate_user!
   
      
   def build_pdf_header(pdf)
-    
+      @lcFecha1= Date.today.strftime("%d/%m/%Y").to_s
+      
+      pdf.text "Fecha Actual : " << @lcFecha1 
       pdf.image "#{Dir.pwd}/public/images/logo.PNG", :width => 270        
       pdf.move_down 6        
       pdf.move_down 4
@@ -51,9 +53,8 @@ before_filter :authenticate_user!
   
     pdf.text " ", :size => 13, :spacing => 4
     pdf.font "Helvetica" , :size => 8
-    pdf.text "FECHA :" << @viatico.fecha1.strftime("%d/%m/%Y")  <<    "           CAJA :" << @viatico.caja.descrip  ,:style => :bold;  
-    pdf.text "SALDO INICIAL :" << sprintf("%.2f",@viatico.inicial) ,:style => :bold;
-    pdf.text "DETALLE :" + @viatico.comments ;
+    pdf.text "FECHA :" << @viatico.fecha1.strftime("%d/%m/%Y")  <<    "           CAJA :" << @viatico.caja.descrip+ @viatico.comments   ,:style => :bold;  
+    pdf.text " " ;
     pdf.move_down 5
     pdf.font "Helvetica" , :size => 6      
       headers = []
@@ -72,11 +73,11 @@ before_filter :authenticate_user!
  
        
             row = []
+            row << " 0 "
             row << ""
             row << ""
             row << ""
-            row << ""
-            row << ""
+            row << "SALDO INICIAL :" << sprintf("%.2f",@viatico.inicial)
             row << ""
             row << ""
             row << ""
@@ -90,17 +91,21 @@ before_filter :authenticate_user!
             row = []
             row << nroitem.to_s        
             row << product.fecha.strftime("%d/%m/%Y") 
+              lccompro =  product.document.descripshort << "-" << product.numero  
+            row << lccompro 
+            if product.tipomov_id == 1
+                row << " I "
+            else
+                row << " E "
+            end 
             
-            row << product.gasto.descrip
-            if product.supplier 
+            
+            if product.supplier.id != 4 
               row << product.supplier.name 
             else
               row << product.employee.full_name
             end 
             
-            lccompro =  product.document.descripshort << "-" << product.numero  
-            
-            row << lccompro 
             row << product.detalle
             
             if product.tipomov_id == 1
@@ -120,16 +125,20 @@ before_filter :authenticate_user!
             table_content << row
             nroitem=nroitem + 1      
         end
+        
+        @lcIngreso  = sprintf("%.2f",@viatico.get_total_ingreso.round(2).to_s)  
+        @lcEgreso   = sprintf("%.2f",@viatico.get_total_egreso.round(2).to_s)  
+        @lcSaldo   = sprintf("%.2f",@viatico.saldo.round(2).to_s)  
             row = []
             row << ""
             row << ""
             row << ""
             row << ""
             row << ""
-            row << ""
-            row << ""
-            row << ""
-            row << ""
+            row << "TOTALES "
+            row << @lcIngreso 
+            row << @lcEgreso
+            row << @lcSaldo 
             
             table_content << row
     
@@ -160,22 +169,6 @@ before_filter :authenticate_user!
 
     def build_pdf_footer(pdf)
 
-   
-
-   $lcIngreso  = sprintf("%.2f",@viatico.get_total_ingreso.round(2).to_s)  
-   $lcEgreso   = sprintf("%.2f",@viatico.get_total_egreso.round(2).to_s)  
-   $lcSaldo   = sprintf("%.2f",@viatico.saldo.round(2).to_s)  
-
-      data0 = [[" "," "," "," ","TOTALES INGRESOS => ",$lcIngreso ],
-               [" "," "," "," ","TOTALES EGRESOS  => ",$lcEgreso],
-               [" "," "," "," ","SALDO            => ",$lcSaldo]]
-
-            
-        pdf.move_down 150
-        pdf.text " "
-        pdf.table(data0,:cell_style=> {:border_width=>0, :width=> 90,:height => 20 })
-            
-       
         pdf.text ""
         pdf.text "" 
         pdf.text "OBSERVACIONES : #{@viatico.comments}", :size => 8, :spacing => 4
