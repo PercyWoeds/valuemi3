@@ -53,7 +53,7 @@ before_filter :authenticate_user!
   
     pdf.text " ", :size => 13, :spacing => 4
     pdf.font "Helvetica" , :size => 8
-    pdf.text "FECHA :" << @viatico.fecha1.strftime("%d/%m/%Y")  <<    "           CAJA :" << @viatico.caja.descrip+ @viatico.comments   ,:style => :bold;  
+    pdf.text "FECHA :" << @viatico.fecha1.strftime("%d/%m/%Y")  <<    "           CAJA :" << @viatico.caja.descrip << " - "<< @viatico.comments   ,:style => :bold;  
     pdf.text " " ;
     pdf.move_down 5
     pdf.font "Helvetica" , :size => 6      
@@ -77,9 +77,9 @@ before_filter :authenticate_user!
             row << ""
             row << ""
             row << ""
-            row << "SALDO INICIAL :" << sprintf("%.2f",@viatico.inicial)
             row << ""
-            row << ""
+            row << "SALDO INICIAL :" 
+            row << sprintf("%.2f",@viatico.inicial)
             row << ""
             row << ""
             
