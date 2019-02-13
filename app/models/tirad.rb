@@ -11,7 +11,7 @@ class Tirad < ActiveRecord::Base
           if a == nil
                 row['employee_id'] = 10
           else
-                row['employee_id'] = a.employee_id
+                row['employee_id'] = a.id
                 
           end 
               
