@@ -245,6 +245,21 @@ def  get_inicial(fecha1,producto,producto2)
     return ret
  
  end 
+ def  get_ventas_contometros0(fecha1,fecha2)
+         
+           facturas = Sellvale.where(["fecha >= ? and fecha <= ? " , "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
+           
+           if facturas
+               
+              ret=0  
+              for detalle in facturas
+                  ret += detalle.importe.to_f
+             end 
+          end 
+    
+          return ret
+       
+       end 
  
  def  get_ventas_contometros_producto(fecha,producto) 
 
@@ -261,7 +276,22 @@ def  get_inicial(fecha1,producto,producto2)
     return ret
  
  end 
- 
+ def  get_ventas_contometros_efectivo0(fecha1,fecha2) 
+    
+           facturas = Sellvale.where(["fecha >= ? and fecha <= ? and cod_tar = ?  " , "#{fecha1} 00:00:00","#{fecha2} 23:59:59","98"])
+           
+           if facturas
+               
+              ret=0  
+              for detalle in facturas
+                  ret += detalle.importe.to_f
+             end 
+          end 
+    
+          return ret
+       
+       end 
+       
  def  get_ventas_contometros_producto_todo(fecha,producto) 
      #no incluye ventas directas
 
