@@ -39,7 +39,7 @@
       <% nroitem = 1%>
        <% for  product0 in @parte_rpt %>
                    <%  producto_value = product0.tanque.product.id%>
-                   <%  producto_codigo = product0.tanque.product.code %>
+                   <%  producto_codigo = product0.tanque.code.to_s %>
                    
                    <% compras = product0.get_compras(@fecha,producto_value) %>
                    <% ventas_qty = product0.get_ventas(@fecha,producto_codigo) %>
