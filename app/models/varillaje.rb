@@ -364,6 +364,22 @@ def  get_inicial(fecha1,producto,producto2)
     return ret
  
  end 
+ def  get_ventas_contometros_tarjeta0(fecha) 
+
+     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and fpago <> ?  and td <> ?  and tipo = ?" , "#{fecha} 00:00:00","#{fecha} 23:59:59", "1" ,"N","1"])
+     
+     if facturas
+         
+        ret=0  
+        for detalle in facturas
+            ret += detalle.importe.to_f
+       end 
+    end 
+
+    return ret
+ 
+ end 
+ 
  
  def  get_ventas_contometros_tarjeta_factura(fecha) 
 
