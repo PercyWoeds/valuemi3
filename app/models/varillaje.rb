@@ -191,7 +191,7 @@ def  get_inicial(fecha1,producto,producto2)
          ret=0  
          for detalle in facturas
     
-              ret += detalle.quantity.round(6)
+              ret += detalle.cantidad.round(6)
       
          end 
      end 
