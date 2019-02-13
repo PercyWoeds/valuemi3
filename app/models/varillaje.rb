@@ -162,27 +162,44 @@ def  get_inicial(fecha1,producto,producto2)
  
  end 
  
- def  get_ventas(fecha,producto) 
+#  def  get_ventas(fecha,producto) 
 
-     facturas = Ventaisla.where(["fecha >= ? and fecha <= ?  " , "#{fecha} 00:00:00","#{fecha} 23:59:59" ])
+#      facturas = Ventaisla.where(["fecha >= ? and fecha <= ?  " , "#{fecha} 00:00:00","#{fecha} 23:59:59" ])
      
-     if facturas
+#      if facturas
          
-        ret=0  
-        for detalle in facturas
+#         ret=0  
+#         for detalle in facturas
         
-              factura_detalle = VentaislaDetail.where(["ventaisla_id = ? and product_id = ?" , detalle.id,producto ])
-                for detalle in factura_detalle
-                    ret += detalle.quantity.round(6)*-1
-                end     
+#               factura_detalle = VentaislaDetail.where(["ventaisla_id = ? and product_id = ?" , detalle.id,producto ])
+#                 for detalle in factura_detalle
+#                     ret += detalle.quantity.round(6)*-1
+#                 end     
             
-        end 
-    end 
+#         end 
+#     end 
 
-    return ret
+#     return ret
  
- end 
+#  end 
+ def  get_ventas(fecha,producto) 
+     
+      facturas = Sellvale.where(["fecha >= ? and fecha <= ? and cod_prod =? " , "#{fecha} 00:00:00","#{fecha} 23:59:59",producto])
+     
+      if facturas
+         
+         ret=0  
+         for detalle in facturas
+    
+              ret += detalle.quantity.round(6)
+      
+         end 
+     end 
+
+     return ret
  
+  end 
+
  def  get_salidas(fecha1,fecha2,producto) 
 
      facturas = Output.where(["fecha >= ? and fecha <= ? " , "#{fecha1} 00:00:00","#{fecha2} 23:59:59"])
@@ -278,13 +295,13 @@ def  get_inicial(fecha1,producto,producto2)
  end 
  def  get_ventas_contometros_efectivo0(fecha1) 
     
-           facturas = Sellvale.where(["fecha >= ? and fecha <= ? and cod_tar = ?  " , "#{fecha1} 00:00:00","#{fecha1} 23:59:59","98"])
+           facturas = Tirad.where(["fecha >= ? and fecha <= ? " , "#{fecha1} 00:00:00","#{fecha1} 23:59:59"])
            
            if facturas
                
               ret=0  
               for detalle in facturas
-                  ret += detalle.importe.to_f
+                  ret += detalle.importe
              end 
           end 
     
