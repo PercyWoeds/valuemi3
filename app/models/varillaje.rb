@@ -413,7 +413,7 @@ def  get_inicial(fecha1,producto,producto2)
  end 
  def  get_ventas_contometros_tarjeta0(fecha) 
 
-     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and cod_tar = ?  " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "06"])
+     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and cod_tar = ?  " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "01"])
      
      if facturas
          

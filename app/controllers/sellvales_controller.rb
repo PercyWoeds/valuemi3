@@ -7,7 +7,7 @@ class SellvalesController < ApplicationController
     
     if current_user.email == "percywoeds@gmail.com"  || @current_user.level == "parte"  
       
-      #@sellvales = Sellvale.all.order(:fecha,:serie,:numero).paginate(:page => params[:page], :per_page => 20)
+      @sellvales2 = Sellvale.all.order(:fecha,:serie,:numero)
       
         if params[:search]
           @sellvales = Sellvale.search(params[:search]).order(:fecha,:serie,:numero).paginate(:page => params[:page], :per_page => 20)
@@ -28,6 +28,13 @@ class SellvalesController < ApplicationController
       
       
     end 
+    
+    
+     respond_to do |format|
+      format.html
+      format.csv { send_data @sellvales2.to_csv, filename: "ventas-#{Date.today}.csv" }
+    end
+    
   end
 
   # GET /sellvales/1

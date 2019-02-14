@@ -234,6 +234,20 @@ def self.search(search)
   # Title is for the above case, the OP incorrectly had 'name'
   where("numero  iLIKE ? or cod_cli iLIKE ? ", "%#{search}%","%#{search}%")
 end
+
+
+def self.to_csv
+    attributes = %w{td fecha turno cod_emp caja serie numero cod_cli ruc placa odometro cod_prod cantidad precio importe igv fpago implista cod_tar km chofer tk_devol cod_sucu isla dni_cli tipo }
+
+    CSV.generate(headers: true) do |csv|
+      csv << attributes
+
+      all.each do |sellvale|
+        csv << attributes.map{ |attr| sellvale.send(attr) }
+      end
+    end
+  end
+
  
 
 end
