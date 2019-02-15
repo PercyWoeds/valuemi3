@@ -491,7 +491,7 @@ def  get_inicial(fecha1,producto,producto2)
      WHERE products.products_category_id = 1 
      and sellvales.fecha >= ? 
      and sellvales.fecha <= ? 
-     and td = ? and cod_tar = ? ?
+     and td = ? and cod_tar = ? 
      ORDER BY sellvales.fecha', "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","06" ])
      
      
