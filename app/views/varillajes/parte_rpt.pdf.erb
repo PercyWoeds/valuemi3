@@ -90,8 +90,6 @@
                     
                     <% dife_soles = product0.get_ventas_importe(@fecha,product0.tanque.product.id) - product0.get_ventas_contometros_producto_todo(@fecha,product0.tanque.product.code.to_s)-   product0.get_ventas_contometros_descuento_producto(@fecha,product0.tanque.product.code.to_s)  - product0.get_afericion_total_dia_producto(@fecha,product0.tanque.id)   %>
                     
-                    
-                    
                     <% dife_mes = product0.get_saldo_final_combustible(@fecha,product0.tanque.product.id,product0.tanque.product.code.to_s,product0.tanque.id) %>
                     
                     <td width = "8%" align ="right"><%=  sprintf("%.2f",dife_mes.to_s)   %></td>
@@ -303,9 +301,6 @@
             <td width= "25%" align ="left">  MARKET            : </td>
             <td width= "25%" >  <%=   sprintf("%.2f",venta_15)  %>                              </td>
             
-            <td width = "25%" align ="left">  &#9475;   </td>
-            <td width= "25%" >   </td>
-      
             <td width = "25%" align ="left">  &#9475;   FALTANTES    :  </td>
             <td width = "25%" align ="right"> <%=    sprintf("%.2f",venta_13)  %> </td>
       
@@ -344,7 +339,7 @@
             <td width= "25%" align ="right" ><%= sprintf("%.2f",venta_8) %>                                </td>
             
             <td width = "25%" align ="left">  &#9475; TOTAL SUSTENTOS :  </td>
-            <td width = "25%" align ="right"> <%= sprintf("%.2f",venta_5+ venta_6 ) %>                                </td>
+            <td width = "25%" align ="right"> <%= sprintf("%.2f",venta_5 + venta_13 + venta_14 ) %>                                </td>
             
             </tr>
             <tr>
