@@ -161,7 +161,7 @@
       
       
      
-     <% venta_9 =  a.get_ventas_vale_contado(@fecha)  %>
+     <% venta_9 =  0 %>
      <% venta_10 = 0 %>
      
      <% venta_12 =  a.get_afericion_total_dia(@fecha) %>
@@ -223,8 +223,8 @@
             <td width= "25%" align ="left">   CONSUMO INTERNO            : </td>
             <td width= "25%" >                                 (-)</td>
             
-            <td width = "25%" align ="left">  &#9475;   VALE CONTADO        :  </td>
-            <td width = "25%" align ="right"> <%= sprintf("%.2f",venta_9 - venta_descuentos_facturas -venta_descuentos_facturas_efe)    %></td>
+            <td width = "25%" align ="left">  &#9475;         :  </td>
+            <td width = "25%" align ="right"> <%= sprintf("%.2f",venta_9  %></td>
             
             </tr>
             
