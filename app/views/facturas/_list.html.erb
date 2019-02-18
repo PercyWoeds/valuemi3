@@ -49,7 +49,6 @@
           <%= link_to "Ver", invoice %>                
           
           <%= link_to "Print", "/facturas/print/#{invoice.id}" %>
-          <%= link_to "Sunat->", "/facturas/sendsunat/#{invoice.id}" %>                      
           
           <% if @current_user.level == "admin" %>
             
