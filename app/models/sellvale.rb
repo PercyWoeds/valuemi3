@@ -232,7 +232,7 @@ def get_cliente(cliente)
 
 def self.search(search)
   # Title is for the above case, the OP incorrectly had 'name'
-  where("numero  iLIKE ? or cod_cli iLIKE ? or odometro ilike ? ", "%#{search}%","%#{search}%")
+  where("numero  iLIKE ? or cod_cli iLIKE ? or odometro ilike ? ", "%#{search}%","%#{search}%","%#{search}%")
 end
 
 
