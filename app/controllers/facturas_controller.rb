@@ -2238,8 +2238,7 @@ def reportes31
             $lcPercentIgv  =18000   
           $lcAutorizacion=" "
           $lcCuentas=" El pago del documento sera necesariamente efectuado mediante deposito en cualquiera de las siguientes cuentas bancarias:  
-  BBVA Continental Cuenta Corriente en Moneda Nacional Numero: 168-0100009824
-  "  
+  BBVA Continental Cuenta Corriente en Moneda Nacional Numero: BBVA SOLES 0011-0168-27010004490  "  
 
 
           $lcScop1       =""   
