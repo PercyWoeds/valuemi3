@@ -528,6 +528,16 @@ end
             
         end 
         
+          
+        def get_product2(id)        
+            
+            a = Product.find_by(code: id)
+            return a.full_name
+            
+            
+        end 
+        
+        
         def get_code(id)    
             a= Employee.find(id)    
             if a 
