@@ -4364,7 +4364,7 @@
     
             facturas = Sellvale.find_by_sql(['Select sellvales.cod_prod,
                     SUM(sellvales.cantidad) AS quantity,
-                    SUM(CAST(sellvales.importe) as FLOAT) AS total 
+                    SUM(CAST(importe AS numeric)) AS total 
                       from sellvales 
                       INNER JOIN employees ON sellvales.cod_emp = employees.cod_emp
                       INNER JOIN products ON  sellvales.cod_prod = products.code 
