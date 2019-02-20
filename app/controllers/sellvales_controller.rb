@@ -113,6 +113,20 @@ class SellvalesController < ApplicationController
     
     @sellvale[:processed] = 0
     
+    if @sellvale[:fpago] == 1
+      @sellvale[:cod_tar] = '98'
+    end
+    if @sellvale[:fpago] == 2
+      @sellvale[:cod_tar] = '01'
+    end
+    if @sellvale[:fpago] == 3
+      @sellvale[:cod_tar] = '05'
+    end
+    
+    
+    
+      
+    
     @sellvale[:importe] = @sellvale[:precio].to_f * @sellvale[:cantidad] 
     
     respond_to do |format|
