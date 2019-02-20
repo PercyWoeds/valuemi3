@@ -266,7 +266,7 @@ end
              facturas = Tirad.where(["fecha >= ? and fecha <= ?  and employee_id = ? and turno = ?  " , "#{fecha} 00:00:00","#{fecha} 23:59:59",grifero,turno ])
         
         
-            return ret
+            return facturas 
          end 
       
       
