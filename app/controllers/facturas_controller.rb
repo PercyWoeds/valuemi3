@@ -4308,7 +4308,7 @@ def cuadre01
     @fecha2 = params[:fecha2]    
     
        
-    @contado_rpt = @company.get_ventas_combustibles_fecha_producto(@fecha1,@fecha2)
+    @contado_rpt = @company.get_ventas_combustibles_fecha_producto0(@fecha1,@fecha2)
     
     
     @detalle_ventas_grifero = @company.get_ventas_combustibles_fecha_grifero(@fecha1,@fecha2)
