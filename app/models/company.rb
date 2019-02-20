@@ -4363,8 +4363,8 @@
         def  get_ventas_combustibles_fecha_producto0(fecha1,fecha2) 
     
             facturas = Sellvale.find_by_sql(['Select sellvales.cod_prod,
-                    SUM(sellvales.quantity) AS quantity,
-                    SUM(sellvales.importe) AS total 
+                    SUM(sellvales.cantidad) AS quantity,
+                    SUM(CAST(sellvales.importe) as FLOAT) AS total 
                       from sellvales 
                       INNER JOIN employees ON sellvales.cod_emp = employees.cod_emp
                       INNER JOIN products ON  sellvales.cod_prod = products.code 
