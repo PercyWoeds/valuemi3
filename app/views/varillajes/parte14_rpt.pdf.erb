@@ -1,7 +1,7 @@
 <html>
 <body>
   <h6 ><center>  Desde: <%= @fecha1 %> Hasta: <%= @fecha2 %> </center>   </h6>
-
+ <font size="2" face="Courier New" >  
   <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
   
   <tr bgcolor="#B4D7F7">
@@ -16,24 +16,20 @@
   <tr bgcolor="#B4D7F7">
    
    <td width= "5%" > Fecha </td></td>
-                    <td width= "15%" >Cliente   </td>
-                    <td width= "3%" > Td   </td>
-                    <td width= "3%" > Serie   </td>
-                    <td width = "5%" align ="right"> Numero </td>
-                    <td width = "3%" align ="right"> Codigo </td>
-                    <td width = "10%" align ="left"> Producto</td>
-                   
-                    <td width = "5%" align ="right"> Placa </td>
-                    <td width = "8%" align ="right">Cantidad</td>
-                    <td width = "8%"  align ="right">Precio</td>
-                    <td width = "8%" align ="right">Importe</td>
-                    <td width = "8%" align ="right">Imp.Lista </td>
-                  
-                    <td width = "10%" align ="left">Cod Emp  </td>
-                     <td width = "10%" align ="left">Empleado  </td>
-                    
-    
-
+   <td width= "15%" >Cliente   </td>
+   <td width= "3%" > Td   </td>
+   <td width= "3%" > Serie   </td>
+   <td width = "5%" align ="right"> Numero </td>
+   <td width = "3%" align ="right"> Codigo </td>
+   <td width = "10%" align ="left"> Producto</td>
+   <td width = "5%" align ="right"> Placa </td>
+   <td width = "8%" align ="right">Cantidad</td>
+   <td width = "8%"  align ="right">Precio</td>
+   <td width = "8%" align ="right">Importe</td>
+   <td width = "8%" align ="right">Imp.Lista </td>
+   <td width = "10%" align ="left">Cod Emp  </td>
+   <td width = "10%" align ="left">Empleado  </td>
+   
   </tr>
   
   </table>
@@ -63,9 +59,22 @@
                     <td width = "8%"  align ="right"><%= sprintf("%.2f",contado.precio)   %></td>
                     <td width = "8%" align ="right"><%= sprintf("%.3f",contado.importe)   %></td>
                     <td width = "8%" align ="right"><%= sprintf("%.2f",contado.implista.to_s)   %></td>
-                   
-                    <td width = "10%" align ="left"><%= contado.cod_emp  %> </td>
-                     <td width = "10%" align ="left"><%= truncate(contado.get_nombre_empleado(contado.cod_emp), :length => 19)  %> </td>
+                    
+                    <% if contado.cod_tar =="98"%>
+                       <% forma_pago = "E" %>
+                    <% end %>
+                    <% if contado.cod_tar =="01"%>
+                       <% forma_pago = "V" %>
+                    <% end %>
+                    <% if contado.cod_tar =="05"%>
+                       <% forma_pago = "M" %>
+                    <% end %>
+                    
+                    
+                    <td width = "5%" align ="left"> forma_pago </td>
+                    
+                    <td width = "5%" align ="left"><%= contado.cod_emp  %> </td>
+                    <td width = "10%" align ="left"><%= truncate(contado.get_nombre_empleado(contado.cod_emp), :length => 15)  %> </td>
                     
                     </tr>
                     
