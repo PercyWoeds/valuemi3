@@ -264,15 +264,7 @@ end
         def  get_ventas_tirada_grifero_turno(fecha,grifero,turno ) 
         
              facturas = Tirad.where(["fecha >= ? and fecha <= ?  and employee_id = ? and turno = ?  " , "#{fecha} 00:00:00","#{fecha} 23:59:59",grifero,turno ])
-             ret=0  
-             if facturas
-                 
-                
-                for detalle in facturas
-                     ret += detalle.importe.to_f
-                
-               end 
-            end 
+        
         
             return ret
          end 
