@@ -235,7 +235,73 @@ def self.search(search)
   where("numero  iLIKE ? or cod_cli iLIKE ? or odometro ilike ? ", "%#{search}%","%#{search}%","%#{search}%")
 end
 
+   
+def get_product2(id)        
+    
+    a = Product.find_by(code: id)
+    return a.full_name
+    
+    
+end 
 
+  def  get_ventas_forma_pago_grifero_turno(fecha,grifero,turno,fpago) 
+
+             facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and cod_emp = ? and turno=?  and cod_tar= ?  " , "#{fecha} 00:00:00","#{fecha} 23:59:59",grifero,turno,fpago])
+             
+             if facturas
+                 
+                ret=0  
+                for detalle in facturas
+                    ret += detalle.importe.to_f
+               end 
+            end 
+        
+            return ret
+         
+        end
+        
+        
+        def  get_ventas_tirada_grifero_turno(fecha,grifero,turno ) 
+        
+             facturas = Tirad.where(["fecha >= ? and fecha <= ?  and employee_id = ? and turno = ?  " , "#{fecha} 00:00:00","#{fecha} 23:59:59",grifero,turno ])
+             ret=0  
+             if facturas
+                 
+                
+                for detalle in facturas
+                     ret += detalle.importe.to_f
+                
+               end 
+            end 
+        
+            return ret
+         end 
+      
+      
+       def  get_ventas_lubricantes_creditos_grifero_turno(fecha,grifero,turno ) 
+     
+           facturas = Sellvale.find_by_sql(['Select sellvales.* from sellvales    
+             INNER JOIN products ON sellvales.cod_prod = products.code 
+             WHERE products.products_category_id = 2 
+             and sellvales.fecha >= ? 
+             and sellvales.fecha <= ? 
+             and cod_emp = ? and turno = ? 
+             ORDER BY sellvales.fecha', "#{fecha} 00:00:00","#{fecha} 23:59:59",grifero,turno])
+             
+          #facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ?  and tipo = ?" , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","1" ])
+             
+             if facturas
+                 
+                ret=0  
+                for detalle in facturas
+                    ret += detalle.implista
+               end 
+            end 
+        
+            return ret
+         
+         end 
+        
 def self.to_csv
     attributes = %w{td fecha turno cod_emp caja serie numero cod_cli ruc placa odometro cod_prod cantidad precio importe igv fpago implista cod_tar km chofer tk_devol cod_sucu isla dni_cli tipo }
 
