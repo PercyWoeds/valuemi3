@@ -135,8 +135,7 @@
               <%      tot_lub = contado.get_ventas_lubricantes_creditos_grifero_turno(@fecha1,contado.cod_emp, contado.turno)   %>   
               
            
-              <% a6 = a1  %>
-              <% a7 = a6-a2   %>
+          
               
               
               
@@ -194,7 +193,7 @@
                       <td width = "11%" align ="right"></td>
                       <td width = "15%" align ="left"> Total x Liquidar </td> : </td>
                         <td width = "15%" align ="left"> </td>
-                      <td width = "15%" align ="right"> <%= sprintf("%.2f", a7)   %></td>
+                      <td width = "15%" align ="right"> <%= sprintf("%.2f", a1)   %></td>
                    </tr>
                    
                      <tr>
@@ -230,7 +229,7 @@
                       <td width = "11%" align ="right"></td>
                       <td width = "15%" align ="left"> ** Diferencia : </td>
                         <td width = "15%" align ="left"> </td>
-                      <td width = "15%" align ="right"> <%= sprintf("%.2f", tot_depo - a7 - tot_lub )   %></td>
+                      <td width = "15%" align ="right"> <%= sprintf("%.2f", tot_depo - a1 - tot_lub )   %></td>
                    </tr>
                    
                    
