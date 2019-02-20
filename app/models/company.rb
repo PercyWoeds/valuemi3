@@ -4362,9 +4362,9 @@
         
         def  get_ventas_combustibles_fecha_producto0(fecha1,fecha2) 
     
-            facturas = Sellvale.find_by_sql(['Select sellvale.cod_prod,
-                    SUM(sellvale.quantity) AS quantity,
-                    SUM(sellvale.importe) AS total 
+            facturas = Sellvale.find_by_sql(['Select sellvales.cod_prod,
+                    SUM(sellvales.quantity) AS quantity,
+                    SUM(sellvales.importe) AS total 
                       from sellvales 
                       INNER JOIN employees ON sellvales.cod_emp = employees.cod_emp
                       INNER JOIN products ON  sellvales.cod_prod = products.code 
