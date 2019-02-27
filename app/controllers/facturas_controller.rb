@@ -3620,7 +3620,6 @@ def newfactura2
               
               if item.cod_prod == "04"
                 precio_descto0 = item.importe.to_f / item.cantidad
-                
                 precio_descto = precio_descto0 - 0.80
               end
               
@@ -3632,6 +3631,8 @@ def newfactura2
               
               preciolista0 = item.implista / item.cantidad
               preciolista  = preciolista0.round(2)
+              
+              
               @importe0 = item.cantidad * precio_descto 
               
               @importe  = @importe0.round(2)
@@ -3890,38 +3891,25 @@ end
           File.delete(file)
         end         
        if @invoice.document_id=="2"
-        #   credit_note_data = { issue_date: Date.new($aa,$mm,$dd), id: $lcNumeroNota, customer: {legal_name:$lcLegalName , ruc:$lcRuc },
-        #                      billing_reference: {id: $lcBillingReference, document_type_code: "01"},
-        #                      discrepancy_response: {reference_id: $lcBillingReference, response_code: "09", description: $lcDescrip},
-        #                      lines: [{id: "1", item: {id: "05", description: $lcDescrip2}, quantity: $lcCantidad, unit: 'GLL', 
-        #                           price: {value: $lcPrecioSIgv}, pricing_reference: $lcPrecioCigv, tax_totals: [{amount: $lcIgv, type: :igv, code: "10"}], line_extension_amount:$lcVVenta }],
-        #                      additional_monetary_totals: [{id: "1001", payable_amount: $lcVVenta}], tax_totals: [{amount: $lcIgv, type: :igv}], legal_monetary_total: $lcTotal}
-        
-
-        # credit_note = SUNAT::CreditNote.new(credit_note_data)
-
-        # if credit_note.valid?                       
-        #   credit_note.to_pdf    
-           
-        #   $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
-        #   send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
-
-        # else
-          
-        #   $aviso = "Invalid document, ignoring output: #{credit_note.errors.messages}"
-
-        # end
-
-           
+      
+            if $lcMoneda == "D"  
+                $lcFileName=""
+                case_49 = ReceiptGenerator.new(1,3,1,$lg_serie_factura,@invoice.id).with_different_currency2
+              #  puts $lcFileName 
+           else
+               
+                case_3  = ReceiptGenerator.new(1,3,1,$lg_serie_factura,@invoice.id).with_igv2(true)
+           end 
        else        
            if $lcMoneda == "D"  
                 $lcFileName=""
                 case_49 = InvoiceGenerator.new(1,3,1,$lg_serie_factura,@invoice.id).with_different_currency2
               #  puts $lcFileName 
            else
-               puts @invoice.id 
+               
                 case_3  = InvoiceGenerator.new(1,3,1,$lg_serie_factura,@invoice.id).with_igv2(true)
            end 
+           
         end 
     
         
