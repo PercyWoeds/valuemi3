@@ -3893,9 +3893,9 @@ end
        if @invoice.document_id == 2 
       
            if $lcMoneda == "D"
-                case_52 = ReceiptGenerator.new(8, 52, 1, "BB04").with_igv2(true)
+                case_52 = ReceiptGenerator.new(8, 52, 1, "BB04",@invoice.id).with_igv2(true)
             else        
-                case_96 = ReceiptGenerator.new(12, 96, 1, "BB04").with_different_currency2(true)
+                case_96 = ReceiptGenerator.new(12, 96, 1, "BB04",@invoice.id).with_different_currency2(true)
             end 
             
        else        
