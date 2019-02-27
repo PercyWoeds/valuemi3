@@ -3605,25 +3605,25 @@ def newfactura2
           a = item.id
           b = Product.find_by(code: item.cod_prod)             
           
-          if @facturasselect.cod_cli == "000C_000001"
+          if item.cod_cli == "000C_000001"
           
               descuento =  item.implista - item.importe.to_f
               
-              if @facturasselect.cod_prod == "02"
+              if item.cod_prod == "02"
                 precio_descto0 = item.importe.to_f / item.cantidad 
                 precio_descto = precio_descto0.round(2) - 0.80
               end
-              if @facturasselect.cod_prod == "03"
-                precio_descto0 = item.importe.to_f / item.cantidad 
-                precio_descto = precio_descto0.round(2) - 0.80
-              end
-              
-              if @facturasselect.cod_prod == "04"
+              if item.cod_prod == "03"
                 precio_descto0 = item.importe.to_f / item.cantidad 
                 precio_descto = precio_descto0.round(2) - 0.80
               end
               
-              if @facturasselect.cod_prod == "05"
+              if item.cod_prod == "04"
+                precio_descto0 = item.importe.to_f / item.cantidad 
+                precio_descto = precio_descto0.round(2) - 0.80
+              end
+              
+              if item.cod_prod == "05"
                 precio_descto0 = item.importe.to_f / item.cantidad 
                 precio_descto = precio_descto0.round(2) - 0.50
               end
