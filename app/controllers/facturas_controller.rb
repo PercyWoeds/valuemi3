@@ -3890,9 +3890,9 @@ end
         files_to_clean.each do |file|
           File.delete(file)
         end         
-       if @invoice.document_id=="2"
+       if @invoice.document_id == 2 
       
-           if $lcMoneda == 2
+           if $lcMoneda == "D"
                 case_52 = ReceiptGenerator.new(8, 52, 1, "BB04").with_igv2(true)
             else        
                 case_96 = ReceiptGenerator.new(12, 96, 1, "BB04").with_different_currency2(true)
