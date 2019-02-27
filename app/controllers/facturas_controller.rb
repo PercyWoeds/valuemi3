@@ -3610,26 +3610,27 @@ def newfactura2
               descuento =  item.implista - item.importe.to_f
               
               if item.cod_prod == "02"
-                precio_descto0 = item.importe.to_f / item.cantidad 
+                precio_descto0 = item.importe.to_f.round(2) / item.cantidad.round(2) 
                 precio_descto = precio_descto0.round(2) - 0.80
               end
               if item.cod_prod == "03"
-                precio_descto0 = item.importe.to_f / item.cantidad 
+                precio_descto0 = item.importe.to_f.round(2) / item.cantidad.round(2) 
                 precio_descto = precio_descto0.round(2) - 0.80
               end
               
               if item.cod_prod == "04"
-                precio_descto0 = item.importe.to_f / item.cantidad 
+                precio_descto0 = item.importe.to_f.round(2) / item.cantidad.round(2)
+                
                 precio_descto = precio_descto0.round(2) - 0.80
               end
               
               if item.cod_prod == "05"
-                precio_descto0 = item.importe.to_f / item.cantidad 
+                precio_descto0 = item.importe.to_f.round(2) / item.cantidad.round(2)
                 precio_descto = precio_descto0.round(2) - 0.50
               end
               
               
-              preciolista0 = item.implista / item.cantidad 
+              preciolista0 = item.implista / item.cantidad
               preciolista  = preciolista0.round(2)
               @importe0 = item.cantidad * precio_descto 
               
