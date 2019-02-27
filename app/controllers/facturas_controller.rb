@@ -3605,15 +3605,53 @@ def newfactura2
           a = item.id
           b = Product.find_by(code: item.cod_prod)             
           
-          descuento =  item.implista - item.importe.to_f
+          if @facturasselect.cod_cli == "000C_000001"
           
-          precio_descto0 = item.importe.to_f / item.cantidad 
-          precio_descto = precio_descto0.round(2)
+              descuento =  item.implista - item.importe.to_f
+              
+              if @facturasselect.cod_prod == "02"
+                precio_descto0 = item.importe.to_f / item.cantidad 
+                precio_descto = precio_descto0.round(2) - 0.80
+              end
+              if @facturasselect.cod_prod == "03"
+                precio_descto0 = item.importe.to_f / item.cantidad 
+                precio_descto = precio_descto0.round(2) - 0.80
+              end
+              
+              if @facturasselect.cod_prod == "04"
+                precio_descto0 = item.importe.to_f / item.cantidad 
+                precio_descto = precio_descto0.round(2) - 0.80
+              end
+              
+              if @facturasselect.cod_prod == "05"
+                precio_descto0 = item.importe.to_f / item.cantidad 
+                precio_descto = precio_descto0.round(2) - 0.50
+              end
+              
+              
+              preciolista0 = item.implista / item.cantidad 
+              preciolista  = preciolista0.round(2)
+              @importe0 = item.cantidad * precio_descto 
+              
+              @importe  = @importe0.round(2)
+              
+          else
+            
+              descuento =  item.implista - item.importe.to_f
+              
+              precio_descto0 = item.importe.to_f / item.cantidad 
+              precio_descto = precio_descto0.round(2)
+              
+              preciolista0 = item.implista / item.cantidad 
+              preciolista  = preciolista0.round(2)
+              
+              @importe = item.importe.to_f 
+            
+            
+            
+          end 
           
-          preciolista0 = item.implista / item.cantidad 
-          preciolista  = preciolista0.round(2)
-          
-          new_invoice_detail = FacturaDetail.new(factura_id: @factura_id  ,sellvale_id: item.id , product_id: b.id ,price:preciolista, price_discount: precio_descto, quantity: item.cantidad,total: item.importe)
+          new_invoice_detail = FacturaDetail.new(factura_id: @factura_id  ,sellvale_id: item.id , product_id: b.id ,price:preciolista, price_discount: precio_descto, quantity: item.cantidad,total: @importe )
           
           if new_invoice_detail.save
               
