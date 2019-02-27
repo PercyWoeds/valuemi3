@@ -3892,14 +3892,12 @@ end
         end         
        if @invoice.document_id=="2"
       
-            if $lcMoneda == "D"  
-                $lcFileName=""
-                case_49 = ReceiptGenerator.new(1,3,1,$lg_serie_factura,@invoice.id).with_different_currency2
-              #  puts $lcFileName 
-           else
-               
-                case_3  = ReceiptGenerator.new(1,3,1,$lg_serie_factura,@invoice.id).with_igv2(true)
-           end 
+           if $lcMoneda == 2
+                case_52 = ReceiptGenerator.new(8, 52, 1, "BB04").with_igv2(true)
+            else        
+                case_96 = ReceiptGenerator.new(12, 96, 1, "BB04").with_different_currency2(true)
+            end 
+            
        else        
            if $lcMoneda == "D"  
                 $lcFileName=""
