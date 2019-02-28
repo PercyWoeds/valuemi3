@@ -3890,7 +3890,10 @@ end
         files_to_clean.each do |file|
           File.delete(file)
         end         
-       if @invoice.document_id == 2 
+       ######################################
+       # Boleta : 7 grupo eye 2 : Kinzuko
+       #####################################
+       if @invoice.document_id == 7
       
            if $lcMoneda == "D"
                 case_96 = ReceiptGenerator.new(12, 96, 1, "BB04",@invoice.id).with_different_currency2(true)
