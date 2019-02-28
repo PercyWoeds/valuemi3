@@ -26,10 +26,18 @@
 
       </div>
     </div>
+    
+     <div class="field">
+      <%= f.label :location_id ,"Local"%><br />
+      <%= f.select :location_id, options_from_collection_for_select(@locations,'id','name') %>    
+    </div>
+    
+    
     <div class="field">
       <%= f.label :document_id,"Documento" %><br />
       <%= f.select :document_id, options_from_collection_for_select(@documents,'id','description')%>
     </div>
+    
     <div class="field">
       <%= f.label :tiponota,"Tipo Movimiento" %><br />
       <%= select_tag(:tiponota, options_for_select([["Normal",1],["Anulacion Factura",2],["Descuento por item",3]], params[:option] ), class:"select") %>
