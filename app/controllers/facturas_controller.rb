@@ -1593,7 +1593,7 @@ def reportes31
        redirect_to root_url, notice: "Factura importadas."
   end 
   def import2
-      FacturaDetail.import2(params[:file])
+      Factura.import2(params[:file])
        redirect_to root_url, notice: "Factura importadas."
   end 
 
