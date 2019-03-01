@@ -3608,6 +3608,10 @@ def newfactura2
           if item.cod_cli == "000C_000001"
           
               descuento =  item.implista - item.importe.to_f
+              if item.cod_prod == "01"
+                precio_descto0 = item.importe.to_f / item.cantidad
+                precio_descto = precio_descto0 - 0.80
+              end
               
               if item.cod_prod == "02"
                 precio_descto0 = item.importe.to_f / item.cantidad
