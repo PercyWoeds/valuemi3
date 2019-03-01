@@ -3140,6 +3140,7 @@ def newfactura2
     @monedas  = @company.get_monedas()
     @payments  = @company.get_payments()
 
+    @gastos = Gasto.all.order(:descrip) 
     
     @ac_user = getUsername()
     @purchase[:user_id] = getUserId()
@@ -3154,7 +3155,7 @@ def newfactura2
     @company = @purchase.company
     @ac_supplier = @purchase.supplier.name
     @ac_user = @purchase.user.username
-    
+    @gastos = Gasto.all.order(:descrip) 
     @purchase_details = @purchase.purchase_details
     
     @locations = @company.get_locations()
@@ -3183,7 +3184,7 @@ def newfactura2
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
-      
+    @gastos = Gasto.all.order(:descrip) 
     @documents = @company.get_documents()    
     @servicebuys  = @company.get_servicebuys()
     @monedas  = @company.get_monedas()
@@ -3301,7 +3302,7 @@ def newfactura2
     end
     
     @purchase_details = @purchase.purchase_details
-    
+    @gastos = Gasto.all.order(:descrip) 
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
       
@@ -3368,7 +3369,7 @@ def newfactura2
       :product_id,:unit_id,:price_with_tax,:price_without_tax,:price_public,:quantity,:other,:money_type,
       :discount,:tax1,:payable_amount,:tax_amount,:total_amount,:status,:pricestatus,:charge,:pago,
       :balance,:tax2,:supplier_id,:order1,:plate_id,:user_id,:company_id,:location_id,:division_id,:comments,
-      :processed,:return,:date_processed,:payment_id,:document_id,:documento,:moneda_id,:participacion,:isc )
+      :processed,:return,:date_processed,:payment_id,:document_id,:documento,:moneda_id,:participacion,:isc,:gasto_id )
   end
 
 end

@@ -416,14 +416,12 @@
 		<% end %>
 
 	
-<!--<% if @invoice.processed =="0" || @invoice.processed==nil %>-->
-<!--  <%= link_to 'Procesar factura', "/facturas/do_process/#{@invoice.id}" %>-->
+<% if @invoice.processed =="0" || @invoice.processed==nil %>-->
+  <%= link_to 'Procesar factura', "/facturas/do_process/#{@invoice.id}" %> 
 
-<!--<% elsif @invoice.processed =="1" %>  -->
 
-<!--  <%= link_to 'Anular', "/facturas/do_anular/#{@invoice.id}" %>-->
-  
-<!--<% end %>-->
+<% end %>
+
 <%= link_to 'Regresar', "/companies/facturas/#{@invoice.company.id}" %>
 </div>
 
