@@ -72,6 +72,17 @@ class FaltantesController < ApplicationController
     end
   end
 
+
+  def import
+      Factura.import(params[:file])
+       redirect_to root_url, notice: "Facturas importadas."
+  end 
+  def import2
+      FacturaDetail.import2(params[:file])
+       redirect_to root_url, notice: "Facturas direcciones importadas."
+  end 
+    
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_faltante

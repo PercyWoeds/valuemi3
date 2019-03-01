@@ -174,6 +174,9 @@
     collection { post :xml }
     collection { post :print1 }
     collection { post :pdf }
+    collection { post :import  }
+     collection { post :import2  }
+     
     
     
   end 
