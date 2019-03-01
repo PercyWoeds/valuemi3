@@ -1592,6 +1592,10 @@ def reportes31
       Factura.import(params[:file])
        redirect_to root_url, notice: "Factura importadas."
   end 
+  def import2
+      FacturaDetail.import(params[:file])
+       redirect_to root_url, notice: "Factura importadas."
+  end 
 
 
     # Export invoice to PDF
