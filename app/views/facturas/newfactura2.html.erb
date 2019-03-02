@@ -72,6 +72,10 @@
           Producto
         </th>
         <th class="small bordered_bottom bordered_right">
+          Nombre 
+        </th>
+        
+        <th class="small bordered_bottom bordered_right">
           Cant.
         </th>
         <th class="small bordered_bottom bordered_right">
@@ -121,6 +125,11 @@
           <td class="small bordered_bottom bordered_right" style="width: 50px;">
             <%= item.cod_prod %>
           </td>
+          <td class="small bordered_bottom bordered_right" style="width: 50px;">
+            <%= item.get_product_name(item.cod_prod) %>
+          </td>
+          
+          
           <td class="small bordered_bottom bordered_right" style="width: 50px;">
             <%= money(item.cantidad) %>
           </td>
