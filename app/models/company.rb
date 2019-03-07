@@ -4510,9 +4510,18 @@
         
         def  get_ventas_all(fecha1,fecha2) 
     
-            facturas = Factura.where(["fecha >= ?  and fecha <=  ? and substring(code,1,2) <> ? "  , "#{fecha1} 00:00:00","#{fecha2} 23:59:59","BB"] ).order(:fecha,:code)
+            #facturas = Factura.where(["fecha >= ?  and fecha <=  ? "  , "#{fecha1} 00:00:00","#{fecha2} 23:59:59"] ).order(:fecha,:code)
+            
+            @facturas = Factura.find_by_sql(['Select facturas.*,factura_details.quantity,
+          factura_details.price,factura_details.total,products.name as nameproducto,products.code as codigo,products.unidad
+          from factura_details   
+          INNER JOIN facturas ON factura_details.factura_id = facturas.id
+          INNER JOIN products ON factura_details.product_id = products.id
+          WHERE facturas.fecha >= ? and facturas.fecha <= ?  and moneda_id = ? and products.products_category_id != ? 
+          order by facturas.fecha, facturas.document_id ', "#{fecha1} 00:00:00","#{fecha2} 23:59:59","2","1" ])
+            
            
-             return facturas 
+             return @facturas 
        
         end 
         def  get_ventas_all2(fecha1,fecha2,customer) 

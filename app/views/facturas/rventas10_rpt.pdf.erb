@@ -36,14 +36,17 @@
       <% total_3 = 0%>
       <% precio = 0%>
        <% for  credito in @facturas_rpt  %>
+       
                 <tr>
                     <td width = "5%" align ="right"><%= credito.fecha.strftime("%d/%m/%Y")    %> </td>
                     <td width = "5%" ><%=  credito.code  %></td>
                     <td width = "5%" align ="right"><%= credito.customer.ruc    %></td>
-                    <td width = "35%" align ="left"><%= credito.customer.name   %></td>
+                    <td width = "25%" align ="left"><%= credito.customer.name   %></td>
+                    <td width = "5%" align ="right"><%= credito.codigo   %></td>
+                    <td width = "10%" align ="right"><%= credito.nameproducto    %></td>
+                    <td width = "10%" align ="right"><%= sprintf("%.3f",credito.quantity)   %></td>
                     
-                    <td width = "10%" align ="right"><%= sprintf("%.3f",credito.get_invoices_cantidad)   %></td>
-                    <% cantidad = credito.get_invoices_cantidad %>
+                    <% cantidad = credito.quantity %>
                     <% if  cantidad > 0 %>
                     <% precio = credito.total / cantidad %>
                     <% else %>
@@ -56,7 +59,7 @@
                     <td width = "10%" align ="right"><%= sprintf("%.3f",credito.tax)   %></td>
                     <td width = "10%" align ="right"><%= sprintf("%.3f",credito.total)   %></td>
                 </tr>
-                    <% total_0 += credito.get_invoices_cantidad %>    
+                    <% total_0 += credito.quantity %>    
                     <% total_1 += credito.subtotal %>
                     <% total_2 += credito.tax %>
                     <% total_3 += credito.total %>

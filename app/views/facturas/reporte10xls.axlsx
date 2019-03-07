@@ -24,17 +24,17 @@ wb.styles do |s|
     tot_2 = 0
     tot_3 = 0
     
-    sheet.add_row ["Fecha","Documento","R.U.C.","Cliente","Cantidad ","Precio","Subtotal","I.G.V.","Importe" ], :style => title 
+    sheet.add_row ["Fecha","Documento","R.U.C.","Cliente","Cod.","Producto","Cantidad ","Precio","Subtotal","I.G.V.","Importe" ], :style => title 
     
    @facturas_rpt.each do |payment|
      
-      cantidad = payment.get_invoices_cantidad
+      cantidad = payment.quantity
                      if  cantidad > 0
                         precio = payment.total / cantidad 
                      else
                         precio = 0
                      end
-    sheet.add_row [payment.fecha,payment.code,payment.customer.ruc,payment.customer.name,cantidad,precio,payment.subtotal,payment.tax,payment.total], :style => [date,cadena,cadena,cadena,currency,currency,currency,currency,currency,currency]
+    sheet.add_row [payment.fecha,payment.code,payment.customer.ruc,payment.customer.name,payment.codigo,payment.nameproducto,cantidad,precio,payment.subtotal,payment.tax,payment.total], :style => [date,cadena,cadena,cadena,currency,currency,currency,currency,currency,currency]
     
     tot_0 += cantidad
     
