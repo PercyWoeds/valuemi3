@@ -4519,9 +4519,12 @@
           INNER JOIN products ON factura_details.product_id = products.id
           WHERE facturas.fecha >= ? and facturas.fecha <= ?  and moneda_id = ? and products.products_category_id = ? 
           order by facturas.fecha, facturas.document_id ', "#{fecha1} 00:00:00","#{fecha2} 23:59:59","2","1" ])
+          
+          
             
+          return @facturas 
            
-             return @facturas 
+           
        
         end 
         def  get_ventas_all2(fecha1,fecha2,customer) 

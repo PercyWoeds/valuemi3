@@ -23,6 +23,8 @@ wb.styles do |s|
     tot_1 = 0
     tot_2 = 0
     tot_3 = 0
+    subtotal = 0
+    tax = 0 
     
     sheet.add_row ["Fecha","Documento","R.U.C.","Cliente","Cod.","Producto","Cantidad ","Precio","Subtotal","I.G.V.","Importe" ], :style => title 
     
@@ -31,15 +33,19 @@ wb.styles do |s|
       cantidad = payment.quantity
                      if  cantidad > 0
                         precio = payment.total / cantidad 
+                        
                      else
                         precio = 0
                      end
-    sheet.add_row [payment.fecha,payment.code,payment.customer.ruc,payment.customer.name,payment.codigo,payment.nameproducto,cantidad,precio,payment.subtotal,payment.tax,payment.total], :style => [date,cadena,cadena,cadena,currency,currency,currency,currency,currency,currency]
+                     subtotal = payment.total / 1.18
+                     tax = payment.total - subtotal 
+                     
+    sheet.add_row [payment.fecha,payment.code,payment.customer.ruc,payment.customer.name,payment.codigo,payment.nameproducto,cantidad,precio,subtotal,tax,payment.total], :style => [date,cadena,cadena,cadena,currency,currency,currency,currency,currency,currency]
     
     tot_0 += cantidad
     
-    tot_1 += payment.subtotal 
-    tot_2 += payment.tax
+    tot_1 += subtotal 
+    tot_2 += tax
     tot_3 += payment.total 
     
    end
