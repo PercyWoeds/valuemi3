@@ -17,7 +17,7 @@ SUNAT.configure do |config|
   config.supplier do |s|
     s.legal_name = "CONSORCIO KINZUKO S.A.C."
     s.name       = ""
-    s.ruc        = "20514739065"
+    s.ruc        = "20501683109"
     s.address_id = "150106"
     s.street     = "MZA. J LOTE. 19 URB. BRISAS DE STA ROSA (GRIFO REPSOL)"
     s.district   = "SAN MARTIN DE PORRES - LIMA-LIMA"
