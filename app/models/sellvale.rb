@@ -161,7 +161,6 @@ def self.import2(file2)
           
           return b
           
-      end 
       
   end       
     
@@ -321,18 +320,16 @@ end
          
          end 
         
-def self.to_csv
-    attributes = %w{td fecha turno cod_emp caja serie numero cod_cli ruc placa odometro cod_prod cantidad precio importe igv fpago implista cod_tar km chofer tk_devol cod_sucu isla dni_cli tipo }
+        def self.to_csv
+            attributes = %w{td fecha turno cod_emp caja serie numero cod_cli ruc placa odometro cod_prod cantidad precio importe igv fpago implista cod_tar km chofer tk_devol cod_sucu isla dni_cli tipo }
 
-    CSV.generate(headers: true) do |csv|
-      csv << attributes
+            CSV.generate(headers: true) do |csv|
+            csv << attributes
 
-      all.each do |sellvale|
-        csv << attributes.map{ |attr| sellvale.send(attr) }
-      end
-    end
-  end
-
- 
+                    all.each do |sellvale|
+                    csv << attributes.map{ |attr| sellvale.send(attr) }
+                end
+            end
+        end
 
 end
