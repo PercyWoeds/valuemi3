@@ -3602,6 +3602,8 @@ def newfactura2
     
     @factura_id = params[:factura_id]
     
+    
+    
     @facturasselect = Sellvale.find(params[:products_ids])
 
     for item in @facturasselect
@@ -3650,6 +3652,10 @@ def newfactura2
               @importe  = @importe0.round(2)
               
           else
+            
+          if     item.cod_cli
+            
+            
             
               descuento =  item.implista - item.importe.to_f
               

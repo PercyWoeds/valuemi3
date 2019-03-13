@@ -137,6 +137,33 @@ def self.import2(file2)
       end 
       
   end       
+  
+  
+    
+  def get_descuento(codigo,producto) 
+      
+      b= 0
+      a=Customer.find_by(account: codigo)
+      
+       case 
+            when  producto =='01'
+                return  a.d01 
+            when   producto =='02'
+                return  a.d02 
+            when   producto =='03'
+                return  a.d03
+            when    producto =='04'
+                return  a.d04
+            when  producto =='05'
+                return  a.d04
+        end
+     
+          
+          return b
+          
+      end 
+      
+  end       
     
   def get_product_name(codigo) 
       

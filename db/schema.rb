@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190301152953) do
+ActiveRecord::Schema.define(version: 20190312224255) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -410,6 +410,12 @@ ActiveRecord::Schema.define(version: 20190301152953) do
     t.string   "ruc"
     t.integer  "tipo"
     t.integer  "saldo"
+    t.float    "d01"
+    t.float    "d02"
+    t.float    "d03"
+    t.float    "d04"
+    t.float    "d05"
+    t.float    "d06"
   end
 
   create_table "dato_laws", force: :cascade do |t|
