@@ -55,7 +55,6 @@ module SUNAT
                      "UNIDAD",
                      "DESCRIPCION",
                      "PRECIO UNITARIO",
-                     
                      "VALOR TOTAL"]
 
     def initialize(*args)

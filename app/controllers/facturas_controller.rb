@@ -3653,7 +3653,7 @@ def newfactura2
               
           else
             
-          if     item.cod_cli
+         
             
             
             
@@ -3667,9 +3667,8 @@ def newfactura2
               
               @importe = item.importe.to_f 
             
-            
-            
           end 
+            
           
           new_invoice_detail = FacturaDetail.new(factura_id: @factura_id  ,sellvale_id: item.id , product_id: b.id ,price:preciolista, price_discount: precio_descto, quantity: item.cantidad,total: @importe )
           
