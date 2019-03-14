@@ -130,9 +130,9 @@
               <%      a2 = contado.get_ventas_forma_pago_grifero_turno(@fecha1,contado.cod_emp, contado.turno,"05") + contado.get_ventas_forma_pago_grifero_turno(@fecha1,contado.cod_emp, contado.turno,"01")  %>
               <%      a3 = contado.get_ventas_forma_pago_grifero_turno(@fecha1,contado.cod_emp, contado.turno,"06")  %>
               <%      a4 = contado.get_ventas_forma_pago_grifero_turno(@fecha1,contado.cod_emp, contado.turno,"07")  %>
-              
               <%      a5 = 0   %>
-              <%      @tot_depo = contado.get_ventas_tirada_grifero_turno(@fecha1,contado.cod_emp, contado.turno)   %>   
+              
+              <%      @tot_depo = contado.get_ventas_tirada_grifero_turno(@fecha1,contado.get_code_empleado(contado.cod_emp), contado.turno)   %>   
               <%      tot_lub = contado.get_ventas_lubricantes_creditos_grifero_turno(@fecha1,contado.cod_emp, contado.turno)   %>   
               
            
@@ -222,9 +222,8 @@
                       <td width = "15%" align ="left"> <%= deposito.documento %></td> : </td>
                         <td width = "15%" align ="left"> </td>
                       <td width = "15%" align ="right"> <%= sprintf("%.2f",deposito.importe )   %></td>
-                      
                       <% tot_depo += deposito.importe %>
-                   </tr>
+                     </tr>
                    
   
                     <% end %>

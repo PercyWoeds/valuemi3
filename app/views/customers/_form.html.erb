@@ -75,10 +75,44 @@
     <%= f.check_box :taxable %>
     <%= f.label :taxable %>
   </div>
+  
+  
+  
+  
   <div class="actions">
     <%= f.label :tipo, "Tipo Credito <1: credito 2:Pago Adelantado 3:Contado >" %><br />
     <%= f.text_field :tipo %>
   </div>
+  
+  <h3> Precios por descuentos </h3>
+  <div class="field">
+      <%= f.label :d01, "GAS 84 ", :class => "bold" %><br />
+      <%= f.number_field :d01  ,:step => 0.01 %>
+  </div>
+  <div class="field">
+      <%= f.label :d02, "GAS 90 ", :class => "bold" %><br />
+      <%= f.number_field :d02 ,:step => 0.01 %>
+  </div>
+  
+  <div class="field">
+      <%= f.label :d03, "GAS 95 ", :class => "bold" %><br />
+      <%= f.number_field :d03 ,:step => 0.01 %>
+  </div>
+  <div class="field">
+      <%= f.label :d04, "GAS 98 ", :class => "bold" %><br />
+      <%= f.number_field :d04 ,:step => 0.01 %>
+  </div>
+  
+  <div class="field">
+      <%= f.label :d05, "DIESEL B5 S50 ", :class => "bold" %><br />
+      <%= f.number_field :d05 ,:step => 0.01 %>
+  </div>
+  
+  <div class="field">
+      <%= f.label :d08, "G.L.P. ", :class => "bold" %><br />
+      <%= f.number_field :d06 ,:step => 0.01 %>
+  </div>
+  
  
   <div class="actions">
     <%= f.hidden_field :company_id %>

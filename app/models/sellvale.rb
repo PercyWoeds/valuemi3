@@ -246,6 +246,7 @@ def get_cliente(cliente)
         return "Cliente no existe"
     end 
  end 
+ 
  def get_nombre_empleado(id)
      a= Employee.find_by(cod_emp: id)
      
@@ -255,6 +256,18 @@ def get_cliente(cliente)
         return "Empleado no existe"
     end 
  end 
+ 
+ def get_code_empleado(id)
+     a= Employee.find_by(cod_emp: id)
+     
+    if a
+         return a.id
+    else
+        return 0
+    end 
+ end 
+ 
+ 
 
 def self.search(search)
   # Title is for the above case, the OP incorrectly had 'name'
@@ -290,9 +303,7 @@ end
         def  get_ventas_tirada_grifero_turno(fecha,grifero,turno ) 
         
              facturas = Tirad.where(["fecha >= ? and fecha <= ?  and employee_id = ? and turno = ?  " , "#{fecha} 00:00:00","#{fecha} 23:59:59",grifero,turno ])
-        
-        
-            return facturas 
+             return facturas 
          end 
       
       
