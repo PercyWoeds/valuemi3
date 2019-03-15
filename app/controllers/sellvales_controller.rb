@@ -64,7 +64,7 @@ class SellvalesController < ApplicationController
     
     @documents = Document.all 
     @employees = Employee.all 
-    @customers = Customer.all 
+    @customers = Customer.all.order(:name) 
     @creditos = Credito.all
     @tarjetas = Tarjetum.all 
     @products = Product.all 

@@ -72,6 +72,13 @@ class CustomersController < ApplicationController
     
     @company = Company.find(params[:company_id])
     @customer.company_id = @company.id
+    @customer.d01 = 0
+    @customer.d02 = 0
+    @customer.d03 = 0
+    @customer.d04 = 0
+    @customer.d05 = 0
+    @customer.d06 = 0
+    
     
     if(params[:ajax])
       @ajax = true
@@ -172,7 +179,7 @@ class CustomersController < ApplicationController
     end
 
     def customer_params
-      params.require(:customer).permit(:company_id,:email,:phone1,:phone2,:address1,:address2,:city,:state,:zip,:country,:comments,:account,:taxable,:name,:ruc,:tipo)
+      params.require(:customer).permit(:company_id,:email,:phone1,:phone2,:address1,:address2,:city,:state,:zip,:country,:comments,:account,:taxable,:name,:ruc,:tipo,:d01,:d02,:d03,:d04,:d05,:d06)
     end
 
 end

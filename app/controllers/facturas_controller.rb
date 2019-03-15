@@ -2365,6 +2365,13 @@ def newfactura2
     @customer_name = @customer.name
     @customer_code = @customer.account 
     
+    @customer_d01 = @customer.d01 
+    @customer_d02 = @customer.d02
+    @customer_d03 = @customer.d03
+    @customer_d04 = @customer.d04
+    @customer_d05 = @customer.d05
+    @customer_d06 = @customer.d06
+    
     @detalleitems =  Sellvale.where(processed:"0",cod_cli: @customer.account,td:"N").order(:fecha)
     @factura_detail = Factura.new
 
@@ -3652,20 +3659,24 @@ def newfactura2
               @importe  = @importe0.round(2)
               
           else
-            
-         
-            
-            
-            
-              descuento =  item.implista - item.importe.to_f
+              puts "items factura"
+              puts item.cod_cli
+              puts item.cod_prod
               
-              precio_descto0 = item.importe.to_f / item.cantidad 
-              precio_descto = precio_descto0.round(2)
+              a =  item.get_descuento(item.cod_cli,item.cod_prod)
+                
+                
+                puts a 
+             
+              precio_descto0  =  item.precio.to_f + a 
               
-              preciolista0 = item.implista / item.cantidad 
+              precio_descto = precio_descto0.round(2) 
+              preciolista0 = item.precio.to_f 
               preciolista  = preciolista0.round(2)
+              importe = item.cantidad * precio_descto 
               
-              @importe = item.importe.to_f 
+              @importe = importe.round(2) 
+              
             
           end 
             

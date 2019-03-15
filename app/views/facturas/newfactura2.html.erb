@@ -39,7 +39,57 @@
       
       <%= @customer_name %>
       <%= @customer_code %>
+      
+      
     </div>
+    <table>
+      <th>
+        Gas 84
+      </th>
+      <th>
+        Gas 90
+      </th>
+        <th>
+        Gas 95
+      </th>
+      
+      <th>
+        Gas 98
+      </th>
+      <th>
+       Diesel B5 S50 
+      </th>
+    
+      <th>
+        G.L.P.
+      </th>
+    
+      <tr>
+        <td>
+        <%=  @customer_d01  %>  
+        </td>
+        
+        <td>
+        <%=  @customer_d02  %>  
+        </td>
+        <td>
+        <%=  @customer_d03  %>  
+        </td>
+        <td>
+        <%=  @customer_d04  %>  
+        </td>
+        <td>
+        <%=  @customer_d05  %>  
+        </td>
+        <td>
+        <%=  @customer_d06  %>  
+        </td>
+        
+        
+      </tr>
+      
+    </table>
+    
 
     <%= hr() %>
 
@@ -83,9 +133,6 @@
         </th>
         <th class="small bordered_bottom bordered_right">
           Importe
-        </th>
-        <th class="small bordered_bottom bordered_right">
-          Descuento 
         </th>
         <th class="small bordered_bottom bordered_right">
           Importe Pre.Lista
@@ -140,11 +187,6 @@
           </td>
           <td class="small bordered_bottom bordered_right" style="width: 100px;">
             <%= money(item.importe) %>
-          </td>
-          <td class="small bordered_bottom bordered_right" style="width: 100px;">
-            
-            <% descuento =  item.implista - item.importe.to_f %>
-            <%= money(descuento) %>
           </td>
           
           
