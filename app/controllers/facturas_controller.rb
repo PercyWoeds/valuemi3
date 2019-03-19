@@ -3646,7 +3646,7 @@ def newfactura2
               end
               if item.cod_prod == "08"
                 precio_descto0 = item.importe.to_f / item.cantidad
-                precio_descto = precio_descto0 - 0.20
+                precio_descto = precio_descto0.round(2) - 0.20
               end
               
               
