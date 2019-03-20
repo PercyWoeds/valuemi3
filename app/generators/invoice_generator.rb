@@ -136,12 +136,31 @@ class InvoiceGenerator < DocumentGenerator
   def data(items = 0, currency = 'PEN')
     
     @invoice = Factura.find(@numero)
+    
+    @redondeo = FacturaDetail.where(factura_id: @numero )
+    
+      for factura in @redondeo
+           puts factura.factura_id 
+           
+          factura.price3 = factura.price_discount.round(2)
+          factura.price_discount = factura.price3
+          factura.save 
+      
+      end 
+    
+
+    
+    
     @invoiceitems = FacturaDetail.select(:product_id,:price_discount ,"SUM(quantity) as cantidad","SUM(total) as total").where(factura_id: @numero).group(:product_id,:price_discount)
+    
     
         $lg_fecha   = @invoice.fecha.to_date
          lcCode = @invoice.code.split("-")
          a = lcCode[0]
          b = lcCode[1]
+         puts "codigo **"
+         puts a
+         puts b
          
         lcVVenta1      =  @invoice.subtotal * 100        
         lcVVenta_a       =  lcVVenta1.round(0)

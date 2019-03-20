@@ -46,7 +46,7 @@ class Facturas::FacturasDetailsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def factura_detail_params
-      params.require(:factura_detail).permit(:id, :factura_id, :sellvale_id, :producto_id, :price, :price_discount, :quantity, :total,:product_id, :discount)
+      params.require(:factura_detail).permit(:id, :factura_id, :sellvale_id, :producto_id, :price, :price_discount, :quantity, :total,:product_id, :discount,:price3)
     end
 
 end
