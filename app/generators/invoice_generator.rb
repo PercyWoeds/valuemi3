@@ -196,6 +196,41 @@ class InvoiceGenerator < DocumentGenerator
         $lcDep          = @invoice.customer.state
         $lcPlaca        = @invoice.description  
         $lcGuiaRemision = @invoice.guia 
+        $lcruc = "20501683109" 
+        
+        if $lcTd == 'FT'
+            $lctidodocumento = '01'
+        end
+        if $lcTd =='BV'
+            $lctidodocumento = '03'
+        end 
+        if $lcTd == 'NC'
+            $lctidodocumento = '07'
+        end 
+        if $lcTd == 'ND'
+            $lctidodocumento = '06'
+        end
+        
+        if @invoice.document.descripshort == "FT"
+          $lcTipoDocCli =  "1"
+        else
+          $lcTipoDocCli =  "6"
+        end 
+         $lcNroDocCli =@invoice.customer.ruc 
+         
+         $lcFecha1codigo      = $lg_fecha.to_s
+
+          parts = $lcFecha1codigo.split("-")
+          $aa = parts[0]
+          $mm = parts[1]        
+          $dd = parts[2]       
+        $lcFechaCodigoBarras = $aa << "-" << $mm << "-" << $dd
+        $lcIGVcode = $lcIgv
+        $lcTotalcode = $lcTotal
+        
+        
+        $lcCodigoBarra = $lcruc << "|" << $lcTd << "|" << $lcSerie << "|" << $lcDocument_serial_id.to_s << "|" <<$lcIGVcode.to_s<< "|" << $lcTotalcode.to_s << "|" << $lcFechaCodigoBarras << "|" << $lcTipoDocCli  << "|" << $lcNroDocCli
+
        
         
         
