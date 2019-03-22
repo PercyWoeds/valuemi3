@@ -2313,7 +2313,7 @@ def reportes31
     $lcAction="Factura"
     
     @invoice = Factura.new
-    @invoice[:code] = ""
+    @invoice[:code] = "#{generate_guid2()}"
     @invoice[:processed] = false
     
     

@@ -28,20 +28,6 @@
     </div>
     
     
-      <label for="ac_documento" class="bold">Documento*</label><br />
-      <input type="text" name="ac_documento" id="ac_documento" value="<% if @ac_documento %><%= @ac_documento %><% end %>" />
-      
-      
-      <div class="small">
-        Ingrese una termino de busqueda para encontrar un documento.
-      </div>
-      <br />
-
-      <div class="small">
-        <strong>Seleccionar documento:</strong>
-        <span id="selected_documento"><% if @ac_documento %><%= @ac_documento %><% else %><!-- i --><% end %></span>
-      </div>
-     
 
        <div class="field">
           <%= f.label :code, "Code*", :class => "bold" %><br />
