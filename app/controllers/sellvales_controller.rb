@@ -6,13 +6,13 @@ class SellvalesController < ApplicationController
   def index
     
     if current_user.email == "percywoeds@gmail.com"  || @current_user.level == "parte"  
-      
+      66
       @sellvales2 = Sellvale.all.order(:fecha,:serie,:numero)
       
         if params[:search]
           @sellvales = Sellvale.search(params[:search]).order(:fecha,:serie,:numero).paginate(:page => params[:page], :per_page => 20)
         else
-          @sellvales = Sellvale.all.order(:id).paginate(:page => params[:page], :per_page => 20)
+          @sellvales = Sellvale.all.order(:fecha,:serie,:numero).paginate(:page => params[:page], :per_page => 20)
         end
         
     
