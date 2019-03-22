@@ -26,7 +26,28 @@
       <%= f.label :document_id,"Documento :" %><br />
       <%= f.select :document_id,options_from_collection_for_select(@tipodocumento,'id','description'),  {style: "width: 140px" } %>
     </div>
+    
+    
+      <label for="ac_documento" class="bold">Documento*</label><br />
+      <input type="text" name="ac_documento" id="ac_documento" value="<% if @ac_documento %><%= @ac_documento %><% end %>" />
+      
+      
+      <div class="small">
+        Ingrese una termino de busqueda para encontrar un documento.
+      </div>
+      <br />
 
+      <div class="small">
+        <strong>Seleccionar documento:</strong>
+        <span id="selected_documento"><% if @ac_documento %><%= @ac_documento %><% else %><!-- i --><% end %></span>
+      </div>
+     
+
+       <div class="field">
+          <%= f.label :code, "Code*", :class => "bold" %><br />
+          <%= f.text_field :code  %>
+        </div>
+        
       <div class="field">
       <%= f.label :tipo , "Factura :", :class => "bold" %><br />
       <%= f.select :tipo, options_from_collection_for_select(@tipofacturas,'id','descrip') %>
@@ -82,12 +103,7 @@
     <%= hr() %>
         
 
-    <div class="field">
-      <%= f.label :code, "Code*", :class => "bold"  %><br />
-      
-      <%= f.text_field :code, :onclick => "$(this).select();" %>
-      
-    </div>
+    
 
       <div class="field">
       <%= f.label :moneda_id ,"  "%><br />
@@ -159,6 +175,7 @@
       
       <%= f.hidden_field :user_id, :id => "ac_user_id" %>
       <%= f.hidden_field :customer_id, :id => "ac_customer_id" %>
+      <%= f.hidden_field :document_id, :id => "ac_document_id" %>
       <%= f.hidden_field :company_id %>      
       <%= f.submit %>
     </div>
@@ -179,6 +196,7 @@
 
 <script type="text/javascript">
   $(document).ready(function() {
+    
     $("#ac_customer").autocomplete("/facturas/ac_customers/<%= @company.id %>", {
 			matchSubset: 1,
 			matchContains: 1,
@@ -189,6 +207,20 @@
       $("#ac_customer_id").val(data[2]);
       $("#selected_customer").html(data[0]);
     });        
+    
+     $("#ac_documento").autocomplete("/facturas/ac_documentos/<%= @company.id %>", {
+			matchSubset: 1,
+			matchContains: 1,
+      selectFirst: false
+    });
+    
+    $("#ac_documento").result(function(event, data, formatted) {
+      $("#ac_document_id").val(data[2]);
+      $("#selected_documento").html(data[0]);
+      $("#factura_code").html(data[4]);
+    });        
+    
+    
     
     $("#ac_user").autocomplete("/facturas/ac_user/<%= @company.id %>", {
 			matchSubset: 1,

@@ -1737,6 +1737,12 @@ def reportes31
   end
   
   
+   def ac_documentos 
+
+    @documentos = Document.where(["company_id = ? AND (description iLIKE ?)", params[:company_id], "%" + params[:q] + "%"])   
+    render :layout => false
+  end
+  
   # Autocomplete for products
   def ac_guias
     procesado = '1'
@@ -2307,7 +2313,7 @@ def reportes31
     $lcAction="Factura"
     
     @invoice = Factura.new
-    @invoice[:code] = "#{generate_guid3()}"
+    @invoice[:code] = ""
     @invoice[:processed] = false
     
     

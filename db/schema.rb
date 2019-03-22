@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190320152405) do
+ActiveRecord::Schema.define(version: 20190321164519) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -584,6 +584,8 @@ ActiveRecord::Schema.define(version: 20190320152405) do
     t.string   "tiposunat"
     t.string   "fullname"
     t.string   "colateral"
+    t.string   "serie"
+    t.string   "numero"
   end
 
   create_table "dsubdia", force: :cascade do |t|

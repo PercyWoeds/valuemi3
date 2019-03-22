@@ -1,0 +1,6 @@
+<% if @documentos %>
+  <% for documento  in @documentos %>
+    <%= documento.description %>|BRK|<%= documento.id %>|BRK|<%= documento.numero %>
+    
+  <% end %>
+<% end %>
