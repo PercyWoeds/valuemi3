@@ -21,8 +21,9 @@ SUNAT.configure do |config|
     s.address_id = "150132"
     s.street     = "AV. TUPAC AMARU KM. 22.5 LOTE. 7 URB. PUNCHAUCA
     (ALT.PARADERO LAS AMERICAS LT8)"
-    s.district   = "CARABAYLLO - LIMA - LIMA"
-    s.city       = "LIMA"
+    s.district   = "CARABAYLLO - LIMA - LIMA   "
+    s.city       = "LOCAL: AV. CERRO DE PASCO NRO. 253 (A DOS CDAS DEL MUNICIPIO)
+    PASCO - PASCO - PAUCARTAMBO"
     s.country    = "PE"
     s.logo_path  = "#{Dir.pwd}/app/assets/images/logo.png"
   

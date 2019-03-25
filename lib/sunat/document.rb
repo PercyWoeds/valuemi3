@@ -63,9 +63,9 @@ module SUNAT
       pdf.text "#{self.accounting_supplier_party.party.party_legal_entity.registration_name}", :size => 12,
                                                                                                :style => :bold
       pdf.move_down 4
-      pdf.text supplier.street, :size => 10
-      pdf.text supplier.district, :size => 10
-      pdf.text supplier.city, :size => 10
+      pdf.text supplier.street, :size => 8
+      pdf.text supplier.district, :size => 8
+      pdf.text supplier.city, :size => 8
       pdf.move_down 4
 
       pdf.bounding_box([325, 725], :width => 200, :height => 80) do
