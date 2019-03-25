@@ -174,7 +174,8 @@ class InvoiceGenerator < DocumentGenerator
         
         @lg_serie_factura = a  
         @lg_serial_id   = b.to_i
-        
+        $lcSerie = a 
+        $lcDocument_serial_id =@lg_serial_id 
         $lcRuc          = @invoice.customer.ruc
         
         $lcTd           = @invoice.document.descripshort
