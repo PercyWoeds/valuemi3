@@ -37,6 +37,8 @@ class VentaislasController < ApplicationController
   # POST /ventaislas.json
   def create
     @ventaisla = Ventaisla.new(ventaisla_params)
+    @ventaisla[:island_id] = 1 
+    
    @employees = Employee.all 
     respond_to do |format|
       if @ventaisla.save
@@ -52,6 +54,8 @@ class VentaislasController < ApplicationController
   # PATCH/PUT /ventaislas/1
   # PATCH/PUT /ventaislas/1.json
   def update
+    @ventaisla[:island_id] = 1 
+    
     respond_to do |format|
       if @ventaisla.update(ventaisla_params)
         format.html { redirect_to @ventaisla, notice: 'Ventaisla was successfully updated.' }
