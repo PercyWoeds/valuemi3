@@ -101,7 +101,7 @@ require 'active_support/number_helper'
           :width => pdf.bounds.width
         }) do
           columns([0, 2]).font_style = :bold
-
+          columns([1]).width  = 300
         end
 
         pdf.move_down 20

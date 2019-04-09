@@ -3943,11 +3943,11 @@ end
             
        else        
           puts "Moneda "
-          puts $lcMoneda
+          puts @invoice.moneda_id
           
-           if $lcMoneda == 1  
+           if @invoice.moneda_id == 1  
                 $lcFileName=""
-                case_49 = InvoiceGenerator.new(1,3,1,$lg_serie_factura,@invoice.id).with_different_currency2
+                case_49 = InvoiceGenerator.new(1,3,1,$lg_serie_factura,@invoice.id).with_different_currency2(true)
               #  puts $lcFileName 
            else
                
