@@ -3686,7 +3686,7 @@ def newfactura2
               preciolista0 = item.precio.to_f 
               preciolista  = preciolista0.round(2)
               
-              importe = cantidad.round(2) * precio_descto 
+              importe = cantidad0.round(2) * precio_descto 
               
               @importe = importe.round(2) 
               
