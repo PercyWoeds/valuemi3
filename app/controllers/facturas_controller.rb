@@ -3942,6 +3942,9 @@ end
             end 
             
        else        
+          puts "Moneda "
+          puts $lcMoneda
+          
            if $lcMoneda == 1  
                 $lcFileName=""
                 case_49 = InvoiceGenerator.new(1,3,1,$lg_serie_factura,@invoice.id).with_different_currency2
