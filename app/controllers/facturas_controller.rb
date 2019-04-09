@@ -2255,7 +2255,7 @@ def reportes31
           $lcScop2       =""
           $lcCantScop1   =""
           $lcCantScop2   =""  
-          $lcAutorizacion1=$lcAutorizacion +$lcCuentas  
+          $lcAutorizacion1 = $lcAutorizacion +$lcCuentas  
       end # colateral 
 
   end
@@ -3935,14 +3935,14 @@ end
        #####################################
        if @invoice.document_id == 2
       
-           if $lcMoneda == "1"
+           if $lcMoneda == 1
                 case_96 = ReceiptGenerator.new(12, 96, 1,$lg_serie_factura,@invoice.id).with_different_currency2(true)
             else        
                 case_52 = ReceiptGenerator.new(8, 52, 1,$lg_serie_factura,@invoice.id).with_igv2(true)
             end 
             
        else        
-           if $lcMoneda == "1"  
+           if $lcMoneda == 1  
                 $lcFileName=""
                 case_49 = InvoiceGenerator.new(1,3,1,$lg_serie_factura,@invoice.id).with_different_currency2
               #  puts $lcFileName 
