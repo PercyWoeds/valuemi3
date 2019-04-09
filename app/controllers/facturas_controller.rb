@@ -3623,44 +3623,49 @@ def newfactura2
         begin
           a = item.id
           b = Product.find_by(code: item.cod_prod)             
-          
+          cantidad0 = 0
+          cantidad0 = item.importe.to_f / item.precio.to_f
+              
           if item.cod_cli == "000C_000001"
           
               descuento =  item.implista - item.importe.to_f
+          
+              
               if item.cod_prod == "01"
-                precio_descto0 = item.importe.to_f / item.cantidad
+                
+                precio_descto0 = item.importe.to_f / cantidad0
                 precio_descto = precio_descto0 - 0.80
               end
               
               if item.cod_prod == "02"
-                precio_descto0 = item.importe.to_f / item.cantidad
+                precio_descto0 = item.importe.to_f / cantidad0
                 precio_descto = precio_descto0 - 0.80
               end
               if item.cod_prod == "03"
-                precio_descto0 = item.importe.to_f / item.cantidad
-                precio_descto = precio_descto0 - 0.80
+                precio_descto0 = item.importe.to_f / cantidad0
+                precio_descto = precio_descto0 - 1.00
               end
               
               if item.cod_prod == "04"
-                precio_descto0 = item.importe.to_f / item.cantidad
-                precio_descto = precio_descto0 - 0.80
+                precio_descto0 = item.importe.to_f / cantidad0
+                precio_descto = precio_descto0 - 1.20
               end
               
               if item.cod_prod == "05"
-                precio_descto0 = item.importe.to_f / item.cantidad
+                precio_descto0 = item.importe.to_f / cantidad0
                 precio_descto = precio_descto0 - 0.50
               end
               if item.cod_prod == "08"
-                precio_descto0 = item.importe.to_f / item.cantidad
-                precio_descto = precio_descto0.round(2) - 0.20
+                precio_descto0 = item.importe.to_f / cantidad0
+                precio_descto = precio_descto0.round(2) - 0.15
               end
               
               
-              preciolista0 = item.implista / item.cantidad
-              preciolista  = preciolista0.round(2)
+              
+              preciolista  = item.precio.to_f 
               
               
-              @importe0 = item.cantidad * precio_descto 
+              @importe0 = cantidad0.round(2) * precio_descto 
               
               @importe  = @importe0.round(2)
               
@@ -3679,7 +3684,8 @@ def newfactura2
               precio_descto = precio_descto0.round(2) 
               preciolista0 = item.precio.to_f 
               preciolista  = preciolista0.round(2)
-              importe = item.cantidad * precio_descto 
+              
+              importe = cantidad.round(2) * precio_descto 
               
               @importe = importe.round(2) 
               
@@ -3687,7 +3693,7 @@ def newfactura2
           end 
             
           
-          new_invoice_detail = FacturaDetail.new(factura_id: @factura_id  ,sellvale_id: item.id , product_id: b.id ,price:preciolista, price_discount: precio_descto, quantity: item.cantidad,total: @importe )
+          new_invoice_detail = FacturaDetail.new(factura_id: @factura_id  ,sellvale_id: item.id , product_id: b.id ,price: preciolista, price_discount: precio_descto, quantity: cantidad0,total: @importe )
           
           if new_invoice_detail.save
               
@@ -3927,16 +3933,16 @@ end
        ######################################
        # Boleta : 7 grupo eye 2 : Kinzuko
        #####################################
-       if @invoice.document_id == 7
+       if @invoice.document_id == 2
       
-           if $lcMoneda == "D"
-                case_96 = ReceiptGenerator.new(12, 96, 1, "BB04",@invoice.id).with_different_currency2(true)
+           if $lcMoneda == "1"
+                case_96 = ReceiptGenerator.new(12, 96, 1,$lg_serie_factura,@invoice.id).with_different_currency2(true)
             else        
-                case_52 = ReceiptGenerator.new(8, 52, 1, "BB04",@invoice.id).with_igv2(true)
+                case_52 = ReceiptGenerator.new(8, 52, 1,$lg_serie_factura,@invoice.id).with_igv2(true)
             end 
             
        else        
-           if $lcMoneda == "D"  
+           if $lcMoneda == "1"  
                 $lcFileName=""
                 case_49 = InvoiceGenerator.new(1,3,1,$lg_serie_factura,@invoice.id).with_different_currency2
               #  puts $lcFileName 
@@ -4369,9 +4375,8 @@ def cuadre01
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]    
     
-       
+     
     @contado_rpt = @company.get_ventas_combustibles_fecha_producto0(@fecha1,@fecha2)
-    
     
     @detalle_ventas_grifero = @company.get_ventas_combustibles_fecha_grifero0(@fecha1,@fecha2)
     @producto = @company.get_productos_comb 
