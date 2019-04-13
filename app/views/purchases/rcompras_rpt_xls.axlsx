@@ -1,0 +1,75 @@
+$LOAD_PATH.unshift "#{File.dirname(__FILE__)}/../lib"
+
+require 'axlsx'
+
+p = Axlsx::Package.new
+wb = xlsx_package.workbook
+xlsx_package.use_autowidth = true
+
+wb.styles do |s|
+
+    date = s.add_style(:format_code => "dd/mm/yyyy", :border => Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :right},:sz => 9)
+    padded = s.add_style(:format_code => "00#", :border => Axlsx::STYLE_THIN_BORDER)
+    percent = s.add_style(:format_code => '#.##0.00', :border => Axlsx::STYLE_THIN_BORDER)
+    title = s.add_style(:bg_color => "FFFF0000", :fg_color=>"#FF000000",:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :center})
+    cadena =s.add_style(:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :left},:sz => 9, )
+    currency = wb.styles.add_style(:format_code=>"#,##0.#0;[Red]-#,##0.#0",
+                              :border=>Axlsx::STYLE_THIN_BORDER,:sz => 9,)
+    red_negative = wb.styles.add_style :num_fmt => 8
+    comma = wb.styles.add_style :num_fmt => 3
+    super_funk = wb.styles.add_style :format_code => '[Green]#'
+    merged_title_cell_style = s.add_style    :bg_color => "D8D8D8",
+                                                   :b => true,
+                                                   :sz => 9,
+                                                   :border => { :style => :thin, :color => "00" },
+                                                   :alignment => { :horizontal => :center,
+                                                                   :vertical => :center ,
+                                                                   :wrap_text => true}
+    
+   
+    
+    wb.add_worksheet(name: "Registro de Ventas") do |sheet|
+    sheet.add_row ["E/S CANTA CALLAO"]
+    sheet.add_row [""]
+    sheet.add_row ["REGISTRO DE COMPRAS DEL PERIODO "]
+    sheet.add_row [""]
+    sheet.add_row ["Nro","Fecha de Emision del Comprobante","Fecha de Pago.","Comprobante de Pago","","","Documento de identidad","Informacion Cliente","","","","Base imponible de la Operacion Gravada ","Importe Total de la Operacion  ","","","IGV y/o IPM","Otros Tributos y Cargos que no forman parte de la Base Imponible ","FISE","SISE","Importe Total del Comprobante de Pago ","Total Percepcion","Total  Monto S/Percepcion ","Tipo Cambio ","Referencia del Comprobante de Pago o Doc Orig que se modifica","","","","","Ref.Transf. Gratuita "], :style =>    merged_title_cell_style
+    sheet.add_row ["","","","Tipo (Tabla 10)","Nro Serie","Numero","","Tipo (Tabla 2)","Numero","Apellidos y Nombre, Razon Social","","","No Gravada ","Percepcion","","","","","","","","","","Fecha","Tipo","Nro.Serie","Numero ", "Fecha Trabajo ",""], :style =>    merged_title_cell_style
+    
+    sheet.column_widths 3,10,10,5,5,10,10,5,10,25,5,10,10,10,10,10,10,10,10,10,10,10,10    
+    sheet.merge_cells('A3:Y3')
+    sheet.merge_cells('D5:G5')
+    sheet.merge_cells('H5:J5')
+    sheet.merge_cells('M5:N5')
+    
+    sheet.merge_cells('F6:G6')
+     nroitem = 1 
+     total_1 =  0
+     total_2 =  0
+     subtotal  =  0
+     tax   =  0
+     total =  0
+      
+    
+   @facturas_rpt.each do |detalle|
+   serie  =" "
+   numero =" "
+       parts = detalle.documento.split("-") 
+            serie = parts[0]  
+            numero  = parts[1]    
+     importe_total_comp= detalle.total_amount + detalle.participacion
+     
+     
+     
+      
+    sheet.add_row [nroitem,detalle.date1,"//",detalle.document.tiposunat,serie,numero,"" ,"06",detalle.supplier.ruc ,detalle.supplier.name,"0.00",detalle.payable_amount,"0.00",detalle.participacion,"0.00",detalle.tax_amount,"0.00","0.00","0.00",importe_total_comp,importe_total_comp,detalle.total_amount ], 
+    :style => [cadena,date,date,cadena,cadena,cadena,cadena,cadena,cadena,cadena,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency]
+    
+   end
+   
+   
+   
+end
+end 
+
+    

@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  venta: 1.5
+  cash: 1.5
+  tcredit: 1.5
+  credit: 1.5
+  serafin: 1.5
+  remito: 1.5
+  diference: 1.5
+
+two:
+  venta: 1.5
+  cash: 1.5
+  tcredit: 1.5
+  credit: 1.5
+  serafin: 1.5
+  remito: 1.5
+  diference: 1.5

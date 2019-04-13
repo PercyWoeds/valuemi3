@@ -850,12 +850,20 @@ WHERE purchase_details.product_id = ?',params[:id] ])
     supplier_select = params[:cbox1]
     proveedor = params[:supplier_id]
     
-    
-    if supplier_select == "1"
-        @facturas_rpt = @company.get_purchases_day_tipo(@fecha1,@fecha2,@tiporeporte)
+     if supplier_select == "1"
+       @facturas_rpt = @company.get_purchases_day_tipo(@fecha1,@fecha2,@tiporeporte)
     else
-        @facturas_rpt = @company.get_purchases_day_tipo2(@fecha1,@fecha2,@tiporeporte,proveedor)
+       @facturas_rpt = @company.get_purchases_day_tipo2(@fecha1,@fecha2,@tiporeporte,proveedor)
     end 
+            
+    
+       case params[:print]
+          when "To PDF" then 
+            begin 
+            
+              #render  pdf: "Facturas ",template: "facturas/rventas_rpt.pdf.erb",locals: {:facturas => @facturas_rpt},
+              #   :orientation      => 'Landscape', :page_size => "A3"
+           
     
             Prawn::Document.generate("app/pdf_output/rpt_factura.pdf") do |pdf|
             pdf.font "Helvetica"
@@ -863,9 +871,17 @@ WHERE purchase_details.product_id = ?',params[:id] ])
             pdf = build_pdf_body_rpt8(pdf)
             build_pdf_footer_rpt8(pdf)
             $lcFileName =  "app/pdf_output/rpt_factura_all.pdf"              
-        end     
-        $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
-        send_file("app/pdf_output/rpt_factura.pdf", :type => 'application/pdf', :disposition => 'inline')    
+          end     
+          $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
+          send_file("app/pdf_output/rpt_factura.pdf", :type => 'application/pdf', :disposition => 'inline')    
+          
+            end   
+          when "To Excel" then render xlsx: 'rcompras_rpt_xls'
+          else render action: "index"
+        end  
+ 
+ 
+ 
  
   end
 

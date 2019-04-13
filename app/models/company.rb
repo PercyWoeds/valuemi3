@@ -4398,7 +4398,7 @@
         end 
         
         
-         def  get_ventas_combustibles_fecha_grifero0(fecha1,fecha2) 
+        def  get_ventas_combustibles_fecha_grifero0(fecha1,fecha2) 
     
             facturas = Sellvale.find_by_sql(['Select sellvales.cod_emp,sellvales.turno, 
                     SUM(sellvales.cantidad) AS quantity,
@@ -4414,6 +4414,56 @@
             return facturas 
             
         end 
+        
+        def  get_ventas_combustibles_fecha_producto1(fecha1,fecha2) 
+           
+             facturas0 = Sellvale.find_by_sql(['Select sellvales.cod_emp,sellvales.turno, 
+                    SUM(sellvales.cantidad) AS quantity,
+                    SUM(CAST(importe AS numeric)) AS total 
+                      from sellvales 
+                      INNER JOIN employees ON sellvales.cod_emp = employees.cod_emp
+                      INNER JOIN products ON  sellvales.cod_prod = products.code 
+                      WHERE sellvales.fecha >= ? and sellvales.fecha <= ? 
+                      GROUP BY sellvales.fecha, sellvales.turno,sellvales.cod_emp
+                      ORDER BY sellvales.fecha, sellvales.turno,sellvales.cod_emp
+                      ', "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])  
+                 
+            Cuadre.delete_all 
+                      
+            for  contado in facturas0 
+                  a = Cuadre.new
+                  a.venta  = contado.total
+                   
+                  a1 = contado.get_ventas_forma_pago_grifero_turno(@fecha1,contado.cod_emp, contado.turno,"98")
+                  a2 = contado.get_ventas_forma_pago_grifero_turno(@fecha1,contado.cod_emp, contado.turno,"05") + contado.get_ventas_forma_pago_grifero_turno(@fecha1,contado.cod_emp, contado.turno,"01")
+                  a3 = contado.get_ventas_forma_pago_grifero_turno(@fecha1,contado.cod_emp, contado.turno,"06") 
+                  a4 = contado.get_ventas_forma_pago_grifero_turno(@fecha1,contado.cod_emp, contado.turno,"07") 
+                  a5 = 0  
+              
+                  @tot_depo = contado.get_ventas_tirada_grifero_turno(@fecha1,contado.get_code_empleado(contado.cod_emp), contado.turno)   
+                  tot_lub = contado.get_ventas_lubricantes_creditos_grifero_turno(@fecha1,contado.cod_emp, contado.turno)    
+                  
+                  a.fecha = @fecha1 
+                  a.cash    = a1
+                  a.tcredit = a2
+                  a.credito = a3
+                  a.serafin = a4
+                  a.employee_id = contado.get_code_empleado(contado.cod_emp)
+                  
+                  
+                   puts "efectivo..."
+                   puts a.cash
+                   
+                    for  deposito  in @tot_depo 
+                      tot_depo += deposito.importe
+                    end 
+                    a.remito  = tot_depo  
+                    a.diference = tot_depo - a1
+                  end     
+                  a.save
+                            
+        end 
+        
         
         
         def  get_ventas_combustibles_producto(fecha1,fecha2) 

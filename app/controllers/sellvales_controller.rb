@@ -122,7 +122,13 @@ class SellvalesController < ApplicationController
     if @sellvale[:fpago] == 3
       @sellvale[:cod_tar] = '05'
     end
+    if @sellvale[:fpago] == 4
+      @sellvale[:cod_tar] = '98'
+    end
     
+    if @sellvale[:fpago] == 5
+      @sellvale[:cod_tar] = '06'
+    end
     
     
       

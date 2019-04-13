@@ -4378,10 +4378,7 @@ def cuadre01
     @company=Company.find(1)          
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]    
-    
-     
     @contado_rpt = @company.get_ventas_combustibles_fecha_producto0(@fecha1,@fecha2)
-    
     @detalle_ventas_grifero = @company.get_ventas_combustibles_fecha_grifero0(@fecha1,@fecha2)
     @producto = @company.get_productos_comb 
     
@@ -4403,6 +4400,32 @@ def cuadre01
       else render action: "index"
     end
   end
+  
+  
+
+def cuadre02
+  
+    @company=Company.find(1)          
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]    
+    @contado_rpt = @company.get_ventas_combustibles_fecha_producto1(@fecha1,@fecha2)
+    case params[:print]
+      when "To PDF" then 
+        begin 
+         render  pdf: "Cuadre",template: "varillajes/cuadre01_rpt.pdf.erb",locals: {:varillajes => @contado_rpt},
+         :header => {
+           :spacing => 5,
+                           :html => {
+                     :template => 'layouts/pdf-header.html',
+                           right: '[page] of [topage]'
+                  }
+               }
+        end   
+      when "To Excel" then render xlsx: 'cuadre01_rpt_xls'
+      else render action: "index"
+    end
+  end
+  
   
     def reportes14 
   
@@ -4443,6 +4466,40 @@ def cuadre01
       invoice_headers <<  ["Tipo de moneda : ", $lcMon]    
       invoice_headers
   end  
+
+
+def cuadre02
+  
+    @company=Company.find(1)          
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]    
+    
+     
+    @contado_rpt = @company.get_ventas_combustibles_fecha_producto0(@fecha1,@fecha2)
+    
+    @detalle_ventas_grifero = @company.get_ventas_combustibles_fecha_grifero0(@fecha1,@fecha2)
+    @producto = @company.get_productos_comb 
+    
+    case params[:print]
+      when "To PDF" then 
+        begin 
+         render  pdf: "Cuadre",template: "varillajes/cuadre01_rpt.pdf.erb",locals: {:varillajes => @contado_rpt},
+         :header => {
+           :spacing => 5,
+                           :html => {
+                     :template => 'layouts/pdf-header.html',
+                           right: '[page] of [topage]'
+                  }
+               }
+        
+        end   
+      when "To Excel" then render xlsx: 'cuadre01_rpt_xls'
+          
+      else render action: "index"
+    end
+  end
+
+
       
   private
   def factura_params
