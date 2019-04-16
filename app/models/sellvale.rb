@@ -330,7 +330,7 @@ end
          end 
         
         def self.to_csv
-            attributes = %w{td fecha turno cod_emp caja serie numero cod_cli ruc placa odometro cod_prod cantidad precio importe igv fpago implista cod_tar km chofer tk_devol cod_sucu isla dni_cli tipo }
+            attributes = %w{id td fecha turno cod_emp caja serie numero cod_cli ruc placa odometro cod_prod cantidad precio importe igv fpago implista cod_tar km chofer tk_devol cod_sucu isla dni_cli tipo }
 
             CSV.generate(headers: true) do |csv|
             csv << attributes
