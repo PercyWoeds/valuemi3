@@ -62,7 +62,7 @@ wb.styles do |s|
      
      
       
-    sheet.add_row [nroitem,detalle.date1,"//",detalle.document.tiposunat,serie,numero,"" ,"06",detalle.supplier.ruc ,detalle.supplier.name,"0.00",detalle.payable_amount,"0.00",detalle.participacion,"0.00",detalle.tax_amount,"0.00","0.00","0.00",importe_total_comp,importe_total_comp,detalle.total_amount ], 
+    sheet.add_row [nroitem,detalle.date1,detalle.date3,detalle.document.tiposunat,serie,numero,"" ,"06",detalle.supplier.ruc ,detalle.supplier.name,"0.00",detalle.payable_amount,"0.00",detalle.participacion,"0.00",detalle.tax_amount,"0.00","0.00","0.00",importe_total_comp,importe_total_comp,detalle.total_amount ], 
     :style => [cadena,date,date,cadena,cadena,cadena,cadena,cadena,cadena,cadena,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency]
     
    end
