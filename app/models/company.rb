@@ -1769,18 +1769,18 @@
     
         def get_purchases_day_tipo(fecha1,fecha2,tipo)
           if tipo =="2" 
-            @purchases = Purchase.where([" company_id = ? AND date1 >= ? and date1 <= ? and processed = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59","1"]).order(:supplier_id,:moneda_id,:date1)    
+            @purchases = Purchase.where([" company_id = ? AND date2 >= ? and date2 <= ? and processed = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59","1"]).order(:supplier_id,:moneda_id,:date1)    
           else   
-            @purchases = Purchase.where([" company_id = ? AND date1 >= ? and date1 <= ?  AND tipo = ?  and processed = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", tipo, "1"]).order(:supplier_id,:moneda_id,:date1)
+            @purchases = Purchase.where([" company_id = ? AND date2 >= ? and date2 <= ?  AND tipo = ?  and processed = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", tipo, "1"]).order(:supplier_id,:moneda_id,:date1)
           end 
           return @purchases 
         end
         def get_purchases_day_tipo2(fecha1,fecha2,tipo,proveedor)
           
           if tipo =="2" 
-            @purchases = Purchase.where([" company_id = ? AND date1 >= ? and date1 <= ? and processed = ? and supplier_id = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59","1",proveedor ]).order(:supplier_id,:moneda_id,:date1)    
+            @purchases = Purchase.where([" company_id = ? AND date2 >= ? and date2 <= ? and processed = ? and supplier_id = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59","1",proveedor ]).order(:supplier_id,:moneda_id,:date1)    
           else   
-            @purchases = Purchase.where([" company_id = ? AND date1 >= ? and date1 <= ?  AND tipo = ?  and processed = ? and supplier_id = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", tipo, "1",proveedor]).order(:supplier_id,:moneda_id,:date1)
+            @purchases = Purchase.where([" company_id = ? AND date2 >= ? and date2 <= ?  AND tipo = ?  and processed = ? and supplier_id = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", tipo, "1",proveedor]).order(:supplier_id,:moneda_id,:date1)
           end 
           return @purchases 
         end
