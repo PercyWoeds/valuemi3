@@ -4466,6 +4466,7 @@ def cuadre02
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]    
     
+    Cuadre.delete_all 
      
     @facturas_rpt = @company.get_ventas_combustibles_fecha_producto1(@fecha1,@fecha2)
     
