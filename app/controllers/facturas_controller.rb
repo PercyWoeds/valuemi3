@@ -4477,6 +4477,7 @@ def cuadre02
       
           Prawn::Document.generate "app/pdf_output/rpt_cuadre02.pdf" , :page_layout => :landscape do |pdf|        
           pdf.font "Helvetica"
+          
           pdf = build_pdf_header_rpt16(pdf)
           pdf = build_pdf_body_rpt16(pdf)
           build_pdf_footer_rpt16(pdf)
@@ -4533,9 +4534,9 @@ def cuadre02
 
   def build_pdf_body_rpt16(pdf)
     
-    pdf.text "Resumen Personal  "+ "Desde "+@fecha1.to_s+ " Hasta : "+@fecha2.to_s , :size => 11 
+    pdf.text "Resumen Personal  "+ "Desde "+@fecha1.to_s+ " Hasta : "+@fecha2.to_s , :size => 8
     pdf.text ""
-    pdf.font "Helvetica" , :size => 6
+    pdf.font "Helvetica" , :size => 5
 
       headers = []
       table_content = []
@@ -4744,7 +4745,7 @@ def cuadre02
             @total_dia09+
             @total_dia10+
             @total_dia11+
-            @total_dia12
+            @total_dia12+
             @total_dia13+
             @total_dia14+
             @total_dia15+
