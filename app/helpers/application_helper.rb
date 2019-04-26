@@ -1,4 +1,7 @@
+
 module ApplicationHelper
+  include ActionView::Helpers::NumberHelper
+  
   def getAppName()
     return 'wds'
   end
