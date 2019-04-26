@@ -765,7 +765,17 @@ class Factura < ActiveRecord::Base
         end
       end      
     
-    
+   
+   def get_empleado_nombre(id) 
+      a= Employee.find(id)
+      
+      if a
+          return a.full_name
+      else
+         return "Codigo No registrado "
+      end 
+     
+   end  
 
 
   

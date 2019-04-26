@@ -1286,7 +1286,6 @@
        
         def get_employees_asis(fecha1,fecha2)
           
-
          @facturas = Sellvale.find_by_sql(["
          SELECT   dia ,
          cod_emp,turno
@@ -1294,7 +1293,6 @@
          WHERE fecha >= ? and fecha  <= ?  
          GROUP BY 2,1,3 
          ORDER BY 2,1,3 ","#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])    
-         
          
          Tmpasisten.delete_all
          
@@ -1317,6 +1315,24 @@
        end 
        
        
+        def get_cuadre(fecha1,fecha2)
+          
+         @facturas = Cuadre.find_by_sql(["
+         SELECT   dia ,
+         employee_id,turno
+         FROM cuadre 
+         WHERE fecha >= ? and fecha  <= ?  
+         GROUP BY 2,1,3 
+         ORDER BY 2,1,3 ","#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])    
+         
+         
+         
+        return @facturas
+          
+       end 
+       
+
+    
     
        def get_customer_payments_value2(fecha1,fecha2)
     
@@ -1380,14 +1396,12 @@
     
           facturas = Sellvale.where(:dia => nil )
           for factura in facturas
-              
-            
               days = factura.fecha.day 
-              
               factura.update_attributes(:dia=>days)   
           end 
     
        end
+       
        
        def actualizar_fecha20(fecha1,fecha2)
           Tempcp.delete_all 
@@ -4374,10 +4388,9 @@
                       ', "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])  
             
             return facturas 
+            
         end 
         
-        
-
 
         def  get_ventas_combustibles_fecha_grifero(fecha1,fecha2) 
     
@@ -4417,7 +4430,7 @@
         
         def  get_ventas_combustibles_fecha_producto1(fecha1,fecha2) 
            
-             facturas0 = Sellvale.find_by_sql(['Select sellvales.cod_emp,sellvales.turno, 
+             facturas0 = Sellvale.find_by_sql(['Select sellvales.fecha,sellvales.cod_emp,sellvales.turno, 
                     SUM(sellvales.cantidad) AS quantity,
                     SUM(CAST(importe AS numeric)) AS total 
                       from sellvales 
@@ -4432,28 +4445,39 @@
                       
             for  contado in facturas0 
                   a = Cuadre.new
+                  
                   a.venta  = contado.total
+                  
+                  fecha10 = contado.fecha.strftime("%Y-%m-%d")
+                  
+                  puts "fecha "
+                  puts fecha10 
+        
+                  puts contado.cod_emp
+                  puts contado.turno 
+                  puts contado.quantity 
+                  puts contado.total 
                    
-                  a1 = contado.get_ventas_forma_pago_grifero_turno(@fecha1,contado.cod_emp, contado.turno,"98")
-                  a2 = contado.get_ventas_forma_pago_grifero_turno(@fecha1,contado.cod_emp, contado.turno,"05") + contado.get_ventas_forma_pago_grifero_turno(@fecha1,contado.cod_emp, contado.turno,"01")
-                  a3 = contado.get_ventas_forma_pago_grifero_turno(@fecha1,contado.cod_emp, contado.turno,"06") 
-                  a4 = contado.get_ventas_forma_pago_grifero_turno(@fecha1,contado.cod_emp, contado.turno,"07") 
+                  a1 = contado.get_ventas_forma_pago_grifero_turno(fecha10,contado.cod_emp, contado.turno,"98")
+                  a2 = contado.get_ventas_forma_pago_grifero_turno(fecha10,contado.cod_emp, contado.turno,"05") + contado.get_ventas_forma_pago_grifero_turno(fecha10,contado.cod_emp, contado.turno,"01")
+                  a3 = contado.get_ventas_forma_pago_grifero_turno(fecha10,contado.cod_emp, contado.turno,"06") 
+                  a4 = contado.get_ventas_forma_pago_grifero_turno(fecha10,contado.cod_emp, contado.turno,"07") 
                   a5 = 0  
               
-                  @tot_depo = contado.get_ventas_tirada_grifero_turno(@fecha1,contado.get_code_empleado(contado.cod_emp), contado.turno)   
-                  tot_lub = contado.get_ventas_lubricantes_creditos_grifero_turno(@fecha1,contado.cod_emp, contado.turno)    
+                  @tot_depo = contado.get_ventas_tirada_grifero_turno(fecha10,contado.get_code_empleado(contado.cod_emp), contado.turno)   
+                  tot_lub = contado.get_ventas_lubricantes_creditos_grifero_turno(fecha10,contado.cod_emp, contado.turno)    
                   
-                  a.fecha = @fecha1 
+                  a.fecha = fecha10
                   a.cash    = a1
                   a.tcredit = a2
-                  a.credito = a3
+                  a.credit = a3
                   a.serafin = a4
                   a.employee_id = contado.get_code_empleado(contado.cod_emp)
-                  
+                  a.day_month = fecha10.to_date.day 
                   
                    puts "efectivo..."
                    puts a.cash
-                   
+                   tot_depo = 0 
                     for  deposito  in @tot_depo 
                       tot_depo += deposito.importe
                     end 
@@ -4461,6 +4485,23 @@
                     a.diference = tot_depo - a1
                   end     
                   a.save
+                  
+                  
+                    @facturas = Factura.find_by_sql(["
+                    SELECT   day_month as day_month,
+                     employee_id,
+                     SUM(diference) as diference   
+                     FROM cuadres 
+                     GROUP BY 2,1
+                     ORDER BY 2,1 " ])    
+                     
+                     
+                     
+                
+                    return @facturas
+                              
+                  
+                  
                             
         end 
         
