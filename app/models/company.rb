@@ -4444,6 +4444,7 @@
             Cuadre.delete_all 
                       
             for  contado in facturas0 
+            
                   a = Cuadre.new
                   
                   a.venta  = contado.total
@@ -4467,23 +4468,26 @@
                   @tot_depo = contado.get_ventas_tirada_grifero_turno(fecha10,contado.get_code_empleado(contado.cod_emp), contado.turno)   
                   tot_lub = contado.get_ventas_lubricantes_creditos_grifero_turno(fecha10,contado.cod_emp, contado.turno)    
                   
-                  a.fecha = fecha10
+                  a.fecha   = fecha10
                   a.cash    = a1
                   a.tcredit = a2
-                  a.credit = a3
+                  a.credit  = a3
                   a.serafin = a4
                   a.employee_id = contado.get_code_empleado(contado.cod_emp)
                   a.day_month = fecha10.to_date.day 
                   
                    puts "efectivo..."
                    puts a.cash
+                   
                    tot_depo = 0 
+                   
                     for  deposito  in @tot_depo 
                       tot_depo += deposito.importe
                     end 
                     a.remito  = tot_depo  
                     a.diference = tot_depo - a1
-                  end     
+                  end   
+                  
                   a.save
                   
                   
@@ -4495,9 +4499,6 @@
                      GROUP BY 2,1
                      ORDER BY 2,1 " ])    
                      
-                     
-                     
-                
                     return @facturas
                               
                   
