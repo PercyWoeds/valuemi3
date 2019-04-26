@@ -4437,8 +4437,8 @@
                       INNER JOIN employees ON sellvales.cod_emp = employees.cod_emp
                       INNER JOIN products ON  sellvales.cod_prod = products.code 
                       WHERE sellvales.fecha >= ? and sellvales.fecha <= ? 
-                      GROUP BY sellvales.fecha, sellvales.turno,sellvales.cod_emp,sellvales.cod_tar
-                      ORDER BY sellvales.fecha, sellvales.turno,sellvales.cod_emp,sellvales.cod_tar', "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])  
+                      GROUP BY sellvales.fecha, sellvales.turno,sellvales.cod_emp
+                      ORDER BY sellvales.fecha, sellvales.turno,sellvales.cod_emp', "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])  
                  
             
                   for  contado in facturas0 
