@@ -4479,14 +4479,11 @@ def cuadre02
       
           Prawn::Document.generate "app/pdf_output/rpt_cuadre02.pdf" , :page_layout => :landscape do |pdf|        
           pdf.font "Helvetica"
-          
           pdf = build_pdf_header_rpt16(pdf)
           pdf = build_pdf_body_rpt16(pdf)
           build_pdf_footer_rpt16(pdf)
           $lcFileName =  "app/pdf_output/rpt_cuadre02.pdf"      
-          
           end     
-  
           $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName                
           send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')  
       end
