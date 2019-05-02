@@ -3649,31 +3649,30 @@ def newfactura2
           
               
               if item.cod_prod == "01"
-                
-                precio_descto0 = item.importe.to_f / cantidad0
-                precio_descto = precio_descto0 - 0.80
+                precio_descto0 = item.importe.to_f / cantidad0.round(6)
+                precio_descto = precio_descto0.round(2) - 0.80
               end
               
               if item.cod_prod == "02"
-                precio_descto0 = item.importe.to_f / cantidad0
-                precio_descto = precio_descto0 - 0.80
+                precio_descto0 = item.importe.to_f / cantidad0.round(6)
+                precio_descto = precio_descto0.round(2) - 0.80
               end
               if item.cod_prod == "03"
-                precio_descto0 = item.importe.to_f / cantidad0
-                precio_descto = precio_descto0 - 1.00
+                precio_descto0 = item.importe.to_f / cantidad0.round(6)
+                precio_descto = precio_descto0.round(2) - 1.00
               end
               
               if item.cod_prod == "04"
-                precio_descto0 = item.importe.to_f / cantidad0
-                precio_descto = precio_descto0 - 1.20
+                precio_descto0 = item.importe.to_f / cantidad0.round(6)
+                precio_descto = precio_descto0.round(2) - 1.20
               end
               
               if item.cod_prod == "05"
-                precio_descto0 = item.importe.to_f / cantidad0
-                precio_descto = precio_descto0 - 0.50
+                precio_descto0 = item.importe.to_f / cantidad0.round(6)
+                precio_descto = precio_descto0.round(2) - 0.50
               end
               if item.cod_prod == "08"
-                precio_descto0 = item.importe.to_f / cantidad0
+                precio_descto0 = item.importe.to_f / cantidad0.round(6)
                 precio_descto = precio_descto0.round(2) - 0.15
               end
               
