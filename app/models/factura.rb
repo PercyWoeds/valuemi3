@@ -312,11 +312,12 @@ class Factura < ActiveRecord::Base
     for ip in invoice_guias
     
       sellvale_process = Sellvale.find(ip.sellvale_id)
+      if sellvale_process
       sellvale_process.processed = "0"
       if sellvale_process.save
         ip.destroy
       end 
-      
+    end 
       
     end
     
