@@ -9,19 +9,17 @@ class SellvalesController < ApplicationController
       
       @sellvales2 = Sellvale.all.where("fecha>=? and fecha<=?","2019-04-15 00:00:00","2019-12-30 23:59:59").order(:fecha,:serie,:numero)
       
-        if params[:search]
-          @sellvales = Sellvale.search(params[:search]).order(:fecha,:serie,:numero).paginate(:page => params[:page], :per_page => 20)
+        if params[:search_serie]  || params[:search_numero]
+          @sellvales = Sellvale.search(params[:search_serie],params[:search_numero]).order(:fecha,:serie,:numero).paginate(:page => params[:page], :per_page => 20)
         else
           @sellvales = Sellvale.all.order(:fecha,:serie,:numero).paginate(:page => params[:page], :per_page => 20)
         end
-        
-    
       
     else
       
       
-      if params[:search]
-        @sellvales = Sellvale.search(params[:search]).where(td:"N").order('fecha DESC').paginate(:page => params[:page], :per_page => 20)
+      if params[:search_serie]  || params[:search_numero]
+        @sellvales = Sellvale.search(params[:search_serie],params[:search_numero]).where(td:"N").order('fecha DESC').paginate(:page => params[:page], :per_page => 20)
       else
         @sellvales = Sellvale.where(td:"N").order('fecha DESC').paginate(:page => params[:page], :per_page => 20)
       end

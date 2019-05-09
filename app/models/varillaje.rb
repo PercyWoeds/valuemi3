@@ -678,7 +678,7 @@ def  get_inicial(fecha1,producto,producto2)
            inicial = wvar.inicial 
            varilla = wvar.varilla 
            compras = self.get_compras(fechax,producto)
-            ventas_qty = self.get_ventas(fechax,producto)
+            ventas_qty = self.get_ventas(fechax,producto1)
             afericion = self.get_afericion_total_dia_producto_qty(fechax,producto2)
             saldo =  inicial + compras - ventas_qty + afericion 
             dife =  varilla - saldo 

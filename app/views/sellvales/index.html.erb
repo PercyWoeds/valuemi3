@@ -3,7 +3,10 @@
 <h1>Listado </h1>
 
 <%= form_tag(sellvales_path, :method => "get", id: "search-form") do %>
-  <%= text_field_tag :search, params[:search], placeholder: "Buscar vales " %>
+
+  <%= text_field_tag :search_serie, params[:search_serie], placeholder: "Buscar Serie " %>
+  <%= text_field_tag :search_numero, params[:search_numero], placeholder: "Buscar Notas Venta " %>
+  
   <%= submit_tag "Buscar: " %>
 <% end %>
 

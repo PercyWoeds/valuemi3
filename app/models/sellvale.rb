@@ -267,9 +267,13 @@ def get_cliente(cliente)
  
  
 
-def self.search(search)
+def self.search(search_serie, search_numero) 
   # Title is for the above case, the OP incorrectly had 'name'
-  where("numero  iLIKE ? or cod_cli iLIKE ? or odometro ilike ? ", "%#{search}%","%#{search}%","%#{search}%")
+  #where("numero  iLIKE ? or cod_cli iLIKE ? or odometro ilike ? ", "%#{search}%","%#{search}%","%#{search}%")
+  
+  return scoped unless search_serie.present? || search_numero.present?
+  where(['serie iLIKE ? AND numero iLIKE ?', "%#{search_serie}%", "%#{search_numero}%"])
+  
 end
 
    
