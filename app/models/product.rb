@@ -11,7 +11,8 @@ class Product < ActiveRecord::Base
   belongs_to :supplier
   belongs_to :products_category
   belongs_to :stock 
-  belongs_to :product  
+  belongs_to :unidad 
+  
 
   has_many :movement_details
   has_many :items

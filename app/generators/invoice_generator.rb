@@ -3,7 +3,7 @@ require_relative 'document_generator'
 class InvoiceGenerator < DocumentGenerator
   attr_reader :items    
 
-  #$lcAutorizacion1=$lcAutorizacion <<' Datos Adicionales GUIA DE REMISION : '<<$lcGuiaRemision
+ 
 
   def initialize(group, group_case, items, serie,numero)
     super(group, group_case)
@@ -148,9 +148,6 @@ class InvoiceGenerator < DocumentGenerator
       
       end 
     
-
-    
-    
     @invoiceitems = FacturaDetail.select(:product_id,:price_discount ,"SUM(quantity) as cantidad","SUM(total) as total").where(factura_id: @numero).group(:product_id,:price_discount)
     
     
@@ -234,7 +231,6 @@ class InvoiceGenerator < DocumentGenerator
 
        
         
-        
     invoice_data = {id: "#{@lg_serie_factura}-#{"%06d" %  @lg_serial_id}", customer: customer, 
     tax_totals: [{amount: {value: items* lcIgv_a, currency: currency}, type: :igv}], legal_monetary_total: {value: lcTotal_a * items, currency: currency}, 
     additional_monetary_totals: [{id: "1001", payable_amount: {value: lcVVenta_a * items, currency: currency}}]}
@@ -245,6 +241,11 @@ class InvoiceGenerator < DocumentGenerator
         for detalle_item in @invoiceitems
         
         lcDes1   = detalle_item.product.name 
+        $lcUnidad20 = detalle_item.product.unidad.descrip2 
+        
+        puts "unidad"
+        puts $lcUnidad20
+        
         lcCantidad     = detalle_item.cantidad.round(2)  
         #lcTotal0 = detalle_item.cantidad * detalle_item.price_discount
         lcTotal0 = detalle_item.total.round(2)

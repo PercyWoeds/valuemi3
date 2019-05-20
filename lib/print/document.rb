@@ -87,11 +87,16 @@ module SUNAT
 
 
     def build_pdf_footer(pdf)
+   
+     pdf.stroke_horizontal_rule
+     
+     image_path = open("https://chart.googleapis.com/chart?chs=90x90&cht=qr&chl=#{$lcCodigoBarra}&choe=UTF-8")
+    
+     pdf.table([[ {:image => image_path,:position => :center}  , "
+     
+     Para consultar el comprobante ingresar a www.nobal.com.pe/facturas
+      Representación impresa del comprobante electrónico.OPERACION SUJETA AL SISTEMA DE PAGO DE OBLIGACIONES TRIBUTARIAS CON EL GOBIERNO CENTRAL BCO. DE LA NACION NRO.00-093-003985"]],:cell_style => { :border_width => 0 } )
 
-      pdf.bounding_box([0, 140], :width => 535, :height => 140) do
-      pdf.stroke_bounds
-      pdf.text  $lcAutorizacion1 ,:align => :center,:valign => :center, :style => :bold    
-      end
       pdf
       
     end
@@ -102,6 +107,7 @@ module SUNAT
         pdf = build_pdf_header(pdf)
         pdf = build_pdf_body(pdf)
         build_pdf_footer(pdf)
+        
         $lcFileName =path || self.pdf_path || "app/pdf_output/#{file_name}.pdf"
         $lcFileNameIni =file_name
         $lcFilezip =path || self.pdf_path || "/#{file_name}.zip"

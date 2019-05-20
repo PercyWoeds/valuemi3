@@ -2219,6 +2219,7 @@ def reportes31
       end 
         $lcMoneda = @invoice.moneda_id
         
+        
         #$lcGuiaRemision ="NRO.CUENTA BBVA BANCO CONTINENTAL : 0244-0100023293"
         $lcGuiaRemision = ""
         $lcPlaca = ""
@@ -2227,7 +2228,7 @@ def reportes31
         #$lcAutorizacion1=""
    
         $lcSerie = a 
-        $lcruc = "20555691263" 
+        $lcruc = "20501683109" 
         
         if $lcTd == 'FT'
             $lctidodocumento = '01'
@@ -2272,7 +2273,7 @@ def reportes31
           $lcScop2       =""
           $lcCantScop1   =""
           $lcCantScop2   =""  
-          $lcAutorizacion1 = $lcAutorizacion +$lcCuentas  
+          $lcAutorizacion1 =  $lcCuentas  
       end # colateral 
 
   end

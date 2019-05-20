@@ -132,23 +132,52 @@ require 'active_support/number_helper'
                                           columns([0]).align=:center
                                           columns([1]).align=:right
                                           columns([2]).align=:center
+                                          columns([3]).width= 250 
+                                          
                                           columns([4]).align=:right
                                           columns([5]).align=:right
                                           columns([6]).align=:right
                                         end
 
-      pdf.move_down 10
+       pdf.move_down 30
+      
+       
+      
+      pdf.move_down 30
+      
 
       pdf.table invoice_summary, {
         :position => :right,
         :cell_style => {:border_width => 1},
-        :width => pdf.bounds.width/2
+        :width => 260
       } do
         columns([0]).font_style = :bold
         columns([1]).align = :right
+        columns([0]).higth = 20
+        columns([1]).higth = 20
+        
+    
+      end
+      #pdf.image open("https://chart.googleapis.com/chart?chs=100x100&cht=qr&chl=#{$lcCodigoBarra}&choe=UTF-8")
+      
+      pdf.move_down 20
+      
+      pdf.table letras, {
+        :position => :right,
+        :cell_style => {:border_width => 0},
+        :width => pdf.bounds.width
+      } do
+        columns([0]).font_style = :bold
+        columns([1]).align = :left
+        columns([0]).width = 50
+        
         
       end
-       pdf.image open("https://chart.googleapis.com/chart?chs=120x120&cht=qr&chl=#{$lcCodigoBarra}&choe=UTF-8")
+      
+     
+       pdf.move_down 10
+       
+      
       pdf
 
     end
@@ -182,36 +211,49 @@ require 'active_support/number_helper'
       invoice_headers
     end
 
-    def invoice_summary
+      def invoice_summary
       invoice_summary = []
-      monetary_totals = [{label: "Operaciones gravadas", catalog_index: 0},
-       {label: "Operaciones inafectas", catalog_index: 1},
-       {label: "Operaciones exoneradas", catalog_index: 2},
-       {label: "Operaciones gratuitas", catalog_index: 3},
-       {label: "Sub total", catalog_index: 4},
+      monetary_totals = [{label: "Total valor venta - Op.Gravadas", catalog_index: 0},
+       {label: "Total valor venta - Op.Inafectas", catalog_index: 1},
+       {label: "Total valor venta - Op.Exoneradas", catalog_index: 2},
+       {label: "Total valor venta - Op.Gratuitas", catalog_index: 3},
        {label: "Total descuentos", catalog_index: 9}
       ]
       monetary_totals.each do |monetary_total|
         value = get_monetary_total_by_id(SUNAT::ANNEX::CATALOG_14[monetary_total[:catalog_index]])
         if value.present?
-          invoice_summary << [monetary_total[:label], ActiveSupport::NumberHelper::number_to_delimited(value.payable_amount,delimiter:",",separator:".").to_s]
-        end
+            invoice_summary << [monetary_total[:label], ActiveSupport::NumberHelper::number_to_delimited(value.payable_amount,delimiter:",",separator:".").to_s]
+       else 
+           invoice_summary << [monetary_total[:label], ActiveSupport::NumberHelper::number_to_delimited(0.00,delimiter:",",separator:".").to_s]
+       
+         end
+        
       end
 
       tax_totals.each do |tax_total|
         invoice_summary << [tax_total.tax_type_name,ActiveSupport::NumberHelper::number_to_delimited(tax_total.tax_amount,delimiter:",",separator:".").to_s]
       end
 
-      invoice_summary << ["Total", ActiveSupport::NumberHelper::number_to_delimited(legal_monetary_total,delimiter:",",separator:".").to_s]
-
-      if get_additional_property_by_id(SUNAT::ANNEX::CATALOG_15[0])
+    
+    invoice_summary << ["Total  a Pagar ", ActiveSupport::NumberHelper::number_to_delimited(legal_monetary_total,delimiter:",",separator:".").to_s]
+    
+    
+     
+      invoice_summary
+    end
+    
+     def letras
+       letras  = []
+       if get_additional_property_by_id(SUNAT::ANNEX::CATALOG_15[0])
         total = get_additional_property_by_id(SUNAT::ANNEX::CATALOG_15[0]).value
       else
         total = legal_monetary_total.textify.upcase
       end
-      invoice_summary << ["Monto del total", ActiveSupport::NumberHelper::number_to_delimited(total,delimiter:",",separator:".")]
-      invoice_summary
-    end
+      letras  << ["SON : ", ActiveSupport::NumberHelper::number_to_delimited(total,delimiter:",",separator:".")]
+      
+      letras
+    end 
+    
 
     def get_line_number
       @current_line_number ||= 0

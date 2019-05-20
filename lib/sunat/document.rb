@@ -96,10 +96,13 @@ module SUNAT
     def build_pdf_footer(pdf)
       
        
-      pdf.bounding_box([0, 140], :width => 535, :height => 140) do
-      pdf.stroke_bounds
-      pdf.text  $lcCuentas ,:align => :center,:valign => :center, :style => :bold    
-      end
+         pdf.stroke_horizontal_rule
+     
+     image_path = open("https://chart.googleapis.com/chart?chs=90x90&cht=qr&chl=#{$lcCodigoBarra}&choe=UTF-8")
+    
+     pdf.table([[ {:image => image_path,:position => :center}  , " El pago del documento sera necesariamente efectuado mediante deposito en cualquiera de las siguientes cuentas bancarias:  
+  BBVA Continental Cuenta Corriente en Moneda Nacional Numero: BBVA SOLES 0011-0168-27010004490.
+  Consultar  en  https://www.sunat.gob.pe/ol-ti-itconsultaunificadalibre/consultaUnificadaLibre/consulta."]],:cell_style => { :border_width => 0 } )
 
       pdf
       

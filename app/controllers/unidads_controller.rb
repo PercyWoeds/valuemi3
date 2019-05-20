@@ -69,6 +69,6 @@ class UnidadsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def unidad_params
-      params.require(:unidad).permit(:descrip, :valorconversion)
+      params.require(:unidad).permit(:descrip,:descrip2, :valorconversion)
     end
 end

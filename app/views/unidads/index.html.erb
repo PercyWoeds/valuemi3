@@ -6,6 +6,7 @@
   <thead>
     <tr>
       <th>Descrip</th>
+      <th>Unidad</th>
       <th>Valorconversion</th>
       <th colspan="3"></th>
     </tr>
@@ -15,10 +16,12 @@
     <% @unidads.each do |unidad| %>
       <tr>
         <td><%= unidad.descrip %></td>
+        <td><%= unidad.descrip2 %></td>
         <td><%= unidad.valorconversion %></td>
-        <td><%= link_to 'Show', unidad %></td>
-        <td><%= link_to 'Edit', edit_unidad_path(unidad) %></td>
-        <td><%= link_to 'Destroy', unidad, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        
+        <td><%= link_to 'Ver', unidad %></td>
+        <td><%= link_to 'Editar', edit_unidad_path(unidad) %></td>
+        <td><%= link_to 'Eliminar', unidad, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
