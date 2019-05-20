@@ -19,6 +19,7 @@ class SellvalesController < ApplicationController
       
       
       if params[:search_serie]  || params[:search_numero]
+        
         @sellvales = Sellvale.search(params[:search_serie],params[:search_numero]).where(td:"N").order('fecha DESC').paginate(:page => params[:page], :per_page => 20)
       else
         @sellvales = Sellvale.where(td:"N").order('fecha DESC').paginate(:page => params[:page], :per_page => 20)
