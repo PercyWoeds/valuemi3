@@ -4,9 +4,12 @@ module SUNAT
     include Model
 
     property :quantity,   Float
-    property :unit_code,  String # unit codes as defined in UN/ECE rec 20
+    property :unit_code,  String, default:  $lcUnidad20 # unit codes as defined in UN/ECE rec 20
+    
+
+    
     def build_xml(xml, tag_name)
-      xml['cbc'].send(tag_name, { unitCode: $lcUnidad20 }, quantity)
+      xml['cbc'].send(tag_name, { unitCode: unit_code }, quantity)
     end
   end
 end
