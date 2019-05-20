@@ -89,6 +89,7 @@ class ProductsController < ApplicationController
     @marcas     = @company.get_marcas()
     @modelos    = @company.get_modelos()
     @categories = @company.get_categories()
+    @unidades = Unidad.all
 
     @product[:tax1_name] = @company.get_last_tax_name(1)
     @product[:tax2_name] = @company.get_last_tax_name(2)
@@ -126,7 +127,8 @@ class ProductsController < ApplicationController
     @suppliers = @company.get_suppliers()
     @marcas = @company.get_marcas()
     @modelos = @company.get_modelos()
-
+    @unidades = Unidad.all
+    
     @categories = @company.get_categories()
   end
 
@@ -141,6 +143,7 @@ class ProductsController < ApplicationController
     @marcas = @company.get_marcas()
     @modelos = @company.get_modelos()
     @categories = @company.get_categories()
+    @unidades = Unidad.all
     
     if(@product[:tax1] == nil)
       @product[:tax1] = 0
@@ -197,6 +200,7 @@ class ProductsController < ApplicationController
     @marcas = @company.get_marcas()
     @modelos = @company.get_modelos()
     @categories = @company.get_categories() 
+    @unidades = Unidad.all
 
     respond_to do |format|
       if @product.update_attributes(products_params)
@@ -420,7 +424,7 @@ def build_pdf_header(pdf)
 
   private
   def products_params
-    params.require(:product).permit(:code, :name, :category, :cost,:price,:price2,:tax1_name, :tax1,:tax2_name,:tax2, :tax3_name,:tax3 ,:quantity,:reorder,:description,:comments,:company_id,:marca_id,:modelo_id,:products_category_id,:unidad,:ubicacion,:punto,:code1,:code2)
+    params.require(:product).permit(:code, :name, :category, :cost,:price,:price2,:tax1_name, :tax1,:tax2_name,:tax2, :tax3_name,:tax3 ,:quantity,:reorder,:description,:comments,:company_id,:marca_id,:modelo_id,:products_category_id,:unidad,:ubicacion,:punto,:code1,:code2,:unidad_id)
   end
   
 

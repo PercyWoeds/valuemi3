@@ -43,6 +43,7 @@ class ProductsCategoriesController < ApplicationController
     @products_category = ProductsCategory.new
     @company = Company.find(params[:company_id])
     @products_category[:company_id] = @company.id
+    
   end
 
   # GET /products_categories/1/edit
@@ -51,6 +52,7 @@ class ProductsCategoriesController < ApplicationController
     @products_category = ProductsCategory.find(params[:id])
     @company = Company.find(@products_category[:company_id])
     @products_category[:company_id] = @company.id
+    
   end
 
   # POST /products_categories
@@ -58,7 +60,8 @@ class ProductsCategoriesController < ApplicationController
   def create
     @pagetitle = "New product category"
     @products_category = ProductsCategory.new(products_category_params)
-
+    
+    
     respond_to do |format|
       if @products_category.save
         format.html { redirect_to(@products_category, :notice => 'Products category was successfully created.') }
@@ -75,7 +78,7 @@ class ProductsCategoriesController < ApplicationController
   def update
     @pagetitle = "Edit product category"
     @products_category = ProductsCategory.find(params[:id])
-
+    
     respond_to do |format|
       if @products_category.update_attributes(products_category_params)
         format.html { redirect_to(@products_category, :notice => 'Products category was successfully updated.') }

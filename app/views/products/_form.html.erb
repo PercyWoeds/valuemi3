@@ -151,11 +151,13 @@
   
   
   <div class="field">
-    <%= f.label :unidad %><br />
-    <%= f.text_field :unidad %>
-    <div class="small">
+        <div class="small">
       Unidad del producto 
+    
     </div>
+    
+    <%= f.collection_select :unidad_id, @unidades, :id, :descrip, :prompt => true %>
+    
   </div>
   
   <div class="field">
