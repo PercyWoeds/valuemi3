@@ -129,13 +129,9 @@ class SellvalesController < ApplicationController
       @sellvale[:cod_tar] = '06'
     end
     
-    
-      
-    
-    @sellvale[:importe] = @sellvale[:precio].to_f * @sellvale[:cantidad] 
-    
     respond_to do |format|
       if @sellvale.update(sellvale_params)
+        
         format.html { redirect_to @sellvale, notice: 'Sellvale was successfully updated.' }
         format.json { render :show, status: :ok, location: @sellvale }
       else
