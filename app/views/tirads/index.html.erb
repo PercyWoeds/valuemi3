@@ -31,12 +31,13 @@
     <% end %>
   </tbody>
 </table>
-
+<%= will_paginate @tirads %>
 <br>
 
+<div class="button" >
+<%= link_to 'Nuevo Deposito', new_tirad_path %><h2>Importar Archivo  "*.csv"</h2>
+</div>
 
-
-<%= link_to 'New Tirada', new_tirad_path %><h2>Importar Archivo  "*.csv"</h2>
 
 <%= form_tag import_tirads_path, multipart: true do %>
   <%= file_field_tag :file %>

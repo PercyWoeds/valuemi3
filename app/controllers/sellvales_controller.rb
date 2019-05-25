@@ -130,9 +130,9 @@ class SellvalesController < ApplicationController
     end
     
     respond_to do |format|
-      if @sellvale.update(sellvale_params)
+      if @sellvale.update_attribute(:fpago =>  @sellvale[:fpago], :cod_tar =>  @sellvale[:cod_tar])
         
-        format.html { redirect_to @sellvale, notice: 'Sellvale was successfully updated.' }
+        format.html { redirect_to @sellvale, notice: 'Registro actualizado correctamente.' }
         format.json { render :show, status: :ok, location: @sellvale }
       else
         format.html { render :edit }
