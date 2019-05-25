@@ -24,9 +24,9 @@
         
         <td><%= tirad.documento  %></td>
         <td><%= tirad.importe %></td>
-        <td><%= link_to 'Show', tirad %></td>
-        <td><%= link_to 'Edit', edit_tirad_path(tirad) %></td>
-        <td><%= link_to 'Destroy', tirad, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Ver', tirad %></td>
+        <td><%= link_to 'Editar', edit_tirad_path(tirad) %></td>
+        <td><%= link_to 'Eliminar', tirad, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
