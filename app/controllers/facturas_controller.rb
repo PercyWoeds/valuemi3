@@ -3950,7 +3950,7 @@ end
        ######################################
        # Boleta : 7 grupo eye 2 : Kinzuko
        #####################################
-       if @invoice.document_id == 2
+       if @invoice.document_id == 13
       
            if $lcMoneda == 1
                 case_96 = ReceiptGenerator.new(12, 96, 1,$lg_serie_factura,@invoice.id).with_different_currency2(true)
