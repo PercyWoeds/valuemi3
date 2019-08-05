@@ -26,7 +26,7 @@ wb.styles do |s|
     subtotal = 0
     tax = 0 
     
-    sheet.add_row ["Fecha","Documento","R.U.C.","Cliente","Cod.","Producto","Cantidad ","Precio","Subtotal","I.G.V.","Importe" ], :style => title 
+    sheet.add_row ["Fecha","Documento","R.U.C.","Cliente","Cod.","Producto","Cantidad ","Precio","Subtotal","I.G.V.","Importe","Placa" ], :style => title 
     
    @facturas_rpt.each do |payment|
      
@@ -40,7 +40,7 @@ wb.styles do |s|
                      subtotal = payment.total / 1.18
                      tax = payment.total - subtotal 
                      
-    sheet.add_row [payment.fecha,payment.code,payment.customer.ruc,payment.customer.name,payment.codigo,payment.nameproducto,cantidad,precio,subtotal,tax,payment.total], :style => [date,cadena,cadena,cadena,currency,currency,currency,currency,currency,currency]
+    sheet.add_row [payment.fecha,payment.code,payment.customer.ruc,payment.customer.name,payment.codigo,payment.nameproducto,cantidad,precio,subtotal,tax,payment.total,payment.description ], :style => [date,cadena,cadena,cadena,currency,currency,currency,currency,currency,currency,cadena]
     
     tot_0 += cantidad
     
@@ -52,7 +52,7 @@ wb.styles do |s|
    
    tot_4 = 0
    blanco = ""
-   sheet.add_row [blanco,blanco,blanco,blanco,tot_0,tot_4,tot_1,tot_2,tot_3], :style => [cadena,cadena,cadena,cadena,currency,currency,currency,currency,currency]
+   sheet.add_row [blanco,blanco,blanco,blanco,tot_0,tot_4,tot_1,tot_2,tot_3,blanco], :style => [cadena,cadena,cadena,cadena,currency,currency,currency,currency,currency,cadena]
    
 end
 end 
