@@ -82,8 +82,7 @@ class ProductsController < ApplicationController
     @product[:quantity_transit] = 0
     @product[:company_id] = params[:company_id]
     @product[:price] = 0
-    @product[:punto] = 0
-    
+   
     @company    = Company.find(params[:company_id])
     @suppliers  = @company.get_suppliers()
     @marcas     = @company.get_marcas()

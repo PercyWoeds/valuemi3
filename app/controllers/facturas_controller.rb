@@ -1833,12 +1833,17 @@ def reportes31
       else 
         
          #@invoices = Factura.all.order('fecha DESC,code  DESC').paginate(:page => params[:page])
-         
+
+           if current_user.level =="ventas2"
+            @invoices  = Factura.joins(:customer).order('fecha DESC,code  DESC').where("serie !=? or serie != ?","F201","F202").paginate(:page => params[:page])
+           else
             @invoices  = Factura.joins(:customer).order('fecha DESC,code  DESC').paginate(:page => params[:page])
-  
+           end 
+
                       
             search = params[:search]
             
+
             unless params[:search].blank?
             
               @invoices = Factura.find_by_sql(['Select facturas.*, customers.name 
