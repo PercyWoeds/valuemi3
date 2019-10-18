@@ -622,14 +622,17 @@
       ## ESTADO DE CUENTA 
       
       def get_facturas_day(fecha1,fecha2,moneda)
-         
-        a =  Sellvale.where(["fecha >= ? and fecha<= ? and td <> ? and importe2 IS NOT NULL ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59","N" ]).order(:fecha)
         
-        for dato in a 
+        Sellvale.where(importe2:nil).update_all("importe2 = CAST(importe as float)")
+
+        # a =  Sellvale.where(["fecha >= ? and fecha<= ? and td <> ? and importe2 IS NOT NULL ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59","N" ]).order(:fecha)
+        
+
+        # for dato in a 
           
-          dato.importe2 = dato.importe.to_f 
-          dato.update_attributes(:importe2=> dato.importe.to_f)
-        end 
+        #   dato.importe2 = dato.importe.to_f 
+        #   dato.update_attributes(:importe2=> dato.importe.to_f)
+        # end 
          
          lcCode=""
          lcCode1=""

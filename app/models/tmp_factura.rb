@@ -1,4 +1,7 @@
 class TmpFactura < ActiveRecord::Base
+
+   self.primary_key = 'id'
+   
     belongs_to :document 
     
     

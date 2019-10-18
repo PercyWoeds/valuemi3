@@ -3492,6 +3492,7 @@ def newfactura2
     @fecha2 = params[:fecha2]    
     @moneda = params[:moneda_id]    
 
+
     @facturas_rpt = @company.get_facturas_day(@fecha1,@fecha2,@moneda)      
 
 #    respond_to do |format|

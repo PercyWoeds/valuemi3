@@ -135,53 +135,6 @@ ActiveRecord::Schema.define(version: 20190520152858) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "avisodetails", force: :cascade do |t|
-    t.string   "descrip"
-    t.string   "comments"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
-    t.float    "quantity"
-    t.float    "price"
-    t.float    "total"
-    t.datetime "fecha"
-    t.float    "tarifa"
-    t.float    "i"
-    t.string   "code"
-    t.integer  "d01"
-    t.integer  "d02"
-    t.integer  "d03"
-    t.integer  "d04"
-    t.integer  "d05"
-    t.integer  "d06"
-    t.integer  "d07"
-    t.integer  "d08"
-    t.integer  "d09"
-    t.integer  "d10"
-    t.integer  "d11"
-    t.integer  "d12"
-    t.integer  "d13"
-    t.integer  "d14"
-    t.integer  "d15"
-    t.integer  "d16"
-    t.integer  "d17"
-    t.integer  "d18"
-    t.integer  "d19"
-    t.integer  "d20"
-    t.integer  "d21"
-    t.integer  "d22"
-    t.integer  "d23"
-    t.integer  "d24"
-    t.integer  "d25"
-    t.integer  "d26"
-    t.integer  "d27"
-    t.integer  "d28"
-    t.integer  "d29"
-    t.integer  "d30"
-    t.integer  "d31"
-    t.integer  "category_program_id"
-    t.integer  "medio_id"
-  end
-
   create_table "bank_acounts", force: :cascade do |t|
     t.string   "number"
     t.integer  "moneda_id"
@@ -232,22 +185,6 @@ ActiveRecord::Schema.define(version: 20190520152858) do
     t.string   "numero"
   end
 
-  create_table "campania", force: :cascade do |t|
-    t.string   "descrip"
-    t.string   "comments"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "canals", force: :cascade do |t|
-    t.string   "descrip"
-    t.string   "ruc"
-    t.string   "address1"
-    t.string   "phone1"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "carts", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -257,13 +194,6 @@ ActiveRecord::Schema.define(version: 20190520152858) do
     t.string   "code"
     t.string   "descrip"
     t.integer  "company_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "category_programs", force: :cascade do |t|
-    t.string   "code"
-    t.string   "descrip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -295,13 +225,6 @@ ActiveRecord::Schema.define(version: 20190520152858) do
     t.datetime "fecha"
     t.integer  "user_id"
     t.integer  "company_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "ciudads", force: :cascade do |t|
-    t.string   "descrip"
-    t.string   "comments"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -358,69 +281,6 @@ ActiveRecord::Schema.define(version: 20190520152858) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "contrato_cuota", force: :cascade do |t|
-    t.integer  "nro"
-    t.datetime "fecha"
-    t.float    "cuota"
-    t.float    "vventa"
-    t.float    "comision1"
-    t.float    "comision2"
-    t.float    "total"
-    t.string   "facturacanal"
-    t.string   "factura1"
-    t.string   "factura2"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-  end
-
-  create_table "contrato_details", force: :cascade do |t|
-    t.string   "nro"
-    t.datetime "fecha"
-    t.float    "importe"
-    t.float    "vventa"
-    t.float    "comision1"
-    t.float    "comision2"
-    t.float    "total"
-    t.string   "facturacanal"
-    t.datetime "fecha2"
-    t.string   "factura1"
-    t.string   "factura2"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-    t.integer  "contrato_id"
-    t.string   "sit"
-    t.datetime "fechafac1"
-    t.datetime "fechafac2"
-    t.float    "comision3"
-    t.datetime "fec_pago"
-    t.float    "vv_f_emp1"
-    t.float    "vv_f_emp2"
-    t.float    "estado"
-    t.text     "comments"
-    t.float    "igv"
-  end
-
-  create_table "contratos", force: :cascade do |t|
-    t.string   "code"
-    t.datetime "fecha"
-    t.integer  "customer_id"
-    t.integer  "medio_id"
-    t.float    "importe"
-    t.integer  "moneda_id"
-    t.integer  "tipocontrato_id"
-    t.float    "nrocuotas"
-    t.float    "comision1"
-    t.float    "comision2"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
-    t.integer  "contrato_cuota_id"
-    t.string   "description"
-    t.string   "codigointerno"
-    t.float    "comision3"
-    t.integer  "modalidad"
-    t.integer  "anio"
-  end
-
   create_table "creditos", force: :cascade do |t|
     t.string   "code"
     t.string   "nombre"
@@ -470,18 +330,6 @@ ActiveRecord::Schema.define(version: 20190520152858) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.integer  "day_month"
-  end
-
-  create_table "customer_contratos", force: :cascade do |t|
-    t.integer  "customer_id"
-    t.string   "secu_org"
-    t.integer  "medio_id"
-    t.integer  "contrato_id"
-    t.string   "anio"
-    t.string   "referencia"
-    t.integer  "moneda_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
   end
 
   create_table "customer_payment_details", force: :cascade do |t|
@@ -862,8 +710,8 @@ ActiveRecord::Schema.define(version: 20190520152858) do
     t.string   "return"
     t.datetime "date_processed"
     t.integer  "user_id"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
     t.datetime "fecha"
     t.string   "serie"
     t.string   "numero"
@@ -887,7 +735,6 @@ ActiveRecord::Schema.define(version: 20190520152858) do
     t.integer  "tarjeta_id"
     t.string   "guia"
     t.integer  "reference_fact"
-    t.integer  "note_concept_id"
   end
 
   create_table "faltantes", force: :cascade do |t|
@@ -1368,22 +1215,6 @@ ActiveRecord::Schema.define(version: 20190520152858) do
     t.string   "category"
   end
 
-  create_table "medios", force: :cascade do |t|
-    t.string   "descrip"
-    t.text     "comments"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string   "sigla"
-    t.text     "address"
-    t.string   "phone1"
-    t.string   "atencion"
-    t.string   "ruc"
-    t.string   "active"
-    t.string   "grupo"
-    t.string   "estacion"
-    t.string   "full_name"
-  end
-
   create_table "modelos", force: :cascade do |t|
     t.string   "descrip"
     t.datetime "created_at", null: false
@@ -1397,13 +1228,6 @@ ActiveRecord::Schema.define(version: 20190520152858) do
     t.string   "description"
     t.string   "symbol"
     t.integer  "company_id"
-  end
-
-  create_table "motivos", force: :cascade do |t|
-    t.string   "descrip"
-    t.text     "comments"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "movement_details", force: :cascade do |t|
@@ -1525,9 +1349,8 @@ ActiveRecord::Schema.define(version: 20190520152858) do
     t.string   "code"
     t.string   "descrip"
     t.string   "td"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.integer  "document_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "numeras", force: :cascade do |t|
@@ -1542,89 +1365,6 @@ ActiveRecord::Schema.define(version: 20190520152858) do
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "orden_products", force: :cascade do |t|
-    t.integer  "orden_id"
-    t.integer  "avisodetail_id"
-    t.float    "price"
-    t.float    "quantity"
-    t.float    "total"
-    t.datetime "fecha"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-    t.float    "tarifa"
-    t.float    "i"
-    t.string   "dia"
-    t.integer  "d01"
-    t.integer  "d02"
-    t.integer  "d03"
-    t.integer  "d04"
-    t.integer  "d05"
-    t.integer  "d06"
-    t.integer  "d07"
-    t.integer  "d08"
-    t.integer  "d09"
-    t.integer  "d10"
-    t.integer  "d11"
-    t.integer  "d12"
-    t.integer  "d13"
-    t.integer  "d14"
-    t.integer  "d15"
-    t.integer  "d16"
-    t.integer  "d17"
-    t.integer  "d18"
-    t.integer  "d19"
-    t.integer  "d20"
-    t.integer  "d21"
-    t.integer  "d22"
-    t.integer  "d23"
-    t.integer  "d24"
-    t.integer  "d25"
-    t.integer  "d26"
-    t.integer  "d27"
-    t.integer  "d28"
-    t.integer  "d29"
-    t.integer  "d30"
-    t.integer  "d31"
-  end
-
-  create_table "ordens", force: :cascade do |t|
-    t.integer  "contrato_id"
-    t.datetime "fecha"
-    t.integer  "medio_id"
-    t.integer  "marca_id"
-    t.integer  "version_id"
-    t.datetime "fecha1"
-    t.datetime "fecha2"
-    t.float    "tiempo"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-    t.string   "code"
-    t.integer  "company_id"
-    t.float    "subtotal"
-    t.float    "tax"
-    t.float    "total"
-    t.integer  "user_id"
-    t.string   "processed"
-    t.integer  "customer_id"
-    t.text     "description"
-    t.string   "rating"
-    t.integer  "month"
-    t.integer  "year"
-    t.integer  "revision"
-    t.integer  "producto_id"
-    t.integer  "ciudad_id"
-    t.datetime "date_processed"
-    t.datetime "fecha_inicio"
-    t.datetime "fecha_fin"
-    t.float    "tarifa"
-    t.integer  "aviso_detail_id"
-    t.integer  "avisodetail_id"
-    t.string   "tipo"
-    t.string   "secu_cont"
-    t.integer  "moneda_id"
-    t.float    "quantity"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -1823,20 +1563,6 @@ ActiveRecord::Schema.define(version: 20190520152858) do
     t.datetime "date_processed"
   end
 
-  create_table "periodos", force: :cascade do |t|
-    t.string   "descrip"
-    t.text     "comments"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "productos", force: :cascade do |t|
-    t.string   "name"
-    t.integer  "marca_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "products", force: :cascade do |t|
     t.string   "code"
     t.string   "name"
@@ -1870,6 +1596,11 @@ ActiveRecord::Schema.define(version: 20190520152858) do
     t.string   "unidad"
     t.string   "ubicacion"
     t.float    "quantity"
+    t.float    "currtotal"
+    t.integer  "punto"
+    t.string   "code1"
+    t.string   "code2"
+    t.integer  "unidad_id"
   end
 
   create_table "products_categories", force: :cascade do |t|
@@ -2095,22 +1826,6 @@ ActiveRecord::Schema.define(version: 20190520152858) do
     t.float    "total_renta_anual"
   end
 
-  create_table "quota", force: :cascade do |t|
-    t.string   "nro"
-    t.datetime "fecha"
-    t.float    "importe"
-    t.float    "vventa"
-    t.float    "comision1"
-    t.float    "comision2"
-    t.float    "total"
-    t.string   "facturacanal"
-    t.datetime "fecha2"
-    t.string   "factura1"
-    t.string   "factura2"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-  end
-
   create_table "quotations", force: :cascade do |t|
     t.datetime "fecha1"
     t.string   "code"
@@ -2128,22 +1843,6 @@ ActiveRecord::Schema.define(version: 20190520152858) do
     t.integer  "division_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
-  end
-
-  create_table "quotes", force: :cascade do |t|
-    t.integer  "nro"
-    t.datetime "fecha"
-    t.float    "importe"
-    t.float    "vventa"
-    t.float    "comision1"
-    t.float    "comision2"
-    t.float    "total"
-    t.string   "facturacanal"
-    t.string   "factura1"
-    t.string   "factura2"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-    t.integer  "contrato_id"
   end
 
   create_table "redention_details", force: :cascade do |t|
@@ -2433,20 +2132,6 @@ ActiveRecord::Schema.define(version: 20190520152858) do
     t.string   "code"
   end
 
-  create_table "supplierpayment_details", force: :cascade do |t|
-    t.integer  "document_id"
-    t.string   "documento"
-    t.integer  "supplier_id"
-    t.string   "tm"
-    t.float    "total"
-    t.text     "descrip"
-    t.integer  "purchase_id"
-    t.integer  "supplier_payment_id"
-    t.float    "tipocambio"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
-  end
-
   create_table "suppliers", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
@@ -2466,17 +2151,6 @@ ActiveRecord::Schema.define(version: 20190520152858) do
     t.string   "taxable"
     t.string   "account"
   end
-
-  create_table "tanks", force: :cascade do |t|
-    t.string   "comments"
-    t.integer  "product_id"
-    t.integer  "company_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_index "tanks", ["company_id"], name: "index_tanks_on_company_id", using: :btree
-  add_index "tanks", ["product_id"], name: "index_tanks_on_product_id", using: :btree
 
   create_table "tanques", force: :cascade do |t|
     t.string   "code"
@@ -2511,21 +2185,6 @@ ActiveRecord::Schema.define(version: 20190520152858) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.string   "year_month"
-  end
-
-  create_table "tipo_ordens", force: :cascade do |t|
-    t.string   "code"
-    t.string   "descrip"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "tipoavisos", force: :cascade do |t|
-    t.string   "descrip"
-    t.text     "comments"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.float    "duracion"
   end
 
   create_table "tipocambios", force: :cascade do |t|
@@ -2856,14 +2515,6 @@ ActiveRecord::Schema.define(version: 20190520152858) do
     t.integer  "island_id"
   end
 
-  create_table "versions", force: :cascade do |t|
-    t.string   "descrip"
-    t.integer  "producto_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.string   "motivo"
-  end
-
   create_table "viatico_details", force: :cascade do |t|
     t.integer  "viatico_id"
     t.datetime "fecha"
@@ -2917,6 +2568,4 @@ ActiveRecord::Schema.define(version: 20190520152858) do
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "tanks", "companies"
-  add_foreign_key "tanks", "products"
 end
