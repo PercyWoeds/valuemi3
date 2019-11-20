@@ -1198,13 +1198,6 @@ end
     end
 
 
-
-
-
-
-
-
-
 def rpt_factura_all
     $lcFacturasall = '1'
 
