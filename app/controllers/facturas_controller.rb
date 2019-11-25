@@ -2384,6 +2384,12 @@ def newfactura2
     @company = Company.find(1)
     @factura = Factura.find(params[:factura_id])
     @customer = Customer.find(params[:customer_id]) 
+
+    @fecha1 = params[:fecha1])
+    @fecha2 = params[:fecha2])
+    @producto_id = params[:product_id]
+        
+
     @customer_name = @customer.name
     @customer_code = @customer.account 
     
@@ -2393,8 +2399,15 @@ def newfactura2
     @customer_d04 = @customer.d04
     @customer_d05 = @customer.d05
     @customer_d06 = @customer.d06
+
+    @productos = Company.get_products
+
     
-    @detalleitems =  Sellvale.where(processed:"0",cod_cli: @customer.account,td:"N").order(:fecha)
+  
+    @detalleitems =  Sellvale.where("fecha>=? and fecha<=? and processed=? and cod_cli =? and td = ?
+     and product_id=? ","#{fecha1} 00:00:00","#{fecha2} 00:00:00","0",@customer.account, "N").order(:fecha)
+    
+
     @factura_detail = Factura.new
 
   
@@ -3940,7 +3953,7 @@ end
         require './app/generators/daily_receipt_summary_generator'
         require './app/generators/voided_documents_generator'
 
-        SUNAT.environment = :production 
+        SUNAT.environment = :production
 
         files_to_clean = Dir.glob("*.xml") + Dir.glob("./app/pdf_output/*.pdf") + Dir.glob("*.zip")
         files_to_clean.each do |file|

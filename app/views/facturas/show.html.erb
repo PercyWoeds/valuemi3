@@ -258,9 +258,34 @@
 <% if @invoice.processed  != "1" %>
 
 <%= form_tag(newfactura2_facturas_path, method: "get") do %>
+
+  <div class="field">
+        <%= f.label :fecha1 , "Desde *", :class => "bold" %><br />
+        <%= f.text_field :fecha1  %>
+  </div>
+
+  <div class="field">
+        <%= f.label :fecha2 , "Hasta *", :class => "bold" %><br />
+        <%= f.text_field :fecha2  %>
+  </div>
+
+<div>
   <%= select_tag(:customer_id,options_from_collection_for_select(@customers,'id','name') ) %>
+</div>
+<div>
+
+<div>
+  <%= select_tag(:product_id,options_from_collection_for_select(@productos,'id','name') ) %>
+</div>
+<div>
+
+
+</div>
+
+
   <%= hidden_field_tag "factura_id" , @invoice.id %>
-  
+
+
   
   <%= submit_tag("Agregar Vale") %>
 <% end %>

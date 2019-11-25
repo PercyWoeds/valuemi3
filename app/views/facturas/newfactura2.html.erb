@@ -42,6 +42,8 @@
       
       
     </div>
+
+
     <table>
       <th>
         Gas 84
@@ -90,8 +92,9 @@
       
     </table>
     
+<button type="button" id = "check_all" class="btw"> <%= "Marcar todos / Desmarcar todos "%> </button>
 
-    <%= hr() %>
+   <%= hr() %>
 
     <p class="bold big">
       Detalle de productos 
@@ -232,3 +235,12 @@
 <div class="button">
   <%= link_to 'Regresar', "/companies/facturas/#{@company.id}" %>
 </div>
+
+<script type="text/javascript"> 
+
+$('#check_all').on("click", function(){
+  var cbxs = $('input[type="checkbox"]');
+  cbxs.prop("checked", !cbxs.prop("checked"));
+});
+
+</script>
