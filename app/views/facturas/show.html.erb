@@ -259,15 +259,14 @@
 
 <%= form_tag(newfactura2_facturas_path, method: "get") do %>
 
-  <div class="field">
-        <%= f.label :fecha1 , "Desde *", :class => "bold" %><br />
-        <%= f.text_field :fecha1  %>
-  </div>
+ <div class="field">
+      <input type="date" name="fecha1" value="2019-11-01" style = "width: 150px" >
+    </div>
 
   <div class="field">
-        <%= f.label :fecha2 , "Hasta *", :class => "bold" %><br />
-        <%= f.text_field :fecha2  %>
+    <input type="date" name="fecha2" value="2019-11-30" style = "width: 150px" >
   </div>
+
 
 <div>
   <%= select_tag(:customer_id,options_from_collection_for_select(@customers,'id','name') ) %>
