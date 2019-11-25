@@ -2107,12 +2107,9 @@ def reportes31
     @company = Company.find(1)
     @customer = @invoice.customer
     @customers = @company.get_customers_all()
-    
     @tipodocumento = @invoice.document 
 
-
-    @productos = Company.get_products
-    
+    @productos = @company.get_products
     
     if @invoice.descuento == "1"
       @factura_details = @invoice.factura_details
@@ -2404,7 +2401,7 @@ def newfactura2
     @customer_d05 = @customer.d05
     @customer_d06 = @customer.d06
 
-    @productos = Company.get_products
+    @productos =   @company.get_products
 
     
   
