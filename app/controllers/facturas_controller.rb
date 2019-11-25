@@ -2109,6 +2109,10 @@ def reportes31
     @customers = @company.get_customers_all()
     
     @tipodocumento = @invoice.document 
+
+
+    @productos = Company.get_products
+    
     
     if @invoice.descuento == "1"
       @factura_details = @invoice.factura_details
