@@ -2388,8 +2388,8 @@ def newfactura2
 
     @fecha1 = params[:fecha1]
     @fecha2 = params[:fecha2]
-    @producto_id = params[:product_id]
-        
+    @product = Product.find(params[:product_id])
+    @product_id = @product.cod_prod     
 
     @customer_name = @customer.name
     @customer_code = @customer.account 
@@ -2406,7 +2406,7 @@ def newfactura2
     
   
     @detalleitems =  Sellvale.where("fecha>=? and fecha<=? and processed=? and cod_cli =? and td = ?
-     and product_id=? ","#{@fecha1} 00:00:00","#{@fecha2} 00:00:00","0",@customer.account, "N",@producto_id).order(:fecha)
+     and cod_prod = ? ","#{@fecha1} 00:00:00","#{@fecha2} 00:00:00","0",@customer.account, "N",@producto_id).order(:fecha)
     
 
     @factura_detail = Factura.new
