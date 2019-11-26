@@ -2389,7 +2389,7 @@ def newfactura2
     @fecha1 = params[:fecha1]
     @fecha2 = params[:fecha2]
     @product = Product.find(params[:product_id])
-    @product_id = @product.cod_prod     
+    @product_id = @product.code  
 
     @customer_name = @customer.name
     @customer_code = @customer.account 
