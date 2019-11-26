@@ -151,7 +151,7 @@
 <button type="button" id = "check_all" class="btw"> <%= "Marcar todos / Desmarcar todos "%> </button>
 
 
-      
+
       <% for item in @detalleitems %>
         <tr>
           <td class="small bordered_bottom bordered_right" style="width: 50px;">
@@ -201,7 +201,8 @@
           </td>
           
            <td class="bordered_right bordered_bottom right">
-            <%= check_box_tag "products_ids[]", item.id     %>
+            <%= check_box_tag "products_ids[]", item.id %> 
+
           </td>          
 
         </tr>
@@ -240,9 +241,12 @@
 
 <script type="text/javascript"> 
 
-$('#check_all').on("click", function(){
-  var cbxs = $('input[type="checkbox"]');
-  cbxs.prop("checked", !cbxs.prop("checked"));
+$('#check_all').change(function() {
+  var is_checked = this.checked;
+  $('.selectable-checkbox').each(function() {
+    this.checked = is_checked;
+  });
 });
+
 
 </script>
