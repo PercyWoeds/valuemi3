@@ -91,9 +91,6 @@
       </tr>
       
     </table>
-    
-<button type="button" id = "check_all" class="btw"> <%= "Marcar todos / Desmarcar todos "%> </button>
-
    <%= hr() %>
 
     <p class="bold big">
@@ -149,6 +146,11 @@
     <tbody>
       
       <%=  form_tag discontinue_facturas_path(factura_id: @factura.id),method: :post  %>
+      
+    
+<button type="button" id = "check_all" class="btw"> <%= "Marcar todos / Desmarcar todos "%> </button>
+
+
       
       <% for item in @detalleitems %>
         <tr>
