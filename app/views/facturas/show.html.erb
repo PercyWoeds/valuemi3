@@ -271,15 +271,6 @@
 <div>
   <%= select_tag(:customer_id,options_from_collection_for_select(@customers,'id','name') ) %>
 </div>
-<div>
-
-<div>
-  <%= select_tag(:product_id,options_from_collection_for_select(@productos,'id','name') ) %>
-</div>
-<div>
-
-
-</div>
 
 
   <%= hidden_field_tag "factura_id" , @invoice.id %>

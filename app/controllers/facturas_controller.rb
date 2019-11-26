@@ -2406,7 +2406,7 @@ def newfactura2
     
   
     @detalleitems =  Sellvale.where("fecha>=? and fecha<=? and processed=? and cod_cli =? and td = ?
-     and cod_prod = ? ","#{@fecha1} 00:00:00","#{@fecha2} 00:00:00","0",@customer.account, "N",@product_id).order(:fecha)
+     ","#{@fecha1} 00:00:00","#{@fecha2} 00:00:00","0",@customer.account, "N").order(:fecha)
     
 
     @factura_detail = Factura.new
