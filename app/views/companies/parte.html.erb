@@ -1,6 +1,6 @@
 <div class="mid_box bordered_right">
 
-
+<% if currente_user.level != "playa"%>
   <h3>
     <%= image_tag("invoice_32.png", :class => "vmiddle") %>
     <%= link_to "Parte Diario", "/companies/reports/reports_parte/#{@company.id}" %>
@@ -33,6 +33,8 @@
      Agregar, editar or eliminar facturas para tu negocio.
   </p>
   
+
+<% end %>
   <%= hr() %>
 
     <h3>
@@ -43,7 +45,11 @@
      Agregar, editar or eliminar lecturas de ventas de combustible para tu negocio.
   </p>
   
+
+
     <%= hr() %>  
+
+    <% if currente_user.level != "playa"%>
 
     <h3>
     <%= image_tag("invoice_32.png", :class => "vmiddle") %>
@@ -145,3 +151,4 @@
  
     <%= hr() %>
     
+<% end %>
