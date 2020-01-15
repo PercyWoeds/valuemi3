@@ -1,6 +1,6 @@
 <div class="mid_box bordered_right">
 
-<% if currente_user.level != "playa"%>
+<% if current_user.level != "playa"%>
   <h3>
     <%= image_tag("invoice_32.png", :class => "vmiddle") %>
     <%= link_to "Parte Diario", "/companies/reports/reports_parte/#{@company.id}" %>
@@ -49,7 +49,7 @@
 
     <%= hr() %>  
 
-    <% if currente_user.level != "playa"%>
+    <% if current_user.level != "playa"%>
 
     <h3>
     <%= image_tag("invoice_32.png", :class => "vmiddle") %>
