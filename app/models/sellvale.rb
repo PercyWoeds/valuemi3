@@ -287,14 +287,12 @@ end
 
   def  get_ventas_forma_pago_grifero_turno(fecha,grifero,turno,fpago) 
 
-             facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and cod_emp = ? and turno=?  and cod_tar= ?  " , "#{fecha} 00:00:00","#{fecha} 23:59:59",grifero,turno,fpago])
+            ret = 0
+             facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and cod_emp = ? and turno=?  and cod_tar= ?  " , "#{fecha} 00:00:00","#{fecha} 23:59:59",grifero,turno,fpago]).sum(:importe)
              
              if facturas
                  
-                ret=0  
-                for detalle in facturas
-                    ret += detalle.importe.to_f
-               end 
+                ret = facturas   
             end 
         
             return ret
