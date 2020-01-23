@@ -50,7 +50,7 @@
           
           <%= link_to "Print", "/facturas/print/#{invoice.id}" %>
           
-          <% if @current_user.level == "admin" %>
+          <% if @current_user.level == "admin" || @current_user.level == "parte" %>
             
             
               <%= link_to 'Eliminar', invoice, :data=> {:confirm => 'Esta seguro ?'}, :method => :delete %>            
@@ -62,13 +62,13 @@
           <%= link_to "Print", "/facturas/print/#{invoice.id}" %>
           
           
-              <% if @current_user.level == "admin" %>
+              <% if @current_user.level == "admin" || @current_user.level == "parte" %>
               <%= link_to 'Eliminar', invoice,:data=> {:confirm => 'Esta seguro ?'}, :method => :delete %>            
               <% end %>
               
           <% elsif invoice.processed =="2"%>  
           <%= "** Anulado **" %>
-            <% if @current_user.level == "admin" %>
+            <% if @current_user.level == "admin" || @current_user.level == "parte" %>
             <%= link_to 'Eliminar', invoice,:data=> {:confirm => 'Esta seguro ?'}, :method => :delete %>            
             <% end %>
           <% elsif invoice.processed =="3"%>  
