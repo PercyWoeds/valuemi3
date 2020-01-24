@@ -292,7 +292,7 @@ end
              
              if facturas
                  
-                ret = facturas   
+                ret += facturas.importe.to_f    
             end 
         
             return ret
