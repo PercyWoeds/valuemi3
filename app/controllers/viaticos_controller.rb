@@ -241,6 +241,54 @@ before_filter :authenticate_user!
     flash[:notice] = "The viatico order has been processed."
     redirect_to @viatico
   end
+   # Process an viatico
+  def do_caja
+    @viatico = Viatico.find(params[:id])
+    @fecha  =  @viatico.fecha1.to_date 
+
+  bucle = 1
+  while bucle < 4
+    detalle_texto = ""
+    
+    ventas1 = @viatico.get_ventas_fecha_turno(@fecha,"98",bucle)
+   
+    tirada1= @viatico.get_ventas_tirada_turno(@fecha,bucle)
+   
+    diferencia1 =  tirada1 - ventas1
+    
+   
+    detalle_texto = "VENTA DEL DIA: " <<   @fecha.to_s  << " TURNO: "  << bucle.to_s  
+    detalle_texto2 = "TIRADAS: " <<   @fecha.to_s  << " TURNO: "  << bucle.to_s  
+    detalle_texto3 = "DIFERENCIA: " <<   @fecha.to_s  << " TURNO: "  << bucle.to_s  
+
+     a = ViaticoDetail.new(viatico_id: @viatico.id, fecha:@viatico.fecha1, descrip:"", document_id: 4, 
+      numero: "0", importe: ventas1, detalle: detalle_texto, tm: "4", tranportorder_id: 1, 
+      supplier_id: 4, gasto_id: 1, employee_id: 10, destino_id: 1, compro: "0", tipomov_id: 1 )
+     a.save
+     a = ViaticoDetail.new(viatico_id: @viatico.id, fecha:@viatico.fecha1, descrip:"", document_id: 4, 
+      numero: "0", importe: tirada1, detalle: detalle_texto2, tm: "4", tranportorder_id: 1, 
+      supplier_id: 4, gasto_id: 1, employee_id: 10, destino_id: 1, compro: "0", tipomov_id: 1 )
+     a.save
+
+     if diferencia1 < 0
+      tipo_mov = 2
+      diferencia1 = diferencia1 * -1 
+     else
+      tipo_mov = 1 
+     end
+     a = ViaticoDetail.new(viatico_id: @viatico.id, fecha:@viatico.fecha1, descrip:"", document_id: 4, 
+      numero: "0", importe: diferencia1, detalle: detalle_texto3, tm: "4", tranportorder_id: 1, 
+      supplier_id: 4, gasto_id: 1, employee_id: 10, destino_id: 1, compro: "0", tipomov_id: tipo_mov )
+     a.save
+
+
+
+     bucle += 1
+    end 
+    
+    flash[:notice] = "The viatico order has been processed."
+    redirect_to @viatico
+  end
   
   # Do send viatico via email
   def do_email

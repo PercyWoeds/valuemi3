@@ -6,6 +6,7 @@ class Sellvale < ActiveRecord::Base
  
  belongs_to :factura_detail
  
+
  
  TABLE_HEADERS9 = ["ITEM",
                      "PERSONAL",   
@@ -307,8 +308,8 @@ end
                  
                for factura in facturas      
                 ret += factura.importe.to_f 
-            end
-            end 
+                end
+             end 
         
             return ret
          

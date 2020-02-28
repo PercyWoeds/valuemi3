@@ -530,5 +530,32 @@ self.per_page = 20
         Voided.where(:id=>'13').update_all(:numero =>lcnumero)        
   end
 
-  
+def  get_ventas_fecha_turno(fecha,fpago,turno ) 
+
+            ret = 0
+             facturas = Sellvale.where(["fecha >= ? and fecha <= ?   and cod_tar= ? and turno = ?  " , "#{fecha} 00:00:00","#{fecha} 23:59:59",fpago,"#{turno}"])
+             
+             if facturas
+                 
+               for factura in facturas      
+                ret += factura.importe.to_f 
+                end
+             end 
+        
+            return ret
+         
+  end
+     def  get_ventas_tirada_turno(fecha,turno ) 
+              ret  = 0
+             facturas = Tirad.where(["fecha >= ? and fecha <= ?   and turno = ?  " , "#{fecha} 00:00:00","#{fecha} 23:59:59",turno ])
+             if facturas
+                for factura in facturas      
+                ret += factura.importe 
+                end
+
+             end  
+             return ret
+
+         end 
+      
 end

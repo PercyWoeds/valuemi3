@@ -608,6 +608,8 @@ end
   match 'viaticos/new2/:company_id' => 'viaticos#new2', via: [:get, :post]
   match 'viaticos/do_email/:id' => 'viaticos#do_email', via: [:get, :post]
   match 'viaticos/do_process/:id' => 'viaticos#do_process', via: [:get, :post]
+  match 'viaticos/do_caja/:id' => 'viaticos#do_caja', via: [:get, :post]
+  
   match 'viaticos/email/:id' => 'viaticos#email', via: [:get, :post]
   match 'viaticos/pdf/:id' => 'viaticos#pdf', via: [:get, :post]
   match 'companies/viaticos/:company_id' => 'viaticos#list_viaticos', via: [:get, :post]
