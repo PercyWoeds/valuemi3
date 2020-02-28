@@ -262,7 +262,7 @@ before_filter :authenticate_user!
     detalle_texto3 = "DIFERENCIA: " <<   @fecha.to_s  << " TURNO: "  << bucle.to_s  
 
      a = ViaticoDetail.new(viatico_id: @viatico.id, fecha:@viatico.fecha1, descrip:"", document_id: 4, 
-      numero: "0", importe: ventas1 * -1, detalle: detalle_texto, tm: "4", tranportorder_id: 1, 
+      numero: "0", importe: ventas1, detalle: detalle_texto, tm: "5", tranportorder_id: 1, 
       supplier_id: 4, gasto_id: 1, employee_id: 10, destino_id: 1, compro: "0", tipomov_id: 1 )
      a.save
      a = ViaticoDetail.new(viatico_id: @viatico.id, fecha:@viatico.fecha1, descrip:"", document_id: 4, 
@@ -277,7 +277,7 @@ before_filter :authenticate_user!
       tipo_mov = 1 
      end
      a = ViaticoDetail.new(viatico_id: @viatico.id, fecha:@viatico.fecha1, descrip:"", document_id: 4, 
-      numero: "0", importe: diferencia1, detalle: detalle_texto3, tm: "4", tranportorder_id: 1, 
+      numero: "0", importe: diferencia1, detalle: detalle_texto3, tm: "5", tranportorder_id: 1, 
       supplier_id: 4, gasto_id: 1, employee_id: 10, destino_id: 1, compro: "0", tipomov_id: tipo_mov )
      a.save
 
