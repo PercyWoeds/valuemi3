@@ -52,8 +52,7 @@
 </h3>
 
 <p>
-  <b>Inicial </b>  
-  <%= link_to @viatico.inicial %>
+ <h4>Inicial:   <%=  @viatico.inicial.round(2) %>  </h4>
 </p>
 
 
@@ -67,40 +66,39 @@
   <thead>
     <tr>
       <th>
-        Empleado
+      ITEM
       </th>
+      <th>
+        FECHA
+      </th>
+      
+      <th>
+        Compro.
+      </th>
+   
+     
+      
+      <th>
+       TIPO OPE
+      </th>
+      
       <th>
         Descrip
       </th>
       
       <th>
-        Gasto
+        Detalle  
       </th>
-      <th>
-        Compro.
-      </th>
-     
-      <th>
-        OST.
-      </th>
-     
-      
-      <th>
-        Fecha
-      </th>
-      
-      <th>
-        Documento 
-      </th>
-      <th>
-        Detalle
-      </th>
-      
       <th>
         Ingreso 
       </th>
+      
       <th>
         Egreso 
+      </th>
+
+      <th colspan= "2" >
+        Opciones 
       </th>
       
     </tr>
@@ -108,37 +106,18 @@
   <tbody>
     
 <%= hr() %>
+<% nroitem = 1 %>
     <%  @viatico_detail.each do |product| %>
     
       <tr>
-         <td class="small bordered_bottom bordered_right">
-            <%= product.employee.full_name %>
-          </td>
-         <td class="small bordered_bottom bordered_right">
-           <%if product.supplier %>
-            <%= product.supplier.name %>
-          <%else%>
-           <%if product.employee %>
-            <%= product.employee.full_name %>
-            <%end %>
-          <%end %>
-          </td>
-         <td class="small bordered_bottom bordered_right">
-             <%if product.gasto %>  
-              <%= product.gasto.descrip %>
-               <%else%>
+        <td>
 
-              <%end %>
-          </td>
-          
-         <td class="small bordered_bottom bordered_right">
-            <%= product.numero %>
-          </td>
-         <td class="small bordered_bottom bordered_right">
-            <%= product.tranportorder.code %>
-          </td>
+          <%= nroitem%>
 
-          <td class="small bordered_bottom bordered_right">
+          <% nroitem += 1 %>
+        </td>
+
+         <td class="small bordered_bottom bordered_right">
              <%if product.gasto %>  
              
              <%=product.fecha.strftime("%d/%m/%Y") %>
@@ -149,10 +128,30 @@
 
           </td>
           
-          <td class="small bordered_bottom bordered_right">
-            
-              <%= product.document.descripshort << "-" << product.compro    %>
+
+           <td class="small bordered_bottom bordered_right">
+
+            <% lccompro =  product.document.descripshort << "-" << product.numero  %>
+      
+            <%= lccompro %>
           </td>
+
+          <td class="small bordered_bottom bordered_right">
+
+           <% if product.tipomov_id == 1 %>
+                 I 
+            <%else%>
+                 E 
+           <% end%> 
+         </td>
+          <td class="small bordered_bottom bordered_right">
+           <% if product.supplier.id != 4 %>
+              <%= product.supplier.name %>
+           <% else %>
+              <%= product.employee.full_name %>
+           <% end %> 
+
+         </td>
            <td class="small bordered_bottom bordered_right">
               <%=product.detalle %>
           </td>
