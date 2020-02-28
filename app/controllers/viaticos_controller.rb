@@ -92,8 +92,10 @@ before_filter :authenticate_user!
             row = []
             row << nroitem.to_s        
             row << product.fecha.strftime("%d/%m/%Y") 
+            
               lccompro =  product.document.descripshort << "-" << product.numero  
             row << lccompro 
+
             if product.tipomov_id == 1
                 row << " I "
             else

@@ -285,6 +285,19 @@ def get_product2(id)
     
 end 
 
+ def  get_ventas_forma_pago_grifero_turno_detalle(fecha,grifero,turno,fpago) 
+
+            ret = 0
+             facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and cod_emp = ? and turno=?  and cod_tar= ?  " , "#{fecha} 00:00:00","#{fecha} 23:59:59",grifero,turno,fpago])
+             
+            
+        
+            return facturas 
+         
+  end
+  
+
+
   def  get_ventas_forma_pago_grifero_turno(fecha,grifero,turno,fpago) 
 
             ret = 0
@@ -299,7 +312,8 @@ end
         
             return ret
          
-        end
+  end
+
         
         
         def  get_ventas_tirada_grifero_turno(fecha,grifero,turno ) 
