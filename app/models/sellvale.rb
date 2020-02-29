@@ -301,17 +301,22 @@ end
 
   def  get_ventas_forma_pago_grifero_turno(fecha,grifero,turno,fpago) 
 
-            ret = 0
-             facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and cod_emp = ? and turno=?  and cod_tar= ?  " , "#{fecha} 00:00:00","#{fecha} 23:59:59",grifero,turno,fpago])
-             
-             if facturas
-                 
-               for factura in facturas      
-                ret += factura.importe.to_f 
-                end
-             end 
+            facturas  = 0
+
+             facturas = Sellvale.find_by_sql(['Select SUM(CAST(importe AS numeric)) AS total 
+                         from sellvales where fecha >= ? and fecha <= ?  and cod_emp = ? and turno=? 
+                         and cod_tar= ?' , "#{fecha} 00:00:00","#{fecha} 23:59:59",
+                         grifero,turno,fpago  ])
+
+            if facturas.first.total != nil  
+                puts "aaaaa"
+                puts facturas.first.total  
+              return facturas.first.total  
+            else 
+               return 0
+            end                
+            
         
-            return ret
          
   end
 

@@ -4441,22 +4441,13 @@
                       GROUP BY sellvales.fecha, sellvales.turno,sellvales.cod_emp
                       ORDER BY sellvales.fecha, sellvales.turno,sellvales.cod_emp', "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])  
                  
-            
                   for  contado in facturas0 
             
                     a = Cuadre.new
                     
                     a.venta  = contado.total
-                    
                     fecha10 = contado.fecha.strftime("%Y-%m-%d")
-                    
-                    puts "fecha "
-                    puts fecha10 
-          
-                    puts contado.cod_emp
-                    puts contado.turno 
-                    puts contado.quantity 
-                    puts contado.total 
+                
                      
                     a1 = contado.get_ventas_forma_pago_grifero_turno(fecha10,contado.cod_emp, contado.turno,"98")
                     a2 = contado.get_ventas_forma_pago_grifero_turno(fecha10,contado.cod_emp, contado.turno,"05") + contado.get_ventas_forma_pago_grifero_turno(fecha10,contado.cod_emp, contado.turno,"01")
@@ -4473,10 +4464,7 @@
                     a.credit  = a3
                     a.serafin = a4
                     a.employee_id = contado.get_code_empleado(contado.cod_emp)
-                    a.day_month = fecha10.to_date.day 
-                    
-                     puts "efectivo..."
-                     puts a.cash
+                    a.day_month = fecha10.to_date.day
                      
                      tot_depo = 0 
                      
@@ -4485,13 +4473,9 @@
                       end 
                       a.remito  = tot_depo  
                       a.diference = tot_depo - a1
-                      
                       a.save
                       
                   end   
-                  
-                  
-                  
                   
                     @facturas = Factura.find_by_sql(["
                     SELECT   day_month as day_month,
@@ -4502,9 +4486,7 @@
                      ORDER BY 2,1 " ])    
                      
                     return @facturas
-                              
-                  
-                  
+    
                             
         end 
         
