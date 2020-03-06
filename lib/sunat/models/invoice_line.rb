@@ -39,6 +39,7 @@ module SUNAT
     property :quantity,               Quantity
     property :line_extension_amount,  PaymentAmount    # total
     property :price,                  PaymentAmount    # price
+    property :preciosigv,              PaymentAmount    # price
     property :pricing_reference,      PricingReference # list price with tax
     property :item,                   Item
     property :tax_totals,             [TaxTotal]
@@ -56,6 +57,15 @@ module SUNAT
                      "DESCRIPCION",
                      "PRECIO UNITARIO",
                      "VALOR TOTAL"]
+
+
+ TABLE_HEADERS2 = ["ITEM",
+                     "CANTIDAD",
+                     "UNIDAD",
+                     "DESCRIPCION",
+                     "VALOR VENTA",
+                     "VALOR TOTAL"]
+
 
     def initialize(*args)
       self.tax_totals ||=[]
@@ -103,13 +113,21 @@ module SUNAT
     end
 
     def build_pdf_table_row(pdf)
+
+
       row = []
       row << self.id
       row << self.quantity.quantity
       row << $lcUnidad20
-      row << "#{self.item.description} "
-      row << "#{self.pricing_reference.alternative_condition_price.price_amount.to_s}"
+      row << "#{self.item.description}"
+      if $lcServicio 
+        row << "#{self.preciosigv}"
+      else 
+        row << "#{self.pricing_reference.alternative_condition_price.price_amount.to_s}"
+      end   
+
       row << "#{self.line_extension_amount.to_s}"
+
     end
 
     def build_xml(xml)

@@ -246,6 +246,7 @@ class InvoiceGenerator < DocumentGenerator
         
         lcDes1   = detalle_item.product.name 
         $lcUnidad20 = detalle_item.product.unidad.descrip2 
+
         
         puts "servicio "
         puts $lcServicio
@@ -261,6 +262,8 @@ class InvoiceGenerator < DocumentGenerator
         lcPrecio = lcPrecio_decim.round(2)
         
         lcPrecioSIGV = lcPrecio /1.18
+        lcPrecioSIGVr  = lcPrecioSIGV.round(3).to_s
+
         
         lcValorVenta = detalle_item.total / 1.18
         lcTax = detalle_item.total - lcValorVenta
@@ -278,7 +281,7 @@ class InvoiceGenerator < DocumentGenerator
               a   =  {id: nro_item.to_s, quantity: lcCantidad, line_extension_amount: {value: lcTotal, currency: currency}, 
            pricing_reference: {alternative_condition_price: {price_amount: {value: lcPrecioCigv, currency: currency}}}, 
            price: {value: lcPrecioSIgv, currency: currency}, tax_totals: [{amount: {value: lcTotal, currency: currency}, type: :igv}], 
-           item: {id: nro_item.to_s, description: lcDes1}}
+           item: {id: nro_item.to_s, description: lcDes1},preciosigv: lcPrecioSIGVr}
          
           invoice_data[:lines] << a 
           
