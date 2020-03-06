@@ -270,6 +270,26 @@ class Factura < ActiveRecord::Base
         rescue
           
         end
+        if self.texto2
+
+        facturas = FacturaDetail.where(factura_id: self.id)
+
+          for x in facturas 
+
+            total = x.preciosigv.round(3) * x.quantity
+
+
+          end
+
+          a = Factura.find(self.id)
+
+          a.total = total
+          a.subtotal = a.total / 1.18
+          a.tax = a.total - a.subtotal 
+          a.save
+
+
+        end 
       end
     end
   end

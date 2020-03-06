@@ -153,7 +153,7 @@ class InvoiceGenerator < DocumentGenerator
 
     if $lcServicio 
 
-        @invoiceitems = FacturaDetail.select(:product_id,:price ,"SUM(quantity) as cantidad","SUM(total) as total").where(factura_id: @numero).group(:product_id,:price)
+        @invoiceitems = FacturaDetail.select(:product_id,:preciosigv ,"SUM(quantity) as cantidad","SUM(total) as total").where(factura_id: @numero).group(:product_id,:preciosigv)
        puts "*** existe servicios"
     else 
         @invoiceitems = FacturaDetail.select(:product_id,:price_discount ,"SUM(quantity) as cantidad","SUM(total) as total").where(factura_id: @numero).group(:product_id,:price_discount)
@@ -266,13 +266,14 @@ class InvoiceGenerator < DocumentGenerator
         lcTotal1 = lcTotal0 * 100
         lcTotal = lcTotal1.round(0)
 
-        lcTotalSIGV1 = (detalle_item.total / 1.18).round(2) * 100
+        lcTotalSIGV1 = detalle_item.preciosigv.round(3) * detalle_item.cantidad * 100  
         lcTotalSIGV  = lcTotalSIGV1.round(0)
 
         lcPrecio_decim =  detalle_item.total   / detalle_item.cantidad   
         lcPrecio = lcPrecio_decim.round(2)
+
         if $lcServicio 
-            lcPrecioSIGV = detalle_item.price / 1.18 
+            lcPrecioSIGV = detalle_item.preciosigv 
         else
             lcPrecioSIGV = detalle_item.price_discount / 1.18 
         end
