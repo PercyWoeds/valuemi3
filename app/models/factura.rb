@@ -273,10 +273,10 @@ class Factura < ActiveRecord::Base
         if self.texto2
 
         facturas = FacturaDetail.where(factura_id: self.id)
-
+        total = 0 
           for x in facturas 
 
-            total = x.preciosigv.round(3) * x.quantity
+            total += x.preciosigv.round(3) * x.quantity
 
 
           end
