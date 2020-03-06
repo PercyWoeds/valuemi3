@@ -148,9 +148,14 @@ class InvoiceGenerator < DocumentGenerator
       
       end 
     
+    if $lcServicio 
+
+    @invoiceitems = FacturaDetail.select(:product_id,:price ,"SUM(quantity) as cantidad","SUM(total) as total").where(factura_id: @numero).group(:product_id,:price)
+ 
+    else 
     @invoiceitems = FacturaDetail.select(:product_id,:price_discount ,"SUM(quantity) as cantidad","SUM(total) as total").where(factura_id: @numero).group(:product_id,:price_discount)
     
-    
+    end 
         $lg_fecha   = @invoice.fecha.to_date
          lcCode = @invoice.code.split("-")
          a = lcCode[0]
@@ -260,7 +265,7 @@ class InvoiceGenerator < DocumentGenerator
         
         lcPrecio_decim =  detalle_item.total   / detalle_item.cantidad   
         lcPrecio = lcPrecio_decim.round(2)
-        lcPrecioSIGV = detalle_item.price_discount / 1.18 
+        lcPrecioSIGV = detalle_item.price / 1.18 
         lcPrecioSIGVr  = lcPrecioSIGV.round(3).to_s 
         puts
         puts lcPrecioSIGVr
