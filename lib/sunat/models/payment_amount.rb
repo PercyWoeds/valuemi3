@@ -37,6 +37,12 @@ module SUNAT
       sprintf "%.2f", (value / 100.0)
     end
 
+
+    def to_s3
+        sprintf "%.3f", (value)
+    end
+      
+  
     def textify
       Helpers::textify(self)
     end

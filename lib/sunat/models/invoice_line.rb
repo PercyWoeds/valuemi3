@@ -39,7 +39,7 @@ module SUNAT
     property :quantity,               Quantity
     property :line_extension_amount,  PaymentAmount    # total
     property :price,                  PaymentAmount    # price
-    property :preciosigv,              PaymentAmount    # price
+    property :preciosigv,             String    # price
     property :pricing_reference,      PricingReference # list price with tax
     property :item,                   Item
     property :tax_totals,             [TaxTotal]

@@ -258,11 +258,12 @@ class Factura < ActiveRecord::Base
         
         total = price.to_f * quantity.to_f
         total -= total * (discount.to_f / 100)
+        preciosigv = price.to_f / 1.18 
         
         begin
           product = Product.find(id.to_i)
           
-          new_invoice_product = FacturaDetail.new(:factura_id => self.id, :product_id => product.id,:price_discount=> price.to_f, :price => price.to_f, :quantity => quantity.to_f, :discount => discount.to_f, :total => total.to_f)
+          new_invoice_product = FacturaDetail.new(:factura_id => self.id, :product_id => product.id,:price_discount=> price.to_f, :price => price.to_f, :quantity => quantity.to_f, :discount => discount.to_f, :total => total.to_f,:preciosigv=> preciosigv)
 
           new_invoice_product.save
 
