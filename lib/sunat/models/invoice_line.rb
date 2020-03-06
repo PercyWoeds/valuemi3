@@ -38,6 +38,8 @@ module SUNAT
     property :id,                     String
     property :quantity,               Quantity
     property :line_extension_amount,  PaymentAmount    # total
+    property :line_extension_vventa,  PaymentAmount    # total
+    
     property :price,                  PaymentAmount    # price
     property :preciosigv,             String    # price
     property :pricing_reference,      PricingReference # list price with tax
@@ -126,7 +128,7 @@ module SUNAT
         row << "#{self.pricing_reference.alternative_condition_price.price_amount.to_s}"
       end   
 
-      row << "#{self.line_extension_amount.to_s}"
+      row << "#{self.line_extension_vventa.to_s}"
 
     end
 

@@ -265,7 +265,10 @@ class InvoiceGenerator < DocumentGenerator
         
         lcTotal1 = lcTotal0 * 100
         lcTotal = lcTotal1.round(0)
-        
+
+        lcTotalSIGV1 = (detalle_item.total / 1.18).round(2) * 100
+        lcTotalSIGV  = lcTotalSIGV1.round(0)
+
         lcPrecio_decim =  detalle_item.total   / detalle_item.cantidad   
         lcPrecio = lcPrecio_decim.round(2)
         if $lcServicio 
@@ -294,7 +297,7 @@ class InvoiceGenerator < DocumentGenerator
               a   =  {id: nro_item.to_s, quantity: lcCantidad, line_extension_amount: {value: lcTotal, currency: currency}, 
            pricing_reference: {alternative_condition_price: {price_amount: {value: lcPrecioCigv, currency: currency}}}, 
            price: {value: lcPrecioSIgv, currency: currency}, tax_totals: [{amount: {value: lcTotal, currency: currency}, type: :igv}], 
-           item: {id: nro_item.to_s, description: lcDes1},preciosigv: lcPrecioSIGVr}
+           item: {id: nro_item.to_s, description: lcDes1},preciosigv: lcPrecioSIGVr, line_extension_vventa: {value: lcTotalSIGV, currency: currency},}
          
           invoice_data[:lines] << a 
           
