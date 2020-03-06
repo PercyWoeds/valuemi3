@@ -101,9 +101,9 @@ require 'active_support/number_helper'
           :width => pdf.bounds.width
         }) do
           columns([0, 2]).font_style = :bold
-          columns([0]).width  = 50
+          columns([0]).width  = 60
           columns([1]).width  = 300
-          columns([2]).width  = 50
+          columns([2]).width  = 100
         end
 
         pdf.move_down 20
@@ -120,6 +120,20 @@ require 'active_support/number_helper'
       end
 
       table_content << headers
+      puts "servocip"
+      puts $lcServicio
+
+      if $lcServicio 
+        row =[]
+        row << ""
+        row << ""
+        row << ""
+        row << $lcServicio 
+           row << ""
+        row << ""
+        table_content<< row
+
+      end 
 
       lines.each do |line|
         table_content << line.build_pdf_table_row(pdf)
@@ -198,6 +212,7 @@ require 'active_support/number_helper'
       client_headers << ["Dirección :",$lcDirCli]
       client_headers << ["Distrito  :",$lcDisCli]
       client_headers << [customer.type_as_text, customer.account_id]
+       client_headers << ["Local Comercial :",$lcLocal]
       client_headers
     end
 

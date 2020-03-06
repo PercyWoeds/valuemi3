@@ -79,8 +79,31 @@
 <% if @invoice.descuento == '0'%>
 
 <h3>
+
+
   Detalle servicios
 </h3>
+ 
+
+
+
+<% if @invoice.texto1 %>
+ Local:
+  <p>
+    <b> Local:</b>
+    <%=  @invoice.texto1 %>
+  </p>
+<% end %>
+
+
+
+<% if @invoice.texto2 %>
+ 
+  <p>
+    <b> Servicio:</b>
+    <%=  @invoice.texto2 %>
+  </p>
+<% end %>
 
 <table>
   <thead>
@@ -295,6 +318,24 @@
 
 <% end %>
 
+
+<% if @invoice.texto1 %>
+
+  <p>
+    <b> Local:</b>
+    <%=  @invoice.texto1 %>
+  </p>
+<% end %>
+
+
+
+<% if @invoice.texto2 %>
+ 
+  <p>
+    <b> Servicio:</b>
+    <%=  @invoice.texto2 %>
+  </p>
+<% end %>
  
   <tbody>
     <table>

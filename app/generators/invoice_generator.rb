@@ -218,10 +218,14 @@ class InvoiceGenerator < DocumentGenerator
          
          $lcFecha1codigo      = $lg_fecha.to_s
 
+         $lcLocal = @invoice.texto1
+         $lcServicio = @invoice.texto2
+
           parts = $lcFecha1codigo.split("-")
           $aa = parts[0]
           $mm = parts[1]        
-          $dd = parts[2]       
+          $dd = parts[2] 
+                
         $lcFechaCodigoBarras = $aa << "-" << $mm << "-" << $dd
         $lcIGVcode = $lcIgv
         $lcTotalcode = $lcTotal
@@ -243,8 +247,8 @@ class InvoiceGenerator < DocumentGenerator
         lcDes1   = detalle_item.product.name 
         $lcUnidad20 = detalle_item.product.unidad.descrip2 
         
-        puts "unidad"
-        puts $lcUnidad20
+        puts "servicio "
+        puts $lcServicio
         
         lcCantidad     = detalle_item.cantidad.round(2)  
         #lcTotal0 = detalle_item.cantidad * detalle_item.price_discount

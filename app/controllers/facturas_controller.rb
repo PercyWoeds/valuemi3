@@ -2115,7 +2115,6 @@ def reportes31
       @factura_details = @invoice.factura_details
     end 
     
-    
     if current_user.level =="colateral"
     
         $lcruc = "20555691263" 
@@ -2216,7 +2215,10 @@ def reportes31
         $lcDes1 = ""
         
       end 
-        $lcMoneda = @invoice.moneda_id
+           $lcMoneda = @invoice.moneda_id
+           $lcLocal = @invoice.texto1
+           $lcServicio = @invoice.texto2
+
         
         
         #$lcGuiaRemision ="NRO.CUENTA BBVA BANCO CONTINENTAL : 0244-0100023293"
@@ -5193,7 +5195,7 @@ def cuadre02
       
   private
   def factura_params
-    params.require(:factura).permit(:company_id,:location_id,:division_id,:customer_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:payment_id,:fecha,:preciocigv,:tipo,:observ,:moneda_id,:detraccion,:factura2,:description,:document_id,:tipoventa_id,:tarjeta_id,:guia)
+    params.require(:factura).permit(:company_id,:location_id,:division_id,:customer_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:payment_id,:fecha,:preciocigv,:tipo,:observ,:moneda_id,:detraccion,:factura2,:description,:document_id,:tipoventa_id,:tarjeta_id,:guia,:texto1,:texto2,:texto3 )
   end
 
 end
