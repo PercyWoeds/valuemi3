@@ -520,6 +520,7 @@ class Factura < ActiveRecord::Base
   def process
     if(self.processed == "1" or self.processed == true)          
       self.processed="1"
+
        if self.texto2 
 
         facturas = FacturaDetail.where(factura_id: self.id)
@@ -543,6 +544,7 @@ class Factura < ActiveRecord::Base
         end 
       self.date_processed = Time.now
       self.save
+      
     end
   end
   def cerrar
