@@ -518,19 +518,19 @@ class Factura < ActiveRecord::Base
   
   # Process the invoice
   def process
-    if(self.processed == "1" or self.processed == true)          
+    if(self.processed == "1" or self.processed == true)   
+
+
       self.processed="1"
 
        if self.texto2 
-
+        puts "processado"
+        puts "xxx"
         facturas = FacturaDetail.where(factura_id: self.id)
         total = 0 
 
           for x in facturas 
-
             total += (x.preciosigv.round(3) * x.quantity)
-
-
           end
 
           a = Factura.find(self.id)
@@ -540,13 +540,16 @@ class Factura < ActiveRecord::Base
           a.tax = a.total - a.subtotal 
           a.save
 
-
         end 
+
       self.date_processed = Time.now
       self.save
-      
+
     end
+
   end
+
+
   def cerrar
     if(self.processed == "3" )         
       
