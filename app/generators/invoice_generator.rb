@@ -271,7 +271,7 @@ class InvoiceGenerator < DocumentGenerator
         lcTotalSIGV1 = detalle_item.preciosigv.round(3) * detalle_item.cantidad * 100
 
         else
-           lcTotalSIGV1 = detalle_item.price.round(3) * detalle_item.cantidad * 100
+           lcTotalSIGV1 = detalle_item.price_discount.round(3) * detalle_item.cantidad * 100
         end   
 
         lcTotalSIGV  = lcTotalSIGV1.round(0)
