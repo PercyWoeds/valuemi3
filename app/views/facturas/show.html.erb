@@ -366,10 +366,11 @@
         <td class="bordered_bottom bordered_right">
           <%= quote.price_discount %>
         </td>
-        
+        <%if quote.preciosigv %>
         <td class="bordered_bottom bordered_right">
           <%= quote.preciosigv.round(3) %>
         </td>
+        <%end %>
         <td class="bordered_bottom bordered_right">
           <%= money(quote.quantity) %>
         </td>

@@ -12,6 +12,7 @@ class StocksController < ApplicationController
       client_headers
   end
 
+
   def invoice_headers            
       invoice_headers  = [["Fecha : ",$lcHora]]    
       invoice_headers
@@ -704,7 +705,9 @@ end
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]    
     
-    @movements = @company.get_stocks_1(@fecha1,@fecha2)
+    @tanques  = @company.get_tanques() 
+    @varillaje = @company.get_varillas()
+    
     
     
     case params[:print]

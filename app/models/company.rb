@@ -3698,12 +3698,22 @@
          
           return @varilla 
        end 
-       def  get_stocks_1(fecha1,fecha2) 
-         
-           @varilla = Varillaje.where(["fecha >= ? and fecha <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59"  ]).order(:tanque_id)
-         
-          return @varilla 
+
+       def get_tanques()
+
+          @tanque = Tanque.all.order(:id)
+          return @tanque 
+
+
        end 
+
+       def get_varillas
+
+          @tanque = Varillaje.all.order(:id)
+          return @tanque 
+       end 
+
+
        
        def  get_parte_10(fecha1,fecha2)
           @varilla = Varillaje.select("tanque_id").where(["fecha >= ? and fecha <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59"  ]).group("tanque_id")
@@ -4892,7 +4902,41 @@
        end 
     
     
-    
+      def get_rit(fecha1,fecha2)
+
+        
+ @facturas = Sellvale.find_by_sql(["
+         SELECT   dia ,
+         cod_emp,turno
+         FROM sellvales
+         WHERE fecha >= ? and fecha  <= ?  
+         GROUP BY 2,1,3 
+         ORDER BY 2,1,3 ","#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])    
+         
+         Tmpasisten.delete_all
+         
+          for f in @facturas
+          
+           puts f.dia 
+           puts f.cod_emp
+           puts f.turno 
+           
+             if f.cod_emp != nil
+              b = Tmpasisten.new(dia_month: f.dia , cod_emp: f.cod_emp, turno: 1)
+              b.save 
+            end 
+          end 
+         
+         @facturas = Tmpasisten.order(:cod_emp,:dia_month) 
+         
+        return @facturas
+          
+
+
+
+      end 
+
+
     
     #***
     end     

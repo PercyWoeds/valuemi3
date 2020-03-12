@@ -44,8 +44,6 @@ class VarillajesController < ApplicationController
     respond_to do |format|
       if @varillaje.save
         
-        
-        
         @tanque_up = Tanque.find(@varillaje.tanque_id)
         @tanque_up.varilla = @varillaje[:varilla] 
         @tanque_up.save

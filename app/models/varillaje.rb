@@ -1,6 +1,42 @@
 class Varillaje < ActiveRecord::Base
     
     belongs_to :tanque
+
+    TABLE_HEADERS  = ["FECHA CORTE ",
+                      "HORA CORTE",
+                     "EXISTENCIAS DEL 
+                     PRODUCTO,SEGUN
+                     INVENTARIO
+                     FISICO ANTERIOR",
+
+                     "TOTAL DE 
+                     INGRESOS DEL 
+                     PRODUCTO
+                      COMPRAS",
+                     "DEVOLUCIONES
+                     DEL PRODUCTO 
+                     A TANQUES",
+                     "TOTAL DE
+                     SALIDAS DEL
+                     PRODUCTO
+                     (VENTAS)",
+                     "ET=NUEVA
+                     EXISTENCIA
+                     TEORICA",
+                     "EF=NUEVA EXISTENCIA
+                     FISICA SEGUN 
+                     VARILLAJE ",
+                     "Di=DIFERENCIA
+                     ENTRE EXISTENCIA
+                     FISICA Y TEORICA",
+                     "REGISTRAR CUALQUIER
+                     SUCESO RELEVANTE
+                     DURANTE PERIODO
+                     REGISTRADO",
+                    "OBSERVACIONES",
+                    " FIRMA "]
+                    
+
     
  def  get_compras(fecha,producto) 
 
@@ -1105,6 +1141,31 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
      return ret 
  end  
  
- 
+ def  get_ingresos(fecha1,tanque ) 
+      
+
+        @purchases1 = Purchase.find_by_sql(['Select purchase_details.quantity, 
+          from purchase_details   
+      INNER JOIN purchases ON purchase_details.purchase_id = purchases.id
+      INNER JOIN products ON purchase_details.product_id = products.id
+      WHERE products.id = ?  and purchases.date1 >= ? and purchases.date1 <= ? and purchases.processed = ?
+      GROUP BY purchase.date2,purchase_detail.product_id
+      ORDER BY purchase.date2,purchase_detail.product_id ',tanque , "#{fecha1} 00:00:00","#{fecha1} 23:59:59","1" ])
+         
+            
+          return purchases1 
+
+ end 
+
+       def get_varilla(fecha1,fecha2,tanque ) 
+       
+           @varilla = Varillaje.where(["fecha >= ? and fecha <= ?  and tanque_id = ?", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ,tanque  ]).order(:tanque_id,:fecha)
+         
+          return @varilla 
+       end
+
+       
+
+
  
 end
