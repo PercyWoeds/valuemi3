@@ -266,7 +266,7 @@ class InvoiceGenerator < DocumentGenerator
         lcTotal1 = lcTotal0 * 100
         lcTotal = lcTotal1.round(0)
 
-        if $lcServicio
+        if $lcServicio || $lcServicio != ""
 
         lcTotalSIGV1 = detalle_item.preciosigv.round(3) * detalle_item.cantidad * 100
 
@@ -279,7 +279,8 @@ class InvoiceGenerator < DocumentGenerator
         lcPrecio_decim =  detalle_item.total   / detalle_item.cantidad   
         lcPrecio = lcPrecio_decim.round(2)
 
-        if $lcServicio 
+        if $lcServicio || $lcServicio != ""
+
             lcPrecioSIGV = detalle_item.preciosigv 
         else
             lcPrecioSIGV = detalle_item.price_discount / 1.18 
