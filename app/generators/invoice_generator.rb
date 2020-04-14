@@ -151,7 +151,8 @@ class InvoiceGenerator < DocumentGenerator
     $lcServicio = @invoice.texto2
 
 
-    if $lcServicio 
+      if $lcServicio || $lcServicio != ""
+
 
         @invoiceitems = FacturaDetail.select(:product_id,:preciosigv ,"SUM(quantity) as cantidad","SUM(total) as total").where(factura_id: @numero).group(:product_id,:preciosigv)
        puts "*** existe servicios"
