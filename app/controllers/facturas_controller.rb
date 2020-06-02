@@ -1629,6 +1629,7 @@ def reportes31
     
   end
   
+
   # Process an invoice
   def do_process
     @invoice = Factura.find(params[:id])
@@ -3553,8 +3554,8 @@ def newfactura2
       @fecha1 = params[:fecha1]  
       @fecha2 = params[:fecha2]
 
-    @company.actualizar_fecha2
-    @company.actualizar_detraccion 
+    # @company.actualizar_fecha2
+   # @company.actualizar_detraccion 
 
     @facturas_rpt = @company.get_pendientes_day(@fecha1,@fecha2)  
 
