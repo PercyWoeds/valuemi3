@@ -4432,7 +4432,7 @@ def cuadre01
 
 
   
-    def reportes14 
+    def reportes142
   
     @company=Company.find(1)      
     
