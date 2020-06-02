@@ -1,4 +1,4 @@
- <% if @invoice.errors.any? %>
+undl <% if @invoice.errors.any? %>
   <div id="error_explanation">
     <h2><%= pluralize(@invoice.errors.count, "error") %> prohibited this invoice from being saved:</h2>
 
@@ -103,6 +103,14 @@
     </div>
 
 
+    <div class="field">
+      <%= f.check_box :servicio %>
+      <%= f.label :servicio ,"Servicio ? " :class => "bold" %>
+      <div class="small">
+         Tipo de venta
+      </div>
+    </div>
+
       <div class="field" >
         <%= f.label :texto1, "Local: ", :class => "bold" %><br />
         <%= f.text_field  :texto1, size: 46 %>
@@ -150,7 +158,8 @@
         Is it a return order?
       </div>
     </div>
-     <div class="field">
+
+    <div class="field">
       <%= f.label :guia %><br />
       <%= f.text_field :guia %>
     </div>  

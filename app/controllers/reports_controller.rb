@@ -1,5 +1,6 @@
 include UsersHelper
 
+
 class ReportsController < ApplicationController
   before_filter :authenticate_user!
   

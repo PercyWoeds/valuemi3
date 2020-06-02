@@ -2295,7 +2295,7 @@ def reportes31
     
     @invoice[:processed] = false
     @invoice[:descuento] = "0"
-    @invoice[:tipoventa_id] = 1
+    @invoice[:tipoventa_id] = 2
     
     
     @company = Company.find(params[:company_id])
@@ -2471,7 +2471,7 @@ def newfactura2
     rescue
       @invoice[:tax] = 0
     end
-    if @invoice[:tipoventa_id] ==  "1"
+    if @invoice[:tipoventa_id] ==  "2"
         @invoice[:balance] = 0
     else
         @invoice[:balance] = @invoice[:total]
@@ -3124,6 +3124,7 @@ def newfactura2
       total_soles = 0
       total_dolares = 0 
       precio_ultimo = 0
+
        for  product in @facturas_rpt
        
          if product.balance.round(2) > 0.00
@@ -3155,7 +3156,7 @@ def newfactura2
                 precio_ultimo = 0 
             end 
             row << sprintf("%.2f",(precio_ultimo.round(2)).to_s)            
-            row << product.get_cantidad
+            row << sprintf("%.2f",(product.get_cantidad).to_s)
             
             row << product.moneda.symbol  
 
@@ -5512,7 +5513,7 @@ def cuadre02
       
   private
   def factura_params
-    params.require(:factura).permit(:company_id,:location_id,:division_id,:customer_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:payment_id,:fecha,:preciocigv,:tipo,:observ,:moneda_id,:detraccion,:factura2,:description,:document_id,:tipoventa_id,:tarjeta_id,:guia,:texto1,:texto2,:texto3 )
+    params.require(:factura).permit(:company_id,:location_id,:division_id,:customer_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:payment_id,:fecha,:preciocigv,:tipo,:observ,:moneda_id,:detraccion,:factura2,:description,:document_id,:tipoventa_id,:tarjeta_id,:guia,:texto1,:texto2,:texto3,:servicio )
   end
 
 end

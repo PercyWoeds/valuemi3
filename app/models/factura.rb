@@ -518,12 +518,15 @@ class Factura < ActiveRecord::Base
   
   # Process the invoice
   def process
+
+
     if(self.processed == "1" or self.processed == true)   
 
 
       self.processed="1"
 
-       if self.texto2 || self.texto2 != ""
+       if self.servicio == "1"
+
         puts "processado"
         puts "xxx"
         facturas = FacturaDetail.where(factura_id: self.id)

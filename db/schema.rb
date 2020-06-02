@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200306182341) do
+ActiveRecord::Schema.define(version: 20200602155053) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -739,6 +739,7 @@ ActiveRecord::Schema.define(version: 20200306182341) do
     t.string   "texto1"
     t.string   "texto2"
     t.string   "texto3"
+    t.string   "servicio"
   end
 
   create_table "faltantes", force: :cascade do |t|
