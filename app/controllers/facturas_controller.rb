@@ -444,8 +444,35 @@ def reportes14
       when "To Excel" then render xlsx: 'rpt_ccobrar2_xls'
       else render action: "index"
     end
+  
+    def reportes14b
+  
+    @company=Company.find(1)      
+    
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]    
+    @grifero  = Employee.get_codigo(params[:employee_id])    
+    
+    @turno  = params[:turno]    
+    puts @grifero 
+    puts @turno 
+    
+    @contado_rpt = @company.get_parte_detalle_grifero(@fecha1,@fecha2,@grifero,@turno)
+    
+    case params[:print]
+      when "To PDF" then 
+        begin 
+         render  pdf: "Ordenes ",template: "varillajes/parte14_rpt.pdf.erb",locals: {:varillajes => @contado_rpt},
+        :orientation      => 'Landscape'
+        end   
+      when "To Excel" then render xlsx: 'parte14_rpt_xls'
+      else render action: "index"
+    end
+  end
   end
  
+
+
 
 def reportes15
   
