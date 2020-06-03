@@ -445,7 +445,11 @@ def reportes14
       else render action: "index"
     end
   
-    def reportes14b
+   
+  end
+ 
+
+ def reportes14b
   
     @company=Company.find(1)      
     
@@ -469,10 +473,6 @@ def reportes14
       else render action: "index"
     end
   end
-  end
- 
-
-
 
 def reportes15
   
