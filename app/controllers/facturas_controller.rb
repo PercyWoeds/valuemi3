@@ -1234,9 +1234,10 @@ def rpt_factura_all
     @moneda = params[:moneda_id]    
   
         Sellvale.where(["substring(serie,1,1)=? and fecha>=? and fecha<=? ","B", "#{@fecha1} 00:00:00","#{@fecha2} 23:59:59"]).update_all(importe2:nil)
-        Sellvale.where(["substring(serie,1,1)=? and fecha>=? and fecha<=? ","F", "#{@fecha1} 00:00:00","#{@fecha2} 23:59:59"]).update_all(tipo:"1")
-        Sellvale.where(["substring(serie,1,1)=? and fecha>=? and fecha<=? ","B", "#{@fecha1} 00:00:00","#{@fecha2} 23:59:59"]).update_all(tipo:"1")
-        Sellvale.where(["substring(serie,1,1)=? and fecha>=? and fecha<=? ","T", "#{@fecha1} 00:00:00","#{@fecha2} 23:59:59"]).update_all(tipo:"2")
+
+        # Sellvale.where(["substring(serie,1,1)=? and fecha>=? and fecha<=? ","F", "#{@fecha1} 00:00:00","#{@fecha2} 23:59:59"]).update_all(tipo:"1")
+        # Sellvale.where(["substring(serie,1,1)=? and fecha>=? and fecha<=? ","B", "#{@fecha1} 00:00:00","#{@fecha2} 23:59:59"]).update_all(tipo:"1")
+        # Sellvale.where(["substring(serie,1,1)=? and fecha>=? and fecha<=? ","T", "#{@fecha1} 00:00:00","#{@fecha2} 23:59:59"]).update_all(tipo:"2")
          
     @facturas_rpt = @company.get_facturas_day(@fecha1,@fecha2,@moneda)          
     
