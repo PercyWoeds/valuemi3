@@ -20,11 +20,15 @@ class Customer < ActiveRecord::Base
     def self.import(file)
           CSV.foreach(file.path, headers: true, encoding:'iso-8859-1:utf-8') do |row|
       
-          a = Customer.find_by(account: row['ruc'].rjust(11, '0')   )
+     
 
-          if a == nil
+          a = Customer.where(:ruc => row['ruc']).first 
+            if a.present?
+            else 
+
               Customer.create! row.to_hash 
-          end 
+            
+           end 
 
 
         end
