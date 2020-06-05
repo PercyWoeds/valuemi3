@@ -651,7 +651,7 @@
                   lcVventa0 = boleta.total / 1.18
                   
                   lcVventa  = lcVventa0.round(2)
-                  lcTax0    = boleta.total  - lcVventaf
+                  lcTax0    = boleta.total  - lcVventa
                   lcTax     = lcTax0
                   lcTotal0  = boleta.total
                   lcTotal   = lcTotal0.round(2)  
