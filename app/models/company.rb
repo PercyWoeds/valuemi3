@@ -691,8 +691,7 @@
                   lcTd      = boleta.td 
                   
                   
-                  if boleta.ruc.strip  != nil  or boleta.ruc !="00000000000"
-                    
+                   
                     lcRucCliente = boleta.ruc 
                     ruc_number =  boleta.ruc 
                       #  lcRazonCliente  = PeruSunatRuc.name_from ruc_number
@@ -700,11 +699,7 @@
                    puts "rucs"
                    puts boleta.ruc 
                     #  lcRazonCliente  = PeruSunatRuc.name_from ruc_number
-                   lcRazonCliente = ""
-                  else
-                    lcRucCliente = "0"
-                    lcRazonCliente = "CLIENTE GENERICO "
-                  end 
+                
                   
                 a= TmpFactura.new(document_id: 16 ,subtotal: lcVventa , tax: lcTax , total: lcTotal, fecha: lcFecha, serie: lcSerie, numero: lcCode,td: lcTd,ruc: lcRucCliente,name:lcRazonCliente, moneda_id:2,tipo2:"0",tipo10:"12")
                 a.save 
