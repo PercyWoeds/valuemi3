@@ -666,7 +666,7 @@
                     #  lcRazonCliente  = PeruSunatRuc.name_from ruc_number
                    lcRazonCliente = ""
                   else
-                    lcRucCliente = "0"
+                    lcRucCliente = "C_000001"
                     lcRazonCliente = "CLIENTE GENERICO "
                   end 
                   
@@ -3777,7 +3777,7 @@
            @contado = Sellvale.find_by_sql(['Select sellvales.* 
            from sellvales
            INNER JOIN customers ON sellvales.cod_cli = customers.account 
-           WHERE sellvales.fecha >= ? and sellvales.fecha <= ?  and sellvales.td = ? and sellvales.tipo = ?  and customers.tipo <> ?  and customers.account = ?order by fecha ',"#{fecha1} 00:00:00","#{fecha2} 23:59:59","N","1","2",cliente ])
+           WHERE sellvales.fecha >= ? and sellvales.fecha <= ?  and sellvales.td = ? and sellvales.tipo = ?  and customers.tipo <> ?  and customers.account = ? order by fecha ',"#{fecha1} 00:00:00","#{fecha2} 23:59:59","N","1","2",cliente ])
            
            
            
