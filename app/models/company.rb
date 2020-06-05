@@ -651,7 +651,7 @@
                   lcVventa0 = boleta.total / 1.18
                   
                   lcVventa  = lcVventa0.round(2)
-                  lcTax0    = boleta.total  - lcVventa
+                  lcTax0    = boleta.total  - lcVventaf
                   lcTax     = lcTax0
                   lcTotal0  = boleta.total
                   lcTotal   = lcTotal0.round(2)  
@@ -659,16 +659,12 @@
                   lcTd      = boleta.td 
                   
                   
-                  if boleta.ruc.strip  != nil  or boleta.ruc !="00000000000"
+                 
                     
-                    lcRucCliente = boleta.ruc 
-                    ruc_number =  boleta.ruc 
-                    #  lcRazonCliente  = PeruSunatRuc.name_from ruc_number
-                   lcRazonCliente = ""
-                  else
+                  
                     lcRucCliente = "C_000001"
                     lcRazonCliente = "CLIENTE GENERICO "
-                  end 
+                
                   
                 a= TmpFactura.new(document_id: 17 ,subtotal: lcVventa , tax: lcTax , total: lcTotal, fecha: lcFecha, serie: lcSerie, numero: lcCode,numero2:lcCode1,td: lcTd,ruc: lcRucCliente,name:lcRazonCliente, moneda_id:2,tipo2:"0",tipo10:"12" )
                 a.save 
