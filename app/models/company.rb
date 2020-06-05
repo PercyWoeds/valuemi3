@@ -699,6 +699,10 @@
                     
                     lcRucCliente = boleta.ruc 
                     ruc_number =  boleta.ruc 
+                      #  lcRazonCliente  = PeruSunatRuc.name_from ruc_number
+                   lcRazonCliente = boleta.get_name_customer(boleta.ruc) 
+                   puts "rucs"
+                   puts boleta.ruc 
                     #  lcRazonCliente  = PeruSunatRuc.name_from ruc_number
                    lcRazonCliente = ""
                   else

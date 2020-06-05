@@ -44,6 +44,21 @@ class Sellvale < ActiveRecord::Base
                     
                     "TOTAL   "]
  
+
+ def get_name_customer(lcRuc )
+     descrip =""
+   
+
+      a = Customer.where(:ruc => lcRuc).first 
+    if a.present?
+
+     return a.name
+    else
+      return ""
+   end 
+
+ end 
+ 
     
  def self.import(file)
         TmpFactura.delete_all 
