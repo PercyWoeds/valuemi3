@@ -10,6 +10,7 @@ class FacturasController < ApplicationController
     before_action :authenticate_user!
     
     require "open-uri"
+
    
   def reportes
   
@@ -1232,32 +1233,19 @@ def rpt_factura_all
     @fecha2 = params[:fecha2]    
     @moneda = params[:moneda_id]    
   
-        Sellvale.where(["substring(serie,1,1)=? and fecha>=? and fecha<=? ","B", "#{@fecha1} 00:00:00","#{@fecha2} 23:59:59"]).update_all(importe2:nil)
-
-        # Sellvale.where(["substring(serie,1,1)=? and fecha>=? and fecha<=? ","F", "#{@fecha1} 00:00:00","#{@fecha2} 23:59:59"]).update_all(tipo:"1")
-        # Sellvale.where(["substring(serie,1,1)=? and fecha>=? and fecha<=? ","B", "#{@fecha1} 00:00:00","#{@fecha2} 23:59:59"]).update_all(tipo:"1")
-        # Sellvale.where(["substring(serie,1,1)=? and fecha>=? and fecha<=? ","T", "#{@fecha1} 00:00:00","#{@fecha2} 23:59:59"]).update_all(tipo:"2")
-         
+    Sellvale.where(["substring(serie,1,1)=? and fecha>=? and fecha<=? ","B", "#{@fecha1} 00:00:00","#{@fecha2} 23:59:59"]).update_all(importe2:nil)
+      
     @facturas_rpt = @company.get_facturas_day(@fecha1,@fecha2,@moneda)          
     
     @total1  = @company.get_facturas_by_day_value2(@fecha1,@fecha2,@moneda,"subtotal")  
     @total2  = @company.get_facturas_by_day_value2(@fecha1,@fecha2,@moneda,"tax")  
     @total3  = @company.get_facturas_by_day_value2(@fecha1,@fecha2,@moneda,"total")  
-    
-    
-    
+
     case params[:print]
       when "To PDF" then 
-        begin 
-        # lcCompany = "20555691263"
-        # lcmonth ='03'
-        # lcyear = '2018'
-        # pdf = SunatBooks::Pdf::Sales.new(company, @facturas_rpt, lcmonth, lcyear)
-        # pdf.render
-        
+        begin         
           render  pdf: "Facturas ",template: "facturas/rventas_rpt.pdf.erb",locals: {:facturas => @facturas_rpt},
              :orientation      => 'Landscape', :page_size => "A3"
-        
         end   
       when "To Excel" then render xlsx: 'rventas_rpt_xls'
       else render action: "index"
@@ -2495,7 +2483,6 @@ def newfactura2
    
     @invoice[:subtotal] = @invoice.get_total_1(items) / 1.18
     @invoice[:total]   = @invoice.get_total_1(items) 
-    
     
     begin
       @invoice[:tax] = @invoice[:total] - @invoice[:subtotal]

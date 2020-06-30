@@ -4316,33 +4316,23 @@
         
       def get_facturas_by_day_value2(fecha1,fecha2,moneda,value='total')
         
-          purchases = TmpFactura.where([" fecha >= ? and fecha <= ? and moneda_id = ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda , ]).order(:id,:moneda_id)    
+          purchases = TmpFactura.where([" fecha >= ? and fecha <= ? and moneda_id = ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda]).order(:id,:moneda_id)    
     
           ret = 0
           for purchase in purchases
-          
-            
             if (value == "subtotal")
-              
-              
               ret += purchase.get_importe_soles1
-              
             elsif(value == "tax")
-            
               ret += purchase.get_importe_soles2
-              
             else
-              
               ret += purchase.get_importe_soles
-            
             end
           end
           
           return ret
-    
-        end 
         
-        
+      end 
+
         
         
         def  get_ventas_combustibles(fecha1,fecha2) 

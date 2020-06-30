@@ -545,7 +545,7 @@ class Factura < ActiveRecord::Base
           a.save
 
         end 
-
+      FacturaDetail.where(factura_id: self.id, preciosigv: nil).update_all("preciosigv = price / 1.18")
       self.date_processed = Time.now
       self.save
 
