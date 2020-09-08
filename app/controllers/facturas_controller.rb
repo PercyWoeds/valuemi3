@@ -11,7 +11,6 @@ class FacturasController < ApplicationController
     
     require "open-uri"
 
-   
   def reportes
   
     @company=Company.find(1)          
@@ -1589,7 +1588,7 @@ def reportes31
 
   def discontinue
     
-    @facturasselect = Factura.find(params[:products_ids])
+    @guiasselect = Factura.find(params[:products_ids])
 
     for item in @guiasselect
         begin
