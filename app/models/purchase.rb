@@ -121,6 +121,41 @@ TABLE_HEADERS2  = ["ITEM ",
 
   end 
 
+    def self.import(file)
+          CSV.foreach(file.path, headers: true, encoding:'iso-8859-1:utf-8') do |row|
+
+            #falta hacer validacion ingreso
+           proveedor =  row['supplier_id']
+           doc1 =  row['documento'].strip
+           doc2 =  row['document_id']
+           saldo = row['balance']
+           moneda = row['moneda_id']
+           puts proveedor
+           puts doc1
+           puts doc2
+           puts saldo
+           puts moneda 
+
+            a =Purchase.find_by(supplier_id: proveedor, documento: doc1, document_id: doc2 , moneda_id: moneda)
+
+            if a.nil?
+
+
+               Purchase.create! row.to_hash 
+          
+            else  
+                a.date2 = row['date2'] 
+                a.date3 = row['date3']
+                #a.balance = saldo 
+                a.save
+            end 
+
+            
+           
+
+           end
+    end     
+
 
   def not_purchase_with?()
     document_tipo = self.document_id

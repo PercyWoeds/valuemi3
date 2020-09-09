@@ -7,7 +7,11 @@ class PurchasesController < ApplicationController
   before_filter :authenticate_user!, :checkProducts
             
 
-    
+ def import
+      Purchase.import(params[:file])
+       redirect_to root_url, notice: "Facturas  importadas."
+  end 
+
   def ingresos
         @company = Company.find(params[:id])
         @purchases  = PurchaseDetail.all.paginate(:page => params[:page])

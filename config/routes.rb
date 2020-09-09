@@ -348,6 +348,7 @@ end
   
   resources :purchases do
      collection { post :datos  }
+     collection { post :import }
   end 
   
   resources :payrolls, only: [:index, :show] do
