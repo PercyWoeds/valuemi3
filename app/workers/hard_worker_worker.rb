@@ -14,13 +14,13 @@ class HardWorkerWorker
 
     @key="RptPersonal.pdf"
 
-    @company.actualizar_fecha3
+    Sellvale.where(dia:nil).update_all(dia: "sellvales.fecha.day")
+    
     @fecha1 = fecha1
     @fecha2 = fecha2 
     
 
     @facturas_rpt = @company.get_employees_asis(@fecha1,@fecha2)  
-
 
 
     if @facturas_rpt != nil 
@@ -65,7 +65,6 @@ class HardWorkerWorker
         puts download_url 
 
         # Record the location of the file
-        
 
         @user.most_recent_report = download_url
 
