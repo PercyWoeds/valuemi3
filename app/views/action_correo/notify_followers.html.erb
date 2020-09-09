@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h3>Estimado Usuario  </h3>
+Hola  <%= @user.email  %>,
+
+El reporte generado ha sido completado. Ud. puede descargarlo ahora.
+
+<%= link_to "Descargar Reporte ", @user.most_recent_report %>
+
+  </body>
+</html>
