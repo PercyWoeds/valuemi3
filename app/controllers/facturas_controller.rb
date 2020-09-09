@@ -4488,7 +4488,7 @@ def cuadre02
     @fecha2 = params[:fecha2]  
 
 
-    HardWorkerWorker.perform_async(@fecha1,@fecha2,@current_user.id) 
+    HardWorkerWorker2.perform_async(@fecha1,@fecha2,@current_user.id) 
 
     
     
