@@ -15,7 +15,7 @@ class HardWorkerWorker
     @key="RptPersonal.pdf"
 
     Sellvale.where(dia:nil).update_all(dia: "sellvales.fecha.day")
-    
+
     @fecha1 = fecha1
     @fecha2 = fecha2 
     
@@ -793,4 +793,16 @@ class HardWorkerWorker
       pdf
       
     end
+
+     def client_data_headers_rpt
+      client_headers  = [["Empresa  :", $lcCli ]]
+      client_headers << ["Direccion :", $lcdir1]
+      client_headers
+    end
+
+    def invoice_headers_rpt            
+        invoice_headers  = [["Fecha : ",$lcHora]]    
+        invoice_headers
+    end
+  
 end 
