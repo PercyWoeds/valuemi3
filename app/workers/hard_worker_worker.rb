@@ -794,15 +794,15 @@ class HardWorkerWorker
       
     end
 
-     def client_data_headers_rpt
+     def client_data_headers
       client_headers  = [["Empresa  :", $lcCli ]]
       client_headers << ["Direccion :", $lcdir1]
       client_headers
     end
 
-    def invoice_headers_rpt            
+    def invoice_headers         
         invoice_headers  = [["Fecha : ",$lcHora]]    
         invoice_headers
     end
-  
+
 end 
