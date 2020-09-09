@@ -35,3 +35,10 @@
 
 
 <%= will_paginate @suppliers %>
+
+
+ Download:
+ 
+  <%= link_to "CSV", suppliers_path(format: "csv"), multipart: true  %> 
+
+
