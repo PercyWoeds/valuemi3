@@ -4411,6 +4411,8 @@ def cuadre01
     @company=Company.find(1)          
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]    
+
+
     @contado_rpt = @company.get_ventas_combustibles_fecha_producto0(@fecha1,@fecha2)
     @detalle_ventas_grifero = @company.get_ventas_combustibles_fecha_grifero0(@fecha1,@fecha2)
     @producto = @company.get_productos_comb 
@@ -4483,28 +4485,11 @@ def cuadre02
   
     @company=Company.find(1)          
     @fecha1 = params[:fecha1]    
-    @fecha2 = params[:fecha2]    
-    
-    Cuadre.delete_all 
-     
-    @facturas_rpt = @company.get_ventas_combustibles_fecha_producto1(@fecha1,@fecha2)
-    
-   # @detalle_ventas_grifero = @company.get_ventas_combustibles_fecha_grifero0(@fecha1,@fecha2)
-   #  @producto = @company.get_productos_comb 
-    
-     if @facturas_rpt != nil 
-      
-          Prawn::Document.generate "app/pdf_output/rpt_cuadre02.pdf" , :page_layout => :landscape do |pdf|        
-          pdf.font "Helvetica"
-          pdf = build_pdf_header_rpt16(pdf)
-          pdf = build_pdf_body_rpt16(pdf)
-          build_pdf_footer_rpt16(pdf)
-          $lcFileName =  "app/pdf_output/rpt_cuadre02.pdf"      
-          end     
-          $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName                
-          send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')  
-      end
-    
+    @fecha2 = params[:fecha2]  
+
+
+    HardWorkerWorker.perform_async(@fecha1,@fecha2,@current_user.id) 
+
     
     
   end
