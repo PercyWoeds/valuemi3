@@ -105,8 +105,8 @@ class HardWorkerWorker2
       (1..max_rows).each do |row|
         rows_index = row - 1
         rows[rows_index] = []
-        rows[rows_index] += (client_data_headers_rpt.length >= row ? client_data_headers_rpt[rows_index] : ['',''])
-        rows[rows_index] += (invoice_headers_rpt.length >= row ? invoice_headers_rpt[rows_index] : ['',''])
+        rows[rows_index] += (client_data_headers.length >= row ? client_data_headers[rows_index] : ['',''])
+        rows[rows_index] += (invoice_headers.length >= row ? invoice_headers[rows_index] : ['',''])
       end
 
       if rows.present?
