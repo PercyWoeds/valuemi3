@@ -34,7 +34,8 @@ class SuppliersController < ApplicationController
   def index
     @pagetitle = "Suppliers"
     
-    @companies = Company.find(:all, :conditions => {:user_id => getUserId()}, :order => "name")
+    @companies = Company.all
+
     @path = 'suppliers'
 
     @customercsv = Supplier.all 
