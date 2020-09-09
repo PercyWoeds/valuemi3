@@ -71,17 +71,21 @@ Mnygo::Application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+  
+  config.exceptions_app = ->(env) { ExceptionsController.action(:show).call(env) }
 
   config.action_mailer.delivery_method = :smtp
-  
- config.action_mailer.smtp_settings = {
-    address:              'send.one.com',
+
+
+
+  config.action_mailer.smtp_settings = {
+    address:              'smtp.gmail.com',
     port:                 587,
-    domain:               'one.com',
-    user_name:            'factura-electronica@valuemiperu.com',
-    password:             'Factura2016',
-    authentication:       'plain',
+    domain:               'gmail.com',
+    user_name:            'wds.report.tpereda@gmail.com',
+    password:             'wpjngmnqcrppgxws',
+    authentication:       :plain,
     enable_starttls_auto: true  }
 
-    
+
 end

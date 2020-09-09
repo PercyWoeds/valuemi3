@@ -480,24 +480,11 @@ def reportes15
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2] 
     
-    @company.actualizar_fecha3
-    
-    @facturas_rpt = @company.get_employees_asis(@fecha1,@fecha2)  
 
-    if @facturas_rpt != nil 
-      
-        Prawn::Document.generate "app/pdf_output/rpt_asistencia.pdf" , :page_layout => :landscape do |pdf|        
-        pdf.font "Helvetica"
-        pdf = build_pdf_header_rpt15(pdf)
-        pdf = build_pdf_body_rpt15(pdf)
-        build_pdf_footer_rpt15(pdf)
-        $lcFileName =  "app/pdf_output/rpt_asistencia.pdf"      
-        
-    end     
-  
-    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName                
-    send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')  
-  
+
+
+    HardWorkerWorker.perform_async(@fecha1,@fecha2,@current_user.id) 
+
   end
 
 end 

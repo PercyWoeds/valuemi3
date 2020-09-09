@@ -24,22 +24,31 @@ Mnygo::Application.configure do
 
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
-  
+    
   config.action_mailer.delivery_method = :smtp
   
+  config.action_mailer.default_url_options = {:host=>'localhost:3000',protocol: 'http'}
+
+  config.action_controller.include_all_helpers = false
+
+  config.force_ssl = false
+  
+ 
  config.action_mailer.smtp_settings = {
-    address:              'send.one.com',
+    address:              'smtp.gmail.com',
     port:                 587,
-    domain:               'one.com',
-    user_name:            'factura-electronica@valuemiperu.com',
-    password:             'Factura2016',
+    domain:               'gmail.com',
+    user_name:            'wds.report.tpereda@gmail.com',
+    password:             'wpjngmnqcrppgxws',
     authentication:       'plain',
     enable_starttls_auto: true  }
 
 
   #BetterErrors::Middleware.allow_ip! "0.0.0.0/0"
   
-  config.web_console.whitelisted_ips = ['10.0.0.0/8', '172.16.0.0/12', '192.168.0.0/16','148.102.0.0/16','167.250.205.154','190.8.128.0/16','201.234.50.0/16','190.102.154.0/16','190.236.255.66']
-    
-end
+  config.web_console.whitelisted_ips = ['10.0.0.0/8', '172.16.0.0/12', '192.168.0.0/16','148.102.0.0/16','167.250.205.154','190.8.128.0/16']
+
+  
+  end
+
 

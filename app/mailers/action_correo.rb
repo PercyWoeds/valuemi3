@@ -18,4 +18,22 @@ class ActionCorreo < ApplicationMailer
 
 
 	  end
+
+
+	  def notify_followers(mail,user)
+		   @user=user			
+		   @url  = 'http://www.kinzuko.com.pe'
+		
+        
+
+		  email_with_name = "Reporte Personal <percywoeds@gmail.com>"	
+		 
+		   
+
+
+		  mail(to: [mail], cc:email_with_name, subject: 'Account Reports : ' )
+
+	  end
+
+
 end

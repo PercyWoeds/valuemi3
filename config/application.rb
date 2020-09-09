@@ -11,7 +11,9 @@ module Mnygo
   class Application < Rails::Application
     
     
+    
     config.assets.precompile += %w( *.js *.css )
+    config.assets.precompile = ['.js', '.css', '*.css.erb']
     
     config.encoding = "utf-8"
     config.assets.initialize_on_precompile = false
@@ -20,6 +22,13 @@ module Mnygo
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
     config.time_zone ='Lima'
+    config.exceptions = self.routes
+    config.enable_dependency_loading= true
+    config.autoload_paths << Rails.root.join('lib')
+   config.active_job.queue_adapter =  :sidekiq 
+   config.active_job.queue_name_prefix = Rails.env
+   
+    
     
   end
 end

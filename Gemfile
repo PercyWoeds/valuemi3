@@ -98,6 +98,13 @@ gem 'rubyzip'
 
 
 
+gem 'sidekiq'
+
+gem 'aws-sdk-s3'
+
+gem 'redis', '~> 4.2', '>= 4.2.1'
+
+
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
