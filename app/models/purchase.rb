@@ -2,7 +2,7 @@ class Purchase < ActiveRecord::Base
   self.per_page = 20
   
   validates_presence_of :company_id, :supplier_id, :documento,:document_id,:date1,:date2,:date3
-  validates_uniqueness_of :documento, scope: :document_id
+  validates :documento , uniqueness:{ scope:[:supplier_id, :document_id,:moneda_id]}
 
   belongs_to :company
   belongs_to :location
