@@ -1390,7 +1390,7 @@
        
        def actualizar_fecha3
     
-          facturas = Sellvale.where(:dia => nil )
+          facturas = Sellvale.where("fecha>=? and fecha<=? and dia is NULL  ","2020-08-01 00:00:00","2020-12-31 23:59:59" )
           for factura in facturas
               days = factura.fecha.day 
               factura.update_attributes(:dia=>days)   
