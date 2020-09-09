@@ -108,8 +108,8 @@ class HardWorkerWorker
       (1..max_rows).each do |row|
         rows_index = row - 1
         rows[rows_index] = []
-        rows[rows_index] += (client_data_headers_rpt.length >= row ? client_data_headers_rpt[rows_index] : ['',''])
-        rows[rows_index] += (invoice_headers_rpt.length >= row ? invoice_headers_rpt[rows_index] : ['',''])
+        rows[rows_index] += (client_data_headers.length >= row ? client_data_headers[rows_index] : ['',''])
+        rows[rows_index] += (invoice_headers.length >= row ? invoice_headers[rows_index] : ['',''])
       end
 
       if rows.present?
@@ -795,13 +795,13 @@ class HardWorkerWorker
     end
 
      def client_data_headers
-      client_headers  = [["Empresa  :", $lcCli ]]
-      client_headers << ["Direccion :", $lcdir1]
+      client_headers  = [["Empresa  :", @company.name ]]
+      client_headers << ["Direccion :", @company.address1 ]
       client_headers
     end
 
     def invoice_headers         
-        invoice_headers  = [["Fecha : ",$lcHora]]    
+        invoice_headers  = [["Fecha : ",Date.current.in_time_zone ]]    
         invoice_headers
     end
 
