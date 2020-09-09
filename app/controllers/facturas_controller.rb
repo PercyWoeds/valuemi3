@@ -485,7 +485,7 @@ def reportes15
 
     HardWorkerWorker.perform_async(@fecha1,@fecha2,@current_user.id) 
 
-  end
+
 
 end 
 
