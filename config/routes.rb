@@ -1,3 +1,7 @@
+
+
+require 'sidekiq/web'
+
   Mnygo::Application.routes.draw do
 
   resources :tipomovs
@@ -1159,6 +1163,9 @@ end
 
   # Frontpage
  # match 'dashboard' => 'pages#dashboard', via: [:get,s :post]
+
+ 
+  mount Sidekiq::Web, at: '/sidekiq'
 
   root :to => "pages#frontpage"
   

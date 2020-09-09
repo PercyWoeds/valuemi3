@@ -1,0 +1,30 @@
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %>
+  <% if @view_restock %>
+    &raquo;
+    <%= link_to "Stocks", "/companies/stocks/#{@company.id}" %>
+  <% end %>
+</div>
+
+<h1>
+ 
+
+ Account Reports </h1>
+
+ <p>
+
+<h3>
+Generar una informe.</h3>
+
+<h4> Su informe  es un archivo pdf. Si tiene una gran cantidad de datos, puede llevar algún tiempo 
+generarlos. Cada vez que genere una nuevo informe, reemplazará la exportación anterior. </h4>
+
+<h4> Cuando su informe esté lista, le enviaremos un correo electrónico de notificación a  <%= @current_user.email %> </h4>
+
+</p>
+
+
+
+
+<br />
