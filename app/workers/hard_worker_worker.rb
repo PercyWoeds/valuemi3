@@ -801,7 +801,7 @@ class HardWorkerWorker
     end
 
     def invoice_headers         
-        invoice_headers  = [["Fecha : ",Date.current.in_time_zone ]]    
+        invoice_headers  = [["Fecha : ",$lcFecha1 ]]    
         invoice_headers
     end
 
