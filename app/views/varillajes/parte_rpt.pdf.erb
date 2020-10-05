@@ -181,7 +181,7 @@
      
      <% venta_8 =  venta_1 + venta_15 + venta_16 - venta_12 - venta_descuentos_facturas  - venta_descuentos_facturas_efe %>
      
-     <% venta_6 =  venta_5 - venta_8  - venta_7 %>
+     <% venta_6 =  venta_5 - venta_8  - venta_7  %>
      
      <% if venta_6 < 0 %>
      
@@ -339,7 +339,7 @@
             <td width= "25%" align ="right" ><%= sprintf("%.2f",venta_8) %>                                </td>
             
             <td width = "25%" align ="left">  &#9475; TOTAL SUSTENTOS :  </td>
-            <td width = "25%" align ="right"> <%= sprintf("%.2f",venta_5 + venta_13 + venta_14 ) %>                                </td>
+            <td width = "25%" align ="right"> <%= sprintf("%.2f",venta_5  ) %>                                </td>
             
             </tr>
             <tr>
@@ -347,7 +347,7 @@
             <td width= "25%" >                                </td>
             
             <td width = "25%" align ="left">  &#9475;  :  </td>
-            <td width = "25%" align ="left">  <%=    sprintf("%.2f",venta_6) %>                   </td>
+            <td width = "25%" align ="left">  <%=    sprintf("%.2f",venta_6 - venta_13 + venta_14) %>                   </td>
             
             </tr>
     </table>

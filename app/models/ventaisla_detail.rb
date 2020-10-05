@@ -6,6 +6,5 @@ class VentaislaDetail < ActiveRecord::Base
        validates_presence_of :pump_id, :product_id
        
 
-
       
 end

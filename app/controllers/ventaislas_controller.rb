@@ -5,6 +5,7 @@ class VentaislasController < ApplicationController
   # GET /ventaislas
   # GET /ventaislas.json
   def index
+    
     @ventaislas = Ventaisla.order('fecha DESC,turno').paginate(:page => params[:page], :per_page => 20)
     
     
@@ -15,8 +16,23 @@ class VentaislasController < ApplicationController
   # GET /ventaislas/1.json
   def show
     @ventaisla_details= @ventaisla.ventaisla_details
+
     @employees = Employee.all
     @islas = Island.all
+    @pumps = Pump.where(island_id: @ventaisla.island_id).order(:id_surtidor,:id_posicion_manguera)
+    @isla_id = @ventaisla.island_id
+    @ventaisla_id = @ventaisla.id
+
+
+    @valor =[]
+
+    for pumps in @pumps do
+
+        @valor.push(pumps.fuel)
+
+    end 
+
+    
   end
 
   # GET /ventaislas/new
@@ -37,7 +53,7 @@ class VentaislasController < ApplicationController
   # POST /ventaislas.json
   def create
     @ventaisla = Ventaisla.new(ventaisla_params)
-    @ventaisla[:island_id] = 1 
+    @ventaisla[:island_id] = params[:island_id]
     
    @employees = Employee.all 
     respond_to do |format|
@@ -54,7 +70,7 @@ class VentaislasController < ApplicationController
   # PATCH/PUT /ventaislas/1
   # PATCH/PUT /ventaislas/1.json
   def update
-    @ventaisla[:island_id] = 1 
+   
     
     respond_to do |format|
       if @ventaisla.update(ventaisla_params)
@@ -106,6 +122,79 @@ class VentaislasController < ApplicationController
       Ventaisla.import4(params[:file])
       redirect_to root_url, notice: "Ventas importadas."
   end 
+  def do_grabar 
+
+    isla_id = params[:isla_id]
+    ventaisla_id = params[:ventaisla_id]
+    items = params[:items]
+    items = items.split(",")
+    items_arr = []
+    @products = []
+    i = 0
+    qty = 0 
+    total_qty   = 0
+
+    totales_qty = 0
+    totales_gln = 0
+
+    if  VentaislaDetail.where(ventaisla_id: ventaisla_id).exists?
+
+              a = VentaislaDetail.where(ventaisla_id: ventaisla_id).delete_all 
+              
+         end 
+
+
+    for item in items
+      if item != ""
+        parts = item.split("|BRK|")
+        
+        campo_ent      = parts[0]
+        campo_ent_val  = parts[1]
+        campo_sal      = parts[2]
+        campo_sal_val  = parts[3]
+        campo_pre      = parts[4]
+        campo_pre_val  = parts[5]
+
+        puts isla_id
+        puts campo_ent 
+        puts campo_ent_val
+
+        puts campo_sal 
+        puts campo_sal_val
+
+        puts campo_pre 
+        puts campo_pre_val
+
+        puts campo_ent[8.12]
+         @datospump = Pump.find_by(fuel: campo_ent[8..12])
+         @datospump.le_an_gln= parts[3].to_f
+         @datospump.save 
+
+         qty = parts[3].to_f - parts[1].to_f
+         total_qty = parts[5].to_f * qty 
+
+         
+         
+
+         ventaisladetalle = VentaislaDetail.new(pump_id: @datospump.id, le_an_gln: parts[1].to_f , le_ac_gln: parts[3].to_f, 
+          price: parts[5].to_f, 
+          quantity: qty , total: total_qty, ventaisla_id:  ventaisla_id, product_id: @datospump.product_id)
+
+         ventaisladetalle.save
+
+         totales_qty += total_qty
+         totales_gln += qty 
+        
+
+      end
+      
+      i += 1
+   end
+
+       ventaislacab = Ventaisla.find(ventaisla_id)
+       ventaislacab.update_attributes(importe: totales_qty , galones: totales_gln )
+      # render :layout => false
+  end
   
   private
     # Use callbacks to share common setup or constraints between actions.

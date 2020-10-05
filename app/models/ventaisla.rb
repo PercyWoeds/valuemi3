@@ -1,5 +1,3 @@
-    
-    
 
 class Ventaisla < ActiveRecord::Base
     
@@ -12,7 +10,7 @@ class Ventaisla < ActiveRecord::Base
     
     has_many :ventaisla_details, :dependent => :destroy
     
-    
+  
     
     belongs_to :payroll 
     
