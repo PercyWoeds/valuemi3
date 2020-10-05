@@ -36,8 +36,13 @@
         <td><%= ventaisla.importe %></td>
         
         <td><%= link_to 'Ver', ventaisla %></td>
+
+         <% if @current_user.level == "admin" %>
         <td><%= link_to 'Editar', edit_ventaisla_path(ventaisla) %></td>
+
+
         <td><%= link_to 'Eliminar', ventaisla, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

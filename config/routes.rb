@@ -1159,9 +1159,12 @@ end
   resources :sessions
 
   match 'ventaisla/ac_mangueras' => 'ventaislas#ac_mangueras', via: [:get, :post]
+
+  match 'ventaislas/do_grabar/:ventaisla_id/:isla_id' => 'ventaislas#do_grabar', via: [:get, :post]
+
+
   resources :ventaislas
   
-
   # Frontpage
  # match 'dashboard' => 'pages#dashboard', via: [:get,s :post]
 
