@@ -3,7 +3,7 @@ class VentaislaDetail < ActiveRecord::Base
      belongs_to :pump
      belongs_to :product 
      
-       validates_presence_of :pump_id, :product_id
+      validates_presence_of :pump_id, :product_id
        
 
       

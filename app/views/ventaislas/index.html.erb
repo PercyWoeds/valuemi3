@@ -2,6 +2,13 @@
 
 <h1>Listado Venta Isla</h1>
 
+<br>
+<div class="button">
+<%= link_to 'Nueva Venta', new_ventaisla_path %>
+</div>
+
+
+
 <table>
   <thead>
     <tr>
@@ -36,31 +43,3 @@
   </tbody>
 </table>
 <%= will_paginate @ventaislas %>
-
-<br>
-<div class="button">
-<%= link_to 'Nueva Venta', new_ventaisla_path %>
-</div>
-
-
-
-<h2>Importar Archivo Contometros "*.csv"</h2>
-
-<%= form_tag import_ventaislas_path, multipart: true do %>
-  <%= file_field_tag :file %>
-  <%= submit_tag "Importar " %>
-<% end %>
-
-
-
-<%= form_tag import2_ventaislas_path, multipart: true do %>
-  <%= file_field_tag :file %>
-  <%= submit_tag "Importar " %>
-<% end %>
-
-<h2>Detalle </h2>
-
-<%= form_tag import4_ventaislas_path, multipart: true do %>
-  <%= file_field_tag :file %>
-  <%= submit_tag "Importar " %>
-<% end %>
