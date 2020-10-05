@@ -37,8 +37,9 @@ class VentaislasController < ApplicationController
 
   # GET /ventaislas/new
   def new
+    @company= Company.find(1)
     @ventaisla = Ventaisla.new
-    @employees = Employee.all
+    @employees = @company.get_employees
     @islas = Island.all
     @ventaisla[:fecha]= Date.today
   end
