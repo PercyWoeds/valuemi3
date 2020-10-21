@@ -2,6 +2,8 @@ class VentaislasController < ApplicationController
   
   before_action :set_ventaisla, only: [:show, :edit, :update, :destroy]
 
+  
+
   # GET /ventaislas
   # GET /ventaislas.json
   def index

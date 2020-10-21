@@ -19,6 +19,10 @@
       <th>Employee</th>
       <th>Galones</th>
       <th>Importe</th>
+      <th>Estado</th>
+      <th>Opciones</th>
+
+
       
       <th colspan="3"></th>
     </tr>
@@ -32,9 +36,29 @@
         <td><%= ventaisla.island.code %></td>
       
         <td><%= ventaisla.employee.full_name %></td>
+
+        <% if ventaisla.galones.nil? %>
+              <td> Invalido</td>
+        <% else %>
         <td><%= ventaisla.galones.round(2) %></td>
+        <% end %>
+        <% if  ventaisla.galones.nil? %>
+           <td> Invalido</td>
+        <% else %>
         <td><%= ventaisla.importe.round(2) %></td>
-        
+        <%end%>
+
+
+        <% if  ventaisla.galones.nil? %>
+           <td> Invalido</td>
+        <% elsif ventaisla.galones < 0  %>
+
+           <td > Invalido revise   </td>
+        <% elsif ventaisla.galones > 0  %>   
+           <td >   </td>
+        <%end%>
+
+
         <td><%= link_to 'Ver', ventaisla %></td>
 
          <% if @current_user.level == "admin" %>
