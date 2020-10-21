@@ -32,8 +32,8 @@
         <td><%= ventaisla.island.code %></td>
       
         <td><%= ventaisla.employee.full_name %></td>
-        <td><%= ventaisla.galones %></td>
-        <td><%= ventaisla.importe %></td>
+        <td><%= ventaisla.galones.round(2) %></td>
+        <td><%= ventaisla.importe.round(2) %></td>
         
         <td><%= link_to 'Ver', ventaisla %></td>
 

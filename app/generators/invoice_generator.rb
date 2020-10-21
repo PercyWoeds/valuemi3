@@ -136,24 +136,29 @@ class InvoiceGenerator < DocumentGenerator
   def data(items = 0, currency = 'PEN')
     
     @invoice = Factura.find(@numero)
-    
-    @redondeo = FacturaDetail.where(factura_id: @numero )
+
+     $lcServicio = @invoice.servicio
+
+     $lcServiciotxt = @invoice.texto2
+
+      @redondeo = FacturaDetail.where(factura_id: @numero )
+
+      if @invoice.servicio == "1"
     
       for factura in @redondeo
-           puts factura.factura_id 
            
           factura.price3 = factura.price_discount.round(2)
           factura.price_discount = factura.price3
           factura.save 
       
       end 
+    end 
+
     puts "servicoi"
-    $lcServicio = @invoice.texto2
+  
 
 
-      if $lcServicio || $lcServicio != ""
-
-
+    if @invoice.servicio == "1"
         @invoiceitems = FacturaDetail.select(:product_id,:preciosigv ,"SUM(quantity) as cantidad","SUM(total) as total").where(factura_id: @numero).group(:product_id,:preciosigv)
        puts "*** existe servicios"
     else 
@@ -228,7 +233,7 @@ class InvoiceGenerator < DocumentGenerator
          $lcFecha1codigo      = $lg_fecha.to_s
 
          $lcLocal = @invoice.texto1
-         $lcServicio = @invoice.texto2
+         $lcServiciotxt  = @invoice.texto2
 
           parts = $lcFecha1codigo.split("-")
           $aa = parts[0]
@@ -251,47 +256,25 @@ class InvoiceGenerator < DocumentGenerator
       invoice_data[:lines] = []
       nro_item = 1 
       
+        puts "servicio ****2020"
+        puts $lcServicio
+        puts $lcServiciotxt 
+
         for detalle_item in @invoiceitems
         
+        
         lcDes1   = detalle_item.product.name 
-        $lcUnidad20 = detalle_item.product.unidad.descrip2 
-
-        
-        puts "servicio "
-        puts $lcServicio
-        
-        lcCantidad     = detalle_item.cantidad.round(2)  
-        #lcTotal0 = detalle_item.cantidad * detalle_item.price_discount
-        lcTotal0 = detalle_item.total.round(2)
+        lcCantidad     = detalle_item.cantidad.round(2) 
+      
+        lcTotal0 = detalle_item.cantidad * detalle_item.price_discount
         
         lcTotal1 = lcTotal0 * 100
         lcTotal = lcTotal1.round(0)
-
-        if $lcServicio || $lcServicio != ""
-
-        lcTotalSIGV1 = detalle_item.preciosigv.round(3) * detalle_item.cantidad * 100
-
-        else
-           lcTotalSIGV1 = detalle_item.price_discount.round(3) * detalle_item.cantidad * 100
-        end   
-
-        lcTotalSIGV  = lcTotalSIGV1.round(0)
-
-        lcPrecio_decim =  detalle_item.total   / detalle_item.cantidad   
-        lcPrecio = lcPrecio_decim.round(2)
-
-        if $lcServicio || $lcServicio != ""
-
-            lcPrecioSIGV = detalle_item.preciosigv 
-        else
-            lcPrecioSIGV = detalle_item.price_discount / 1.18 
-        end
-
-        lcPrecioSIGVr  = lcPrecioSIGV.round(3).to_s 
-        puts
-        puts lcPrecioSIGVr
         
+        lcPrecio =  detalle_item.total   / detalle_item.cantidad   
+        lcPrecioSIGV = lcPrecio /1.18
         lcValorVenta = detalle_item.total / 1.18
+
         lcTax = detalle_item.total - lcValorVenta
         
         lcPrecioCigv1  =  lcPrecio * 100
@@ -307,14 +290,12 @@ class InvoiceGenerator < DocumentGenerator
               a   =  {id: nro_item.to_s, quantity: lcCantidad, line_extension_amount: {value: lcTotal, currency: currency}, 
            pricing_reference: {alternative_condition_price: {price_amount: {value: lcPrecioCigv, currency: currency}}}, 
            price: {value: lcPrecioSIgv, currency: currency}, tax_totals: [{amount: {value: lcTotal, currency: currency}, type: :igv}], 
-           item: {id: nro_item.to_s, description: lcDes1},preciosigv: lcPrecioSIGVr, line_extension_vventa: {value: lcTotalSIGV, currency: currency},}
+           item: {id: nro_item.to_s, description: lcDes1}}
          
           invoice_data[:lines] << a 
-          
-          nro_item += 1 
-         
+         nro_item += 1 
       
-      end 
+        end 
       
       
       invoice_data

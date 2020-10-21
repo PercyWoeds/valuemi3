@@ -242,7 +242,6 @@ class InvoicesController < ApplicationController
     @invoice[:user_id] = getUserId()
   end
 
-
   # GET /invoices/1/edit
   def edit
     @pagetitle = "Edit invoice"

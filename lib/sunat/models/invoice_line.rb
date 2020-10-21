@@ -122,13 +122,10 @@ module SUNAT
       row << self.quantity.quantity
       row << $lcUnidad20
       row << "#{self.item.description}"
-      if $lcServicio 
-        row << "#{self.preciosigv}"
-      else 
-        row << "#{self.pricing_reference.alternative_condition_price.price_amount.to_s}"
-      end   
+      row << "#{self.pricing_reference.alternative_condition_price.price_amount.to_s}"
+      
+      row << "#{self.line_extension_amount.to_s}"
 
-      row << "#{self.line_extension_vventa.to_s}"
 
     end
 

@@ -120,16 +120,17 @@ require 'active_support/number_helper'
       end
 
       table_content << headers
-      puts "servocip"
+
+      puts "servocip-----------"
       puts $lcServicio
 
-      if $lcServicio 
+      if $lcServicio == "1"
         row =[]
         row << ""
         row << ""
         row << ""
-        row << $lcServicio 
-           row << ""
+        row << $lcServiciotxt
+        row << ""
         row << ""
         table_content<< row
 
@@ -153,11 +154,9 @@ require 'active_support/number_helper'
                                           columns([6]).align=:right
                                         end
 
-       pdf.move_down 30
+       pdf.move_down 10
       
-       
       
-      pdf.move_down 30
       
 
       pdf.table invoice_summary, {
@@ -212,7 +211,13 @@ require 'active_support/number_helper'
       client_headers << ["Dirección :",$lcDirCli]
       client_headers << ["Distrito  :",$lcDisCli]
       client_headers << [customer.type_as_text, customer.account_id]
+
+      if $lcServicio =="1"
+
        client_headers << ["Local Comercial :",$lcLocal]
+
+      end 
+
       client_headers
     end
 

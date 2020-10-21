@@ -2223,7 +2223,7 @@ def reportes31
       end 
            $lcMoneda = @invoice.moneda_id
            $lcLocal = @invoice.texto1
-           $lcServicio = @invoice.texto2
+           $lcServiciotxt = @invoice.texto2
 
         
         
@@ -2340,7 +2340,7 @@ def reportes31
     @invoice = Factura.new
     @invoice[:code] = "#{generate_guid2()}"
     @invoice[:processed] = false
-    
+    @invoice[:servicio] = "0"
     
     @company = Company.find(params[:company_id])
     @invoice.company_id = @company.id
@@ -2484,6 +2484,7 @@ def newfactura2
     @invoice[:pago]    = 0
     @invoice[:charge]  = 0
     @invoice[:descuento] = "1"
+    @invoice[:servicio] = params[:check_servicio]
     
      parts = (@invoice[:code]).split("-")
      id = parts[0]
@@ -2495,11 +2496,15 @@ def newfactura2
     end
     @invoice[:numero2] = numero2
   
+
+
     respond_to do |format|
       if @invoice.save
         # Create products for kit
         @invoice.add_products(items)
         @invoice.add_guias(items2)
+
+        
         if $lcAction == "Boleta"
           @invoice.correlativo2
         else
@@ -2507,6 +2512,7 @@ def newfactura2
         end 
         # Check if we gotta process the invoice
         @invoice.process()
+
 
         
         format.html { redirect_to(@invoice, :notice => 'Invoice was successfully created.') }
