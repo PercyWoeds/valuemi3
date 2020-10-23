@@ -3,8 +3,7 @@ class Ventaisla < ActiveRecord::Base
     
         require "open-uri"  
     validates_presence_of :employee_id
-    validates_numericality_of :galones, :on => :create
-    validates_numericality_of :importe, :on => :create
+    
     
     belongs_to :employee 
     belongs_to :island  

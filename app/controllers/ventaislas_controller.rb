@@ -2,14 +2,11 @@ class VentaislasController < ApplicationController
   
   before_action :set_ventaisla, only: [:show, :edit, :update, :destroy]
 
-  
-
   # GET /ventaislas
   # GET /ventaislas.json
   def index
     
     @ventaislas = Ventaisla.order('fecha DESC,turno').paginate(:page => params[:page], :per_page => 20)
-    
     
 
   end
@@ -44,6 +41,8 @@ class VentaislasController < ApplicationController
     @employees = @company.get_employees
     @islas = Island.all
     @ventaisla[:fecha]= Date.today
+    @ventaisla[:galones] = 0 
+    @ventaisla[:importe] = 0 
   end
 
   # GET /ventaislas/1/edit
@@ -57,6 +56,7 @@ class VentaislasController < ApplicationController
   def create
     @ventaisla = Ventaisla.new(ventaisla_params)
     @ventaisla[:island_id] = params[:island_id]
+      @islas = Island.all
     
    @employees = Employee.all 
     respond_to do |format|
