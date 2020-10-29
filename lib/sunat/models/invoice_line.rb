@@ -120,7 +120,7 @@ module SUNAT
       row = []
       row << self.id
       row << self.quantity.quantity
-      row << $lcUnidad20
+      row << "GLL"
       row << "#{self.item.description}"
       row << "#{self.pricing_reference.alternative_condition_price.price_amount.to_s}"
       
