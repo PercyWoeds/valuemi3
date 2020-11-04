@@ -122,8 +122,11 @@ module SUNAT
       row << self.quantity.quantity
       row << "GLL"
       row << "#{self.item.description}"
-      row << "#{self.pricing_reference.alternative_condition_price.price_amount.to_s}"
-      
+      if $lcServicioFactura =="true"
+        row << "0.079"
+      else 
+        row << "#{self.pricing_reference.alternative_condition_price.price_amount.to_s}"
+      end 
       row << "#{self.line_extension_amount.to_s}"
 
 

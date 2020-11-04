@@ -148,8 +148,10 @@ class InvoiceGenerator < DocumentGenerator
     puts "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 
        if @invoice.servicio == "true"
+        $lcServicioFactura = "true"
          @invoiceitems = FacturaDetail.where(factura_id: @numero )
        else 
+        $lcServicioFactura = "0"
         @invoiceitems = FacturaDetail.select(:product_id,:price ,"SUM(quantity) as cantidad","SUM(total) as total").where(factura_id: @numero).group(:product_id,:price)
         
         end 
@@ -254,11 +256,15 @@ class InvoiceGenerator < DocumentGenerator
         
         
         lcDes1   = detalle_item.product.name 
+          if @invoice.servicio == "true"
+            lcCantidad = detalle_item.quantity
+          else
+
 
         lcCantidad     = detalle_item.cantidad.round(2) 
-      
-
-        lcTotal0 = detalle_item.cantidad * detalle_item.price
+        
+      end 
+        lcTotal0 = lcCantidad * detalle_item.price
 
         
         lcTotal1 = lcTotal0 * 100
@@ -267,7 +273,7 @@ class InvoiceGenerator < DocumentGenerator
         if @invoice.servicio == "true"
           lcPrecio = detalle_item.price 
         else 
-        lcPrecio =  detalle_item.total   / detalle_item.cantidad  
+          lcPrecio =  detalle_item.total   / detalle_item.cantidad  
         end 
 
         lcPrecioSIGV = lcPrecio /1.18
@@ -287,7 +293,7 @@ class InvoiceGenerator < DocumentGenerator
         
               a   =  {id: nro_item.to_s, quantity: lcCantidad, line_extension_amount: {value: lcTotal, currency: currency}, 
            pricing_reference: {alternative_condition_price: {price_amount: {value: lcPrecioCigv, currency: currency}}}, 
-           price: {value: lcPrecioSIgv, currency: currency}, tax_totals: [{amount: {value: lcTotal, currency: currency}, type: :igv}], 
+           price: {value: lcPrecioSIgv }, tax_totals: [{amount: {value: lcTotal, currency: currency}, type: :igv}], 
            item: {id: nro_item.to_s, description: lcDes1}}
          
           invoice_data[:lines] << a 
