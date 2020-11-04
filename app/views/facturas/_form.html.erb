@@ -364,12 +364,12 @@
 
      if ($('#check_servicio').is(":checked")) {
         $('#factura_texto1').attr('disabled', true); //disable input
-        $('#factura_texto1').attr('disabled', true); //disable input
+        $('#factura_texto2').attr('disabled', true); //disable input
 
      }
      else {
-        $('#factura_texto1').removeAttr('disabled'); //enable input
-        $('#factura_texto2').attr('disabled', true); //disable input
+        $('#factura_texto1').removeAttr('enabled'); //enable input
+        $('#factura_texto2').attr('enabled', true); //disable input
      }
      
      
@@ -381,8 +381,8 @@
              $('#factura_texto2').attr('disabled', true); //disable input
 
           } else {
-               $('#factura_texto1').removeAttr('disabled'); //enable input
-               $('#factura_texto2').attr('disabled', true); //disable input
+               $('#factura_texto1').removeAttr('enabled'); //enable input
+               $('#factura_texto2').attr('enabled', true); //disable input
               
           }
       });
