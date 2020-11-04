@@ -550,8 +550,8 @@ class Factura < ActiveRecord::Base
            
            tax0 = a.total / 1.18
            
-           a.tax = tax0.round(2)
-           a.subtotal = a.total - a.tax 
+           a.subtotal  = tax0.round(2)
+           a.tax = a.total - a.subtotal 
 
            a.save
 
