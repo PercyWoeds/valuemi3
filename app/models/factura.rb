@@ -525,29 +525,29 @@ class Factura < ActiveRecord::Base
 
       self.processed="1"
 
-       if self.servicio == "1"
+       if self.servicio == "true"
 
         puts "processado"
         puts "xxx"
-        facturas = FacturaDetail.where(factura_id: self.id)
-        total = 0 
-        total1 = 0
-          for x in facturas 
-            total += (x.preciosigv.round(3) * x.quantity)
-          end
+        # facturas = FacturaDetail.where(factura_id: self.id)
+        # total = 0 
+        # total1 = 0
+        #   for x in facturas 
+        #     total += (x.preciosigv.round(3) * x.quantity)
+        #   end
 
-          a = Factura.find(self.id)
+        #   a = Factura.find(self.id)
 
-          a.subtotal = total
-          total1 = a.subtotal * 1.18
-          a.total = total1.round(2)
-          a.tax = a.total - a.subtotal 
-          a.save
+        #   a.subtotal = total
+        #   total1 = a.subtotal * 1.18
+        #   a.total = total1.round(2)
+        #   a.tax = a.total - a.subtotal 
+        #   a.save
 
         end 
-      FacturaDetail.where(factura_id: self.id, preciosigv: nil).update_all("preciosigv = price / 1.18")
-      self.date_processed = Time.now
-      self.save
+        # FacturaDetail.where(factura_id: self.id, preciosigv: nil).update_all("preciosigv = price / 1.18")
+        self.date_processed = Time.now
+        self.save
 
     end
 

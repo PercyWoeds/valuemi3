@@ -143,7 +143,7 @@ class InvoiceGenerator < DocumentGenerator
 
       @redondeo = FacturaDetail.where(factura_id: @numero )
 
-      if @invoice.servicio == "1"
+      if @invoice.servicio == "true"
     
       for factura in @redondeo
            
@@ -158,13 +158,8 @@ class InvoiceGenerator < DocumentGenerator
   
 
 
-    if @invoice.servicio == "1"
-        @invoiceitems = FacturaDetail.select(:product_id,:preciosigv ,"SUM(quantity) as cantidad","SUM(total) as total").where(factura_id: @numero).group(:product_id,:preciosigv)
-       puts "*** existe servicios"
-    else 
-        @invoiceitems = FacturaDetail.select(:product_id,:price_discount ,"SUM(quantity) as cantidad","SUM(total) as total").where(factura_id: @numero).group(:product_id,:price_discount)
-    
-    end 
+        @invoiceitems = FacturaDetail.select(:product_id,:price ,"SUM(quantity) as cantidad","SUM(total) as total").where(factura_id: @numero).group(:product_id,:price)
+  
         $lg_fecha   = @invoice.fecha.to_date
          lcCode = @invoice.code.split("-")
          a = lcCode[0]
@@ -266,7 +261,9 @@ class InvoiceGenerator < DocumentGenerator
         lcDes1   = detalle_item.product.name 
         lcCantidad     = detalle_item.cantidad.round(2) 
       
-        lcTotal0 = detalle_item.cantidad * detalle_item.price_discount
+
+        lcTotal0 = detalle_item.cantidad * detalle_item.price
+
         
         lcTotal1 = lcTotal0 * 100
         lcTotal = lcTotal1.round(0)
