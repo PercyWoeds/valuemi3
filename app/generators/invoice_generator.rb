@@ -258,13 +258,12 @@ class InvoiceGenerator < DocumentGenerator
         lcDes1   = detalle_item.product.name 
           if @invoice.servicio == "true"
             lcCantidad = detalle_item.quantity
+            lcTotal0  = detalle_item.total 
           else
-
-
-        lcCantidad     = detalle_item.cantidad.round(2) 
-        
-      end 
-        lcTotal0 = lcCantidad * detalle_item.price
+            lcCantidad     = detalle_item.cantidad.round(2) 
+             lcTotal0   = lcCantidad * detalle_item.price
+          end 
+       
 
         
         lcTotal1 = lcTotal0 * 100
