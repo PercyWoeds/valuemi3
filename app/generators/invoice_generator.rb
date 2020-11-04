@@ -141,25 +141,18 @@ class InvoiceGenerator < DocumentGenerator
 
      $lcServiciotxt = @invoice.texto2
 
-      @redondeo = FacturaDetail.where(factura_id: @numero )
-
-      if @invoice.servicio == "true"
     
-      for factura in @redondeo
-           
-          factura.price3 = factura.price_discount.round(2)
-          factura.price_discount = factura.price3
-          factura.save 
-      
-      end 
-    end 
 
     puts "servicoi"
-  
+    puts @invoice.servicio
+    puts "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 
-
+       if @invoice.servicio == "true"
+         @invoiceitems = FacturaDetail.where(factura_id: @numero )
+       else 
         @invoiceitems = FacturaDetail.select(:product_id,:price ,"SUM(quantity) as cantidad","SUM(total) as total").where(factura_id: @numero).group(:product_id,:price)
-  
+        
+        end 
         $lg_fecha   = @invoice.fecha.to_date
          lcCode = @invoice.code.split("-")
          a = lcCode[0]
@@ -255,10 +248,13 @@ class InvoiceGenerator < DocumentGenerator
         puts $lcServicio
         puts $lcServiciotxt 
 
+
+
         for detalle_item in @invoiceitems
         
         
         lcDes1   = detalle_item.product.name 
+
         lcCantidad     = detalle_item.cantidad.round(2) 
       
 
@@ -267,8 +263,13 @@ class InvoiceGenerator < DocumentGenerator
         
         lcTotal1 = lcTotal0 * 100
         lcTotal = lcTotal1.round(0)
-        
-        lcPrecio =  detalle_item.total   / detalle_item.cantidad   
+
+        if @invoice.servicio == "true"
+          lcPrecio = detalle_item.price 
+        else 
+        lcPrecio =  detalle_item.total   / detalle_item.cantidad  
+        end 
+
         lcPrecioSIGV = lcPrecio /1.18
         lcValorVenta = detalle_item.total / 1.18
 
