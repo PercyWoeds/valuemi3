@@ -124,7 +124,7 @@ require 'active_support/number_helper'
       puts "servocip-----------"
       puts $lcServicio
 
-      if $lcServicio == "1"
+      if $lcServicio == "true"
         row =[]
         row << ""
         row << ""
