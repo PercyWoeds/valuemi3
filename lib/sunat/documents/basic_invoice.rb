@@ -212,7 +212,7 @@ require 'active_support/number_helper'
       client_headers << ["Distrito  :",$lcDisCli]
       client_headers << [customer.type_as_text, customer.account_id]
 
-      if $lcServicio =="1"
+      if $lcServicio =="true"
 
        client_headers << ["Local Comercial :",$lcLocal]
 
