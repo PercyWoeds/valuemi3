@@ -104,6 +104,7 @@ gem 'aws-sdk-s3'
 
 gem 'redis', '~> 4.2', '>= 4.2.1'
 
+gem 'nubefact', '~> 0.0.14'
 
 
 group :development, :test do

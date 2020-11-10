@@ -706,6 +706,8 @@ end
   match 'facturas/do_anular/:id' => 'facturas#do_anular', via: [:get, :post]
   match 'facturas/do_email/:id' => 'facturas#do_email', via: [:get, :post]
   match 'facturas/do_process/:id' => 'facturas#do_process', via: [:get, :post]
+  match 'facturas/do_process2/:id' => 'facturas#do_process2', via: [:get, :post]
+
   match 'facturas/print/:id' => 'facturas#print', via: [:get, :post]
   match 'facturas/sendsunat/:id' => 'facturas#sendsunat', via: [:get, :post]
   match 'facturas/sendmail/:id' => 'facturas#sendmail', via: [:get, :post]

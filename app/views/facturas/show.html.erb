@@ -478,6 +478,13 @@
   <%= link_to 'Procesar factura', "/facturas/do_process/#{@invoice.id}" %> 
 
 
+
+<% end %>
+
+<% if current_user.email== "percywoeds@gmail.com"%>
+
+ <%= link_to 'Procesar factura2', "/facturas/do_process2/#{@invoice.id}" %> 
+
 <% end %>
 
 <%= link_to 'Regresar', "/companies/facturas/#{@invoice.company.id}" %>

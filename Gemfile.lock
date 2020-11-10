@@ -156,6 +156,7 @@ GEM
       mini_portile2 (~> 2.3.0)
     nori (2.6.0)
     ntlm-http (0.1.1)
+    nubefact (0.0.14)
     numbers_and_words (0.10.6)
       activesupport
       i18n
@@ -324,6 +325,7 @@ DEPENDENCIES
   jquery-rails (~> 4.2, >= 4.2.1)
   jquery-ui-rails (~> 5.0, >= 5.0.5)
   mechanize
+  nubefact (~> 0.0.14)
   numbers_and_words (~> 0.10.5)
   pg (~> 0.18.4)
   pivot_table

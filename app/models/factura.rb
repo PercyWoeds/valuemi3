@@ -564,6 +564,107 @@ class Factura < ActiveRecord::Base
 
   end
 
+  
+  # Process the invoice
+  def process2
+
+
+          @factura = Factura.find(self.id)
+
+          puts @factura.code 
+
+
+    # create a new Invoice object
+invoice = NubeFact::Invoice.new({
+
+    "operacion"                   => "generar_comprobante",
+    "tipo_de_comprobante"               => "1",
+    "serie"                             => "FF01",
+    "numero"                    => "395",
+    "sunat_transaction"             => "1",
+    "cliente_tipo_de_documento"       => "6",
+    "cliente_numero_de_documento"     => "20550943060",
+    "cliente_denominacion"              => "SCLT PERU SAC",
+    "cliente_direccion"                 => "-",
+    "cliente_email"                     => "",
+    "cliente_email_1"                   => "",
+    "cliente_email_2"                   => "",
+    "fecha_de_emision"                  => "2020-11-01",
+    "fecha_de_vencimiento"              => "",
+    "moneda"                            => "1",
+    "tipo_de_cambio"                    => "",
+    "porcentaje_de_igv"                 => "18.00",
+    "descuento_global"                  => "",
+    "descuento_global"                  => "",
+    "total_descuento"                   => "",
+    "total_anticipo"                    => "",
+    "total_gravada"                     => @factura.subtotal,
+    "total_inafecta"                    => "",
+    "total_exonerada"                   => "",
+    "total_igv"                         => @factura.tax,
+    "total_gratuita"                    => "",
+    "total_otros_cargos"                => "",
+    "total"                             =>   @factura.total,
+    "percepcion_tipo"                   => "",
+    "percepcion_base_imponible"         => "",
+    "total_percepcion"                  => "",
+    "total_incluido_percepcion"         => "",
+    "detraccion"                        => "false",
+    "observaciones"                     => "",
+    "documento_que_se_modifica_tipo"    => "",
+    "documento_que_se_modifica_serie"   => "",
+    "documento_que_se_modifica_numero"  => "",
+    "tipo_de_nota_de_credito"           => "",
+    "tipo_de_nota_de_debito"            => "",
+    "enviar_automaticamente_a_la_sunat" => "true",
+    "enviar_automaticamente_al_cliente" => "false",
+    "codigo_unico"                      => "",
+    "condiciones_de_pago"               => "",
+    "medio_de_pago"                     => "",
+    "placa_vehiculo"                    => "",
+    "orden_compra_servicio"             => "",
+    "tabla_personalizada_codigo"        => "",
+    "formato_de_pdf"                    => "",
+
+
+})
+
+# Add items
+# You don't need to add the fields that are calculated like total or igv
+# those got calculated automatically.
+
+
+cantidad = 0
+
+@factura_detail = FacturaDetail.where(factura_id: @factura.id)
+
+for item_factura in @factura_detail 
+    
+
+puts "*+++++++++++++++++++++"
+puts item_factura.quantity  
+
+  invoice.add_item({
+ unidad_de_medida: 'ZZ',
+  descripcion: 'Osito de peluche de taiwan',
+  cantidad: 1,
+  valor_unitario: "#{item_factura.price_discount.round(2)}",
+  tipo_de_igv: 1,
+
+                   
+
+  })
+
+end 
+
+result = invoice.deliver
+
+
+
+ end
+
+
+
 
   def cerrar
     if(self.processed == "3" )         
