@@ -257,23 +257,26 @@ class InvoiceGenerator < DocumentGenerator
         
         lcDes1   = detalle_item.product.name 
           if @invoice.servicio == "true"
-            lcCantidad = detalle_item.quantity
-            lcTotal0  = detalle_item.total 
-            lcPrecio = detalle_item.price 
+              lcCantidad = detalle_item.quantity
+              lcTotal0  = detalle_item.total 
+              lcPrecio = detalle_item.price_discount 
+              lcPrecioSIGV = detalle_item.preciosigv
 
+              lcTotalSIGV0  = detalle_item.total / 1.18 
 
-          lcTotalSIGV0  = detalle_item.total / 1.18 
-
-         lcTotalSIGV1 = lcTotalSIGV0.round(2) * 100
-         lcTotalSIGV  = lcTotalSIGV1.round(0)
+              lcTotalSIGV1 = lcTotalSIGV0.round(2) * 100
+              lcTotalSIGV  = lcTotalSIGV1.round(0)
 
           else
-            lcCantidad     = detalle_item.cantidad.round(2) 
-             lcTotal0   = lcCantidad * detalle_item.price
-            lcPrecio =  detalle_item.price   
+              lcCantidad     = detalle_item.cantidad.round(2) 
+              lcTotal0   = lcCantidad * detalle_item.price
+              
+              lcPrecio =  detalle_item.price  
+              lcPrecioSIGV = lcPrecio /1.18 
+
               lcTotalSIGV0  = lcTotal0 / 1.18 
 
-             lcTotalSIGV1 = lcTotalSIGV0.round(2) * 100
+              lcTotalSIGV1 = lcTotalSIGV0.round(2) * 100
               lcTotalSIGV  = lcTotalSIGV1.round(0)
 
           end 
@@ -282,13 +285,10 @@ class InvoiceGenerator < DocumentGenerator
         
         lcTotal1 = lcTotal0 * 100
         lcTotal = lcTotal1.round(0)
-
-    
      
 
-        lcPrecioSIGV = lcPrecio /1.18
-        lcValorVenta = detalle_item.total / 1.18
-
+        
+      
         lcTax = detalle_item.total - lcValorVenta
         
         lcPrecioCigv1  =  lcPrecio * 100
