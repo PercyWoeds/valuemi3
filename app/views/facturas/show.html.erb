@@ -465,9 +465,8 @@
 	  
 		 <% if current_user.level=='admin' || current_user.level=='parte'  %>
 		  <tr>
-			<%= form_tag anular_voideds_path,  multipart: true, data: { confirm: "Esta seguro de anular este documento ?" } do  %>
-	  		<%= submit_tag  " Anular "  ,  data: { no_turbolink: true } %>
-			<% end %>
+			 <%= link_to 'Anular ', "/facturas/do_anular/#{@invoice.id}" %> 
+
       </tr>
       
 		</table>
