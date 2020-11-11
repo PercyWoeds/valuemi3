@@ -294,12 +294,12 @@ class InvoiceGenerator < DocumentGenerator
         lcPrecioSigv1  =  lcPrecioSIGV * 100
         lcPrecioSigv2   = lcPrecioSigv1.round(0).to_f
         lcPrecioSIgv   =  lcPrecioSigv2.to_i 
-        
+        lcPrecioSIGVr  = lcPrecioSIGV.round(3).to_s 
         
               a   =  {id: nro_item.to_s, quantity: lcCantidad, line_extension_amount: {value: lcTotal, currency: currency}, 
            pricing_reference: {alternative_condition_price: {price_amount: {value: lcPrecioCigv, currency: currency}}}, 
            price: {value: lcPrecioSIgv }, tax_totals: [{amount: {value: lcTotal, currency: currency}, type: :igv}], 
-           item: {id: nro_item.to_s, description: lcDes1},preciosigv: lcPrecioSIGV, line_extension_vventa: {value: lcTotalSIGV, currency: currency},}
+           item: {id: nro_item.to_s, description: lcDes1},preciosigv: lcPrecioSIGVr, line_extension_vventa: {value: lcTotalSIGV, currency: currency},}
          
           invoice_data[:lines] << a 
          nro_item += 1 
