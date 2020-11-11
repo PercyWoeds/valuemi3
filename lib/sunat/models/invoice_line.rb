@@ -123,12 +123,19 @@ module SUNAT
       row << "GLL"
       row << "#{self.item.description}"
       if $lcServicioFactura =="true"
-        row << "0.07906"
-      else 
-        row << "#{self.pricing_reference.alternative_condition_price.price_amount.to_s}"
-      end 
-      row << "#{self.line_extension_amount.to_s}"
 
+
+
+          row << "0.067"
+         row << "#{self.line_extension_vventa.to_s}"
+      else 
+
+      
+
+        row << "#{self.pricing_reference.alternative_condition_price.price_amount }"
+        row << "#{self.line_extension_amount.to_s}"
+      end 
+  
 
     end
 
