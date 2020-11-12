@@ -152,7 +152,7 @@ class InvoiceGenerator < DocumentGenerator
          @invoiceitems = FacturaDetail.where(factura_id: @numero )
        else 
         $lcServicioFactura = "0"
-        @invoiceitems = FacturaDetail.select(:product_id,"price_discount as price" ,"SUM(quantity) as cantidad","SUM(total) as total").where(factura_id: @numero).group(:product_id,:price)
+        @invoiceitems = FacturaDetail.select(:product_id,"price_discount as price" ,"SUM(quantity) as cantidad","SUM(total) as total").where(factura_id: @numero).group(:product_id,:price_discount)
         
         end 
         $lg_fecha   = @invoice.fecha.to_date
