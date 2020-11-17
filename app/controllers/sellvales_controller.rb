@@ -5,7 +5,7 @@ class SellvalesController < ApplicationController
   # GET /sellvales.json
   def index
     
-    if current_user.email == "percywoeds@gmail.com"  || @current_user.level == "parte"  
+    if current_user.email == "percywoeds@gmail.com"  || @current_user.level == "admin"  
       
       @sellvales2 = Sellvale.all.where("fecha>=? and fecha<=?","2020-02-01 00:00:00","2020-12-31 23:59:59").order(:fecha,:serie,:numero)
       
