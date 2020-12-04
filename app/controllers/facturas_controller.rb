@@ -1,7 +1,7 @@
 include CustomersHelper
 include ServicesHelper
 require 'sunat_books'
-require "nube_fact"
+require "./lib/nubefact/nube_fact"
 
 require "active_support/number_helper"
 

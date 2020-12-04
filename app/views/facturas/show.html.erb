@@ -364,11 +364,16 @@
           <%= quote.product.name  %>
         </td>
         <td class="bordered_bottom bordered_right">
-          <%= quote.price_discount %>
+          <%= money(quote.price_discount) %>
         </td>
+
         <%if quote.preciosigv %>
         <td class="bordered_bottom bordered_right">
           <%= quote.preciosigv.round(3) %>
+        </td>
+        <% else %>
+  <td class="bordered_bottom bordered_right">
+          <%= quote.price.round(3) %>
         </td>
         <%end %>
         <td class="bordered_bottom bordered_right">

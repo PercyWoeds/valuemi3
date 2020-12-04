@@ -8,6 +8,12 @@
         <th class="bordered_right bordered_bottom" style="width: 350px;">
           Cliente
         </th>
+
+
+
+        <th class="bordered_right bordered_bottom">
+          Moneda 
+        </th>
         <th class="bordered_right bordered_bottom">
           Total
           
@@ -34,11 +40,18 @@
           <td class="bordered_right bordered_bottom">
             <%= money(invoice.customer.name) %>
           </td>
+
+
+        <td class="bordered_right bordered_bottom">
+            <%= invoice.moneda.symbol %>
+          
+        </td>
+
           <td class="bordered_right bordered_bottom right">
             <%= money(invoice.total) %>
           </td>
           <td class="bordered_right bordered_bottom">
-            <%= invoice.fecha %>
+            <%= invoice.fecha.strftime("%d-%m-%Y") %>
           </td>
           <td class="bordered_right bordered_bottom <%= invoice.processed_color %>">
             <%= invoice.get_processed_short %>
@@ -46,14 +59,17 @@
         <td class="bordered_right bordered_bottom <%= invoice.processed_color %>">
 
           <% if invoice.processed =="0" %>
-          <%= link_to "Ver", invoice %>                
+          <%= link_to "Ver", invoice  %>                
           
-          <%= link_to "Print", "/facturas/print/#{invoice.id}" %>
+          <%= link_to "Print", "/facturas/print/#{invoice.id}"  %>
           
           <% if @current_user.level == "admin" || @current_user.level == "parte" %>
-            
-            
-              <%= link_to 'Eliminar', invoice, :data=> {:confirm => 'Esta seguro ?'}, :method => :delete %>            
+
+                 <% if invoice.processed == "0" %>
+           
+              <%= link_to 'Eliminar', invoice, :data=> {:confirm => 'Esta seguro ?'}, :method => :delete %>      
+                 <% end %>
+
             <% end %>
           
           <% elsif invoice.processed =="1"%>    
@@ -62,14 +78,11 @@
           <%= link_to "Print", "/facturas/print/#{invoice.id}" %>
           
           
-              <% if @current_user.level == "admin" || @current_user.level == "parte" %>
-              <%= link_to 'Eliminar', invoice,:data=> {:confirm => 'Esta seguro ?'}, :method => :delete %>            
-              <% end %>
               
           <% elsif invoice.processed =="2"%>  
           <%= "** Anulado **" %>
             <% if @current_user.level == "admin" || @current_user.level == "parte" %>
-            <%= link_to 'Eliminar', invoice,:data=> {:confirm => 'Esta seguro ?'}, :method => :delete %>            
+                
             <% end %>
           <% elsif invoice.processed =="3"%>  
           <%= "** Cerrado **" %>                      

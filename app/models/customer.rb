@@ -57,6 +57,12 @@ class Customer < ActiveRecord::Base
     end
   end
 
+  def direccion_all
+
+      direccion_all ="#{self.address1} #{self.address2} #{self.address2} #{self.city} #{self.state} ".strip    
+
+  end 
+
   
 
 

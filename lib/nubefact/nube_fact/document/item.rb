@@ -83,16 +83,23 @@ class NubeFact::Document::Item
 
   def calculate_amounts
     unit_igv = if should_add_igv?
-      ( (valor_unitario / 100) * @invoice.porcentaje_de_igv ).round 2
+
+      puts "valor unitario "
+      puts valor_unitario
+      puts @invoice.porcentaje_de_igv
+      
+       (valor_unitario.to_f  * 1.18 ).round 5
     else
       0
     end
 
-    self.igv = unit_igv * cantidad # total IGV de la linea
+    self.total  = unit_igv * cantidad # total IGV de la linea
+     self.subtotal = (self.total / 1.18 ).round 2
 
-    self.precio_unitario = valor_unitario + unit_igv
-    self.subtotal = (valor_unitario * cantidad) - descuento
-    self.total = subtotal + igv
+    self.precio_unitario =  unit_igv
+
+    self.igv = self.total - self.subtotal 
+  
   end
 
   TYPES_SUBJECT_TO_IGV = [1, 2, 3, 4, 5, 6, 7]

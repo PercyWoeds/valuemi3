@@ -573,25 +573,43 @@ class Factura < ActiveRecord::Base
 
           puts @factura.code 
 
+          @fecha_emision = @factura.fecha.strftime("%Y-%m-%d")
+          ff = @factura.code.split("-")
+
+          @serie  =  ff[0]
+          @numero =  ff[1]
+
+         if @factura.moneda_id == 1 
+           @moneda_nube = 2
+          else
+                @moneda_nube = 1
+          end 
+          if @factura.servicio == "true"
+               @texto_obs = @factura.texto2  +  " LOCAL : "  + @factura.texto1
+          else
+               @texto_obs = " "
+          end   
+
+
 
     # create a new Invoice object
 invoice = NubeFact::Invoice.new({
 
     "operacion"                   => "generar_comprobante",
     "tipo_de_comprobante"               => "1",
-    "serie"                             => "FF01",
-    "numero"                    => "395",
-    "sunat_transaction"             => "1",
-    "cliente_tipo_de_documento"       => "6",
-    "cliente_numero_de_documento"     => "20550943060",
-    "cliente_denominacion"              => "SCLT PERU SAC",
-    "cliente_direccion"                 => "-",
+    "serie"                             =>  @serie,
+    "numero"                            =>  @numero ,
+    "sunat_transaction"                 => "1",
+    "cliente_tipo_de_documento"         => "6",
+    "cliente_numero_de_documento"       => @factura.customer.ruc ,
+    "cliente_denominacion"              => @factura.customer.name ,
+    "cliente_direccion"                 => @factura.customer.direccion_all ,
     "cliente_email"                     => "",
     "cliente_email_1"                   => "",
     "cliente_email_2"                   => "",
-    "fecha_de_emision"                  => "2020-11-01",
+    "fecha_de_emision"                  => @fecha_emision,
     "fecha_de_vencimiento"              => "",
-    "moneda"                            => "1",
+    "moneda"                            => @moneda_nube,
     "tipo_de_cambio"                    => "",
     "porcentaje_de_igv"                 => "18.00",
     "descuento_global"                  => "",
@@ -604,13 +622,13 @@ invoice = NubeFact::Invoice.new({
     "total_igv"                         => @factura.tax,
     "total_gratuita"                    => "",
     "total_otros_cargos"                => "",
-    "total"                             =>   @factura.total,
+    "total"                             => @factura.total,
     "percepcion_tipo"                   => "",
     "percepcion_base_imponible"         => "",
     "total_percepcion"                  => "",
     "total_incluido_percepcion"         => "",
     "detraccion"                        => "false",
-    "observaciones"                     => "",
+    "observaciones"                     => @texto_obs, 
     "documento_que_se_modifica_tipo"    => "",
     "documento_que_se_modifica_serie"   => "",
     "documento_que_se_modifica_numero"  => "",
@@ -621,10 +639,10 @@ invoice = NubeFact::Invoice.new({
     "codigo_unico"                      => "",
     "condiciones_de_pago"               => "",
     "medio_de_pago"                     => "",
-    "placa_vehiculo"                    => "",
+    "placa_vehiculo"                    => @factura.description  ,
     "orden_compra_servicio"             => "",
     "tabla_personalizada_codigo"        => "",
-    "formato_de_pdf"                    => "",
+    "formato_de_pdf"                    => ""
 
 
 })
@@ -636,26 +654,61 @@ invoice = NubeFact::Invoice.new({
 
 cantidad = 0
 
-@factura_detail = FacturaDetail.where(factura_id: @factura.id)
+
+if @factura.servicio == "true"
+       
+         @factura_detail = FacturaDetail.where(factura_id: @factura.id )
+       else 
+       
+         @factura_detail = FacturaDetail.select(:product_id,"SUM(quantity) as quantity","SUM(total) as total").where(factura_id: self.id).group(:product_id)
+      
+        end 
+
+
+for item0 in @factura_detail
+  puts "***********"
+    puts item0.product.code
+    puts item0.product.name 
+    puts item0.quantity 
+    puts item0.total 
+
+end
 
 for item_factura in @factura_detail 
     
 
 puts "*+++++++++++++++++++++"
 puts item_factura.quantity  
+#puts item_factura.preciosigv 
 
-  invoice.add_item({
- unidad_de_medida: 'ZZ',
-  descripcion: 'Osito de peluche de taiwan',
-  cantidad: 1,
-  valor_unitario: "#{item_factura.price_discount.round(2)}",
-  tipo_de_igv: 1,
+        if @factura.servicio == "true"
+          invoice.add_item({
+            codigo: item_factura.product.code ,
+         unidad_de_medida: item_factura.product.unidad.descrip2, 
+          descripcion: item_factura.product.name ,
+          cantidad: item_factura.quantity,
+          valor_unitario: item_factura.preciosigv   ,
+          tipo_de_igv: 1 
 
-                   
+          })
+        else 
 
-  })
+          @valor_unitario = (item_factura.total / item_factura.quantity ) / 1.18
+          invoice.add_item({
+            codigo: item_factura.product.code ,
+           unidad_de_medida: item_factura.product.unidad.descrip2, 
+          descripcion: item_factura.product.name ,
+          cantidad: item_factura.quantity,
+          valor_unitario:  @valor_unitario  ,
+          tipo_de_igv: 1 
+
+          })
+
+        end 
 
 end 
+
+puts JSON.pretty_generate(invoice )
 
 result = invoice.deliver
 

@@ -7,18 +7,18 @@ require 'json'
 
 module NubeFact; end
 
-require "util/validator"
-require "util/utils"
-require "util/sunat"
+require "./lib/nubefact/util/validator"
+require "./lib/nubefact/util/utils"
+require "./lib/nubefact/util/sunat"
 
-require "nube_fact/version"
-require "nube_fact/exceptions"
+require "./lib/nubefact/nube_fact/version"
+require "./lib/nubefact/nube_fact/exceptions"
 
-require "nube_fact/document"
-require 'nube_fact/document/guia'
-require 'nube_fact/document/item'
-require "nube_fact/invoice"
-require "nube_fact/credit_note"
+require "./lib/nubefact/nube_fact/document"
+require './lib/nubefact/nube_fact/document/guia'
+require './lib/nubefact/nube_fact/document/item'
+require "./lib/nubefact/nube_fact/invoice"
+require "./lib/nubefact/nube_fact/credit_note"
 
 module NubeFact
   API_BASE = 'https://www.nubefact.com/api/v1'
@@ -54,8 +54,10 @@ module NubeFact
     # ToDO evaluate response code (not authorized, 500, etc)
 
     result = JSON.parse(response.read_body)
-    if result['errors']
-      raise ErrorResponse.new "#{result['codigo']}: #{result['errors']}"
+
+    if result['errors'] 
+
+        puts  "#{result['codigo']}: #{result['errors']}"
     end
 
     result

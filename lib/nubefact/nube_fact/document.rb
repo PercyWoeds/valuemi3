@@ -150,6 +150,8 @@ class NubeFact::Document
     validate!
 
     NubeFact.request to_h
+
+    
   end
 
   def calculate_amounts
