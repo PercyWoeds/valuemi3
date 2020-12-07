@@ -7,7 +7,7 @@ class SellvalesController < ApplicationController
     
     if current_user.email == "percywoeds@gmail.com"  || @current_user.level == "admin"  
       
-      @sellvales2 = Sellvale.all.where("fecha>=? and fecha<=?","2020-02-01 00:00:00","2020-12-31 23:59:59").order(:fecha,:serie,:numero)
+      @sellvales2 = Sellvale.all.where("fecha>=? and fecha<=?","2020-11-01 00:00:00","2020-11-30 23:59:59").order(:fecha,:serie,:numero)
       
         if params[:search_serie]  || params[:search_numero]
           @sellvales = Sellvale.search(params[:search_serie],params[:search_numero]).order(:fecha,:serie,:numero).paginate(:page => params[:page], :per_page => 20)
