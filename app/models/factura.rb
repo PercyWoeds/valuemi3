@@ -557,7 +557,7 @@ class Factura < ActiveRecord::Base
 
         end 
         
-             self.date_processed = Time.now
+        self.date_processed = Time.now
         self.save
 
     end
@@ -713,6 +713,10 @@ puts JSON.pretty_generate(invoice )
 result = invoice.deliver
 
 
+        self.processed="1"
+   
+        self.date_processed = Time.now
+        self.save
 
  end
 
