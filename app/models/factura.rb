@@ -535,12 +535,16 @@ class Factura < ActiveRecord::Base
            for x in facturas 
               total0 = 0
               total00 = 0
+              total000 = 0 
 
-              x.total = x.preciosigv.round(3) * x.quantity 
+              total000 = x.preciosigv.round(3) * x.quantity 
 
-              total00 = x.total.round(2) * 1.18 
-              
+              total00 = total000.round(2) * 1.18 
+
               total0 = total00.round(2)
+
+              total = total0 
+
               x.save
               
               total += total0 
