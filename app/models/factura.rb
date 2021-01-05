@@ -519,9 +519,7 @@ class Factura < ActiveRecord::Base
   # Process the invoice
   def process
 
-
     if(self.processed == "1" or self.processed == true)   
-
 
       self.processed="1"
 
@@ -536,8 +534,13 @@ class Factura < ActiveRecord::Base
 
            for x in facturas 
               total0 = 0
-              x.total = (x.preciosigv.round(3) * 1.18 * x.quantity)
-              total0 = x.total.round(2)
+              total00 = 0
+
+              x.total = x.preciosigv.round(3) * x.quantity 
+
+              total00 = x.total.round(2) * 1.18 
+              
+              total0 = total00.round(2)
               x.save
               
               total += total0 

@@ -1626,6 +1626,7 @@ def reportes31
         
         $lcFileName =  "app/pdf_output/ticket2.pdf"              
         end 
+      
         
     
     $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
