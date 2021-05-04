@@ -124,11 +124,11 @@ module SUNAT
       row << "#{self.item.description}"
 
 
-      if $lcServicioFactura =="true  
+      if $lcServicioFactura =="true"  
 
 
           row << "0.067"
-         row << "#{self.line_extension_vventa.to_s}"
+          
       else 
 
       
