@@ -128,7 +128,7 @@ module SUNAT
 
 
           row << "0.067"
-          
+          row << "#{self.line_extension_amount.to_s}"
       else 
 
       
