@@ -132,8 +132,8 @@ module SUNAT
       else 
 
       
-
-        row << "#{self.pricing_reference.alternative_condition_price.price_amount }"
+        row << "0.0875"
+     #   row << "#{self.pricing_reference.alternative_condition_price.price_amount }"
         row << "#{self.line_extension_amount.to_s}"
       end 
   
