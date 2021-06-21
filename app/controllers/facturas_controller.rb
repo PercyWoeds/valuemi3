@@ -1642,7 +1642,7 @@ def reportes31
     @invoice = Factura.find(params[:id])
     @invoice[:processed] = "1"
     @invoice.process
-    
+    @invoice.process2
     flash[:notice] = "The invoice order has been processed."
     redirect_to @invoice
   end
