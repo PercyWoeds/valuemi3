@@ -127,7 +127,7 @@ module SUNAT
       if $lcServicioFactura == "true"  
 
 
-          row << "0.11"
+          row << "0.13"
           row << "#{self.line_extension_vventa.to_s}"
       else 
 
