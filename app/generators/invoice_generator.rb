@@ -162,6 +162,12 @@ class InvoiceGenerator < DocumentGenerator
          puts "codigo **"
          puts a
          puts b
+
+         dias_vmto  = @invoice.get_dias(@invoice.payment_id) 
+        
+         $lg_fecha2    =  @invoice.fecha + dias_vmto.days 
+        
+        
          
         lcVVenta1      =  @invoice.subtotal * 100        
         lcVVenta_a       =  lcVVenta1.round(0)

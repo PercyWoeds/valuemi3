@@ -979,6 +979,19 @@ result = invoice.deliver
      
    end  
 
+def get_dias_formapago
+    
+    return self.payment.day 
+    
+  end 
 
+  def get_dias(id)
+
+       a  =  Payment.find(id)
+
+       return a.day 
+
+  end 
+  
   
 end

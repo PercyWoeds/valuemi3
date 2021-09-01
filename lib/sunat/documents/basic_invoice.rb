@@ -206,11 +206,14 @@ require 'active_support/number_helper'
     private
 
     def client_data_headers
-      client_headers = [["Cliente   :", customer.party.party_legal_entity.registration_name]]
-      #client_headers << ["Direccion", customer.party.postal_addresses.first.to_s]
+
+     
+      client_headers = [["Señor(es)   :", customer.party.party_legal_entity.registration_name]]
       client_headers << ["Dirección :",$lcDirCli]
-      client_headers << ["Distrito  :",$lcDisCli]
       client_headers << [customer.type_as_text, customer.account_id]
+      client_headers << ["Guia Remision :", $lcGuiaRemision]
+
+      
 
       if $lcServicio =="true"
 
@@ -223,10 +226,13 @@ require 'active_support/number_helper'
 
     def invoice_headers
       invoice_headers = [["Fecha de emisión :", issue_date]]
-      #invoice_headers = [["Fecha de emisión :", "2015-12-09"]]
+  
+      invoice_headers << ["Fecha Vcto :",  $lg_fecha2.strftime("%d/%m/%Y") ]
+      invoice_headers << ["Forma de pago :", $lcFormapago]
       invoice_headers << ["Tipo de moneda : ", Currency.new(document_currency_code).singular_name.upcase]
-      invoice_headers << ["Guia Remision :", $lcGuiaRemision]
+     
       invoice_headers << ["Placa :", $lcPlaca]
+
 
       invoice_headers
     end
