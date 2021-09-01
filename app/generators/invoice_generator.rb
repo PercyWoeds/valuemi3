@@ -184,7 +184,7 @@ class InvoiceGenerator < DocumentGenerator
         $lcSerie = a 
         $lcDocument_serial_id =@lg_serial_id 
         $lcRuc          = @invoice.customer.ruc
-        
+          $lcFormapago    = @invoice.payment.descrip
         $lcTd           = @invoice.document.descripshort
         
         $lcMail         = @invoice.customer.email
