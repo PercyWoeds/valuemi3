@@ -123,6 +123,18 @@
         <%= f.text_field :texto2 ,size:46 %>
       </div>
 
+
+ <div class="field">
+      
+      <%= f.check_box :denis  %>
+
+      <%= f.label :denis , "Denis precio peaje ?", :class => "bold" %>
+      <div class="small">
+        Marks wether or not this invoice has been payed and we can deduct the product quantities and count it towards the month's total.
+      </div>
+    </div>
+
+    
      
       <div class="field" id="list_items">
         <p class="bold big">Products:</p>
