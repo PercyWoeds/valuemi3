@@ -138,6 +138,7 @@ class InvoiceGenerator < DocumentGenerator
     @invoice = Factura.find(@numero)
 
      $lcServicio = @invoice.servicio
+     $lcDenis = @invoice.denis 
 
      $lcServiciotxt = @invoice.texto2
 

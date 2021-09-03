@@ -126,9 +126,17 @@ module SUNAT
 
       if $lcServicioFactura == "true"  
 
-
+         if $lcDenis == "1"
           row << "0.13"
+
           row << "#{self.line_extension_vventa.to_s}"
+        else
+              row << "0.067"
+
+          row << "#{self.line_extension_vventa.to_s}"
+        end 
+
+
       else 
 
       
