@@ -43,6 +43,8 @@ require 'active_support/number_helper'
     end
 
     def document_currency_code
+   
+      
       currency = get_attribute(:document_currency_code)
       if currency
         currency
@@ -50,6 +52,7 @@ require 'active_support/number_helper'
         legal_monetary_total.currency
       else
         DEFAULT_CURRENCY_CODE
+        
       end
     end
 
@@ -82,7 +85,15 @@ require 'active_support/number_helper'
     end
 
     def build_pdf_body(pdf)
-      pdf.font "Helvetica", :size => 8
+      
+      
+       pdf.font_families.update("Open Sans" => {
+          :normal => "app/assets/fonts/OpenSans-Regular.ttf",
+          :italic => "app/assets/fonts/OpenSans-Italic.ttf",
+          :bold   => "app/assets/fonts/OpenSans-Bold.ttf",
+        } )
+      
+       pdf.font "Open Sans",:size => 6
 
       max_rows = [client_data_headers.length, invoice_headers.length, 0].max
       rows = []
@@ -101,12 +112,12 @@ require 'active_support/number_helper'
           :width => pdf.bounds.width
         }) do
           columns([0, 2]).font_style = :bold
-          columns([0]).width  = 60
-          columns([1]).width  = 300
-          columns([2]).width  = 100
+          columns([1]).width = 300
+
+
         end
 
-        pdf.move_down 20
+        pdf.move_down 5
 
       end
 
@@ -115,81 +126,96 @@ require 'active_support/number_helper'
 
       InvoiceLine::TABLE_HEADERS.each do |header|
         cell = pdf.make_cell(:content => header)
-        cell.background_color = "FFFFCC"
+        cell.background_color = "FFFFFF"
+        cell.align = :center 
         headers << cell
       end
 
       table_content << headers
 
-      puts "servocip-----------"
-      puts $lcServicio
+      result = pdf.table table_content, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width
+                                        } do 
+                                  
+                                          columns([0]).align=:center
+                                          columns([1]).align=:center
+                                          columns([2]).align=:center
+                                          columns([3]).align=:center
+                                          columns([4]).align=:center 
+                                          columns([5]).align=:center  
+                                          
+                                           columns([0]).width = 30
+                                           columns([1]).width = 30
+                                           
+                                           columns([2]).width = 30
+                                           columns([3]).width = 330
+                                         
+                                           columns([4]).width = 60
+                                           columns([5]).width = 60                                    
+                                        end
 
-      if $lcServicio == "true"
-        row =[]
-        row << ""
-        row << ""
-        row << ""
-        row << $lcServiciotxt
-        row << ""
-        row << ""
-        table_content<< row
-
-      end 
+       table_content = []
 
       lines.each do |line|
         table_content << line.build_pdf_table_row(pdf)
       end
 
+
+      puts "ancho tabla "
+      puts pdf.bounds.width
       result = pdf.table table_content, {:position => :center,
                                         :header => true,
                                         :width => pdf.bounds.width
                                         } do 
+                                        rows([0]).align=:center
                                           columns([0]).align=:center
-                                          columns([1]).align=:right
-                                          columns([2]).align=:center
-                                          columns([3]).width= 250 
+                                          columns([1]).align=:left 
+                                          columns([2]).align=:right
+                                          columns([3]).align=:left 
+                                          columns([4]).align=:right 
+                                          columns([5]).align=:right 
                                           
-                                          columns([4]).align=:right
-                                          columns([5]).align=:right
-                                          columns([6]).align=:right
+                                          columns([0]).width = 30
+                                           columns([1]).width = 30
+                                           
+                                           columns([2]).width = 30
+                                           columns([3]).width = 330
+                                         
+                                           columns([4]).width = 60
+                                           columns([5]).width = 60                                     
                                         end
 
-       pdf.move_down 10
-      
-      
-      
+      pdf.move_down 5
 
+ 
       pdf.table invoice_summary, {
         :position => :right,
         :cell_style => {:border_width => 1},
-        :width => 260
+        :width => pdf.bounds.width / 3
       } do
         columns([0]).font_style = :bold
         columns([1]).align = :right
-        columns([0]).higth = 20
-        columns([1]).higth = 20
-        
-    
+        columns([0]).width = 100
       end
-      #pdf.image open("https://chart.googleapis.com/chart?chs=100x100&cht=qr&chl=#{$lcCodigoBarra}&choe=UTF-8")
-      
-      pdf.move_down 20
-      
-      pdf.table letras, {
+
+      pdf.move_down 2
+
+      pdf.table invoice_summary2, {
         :position => :right,
-        :cell_style => {:border_width => 0},
+        :cell_style => {:border_width => 0 },
         :width => pdf.bounds.width
       } do
         columns([0]).font_style = :bold
-        columns([1]).align = :left
-        columns([0]).width = 50
-        
+        columns([1]).align = :left 
+
+        columns([0]).width = 25
+
         
       end
-      
-     
-       pdf.move_down 10
-       
+ 
+
+      pdf.move_down 2
       
       pdf
 
@@ -205,81 +231,106 @@ require 'active_support/number_helper'
 
     private
 
-    def client_data_headers
-
-     
+   def client_data_headers
       client_headers = [["Señor(es)   :", customer.party.party_legal_entity.registration_name]]
       client_headers << ["Dirección :",$lcDirCli]
       client_headers << [customer.type_as_text, customer.account_id]
-      client_headers << ["Guia Remision :", $lcGuiaRemision]
-
+      client_headers << [" "," "]
       
-
-      if $lcServicio =="true"
-
-       client_headers << ["Local Comercial :",$lcLocal]
-
-      end 
-
       client_headers
     end
 
     def invoice_headers
-      invoice_headers = [["Fecha de emisión :", issue_date]]
-  
-      invoice_headers << ["Fecha Vcto :",  $lg_fecha2.strftime("%d/%m/%Y") ]
-      invoice_headers << ["Forma de pago :", $lcFormapago]
-      invoice_headers << ["Tipo de moneda : ", Currency.new(document_currency_code).singular_name.upcase]
+      
+      
+      invoice_headers = [["Fecha de emisión:", issue_date.strftime("%d/%m/%Y") ]]
+      invoice_headers << ["Fecha Vencimiento :",  $lg_fecha2.strftime("%d/%m/%Y") ]
+      
+      invoice_headers << ["Moneda :", Currency.new(document_currency_code).singular_name.upcase]
+      invoice_headers << ["Forma de pago :", $lcFormapagoCorto ]
      
-      invoice_headers << ["Placa :", $lcPlaca]
-
 
       invoice_headers
     end
 
-      def invoice_summary
+    def invoice_summary
+
+      monedasimbolo = Currency.new(document_currency_code).singular_name.upcase
+      puts "moneda "
+      puts monedasimbolo 
+
       invoice_summary = []
-      monetary_totals = [{label: "Total valor venta - Op.Gravadas", catalog_index: 0},
-       {label: "Total valor venta - Op.Inafectas", catalog_index: 1},
-       {label: "Total valor venta - Op.Exoneradas", catalog_index: 2},
-       {label: "Total valor venta - Op.Gratuitas", catalog_index: 3},
-       {label: "Total descuentos", catalog_index: 9}
-      ]
-      monetary_totals.each do |monetary_total|
+
+      if monedasimbolo.strip == "SOL"
+
+          monetary_totals = [{label: "Operaciones gravadas S/", catalog_index: 0},
+           {label: "Operaciones inafectas S/", catalog_index: 1},
+           {label: "Operaciones exoneradas S/"  , catalog_index: 2},
+           {label: "Operaciones gratuitas S/", catalog_index: 3},
+           {label: "Sub total S/", catalog_index: 4},
+           {label: "Total descuentos S/", catalog_index: 9}
+          ]
+           monetary_totals.each do |monetary_total|
         value = get_monetary_total_by_id(SUNAT::ANNEX::CATALOG_14[monetary_total[:catalog_index]])
         if value.present?
-            invoice_summary << [monetary_total[:label], ActiveSupport::NumberHelper::number_to_delimited(value.payable_amount,delimiter:",",separator:".").to_s]
-       else 
-           invoice_summary << [monetary_total[:label], ActiveSupport::NumberHelper::number_to_delimited(0.00,delimiter:",",separator:".").to_s]
+          invoice_summary << [monetary_total[:label], ActiveSupport::NumberHelper::number_to_delimited(value.payable_amount,delimiter:",",separator:".").to_s]
        
-         end
-        
+        end
       end
+
+
 
       tax_totals.each do |tax_total|
-        invoice_summary << [tax_total.tax_type_name,ActiveSupport::NumberHelper::number_to_delimited(tax_total.tax_amount,delimiter:",",separator:".").to_s]
+        invoice_summary << ["IGV S/",ActiveSupport::NumberHelper::number_to_delimited(tax_total.tax_amount,delimiter:",",separator:".").to_s]
       end
 
-    
-    invoice_summary << ["Total  a Pagar ", ActiveSupport::NumberHelper::number_to_delimited(legal_monetary_total,delimiter:",",separator:".").to_s]
-    
-    
+      invoice_summary << ["Total S/", ActiveSupport::NumberHelper::number_to_delimited(legal_monetary_total,delimiter:",",separator:".").to_s]
+
+      
+      else
+        monetary_totals = [{label: "Operaciones gravadas USD", catalog_index: 0},
+           {label: "Operaciones inafectas USD", catalog_index: 1},
+           {label: "Operaciones exoneradas USD"  , catalog_index: 2},
+           {label: "Operaciones gratuitas USD", catalog_index: 3},
+           {label: "Sub total USD", catalog_index: 4},
+           {label: "Total descuentos USD", catalog_index: 9}
+          ]
+
+           monetary_totals.each do |monetary_total|
+        value = get_monetary_total_by_id(SUNAT::ANNEX::CATALOG_14[monetary_total[:catalog_index]])
+        if value.present?
+          invoice_summary << [monetary_total[:label], ActiveSupport::NumberHelper::number_to_delimited(value.payable_amount,delimiter:",",separator:".").to_s]
+        
+        end
+      end
+
+
+
+      tax_totals.each do |tax_total|
+        invoice_summary << ["IGV USD",ActiveSupport::NumberHelper::number_to_delimited(tax_total.tax_amount,delimiter:",",separator:".").to_s]
+      end
+
+      invoice_summary << ["Total USD", ActiveSupport::NumberHelper::number_to_delimited(legal_monetary_total,delimiter:",",separator:".").to_s]  
+      end 
+
      
-      invoice_summary
     end
-    
-     def letras
-       letras  = []
-       if get_additional_property_by_id(SUNAT::ANNEX::CATALOG_15[0])
+
+    def  invoice_summary2
+
+      invoice_summary2 = []
+
+      if get_additional_property_by_id(SUNAT::ANNEX::CATALOG_15[0])
         total = get_additional_property_by_id(SUNAT::ANNEX::CATALOG_15[0]).value
       else
         total = legal_monetary_total.textify.upcase
       end
-      letras  << ["SON : ", ActiveSupport::NumberHelper::number_to_delimited(total,delimiter:",",separator:".")]
-      
-      letras
-    end 
-    
+
+      invoice_summary2 << ["SON: ", ActiveSupport::NumberHelper::number_to_delimited(total,delimiter:",",separator:".")]
+      invoice_summary2
+
+     
+    end
 
     def get_line_number
       @current_line_number ||= 0

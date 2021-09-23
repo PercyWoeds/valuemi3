@@ -101,13 +101,9 @@ before_filter :authenticate_user!
             else
                 row << " E "
             end 
+            row << product.descrip 
             
             
-            if product.supplier.id != 4 
-              row << product.supplier.name 
-            else
-              row << product.employee.full_name
-            end 
             
             row << product.detalle
             

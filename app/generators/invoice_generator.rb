@@ -136,6 +136,7 @@ class InvoiceGenerator < DocumentGenerator
   def data(items = 0, currency = 'PEN')
     
     @invoice = Factura.find(@numero)
+    $lcDocumentIdFactura = @invoice.document_id  
 
      $lcServicio = @invoice.servicio
      $lcDenis = @invoice.denis 
@@ -167,7 +168,42 @@ class InvoiceGenerator < DocumentGenerator
          dias_vmto  = @invoice.get_dias(@invoice.payment_id) 
         
          $lg_fecha2    =  @invoice.fecha + dias_vmto.days 
+
+         puts "dias de pago 1********"
+         puts dias_vmto
+
+        $lcDiasPago = dias_vmto 
+
+        if dias_vmto == 0 
+          $lcFormapagoCorto  = "CONTADO"
+          $lcFormapagoMayus  = "CONTADO"
+        else
+          $lcFormapagoCorto  = "CREDITO"
+          $lcFormapagoMayus  = "CREDITO: FACTURA A " + dias_vmto.to_s + " DIAS "
+
+        end 
+
+        $lcFormapago    = @invoice.payment.descrip
+
+        $lcTd           = @invoice.document.descripshort
         
+        $lcMail         = @invoice.customer.email
+        $lcMail2        = ""
+        $lcMail3        = ""
+
+        $lcDetraccionImporte = @invoice.detraccion_importe
+        $lcDetraccionPercent = @invoice.detraccion_percent 
+        $lcDetraccionCuenta  = @invoice.detraccion_cuenta 
+        $lcDetraccionDescrip = @invoice.detraccion_descrip 
+        $lcDetraccionCodigo  = @invoice.get_codigo_det
+        $lcRetencionImporte  = @invoice.retencion_importe 
+        
+
+        $lnTotalFactura = @invoice.total  
+
+        puts "detra codigo "
+        puts $lcDetraccionCodigo  
+
         
          
         lcVVenta1      =  @invoice.subtotal * 100        
@@ -185,7 +221,7 @@ class InvoiceGenerator < DocumentGenerator
         $lcSerie = a 
         $lcDocument_serial_id =@lg_serial_id 
         $lcRuc          = @invoice.customer.ruc
-          $lcFormapago    = @invoice.payment.descrip
+        $lcFormapago    = @invoice.payment.descrip
         $lcTd           = @invoice.document.descripshort
         
         $lcMail         = @invoice.customer.email

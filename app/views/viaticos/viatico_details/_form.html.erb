@@ -17,71 +17,24 @@
   <div class="form-inputs">
     
     <input type="hidden" name="ac_item_id" id="ac_item_id"  />  
-    <input type="hidden" name="ac_supplier_id" id="ac_supplier_id"  />
-    <input type="hidden" name="ac_employee_id" id="ac_employee_id"  />
+   
     <br />
     
-    <strong>Orden de servicio :</strong><br />
-    <input type="text" name="ac_item" id="ac_item" value="<% if @ac_item %><%= @ac_item %><% end %>" />
-    
-    <div class="small">
-      Ingrese un termino de busqueda para encontrar un documento 
-    </div>
-    
-    <br />
-
-    <div class="small">
-      <strong>Seleccionar proveedor:</strong>
-      <span id="selected supplier"><% if @ac_supplier %><%= @ac_supplier %><% else %><!-- i --><% end %></span>
-
-    </div>
-    <%= hr() %>
-    
-    <div >
-    <strong>Destino  :</strong>
-    <br />
-      <%= f.collection_select :destino_id, @destinos , :id, :name , :prompt => true %>
-    <br />
+   
     <p>
       <strong>Gasto :</strong>
     </p>
+    <div class="small">
       <%= f.collection_select :gasto_id, @gastos , :id, :fullcuenta, :prompt => true %>
-    <br />
-    </div>
-    <td>
-    
-      <label for="ac_supplier" class="bold">Proveedor/Empleado*</label><br />
-          
-    <table> 
-    
-  <tr>
-    <td>        
-    <input type="radio" name="tipoproveedor" value="1" checked> Provedor<br>
-    </td>
-    
-    <td><input type="text" name="ac_supplier" id="ac_supplier" value="<% if @ac_supplier %><%= @ac_supplier %><% end %>" />
-        
-      <div class="small">
-      <a href="#" onclick="createSupplier(); return false;">+ Crear nuevo proveedor</a>
-      </div>
-    </td> 
-    
-  </tr>
-  <tr>
-    <td><input type="radio" name="tipoproveedor" value="2"> Empleado<br></td>
-    <td>
-      <%= f.collection_select :employee_id, @employees , :id, :full_name , :prompt => true %>
-    </td> 
-
-  </tr>
   
-      </table>      
-      
-      <div class="small">
-        Ingrese una termino de busqueda 
-      </div>
-    </td>
+    </div>
+
+      <br />
+
+
+    <td>
     
+     
       <br />
  <tr>
     <strong> Movimiento  :</strong><br />
@@ -94,20 +47,25 @@
       
     <br />
     
-    <strong>Comprobante Interno :</strong><br />
     
+       <br />
       <div class="field">
+        <strong>Comprobante Interno :</strong><br />
           <%= f.text_field :numero ,:style=> 'width: 200px'%>
       </div>
       
     <strong>Documento:</strong><br />
     <br />
-      
+     <div class="field">
       <%= f.collection_select :tm, @documents , :id, :fullname , :prompt => true %>
+    
+     </div>
+
     <br />
       
     
       <div class="field">
+         <strong> Nro.Documento :</strong><br />
           <%= f.text_field :compro ,:style=> 'width: 200px'%>
       </div>
     
@@ -137,15 +95,19 @@
       </div>
     </div>
     
-    
-    <div class="small">
-     Total 
-    </div>
-    <div >
+  
      <div class="field">
-      <%= f.label :detalle %><br />
+      <%= f.label :descrip, "Descripcion: " %><br />
+      <%= f.text_field :descrip  , :size=>"50", placeholder: "Ingrese Proveedor / Empleado - otros", :maxlength=>"254"%>
+    </div>  
+    
+
+     <div class="field">
+      <%= f.label :detalle, "Detalle: " %><br />
       <%= f.text_area :detalle %>
     </div>  
+
+
     </div>
     
 
@@ -157,11 +119,13 @@
   </div>
 
   <div class="form-actions">
-    <%= f.hidden_field :tranportorder_id,:id => "ac_item_id" %>
-    <%= f.hidden_field :supplier_id, :id => "ac_supplier_id" %>
     
     <%= f.button :submit %>
   </div>
+
+
+
+
 <% end %>
 
 

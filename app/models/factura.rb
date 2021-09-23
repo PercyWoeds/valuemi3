@@ -992,6 +992,19 @@ def get_dias_formapago
        return a.day 
 
   end 
+
+
+ 
+  def get_codigo_det
+  
+    if FacturaDetail.where(factura_id: self.id ).exists?
+
+       a = FacturaDetail.where(factura_id: self.id )
+     return   a.first.product.cuentadet 
+    else
+     return 0.00 
+    end 
+  end   
   
   
 end

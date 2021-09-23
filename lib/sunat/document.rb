@@ -20,6 +20,7 @@ module SUNAT
     property :pdf_path,                   String
     property :global_discount_percent,    Float
 
+
     def self.xml_root(root_name)
       define_method :xml_root do
         root_name
@@ -35,6 +36,7 @@ module SUNAT
       super(*args)
       #self.issue_date ||= Date.today
       self.issue_date ||= $lg_fecha 
+
       self.additional_properties ||= []
       self.additional_monetary_totals ||= []
     end
@@ -56,19 +58,13 @@ module SUNAT
     end
 
     def build_pdf_header(pdf)
-      if self.accounting_supplier_party.logo_path.present?
-        pdf.image "#{self.accounting_supplier_party.logo_path}", :width => 100
-        pdf.move_down 6
+     if self.accounting_supplier_party.logo_path.present?
+        pdf.image "#{self.accounting_supplier_party.logo_path}", :width => 200
+        pdf.move_down 2
       end
-      pdf.text "#{self.accounting_supplier_party.party.party_legal_entity.registration_name}", :size => 12,
-                                                                                               :style => :bold
-      pdf.move_down 4
-      pdf.text supplier.street, :size => 8
-      pdf.text supplier.district, :size => 8
-      pdf.text supplier.city, :size => 8
-      pdf.move_down 4
-
-      pdf.bounding_box([325, 725], :width => 200, :height => 80) do
+#     
+                                                                                
+      pdf.bounding_box([345, 755], :width => 200, :height => 80) do
         pdf.stroke_bounds
         pdf.move_down 15
         pdf.font "Helvetica", :style => :bold do
@@ -79,10 +75,9 @@ module SUNAT
           pdf.text "Rectifica: #{self.billing_reference.invoice_document_reference.id}", :align => :center, :size => 8 if self.try(:billing_reference).present?
         end
       end
-      pdf.move_down 25
+      pdf.move_down 5
       pdf
     end
-    
 
     def build_pdf_header_extension(pdf)
       raise not_implemented_exception
@@ -94,28 +89,153 @@ module SUNAT
 
 
     def build_pdf_footer(pdf)
-      
-       
-         pdf.stroke_horizontal_rule
-     
-     image_path = open("https://chart.googleapis.com/chart?chs=90x90&cht=qr&chl=#{$lcCodigoBarra}&choe=UTF-8")
-    
-     pdf.table([[ {:image => image_path,:position => :center}  , " El pago del documento sera necesariamente efectuado mediante deposito en cualquiera de las siguientes cuentas bancarias:  
-  BBVA Continental Cuenta Corriente en Moneda Nacional Numero: BBVA SOLES 0011-0168-27010004490.
-  Consultar  en  https://www.sunat.gob.pe/ol-ti-itconsultaunificadalibre/consultaUnificadaLibre/consulta."]],:cell_style => { :border_width => 0 } )
+
+
+      puts "documento id "
+      puts $lcDocumentIdFactura
+
+  
+ if $lcDocumentIdFactura == 1
+
+      pdf.bounding_box([0, 225 ], :width => 535  ,height: 225 ) do
+
+      pdf.stroke_bounds
+      pdf.stroke_horizontal_rule
+
+
+      row = []
+       table_content = []  
+         pdf.text "  "
+         pdf.text "  " + $lcFormapagoMayus ,:font_style=> :bold
+
+         row = []
+         table_content = []
+        row <<{:content =>"CUOTAS",:rowspan => 2,:border_width => 0}
+
+         row << "Nro.Cuotas  "
+         row << "Fecha de
+          Vencimiento "
+         row << "Tipo de
+          Moneda "
+         row << "Monto de Cuota"
+
+         row <<{:content =>" ",:rowspan => 2,:border_width => 0}
+
+        table_content << row
+
+
+         if $lcMonedaValor  == "PEN"
+            @moneda_valor = "SOL"
+         else
+            @moneda_valor = "DOLARES AMERICANOS"
+         end
+
+         row = []
+         row << "01"
+         row << $lg_fecha2.strftime("%d/%m/%Y")       
+         row << @moneda_valor   
+         @totalvalor = $lnTotalFactura.round(2) - $lcDetraccionImporte.round(2) - $lcRetencionImporte.round(2)
+         row << @totalvalor        
+
+         table_content << row
+          row = []
+          row <<{:content =>" ",:colspan => 5,:border_width => 0}
+
+          table_content << row
+
+
+          puts "dias pago +++++++++++++ "
+          puts $lcDiasPago
+
+
+          if $lcDiasPago !=  0
+
+            result = pdf.table table_content, {:position => :center,
+                                              :width => pdf.bounds.width * 0.70
+                                              } do
+                                                columns([0]).align=:center
+                                                columns([1]).align=:center
+                                                columns([2]).align=:center
+                                                columns([3]).align=:center
+                                                columns([3]).align=:center
+
+                                                columns([0]).width = 50
+                                                columns([3]).width = 80
+                                              end
+
+              pdf.stroke_horizontal_rule
+
+           end
+
+          table_content = []
+          row = []
+
+            if $lcDetraccionImporte > 0
+
+                      table_content = ([
+                      [{:content =>"DETRACCION EN MONEDA :  " + @moneda_valor,:colspan => 5 }],
+                      ["% Detraccion " ,"Codigo " ,"Monto Detraccion: ", "Nro.Cuenta en el BN.","Moneda:"],
+
+                      [ $lcDetraccionPercent.to_s ,$lcDetraccionCodigo ,$lcDetraccionImporte,$lcDetraccionCuenta ,"Sol"]
+                      ])
+
+                   pdf.table(table_content  ,{
+                       :position => :center,
+                       :width => pdf.bounds.width
+                     })do
+                       columns([0,1,2,3,4]).font_style = :bold
+                        columns([0,1,2,3,4,]).align = :center
+
+                     end
+
+             end 
+
+
+           image_path = open("https://chart.googleapis.com/chart?chs=90x90&cht=qr&chl=#{$lcCodigoBarra}&choe=UTF-8")
+
+          pdf.table([[ "   ",{:image => image_path,:position => :center}  , "
+           El pago del documento sera necesariamente efectuado mediante deposito en cualquiera de las siguientes cuentas bancarias:
+BBVA Continental Cuenta Corriente en Moneda Nacional Numero: BBVA SOLES 0011-0168-27010004490.
+Consultar en https://www.nubefact.com/20501683109"]],:cell_style => { :border_width => 0 } )
+
+      end
+    else 
+        pdf.bounding_box([0, 125 ], :width => 535  ,height: 125 ) do
+
+      pdf.stroke_bounds
+      pdf.stroke_horizontal_rule
+
+           image_path = open("https://chart.googleapis.com/chart?chs=90x90&cht=qr&chl=#{$lcCodigoBarra}&choe=UTF-8")
+
+          pdf.table([[ "   ",{:image => image_path,:position => :center}  , "
+
+
+           El pago del documento sera necesariamente efectuado mediante deposito en cualquiera de las siguientes cuentas bancarias:
+          BBVA Continental Cuenta Corriente en Moneda Nacional Numero: BBVA SOLES 0011-0168-27010004490.
+          Consultar  en  https://www.sunat.gob.pe/ol-ti-itconsultaunificadalibre/consultaUnificadaLibre/consulta."]],:cell_style => { :border_width => 0 } )
+
+       end 
+
+    end
 
       pdf
+
       
+
+  
+
     end
 
     def build_pdf(path=false)
-      Prawn::Document.generate(path || self.pdf_path || "app/pdf_output/#{file_name}.pdf") do |pdf|
+
+      Prawn::Document.generate(path || self.pdf_path || "app/pdf_output/#{file_name}.pdf" ,:bottom_margin=> 0.5) do |pdf|
       
         pdf.font "Helvetica"
         pdf = build_pdf_header(pdf)
         pdf = build_pdf_body(pdf)
         
         build_pdf_footer(pdf)
+
 
         $lcFileName =path || self.pdf_path || "app/pdf_output/#{file_name}.pdf"
         $lcFileNameIni =file_name

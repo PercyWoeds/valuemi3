@@ -2313,6 +2313,12 @@ def reportes31
     @invoice[:processed] = false
     @invoice[:descuento] = "0"
     @invoice[:tipoventa_id] = 2
+
+    @invoice[:detraccion_cuenta]  =   "00-000-5353362" 
+    @invoice[:detraccion_percent] = 4.00 
+    @invoice[:detraccion_importe ] = 0.00 
+    @invoice[:retencion_importe ] = 0.00 
+
     
     
     @company = Company.find(params[:company_id])
@@ -2342,6 +2348,7 @@ def reportes31
     @invoice[:user_id] = getUserId()
     @invoice[:moneda_id] = 2
     @invoice[:document_id] = 3
+
     
   end
   def new2
@@ -2508,7 +2515,7 @@ def newfactura2
     end
     @invoice[:numero2] = numero2
   
-
+  
 
     respond_to do |format|
       if @invoice.save
@@ -3996,17 +4003,23 @@ end
           puts "Moneda "
           puts @invoice.moneda_id
           
-           if @invoice.moneda_id == 1  
+          if @invoice.moneda_id == 1  
                 $lcFileName=""
-                case_49 = InvoiceGenerator.new(1,3,1,$lg_serie_factura,@invoice.id).with_different_currency2(true)
+                 $lcMonedaValor ="USD"
+
+                case_49 = InvoiceGenerator.new(1,3,1,@serie_factura,@invoice.id).with_different_currency2(true)
               #  puts $lcFileName 
+
            else
-               
-                case_3  = InvoiceGenerator.new(1,3,1,$lg_serie_factura,@invoice.id).with_igv2(true)
-           end 
+                   $lcMonedaValor ="PEN"
+                case_3  = InvoiceGenerator.new(1,3,1,@serie_factura,@invoice.id).with_igv2(true)
+
+
+           end
            
-        end 
-    
+        end
+
+
         
         $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
                 
@@ -5523,7 +5536,8 @@ def cuadre02
       :description,:comments,:code,:subtotal,:tax,:total,:processed,:return,
       :date_processed,:user_id,:payment_id,:fecha,:preciocigv,:tipo,:observ,
       :moneda_id,:detraccion,:factura2,:description,:document_id,:tipoventa_id,
-      :tarjeta_id,:guia,:texto1,:texto2,:texto3,:servicio,:facturas  )
+      :tarjeta_id,:guia,:texto1,:texto2,:texto3,:servicio,:facturas ,
+      :detraccion_importe,:detraccion_percent ,:detraccion_cuenta, :detraccion2 ,:anexo8_id ,:retencion_importe)
   end
 
 end

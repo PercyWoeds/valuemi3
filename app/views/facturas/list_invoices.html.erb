@@ -26,13 +26,6 @@
 </div>
 
 
-<br />
-<%= render "facturas/list" %>
-
-<br />
-
-<%= will_paginate @invoices %>  
-
 <div class="button">
   
   <% if @current_user.level != "caja" %>
@@ -45,6 +38,14 @@
   <% end %>
 
 </div>
+
+<br />
+<%= render "facturas/list" %>
+
+<br />
+
+<%= will_paginate @invoices %>  
+
 </div>
 
 <%= render 'layouts/autocomplete' %>

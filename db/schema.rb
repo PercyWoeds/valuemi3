@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200909140356) do
+ActiveRecord::Schema.define(version: 20210921172558) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -711,8 +711,8 @@ ActiveRecord::Schema.define(version: 20200909140356) do
     t.string   "return"
     t.datetime "date_processed"
     t.integer  "user_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
     t.datetime "fecha"
     t.string   "serie"
     t.string   "numero"
@@ -736,10 +736,17 @@ ActiveRecord::Schema.define(version: 20200909140356) do
     t.integer  "tarjeta_id"
     t.string   "guia"
     t.integer  "reference_fact"
+    t.integer  "note_concept_id"
     t.string   "texto1"
     t.string   "texto2"
     t.string   "texto3"
     t.string   "servicio"
+    t.string   "denis"
+    t.float    "detraccion_importe"
+    t.float    "detraccion_percent"
+    t.string   "detraccion_cuenta"
+    t.string   "detraccion_descrip"
+    t.float    "retencion_importe"
   end
 
   create_table "faltantes", force: :cascade do |t|
@@ -1354,8 +1361,9 @@ ActiveRecord::Schema.define(version: 20200909140356) do
     t.string   "code"
     t.string   "descrip"
     t.string   "td"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "document_id"
   end
 
   create_table "numeras", force: :cascade do |t|
@@ -1606,6 +1614,7 @@ ActiveRecord::Schema.define(version: 20200909140356) do
     t.string   "code1"
     t.string   "code2"
     t.integer  "unidad_id"
+    t.string   "cuentadet"
   end
 
   create_table "products_categories", force: :cascade do |t|

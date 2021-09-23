@@ -123,6 +123,12 @@
         <%= f.text_field :texto2 ,size:46 %>
       </div>
 
+       <div class="field">
+        <%= f.label :texto2, "Servicio: ", :class => "bold" %><br />
+        <%= f.text_field :texto2 ,size:46 %>
+      </div>
+
+
 
  <div class="field">
       
@@ -133,6 +139,33 @@
         Marks wether or not this invoice has been payed and we can deduct the product quantities and count it towards the month's total.
       </div>
     </div>
+
+
+
+
+  <div class="field">
+      <%= f.label :detracion_percent, "Detraccion %   ", :class => "bold" %><br />
+      <%= f.number_field :detraccion_percent ,:step => 0.1 %>
+    </div>
+
+     <div class="field">
+      <%= f.label :detraccion_importe, "Detraccion Importe: ", :class => "bold" %><br />
+      <%= f.number_field :detraccion_importe,:step => 0.01 %>
+    </div>
+
+
+
+   <div class="field">
+      <%= f.label :detraccion_cuenta, "Detraccion Cuenta :", :class => "bold" %><br />
+      <%= f.text_field :detraccion_cuenta ,:readonly => true %>
+    </div>
+
+
+  <div class="field">
+      <%= f.label :retencion_importe, "Retencion  Importe: ", :class => "bold" %><br />
+      <%= f.number_field :retencion_importe,:step => 0.01 %>
+    </div>
+
 
     
      
@@ -183,6 +216,8 @@
       <%= f.label :description %><br />
       <%= f.text_area :description %>
     </div>  
+
+
       
     <%= hr() %>
 
