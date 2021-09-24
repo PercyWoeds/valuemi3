@@ -174,11 +174,21 @@ class Viaticos::ViaticoDetailsController < ApplicationController
     @viatico_detail = ViaticoDetail.find(params[:id]) 
     @viatico_detail.viatico_id  = @viatico.id 
     @viatico_detail.fecha = params[:viatico_detail][:fecha]
-    @viatico_detail.employee_id = params[:ac_employee_id]
     
+    
+    
+        
     respond_to do |format|
-      if @viatico_detail.update_attributes(employee_id: params[:viatico_detail][:employee_id],fecha: params[:viatico_detail][:fecha],importe: params[:viatico_detail][:importe],
-        gasto_id: params[:viatico_detail][:gasto_id],destino_id: params[:viatico_detail][:destino_id],tm:params[:viatico_detail][:tm],numero: params[:viatico_detail][:numero],detalle: params[:viatico_detail][:detalle],document_id: params[:viatico_detail][:tm])
+      if @viatico_detail.update_attributes(employee_id: 10 ,
+        fecha: params[:viatico_detail][:fecha],
+        importe: params[:viatico_detail][:importe],
+        gasto_id: params[:viatico_detail][:gasto_id],
+        destino_id: params[:viatico_detail][:destino_id],
+        tm:params[:viatico_detail][:tm],
+        numero: params[:viatico_detail][:numero],
+        detalle: params[:viatico_detail][:detalle],
+        document_id: params[:viatico_detail][:tm],
+        descrip: params[:viatico_detail][:descrip])
    begin
       @viatico[:inicial] = @viatico.get_total_inicial
     rescue
@@ -296,6 +306,6 @@ class Viaticos::ViaticoDetailsController < ApplicationController
       
       params.require(:viatico_detail).permit(:fecha, :descrip, :document_id, :numero, :importe, :detalle, :tm,
        :CurrTotal, :tranportorder_id,:date_processed,:ruc,:supplier_id,:gasto_id,:employee_id,:destino_id,
-       :compro,:tipomov_id)
+       :compro,:tipomov_id )
     end
 end
