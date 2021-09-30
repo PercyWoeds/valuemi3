@@ -152,7 +152,9 @@ require 'sidekiq/web'
         collection { get :factura3 }
         
     collection { get :cuadre01   }    
-    collection { get :cuadre02   }    
+    collection { get :cuadre02   }
+    collection { get :rit_01    }
+        
   end 
     
   
@@ -521,6 +523,7 @@ end
   match 'companies/reports/rpt_parte_14/:company_id' => 'reports#rpt_parte_14', via: [:get, :post]  
   match 'companies/reports/rpt_parte_15/:company_id' => 'reports#rpt_parte_15', via: [:get, :post]
   match 'companies/reports/rpt_parte_16/:company_id' => 'reports#rpt_parte_16', via: [:get, :post]
+  match 'companies/reports/rpt_parte_17/:company_id' => 'reports#rpt_parte_17', via: [:get, :post]
   
   match 'companies/reports/cuadre_01/:company_id' => 'reports#cuadre_01', via: [:get, :post]    
   

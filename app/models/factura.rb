@@ -515,7 +515,21 @@ class Factura < ActiveRecord::Base
     return tot
     
   end 
+
+
+
+  def get_codigo_det
   
+    if FacturaDetail.where(factura_id: self.id ).exists?
+
+       a = FacturaDetail.where(factura_id: self.id )
+     return   a.first.product.cuentadet 
+    else
+     return 0.00 
+    end 
+  end   
+
+
   # Process the invoice
   def process
 
@@ -569,10 +583,24 @@ class Factura < ActiveRecord::Base
 
 
           @factura = Factura.find(self.id)
+          
 
           puts @factura.code 
 
           @fecha_emision = @factura.fecha.strftime("%Y-%m-%d")
+          @fecha_vmto    = @factura.fecha2.strftime("%Y-%m-%d")
+
+
+          if @factura.payment.day == 0 
+            @forma_pago = "CONTADO" 
+            @medio_pago = "CONTADO"
+          else 
+             @forma_pago = "CREDITO"
+             @medio_pago = "VENTA AL CREDITO"
+          end
+
+
+
           ff = @factura.code.split("-")
 
           @serie  =  ff[0]
@@ -582,69 +610,139 @@ class Factura < ActiveRecord::Base
            @moneda_nube = 2
           else
                 @moneda_nube = 1
-          end 
+          end
+
+
           if @factura.servicio == "true"
                @texto_obs = @factura.texto2  +  " LOCAL : "  + @factura.texto1
           else
                @texto_obs = " "
-          end   
+          end
+
+          if @factura.detraccion_importe  > 0.0
+
+              @detraccion_tipo  =  @factura.get_codigo_det
+              @detraccion_total =  @factura.detraccion_importe
+              @medio_de_pago_detraccion = "1" 
+
+            # create a new Invoice object
+            invoice = NubeFact::Invoice.new({
+                "operacion"                   => "generar_comprobante",
+                "tipo_de_comprobante"               => "1",
+                "serie"                             =>  @serie,
+                "numero"                            =>  @numero ,
+                "sunat_transaction"                 => "1",
+                "cliente_tipo_de_documento"         => "6",
+                "cliente_numero_de_documento"       => @factura.customer.ruc ,
+                "cliente_denominacion"              => @factura.customer.name ,
+                "cliente_direccion"                 => @factura.customer.direccion_all ,
+                "cliente_email"                     => "",
+                "cliente_email_1"                   => "",
+                "cliente_email_2"                   => "",
+                "fecha_de_emision"                  => @fecha_emision,
+                "fecha_de_vencimiento"              => @fecha_vmto ,
+                "moneda"                            => @moneda_nube,
+                "tipo_de_cambio"                    => "",
+                "porcentaje_de_igv"                 => "18.00",
+                "descuento_global"                  => "",
+                "descuento_global"                  => "",
+                "total_descuento"                   => "",
+                "total_anticipo"                    => "",
+                "total_gravada"                     => @factura.subtotal,
+                "total_inafecta"                    => "",
+                "total_exonerada"                   => "",
+                "total_igv"                         => @factura.tax,
+                "total_gratuita"                    => "",
+                "total_otros_cargos"                => "",
+                "total"                             => @factura.total,
+                "percepcion_tipo"                   => "",
+                "percepcion_base_imponible"         => "",
+                "total_percepcion"                  => "",
+                "total_incluido_percepcion"         => "",
+                "detraccion"                        => "false",
+                "observaciones"                     => @texto_obs, 
+                "documento_que_se_modifica_tipo"    => "",
+                "documento_que_se_modifica_serie"   => "",
+                "documento_que_se_modifica_numero"  => "",
+                "tipo_de_nota_de_credito"           => "",
+                "tipo_de_nota_de_debito"            => "",
+                "enviar_automaticamente_a_la_sunat" => "true",
+                "enviar_automaticamente_al_cliente" => "false",
+                "codigo_unico"                      => "",
+                "condiciones_de_pago"               => @forma_pago,
+                "medio_de_pago"                     => @medio_pago,
+                "placa_vehiculo"                    => @factura.description  ,
+                "orden_compra_servicio"             => "",
+                "tabla_personalizada_codigo"        => "",
+                "formato_de_pdf"                    => "",
+                "detraccion_tipo"                  => @detraccion_tipo,
+                "detraccion_total"                 => @detraccion_total,
+                "medio_de_pago_detraccion"         => @medio_de_pago_detraccion
+               
+            })
+
+          else 
+              # create a new Invoice object
+              invoice = NubeFact::Invoice.new({
+                  "operacion"                   => "generar_comprobante",
+                  "tipo_de_comprobante"               => "1",
+                  "serie"                             =>  @serie,
+                  "numero"                            =>  @numero ,
+                  "sunat_transaction"                 => "1",
+                  "cliente_tipo_de_documento"         => "6",
+                  "cliente_numero_de_documento"       => @factura.customer.ruc ,
+                  "cliente_denominacion"              => @factura.customer.name ,
+                  "cliente_direccion"                 => @factura.customer.direccion_all ,
+                  "cliente_email"                     => "",
+                  "cliente_email_1"                   => "",
+                  "cliente_email_2"                   => "",
+                  "fecha_de_emision"                  => @fecha_emision,
+                  "fecha_de_vencimiento"              => @fecha_vmto ,
+                  "moneda"                            => @moneda_nube,
+                  "tipo_de_cambio"                    => "",
+                  "porcentaje_de_igv"                 => "18.00",
+                  "descuento_global"                  => "",
+                  "descuento_global"                  => "",
+                  "total_descuento"                   => "",
+                  "total_anticipo"                    => "",
+                  "total_gravada"                     => @factura.subtotal,
+                  "total_inafecta"                    => "",
+                  "total_exonerada"                   => "",
+                  "total_igv"                         => @factura.tax,
+                  "total_gratuita"                    => "",
+                  "total_otros_cargos"                => "",
+                  "total"                             => @factura.total,
+                  "percepcion_tipo"                   => "",
+                  "percepcion_base_imponible"         => "",
+                  "total_percepcion"                  => "",
+                  "total_incluido_percepcion"         => "",
+                  "detraccion"                        => "false",
+                  "observaciones"                     => @texto_obs, 
+                  "documento_que_se_modifica_tipo"    => "",
+                  "documento_que_se_modifica_serie"   => "",
+                  "documento_que_se_modifica_numero"  => "",
+                  "tipo_de_nota_de_credito"           => "",
+                  "tipo_de_nota_de_debito"            => "",
+                  "enviar_automaticamente_a_la_sunat" => "true",
+                  "enviar_automaticamente_al_cliente" => "false",
+                  "codigo_unico"                      => "",
+                  "condiciones_de_pago"               => @forma_pago,
+                  "medio_de_pago"                     => @medio_pago,
+                  "placa_vehiculo"                    => @factura.description  ,
+                  "orden_compra_servicio"             => "",
+                  "tabla_personalizada_codigo"        => "",
+                  "formato_de_pdf"                    => "",
+                   "detraccion_tipo"                  => "",
+                   "detraccion_total"                 => "",
+                   "medio_de_pago_detraccion"         => ""
+                 
+              })
 
 
 
-    # create a new Invoice object
-invoice = NubeFact::Invoice.new({
 
-    "operacion"                   => "generar_comprobante",
-    "tipo_de_comprobante"               => "1",
-    "serie"                             =>  @serie,
-    "numero"                            =>  @numero ,
-    "sunat_transaction"                 => "1",
-    "cliente_tipo_de_documento"         => "6",
-    "cliente_numero_de_documento"       => @factura.customer.ruc ,
-    "cliente_denominacion"              => @factura.customer.name ,
-    "cliente_direccion"                 => @factura.customer.direccion_all ,
-    "cliente_email"                     => "",
-    "cliente_email_1"                   => "",
-    "cliente_email_2"                   => "",
-    "fecha_de_emision"                  => @fecha_emision,
-    "fecha_de_vencimiento"              => "",
-    "moneda"                            => @moneda_nube,
-    "tipo_de_cambio"                    => "",
-    "porcentaje_de_igv"                 => "18.00",
-    "descuento_global"                  => "",
-    "descuento_global"                  => "",
-    "total_descuento"                   => "",
-    "total_anticipo"                    => "",
-    "total_gravada"                     => @factura.subtotal,
-    "total_inafecta"                    => "",
-    "total_exonerada"                   => "",
-    "total_igv"                         => @factura.tax,
-    "total_gratuita"                    => "",
-    "total_otros_cargos"                => "",
-    "total"                             => @factura.total,
-    "percepcion_tipo"                   => "",
-    "percepcion_base_imponible"         => "",
-    "total_percepcion"                  => "",
-    "total_incluido_percepcion"         => "",
-    "detraccion"                        => "false",
-    "observaciones"                     => @texto_obs, 
-    "documento_que_se_modifica_tipo"    => "",
-    "documento_que_se_modifica_serie"   => "",
-    "documento_que_se_modifica_numero"  => "",
-    "tipo_de_nota_de_credito"           => "",
-    "tipo_de_nota_de_debito"            => "",
-    "enviar_automaticamente_a_la_sunat" => "true",
-    "enviar_automaticamente_al_cliente" => "false",
-    "codigo_unico"                      => "",
-    "condiciones_de_pago"               => "",
-    "medio_de_pago"                     => "",
-    "placa_vehiculo"                    => @factura.description  ,
-    "orden_compra_servicio"             => "",
-    "tabla_personalizada_codigo"        => "",
-    "formato_de_pdf"                    => ""
+          end    
 
-
-})
 
 # Add items
 # You don't need to add the fields that are calculated like total or igv
@@ -706,6 +804,39 @@ puts item_factura.quantity
         end 
 
 end 
+
+if @factura.importe_cuota1 > 0
+          invoice.add_cuota({
+            cuota: "1" ,
+            fecha_pago: @factura.fecha_cuota1.strftime(NubeFact::DATE_FORMAT), 
+            importe: @factura.importe_cuota1 
+
+          })
+
+end 
+
+if @factura.importe_cuota2 > 0
+          invoice.add_cuota({
+             cuota: "2" , 
+             fecha_pago: @factura.fecha_cuota2.strftime(NubeFact::DATE_FORMAT), 
+             importe: @factura.importe_cuota2 
+
+
+          })
+
+end 
+if @factura.importe_cuota3 > 0
+          invoice.add_cuota({
+             cuota: "3" ,
+            fecha_pago: @factura.fecha_cuota3.strftime(NubeFact::DATE_FORMAT), 
+            importe: @factura.importe_cuota3 ,
+
+          })
+
+end 
+
+
+
 
 puts JSON.pretty_generate(invoice )
 
@@ -979,11 +1110,6 @@ result = invoice.deliver
      
    end  
 
-def get_dias_formapago
-    
-    return self.payment.day 
-    
-  end 
 
   def get_dias(id)
 

@@ -52,10 +52,19 @@
 </p>
 
 <p>
-  <b>Fecha :</b>
-  <%= @invoice.fecha %>
+  <b>Fecha Emision :</b>
+  <%= @invoice.fecha.strftime("%d/%m/%Y")  %>
 </p>
 
+<% if @invoice.fecha2 %>
+
+<p>
+  <b>Fecha Vencimiento :</b>
+
+  <%= @invoice.fecha2.strftime("%d/%m/%Y") %>
+</p>
+
+<% end %>
 
 <p>
   <b>Moneda :</b>
@@ -339,7 +348,8 @@
  
   <tbody>
     <table>
-      
+<thead>
+        
       <tr>
         <th> Id</th>
         <th> Codigo</th>
@@ -350,7 +360,8 @@
         <th> Cantidad</th>
         <th> Total </th>
       </tr>
-      
+  </thead>
+
     <%  @factura_details.each do |quote| %>
       <tr>
         <td class="bordered_bottom bordered_right">
@@ -439,6 +450,135 @@
 <% end %>
 
 <br />
+
+</td>
+</table>
+
+<table> 
+<thead>
+
+<tr> 
+  
+    <th> Cuota </th>
+    <th> Fecha </th>
+    <th> Importe </th>
+    
+  </tr>
+</thead>
+<tbody>
+  <tr>
+      <td class="bordered_bottom bordered_right bold">
+        <%= @invoice.cuota1  %>
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= @invoice.fecha_cuota1.strftime("%d/%m/%Y")  %>
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= @invoice.importe_cuota1  %>
+      </td>
+
+    </tr>
+
+  <tr>
+      <td  class="bordered_bottom bordered_right bold">
+        <%= @invoice.cuota2 %>
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= @invoice.fecha_cuota2.strftime("%d/%m/%Y")  %>
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= @invoice.importe_cuota2  %>
+      </td>
+
+    </tr>
+
+  <tr>
+      <td class="bordered_bottom bordered_right bold">
+        <%= @invoice.cuota3  %>
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= @invoice.fecha_cuota3.strftime("%d/%m/%Y") %>
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= @invoice.importe_cuota3  %>
+      </td>
+
+    </tr>
+</tbody>
+
+</table>
+
+
+<table>
+
+<tr>
+  <td>     
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+  <td>. 
+  </td>
+
+</tr>
+
+  <tr>
+      <td colspan="4" class="bordered_bottom bordered_right bold">
+        % Detraccion :
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@invoice.detraccion_percent) %>
+      </td>
+    </tr>
+
+
+  <tr>
+      <td colspan="4" class="bordered_bottom bordered_right bold">
+        Monto de Detraccion :
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@invoice.detraccion_importe ) %>
+      </td>
+    </tr>
+
+   <tr>
+      <td colspan="4" class="bordered_bottom bordered_right bold">
+        Detraccion cuenta :
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= @invoice.detraccion_cuenta %>
+      </td>
+    </tr>
+
+<tr>
+      <td colspan="4" class="bordered_bottom bordered_right bold">
+    
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+      
+      </td>
+    </tr>
+
+
+  <tr>
+      <td colspan="4" class="bordered_bottom bordered_right bold">
+        Retencion cuenta :
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@invoice.retencion_importe) %>
+      </td>
+    </tr>
+
+
+
+
+  </tbody>
+</table>
+
+
 
 <div>
   <strong><%= @invoice.get_processed %></strong>

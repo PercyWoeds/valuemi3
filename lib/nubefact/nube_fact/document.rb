@@ -97,11 +97,15 @@ class NubeFact::Document
     "placa_vehiculo",
     "orden_compra_servicio",
     "tabla_personalizada_codigo",
+    "detraccion_tipo",
+    "detraccion_total",
+    "medio_de_pago_detraccion" ,
     "formato_de_pdf",
       # A4, A5 o TICKET.
 
     "items",
-    "guias"
+    "guias",
+    "venta_al_credito"
   ]
   
   attr_accessor *FIELDS
@@ -127,6 +131,7 @@ class NubeFact::Document
 
     @items = []
     @guias = []
+    @venta_al_credito = []
 
     load_data_from_param data_hash
   end
@@ -139,7 +144,13 @@ class NubeFact::Document
     
   end
 
-  def add_guia(guia)
+  
+
+  def add_cuota(cuota)
+    if cuota.is_a? Hash
+      cuota = Cuota.new self, cuota
+    end
+    @venta_al_credito << cuota
 
   end
 

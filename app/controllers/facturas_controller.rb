@@ -1574,21 +1574,21 @@ def reportes31
 
 
 
-  def discontinue
+  # def discontinue
     
-    @guiasselect = Factura.find(params[:products_ids])
+  #   @guiasselect = Factura.find(params[:products_ids])
 
-    for item in @guiasselect
-        begin
-          a = item.id
-          b = item.remite_id               
-          new_invoice_guia = Deliverymine.new(:mine_id =>$minesid, :delivery_id =>item.id)          
-          new_invoice_guia.save
+  #   for item in @guiasselect
+  #       begin
+  #         a = item.id
+  #         b = item.remite_id               
+  #         new_invoice_guia = Deliverymine.new(:mine_id =>$minesid, :delivery_id =>item.id)          
+  #         new_invoice_guia.save
            
         
-        end              
-    end
-  end  
+  #       end              
+  #   end
+  # end  
   def excel
 
     @company=Company.find(1)          
@@ -2319,7 +2319,20 @@ def reportes31
     @invoice[:detraccion_importe ] = 0.00 
     @invoice[:retencion_importe ] = 0.00 
 
+    @invoice[:fecha_cuota1] = Date.today 
+    @invoice[:fecha_cuota2] = Date.today + 30
+    @invoice[:fecha_cuota3] = Date.today + 60 
     
+    @invoice[:importe_cuota1] = 0
+    @invoice[:importe_cuota2] = 0
+    @invoice[:importe_cuota3] = 0
+
+    @invoice[:cuota1] = 1
+    @invoice[:cuota2] = 2
+    @invoice[:cuota3] = 3
+
+
+
     
     @company = Company.find(params[:company_id])
     @invoice.company_id = @company.id
@@ -2504,6 +2517,13 @@ def newfactura2
     @invoice[:charge]  = 0
     @invoice[:descuento] = "1"
     @invoice[:servicio] = params[:check_servicio]
+
+
+    
+    days = @invoice.get_dias(params[:factura][:payment_id])
+    @invoice[:fecha2] = @invoice[:fecha] + days.days     
+
+
     
      parts = (@invoice[:code]).split("-")
      id = parts[0]
@@ -2515,6 +2535,10 @@ def newfactura2
     end
     @invoice[:numero2] = numero2
   
+    @invoice[:cuota1] = 1
+    @invoice[:cuota2] = 2
+    @invoice[:cuota3] = 3
+    
   
 
     respond_to do |format|
@@ -5527,8 +5551,6 @@ def cuadre02
 
       pdf      
   end
-
-
       
   private
   def factura_params
@@ -5537,7 +5559,12 @@ def cuadre02
       :date_processed,:user_id,:payment_id,:fecha,:preciocigv,:tipo,:observ,
       :moneda_id,:detraccion,:factura2,:description,:document_id,:tipoventa_id,
       :tarjeta_id,:guia,:texto1,:texto2,:texto3,:servicio,:facturas ,
-      :detraccion_importe,:detraccion_percent ,:detraccion_cuenta, :detraccion2 ,:anexo8_id ,:retencion_importe)
+      :detraccion_importe,:detraccion_percent ,
+      :detraccion_cuenta, :detraccion2 ,:anexo8_id ,
+      :retencion_importe,
+      :cuota1,:fecha_cuota1,:importe_cuota1,
+      :cuota2,:fecha_cuota2,:importe_cuota2,
+      :cuota3,:fecha_cuota3,:importe_cuota3)
   end
 
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210921172558) do
+ActiveRecord::Schema.define(version: 20210930153124) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -747,6 +747,15 @@ ActiveRecord::Schema.define(version: 20210921172558) do
     t.string   "detraccion_cuenta"
     t.string   "detraccion_descrip"
     t.float    "retencion_importe"
+    t.integer  "cuota1"
+    t.float    "importe_cuota1"
+    t.datetime "fecha_cuota1"
+    t.integer  "cuota2"
+    t.float    "importe_cuota2"
+    t.datetime "fecha_cuota2"
+    t.integer  "cuota3"
+    t.float    "importe_cuota3"
+    t.datetime "fecha_cuota3"
   end
 
   create_table "faltantes", force: :cascade do |t|
