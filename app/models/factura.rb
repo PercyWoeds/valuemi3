@@ -624,6 +624,7 @@ class Factura < ActiveRecord::Base
               @detraccion_tipo  =  @factura.get_codigo_det
               @detraccion_total =  @factura.detraccion_importe
               @medio_de_pago_detraccion = "1" 
+              @detraccion_porcentaje = @factura.detraccion_percent
 
             # create a new Invoice object
             invoice = NubeFact::Invoice.new({
@@ -677,7 +678,9 @@ class Factura < ActiveRecord::Base
                 "formato_de_pdf"                    => "",
                 "detraccion_tipo"                  => @detraccion_tipo,
                 "detraccion_total"                 => @detraccion_total,
+                "detraccion_porcentaje"            => @detraccion_porcentaje,
                 "medio_de_pago_detraccion"         => @medio_de_pago_detraccion
+
                
             })
 

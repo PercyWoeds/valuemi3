@@ -95,7 +95,93 @@
       <%= f.select :moneda_id, options_from_collection_for_select(@monedas,'id','description') %>
     </div>
 
+
+  <div class="field">
+      <%= f.label :detracion_percent, "Detraccion %   ", :class => "bold" %><br />
+      <%= f.number_field :detraccion_percent ,:step => 0.1 %>
+    </div>
+
+     <div class="field">
+      <%= f.label :detraccion_importe, "Detraccion Importe: ", :class => "bold" %><br />
+      <%= f.number_field :detraccion_importe,:step => 0.01 %>
+    </div>
+
+
+
+   <div class="field">
+      <%= f.label :detraccion_cuenta, "Detraccion Cuenta :", :class => "bold" %><br />
+      <%= f.text_field :detraccion_cuenta ,:readonly => true %>
+    </div>
+
+
+  <div class="field">
+      <%= f.label :retencion_importe, "Retencion  Importe: ", :class => "bold" %><br />
+      <%= f.number_field :retencion_importe,:step => 0.01 %>
+    </div>
+
      
+<h5>Cuotas </h5>
+    <table>
+
+      <tr>
+        <td>
+           01
+
+        </td>
+        <td>
+
+          <%= f.date_field :fecha_cuota1   %>
+
+        </td>
+
+        <td>
+          <%= f.number_field :importe_cuota1 ,:step => 0.1 %>
+
+        </td>
+
+
+      </tr>
+
+      <tr>
+        <td>
+           02
+
+        </td>
+        <td>
+
+          <%= f.date_field :fecha_cuota2   %>
+
+        </td>
+
+        <td>
+          <%= f.number_field :importe_cuota2 ,:step => 0.1 %>
+
+        </td>
+
+
+      </tr>
+
+      <tr>
+        <td>
+           03
+
+        </td>
+        <td>
+
+          <%= f.date_field :fecha_cuota3   %>
+
+        </td>
+
+        <td>
+          <%= f.number_field :importe_cuota3 ,:step => 0.1 %>
+
+        </td>
+
+
+      </tr>
+
+    </table>
+
     <div class="field" id="list_items">
       <p class="bold big">Products:</p>
     </div>

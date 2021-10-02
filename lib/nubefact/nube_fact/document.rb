@@ -99,6 +99,7 @@ class NubeFact::Document
     "tabla_personalizada_codigo",
     "detraccion_tipo",
     "detraccion_total",
+    "detraccion_porcentaje",
     "medio_de_pago_detraccion" ,
     "formato_de_pdf",
       # A4, A5 o TICKET.

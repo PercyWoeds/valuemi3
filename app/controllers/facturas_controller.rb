@@ -2351,7 +2351,7 @@ def reportes31
     @monedas = @company.get_monedas()
     
     if @current_user.level== "colateral"
-      @tipodocumento = @company.get_documents2oot()
+      @tipodocumento = @company.get_documents2()
     else 
       @tipodocumento = @company.get_documents()
     end
@@ -2386,8 +2386,34 @@ def reportes31
     @monedas = @company.get_monedas()
     @tipodocumento = @company.get_documents()
     @tipoventas = Tipoventum.all 
+
+
     @ac_user = getUsername()
+
+    
     @invoice[:user_id] = getUserId()
+    @invoice[:processed] = false
+    @invoice[:descuento] = "0"
+    @invoice[:tipoventa_id] = 2
+
+    @invoice[:detraccion_cuenta]  =   "00-000-5353362" 
+    @invoice[:detraccion_percent] = 4.00 
+    @invoice[:detraccion_importe ] = 0.00 
+    @invoice[:retencion_importe ] = 0.00 
+
+    @invoice[:fecha_cuota1] = Date.today 
+    @invoice[:fecha_cuota2] = Date.today + 30
+    @invoice[:fecha_cuota3] = Date.today + 60 
+    
+    @invoice[:importe_cuota1] = 0
+    @invoice[:importe_cuota2] = 0
+    @invoice[:importe_cuota3] = 0
+
+    @invoice[:cuota1] = 1
+    @invoice[:cuota2] = 2
+    @invoice[:cuota3] = 3
+
+
   end
   
   def new3
