@@ -131,6 +131,7 @@ require 'active_support/number_helper'
         headers << cell
       end
 
+
       table_content << headers
 
       result = pdf.table table_content, {:position => :center,
@@ -156,6 +157,21 @@ require 'active_support/number_helper'
                                         end
 
        table_content = []
+
+
+       if $lcServicio == "true"
+        row =[]
+        row << ""
+        row << ""
+        row << ""
+        row << $lcServiciotxt
+        row << ""
+        row << ""
+        table_content<< row
+
+      end 
+      
+
 
       lines.each do |line|
         table_content << line.build_pdf_table_row(pdf)
@@ -235,8 +251,15 @@ require 'active_support/number_helper'
       client_headers = [["Señor(es)   :", customer.party.party_legal_entity.registration_name]]
       client_headers << ["Dirección :",$lcDirCli]
       client_headers << [customer.type_as_text, customer.account_id]
-      client_headers << [" "," "]
       
+      if $lcServicio =="true"
+
+       client_headers << ["Local Comercial :",$lcLocal]
+     else 
+      client_headers << [" "," "]
+
+      end 
+
       client_headers
     end
 

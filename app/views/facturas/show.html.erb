@@ -470,9 +470,14 @@
       <td class="bordered_bottom bordered_right bold">
         <%= @invoice.cuota1  %>
       </td>
-      <td class="bordered_bottom bordered_right bold right">
+      <% if @invoice.fecha_cuota1.nil? %>
+      No hay fecha 
+      <% else %>
+       <td class="bordered_bottom bordered_right bold right">
         <%= @invoice.fecha_cuota1.strftime("%d/%m/%Y")  %>
       </td>
+     
+      <% end %>
       <td class="bordered_bottom bordered_right bold right">
         <%= @invoice.importe_cuota1  %>
       </td>
@@ -483,9 +488,13 @@
       <td  class="bordered_bottom bordered_right bold">
         <%= @invoice.cuota2 %>
       </td>
+       <% if @invoice.fecha_cuota2.nil? %>
+      No hay fecha 
+      <% else %>
       <td class="bordered_bottom bordered_right bold right">
         <%= @invoice.fecha_cuota2.strftime("%d/%m/%Y")  %>
       </td>
+      <% end  %>
       <td class="bordered_bottom bordered_right bold right">
         <%= @invoice.importe_cuota2  %>
       </td>
@@ -496,9 +505,14 @@
       <td class="bordered_bottom bordered_right bold">
         <%= @invoice.cuota3  %>
       </td>
+       <% if @invoice.fecha_cuota3.nil? %>
+      No hay fecha 
+      <% else %>
+
       <td class="bordered_bottom bordered_right bold right">
         <%= @invoice.fecha_cuota3.strftime("%d/%m/%Y") %>
       </td>
+      <% end %>
       <td class="bordered_bottom bordered_right bold right">
         <%= @invoice.importe_cuota3  %>
       </td>
