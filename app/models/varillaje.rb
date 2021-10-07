@@ -1141,30 +1141,84 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
      return ret 
  end  
  
- def  get_ingresos(fecha1,tanque ) 
+ def  get_ingresos(fecha1,product  ) 
       
+        ret = 0 
+        @purchases1 = Purchase.joins(:purchase_details).
+        select("sum(purchase_details.quantity) as quantity").
+        group("purchases.date2").order("purchases.date2").
+        where("purchases.date2>=? and purchases.date2<=? and purchase_details.product_id=?","#{fecha1} 00:00:00","#{fecha1} 23:59:59","#{product}" )
+       
 
-        @purchases1 = Purchase.find_by_sql(['Select purchase_details.quantity  
-          from purchase_details   
-      INNER JOIN purchases ON purchase_details.purchase_id = purchases.id
-      INNER JOIN products  ON purchase_details.product_id = products.id
-      WHERE products.id = ?  and purchases.date1 >= ? and purchases.date1 <= ? and purchases.processed = ?
-      GROUP BY purchase.date2,purchase_detail.product_id
-      ORDER BY purchase.date2,purchase_detail.product_id ',tanque , "#{fecha1} 00:00:00","#{fecha1} 23:59:59","1" ])
-         
-            
-          return purchases1 
+       puts "fecha 1 ingresos "
+       puts fecha1
+       puts product
+
+      if   @purchases1.first == nil  || @purchases1.blank? || @purchases1.empty? 
+         return ret 
+
+      else 
+       
+        puts "retorno ******************"
+        ret = @purchases1.first.quantity 
+          return ret 
+    
+      end 
 
  end 
 
+
        def get_varilla(fecha1,fecha2,tanque ) 
+
+          ret = 0
        
            @varilla = Varillaje.where(["fecha >= ? and fecha <= ?  and tanque_id = ?", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ,tanque  ]).order(:tanque_id,:fecha)
-         
-          return @varilla 
+            if @varilla
+            ret = @varilla  
+                return ret
+            else
+                return ret 
+            end 
        end
 
-       
+     
+
+    def  get_ventas(fecha,product ) 
+
+            facturas  = 0
+
+             facturas = Sellvale.find_by_sql(['Select SUM(cantidad) AS total 
+                         from sellvales where fecha >= ? and fecha <= ? and cod_prod=? and fpago <> ?' , "#{fecha} 00:00:00","#{fecha} 23:59:59",product,"07"])
+
+            if facturas.first.total != nil  
+                puts "aaaaa"
+                puts facturas.first.total  
+              return facturas.first.total  
+            else 
+               return 0
+            end                
+            
+  end
+
+  def  get_ventas_serafin(fecha,product ) 
+
+            facturas  = 0
+
+             facturas = Sellvale.find_by_sql(['Select SUM(cantidad) AS total 
+                         from sellvales where fecha >= ? and fecha <= ? and cod_prod=? and fpago=  ?' , "#{fecha} 00:00:00","#{fecha} 23:59:59",product,"07"])
+
+            if facturas.first.total != nil  
+                puts "aaaaa"
+                puts facturas.first.total  
+              return facturas.first.total  
+            else 
+               return 0
+            end                
+            
+  end
+
+ 
+
 
 
  

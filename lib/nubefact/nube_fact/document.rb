@@ -103,10 +103,19 @@ class NubeFact::Document
     "medio_de_pago_detraccion" ,
     "formato_de_pdf",
       # A4, A5 o TICKET.
-
+    "ubigeo_origen",
+    "direccion_origen",
+     "ubigeo_destino" ,
+     "direccion_destino" ,
+      "detalle_viaje"  ,
+      "val_ref_serv_trans",
+      "val_ref_carga_efec" ,
+       "val_ref_carga_util" ,    
     "items",
     "guias",
     "venta_al_credito"
+
+
   ]
   
   attr_accessor *FIELDS

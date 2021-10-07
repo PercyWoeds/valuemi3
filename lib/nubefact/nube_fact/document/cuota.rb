@@ -4,7 +4,7 @@ class NubeFact::Document::Cuota
   
   FIELDS = [
     "cuota",
-    "fecha_pago",
+    "fecha_de_pago",
     "importe",
     
   ]
@@ -13,14 +13,14 @@ class NubeFact::Document::Cuota
 
   add_required_fields *%i(
     cuota
-    fecha_pago
+    fecha_de_pago
     importe
    )
 
   
   DEFAULT_DATA = {
                cuota: '0',
-        fecha_pago: "",
+        fecha_de_pago: "",
         importe: 0
   }
 

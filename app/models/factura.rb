@@ -620,8 +620,8 @@ class Factura < ActiveRecord::Base
           end
 
           if @factura.detraccion_importe  > 0.0
-
-              @detraccion_tipo  =  @factura.get_codigo_det
+            puts " ** detraccion********************************************"
+              @detraccion_tipo  =  "25"
               @detraccion_total =  @factura.detraccion_importe
               @medio_de_pago_detraccion = "1" 
               @detraccion_porcentaje = @factura.detraccion_percent
@@ -632,7 +632,7 @@ class Factura < ActiveRecord::Base
                 "tipo_de_comprobante"               => "1",
                 "serie"                             =>  @serie,
                 "numero"                            =>  @numero ,
-                "sunat_transaction"                 => "1",
+                "sunat_transaction"                 => "33",
                 "cliente_tipo_de_documento"         => "6",
                 "cliente_numero_de_documento"       => @factura.customer.ruc ,
                 "cliente_denominacion"              => @factura.customer.name ,
@@ -660,7 +660,7 @@ class Factura < ActiveRecord::Base
                 "percepcion_base_imponible"         => "",
                 "total_percepcion"                  => "",
                 "total_incluido_percepcion"         => "",
-                "detraccion"                        => "false",
+                "detraccion"                        => "true",
                 "observaciones"                     => @texto_obs, 
                 "documento_que_se_modifica_tipo"    => "",
                 "documento_que_se_modifica_serie"   => "",
@@ -679,12 +679,21 @@ class Factura < ActiveRecord::Base
                 "detraccion_tipo"                  => @detraccion_tipo,
                 "detraccion_total"                 => @detraccion_total,
                 "detraccion_porcentaje"            => @detraccion_porcentaje,
-                "medio_de_pago_detraccion"         => @medio_de_pago_detraccion
-
+                "medio_de_pago_detraccion"         => @medio_de_pago_detraccion,
+                "ubigeo_origen"                    => "150101",
+                "direccion_origen"                 => "CARR. A VENTANILLA KM 25 PROV.CONT.CALLAO - VENTANILLA",
+                "ubigeo_destino"                   => "150134",
+                "direccion_destino"                =>  @factura.texto1,
+                 "detalle_viaje"  => "Transporte de Combustible",
+                 "val_ref_serv_trans"  => "1.00",
+                 "val_ref_carga_efec"  => "1.00",
+                 "val_ref_carga_util"  => "1.00"
                
             })
 
           else 
+
+            puts " sin detraccion**"
               # create a new Invoice object
               invoice = NubeFact::Invoice.new({
                   "operacion"                   => "generar_comprobante",
@@ -765,14 +774,14 @@ if @factura.servicio == "true"
         end 
 
 
-for item0 in @factura_detail
-  puts "***********"
-    puts item0.product.code
-    puts item0.product.name 
-    puts item0.quantity 
-    puts item0.total 
+# for item0 in @factura_detail
+#   puts "***********"
+#     puts item0.product.code
+#     puts item0.product.name 
+#     puts item0.quantity 
+#     puts item0.total 
 
-end
+# end
 
 for item_factura in @factura_detail 
     
@@ -808,30 +817,30 @@ puts item_factura.quantity
 
 end 
 
-if @factura.importe_cuota1 > 0
+if @factura.importe_cuota1 > 0.00
           invoice.add_cuota({
             cuota: "1" ,
-            fecha_pago: @factura.fecha_cuota1.strftime(NubeFact::DATE_FORMAT), 
+            fecha_de_pago: @factura.fecha_cuota1.strftime("%d-%m-%Y"), 
             importe: @factura.importe_cuota1 
 
           })
 
 end 
 
-if @factura.importe_cuota2 > 0
+if @factura.importe_cuota2 > 0.00
           invoice.add_cuota({
              cuota: "2" , 
-             fecha_pago: @factura.fecha_cuota2.strftime(NubeFact::DATE_FORMAT), 
+             fecha_de_pago: @factura.fecha_cuota2.strftime("%d-%m-%Y"), 
              importe: @factura.importe_cuota2 
 
 
           })
 
 end 
-if @factura.importe_cuota3 > 0
+if @factura.importe_cuota3 > 0.00 
           invoice.add_cuota({
              cuota: "3" ,
-            fecha_pago: @factura.fecha_cuota3.strftime(NubeFact::DATE_FORMAT), 
+            fecha_de_pago: @factura.fecha_cuota3.strftime("%d-%m-%Y"), 
             importe: @factura.importe_cuota3 ,
 
           })
