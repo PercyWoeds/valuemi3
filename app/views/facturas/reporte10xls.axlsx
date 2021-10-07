@@ -40,7 +40,8 @@ wb.styles do |s|
                      subtotal = payment.total / 1.18
                      tax = payment.total - subtotal 
                      
-    sheet.add_row [payment.fecha,payment.code,payment.customer.ruc,payment.customer.name,payment.codigo,payment.nameproducto,cantidad,precio,subtotal,tax,payment.total,payment.description ], :style => [date,cadena,cadena,cadena,currency,currency,currency,currency,currency,currency,cadena]
+    sheet.add_row [payment.fecha,payment.code,payment.customer.ruc,payment.customer.name,payment.codigo,payment.nameproducto,cantidad,precio,subtotal,tax,payment.total,payment.description,payment.fecha2,payment.detraccion_percent,payment.detraccion_importe,payment.importe_cuota1,payment.texto1,payment.texto2  ], :style => [date,cadena,cadena,cadena,
+    currency,currency,currency,currency,currency,currency,currency,cadena,date,currency,currency,currency,cadena,cadena ]
     
     tot_0 += cantidad
     

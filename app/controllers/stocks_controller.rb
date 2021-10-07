@@ -707,8 +707,7 @@ end
     
     @tanques  = @company.get_tanques() 
     @varillaje = @company.get_varillas()
-    
-    
+        
     
     case params[:print]
       when "To PDF" then 
