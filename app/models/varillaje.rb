@@ -1144,10 +1144,10 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
  def  get_ingresos(fecha1,tanque ) 
       
 
-        @purchases1 = Purchase.find_by_sql(['Select purchase_details.quantity, 
+        @purchases1 = Purchase.find_by_sql(['Select purchase_details.quantity  
           from purchase_details   
       INNER JOIN purchases ON purchase_details.purchase_id = purchases.id
-      INNER JOIN products ON purchase_details.product_id = products.id
+      INNER JOIN products  ON purchase_details.product_id = products.id
       WHERE products.id = ?  and purchases.date1 >= ? and purchases.date1 <= ? and purchases.processed = ?
       GROUP BY purchase.date2,purchase_detail.product_id
       ORDER BY purchase.date2,purchase_detail.product_id ',tanque , "#{fecha1} 00:00:00","#{fecha1} 23:59:59","1" ])

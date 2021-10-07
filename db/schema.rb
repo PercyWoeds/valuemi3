@@ -736,7 +736,6 @@ ActiveRecord::Schema.define(version: 20210930153124) do
     t.integer  "tarjeta_id"
     t.string   "guia"
     t.integer  "reference_fact"
-    t.integer  "note_concept_id"
     t.string   "texto1"
     t.string   "texto2"
     t.string   "texto3"
@@ -1370,9 +1369,8 @@ ActiveRecord::Schema.define(version: 20210930153124) do
     t.string   "code"
     t.string   "descrip"
     t.string   "td"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.integer  "document_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "numeras", force: :cascade do |t|

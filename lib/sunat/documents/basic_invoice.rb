@@ -251,6 +251,8 @@ require 'active_support/number_helper'
       client_headers = [["Señor(es)   :", customer.party.party_legal_entity.registration_name]]
       client_headers << ["Dirección :",$lcDirCli]
       client_headers << [customer.type_as_text, customer.account_id]
+      client_headers << ["Guia  :",$lcGuiaRemision]
+      
       
       if $lcServicio =="true"
 
