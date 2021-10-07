@@ -4,18 +4,25 @@
 
   <table style='font-family:"Courier New", Courier, monospace; font-size:60% ;width:100%'>
     <tr bgcolor="#B4D7F7">
-    <td width="5%"> Tanque  </td>
-    <td width="10%"> Producto  </td>
-    <td width="10%"> Inicial</td>
-    <td width="10%">  Compras </td>
-    <td width="4%"> Directo</td>
-    <td width="10%"> Venta</td>
-    <td width="10%"> Stock Final </td>
-    <td width="10%"> Medicion</td>
-    <td width="8%"> Dife_dia </td>
-    <td width="8%"> Dife_mes </td>
-    <td width="8%"> Dife_cont </td>
-    <td width="10%"> Ventas S/.</td>
+
+    <td width="8%"> FECHA DE CORTE </td>
+    <td width="8%">HORA DE CORTE </td>
+    <td width="8%">EXISTENCIAS DEL PRODUCTO,
+        SEGUN INVENTARIO FISICO ANTERIOR</td>
+    <td width="8%"> TOTAL DE INGRESOS DEL PRODUCTO
+    (COMPRAS)  </td>
+    <td width="8%">Σ DEVOLUCIONES DEL PRODUCTO A TANQUES 
+    (calibraciones, mantenimiento o afines) </td>
+    <td width="8%"> TOTAL DE SALIDAS DEL PRODUCTO
+    (VENTAS)     </td>
+    <td width="8%">ET = NUEVA EXISTENCIA TEORICA </td>
+    <td width="8%">EF = NUEVA EXISTENCIA FISICA, 
+         SEGÚN VARILLAJE</td>
+    <td width="8%"> Di = DIFERENCIA ENTRE 
+    EXISTENCIA TEORICA Y FISICA </td>
+    <td width="8%">SUCESOS </td>
+    <td width="10%"> OBSERVACIONES </td>
+    <td width="10%"> FIRMA</td>
     
   </tr>
   </table>
@@ -33,37 +40,71 @@
       
       <% if @tanques %>
 
-          <% for tanques  in @tanques %>
+          <% for tanques0  in @tanques %>
 
             <tr bgcolor="#B4D7F7">
-             <td width= "8%" > <%= tanques.product.code   %></td>
-             <td width= "4%" > <%= tanques.product.name  %> </td>
-             
+             <td width= "8%" > <%= tanques0.product.code   %></td>
+             <td width= "8%" > <%= tanques0.product.name  %> </td>
+
+              <td width= "8%" ></td>
+              <td width= "8%" ></td>
+              <td width= "8%" ></td>
+              <td width= "8%" ></td>
+              <td width= "8%" ></td>
+              <td width= "8%" ></td>
+                <td width= "8%" ></td>
+              <td width= "8%" ></td>
+              <td width= "10%" ></td>
+              <td width= "10%" ></td>
+              
+
             </tr>
-          <% @varillas = @varillaje.first.get_varilla(@fecha1,@fecha2,tanques.id ) %> 
+
+         <%  @fecha0="2020-01-01" %>
+
+          <% @varillas0 = @varillaje.first.get_varilla(@fecha0,@fecha0,tanques0.id ) %> 
+          
+          <% @varillas = @varillaje.first.get_varilla(@fecha1,@fecha2,tanques0.id ) %> 
+
+           <% saldo_inicial = @varillas0.first.inicial %> 
              <%if @varillas %>      
             <% for  varillas  in @varillas %>
-
+              <tr>
               <%total1 = 0 %>
 
-               <td width= "8%" > <%= varillas.fecha.strftime("%d-%m-%Y") %></td>                
-               <td width= "4%" > <%= varillas.get_varilla(varillas.date2,tanques.id ) %></td>
-               <td width= "6%" >  </td> 
-               <td width= "10%" >  </td>                           
-               
-               <td width= "6%" > <%=  %> </td>
-                <% qty_ingreso = varillas.get_ingresos(varillas.date2,varillas.tanque.id) %>    
+              
+<% qty_ingreso = varillas.get_ingresos(varillas.fecha.to_date,tanques0.product.id) %>   
 
-                <td width= "7%" align="right" > <%= sprintf("%.2f",qty_ingreso.to_s)  %> </td>
-                <td width= "7%" align="right"><%= %> </td>
+<% qty_ventas  = varillas.get_ventas(varillas.fecha.to_date,tanques0.product.code) %>  
 
-                <% total1 = varillas.varilla - qty_ingreso  %>
+<% qty_ventas_serafin  = varillas.get_ventas_serafin(varillas.fecha.to_date,tanques0.product.code) %>  
 
-                <td width= "7%" align="right"> <%=sprintf("%.2f",total1.to_s)%> </td>
-                <td width= "7%" align="right"> </td>
-                <td width= "7%" align="right"> </td>
-                <td width= "7%" align="right"> </td>
+               <td width= "8%" > <%= varillas.fecha.to_date  %></td>                
+               <td width= "8%" > 06:00 AM  </td>   
+               <td width= "8%" align="right"> <%= saldo_inicial  %></td>
+             
+               <td width= "8%"align="right" > <%= sprintf("%.2f",qty_ingreso.to_s)  %>  </td> 
+               <td width= "8%" align="right"><%= sprintf("%.2f",qty_ventas_serafin.to_s)  %> </td>
+              
+               <td width= "8%" align="right"> <%= sprintf("%.2f",qty_ventas.to_s)  %></td>
+
+              
+
+                <% total1 = saldo_inicial +  qty_ingreso - qty_ventas + qty_ventas_serafin  %>
+
+                <% dif = total1 - varillas.varilla  %>
+
+                <td width= "8%" align="right"><%=sprintf("%.2f",total1.to_s)%> </td>
+
+                <td width= "8%" align="right"><%= varillas.varilla   %>  </td>
+                  <td width= "8%" align="right">  <%= sprintf("%.2f",dif.to_s)%></td>
+              <td width= "8%" ></td>
+                <td width= "10%" align="right"> </td>
+                <td width= "10%" align="right"> </td>
+          
                 <%total2 = 0%>
+               </tr>   
+               <% saldo_inicial = varillas.varilla %>
 
              <% end %>
             
