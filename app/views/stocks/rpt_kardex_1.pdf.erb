@@ -66,7 +66,13 @@
           
           <% @varillas = @varillaje.first.get_varilla(@fecha1,@fecha2,tanques0.id ) %> 
 
+           <% if @varillas0.nil? %> 
+           <% saldo_inicial = 0 %> 
+           
+           <% else %>
            <% saldo_inicial = @varillas0.first.inicial %> 
+           <% end %> 
+
              <%if @varillas %>      
             <% for  varillas  in @varillas %>
               <tr>
