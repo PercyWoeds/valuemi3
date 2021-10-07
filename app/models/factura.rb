@@ -796,13 +796,13 @@ puts item_factura.quantity
          unidad_de_medida: item_factura.product.unidad.descrip2, 
           descripcion: item_factura.product.name ,
           cantidad: item_factura.quantity,
-          valor_unitario: item_factura.preciosigv   ,
+          valor_unitario: item_factura.preciosigv.round(3)   ,
           tipo_de_igv: 1 
 
           })
         else 
 
-          @valor_unitario = (item_factura.total / item_factura.quantity ) / 1.18
+          @valor_unitario = (item_factura.total / item_factura.quantity ) / 1.18 
           invoice.add_item({
             codigo: item_factura.product.code ,
            unidad_de_medida: item_factura.product.unidad.descrip2, 
