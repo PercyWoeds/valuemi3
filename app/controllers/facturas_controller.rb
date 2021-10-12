@@ -1681,7 +1681,8 @@ def reportes31
     
     @invoice.anular 
     @invoice.delete_products()
-    @invoice.delete_guias()
+    
+    @invoice.delete_facturas()
   
     flash[:notice] = "Documento a sido anulado."
     redirect_to @invoice 
