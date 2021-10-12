@@ -2449,16 +2449,19 @@ def reportes31
   
 def newfactura2
     
-    @company = Company.find(1)
+     @company = Company.find(1)
     @factura = Factura.find(params[:factura_id])
     @customer = Customer.find(params[:customer_id]) 
+
+    @check_product = params[:cbox1]
+    @product = Product.find(params[:product_id]) 
 
     @fecha1 = params[:fecha1]
     @fecha2 = params[:fecha2]
     
     @customer_name = @customer.name
     @customer_code = @customer.account 
-    
+
     @customer_d01 = @customer.d01 
     @customer_d02 = @customer.d02
     @customer_d03 = @customer.d03
@@ -2466,11 +2469,18 @@ def newfactura2
     @customer_d05 = @customer.d05
     @customer_d06 = @customer.d06
 
-    
   
-    @detalleitems =  Sellvale.where("fecha>=? and fecha<=? and processed=? and cod_cli =? and td = ?
-     ","#{@fecha1} 00:00:00","#{@fecha2} 23:59:59","0",@customer.account, "N").order(:fecha)
-    
+  
+   if @check_product == "1"
+
+      @detalleitems =  Sellvale.where("fecha>=? and fecha<=? and processed=? and cod_cli =? and substring(serie,1,1) = ?
+       ","#{@fecha1} 00:00:00","#{@fecha2} 23:59:59","0",@customer.account, "T").order(:fecha)
+
+   else
+        @detalleitems =  Sellvale.where("fecha>=? and fecha<=? and processed=? and cod_cli =? and substring(serie,1,1) = ? and cod_prod  = ?
+       ","#{@fecha1} 00:00:00","#{@fecha2} 23:59:59","0",@customer.account, "T",@product.code ).order(:fecha)
+
+   end 
 
     @factura_detail = Factura.new
 

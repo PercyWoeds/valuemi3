@@ -300,6 +300,21 @@
   </div>
 
 
+ <div class="field">
+  
+  <%= check_box_tag("cbox1", value = "1", checked = true , options = {})  %> Todos los productos 
+  
+ </div>
+ 
+ 
+  
+  <div class="field">
+    <%= select_tag(:product_id,options_from_collection_for_select(@productos,'id','name') ) %>
+  </div>
+  
+<br>
+
+
 <div>
   <%= select_tag(:customer_id,options_from_collection_for_select(@customers,'id','name') ) %>
 </div>
