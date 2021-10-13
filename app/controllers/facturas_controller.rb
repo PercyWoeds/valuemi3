@@ -3818,6 +3818,7 @@ def newfactura2
           if new_invoice_detail.save
               
             a= Sellvale.find(item.id)
+
             a.processed ='1'
             a.save
             
@@ -3839,6 +3840,9 @@ def newfactura2
     @invoice[:pago] = 0
     @invoice[:charge] = 0
     @invoice[:descuento] = "1"
+    @invoice[:fecha_cuota1] = @invoice[:fecha2]
+     @invoice[:importe_cuota1] = @invoice[:total]
+    
     
     respond_to do |format|
       if @invoice.save

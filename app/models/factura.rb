@@ -646,7 +646,6 @@ class Factura < ActiveRecord::Base
                 "tipo_de_cambio"                    => "",
                 "porcentaje_de_igv"                 => "18.00",
                 "descuento_global"                  => "",
-                "descuento_global"                  => "",
                 "total_descuento"                   => "",
                 "total_anticipo"                    => "",
                 "total_gravada"                     => @factura.subtotal,
@@ -713,7 +712,6 @@ class Factura < ActiveRecord::Base
                   "moneda"                            => @moneda_nube,
                   "tipo_de_cambio"                    => "",
                   "porcentaje_de_igv"                 => "18.00",
-                  "descuento_global"                  => "",
                   "descuento_global"                  => "",
                   "total_descuento"                   => "",
                   "total_anticipo"                    => "",
@@ -854,6 +852,10 @@ puts JSON.pretty_generate(invoice )
 
 result = invoice.deliver
 
+if result['errors'] 
+
+        puts  "#{result['codigo']}: #{result['errors']}  aviso "
+    end
 
         self.processed="1"
    
