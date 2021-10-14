@@ -220,17 +220,37 @@ def  get_inicial(fecha1,producto,producto2)
 #  end 
  def  get_ventas(fecha,producto) 
      
+
+         ret=0  
+         
       facturas = Sellvale.where(["fecha >= ? and fecha <= ? and cod_prod = ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59","#{producto}" ])
      
       if facturas
-         
-         ret=0  
+      
          for detalle in facturas
     
               ret += detalle.cantidad.round(6)
       
          end 
      end 
+
+
+     @ventas  = Factura.where('fecha>= ? and fecha <= ? and tipoventa_id = ?',"#{fecha1} 00:00:00","#{fecha2} 23:59:59","3")
+    
+           for sal in @ventas
+             
+              
+              @ventasdetail=  FacturaDetail.select("sum(quantity) as quantity",:product_id).where(:factura_id=>sal.id,:product_id => producto).group(:product_id)
+    
+              for detail in @ventasdetail 
+    
+             
+                 ret += detalle.cantidad.round(6)
+      
+
+              end 
+            
+           end 
 
      return ret
  

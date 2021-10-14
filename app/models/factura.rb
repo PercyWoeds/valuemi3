@@ -854,7 +854,7 @@ result = invoice.deliver
 
 if result['errors'] 
 
-        puts  "#{result['codigo']}: #{result['errors']}  aviso "
+        puts  "#{result['codigo']}: #{result['errors']}  aviso"
     end
 
         self.processed="1"
