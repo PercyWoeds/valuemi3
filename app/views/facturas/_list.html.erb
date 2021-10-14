@@ -24,6 +24,10 @@
         <th class="bordered_right bordered_bottom">
           Procesado
         </th>
+        <th class="bordered_right bordered_bottom">
+          Estado Nubefact 
+        </th>
+        
         <th class="bordered_right bordered_bottom" colspan="3">
           Opciones
         </th>
@@ -55,6 +59,9 @@
           </td>
           <td class="bordered_right bordered_bottom <%= invoice.processed_color %>">
             <%= invoice.get_processed_short %>
+          </td>
+           <td class="bordered_right bordered_bottom <%= invoice.processed_color %>">
+            <%= invoice.get_estado_nubefact %>
           </td>
         <td class="bordered_right bordered_bottom <%= invoice.processed_color %>">
 

@@ -5605,7 +5605,8 @@ def cuadre02
       :retencion_importe,
       :cuota1,:fecha_cuota1,:importe_cuota1,
       :cuota2,:fecha_cuota2,:importe_cuota2,
-      :cuota3,:fecha_cuota3,:importe_cuota3)
+      :cuota3,:fecha_cuota3,:importe_cuota3,
+      :msgerror )
   end
 
 end

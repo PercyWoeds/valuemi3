@@ -71,12 +71,18 @@
   <%= @invoice.moneda.description  %>
 </p>
 
+<% if !@invoice.msgerror.nil? %> 
+<p>
+  <b> Estado Nubefact:</b>
+  <%= @invoice.msgerror %>
+</p>
+<% end %>
+
 <%= hr() %>
 
 <h3>
   Informacion Cliente 
 </h3>
-
 <p>
   <b>Name:</b>
   <%= link_to @customer.name, @customer %>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210930153124) do
+ActiveRecord::Schema.define(version: 20211014232845) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -755,6 +755,7 @@ ActiveRecord::Schema.define(version: 20210930153124) do
     t.integer  "cuota3"
     t.float    "importe_cuota3"
     t.datetime "fecha_cuota3"
+    t.string   "msgerror"
   end
 
   create_table "faltantes", force: :cascade do |t|

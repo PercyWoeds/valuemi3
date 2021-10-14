@@ -852,9 +852,9 @@ puts JSON.pretty_generate(invoice )
 
 result = invoice.deliver
 
-if result['errors'] 
-
+    if result['errors'] 
         puts  "#{result['codigo']}: #{result['errors']}  aviso"
+        self.msgerror = "#{result['codigo']}: #{result['errors']}  aviso"
     end
 
         self.processed="1"
@@ -1146,5 +1146,15 @@ if result['errors']
     end 
   end   
   
-  
+
+  def get_estado_nubefact
+
+    if !self.msgerror.nil?
+
+      return self.msgerror 
+    else 
+      return "-"  
+    end 
+      
+  end 
 end
