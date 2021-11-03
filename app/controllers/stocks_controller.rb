@@ -706,7 +706,7 @@ end
     @fecha2 = params[:fecha2]  
 
 
-    HardWorkerWorker30.perform_async(@fecha1,@fecha2,@current_user.id) 
+    #HardWorkerWorker30.perform_async(@fecha1,@fecha2,@current_user.id) 
 
   end 
 
