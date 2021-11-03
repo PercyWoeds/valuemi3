@@ -110,7 +110,7 @@ def reportes5
     @fecha2 = params[:fecha2]    
     @cliente = params[:cod_cli]    
     
-    
+  
     @contado_rpt = @company.get_parte_3(@fecha1,@fecha2,@cliente)
     
     

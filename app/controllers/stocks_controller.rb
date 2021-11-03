@@ -703,33 +703,11 @@ end
   
     @company=Company.find(1)          
     @fecha1 = params[:fecha1]    
-    @fecha2 = params[:fecha2]    
-    
-    @tanques  = @company.get_tanques() 
-    @varillaje = @company.get_varillas()
-        
-    
-    case params[:print]
-      when "To PDF" then 
-        begin 
-         render  pdf: "Ordenes ",template: "stocks/rpt_kardex_1.pdf.erb",locals: {:stocks => @movements},
-         :orientation      => 'Landscape',
-         :header => {
-           :spacing => 5,
-                           :html => {
-                     :template => 'layouts/pdf-header.html',
-                           right: '[page] of [topage]'
-                  }
-               }
-               
-               
-        
-             
-        end   
-      when "To Excel" then render xlsx: 'exportxls'
-      else render action: "index"
-    end
-  end
-  
+    @fecha2 = params[:fecha2]  
+
+
+    HardWorkerWorker30.perform_async(@fecha1,@fecha2,@current_user.id) 
+
+  end 
 
 end

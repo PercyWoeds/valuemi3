@@ -848,6 +848,7 @@ end
 
 
 
+
 puts JSON.pretty_generate(invoice )
 
 result = invoice.deliver
@@ -855,6 +856,9 @@ result = invoice.deliver
     if result['errors'] 
         puts  "#{result['codigo']}: #{result['errors']}  aviso"
         self.msgerror = "#{result['codigo']}: #{result['errors']}  aviso"
+      else 
+        self.msgerror = "Factura en nubefact."
+
     end
 
         self.processed="1"
