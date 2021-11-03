@@ -710,33 +710,33 @@ end
    
     @key="Rpt_resumen_lqd.pdf"
 
-   # HardWorkerWorker30.perform_async(@fecha1,@fecha2,@current_user.id) 
-  puts "jaree"
+    HardWorkerWorker30.perform_async(@fecha1,@fecha2,@current_user.id) 
+  
 
     
-    @tanques  = @company.get_tanques() 
-    @varillaje = @company.get_varillas()
+    # @tanques  = @company.get_tanques() 
+    # @varillaje = @company.get_varillas()
   
        
-     if @varillaje  != nil 
+    #  if @varillaje  != nil 
 
-        Prawn::Document.generate "#{@directory}/#{@key}", :page_layout => :landscape   do |pdf|            
-            pdf.font_families.update("Open Sans" => {
-              :normal => "app/assets/fonts/OpenSans-Regular.ttf",
-              :italic => "app/assets/fonts/OpenSans-Italic.ttf",
-            })
+    #     Prawn::Document.generate "#{@directory}/#{@key}", :page_layout => :landscape   do |pdf|            
+    #         pdf.font_families.update("Open Sans" => {
+    #           :normal => "app/assets/fonts/OpenSans-Regular.ttf",
+    #           :italic => "app/assets/fonts/OpenSans-Italic.ttf",
+    #         })
 
-            pdf.font "Open Sans",:size =>6
-            pdf = build_pdf_header_rpt16(pdf)
-            pdf = build_pdf_body_rpt16(pdf)
-            build_pdf_footer_rpt16(pdf)
+    #         pdf.font "Open Sans",:size =>6
+    #         pdf = build_pdf_header_rpt16(pdf)
+    #         pdf = build_pdf_body_rpt16(pdf)
+    #         build_pdf_footer_rpt16(pdf)
 
             
-        end 
+    #     end 
 
-        send_file("#{@directory}/#{@key}", :type => 'application/pdf', :disposition => 'inline')
+    #     send_file("#{@directory}/#{@key}", :type => 'application/pdf', :disposition => 'inline')
 
-      end 
+    #   end 
 
 
 
