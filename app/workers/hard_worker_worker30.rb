@@ -22,8 +22,11 @@ class HardWorkerWorker30
     @varillaje = @company.get_varillas()
   
    
-
-    if @varillaje  != nil 
+    @tanques  = @company.get_tanques() 
+    @varillaje = @company.get_varillas()
+  
+   
+ if @varillaje  != nil 
 
     Prawn::Document.generate "#{@directory}/#{@key}", :page_layout => :landscape   do |pdf|            
         pdf.font_families.update("Open Sans" => {
@@ -35,9 +38,15 @@ class HardWorkerWorker30
         pdf = build_pdf_header_rpt16(pdf)
         pdf = build_pdf_body_rpt16(pdf)
         build_pdf_footer_rpt16(pdf)
+
+
        
         
-    end     
+    end 
+
+    send_file("#{@directory}/#{@key}", :type => 'application/pdf', :disposition => 'inline')
+
+  end 
 
    
         s3 = Aws::S3::Resource.new(region: ENV.fetch("AWS_REGION"),
@@ -87,6 +96,7 @@ class HardWorkerWorker30
   end
 
 
+
 ##-------------------------------------------------------------------------------------
 ## REPORTE DE ESTADISTICA DE VENTAS pivot
 ##-------------------------------------------------------------------------------------
@@ -132,12 +142,12 @@ class HardWorkerWorker30
     pdf.text ""
     pdf.font "Helvetica" , :size => 5
 
-      headers = []
       table_content = []
       total_general = 0
       total_factory = 0
+      headers  = []
 
-      Stocks::TABLE_HEADERS5.each do |header|
+      Stock::TABLE_HEADERS5.each do |header|
         cell = pdf.make_cell(:content => header)
         cell.background_color = "FFFFCC"
         headers << cell
@@ -159,20 +169,16 @@ class HardWorkerWorker30
            for tanques0  in @tanques 
              row = []               
              row << tanques0.product.code 
+             row << ""
              row <<  tanques0.product.name 
              row << ""
              row << ""
-             row << ""
              row << ""             
              row << ""
              row << ""
              row << ""
              row << ""
              row << ""             
-             row << ""
-             row << ""
-             row << ""             
-             row << ""
              row << ""
              table_content << row             
 
@@ -194,10 +200,10 @@ class HardWorkerWorker30
                      qty_ingreso = varillas.get_ingresos(varillas.fecha.to_date,tanques0.product.id) 
                      qty_ventas  = varillas.get_ventas(varillas.fecha.to_date,tanques0.product.code)  
                      qty_ventas_serafin  = varillas.get_ventas_serafin(varillas.fecha.to_date,tanques0.product.code) 
-
+                     fecha_dia_anterior = varillas.fecha.yesterday.to_date
                      row << varillas.fecha.to_date 
                      row << " 06:00 AM " 
-                     row << saldo_inicial              
+                     row << varillas.get_saldo_inicial(fecha_dia_anterior,fecha_dia_anterior,tanques0.product.id).last.varilla               
                      row << sprintf("%.2f",qty_ingreso.to_s)  
                      row << sprintf("%.2f",qty_ventas_serafin.to_s)               
                      row << sprintf("%.2f",qty_ventas.to_s)  
@@ -210,7 +216,9 @@ class HardWorkerWorker30
                       row << sprintf("%.2f",dif.to_s)
                       row << "" 
                       row << "" 
-                      row << ""                                         
+                      row << ""           
+                        table_content << row         
+
                       total2 = 0                      
                      saldo_inicial = varillas.varilla
                  end            
@@ -224,14 +232,26 @@ class HardWorkerWorker30
                                         :width => pdf.bounds.width
                                         } do 
                                           columns([0]).align=:center
+                                          columns([0]).width = 50 
                                           columns([1]).align=:left
+
                                           columns([2]).align=:right
+                                          columns([2]).width = 60 
+                                          
                                           columns([3]).align=:right 
+                                          columns([3]).width = 60
                                           columns([4]).align=:right
+                                          columns([4]).width = 60
                                           columns([5]).align=:right 
+                                          columns([5]).width = 60
                                           columns([6]).align=:right
-                                          columns([7]).align=:right 
+                                          columns([6]).width = 60
+                                          
+                                          columns([7]).align=:right
+                                          columns([7]).width = 60
+                                           
                                           columns([8]).align=:right
+                                          columns([8]).width = 60
                                           columns([9]).align=:right 
                                           columns([10]).align=:right
                                           columns([11]).align=:right 
@@ -273,5 +293,10 @@ class HardWorkerWorker30
         invoice_headers  = [["Fecha : ",$lcFecha1 ]]    
         invoice_headers
     end
+
+
+
+
+
 
 end 

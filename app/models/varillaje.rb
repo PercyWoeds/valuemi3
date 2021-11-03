@@ -1201,6 +1201,20 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
             end 
        end
 
+       def get_saldo_inicial(fecha1,fecha2,tanque ) 
+
+          ret = 0
+       
+           @varilla = Varillaje.where(["fecha >= ? and fecha <= ?  and tanque_id = ?", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ,tanque  ]).order(:tanque_id,:fecha)
+            if @varilla
+            ret = @varilla  
+                return ret
+            else
+                return ret 
+            end 
+       end
+
+     
      
 
     def  get_ventas(fecha,product ) 

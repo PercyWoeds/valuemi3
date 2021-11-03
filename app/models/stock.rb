@@ -69,7 +69,7 @@ belongs_to :product
                     "HORA DE CORTE",
                     "EXISTENCIAS DEL PRODUCTO SEGUN INVENTARIO FISICO ANTERIOR",
                     "TOTAL DE INGRESOS DEL PRODUCTO  (COMPRAS)  ",
-                    "Σ DEVOLUCIONES DEL PRODUCTO A TANQUES (calibraciones, mantenimiento o afines) ",
+                    " DEVOLUCIONES DEL PRODUCTO A TANQUES (calibraciones, mantenimiento o afines) ",
                     "TOTAL DE SALIDAS DEL PRODUCTO  (VENTAS) ",
                     "ET = NUEVA EXISTENCIA TEORICA",
                     "EF = NUEVA EXISTENCIA FISICA SEGÚN VARILLAJE ",
