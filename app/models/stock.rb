@@ -76,7 +76,7 @@ belongs_to :product
                     "TOTAL DE SALIDAS DEL PRODUCTO
                     (VENTAS)   "
                     "ET = NUEVA EXISTENCIA TEORICA",
-                    "EF = NUEVA EXISTENCIA FISICA, 
+                    "EF = NUEVA EXISTENCIA FISICA 
                     SEGÚN VARILLAJE ",
                     " Di = DIFERENCIA ENTRE 
                     EXISTENCIA TEORICA Y FISICA ",
