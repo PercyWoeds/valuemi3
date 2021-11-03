@@ -65,24 +65,18 @@ belongs_to :product
                      "TOTAL          "  ]
         
 
-  # TABLE_HEADERS5 = [ "FECHA DE CORTE" ,
-  #                   "HORA DE CORTE",
-  #                   "EXISTENCIAS DEL PRODUCTO
-  #                   SEGUN INVENTARIO FISICO ANTERIOR",
-  #                   "TOTAL DE INGRESOS DEL PRODUCTO
-  #                   (COMPRAS)  ",
-  #                   "Σ DEVOLUCIONES DEL PRODUCTO A TANQUES 
-  #                   (calibraciones, mantenimiento o afines) ",
-  #                   "TOTAL DE SALIDAS DEL PRODUCTO
-  #                   (VENTAS)   "
-  #                   "ET = NUEVA EXISTENCIA TEORICA",
-  #                   "EF = NUEVA EXISTENCIA FISICA 
-  #                   SEGÚN VARILLAJE ",
-  #                   " Di = DIFERENCIA ENTRE 
-  #                   EXISTENCIA TEORICA Y FISICA ",
-  #                   "SUCESOS ",
-  #                   "OBSERVACIONES ",
-  #                   " FIRMA"]
+  TABLE_HEADERS5 = [ "FECHA DE CORTE" ,
+                    "HORA DE CORTE",
+                    "EXISTENCIAS DEL PRODUCTO SEGUN INVENTARIO FISICO ANTERIOR",
+                    "TOTAL DE INGRESOS DEL PRODUCTO  (COMPRAS)  ",
+                    "Σ DEVOLUCIONES DEL PRODUCTO A TANQUES (calibraciones, mantenimiento o afines) ",
+                    "TOTAL DE SALIDAS DEL PRODUCTO  (VENTAS) ",
+                    "ET = NUEVA EXISTENCIA TEORICA",
+                    "EF = NUEVA EXISTENCIA FISICA SEGÚN VARILLAJE ",
+                    " Di = DIFERENCIA ENTRE EXISTENCIA TEORICA Y FISICA ",
+                    "SUCESOS ",
+                    "OBSERVACIONES ",
+                    " FIRMA"]
 
 
 def get_estado
