@@ -25,28 +25,25 @@ class HardWorkerWorker30
     @tanques  = @company.get_tanques() 
     @varillaje = @company.get_varillas()
   
-   
- if @varillaje  != nil 
-
-    Prawn::Document.generate "#{@directory}/#{@key}", :page_layout => :landscape   do |pdf|            
-        pdf.font_families.update("Open Sans" => {
-          :normal => "app/assets/fonts/OpenSans-Regular.ttf",
-          :italic => "app/assets/fonts/OpenSans-Italic.ttf",
-        })
-
-        pdf.font "Open Sans",:size =>6
-        pdf = build_pdf_header_rpt16(pdf)
-        pdf = build_pdf_body_rpt16(pdf)
-        build_pdf_footer_rpt16(pdf)
-
-
        
-        
-    end 
+     if @varillaje  != nil 
 
-    send_file("#{@directory}/#{@key}", :type => 'application/pdf', :disposition => 'inline')
+        Prawn::Document.generate "#{@directory}/#{@key}", :page_layout => :landscape   do |pdf|            
+            pdf.font_families.update("Open Sans" => {
+              :normal => "app/assets/fonts/OpenSans-Regular.ttf",
+              :italic => "app/assets/fonts/OpenSans-Italic.ttf",
+            })
 
-  end 
+            pdf.font "Open Sans",:size =>6
+            pdf = build_pdf_header_rpt16(pdf)
+            pdf = build_pdf_body_rpt16(pdf)
+            build_pdf_footer_rpt16(pdf)
+            
+        end 
+
+        send_file("#{@directory}/#{@key}", :type => 'application/pdf', :disposition => 'inline')
+
+      end 
 
    
         s3 = Aws::S3::Resource.new(region: ENV.fetch("AWS_REGION"),
@@ -91,7 +88,7 @@ class HardWorkerWorker30
 
         ActionCorreo.notify_followers(@user.email, @user).deliver_now
 
-    end 
+    
 
   end
 
