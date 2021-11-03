@@ -11,9 +11,7 @@ class HardWorkerWorker30
     @user = User.find(user_id)
     @directory = "app/pdf_output"
    
-
     @key="Rpt_resumen_lqd.pdf"
-
 
     @fecha1 = fecha1
     @fecha2 = fecha2 
