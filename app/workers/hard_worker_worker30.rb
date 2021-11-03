@@ -15,15 +15,10 @@ class HardWorkerWorker30
 
     @fecha1 = fecha1
     @fecha2 = fecha2 
-
-   
     
     @tanques  = @company.get_tanques() 
     @varillaje = @company.get_varillas()
   
-   
-    @tanques  = @company.get_tanques() 
-    @varillaje = @company.get_varillas()
   
        
      if @varillaje  != nil 
@@ -41,7 +36,7 @@ class HardWorkerWorker30
             
         end 
 
-        send_file("#{@directory}/#{@key}", :type => 'application/pdf', :disposition => 'inline')
+       # send_file("#{@directory}/#{@key}", :type => 'application/pdf', :disposition => 'inline')
 
       end 
 
@@ -280,7 +275,7 @@ class HardWorkerWorker30
       
     end
 
-     def client_data_headers
+    def client_data_headers
       client_headers  = [["Empresa  :", @company.name ]]
       client_headers << ["Direccion :", @company.address1 ]
       client_headers
