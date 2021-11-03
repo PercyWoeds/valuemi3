@@ -85,7 +85,6 @@ class HardWorkerWorker30
 
     
 
-  end
 
 
 
@@ -184,15 +183,20 @@ class HardWorkerWorker30
              else 
               saldo_inicial = @varillas0.first.inicial 
              end 
+             saldo_acum = 0 
 
               if @varillas       
+                
                 for  varillas  in @varillas            
-                    total1 = 0
-                    row = []                                  
+                     
+
+                     total1 = 0
+                     row = []                                  
                      qty_ingreso = varillas.get_ingresos(varillas.fecha.to_date,tanques0.product.id) 
                      qty_ventas  = varillas.get_ventas(varillas.fecha.to_date,tanques0.product.code)  
                      qty_ventas_serafin  = varillas.get_ventas_serafin(varillas.fecha.to_date,tanques0.product.code) 
                      fecha_dia_anterior = varillas.fecha.yesterday.to_date
+                     
                      row << varillas.fecha.to_date 
                      row << " 06:00 AM " 
                      row << varillas.get_saldo_inicial(fecha_dia_anterior,fecha_dia_anterior,tanques0.product.id).last.varilla               
@@ -201,18 +205,25 @@ class HardWorkerWorker30
                      row << sprintf("%.2f",qty_ventas.to_s)  
                   
                      total1 = saldo_inicial +  qty_ingreso - qty_ventas + qty_ventas_serafin  
+                      
                       dif = total1 - varillas.varilla 
+
+                     saldo_acum += dif       
+
                       row << sprintf("%.2f",total1.to_s)
 
                       row << varillas.varilla
-                      row << sprintf("%.2f",dif.to_s)
+
+                      row << sprintf("%.2f",saldo_acum.to_s)
                       row << "" 
                       row << "" 
                       row << ""           
-                        table_content << row         
+                      table_content << row         
 
-                      total2 = 0                      
-                     saldo_inicial = varillas.varilla
+                      total2 = 0
+                                     
+                      saldo_inicial = varillas.varilla
+
                  end            
                end 
 
@@ -275,7 +286,7 @@ class HardWorkerWorker30
       
     end
 
-    def client_data_headers
+     def client_data_headers
       client_headers  = [["Empresa  :", @company.name ]]
       client_headers << ["Direccion :", @company.address1 ]
       client_headers
@@ -285,9 +296,6 @@ class HardWorkerWorker30
         invoice_headers  = [["Fecha : ",$lcFecha1 ]]    
         invoice_headers
     end
-
-
-
 
 
 
