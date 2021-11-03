@@ -3,7 +3,7 @@ class HardWorkerWorker30
   sidekiq_options queue: 'default', retry: false, backtrace: true 
 
   
-  def perform(fecha1,fecha2,user_id)
+def perform(fecha1,fecha2,user_id)
     # Build the big, slow report into a zip file
   
 
@@ -18,8 +18,7 @@ class HardWorkerWorker30
     
     @tanques  = @company.get_tanques() 
     @varillaje = @company.get_varillas()
-  
-  
+    
        
      if @varillaje  != nil 
 
@@ -83,8 +82,7 @@ class HardWorkerWorker30
 
         ActionCorreo.notify_followers(@user.email, @user).deliver_now
 
-    
-
+end     
 
 
 
@@ -286,7 +284,7 @@ class HardWorkerWorker30
       
     end
 
-     def client_data_headers
+    def client_data_headers
       client_headers  = [["Empresa  :", @company.name ]]
       client_headers << ["Direccion :", @company.address1 ]
       client_headers
