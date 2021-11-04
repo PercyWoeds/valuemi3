@@ -1181,7 +1181,7 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
       end 
 
 
-       @facturas  = Sellvale.select("Facturas.*,customers.id as customer_id").where(["fecha >= ? and fecha <= ? ",
+       @facturas  = Factura.select("Facturas.*,customers.id as customer_id").where(["fecha >= ? and fecha <= ? ",
         "#{fecha1} 00:00:00","#{fecha1} 23:59:59"  ]).order(:fecha).joins("INNER JOIN customers ON facturas.cod_cli = customers.account AND customers.tipo = '4'  ")
          
        if @facturas
