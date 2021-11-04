@@ -1226,12 +1226,12 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
             if facturas.first.total != nil  
                 puts "aaaaa"
                 ret = facturas.first.total  
-                return ret   
+                   
             else 
-               return ret 
+                ret  = 0
             end                
             
-                 @facturas = Factura.find_by_sql(['Select facturas.*,customers.id,customers.name 
+           @facturas = Factura.find_by_sql(['Select facturas.*,customers.id,customers.name 
                        from facturas 
                        INNER JOIN customers ON facturas.customer_id = customers.id   
                        WHERE facturas.fecha >= ? and facturas.fecha <= ? and customers.tipo = ?', "#{fecha} 00:00:00",
@@ -1258,7 +1258,7 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
                  end  
               
             end 
-  
+        return ret 
 
     end
 
