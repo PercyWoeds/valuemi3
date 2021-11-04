@@ -1233,21 +1233,22 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
             
 
 
-           @facturas  = Factura.select("Facturas.*,customers.id as customer_id").where(["fecha >= ? and fecha <= ? ",
-            "#{fecha1} 00:00:00","#{fecha1} 23:59:59"  ]).order(:fecha).joins("INNER JOIN customers ON facturas.customer_id = customers.id
+           @facturas  = Factura.select("Facturas.*,customers.id as customer_id").where(["fecha >= ? and fecha <= ? and cod_prod = ? ",
+            "#{fecha1} 00:00:00","#{fecha1} 23:59:59", product   ]).order(:fecha).joins("INNER JOIN customers ON 
+             facturas.customer_id = customers.id
              AND customers.tipo = '4'  ")
              
            if @facturas
                    
-                  
+                 puts "venta mayorista " 
                   for detalle in @facturas
                   
-                   @factura_details = FacturaDetail.where(factura_id: detalle.id )
+                       @factura_details = FacturaDetail.where(factura_id: detalle.id )
                    
                         for quote in   @factura_details 
                  
                              ret += quote.quantity 
-                     
+                            puts ret 
                         end 
                  end  
               
