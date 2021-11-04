@@ -1181,27 +1181,6 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
       end 
 
 
-       @facturas  = Factura.select("Facturas.*,customers.id as customer_id").where(["fecha >= ? and fecha <= ? ",
-        "#{fecha1} 00:00:00","#{fecha1} 23:59:59"  ]).order(:fecha).joins("INNER JOIN customers ON facturas.customer_id = customers.id
-         AND customers.tipo = '4'  ")
-         
-       if @facturas
-               
-              ret=0  
-              for detalle in @facturas
-              
-               @factura_details = detalle.factura_details
-               
-                    for quote in   @factura_details 
-             
-                    ret += quote.quantity 
-                 
-                    end 
-             end  
-          
-        end 
-  
-        return ret 
 
  end 
 
@@ -1237,6 +1216,8 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
 
     def  get_ventas(fecha,product ) 
 
+            ret = 0
+
             facturas  = 0
 
              facturas = Sellvale.find_by_sql(['Select SUM(cantidad) AS total 
@@ -1244,12 +1225,35 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
 
             if facturas.first.total != nil  
                 puts "aaaaa"
-                puts facturas.first.total  
-              return facturas.first.total  
+                ret = facturas.first.total  
+                return ret   
             else 
-               return 0
+               return ret 
             end                
             
+
+
+           @facturas  = Factura.select("Facturas.*,customers.id as customer_id").where(["fecha >= ? and fecha <= ? ",
+            "#{fecha1} 00:00:00","#{fecha1} 23:59:59"  ]).order(:fecha).joins("INNER JOIN customers ON facturas.customer_id = customers.id
+             AND customers.tipo = '4'  ")
+             
+           if @facturas
+                   
+                  
+                  for detalle in @facturas
+                  
+                   @factura_details = FacturaDetail.where(factura_id: detalle.id )
+                   
+                        for quote in   @factura_details 
+                 
+                             ret += quote.quantity 
+                     
+                        end 
+                 end  
+              
+            end 
+  
+
     end
 
 
