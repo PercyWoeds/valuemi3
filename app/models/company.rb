@@ -844,8 +844,7 @@
        end 
        
       
-      def get_facturas_day3(fecha1,fecha2,moneda)
-        
+      def get_facturas_day3(fecha1,fecha2,moneda)        
         
         @facturas = Factura.find_by_sql(['Select facturas.*,factura_details.quantity,
           factura_details.price,factura_details.total,products.name as nameproducto,products.code as codigo,products.unidad
