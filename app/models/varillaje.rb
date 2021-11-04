@@ -1246,18 +1246,25 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
            if @facturas
                    
                  puts "venta mayorista " 
+                 
                   for detalle in @facturas
+
+                    puts detalle.id 
                   
                        @factura_details = FacturaDetail.where(factura_id: detalle.id )
                    
                         for quote in   @factura_details 
                  
                              ret += quote.quantity 
+
+                             puts "factura detaleee..."
                             puts ret 
                         end 
                  end  
               
             end 
+
+
         return ret 
 
     end
