@@ -1231,17 +1231,17 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
                return ret 
             end                
             
- # @facturas = Factura.find_by_sql(['Select facturas.*,customers.id,customers.name 
- #                      from facturas 
- #                      INNER JOIN customers ON facturas.customer_id = customers.id   
- #                      WHERE facturas.fecha >= ? and facturas.fecha <= ? and customers.tipo = ?', "#{fecha1} 00:00:00",
- #                      "#{fecha} 23:59:59","4" ])  
+                 @facturas = Factura.find_by_sql(['Select facturas.*,customers.id,customers.name 
+                       from facturas 
+                       INNER JOIN customers ON facturas.customer_id = customers.id   
+                       WHERE facturas.fecha >= ? and facturas.fecha <= ? and customers.tipo = ?', "#{fecha} 00:00:00",
+                       "#{fecha} 23:59:59","4" ])  
             
 
-           @facturas  = Factura.select("Facturas.*,customers.id as customer_id").where(["fecha >= ? and fecha <= ? and cod_prod = ? ",
-            "#{fecha} 00:00:00","#{fecha} 23:59:59", product   ]).order(:fecha).joins("INNER JOIN customers ON 
-             facturas.customer_id = customers.id
-             AND customers.tipo = '4'  ")
+           # @facturas  = Factura.select("Facturas.*,customers.id as customer_id").where(["fecha >= ? and fecha <= ? and cod_prod = ? ",
+           #  "#{fecha} 00:00:00","#{fecha} 23:59:59", product   ]).order(:fecha).joins("INNER JOIN customers ON 
+           #   facturas.customer_id = customers.id
+           #   AND customers.tipo = '4'  ")
              
            if @facturas
                    
