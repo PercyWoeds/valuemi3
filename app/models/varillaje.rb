@@ -1169,22 +1169,38 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
         group("purchases.date2").order("purchases.date2").
         where("purchases.date2>=? and purchases.date2<=? and purchase_details.product_id=?","#{fecha1} 00:00:00","#{fecha1} 23:59:59","#{product}" )
        
-
-       puts "fecha 1 ingresos "
-       puts fecha1
-       puts product
-
       if   @purchases1.first == nil  || @purchases1.blank? || @purchases1.empty? 
          return ret 
 
       else 
        
         puts "retorno ******************"
-        ret = @purchases1.first.quantity 
+        ret += @purchases1.first.quantity 
           return ret 
     
       end 
 
+
+       @facturas  = Sellvale.select("Facturas.*,customers.id as customer_id").where(["fecha >= ? and fecha <= ? ",
+        "#{fecha1} 00:00:00","#{fecha1} 23:59:59"  ]).order(:fecha).joins("INNER JOIN customers ON facturas.cod_cli = customers.account AND customers.tipo = '4'  ")
+         
+       if @facturas
+               
+              ret=0  
+              for detalle in @facturas
+              
+               @factura_details = detalle.factura_details
+               
+                    for quote in   @factura_details 
+             
+                    ret += quote.quantity 
+                 
+                    end 
+             end  
+          
+        end 
+  
+        return ret 
  end 
 
 
@@ -1232,7 +1248,10 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
                return 0
             end                
             
-  end
+    end
+
+
+
 
   def  get_ventas_serafin(fecha,product ) 
 
