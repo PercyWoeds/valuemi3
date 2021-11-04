@@ -192,12 +192,17 @@ end
                      row = []                                  
                      qty_ingreso = varillas.get_ingresos(varillas.fecha.to_date,tanques0.product.id) 
                      qty_ventas  = varillas.get_ventas(varillas.fecha.to_date,tanques0.product.code)  
+
                      qty_ventas_serafin  = varillas.get_ventas_serafin(varillas.fecha.to_date,tanques0.product.code) 
                      fecha_dia_anterior = varillas.fecha.yesterday.to_date
                      
+
+                     saldo_inicial = varillas.get_saldo_inicial(fecha_dia_anterior,fecha_dia_anterior,tanques0.product.id).last.varilla  
+                     
+
                      row << varillas.fecha.to_date 
                      row << " 06:00 AM " 
-                     row << varillas.get_saldo_inicial(fecha_dia_anterior,fecha_dia_anterior,tanques0.product.id).last.varilla               
+                     row << saldo_inicial              
                      row << sprintf("%.2f",qty_ingreso.to_s)  
                      row << sprintf("%.2f",qty_ventas_serafin.to_s)               
                      row << sprintf("%.2f",qty_ventas.to_s)  
@@ -220,7 +225,7 @@ end
 
                       total2 = 0
                                      
-                      saldo_inicial = varillas.varilla
+                     # saldo_inicial = varillas.varilla
 
                  end            
                end 
