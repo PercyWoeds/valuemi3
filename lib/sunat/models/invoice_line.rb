@@ -131,7 +131,7 @@ module SUNAT
 
           row << "#{self.line_extension_vventa.to_s}"
         else
-              row << "0.067"
+              row << "0.078"
 
           row << "#{self.line_extension_vventa.to_s}"
         end 

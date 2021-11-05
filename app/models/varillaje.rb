@@ -1225,18 +1225,15 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
 
             if facturas.first.total != nil  
                 puts "aaaaa"
-                ret = facturas.first.total  
-                   
-            else 
-                ret  = 0
+                ret += facturas.first.total  
+                           
             end                
             
            @facturas = Factura.find_by_sql(['Select facturas.*,customers.id,customers.name 
                        from facturas 
                        INNER JOIN customers ON facturas.customer_id = customers.id   
-                       WHERE facturas.fecha >= ? and facturas.fecha <= ? and customers.tipo = ?', "#{fecha} 00:00:00",
-                       "#{fecha} 23:59:59","4" ])  
-            
+                       WHERE facturas.fecha >= ? and facturas.fecha <= ? and customers.tipo = ? ', "#{fecha} 00:00:00",
+                       "#{fecha} 23:59:59","4" ])              
 
            # @facturas  = Factura.select("Facturas.*,customers.id as customer_id").where(["fecha >= ? and fecha <= ? and cod_prod = ? ",
            #  "#{fecha} 00:00:00","#{fecha} 23:59:59", product   ]).order(:fecha).joins("INNER JOIN customers ON 
@@ -1246,19 +1243,19 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
            if @facturas
                    
                  puts "venta mayorista " 
-                 
-                  for detalle in @facturas
 
+                  for detalle in @facturas
+                    puts "detalle----"    
                     puts detalle.id 
                   
-                       @factura_details = FacturaDetail.where(factura_id: detalle.id )
+                       @factura_details = FacturaDetail.where(factura_id: detalle.id , product_id: 5 )
                    
                         for quote in   @factura_details 
                  
                              ret += quote.quantity 
-
                              puts "factura detaleee..."
-                            puts ret 
+                             puts ret
+
                         end 
                  end  
               
