@@ -192,7 +192,7 @@ end
                      row = []                                  
                      qty_ingreso = varillas.get_ingresos(varillas.fecha.to_date,tanques0.product.id) 
                      qty_ventas  = varillas.get_ventas(varillas.fecha.to_date,tanques0.product.code)  
-                     qty_devol   = varillas.get_ventas(varillas.fecha.to_date,tanques0.product.code)  
+                     qty_devol   = varillas.get_devol(varillas.fecha.to_date,tanques0.product.code)  
                      qty_ventas_serafin  = varillas.get_ventas_serafin(varillas.fecha.to_date,tanques0.product.code) + qty_devol 
                      fecha_dia_anterior = varillas.fecha.yesterday.to_date
                      

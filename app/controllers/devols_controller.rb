@@ -15,19 +15,21 @@ class DevolsController < ApplicationController
   # GET /devols/new
   def new
     @devol = Devol.new
-    @products = Product.all 
+    @products = Product.where(products_category_id: 1 )
+
   end
 
   # GET /devols/1/edit
   def edit
-    @products = Product.all 
+    @products = Product.where(products_category_id: 1 )
+
   end
 
   # POST /devols
   # POST /devols.json
   def create
     @devol = Devol.new(devol_params)
-    @products = Product.all 
+    @products = Product.where(products_category_id: 1 )
 
     respond_to do |format|
       if @devol.save
