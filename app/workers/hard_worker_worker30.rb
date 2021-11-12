@@ -192,10 +192,13 @@ end
                      row = []                                  
                      qty_ingreso = varillas.get_ingresos(varillas.fecha.to_date,tanques0.product.id) 
                      qty_ventas  = varillas.get_ventas(varillas.fecha.to_date,tanques0.product.code)  
-                     qty_devol  = varillas.get_ventas(varillas.fecha.to_date,tanques0.product.code)  
-                     qty_ventas_serafin  = varillas.get_ventas_serafin(varillas.fecha.to_date,tanques0.product.code) 
+                     qty_devol   = varillas.get_ventas(varillas.fecha.to_date,tanques0.product.code)  
+                     qty_ventas_serafin  = varillas.get_ventas_serafin(varillas.fecha.to_date,tanques0.product.code) + qty_devol 
                      fecha_dia_anterior = varillas.fecha.yesterday.to_date
                      
+
+                     puts "devol"
+                     puts qty_devol 
 
                      saldo_inicial = varillas.get_saldo_inicial(fecha_dia_anterior,fecha_dia_anterior,tanques0.product.id).last.varilla  
                      
@@ -206,10 +209,10 @@ end
                      row << sprintf("%.2f",qty_ingreso.to_s)  
                      row << sprintf("%.2f",qty_ventas_serafin.to_s)               
                      row << sprintf("%.2f",qty_ventas.to_s)  
-                     row << sprintf("%.2f",qty_devol.to_s)  
+                     
                         
                   
-                     total1 = saldo_inicial +  qty_ingreso - qty_ventas -  qty_devol  + qty_ventas_serafin  
+                     total1 = saldo_inicial +  qty_ingreso - qty_ventas   + qty_ventas_serafin  
                       
                       dif = total1 - varillas.varilla 
 
