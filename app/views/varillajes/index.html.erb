@@ -34,7 +34,7 @@
         <td><%= varillaje.saldo %></td>
         <td><%= varillaje.varilla %></td>
         <td><%= varillaje.dife_dia %></td>
-        <td><%= varillaje.fecha %></td>
+        <td><%= varillaje.fecha.strftime("%d/%m/%Y") %></td>
         <td><%= varillaje.documento %></td>
         <td><%= link_to 'Show', varillaje %></td>
         <td><%= link_to 'Edit', edit_varillaje_path(varillaje) %></td>

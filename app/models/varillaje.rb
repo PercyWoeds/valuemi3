@@ -203,6 +203,7 @@ def  get_inicial(fecha1,producto,producto2)
     
       ret = 0
       factura_detalle = Devol.where(["fecha >= ? and fecha <= ? and cod_prod = ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59","#{producto}" ])
+        
         for detalle in factura_detalle
             ret += detalle.qty.round(2)
         end     

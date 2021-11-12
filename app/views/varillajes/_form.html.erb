@@ -2,14 +2,13 @@
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    
-          <div class="field">
+      <div class="field">
       <%= f.label :fecha , "Fecha *", :class => "bold" %><br />
 
       <% if @current_user.level = "admin" %>
-        <%= f.text_field :fecha, value: Time.zone.now.strftime("%d/%m/%Y") %>
+        <%= f.text_field :fecha %>
       <% else %>
-        <%= f.text_field :fecha, value: Time.zone.now.strftime("%d/%m/%Y")  %>
+        <%= f.text_field :fecha %>
       <% end %>
       </div>
       <div class="field">
