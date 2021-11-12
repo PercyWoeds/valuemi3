@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20211014232845) do
+ActiveRecord::Schema.define(version: 20211112162144) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -555,6 +555,16 @@ ActiveRecord::Schema.define(version: 20211014232845) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "devols", force: :cascade do |t|
+    t.string   "cod_prod"
+    t.datetime "fecha"
+    t.string   "documento"
+    t.string   "observa"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.float    "qty"
+  end
+
   create_table "divisions", force: :cascade do |t|
     t.integer  "company_id"
     t.integer  "location_id"
@@ -736,6 +746,7 @@ ActiveRecord::Schema.define(version: 20211014232845) do
     t.integer  "tarjeta_id"
     t.string   "guia"
     t.integer  "reference_fact"
+    t.integer  "note_concept_id"
     t.string   "texto1"
     t.string   "texto2"
     t.string   "texto3"
@@ -1370,8 +1381,9 @@ ActiveRecord::Schema.define(version: 20211014232845) do
     t.string   "code"
     t.string   "descrip"
     t.string   "td"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "document_id"
   end
 
   create_table "numeras", force: :cascade do |t|

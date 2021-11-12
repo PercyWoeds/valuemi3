@@ -1,0 +1,39 @@
+<%= simple_form_for(@devol) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+      <div class="field">
+      <%= f.label :fecha , "Fecha *", :class => "bold" %><br />
+       <%= f.text_field :fecha, value: Time.zone.now.strftime("%d/%m/%Y") %>
+    </div>
+
+    <div class="field">
+      <%= f.label :cod_prod, "Producto "%><br />
+      <%= f.collection_select :cod_prod, @products, :code, :name, :prompt => true %>
+    </div>
+    
+
+    
+      <div class="field">
+      <%= f.label :qty, "Medida *", :class => "bold"  %><br />
+      <%= f.input_field :qty   %>  
+      </div>
+
+    <div class="field">
+      <%= f.label :documento, "Documento *", :class => "bold"  %><br />
+      <%= f.input_field :documento   %>  
+      </div>
+   
+
+    <div class="field">
+      <%= f.label :observa, "Observacion *", :class => "bold"  %><br />
+      <%= f.input_field :observa   %>  
+      </div>
+
+
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

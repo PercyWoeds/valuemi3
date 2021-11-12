@@ -198,26 +198,21 @@ def  get_inicial(fecha1,producto,producto2)
  
  end 
  
-#  def  get_ventas(fecha,producto) 
+ def  get_devol(fecha,producto) 
 
-#      facturas = Ventaisla.where(["fecha >= ? and fecha <= ?  " , "#{fecha} 00:00:00","#{fecha} 23:59:59" ])
-     
-#      if facturas
-         
-#         ret=0  
-#         for detalle in facturas
-        
-#               factura_detalle = VentaislaDetail.where(["ventaisla_id = ? and product_id = ?" , detalle.id,producto ])
-#                 for detalle in factura_detalle
-#                     ret += detalle.quantity.round(6)*-1
-#                 end     
-            
-#         end 
-#     end 
-
-#     return ret
+    
+      ret = 0
+      factura_detalle = Devol.where(["fecha >= ? and fecha <= ? and cod_prod = ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59","#{producto}" ])
+        for detalle in factura_detalle
+            ret += detalle.qty.round(2)
+        end     
  
-#  end 
+
+       return ret
+ 
+ end 
+
+
  def  get_ventas(fecha,producto) 
      
 
@@ -233,6 +228,8 @@ def  get_inicial(fecha1,producto,producto2)
       
          end 
      end 
+
+
 
 
      @ventas  = Factura.where('fecha>= ? and fecha <= ? and tipoventa_id = ?',"#{fecha1} 00:00:00","#{fecha2} 23:59:59","3")

@@ -20,6 +20,7 @@ class FacturasController < ApplicationController
     @parte_rpt = @company.get_parte_10(@fecha)
     
     
+
     case params[:print]
       when "To PDF" then 
         begin 
@@ -109,7 +110,7 @@ def reportes5
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]    
     @cliente = params[:cod_cli]    
-    
+  
   
     @contado_rpt = @company.get_parte_3(@fecha1,@fecha2,@cliente)
     
@@ -4581,7 +4582,6 @@ def cuadre02
     @company=Company.find(1)          
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]  
-
 
     HardWorkerWorker2.perform_async(@fecha1,@fecha2,@current_user.id) 
 
