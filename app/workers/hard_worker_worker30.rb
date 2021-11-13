@@ -15,6 +15,8 @@ def perform(fecha1,fecha2,user_id)
 
     @fecha1 = fecha1
     @fecha2 = fecha2 
+
+    Sellvale.where("fecha>=? and fecha <=?", "2021-11-11 00:00:00","2021-12-12 23:59:59").update_all("cantidad =  CAST(importe as  float ) / CAST( precio AS float) ")
     
     @tanques  = @company.get_tanques() 
     @varillaje = @company.get_varillas()
