@@ -4423,7 +4423,38 @@
             return facturas 
             
         end 
-        
+        def  get_ventas_combustibles_fecha_total(fecha1,fecha2) 
+    
+            facturas = Sellvale.find_by_sql(['Select  
+                    SUM(sellvales.cantidad) AS quantity,
+                    SUM(CAST(importe AS numeric)) AS total 
+                      from sellvales 
+                      INNER JOIN employees ON sellvales.cod_emp = employees.cod_emp
+                      INNER JOIN products ON  sellvales.cod_prod = products.code 
+                      WHERE sellvales.fecha >= ? and sellvales.fecha <= ? 
+                      GROUP BY sellvales.fecha
+                      ORDER BY sellvales.fecha
+                      ', "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])  
+            
+            return facturas 
+            
+        end 
+        def  get_ventas_combustibles_fecha_grifero_turno(fecha1,fecha2,turno ) 
+    
+            facturas = Sellvale.find_by_sql(['Select sellvales.cod_emp,sellvales.turno, 
+                    SUM(sellvales.cantidad) AS quantity,
+                    SUM(CAST(importe AS numeric)) AS total 
+                      from sellvales 
+                      INNER JOIN employees ON sellvales.cod_emp = employees.cod_emp
+                      INNER JOIN products ON  sellvales.cod_prod = products.code 
+                      WHERE sellvales.fecha >= ? and sellvales.fecha <= ? and turno = ?
+                      GROUP BY sellvales.fecha, sellvales.turno,sellvales.cod_emp
+                      ORDER BY sellvales.fecha, sellvales.turno,sellvales.cod_emp
+                      ', "#{fecha1} 00:00:00","#{fecha2} 23:59:59",turno ])  
+            
+            return facturas 
+            
+        end 
         def  get_ventas_combustibles_fecha_producto1(fecha1,fecha2) 
            
              facturas0 = Sellvale.find_by_sql(['Select sellvales.fecha,sellvales.cod_emp,sellvales.turno, 
@@ -4929,6 +4960,10 @@
 
 
       end 
+
+
+ 
+
 
 
     

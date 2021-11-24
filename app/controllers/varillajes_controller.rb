@@ -33,7 +33,7 @@ class VarillajesController < ApplicationController
     @tanques = Tanque.all
     @varillaje = Varillaje.new(varillaje_params)
     
-    @varillaje[:inicial] = @varillaje.tanque.varilla 
+    @varillaje[:inicial] = 0 
     @varillaje[:compras] = 0
     @varillaje[:directo] = 0
     @varillaje[:consumo] = 0

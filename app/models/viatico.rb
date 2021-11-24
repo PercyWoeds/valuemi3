@@ -557,5 +557,99 @@ def  get_ventas_fecha_turno(fecha,fpago,turno )
              return ret
 
          end 
+
+
+
+        def  get_ventas_combustibles_fecha_grifero0(fecha1,turno) 
+
+            @forma_pago='98'
+            @turno = turno.to_s 
+            facturas = Sellvale.find_by_sql(['Select sellvales.cod_emp,sellvales.turno, 
+                    SUM(sellvales.cantidad) AS quantity,
+                    SUM(CAST(importe AS numeric)) AS total 
+                      from sellvales 
+                      INNER JOIN employees ON sellvales.cod_emp = employees.cod_emp
+                      INNER JOIN products ON  sellvales.cod_prod = products.code 
+                      WHERE sellvales.fecha >= ? and sellvales.fecha <= ? and sellvales.cod_tar = ? and sellvales.turno = ?
+                      GROUP BY sellvales.fecha, sellvales.turno,sellvales.cod_emp
+                      ORDER BY sellvales.fecha, sellvales.turno,sellvales.cod_emp
+                      ', "#{fecha1} 00:00:00","#{fecha1} 23:59:59",@forma_pago, @turno  ])  
+            
+            return facturas 
+            
+        end 
+
+def  get_ventas_tirada_emp_turno(fecha,cod_emp, turno ) 
+          ret  = 0
+         facturas = Tirad.where(["fecha >= ? and fecha <= ?  and cod_emp = ?   and turno = ?  " , "#{fecha} 00:00:00","#{fecha} 23:59:59",cod_emp,turno ])
+         if facturas
+            for factura in facturas      
+            ret += factura.importe 
+            end
+
+         end  
+         return ret
+
+ end 
+
+
+ 
+  def  get_ventas_forma_pago(fecha,fpago) 
+
+            facturas  = 0
+
+             facturas = Sellvale.find_by_sql(['Select SUM(CAST(importe AS numeric)) AS total 
+                         from sellvales where fecha >= ? and fecha <= ?   
+                         and cod_tar= ?' , "#{fecha} 00:00:00","#{fecha} 23:59:59",
+                         fpago  ])
+
+            if facturas.first.total != nil  
+                puts "aaaaa"
+                puts facturas.first.total  
+              return facturas.first.total  
+            else 
+               return 0
+            end                
+            
+        
+         
+  end
+  
+ def  get_ventas_forma_pago_grifero_turno_detalle(fecha,grifero,turno,fpago) 
+
+            ret = 0
+             facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and cod_emp = ? and turno=?  and cod_tar= ?  " , "#{fecha} 00:00:00","#{fecha} 23:59:59",grifero,turno,fpago])
+             
+            
+        
+            return facturas 
+         
+  end
+  
+
+
+  def  get_ventas_forma_pago_grifero_turno_total(fecha,grifero,turno,fpago) 
+
+            facturas  = 0
+
+             facturas = Sellvale.find_by_sql(['Select SUM(CAST(importe AS numeric)) AS total 
+                         from sellvales where fecha >= ? and fecha <= ?   
+                         and cod_emp = ?  and turno = ? and  cod_tar= ?' , "#{fecha} 00:00:00","#{fecha} 23:59:59",
+                         cod_emp,turno, fpago  ])
+
+            if facturas.first.total != nil  
+                puts "aaaaa"
+                puts facturas.first.total  
+              return facturas.first.total  
+            else 
+               return 0
+            end                
+            
+        
+         
+  end
       
 end
+
+
+

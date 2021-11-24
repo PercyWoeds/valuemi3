@@ -238,53 +238,296 @@ before_filter :authenticate_user!
     redirect_to @viatico
   end
    # Process an viatico
+
+  # def do_caja
+  #   @viatico = Viatico.find(params[:id])
+  #   @fecha  =  @viatico.fecha1.to_date 
+
+  # bucle = 1
+  # while bucle < 4
+  #   detalle_texto = ""
+    
+  #   ventas1 = @viatico.get_ventas_fecha_turno(@fecha,"98",bucle)
+   
+  #   tirada1= @viatico.get_ventas_tirada_turno(@fecha,bucle)
+   
+  #   diferencia1 =  tirada1 - ventas1
+    
+   
+  #   detalle_texto = "VENTA DEL DIA: " <<   @fecha.to_s  << " TURNO: "  << bucle.to_s  
+  #   detalle_texto2 = "TIRADAS: " <<   @fecha.to_s  << " TURNO: "  << bucle.to_s  
+  #   detalle_texto3 = "DIFERENCIA: " <<   @fecha.to_s  << " TURNO: "  << bucle.to_s  
+
+  #    a = ViaticoDetail.new(viatico_id: @viatico.id, fecha:@viatico.fecha1, descrip:"", document_id: 4, 
+  #     numero: "0", importe: ventas1, detalle: detalle_texto, tm: "5", tranportorder_id: 1, 
+  #     supplier_id: 4, gasto_id: 1, employee_id: 10, destino_id: 1, compro: "0", tipomov_id: 1 )
+  #    a.save
+  #    a = ViaticoDetail.new(viatico_id: @viatico.id, fecha:@viatico.fecha1, descrip:"", document_id: 4, 
+  #     numero: "0", importe: tirada1, detalle: detalle_texto2, tm: "4", tranportorder_id: 1, 
+  #     supplier_id: 4, gasto_id: 1, employee_id: 10, destino_id: 1, compro: "0", tipomov_id: 1 )
+  #    a.save
+
+  #    if diferencia1 < 0
+  #     tipo_mov = 2
+  #     diferencia1 = diferencia1 * -1 
+  #    else
+  #     tipo_mov = 1 
+  #    end
+  #    a = ViaticoDetail.new(viatico_id: @viatico.id, fecha:@viatico.fecha1, descrip:"", document_id: 4, 
+  #     numero: "0", importe: diferencia1, detalle: detalle_texto3, tm: "5", tranportorder_id: 1, 
+  #     supplier_id: 4, gasto_id: 1, employee_id: 10, destino_id: 1, compro: "0", tipomov_id: tipo_mov )
+  #    a.save
+
+
+
+  #    bucle += 1
+  #   end 
+    
+  #   flash[:notice] = "The viatico order has been processed."
+  #   redirect_to @viatico
+  # end
+
+
+
   def do_caja
     @viatico = Viatico.find(params[:id])
     @fecha  =  @viatico.fecha1.to_date 
+    @company = Company.find(1)    
 
   bucle = 1
-  while bucle < 4
+   contado = Viatico.last
+    @detalle_ventas_grifero1 = @company.get_ventas_combustibles_fecha_grifero_turno(@fecha,@fecha,"1")
+    @detalle_ventas_grifero2 = @company.get_ventas_combustibles_fecha_grifero_turno(@fecha,@fecha,"2")
+    @detalle_ventas_grifero3 = @company.get_ventas_combustibles_fecha_grifero_turno(@fecha,@fecha,"3")
+
+
+    @detalle_ventas_grifero = @company.get_ventas_combustibles_fecha_total(@fecha,@fecha)
+  
+    a1 = contado.get_ventas_forma_pago(@fecha,"98") 
+
+    a2 = contado.get_ventas_forma_pago(@fecha,"05") 
+
+    a20 =  contado.get_ventas_forma_pago(@fecha,"01")  
+
+    a2 += a20 
+
+    a3 = contado.get_ventas_forma_pago(@fecha,"06")  
+    
+              
+    a4 = contado.get_ventas_forma_pago(@fecha,"07") 
+    a5 = 0  
+     
+
+
+    detalle_texto = " "
+    
+    
+   for  venta_dia  in @detalle_ventas_grifero
+    puts "contado... "
+    puts venta_dia.total
+    puts venta_dia.quantity 
+
+
+      a = ViaticoDetail.new(viatico_id: @viatico.id, fecha:@fecha , descrip: "Total Vta Soles: ", document_id: 4, 
+      numero: "0", importe: venta_dia.total, detalle: detalle_texto, tm: 5, tranportorder_id: 1, 
+      supplier_id: 1, gasto_id: 31 , employee_id: 10, destino_id: 1, compro: "0", tipomov_id: 1 )
+       a.save
+
+   end 
+
+   
+     a = ViaticoDetail.new(viatico_id: @viatico.id, fecha:@fecha , descrip: "Efectivo ", document_id: 4, 
+      numero: "0", importe: a1, detalle: detalle_texto, tm: 5, tranportorder_id: 1, 
+      supplier_id: 1, gasto_id: 31 , employee_id: 10, destino_id: 1, compro: "0", tipomov_id: 1 )
+     a.save
+
+     a = ViaticoDetail.new(viatico_id: @viatico.id, fecha:@fecha , descrip: "Tarj.Credito ", document_id: 4, 
+      numero: "0", importe: a2, detalle: detalle_texto, tm: 5, tranportorder_id: 1, 
+      supplier_id: 1, gasto_id: 31 , employee_id: 10, destino_id: 1, compro: "0", tipomov_id: 1 )
+     a.save
+
+     a = ViaticoDetail.new(viatico_id: @viatico.id, fecha:@fecha , descrip: "Vales Credito ", document_id: 4, 
+      numero: "0", importe: a3, detalle: detalle_texto, tm: 5, tranportorder_id: 1, 
+      supplier_id: 1, gasto_id: 31 , employee_id: 10, destino_id: 1, compro: "0", tipomov_id: 1 )
+     a.save
+
+     a = ViaticoDetail.new(viatico_id: @viatico.id, fecha:@fecha , descrip: "Serafin ", document_id: 4, 
+      numero: "0", importe: a4, detalle: detalle_texto, tm: 5, tranportorder_id: 1, 
+      supplier_id: 1, gasto_id: 31 , employee_id: 10, destino_id: 1, compro: "0", tipomov_id: 1 )
+     a.save
+
+   
     detalle_texto = ""
-    
-    ventas1 = @viatico.get_ventas_fecha_turno(@fecha,"98",bucle)
+    nombre_empleado = ""
+
+
+   for  contado in @detalle_ventas_grifero1 
+
+        nombre_empleado =   contado.get_nombre_empleado(contado.cod_emp)
+
+        detalle_texto = "DIA: " <<   @fecha.strftime("%d-%m-%Y")  << " "  << nombre_empleado  
+        detalle_texto3 = "DIA: " <<   @fecha.strftime("%d-%m-%Y")  <<  " " << nombre_empleado
+        detalle_texto2 =  "VENTA TURNO "  << bucle.to_s 
+        detalle_texto4 =  "DIFER.TURNO "  << bucle.to_s 
+
+        if bucle == 1
+            @gasto_id = 24   
+        end 
+        if bucle == 2
+            @gasto_id = 25   
+        end 
+        if bucle == 3
+            @gasto_id = 26   
+        end 
+
+
+        total_efe = contado.get_ventas_forma_pago_grifero_turno_total(@fecha,contado.cod_emp,contado.turno ,"98") 
+
+
+
+         a = ViaticoDetail.new(viatico_id: @viatico.id, fecha:@fecha , descrip:detalle_texto2, document_id: 4, 
+          numero: "0", importe: total_efe , detalle: detalle_texto, tm: 1, tranportorder_id: 1, 
+          supplier_id: 1, gasto_id: @gasto_id , employee_id: 10, destino_id: 1, compro: "0", tipomov_id: 1 )
+         a.save
+
+
+         tirada1 = @viatico.get_ventas_tirada_emp_turno(@fecha,contado.cod_emp,bucle)
+
+          diferencia1 =  tirada1 - total_efe
+          
+         if diferencia1 < 0
+          tipo_mov = 2
+          diferencia1 = diferencia1 * -1 
+         else
+          tipo_mov = 1 
+         end
+         a = ViaticoDetail.new(viatico_id: @viatico.id, fecha:@fecha , descrip:detalle_texto4 , document_id: 4, 
+          numero: "0", importe: diferencia1, detalle: detalle_texto3, tm: 2 , tranportorder_id: 1, 
+          supplier_id: 4, gasto_id: 1, employee_id: 10, destino_id: 1, compro: "0", tipomov_id: tipo_mov )
+         a.save
    
-    tirada1= @viatico.get_ventas_tirada_turno(@fecha,bucle)
-   
-    diferencia1 =  tirada1 - ventas1
+
     
+    end
+    bucle += 1
+   for  contado in @detalle_ventas_grifero2 
+
+        nombre_empleado =   contado.get_nombre_empleado(contado.cod_emp)
+
+        detalle_texto = "DIA: " <<   @fecha.strftime("%d-%m-%Y")  << " "  << nombre_empleado  
+        detalle_texto3 = "DIA: " <<   @fecha.strftime("%d-%m-%Y")  <<  " " << nombre_empleado
+        detalle_texto2 =  "VENTA TURNO "  << bucle.to_s 
+        detalle_texto4 =  "DIFER.TURNO "  << bucle.to_s 
+
+        if bucle == 1
+            @gasto_id = 24   
+        end 
+        if bucle == 2
+            @gasto_id = 25   
+        end 
+        if bucle == 3
+            @gasto_id = 26   
+        end 
+
+
+        total_efe = contado.get_ventas_forma_pago_grifero_turno_total(@fecha,contado.cod_emp,contado.turno ,"98") 
+
+
+
+         a = ViaticoDetail.new(viatico_id: @viatico.id, fecha:@fecha , descrip:detalle_texto2, document_id: 4, 
+          numero: "0", importe: total_efe , detalle: detalle_texto, tm: 1, tranportorder_id: 1, 
+          supplier_id: 1, gasto_id: @gasto_id , employee_id: 10, destino_id: 1, compro: "0", tipomov_id: 1 )
+         a.save
+
+
+         tirada1 = @viatico.get_ventas_tirada_emp_turno(@fecha,contado.cod_emp,bucle)
+
+          diferencia1 =  tirada1 - total_efe
+          
+         if diferencia1 < 0
+          tipo_mov = 2
+          diferencia1 = diferencia1 * -1 
+         else
+          tipo_mov = 1 
+         end
+         a = ViaticoDetail.new(viatico_id: @viatico.id, fecha:@fecha , descrip:detalle_texto4 , document_id: 4, 
+          numero: "0", importe: diferencia1, detalle: detalle_texto3, tm: 2 , tranportorder_id: 1, 
+          supplier_id: 4, gasto_id: 1, employee_id: 10, destino_id: 1, compro: "0", tipomov_id: tipo_mov )
+         a.save
    
-    detalle_texto = "VENTA DEL DIA: " <<   @fecha.to_s  << " TURNO: "  << bucle.to_s  
-    detalle_texto2 = "TIRADAS: " <<   @fecha.to_s  << " TURNO: "  << bucle.to_s  
-    detalle_texto3 = "DIFERENCIA: " <<   @fecha.to_s  << " TURNO: "  << bucle.to_s  
 
-     a = ViaticoDetail.new(viatico_id: @viatico.id, fecha:@viatico.fecha1, descrip:"", document_id: 4, 
-      numero: "0", importe: ventas1, detalle: detalle_texto, tm: "5", tranportorder_id: 1, 
-      supplier_id: 4, gasto_id: 1, employee_id: 10, destino_id: 1, compro: "0", tipomov_id: 1 )
-     a.save
-     a = ViaticoDetail.new(viatico_id: @viatico.id, fecha:@viatico.fecha1, descrip:"", document_id: 4, 
-      numero: "0", importe: tirada1, detalle: detalle_texto2, tm: "4", tranportorder_id: 1, 
-      supplier_id: 4, gasto_id: 1, employee_id: 10, destino_id: 1, compro: "0", tipomov_id: 1 )
-     a.save
-
-     if diferencia1 < 0
-      tipo_mov = 2
-      diferencia1 = diferencia1 * -1 
-     else
-      tipo_mov = 1 
-     end
-     a = ViaticoDetail.new(viatico_id: @viatico.id, fecha:@viatico.fecha1, descrip:"", document_id: 4, 
-      numero: "0", importe: diferencia1, detalle: detalle_texto3, tm: "5", tranportorder_id: 1, 
-      supplier_id: 4, gasto_id: 1, employee_id: 10, destino_id: 1, compro: "0", tipomov_id: tipo_mov )
-     a.save
-
-
-
-     bucle += 1
-    end 
     
+    end
+
+    bucle += 1
+   for  contado in @detalle_ventas_grifero3
+
+        nombre_empleado =   contado.get_nombre_empleado(contado.cod_emp)
+
+        detalle_texto = "DIA: " <<   @fecha.strftime("%d-%m-%Y")  << " "  << nombre_empleado  
+        detalle_texto3 = "DIA: " <<   @fecha.strftime("%d-%m-%Y")  <<  " " << nombre_empleado
+        detalle_texto2 =  "VENTA TURNO "  << bucle.to_s 
+        detalle_texto4 =  "DIFER.TURNO "  << bucle.to_s 
+
+        if bucle == 1
+            @gasto_id = 24   
+        end 
+        if bucle == 2
+            @gasto_id = 25   
+        end 
+        if bucle == 3
+            @gasto_id = 26   
+        end 
+
+
+        total_efe = contado.get_ventas_forma_pago_grifero_turno_total(@fecha,contado.cod_emp,contado.turno ,"98") 
+
+
+
+         a = ViaticoDetail.new(viatico_id: @viatico.id, fecha:@fecha , descrip:detalle_texto2, document_id: 4, 
+          numero: "0", importe: total_efe , detalle: detalle_texto, tm: 1, tranportorder_id: 1, 
+          supplier_id: 1, gasto_id: @gasto_id , employee_id: 10, destino_id: 1, compro: "0", tipomov_id: 1 )
+         a.save
+
+
+         tirada1 = @viatico.get_ventas_tirada_emp_turno(@fecha,contado.cod_emp,bucle)
+
+          diferencia1 =  tirada1 - total_efe
+          
+         if diferencia1 < 0
+          tipo_mov = 2
+          diferencia1 = diferencia1 * -1 
+         else
+          tipo_mov = 1 
+         end
+         a = ViaticoDetail.new(viatico_id: @viatico.id, fecha:@fecha , descrip:detalle_texto4 , document_id: 4, 
+          numero: "0", importe: diferencia1, detalle: detalle_texto3, tm: 2 , tranportorder_id: 1, 
+          supplier_id: 4, gasto_id: 1, employee_id: 10, destino_id: 1, compro: "0", tipomov_id: tipo_mov )
+         a.save
+   
+
+    
+    end
+
+
+
+    @viatico[:inicial] = @viatico.get_total_inicial 
+    @viatico[:total_ing] = @viatico.get_total_ingreso
+    @viatico[:total_egreso]=  @viatico.get_total_egreso
+    
+    @viatico[:saldo] = @viatico[:inicial] +  @viatico[:total_ing] - @viatico[:total_egreso]
+    
+    @viatico.save
+    puts "actuaizaº" 
+    puts   @viatico[:inicial]
+    puts  @viatico[:total_ing]
+    puts  @viatico[:total_egreso]
+    puts  @viatico[:saldo]
+
     flash[:notice] = "The viatico order has been processed."
     redirect_to @viatico
   end
+
   
   # Do send viatico via email
   def do_email
