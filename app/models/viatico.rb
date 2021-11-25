@@ -304,7 +304,7 @@ self.per_page = 20
     return "#{self.code} "
   end
   def get_viaticos
-      @viaticos = ViaticoDetail.where("viatico_id = ? ",self.id).order(:fecha,:tipomov_id,:document_id)
+      @viaticos = ViaticoDetail.where("viatico_id = ? ",self.id)
   end
 
   def get_viaticos_cheque
