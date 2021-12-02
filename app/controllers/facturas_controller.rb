@@ -2123,6 +2123,7 @@ def reportes31
   # GET /invoices/1
   # GET /invoices/1.xml
   def show
+
     @invoice = Factura.find(params[:id])
     @company = Company.find(1)
     @customer = @invoice.customer
@@ -2450,7 +2451,7 @@ def reportes31
   
 def newfactura2
     
-     @company = Company.find(1)
+    @company = Company.find(1)
     @factura = Factura.find(params[:factura_id])
     @customer = Customer.find(params[:customer_id]) 
 
@@ -3733,6 +3734,8 @@ def newfactura2
       invoice_headers  = [["Fecha : ",$lcHora]]    
       invoice_headers
   end
+
+
  def discontinue
     
     @factura_id = params[:factura_id]
@@ -5480,10 +5483,7 @@ def cuadre02
       end 
 
         lcProveedor = @facturas_rpt.last.supplier_id 
-
-            
-            
-         
+   
         
               
           

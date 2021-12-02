@@ -117,6 +117,8 @@ module SUNAT
     def build_pdf_table_row(pdf)
 
 
+      precio_line = 0 
+
       row = []
       row << self.id
       row << self.quantity.quantity
@@ -126,12 +128,9 @@ module SUNAT
 
       if $lcServicioFactura == "true"  
 
-         if $lcDenis == "1"
-          row << "0.13"
-
-          row << "#{self.line_extension_vventa.to_s}"
-        else
-              row << "0.013"
+         precio_line = self.line_extension_vventa / self.quantity.quantity
+         
+        row << "#{precio_line.round(3).to_s}"
 
           row << "#{self.line_extension_vventa.to_s}"
         end 
