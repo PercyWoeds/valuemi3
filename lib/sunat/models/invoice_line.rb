@@ -128,19 +128,17 @@ module SUNAT
 
       if $lcServicioFactura == "true"  
 
-         precio_line = self.line_extension_vventa / self.quantity.quantity
+        
+           row << "#{self.preciosigv.to_s}"
 
-        row << "#{precio_line.round(3).to_s}"
-
-          row << "#{self.line_extension_vventa.to_s}"
+           row << "#{self.line_extension_vventa.to_s}"
       
-
 
       else 
 
       
       #  row << "0.0875"
-       row << "#{self.pricing_reference.alternative_condition_price.price_amount }"
+        row << "#{self.pricing_reference.alternative_condition_price.price_amount }"
         row << "#{self.line_extension_amount.to_s}"
       end 
   
