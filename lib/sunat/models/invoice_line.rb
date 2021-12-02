@@ -129,11 +129,11 @@ module SUNAT
       if $lcServicioFactura == "true"  
 
          precio_line = self.line_extension_vventa / self.quantity.quantity
-         
+
         row << "#{precio_line.round(3).to_s}"
 
           row << "#{self.line_extension_vventa.to_s}"
-        end 
+      
 
 
       else 
