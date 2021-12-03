@@ -582,10 +582,10 @@ class Factura < ActiveRecord::Base
   def process2
 
 
-          @factura = Factura.find(self.id)
+       
 
           Factura.where(id: self.id).update_all("fecha_cuota1 = fecha2, importe_cuota1 =  total - detraccion_importe ")
-          
+             @factura = Factura.find(self.id)
 
           puts @factura.code 
 
