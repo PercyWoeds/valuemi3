@@ -3932,6 +3932,15 @@
        
        end 
        
+
+        def  get_detalle_venta(fecha1,fecha2) 
+    
+           facturas = Sellvale.where(["fecha >= ? and fecha <= ? " , "#{fecha1} 00:00:00","#{fecha2} 23:59:59"]).order(:fecha,:serie,:numero)
+           
+           
+          return facturas
+       
+       end 
        def  get_ventas_contometros_efectivo(fecha1,fecha2) 
     
            facturas = Sellvale.where(["fecha >= ? and fecha <= ? and td <> ?  and tipo<> ? and serie = ?" , "#{fecha1} 00:00:00","#{fecha2} 23:59:59","N","2","BB02"])

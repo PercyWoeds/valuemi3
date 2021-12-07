@@ -216,48 +216,53 @@ def reportes8
     @company=Company.find(1)          
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2] 
+
+     @contado_rpt1 = @company.get_detalle_venta(@fecha1,@fecha2)  
+    
+   
   
-    @contado_rpt1 = @company.get_ventas_contometros_efectivo_sustento2(@fecha1,@fecha2)  
-    @contado_rpt2 = @company.get_parte_2(@fecha1,@fecha2) #contadp
-    @contado_rpt4 = @company.get_parte_4(@fecha1,@fecha2) #creditos
-    @contado_rpt5 = @company.get_parte_5(@fecha1,@fecha2) #tarjeta 
-    @contado_rpt6 = @company.get_parte_6(@fecha1,@fecha2) #pago adelantado
+    # @contado_rpt1 = @company.get_ventas_contometros_efectivo_sustento2(@fecha1,@fecha2)  
+
+    # @contado_rpt2 = @company.get_parte_2(@fecha1,@fecha2) #contadp
+    # @contado_rpt4 = @company.get_parte_4(@fecha1,@fecha2) #creditos
+    # @contado_rpt5 = @company.get_parte_5(@fecha1,@fecha2) #tarjeta 
+    # @contado_rpt6 = @company.get_parte_6(@fecha1,@fecha2) #pago adelantado
     
-    @contado_adel0 = @company.get_parte_6b(@fecha1,@fecha2) # total saldo vales adelantados inicial
+    # @contado_adel0 = @company.get_parte_6b(@fecha1,@fecha2) # total saldo vales adelantados inicial
     
-    @fecha0 = "2018-03-01"
-    @contado_adel1 = @company.get_ventas_mayor_anterior(@fecha0,@fecha1,"4") # total saldo facturas adelantadas inicial
+    # @fecha0 = "2018-03-01"
+    # @contado_adel1 = @company.get_ventas_mayor_anterior(@fecha0,@fecha1,"4") # total saldo facturas adelantadas inicial
     
-    @contado_rpt7 = @company.get_ventas_vale_directo(@fecha1,@fecha2) #ventas directa
+    # @contado_rpt7 = @company.get_ventas_vale_directo(@fecha1,@fecha2) #ventas directa
     
-    @total_combus = @company.get_ventas_contometros(@fecha1,@fecha2) #ventas market 
+    # @total_combus = @company.get_ventas_contometros(@fecha1,@fecha2) #ventas market 
     
-    @total_market = @company.get_ventas_market_total(@fecha1,@fecha2)  +@company.get_ventas_colaterales_efe(@fecha1,@fecha2,"2" )+@company.get_ventas_colaterales_tar(@fecha1,@fecha2,"2" )  +@company.get_ventas_colaterales_efe(@fecha1,@fecha2,"3" )+@company.get_ventas_colaterales_tar(@fecha1,@fecha2,"3" )
+    # @total_market = @company.get_ventas_market_total(@fecha1,@fecha2)  +@company.get_ventas_colaterales_efe(@fecha1,@fecha2,"2" )+@company.get_ventas_colaterales_tar(@fecha1,@fecha2,"2" )  +@company.get_ventas_colaterales_efe(@fecha1,@fecha2,"3" )+@company.get_ventas_colaterales_tar(@fecha1,@fecha2,"3" )
     
-    @total_directa = @company.get_ventas_mayor(@fecha1,@fecha2,"3") #ventas market 
+    # @total_directa = @company.get_ventas_mayor(@fecha1,@fecha2,"3") #ventas market 
     
-    @total_adelantada_bruta = @company.get_ventas_adelantado_suma(@fecha1,@fecha2) 
+    # @total_adelantada_bruta = @company.get_ventas_adelantado_suma(@fecha1,@fecha2) 
     
-    @total_adelantada = @contado_adel1 -@contado_adel0 + @total_adelantada_bruta - @company.get_ventas_contometros_adelantado(@fecha1,@fecha2)
+    # @total_adelantada = @contado_adel1 -@contado_adel0 + @total_adelantada_bruta - @company.get_ventas_contometros_adelantado(@fecha1,@fecha2)
     
-    @total_venta = @company.get_ventas_all_series(@fecha1,@fecha2)
+    # @total_venta = @company.get_ventas_all_series(@fecha1,@fecha2)
     
-    @total_boletas= @company.get_ventas_contometros_efectivo(@fecha1,@fecha2)  + @total_venta   #ventas boletas reg ventas playa
+    # @total_boletas= @company.get_ventas_contometros_efectivo(@fecha1,@fecha2)  + @total_venta   #ventas boletas reg ventas playa
     
     
-    @total_contado_pendiente = @company.get_contado_pendiente(@fecha1,@fecha2)
-    @total_credito_pendiente_detalle = @company.get_credito_pendiente_detalle(@fecha1,@fecha2)
+    # @total_contado_pendiente = @company.get_contado_pendiente(@fecha1,@fecha2)
+    # @total_credito_pendiente_detalle = @company.get_credito_pendiente_detalle(@fecha1,@fecha2)
     
-    @total_factura_out_fecha = @company.get_credito_out_fecha(@fecha1,@fecha2)
-    @total_factura_out_fecha2 = @company.get_credito_out_fecha2(@fecha1,@fecha2,"1")
+    # @total_factura_out_fecha = @company.get_credito_out_fecha(@fecha1,@fecha2)
+    # @total_factura_out_fecha2 = @company.get_credito_out_fecha2(@fecha1,@fecha2,"1")
     
-    @total_credito_pendiente = @company.get_credito_pendiente(@fecha1,@fecha2)
+    # @total_credito_pendiente = @company.get_credito_pendiente(@fecha1,@fecha2)
     
-    @total_factura_out_fecha_detalle =@company.get_credito_out_fecha_detalle(@fecha1,@fecha2)
+    # @total_factura_out_fecha_detalle =@company.get_credito_out_fecha_detalle(@fecha1,@fecha2)
     
-    @total_factura_out_fecha_detalle2 =@company.get_credito_out_fecha_detalle2(@fecha1,@fecha2,"1")
+    # @total_factura_out_fecha_detalle2 =@company.get_credito_out_fecha_detalle2(@fecha1,@fecha2,"1")
     
-    @total_venta_combustible_fecha = @company.get_ventas_combustibles_fecha(@fecha1,@fecha2)
+    # @total_venta_combustible_fecha = @company.get_ventas_combustibles_fecha(@fecha1,@fecha2)
  
     case params[:print]
       when "To PDF" then 
@@ -279,7 +284,7 @@ def reportes8
                }
                
         end   
-      when "To Excel" then render xlsx: 'exportxls'
+      when "To Excel" then render xlsx: 'parte8_rpt_xls'
       else render action: "index"
     end
   end
