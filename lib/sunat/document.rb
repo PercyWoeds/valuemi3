@@ -63,6 +63,7 @@ module SUNAT
         pdf.move_down 2
       end
 #     
+
                                                                                 
       pdf.bounding_box([345, 755], :width => 200, :height => 80) do
         pdf.stroke_bounds
