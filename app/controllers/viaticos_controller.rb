@@ -687,11 +687,11 @@ before_filter :authenticate_user!
     end
   
     if(@company.can_view(current_user))
-         @viaticos = Viatico.all.order('id DESC').paginate(:page => params[:page])
+         @viaticos = Viatico.all.order('fecha DESC').paginate(:page => params[:page])
         if params[:search]
-          @viaticos = Viatico.search(params[:search]).order('id DESC').paginate(:page => params[:page])
+          @viaticos = Viatico.search(params[:search]).order('fecha DESC').paginate(:page => params[:page])
         else
-          @viaticos = Viatico.all.order('id DESC').paginate(:page => params[:page]) 
+          @viaticos = Viatico.all.order('fecha  DESC').paginate(:page => params[:page]) 
         end
     
     else
