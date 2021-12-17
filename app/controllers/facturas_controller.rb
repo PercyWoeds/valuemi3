@@ -2292,7 +2292,7 @@ def reportes31
             $lcPercentIgv  =18000   
           $lcAutorizacion=" "
           $lcCuentas=" El pago del documento sera necesariamente efectuado mediante deposito en cualquiera de las siguientes cuentas bancarias:  
-  BBVA Continental Cuenta Corriente en Moneda Nacional Numero: BBVA SOLES 0011-0168-27010004490.
+  BBVA Continental Cuenta Corriente en Moneda Nacional Numero: BBVA SOLES 0011-0168-27010009824.
   Consultar  en  https://www.sunat.gob.pe/ol-ti-itconsultaunificadalibre/consultaUnificadaLibre/consulta"  
 
 
