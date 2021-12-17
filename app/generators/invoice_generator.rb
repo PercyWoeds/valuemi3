@@ -139,8 +139,7 @@ class InvoiceGenerator < DocumentGenerator
     $lcDocumentIdFactura = @invoice.document_id  
 
      $lcServicio = @invoice.servicio
-     $lcDenis = @invoice.denis 
-
+     
      $lcServiciotxt = @invoice.texto2    
 
     puts "servicoi"
