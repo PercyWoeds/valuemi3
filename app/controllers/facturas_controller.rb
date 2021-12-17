@@ -4073,7 +4073,7 @@ end
                 case_52 = ReceiptGenerator.new(8, 52, 1,$lg_serie_factura,@invoice.id).with_igv2(true)
             end 
             
-       else        
+       end        
           puts "Moneda "
           puts @invoice.moneda_id
           
@@ -4091,7 +4091,7 @@ end
 
            end
            
-        end
+      
 
 
         
@@ -4102,6 +4102,162 @@ end
         
         @@document_serial_id =""
         $aviso=""
+
+############################################################################
+
+
+############################################################################
+
+   if @invoice.document_id == 2 
+
+      parts = @invoice.fecha.to_s.split("-")
+          $aa = parts[0].to_i
+          $mm = parts[1].to_i        
+          $dd = parts[2].to_i      
+
+          $lcVVenta1      =  @invoice.subtotal * 100 * -1      
+          $lcVVenta       =  $lcVVenta1.round(0)
+
+          $lcIgv1         =  @invoice.tax * 100 * -1
+          $lcIgv          =  $lcIgv1.round(0)
+
+          $lcTotal1       =  @invoice.total * 100 * -1
+          $lcTotal        =  $lcTotal1.round(0)
+     
+          @invoice_detail = InvoiceService.where(factura_id: @invoice.id).first 
+
+
+          $lcPrecioCigv1  =  @invoice_detail.price * 100
+          $lcPrecioCigv2   = $lcPrecioCigv1.round(0).to_f
+          $lcPrecioCigv   =  $lcPrecioCigv2.to_i 
+
+          $lcPrecioSigv1  =  (@invoice_detail.price / 1.18) * 100
+          $lcPrecioSigv2   = $lcPrecioSigv1.round(0).to_f
+          $lcPrecioSIgv   =  $lcPrecioSigv2.to_i 
+
+           $lcDescrip = "ANULACION DE FACTURA"   
+        
+          if @invoice.moneda_id == 1
+                  $lcMonedaValor ="USD"
+          else
+                  $lcMonedaValor ="PEN"
+          end
+    
+        
+        credit_note_data = { issue_date: Date.new($aa,$mm,$dd), id: @invoice.code , customer: {legal_name:@invoice.customer.name , ruc:@invoice.customer.ruc  },
+                             billing_reference: {id: @invoice.documento2, document_type_code: "01"},
+                             discrepancy_response: {reference_id:@invoice.documento2, response_code: "09", description: $lcDescrip},
+                            
+                            lines: [{id: "1", item: {id: "05", description: @invoice_detail.service.name }, quantity: @invoice_detail.quantity, unit: 'ZZ', 
+                                  price: {value: @lcPrecioSIgv },
+                                   pricing_reference: $lcPrecioCigv, tax_totals: [{amount: $lcIgv, type: :igv, code: "10"}], 
+                                   line_extension_amount:$lcVVenta }],
+                             additional_monetary_totals: [{id: "1001", payable_amount: $lcVVenta}], tax_totals: [{amount: $lcIgv, type: :igv}], legal_monetary_total: {value: $lcTotal, currency: $lcMonedaValor }}
+         
+
+     
+        if @invoice.moneda_id == 2
+              puts "dolares "
+          
+             credit_note = SUNAT::CreditNote.new(credit_note_data)
+  
+            $aviso = 'Nota enviada con exito...$$'
+        else            
+       
+             credit_note = SUNAT::CreditNote.new(credit_note_data)
+            $aviso = 'Nota enviada con exito...'
+        end 
+
+        if credit_note.valid?                       
+           credit_note.to_pdf    
+           document_type_code = "07"
+           file_name =   "20424092941-#{document_type_code}-#{@invoice.code}"+".pdf"
+            $lcFileName1=File.expand_path('../../../', __FILE__)+ "/app/pdf_output/"+file_name  
+
+            send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')      
+          
+
+        else
+          
+          $aviso = "Invalid document, ignoring output: #{credit_note.errors.messages}"
+
+        end
+
+      end 
+
+      if @invoice.document_id == 3
+
+
+        parts = @invoice.fecha.to_s.split("-")
+          $aa = parts[0].to_i
+          $mm = parts[1].to_i        
+          $dd = parts[2].to_i      
+
+          $lcVVenta1      =  @invoice.subtotal * 100        
+          $lcVVenta       =  $lcVVenta1.round(0)
+
+          $lcIgv1         =  @invoice.tax * 100
+          $lcIgv          =  $lcIgv1.round(0)
+
+          $lcTotal1       =  @invoice.total * 100
+          $lcTotal        =  $lcTotal1.round(0)
+     
+          @invoice_detail = InvoiceService.where(factura_id: @invoice.id).first 
+
+
+          $lcPrecioCigv1  =  @invoice_detail.price * 100
+          $lcPrecioCigv2   = $lcPrecioCigv1.round(0).to_f
+          $lcPrecioCigv   =  $lcPrecioCigv2.to_i 
+
+          $lcPrecioSigv1  =  (@invoice_detail.price / 1.18) * 100
+          $lcPrecioSigv2   = $lcPrecioSigv1.round(0).to_f
+          $lcPrecioSIgv   =  $lcPrecioSigv2.to_i 
+
+           $lcDescrip = "AUMENTO EN EL VALOR "  
+
+           if @invoice.moneda_id == 1
+                  $lcMonedaValor ="USD"
+          else
+                  $lcMonedaValor ="PEN"
+          end 
+
+          debit_note_data = { issue_date: Date.new($aa,$mm,$dd), id: @invoice.code, customer: {legal_name: @invoice.customer.name , ruc: @invoice.customer.ruc },
+                     billing_reference: {id: @invoice.documento2, document_type_code: "01"},
+                     discrepancy_response: {reference_id: @invoice.documento2, response_code: "02", description: $lcDescrip},
+                     lines: [{id: "1", item: {id: "05", description: @invoice_detail.service.name }, quantity: @invoice_detail.quantity, unit: 'ZZ', 
+                          price: {value: $lcPrecioCigv}, pricing_reference: $lcPrecioCigv, tax_totals: [{amount: $lcIgv, type: :igv, code: "10"}], line_extension_amount:$lcVVenta }],
+                     additional_monetary_totals: [{id: "1001", payable_amount: $lcVVenta}], tax_totals: [{amount: $lcIgv, type: :igv}], legal_monetary_total: $lcTotal}
+
+          debit_note = SUNAT::DebitNote.new(debit_note_data)
+          
+
+        if debit_note.valid?
+            debit_note.to_pdf
+           document_type_code = "08"
+           file_name =   "20424092941-#{document_type_code}-#{@invoice.code}"+".pdf"
+            $lcFileName1=File.expand_path('../../../', __FILE__)+ "/app/pdf_output/"+file_name  
+
+            send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
+        else          
+          $aviso = "Invalid document, ignoring output: #{debit_note.errors.messages}"  
+          puts $aviso         
+        end
+
+
+      end 
+        
+     if @invoice.document_id == 1 || @invoice.document_id == 7
+
+        $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
+        send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
+        @@document_serial_id =""
+        $aviso=""
+     end 
+
+
+############################################################################
+
+
     end 
 
         

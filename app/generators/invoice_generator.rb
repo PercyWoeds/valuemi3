@@ -141,9 +141,7 @@ class InvoiceGenerator < DocumentGenerator
      $lcServicio = @invoice.servicio
      $lcDenis = @invoice.denis 
 
-     $lcServiciotxt = @invoice.texto2
-
-    
+     $lcServiciotxt = @invoice.texto2    
 
     puts "servicoi"
     puts @invoice.servicio
