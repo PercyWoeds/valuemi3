@@ -19,7 +19,7 @@ SUNAT.configure do |config|
     s.name       = ""
     s.ruc        = "20504809090"
     s.address_id = "150106"
-    s.street     = "OTR.PARCELA E KM. 9.8 MZA. A1 LOTE. 1 C.C. COMUNIDAD CAMPESINA DE LLANAVILLA LIMA - LIMA - PACHACAMAC"
+    s.street     = "OTR.PARCELA E KM. 9.8 MZA. A1 LOTE. 1 C.C. COMUNIDAD CAMPESINA DE LLANAVILLA  PACHACAMAC LIMA"
     s.district   = "PACHACAMAC - LIMA-LIMA"
     s.city       = "LIMA"
     s.country    = "PE"
