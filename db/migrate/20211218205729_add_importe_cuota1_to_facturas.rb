@@ -6,7 +6,7 @@ class AddImporteCuota1ToFacturas < ActiveRecord::Migration
     add_column :facturas, :cuota2, :integer
     add_column :facturas, :cuota3, :integer
     add_column :facturas, :fecha_cuota2, :datetime
-    add_column :facturas, :fecha_cuota2, :datetime
+    add_column :facturas, :fecha_cuota3, :datetime
 
     
     
