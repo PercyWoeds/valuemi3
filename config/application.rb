@@ -10,7 +10,7 @@ Bundler.require(:default, Rails.env) if defined?(Bundler)
 module Mnygo
   class Application < Rails::Application
     
-    
+  
     
     config.assets.precompile += %w( *.js *.css )
     config.assets.precompile = ['.js', '.css', '*.css.erb']
