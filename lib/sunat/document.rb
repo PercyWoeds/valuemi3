@@ -62,7 +62,9 @@ module SUNAT
         pdf.image "#{self.accounting_supplier_party.logo_path}", :width => 200
         pdf.move_down 2
       end
-#     
+# 
+      pdf.move_down 10
+
 
                                                                                 
       pdf.bounding_box([345, 755], :width => 200, :height => 80) do
@@ -102,7 +104,6 @@ module SUNAT
 
       pdf.stroke_bounds
       pdf.stroke_horizontal_rule
-
 
       row = []
        table_content = []  
