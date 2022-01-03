@@ -1,4 +1,4 @@
-include UsersHelper
+  include UsersHelper
 include SuppliersHelper
 include ProductsHelper
 include PurchasesHelper
@@ -20,9 +20,8 @@ class PurchasesController < ApplicationController
   def list_ingresos
         @company = Company.find(1)
         @purchases  = Purchase.find_by_sql(['Select purchases.* from purchase_details   
-INNER JOIN purchases ON purchase_details.purchase_id = purchases.id
-WHERE purchase_details.product_id = ?',params[:id] ])
-        
+        INNER JOIN purchases ON purchase_details.purchase_id = purchases.id
+        WHERE purchase_details.product_id = ?',params[:id] ])        
 
   end 
   
@@ -2145,6 +2144,7 @@ def build_pdf_header_rpt48(pdf)
     @fecha2 = params[:fecha2]    
 
 
+
     @facturas_rpt = @company.get_purchases_day(@fecha1,@fecha2)      
 
     respond_to do |format|
@@ -3082,6 +3082,8 @@ def newfactura2
           @purchases = Purchase.where(company_id:  @company.id).order("id DESC").paginate(:page => params[:page])
           @filters_display = "none"
         end
+
+
 
   end
   

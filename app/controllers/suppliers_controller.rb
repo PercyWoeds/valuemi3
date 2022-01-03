@@ -38,10 +38,10 @@ class SuppliersController < ApplicationController
 
     @path = 'suppliers'
 
-    @customercsv = Supplier.all 
+    @suppliercsv = Supplier.all 
     respond_to do |format|
       format.html
-      format.csv { send_data @customercsv.to_csv }
+      format.csv { send_data @suppliercsv.to_csv }
     
     end
 
