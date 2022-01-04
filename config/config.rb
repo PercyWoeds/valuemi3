@@ -27,7 +27,7 @@ SUNAT.configure do |config|
     #PASCO - PASCO - PAUCARTAMBO"
     s.city       = ""
     s.country    = "PE"
-    s.logo_path  = "#{Dir.pwd}/app/assets/images/logog.png"
+    s.logo_path  = "#{Dir.pwd}/assets/images/logog.png"
   
                           
                           
