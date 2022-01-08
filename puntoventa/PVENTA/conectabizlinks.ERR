@@ -1,0 +1,1572 @@
+INSERT INTO [dbo].[SPE_EINVOICEHEADER]
+Error en la línea 98: Error de sintaxis.
+([numeroDocumentoEmisor]
+Error en la línea 99: No se reconoce el verbo de comando.
+,[serieNumero]
+Error en la línea 100: No se reconoce el verbo de comando.
+,[tipoDocumento]
+Error en la línea 101: No se reconoce el verbo de comando.
+,[tipoDocumentoEmisor]
+Error en la línea 102: No se reconoce el verbo de comando.
+,[bl_estadoRegistro]
+Error en la línea 103: No se reconoce el verbo de comando.
+,[bl_reintento]
+Error en la línea 104: No se reconoce el verbo de comando.
+,[bl_origen]
+Error en la línea 105: No se reconoce el verbo de comando.
+,[bl_hasFileResponse]
+Error en la línea 106: No se reconoce el verbo de comando.
+,[baseImponiblePercepcion]
+Error en la línea 107: No se reconoce el verbo de comando.
+,[codigoAuxiliar100_1]
+Error en la línea 108: No se reconoce el verbo de comando.
+,[codigoAuxiliar100_10]
+Error en la línea 109: No se reconoce el verbo de comando.
+,[codigoAuxiliar100_2]
+Error en la línea 110: No se reconoce el verbo de comando.
+,[codigoAuxiliar100_3]
+Error en la línea 111: No se reconoce el verbo de comando.
+,[codigoAuxiliar100_4]
+Error en la línea 112: No se reconoce el verbo de comando.
+,[codigoAuxiliar100_5]
+Error en la línea 113: No se reconoce el verbo de comando.
+,[codigoAuxiliar100_6]
+Error en la línea 114: No se reconoce el verbo de comando.
+,[codigoAuxiliar100_7]
+Error en la línea 115: No se reconoce el verbo de comando.
+,[codigoAuxiliar100_8]
+Error en la línea 116: No se reconoce el verbo de comando.
+,[codigoAuxiliar100_9]
+Error en la línea 117: No se reconoce el verbo de comando.
+,[codigoAuxiliar250_1]
+Error en la línea 118: No se reconoce el verbo de comando.
+,[codigoAuxiliar250_10]
+Error en la línea 119: No se reconoce el verbo de comando.
+,[codigoAuxiliar250_11]
+Error en la línea 120: No se reconoce el verbo de comando.
+,[codigoAuxiliar250_12]
+Error en la línea 121: No se reconoce el verbo de comando.
+,[codigoAuxiliar250_13]
+Error en la línea 122: No se reconoce el verbo de comando.
+,[codigoAuxiliar250_14]
+Error en la línea 123: No se reconoce el verbo de comando.
+,[codigoAuxiliar250_15]
+Error en la línea 124: No se reconoce el verbo de comando.
+,[codigoAuxiliar250_16]
+Error en la línea 125: No se reconoce el verbo de comando.
+,[codigoAuxiliar250_17]
+Error en la línea 126: No se reconoce el verbo de comando.
+,[codigoAuxiliar250_18]
+Error en la línea 127: No se reconoce el verbo de comando.
+,[codigoAuxiliar250_19]
+Error en la línea 128: No se reconoce el verbo de comando.
+,[codigoAuxiliar250_2]
+Error en la línea 129: No se reconoce el verbo de comando.
+,[codigoAuxiliar250_20]
+Error en la línea 130: No se reconoce el verbo de comando.
+,[codigoAuxiliar250_21]
+Error en la línea 131: No se reconoce el verbo de comando.
+,[codigoAuxiliar250_22]
+Error en la línea 132: No se reconoce el verbo de comando.
+,[codigoAuxiliar250_23]
+Error en la línea 133: No se reconoce el verbo de comando.
+,[codigoAuxiliar250_24]
+Error en la línea 134: No se reconoce el verbo de comando.
+,[codigoAuxiliar250_25]
+Error en la línea 135: No se reconoce el verbo de comando.
+,[codigoAuxiliar250_3]
+Error en la línea 136: No se reconoce el verbo de comando.
+,[codigoAuxiliar250_4]
+Error en la línea 137: No se reconoce el verbo de comando.
+,[codigoAuxiliar250_5]
+Error en la línea 138: No se reconoce el verbo de comando.
+,[codigoAuxiliar250_6]
+Error en la línea 139: No se reconoce el verbo de comando.
+,[codigoAuxiliar250_7]
+Error en la línea 140: No se reconoce el verbo de comando.
+,[codigoAuxiliar250_8]
+Error en la línea 141: No se reconoce el verbo de comando.
+,[codigoAuxiliar250_9]
+Error en la línea 142: No se reconoce el verbo de comando.
+,[codigoAuxiliar40_1]
+Error en la línea 143: No se reconoce el verbo de comando.
+,[codigoAuxiliar40_10]
+Error en la línea 144: No se reconoce el verbo de comando.
+,[codigoAuxiliar40_11]
+Error en la línea 145: No se reconoce el verbo de comando.
+,[codigoAuxiliar40_12]
+Error en la línea 146: No se reconoce el verbo de comando.
+,[codigoAuxiliar40_13]
+Error en la línea 147: No se reconoce el verbo de comando.
+,[codigoAuxiliar40_14]
+Error en la línea 148: No se reconoce el verbo de comando.
+,[codigoAuxiliar40_15]
+Error en la línea 149: No se reconoce el verbo de comando.
+,[codigoAuxiliar40_16]
+Error en la línea 150: No se reconoce el verbo de comando.
+,[codigoAuxiliar40_17]
+Error en la línea 151: No se reconoce el verbo de comando.
+,[codigoAuxiliar40_18]
+Error en la línea 152: No se reconoce el verbo de comando.
+,[codigoAuxiliar40_19]
+Error en la línea 153: No se reconoce el verbo de comando.
+,[codigoAuxiliar40_2]
+Error en la línea 154: No se reconoce el verbo de comando.
+,[codigoAuxiliar40_20]
+Error en la línea 155: No se reconoce el verbo de comando.
+,[codigoAuxiliar40_3]
+Error en la línea 156: No se reconoce el verbo de comando.
+,[codigoAuxiliar40_4]
+Error en la línea 157: No se reconoce el verbo de comando.
+,[codigoAuxiliar40_5]
+Error en la línea 158: No se reconoce el verbo de comando.
+,[codigoAuxiliar40_6]
+Error en la línea 159: No se reconoce el verbo de comando.
+,[codigoAuxiliar40_7]
+Error en la línea 160: No se reconoce el verbo de comando.
+,[codigoAuxiliar40_8]
+Error en la línea 161: No se reconoce el verbo de comando.
+,[codigoAuxiliar40_9]
+Error en la línea 162: No se reconoce el verbo de comando.
+,[codigoAuxiliar500_1]
+Error en la línea 163: No se reconoce el verbo de comando.
+,[codigoAuxiliar500_2]
+Error en la línea 164: No se reconoce el verbo de comando.
+,[codigoAuxiliar500_3]
+Error en la línea 165: No se reconoce el verbo de comando.
+,[codigoAuxiliar500_4]
+Error en la línea 166: No se reconoce el verbo de comando.
+,[codigoAuxiliar500_5]
+Error en la línea 167: No se reconoce el verbo de comando.
+,[codigoLeyenda_1]
+Error en la línea 168: No se reconoce el verbo de comando.
+,[codigoLeyenda_10]
+Error en la línea 169: No se reconoce el verbo de comando.
+,[codigoLeyenda_11]
+Error en la línea 170: No se reconoce el verbo de comando.
+,[codigoLeyenda_12]
+Error en la línea 171: No se reconoce el verbo de comando.
+,[codigoLeyenda_13]
+Error en la línea 172: No se reconoce el verbo de comando.
+,[codigoLeyenda_14]
+Error en la línea 173: No se reconoce el verbo de comando.
+,[codigoLeyenda_15]
+Error en la línea 174: No se reconoce el verbo de comando.
+,[codigoLeyenda_16]
+Error en la línea 175: No se reconoce el verbo de comando.
+,[codigoLeyenda_17]
+Error en la línea 176: No se reconoce el verbo de comando.
+,[codigoLeyenda_18]
+Error en la línea 177: No se reconoce el verbo de comando.
+,[codigoLeyenda_19]
+Error en la línea 178: No se reconoce el verbo de comando.
+,[codigoLeyenda_2]
+Error en la línea 179: No se reconoce el verbo de comando.
+,[codigoLeyenda_20]
+Error en la línea 180: No se reconoce el verbo de comando.
+,[codigoLeyenda_3]
+Error en la línea 181: No se reconoce el verbo de comando.
+,[codigoLeyenda_4]
+Error en la línea 182: No se reconoce el verbo de comando.
+,[codigoLeyenda_5]
+Error en la línea 183: No se reconoce el verbo de comando.
+,[codigoLeyenda_6]
+Error en la línea 184: No se reconoce el verbo de comando.
+,[codigoLeyenda_7]
+Error en la línea 185: No se reconoce el verbo de comando.
+,[codigoLeyenda_8]
+Error en la línea 186: No se reconoce el verbo de comando.
+,[codigoLeyenda_9]
+Error en la línea 187: No se reconoce el verbo de comando.
+,[codigoSerieNumeroAfectado]
+Error en la línea 188: No se reconoce el verbo de comando.
+,[correoAdquiriente]
+Error en la línea 189: No se reconoce el verbo de comando.
+,[correoEmisor]
+Error en la línea 190: No se reconoce el verbo de comando.
+,[departamentoEmisor]
+Error en la línea 191: No se reconoce el verbo de comando.
+,[descripcionDetraccion]
+Error en la línea 192: No se reconoce el verbo de comando.
+,[descuentosGlobales]
+Error en la línea 193: No se reconoce el verbo de comando.
+,[direccionEmisor]
+Error en la línea 194: No se reconoce el verbo de comando.
+,[distritoEmisor]
+Error en la línea 195: No se reconoce el verbo de comando.
+,[fechaEmision]
+Error en la línea 196: No se reconoce el verbo de comando.
+,[inHabilitado]
+Error en la línea 197: No se reconoce el verbo de comando.
+,[lugarDestino]
+Error en la línea 198: No se reconoce el verbo de comando.
+,[motivoDocumento]
+Error en la línea 199: No se reconoce el verbo de comando.
+,[nombreComercialEmisor]
+Error en la línea 200: No se reconoce el verbo de comando.
+,[numeroDocumentoAdquiriente]
+Error en la línea 201: No se reconoce el verbo de comando.
+,[numeroDocumentoRefeAdicional_1]
+Error en la línea 202: No se reconoce el verbo de comando.
+,[numeroDocumentoRefeAdicional_2]
+Error en la línea 203: No se reconoce el verbo de comando.
+,[numeroDocumentoRefeAdicional_3]
+Error en la línea 204: No se reconoce el verbo de comando.
+,[numeroDocumentoRefeAdicional_4]
+Error en la línea 205: No se reconoce el verbo de comando.
+,[numeroDocumentoRefeAdicional_5]
+Error en la línea 206: No se reconoce el verbo de comando.
+,[numeroDocumentoReferenciaCorre]
+Error en la línea 207: No se reconoce el verbo de comando.
+,[numeroDocumentoReferenciaPrinc]
+Error en la línea 208: No se reconoce el verbo de comando.
+,[numeroDocumentoReferencia_1]
+Error en la línea 209: No se reconoce el verbo de comando.
+,[numeroDocumentoReferencia_2]
+Error en la línea 210: No se reconoce el verbo de comando.
+,[numeroDocumentoReferencia_3]
+Error en la línea 211: No se reconoce el verbo de comando.
+,[numeroDocumentoReferencia_4]
+Error en la línea 212: No se reconoce el verbo de comando.
+,[numeroDocumentoReferencia_5]
+Error en la línea 213: No se reconoce el verbo de comando.
+,[paisEmisor]
+Error en la línea 214: No se reconoce el verbo de comando.
+,[porcentajeDetraccion]
+Error en la línea 215: No se reconoce el verbo de comando.
+,[porcentajePercepcion]
+Error en la línea 216: No se reconoce el verbo de comando.
+,[porcentajeRetencion]
+Error en la línea 217: No se reconoce el verbo de comando.
+,[provinciaEmisor]
+Error en la línea 218: No se reconoce el verbo de comando.
+,[razonSocialAdquiriente]
+Error en la línea 219: No se reconoce el verbo de comando.
+,[razonSocialEmisor]
+Error en la línea 220: No se reconoce el verbo de comando.
+,[serieNumeroAfectado]
+Error en la línea 221: No se reconoce el verbo de comando.
+,[subTotal]
+Error en la línea 222: No se reconoce el verbo de comando.
+,[textoAdicionalLeyenda_1]
+Error en la línea 223: No se reconoce el verbo de comando.
+,[textoAdicionalLeyenda_10]
+Error en la línea 224: No se reconoce el verbo de comando.
+,[textoAdicionalLeyenda_11]
+Error en la línea 225: No se reconoce el verbo de comando.
+,[textoAdicionalLeyenda_12]
+Error en la línea 226: No se reconoce el verbo de comando.
+,[textoAdicionalLeyenda_13]
+Error en la línea 227: No se reconoce el verbo de comando.
+,[textoAdicionalLeyenda_14]
+Error en la línea 228: No se reconoce el verbo de comando.
+,[textoAdicionalLeyenda_15]
+Error en la línea 229: No se reconoce el verbo de comando.
+,[textoAdicionalLeyenda_16]
+Error en la línea 230: No se reconoce el verbo de comando.
+,[textoAdicionalLeyenda_17]
+Error en la línea 231: No se reconoce el verbo de comando.
+,[textoAdicionalLeyenda_18]
+Error en la línea 232: No se reconoce el verbo de comando.
+,[textoAdicionalLeyenda_19]
+Error en la línea 233: No se reconoce el verbo de comando.
+,[textoAdicionalLeyenda_2]
+Error en la línea 234: No se reconoce el verbo de comando.
+,[textoAdicionalLeyenda_20]
+Error en la línea 235: No se reconoce el verbo de comando.
+,[textoAdicionalLeyenda_3]
+Error en la línea 236: No se reconoce el verbo de comando.
+,[textoAdicionalLeyenda_4]
+Error en la línea 237: No se reconoce el verbo de comando.
+,[textoAdicionalLeyenda_5]
+Error en la línea 238: No se reconoce el verbo de comando.
+,[textoAdicionalLeyenda_6]
+Error en la línea 239: No se reconoce el verbo de comando.
+,[textoAdicionalLeyenda_7]
+Error en la línea 240: No se reconoce el verbo de comando.
+,[textoAdicionalLeyenda_8]
+Error en la línea 241: No se reconoce el verbo de comando.
+,[textoAdicionalLeyenda_9]
+Error en la línea 242: No se reconoce el verbo de comando.
+,[textoAuxiliar100_1]
+Error en la línea 243: No se reconoce el verbo de comando.
+,[textoAuxiliar100_10]
+Error en la línea 244: No se reconoce el verbo de comando.
+,[textoAuxiliar100_2]
+Error en la línea 245: No se reconoce el verbo de comando.
+,[textoAuxiliar100_3]
+Error en la línea 246: No se reconoce el verbo de comando.
+,[textoAuxiliar100_4]
+Error en la línea 247: No se reconoce el verbo de comando.
+,[textoAuxiliar100_5]
+Error en la línea 248: No se reconoce el verbo de comando.
+,[textoAuxiliar100_6]
+Error en la línea 249: No se reconoce el verbo de comando.
+,[textoAuxiliar100_7]
+Error en la línea 250: No se reconoce el verbo de comando.
+,[textoAuxiliar100_8]
+Error en la línea 251: No se reconoce el verbo de comando.
+,[textoAuxiliar100_9]
+Error en la línea 252: No se reconoce el verbo de comando.
+,[textoAuxiliar250_1]
+Error en la línea 253: No se reconoce el verbo de comando.
+,[textoAuxiliar250_10]
+Error en la línea 254: No se reconoce el verbo de comando.
+,[textoAuxiliar250_11]
+Error en la línea 255: No se reconoce el verbo de comando.
+,[textoAuxiliar250_12]
+Error en la línea 256: No se reconoce el verbo de comando.
+,[textoAuxiliar250_13]
+Error en la línea 257: No se reconoce el verbo de comando.
+,[textoAuxiliar250_14]
+Error en la línea 258: No se reconoce el verbo de comando.
+,[textoAuxiliar250_15]
+Error en la línea 259: No se reconoce el verbo de comando.
+,[textoAuxiliar250_16]
+Error en la línea 260: No se reconoce el verbo de comando.
+,[textoAuxiliar250_17]
+Error en la línea 261: No se reconoce el verbo de comando.
+,[textoAuxiliar250_18]
+Error en la línea 262: No se reconoce el verbo de comando.
+,[textoAuxiliar250_19]
+Error en la línea 263: No se reconoce el verbo de comando.
+,[textoAuxiliar250_2]
+Error en la línea 264: No se reconoce el verbo de comando.
+,[textoAuxiliar250_20]
+Error en la línea 265: No se reconoce el verbo de comando.
+,[textoAuxiliar250_21]
+Error en la línea 266: No se reconoce el verbo de comando.
+,[textoAuxiliar250_22]
+Error en la línea 267: No se reconoce el verbo de comando.
+,[textoAuxiliar250_23]
+Error en la línea 268: No se reconoce el verbo de comando.
+,[textoAuxiliar250_24]
+Error en la línea 269: No se reconoce el verbo de comando.
+,[textoAuxiliar250_25]
+Error en la línea 270: No se reconoce el verbo de comando.
+,[textoAuxiliar250_3]
+Error en la línea 271: No se reconoce el verbo de comando.
+,[textoAuxiliar250_4]
+Error en la línea 272: No se reconoce el verbo de comando.
+,[textoAuxiliar250_5]
+Error en la línea 273: No se reconoce el verbo de comando.
+,[textoAuxiliar250_6]
+Error en la línea 274: No se reconoce el verbo de comando.
+,[textoAuxiliar250_7]
+Error en la línea 275: No se reconoce el verbo de comando.
+,[textoAuxiliar250_8]
+Error en la línea 276: No se reconoce el verbo de comando.
+,[textoAuxiliar250_9]
+Error en la línea 277: No se reconoce el verbo de comando.
+,[textoAuxiliar40_1]
+Error en la línea 278: No se reconoce el verbo de comando.
+,[textoAuxiliar40_10]
+Error en la línea 279: No se reconoce el verbo de comando.
+,[textoAuxiliar40_11]
+Error en la línea 280: No se reconoce el verbo de comando.
+,[textoAuxiliar40_12]
+Error en la línea 281: No se reconoce el verbo de comando.
+,[textoAuxiliar40_13]
+Error en la línea 282: No se reconoce el verbo de comando.
+,[textoAuxiliar40_14]
+Error en la línea 283: No se reconoce el verbo de comando.
+,[textoAuxiliar40_15]
+Error en la línea 284: No se reconoce el verbo de comando.
+,[textoAuxiliar40_16]
+Error en la línea 285: No se reconoce el verbo de comando.
+,[textoAuxiliar40_17]
+Error en la línea 286: No se reconoce el verbo de comando.
+,[textoAuxiliar40_18]
+Error en la línea 287: No se reconoce el verbo de comando.
+,[textoAuxiliar40_19]
+Error en la línea 288: No se reconoce el verbo de comando.
+,[textoAuxiliar40_2]
+Error en la línea 289: No se reconoce el verbo de comando.
+,[textoAuxiliar40_20]
+Error en la línea 290: No se reconoce el verbo de comando.
+,[textoAuxiliar40_3]
+Error en la línea 291: No se reconoce el verbo de comando.
+,[textoAuxiliar40_4]
+Error en la línea 292: No se reconoce el verbo de comando.
+,[textoAuxiliar40_5]
+Error en la línea 293: No se reconoce el verbo de comando.
+,[textoAuxiliar40_6]
+Error en la línea 294: No se reconoce el verbo de comando.
+,[textoAuxiliar40_7]
+Error en la línea 295: No se reconoce el verbo de comando.
+,[textoAuxiliar40_8]
+Error en la línea 296: No se reconoce el verbo de comando.
+,[textoAuxiliar40_9]
+Error en la línea 297: No se reconoce el verbo de comando.
+,[textoAuxiliar500_1]
+Error en la línea 298: No se reconoce el verbo de comando.
+,[textoAuxiliar500_2]
+Error en la línea 299: No se reconoce el verbo de comando.
+,[textoAuxiliar500_3]
+Error en la línea 300: No se reconoce el verbo de comando.
+,[textoAuxiliar500_4]
+Error en la línea 301: No se reconoce el verbo de comando.
+,[textoAuxiliar500_5]
+Error en la línea 302: No se reconoce el verbo de comando.
+,[textoLeyenda_1]
+Error en la línea 303: No se reconoce el verbo de comando.
+,[textoLeyenda_10]
+Error en la línea 304: No se reconoce el verbo de comando.
+,[textoLeyenda_11]
+Error en la línea 305: No se reconoce el verbo de comando.
+,[textoLeyenda_12]
+Error en la línea 306: No se reconoce el verbo de comando.
+,[textoLeyenda_13]
+Error en la línea 307: No se reconoce el verbo de comando.
+,[textoLeyenda_14]
+Error en la línea 308: No se reconoce el verbo de comando.
+,[textoLeyenda_15]
+Error en la línea 309: No se reconoce el verbo de comando.
+,[textoLeyenda_16]
+Error en la línea 310: No se reconoce el verbo de comando.
+,[textoLeyenda_17]
+Error en la línea 311: No se reconoce el verbo de comando.
+,[textoLeyenda_18]
+Error en la línea 312: No se reconoce el verbo de comando.
+,[textoLeyenda_19]
+Error en la línea 313: No se reconoce el verbo de comando.
+,[textoLeyenda_2]
+Error en la línea 314: No se reconoce el verbo de comando.
+,[textoLeyenda_20]
+Error en la línea 315: No se reconoce el verbo de comando.
+,[textoLeyenda_3]
+Error en la línea 316: No se reconoce el verbo de comando.
+,[textoLeyenda_4]
+Error en la línea 317: No se reconoce el verbo de comando.
+,[textoLeyenda_5]
+Error en la línea 318: No se reconoce el verbo de comando.
+,[textoLeyenda_6]
+Error en la línea 319: No se reconoce el verbo de comando.
+,[textoLeyenda_7]
+Error en la línea 320: No se reconoce el verbo de comando.
+,[textoLeyenda_8]
+Error en la línea 321: No se reconoce el verbo de comando.
+,[textoLeyenda_9]
+Error en la línea 322: No se reconoce el verbo de comando.
+,[tipoDocumentoAdquiriente]
+Error en la línea 323: No se reconoce el verbo de comando.
+,[tipoDocumentoReferenciaCorregi]
+Error en la línea 324: No se reconoce el verbo de comando.
+,[tipoDocumentoReferenciaPrincip]
+Error en la línea 325: No se reconoce el verbo de comando.
+,[tipoMoneda]
+Error en la línea 326: No se reconoce el verbo de comando.
+,[tipoOperacionFactura]
+Error en la línea 327: No se reconoce el verbo de comando.
+,[tipoReferenciaAdicional_1]
+Error en la línea 328: No se reconoce el verbo de comando.
+,[tipoReferenciaAdicional_2]
+Error en la línea 329: No se reconoce el verbo de comando.
+,[tipoReferenciaAdicional_3]
+Error en la línea 330: No se reconoce el verbo de comando.
+,[tipoReferenciaAdicional_4]
+Error en la línea 331: No se reconoce el verbo de comando.
+,[tipoReferenciaAdicional_5]
+Error en la línea 332: No se reconoce el verbo de comando.
+,[tipoReferencia_1]
+Error en la línea 333: No se reconoce el verbo de comando.
+,[tipoReferencia_2]
+Error en la línea 334: No se reconoce el verbo de comando.
+,[tipoReferencia_3]
+Error en la línea 335: No se reconoce el verbo de comando.
+,[tipoReferencia_4]
+Error en la línea 336: No se reconoce el verbo de comando.
+,[tipoReferencia_5]
+Error en la línea 337: No se reconoce el verbo de comando.
+,[totalBonificacion]
+Error en la línea 338: No se reconoce el verbo de comando.
+,[totalDescuentos]
+Error en la línea 339: No se reconoce el verbo de comando.
+,[totalDetraccion]
+Error en la línea 340: No se reconoce el verbo de comando.
+,[totalDocumentoAnticipo]
+Error en la línea 341: No se reconoce el verbo de comando.
+,[totalIgv]
+Error en la línea 342: No se reconoce el verbo de comando.
+,[totalIsc]
+Error en la línea 343: No se reconoce el verbo de comando.
+,[totalOtrosCargos]
+Error en la línea 344: No se reconoce el verbo de comando.
+,[totalOtrosTributos]
+Error en la línea 345: No se reconoce el verbo de comando.
+,[totalPercepcion]
+Error en la línea 346: No se reconoce el verbo de comando.
+,[totalRetencion]
+Error en la línea 347: No se reconoce el verbo de comando.
+,[totalValorVentaNetoOpExonerada]
+Error en la línea 348: No se reconoce el verbo de comando.
+,[totalValorVentaNetoOpGratuitas]
+Error en la línea 349: No se reconoce el verbo de comando.
+,[totalValorVentaNetoOpGravadas]
+Error en la línea 350: No se reconoce el verbo de comando.
+,[totalValorVentaNetoOpNoGravada]
+Error en la línea 351: No se reconoce el verbo de comando.
+,[totalVenta]
+Error en la línea 352: No se reconoce el verbo de comando.
+,[totalVentaConPercepcion]
+Error en la línea 353: No se reconoce el verbo de comando.
+,[ubigeoEmisor]
+Error en la línea 354: No se reconoce el verbo de comando.
+,[urbanizacion]
+Error en la línea 355: No se reconoce el verbo de comando.
+,[valorReferencialDetraccion]
+Error en la línea 356: No se reconoce el verbo de comando.
+,[bl_reintentoJob]
+Error en la línea 357: No se reconoce el verbo de comando.
+,[BL_SOURCEFILE]
+Error en la línea 358: No se reconoce el verbo de comando.
+,[visualizado])
+Error en la línea 359: No se reconoce el verbo de comando.
+VALUES
+Error en la línea 360: No se reconoce el verbo de comando.
+(<numeroDocumentoEmisor, varchar(20),>
+Error en la línea 361: No se reconoce el verbo de comando.
+,<serieNumero, varchar(13),>
+Error en la línea 362: No se reconoce el verbo de comando.
+,<tipoDocumento, varchar(2),>
+Error en la línea 363: No se reconoce el verbo de comando.
+,<tipoDocumentoEmisor, varchar(1),>
+Error en la línea 364: No se reconoce el verbo de comando.
+,<bl_estadoRegistro, varchar(1),>
+Error en la línea 365: No se reconoce el verbo de comando.
+,<bl_reintento, int,>
+Error en la línea 366: No se reconoce el verbo de comando.
+,<bl_origen, varchar(1),>
+Error en la línea 367: No se reconoce el verbo de comando.
+,<bl_hasFileResponse, int,>
+Error en la línea 368: No se reconoce el verbo de comando.
+,<baseImponiblePercepcion, varchar(15),>
+Error en la línea 369: No se reconoce el verbo de comando.
+,<codigoAuxiliar100_1, varchar(4),>
+Error en la línea 370: No se reconoce el verbo de comando.
+,<codigoAuxiliar100_10, varchar(4),>
+Error en la línea 371: No se reconoce el verbo de comando.
+,<codigoAuxiliar100_2, varchar(4),>
+Error en la línea 372: No se reconoce el verbo de comando.
+,<codigoAuxiliar100_3, varchar(4),>
+Error en la línea 373: No se reconoce el verbo de comando.
+,<codigoAuxiliar100_4, varchar(4),>
+Error en la línea 374: No se reconoce el verbo de comando.
+,<codigoAuxiliar100_5, varchar(4),>
+Error en la línea 375: No se reconoce el verbo de comando.
+,<codigoAuxiliar100_6, varchar(4),>
+Error en la línea 376: No se reconoce el verbo de comando.
+,<codigoAuxiliar100_7, varchar(4),>
+Error en la línea 377: No se reconoce el verbo de comando.
+,<codigoAuxiliar100_8, varchar(4),>
+Error en la línea 378: No se reconoce el verbo de comando.
+,<codigoAuxiliar100_9, varchar(4),>
+Error en la línea 379: No se reconoce el verbo de comando.
+,<codigoAuxiliar250_1, varchar(4),>
+Error en la línea 380: No se reconoce el verbo de comando.
+,<codigoAuxiliar250_10, varchar(4),>
+Error en la línea 381: No se reconoce el verbo de comando.
+,<codigoAuxiliar250_11, varchar(4),>
+Error en la línea 382: No se reconoce el verbo de comando.
+,<codigoAuxiliar250_12, varchar(4),>
+Error en la línea 383: No se reconoce el verbo de comando.
+,<codigoAuxiliar250_13, varchar(4),>
+Error en la línea 384: No se reconoce el verbo de comando.
+,<codigoAuxiliar250_14, varchar(4),>
+Error en la línea 385: No se reconoce el verbo de comando.
+,<codigoAuxiliar250_15, varchar(4),>
+Error en la línea 386: No se reconoce el verbo de comando.
+,<codigoAuxiliar250_16, varchar(4),>
+Error en la línea 387: No se reconoce el verbo de comando.
+,<codigoAuxiliar250_17, varchar(4),>
+Error en la línea 388: No se reconoce el verbo de comando.
+,<codigoAuxiliar250_18, varchar(4),>
+Error en la línea 389: No se reconoce el verbo de comando.
+,<codigoAuxiliar250_19, varchar(4),>
+Error en la línea 390: No se reconoce el verbo de comando.
+,<codigoAuxiliar250_2, varchar(4),>
+Error en la línea 391: No se reconoce el verbo de comando.
+,<codigoAuxiliar250_20, varchar(4),>
+Error en la línea 392: No se reconoce el verbo de comando.
+,<codigoAuxiliar250_21, varchar(4),>
+Error en la línea 393: No se reconoce el verbo de comando.
+,<codigoAuxiliar250_22, varchar(4),>
+Error en la línea 394: No se reconoce el verbo de comando.
+,<codigoAuxiliar250_23, varchar(4),>
+Error en la línea 395: No se reconoce el verbo de comando.
+,<codigoAuxiliar250_24, varchar(4),>
+Error en la línea 396: No se reconoce el verbo de comando.
+,<codigoAuxiliar250_25, varchar(4),>
+Error en la línea 397: No se reconoce el verbo de comando.
+,<codigoAuxiliar250_3, varchar(4),>
+Error en la línea 398: No se reconoce el verbo de comando.
+,<codigoAuxiliar250_4, varchar(4),>
+Error en la línea 399: No se reconoce el verbo de comando.
+,<codigoAuxiliar250_5, varchar(4),>
+Error en la línea 400: No se reconoce el verbo de comando.
+,<codigoAuxiliar250_6, varchar(4),>
+Error en la línea 401: No se reconoce el verbo de comando.
+,<codigoAuxiliar250_7, varchar(4),>
+Error en la línea 402: No se reconoce el verbo de comando.
+,<codigoAuxiliar250_8, varchar(4),>
+Error en la línea 403: No se reconoce el verbo de comando.
+,<codigoAuxiliar250_9, varchar(4),>
+Error en la línea 404: No se reconoce el verbo de comando.
+,<codigoAuxiliar40_1, varchar(4),>
+Error en la línea 405: No se reconoce el verbo de comando.
+,<codigoAuxiliar40_10, varchar(4),>
+Error en la línea 406: No se reconoce el verbo de comando.
+,<codigoAuxiliar40_11, varchar(4),>
+Error en la línea 407: No se reconoce el verbo de comando.
+,<codigoAuxiliar40_12, varchar(4),>
+Error en la línea 408: No se reconoce el verbo de comando.
+,<codigoAuxiliar40_13, varchar(4),>
+Error en la línea 409: No se reconoce el verbo de comando.
+,<codigoAuxiliar40_14, varchar(4),>
+Error en la línea 410: No se reconoce el verbo de comando.
+,<codigoAuxiliar40_15, varchar(4),>
+Error en la línea 411: No se reconoce el verbo de comando.
+,<codigoAuxiliar40_16, varchar(4),>
+Error en la línea 412: No se reconoce el verbo de comando.
+,<codigoAuxiliar40_17, varchar(4),>
+Error en la línea 413: No se reconoce el verbo de comando.
+,<codigoAuxiliar40_18, varchar(4),>
+Error en la línea 414: No se reconoce el verbo de comando.
+,<codigoAuxiliar40_19, varchar(4),>
+Error en la línea 415: No se reconoce el verbo de comando.
+,<codigoAuxiliar40_2, varchar(4),>
+Error en la línea 416: No se reconoce el verbo de comando.
+,<codigoAuxiliar40_20, varchar(4),>
+Error en la línea 417: No se reconoce el verbo de comando.
+,<codigoAuxiliar40_3, varchar(4),>
+Error en la línea 418: No se reconoce el verbo de comando.
+,<codigoAuxiliar40_4, varchar(4),>
+Error en la línea 419: No se reconoce el verbo de comando.
+,<codigoAuxiliar40_5, varchar(4),>
+Error en la línea 420: No se reconoce el verbo de comando.
+,<codigoAuxiliar40_6, varchar(4),>
+Error en la línea 421: No se reconoce el verbo de comando.
+,<codigoAuxiliar40_7, varchar(4),>
+Error en la línea 422: No se reconoce el verbo de comando.
+,<codigoAuxiliar40_8, varchar(4),>
+Error en la línea 423: No se reconoce el verbo de comando.
+,<codigoAuxiliar40_9, varchar(4),>
+Error en la línea 424: No se reconoce el verbo de comando.
+,<codigoAuxiliar500_1, varchar(4),>
+Error en la línea 425: No se reconoce el verbo de comando.
+,<codigoAuxiliar500_2, varchar(4),>
+Error en la línea 426: No se reconoce el verbo de comando.
+,<codigoAuxiliar500_3, varchar(4),>
+Error en la línea 427: No se reconoce el verbo de comando.
+,<codigoAuxiliar500_4, varchar(4),>
+Error en la línea 428: No se reconoce el verbo de comando.
+,<codigoAuxiliar500_5, varchar(4),>
+Error en la línea 429: No se reconoce el verbo de comando.
+,<codigoLeyenda_1, varchar(4),>
+Error en la línea 430: No se reconoce el verbo de comando.
+,<codigoLeyenda_10, varchar(4),>
+Error en la línea 431: No se reconoce el verbo de comando.
+,<codigoLeyenda_11, varchar(4),>
+Error en la línea 432: No se reconoce el verbo de comando.
+,<codigoLeyenda_12, varchar(4),>
+Error en la línea 433: No se reconoce el verbo de comando.
+,<codigoLeyenda_13, varchar(4),>
+Error en la línea 434: No se reconoce el verbo de comando.
+,<codigoLeyenda_14, varchar(4),>
+Error en la línea 435: No se reconoce el verbo de comando.
+,<codigoLeyenda_15, varchar(4),>
+Error en la línea 436: No se reconoce el verbo de comando.
+,<codigoLeyenda_16, varchar(4),>
+Error en la línea 437: No se reconoce el verbo de comando.
+,<codigoLeyenda_17, varchar(4),>
+Error en la línea 438: No se reconoce el verbo de comando.
+,<codigoLeyenda_18, varchar(4),>
+Error en la línea 439: No se reconoce el verbo de comando.
+,<codigoLeyenda_19, varchar(4),>
+Error en la línea 440: No se reconoce el verbo de comando.
+,<codigoLeyenda_2, varchar(4),>
+Error en la línea 441: No se reconoce el verbo de comando.
+,<codigoLeyenda_20, varchar(4),>
+Error en la línea 442: No se reconoce el verbo de comando.
+,<codigoLeyenda_3, varchar(4),>
+Error en la línea 443: No se reconoce el verbo de comando.
+,<codigoLeyenda_4, varchar(4),>
+Error en la línea 444: No se reconoce el verbo de comando.
+,<codigoLeyenda_5, varchar(4),>
+Error en la línea 445: No se reconoce el verbo de comando.
+,<codigoLeyenda_6, varchar(4),>
+Error en la línea 446: No se reconoce el verbo de comando.
+,<codigoLeyenda_7, varchar(4),>
+Error en la línea 447: No se reconoce el verbo de comando.
+,<codigoLeyenda_8, varchar(4),>
+Error en la línea 448: No se reconoce el verbo de comando.
+,<codigoLeyenda_9, varchar(4),>
+Error en la línea 449: No se reconoce el verbo de comando.
+,<codigoSerieNumeroAfectado, varchar(2),>
+Error en la línea 450: No se reconoce el verbo de comando.
+,<correoAdquiriente, varchar(100),>
+Error en la línea 451: No se reconoce el verbo de comando.
+,<correoEmisor, varchar(100),>
+Error en la línea 452: No se reconoce el verbo de comando.
+,<departamentoEmisor, varchar(30),>
+Error en la línea 453: No se reconoce el verbo de comando.
+,<descripcionDetraccion, varchar(100),>
+Error en la línea 454: No se reconoce el verbo de comando.
+,<descuentosGlobales, varchar(15),>
+Error en la línea 455: No se reconoce el verbo de comando.
+,<direccionEmisor, varchar(100),>
+Error en la línea 456: No se reconoce el verbo de comando.
+,<distritoEmisor, varchar(30),>
+Error en la línea 457: No se reconoce el verbo de comando.
+,<fechaEmision, varchar(10),>
+Error en la línea 458: No se reconoce el verbo de comando.
+,<inHabilitado, varchar(1),>
+Error en la línea 459: No se reconoce el verbo de comando.
+,<lugarDestino, varchar(100),>
+Error en la línea 460: No se reconoce el verbo de comando.
+,<motivoDocumento, varchar(500),>
+Error en la línea 461: No se reconoce el verbo de comando.
+,<nombreComercialEmisor, varchar(100),>
+Error en la línea 462: No se reconoce el verbo de comando.
+,<numeroDocumentoAdquiriente, varchar(15),>
+Error en la línea 463: No se reconoce el verbo de comando.
+,<numeroDocumentoRefeAdicional_1, varchar(30),>
+Error en la línea 464: No se reconoce el verbo de comando.
+,<numeroDocumentoRefeAdicional_2, varchar(30),>
+Error en la línea 465: No se reconoce el verbo de comando.
+,<numeroDocumentoRefeAdicional_3, varchar(30),>
+Error en la línea 466: No se reconoce el verbo de comando.
+,<numeroDocumentoRefeAdicional_4, varchar(30),>
+Error en la línea 467: No se reconoce el verbo de comando.
+,<numeroDocumentoRefeAdicional_5, varchar(30),>
+Error en la línea 468: No se reconoce el verbo de comando.
+,<numeroDocumentoReferenciaCorre, varchar(13),>
+Error en la línea 469: No se reconoce el verbo de comando.
+,<numeroDocumentoReferenciaPrinc, varchar(13),>
+Error en la línea 470: No se reconoce el verbo de comando.
+,<numeroDocumentoReferencia_1, varchar(30),>
+Error en la línea 471: No se reconoce el verbo de comando.
+,<numeroDocumentoReferencia_2, varchar(30),>
+Error en la línea 472: No se reconoce el verbo de comando.
+,<numeroDocumentoReferencia_3, varchar(30),>
+Error en la línea 473: No se reconoce el verbo de comando.
+,<numeroDocumentoReferencia_4, varchar(30),>
+Error en la línea 474: No se reconoce el verbo de comando.
+,<numeroDocumentoReferencia_5, varchar(30),>
+Error en la línea 475: No se reconoce el verbo de comando.
+,<paisEmisor, varchar(2),>
+Error en la línea 476: No se reconoce el verbo de comando.
+,<porcentajeDetraccion, varchar(15),>
+Error en la línea 477: No se reconoce el verbo de comando.
+,<porcentajePercepcion, varchar(15),>
+Error en la línea 478: No se reconoce el verbo de comando.
+,<porcentajeRetencion, varchar(15),>
+Error en la línea 479: No se reconoce el verbo de comando.
+,<provinciaEmisor, varchar(30),>
+Error en la línea 480: No se reconoce el verbo de comando.
+,<razonSocialAdquiriente, varchar(100),>
+Error en la línea 481: No se reconoce el verbo de comando.
+,<razonSocialEmisor, varchar(100),>
+Error en la línea 482: No se reconoce el verbo de comando.
+,<serieNumeroAfectado, varchar(13),>
+Error en la línea 483: No se reconoce el verbo de comando.
+,<subTotal, varchar(15),>
+Error en la línea 484: No se reconoce el verbo de comando.
+,<textoAdicionalLeyenda_1, varchar(200),>
+Error en la línea 485: No se reconoce el verbo de comando.
+,<textoAdicionalLeyenda_10, varchar(200),>
+Error en la línea 486: No se reconoce el verbo de comando.
+,<textoAdicionalLeyenda_11, varchar(200),>
+Error en la línea 487: No se reconoce el verbo de comando.
+,<textoAdicionalLeyenda_12, varchar(200),>
+Error en la línea 488: No se reconoce el verbo de comando.
+,<textoAdicionalLeyenda_13, varchar(200),>
+Error en la línea 489: No se reconoce el verbo de comando.
+,<textoAdicionalLeyenda_14, varchar(200),>
+Error en la línea 490: No se reconoce el verbo de comando.
+,<textoAdicionalLeyenda_15, varchar(200),>
+Error en la línea 491: No se reconoce el verbo de comando.
+,<textoAdicionalLeyenda_16, varchar(200),>
+Error en la línea 492: No se reconoce el verbo de comando.
+,<textoAdicionalLeyenda_17, varchar(200),>
+Error en la línea 493: No se reconoce el verbo de comando.
+,<textoAdicionalLeyenda_18, varchar(200),>
+Error en la línea 494: No se reconoce el verbo de comando.
+,<textoAdicionalLeyenda_19, varchar(200),>
+Error en la línea 495: No se reconoce el verbo de comando.
+,<textoAdicionalLeyenda_2, varchar(200),>
+Error en la línea 496: No se reconoce el verbo de comando.
+,<textoAdicionalLeyenda_20, varchar(200),>
+Error en la línea 497: No se reconoce el verbo de comando.
+,<textoAdicionalLeyenda_3, varchar(200),>
+Error en la línea 498: No se reconoce el verbo de comando.
+,<textoAdicionalLeyenda_4, varchar(200),>
+Error en la línea 499: No se reconoce el verbo de comando.
+,<textoAdicionalLeyenda_5, varchar(200),>
+Error en la línea 500: No se reconoce el verbo de comando.
+,<textoAdicionalLeyenda_6, varchar(200),>
+Error en la línea 501: No se reconoce el verbo de comando.
+,<textoAdicionalLeyenda_7, varchar(200),>
+Error en la línea 502: No se reconoce el verbo de comando.
+,<textoAdicionalLeyenda_8, varchar(200),>
+Error en la línea 503: No se reconoce el verbo de comando.
+,<textoAdicionalLeyenda_9, varchar(200),>
+Error en la línea 504: No se reconoce el verbo de comando.
+,<textoAuxiliar100_1, varchar(100),>
+Error en la línea 505: No se reconoce el verbo de comando.
+,<textoAuxiliar100_10, varchar(100),>
+Error en la línea 506: No se reconoce el verbo de comando.
+,<textoAuxiliar100_2, varchar(100),>
+Error en la línea 507: No se reconoce el verbo de comando.
+,<textoAuxiliar100_3, varchar(100),>
+Error en la línea 508: No se reconoce el verbo de comando.
+,<textoAuxiliar100_4, varchar(100),>
+Error en la línea 509: No se reconoce el verbo de comando.
+,<textoAuxiliar100_5, varchar(100),>
+Error en la línea 510: No se reconoce el verbo de comando.
+,<textoAuxiliar100_6, varchar(100),>
+Error en la línea 511: No se reconoce el verbo de comando.
+,<textoAuxiliar100_7, varchar(100),>
+Error en la línea 512: No se reconoce el verbo de comando.
+,<textoAuxiliar100_8, varchar(100),>
+Error en la línea 513: No se reconoce el verbo de comando.
+,<textoAuxiliar100_9, varchar(100),>
+Error en la línea 514: No se reconoce el verbo de comando.
+,<textoAuxiliar250_1, varchar(250),>
+Error en la línea 515: No se reconoce el verbo de comando.
+,<textoAuxiliar250_10, varchar(250),>
+Error en la línea 516: No se reconoce el verbo de comando.
+,<textoAuxiliar250_11, varchar(250),>
+Error en la línea 517: No se reconoce el verbo de comando.
+,<textoAuxiliar250_12, varchar(250),>
+Error en la línea 518: No se reconoce el verbo de comando.
+,<textoAuxiliar250_13, varchar(250),>
+Error en la línea 519: No se reconoce el verbo de comando.
+,<textoAuxiliar250_14, varchar(250),>
+Error en la línea 520: No se reconoce el verbo de comando.
+,<textoAuxiliar250_15, varchar(250),>
+Error en la línea 521: No se reconoce el verbo de comando.
+,<textoAuxiliar250_16, varchar(250),>
+Error en la línea 522: No se reconoce el verbo de comando.
+,<textoAuxiliar250_17, varchar(250),>
+Error en la línea 523: No se reconoce el verbo de comando.
+,<textoAuxiliar250_18, varchar(250),>
+Error en la línea 524: No se reconoce el verbo de comando.
+,<textoAuxiliar250_19, varchar(250),>
+Error en la línea 525: No se reconoce el verbo de comando.
+,<textoAuxiliar250_2, varchar(250),>
+Error en la línea 526: No se reconoce el verbo de comando.
+,<textoAuxiliar250_20, varchar(250),>
+Error en la línea 527: No se reconoce el verbo de comando.
+,<textoAuxiliar250_21, varchar(250),>
+Error en la línea 528: No se reconoce el verbo de comando.
+,<textoAuxiliar250_22, varchar(250),>
+Error en la línea 529: No se reconoce el verbo de comando.
+,<textoAuxiliar250_23, varchar(250),>
+Error en la línea 530: No se reconoce el verbo de comando.
+,<textoAuxiliar250_24, varchar(250),>
+Error en la línea 531: No se reconoce el verbo de comando.
+,<textoAuxiliar250_25, varchar(250),>
+Error en la línea 532: No se reconoce el verbo de comando.
+,<textoAuxiliar250_3, varchar(250),>
+Error en la línea 533: No se reconoce el verbo de comando.
+,<textoAuxiliar250_4, varchar(250),>
+Error en la línea 534: No se reconoce el verbo de comando.
+,<textoAuxiliar250_5, varchar(250),>
+Error en la línea 535: No se reconoce el verbo de comando.
+,<textoAuxiliar250_6, varchar(250),>
+Error en la línea 536: No se reconoce el verbo de comando.
+,<textoAuxiliar250_7, varchar(250),>
+Error en la línea 537: No se reconoce el verbo de comando.
+,<textoAuxiliar250_8, varchar(250),>
+Error en la línea 538: No se reconoce el verbo de comando.
+,<textoAuxiliar250_9, varchar(250),>
+Error en la línea 539: No se reconoce el verbo de comando.
+,<textoAuxiliar40_1, varchar(40),>
+Error en la línea 540: No se reconoce el verbo de comando.
+,<textoAuxiliar40_10, varchar(40),>
+Error en la línea 541: No se reconoce el verbo de comando.
+,<textoAuxiliar40_11, varchar(40),>
+Error en la línea 542: No se reconoce el verbo de comando.
+,<textoAuxiliar40_12, varchar(40),>
+Error en la línea 543: No se reconoce el verbo de comando.
+,<textoAuxiliar40_13, varchar(40),>
+Error en la línea 544: No se reconoce el verbo de comando.
+,<textoAuxiliar40_14, varchar(40),>
+Error en la línea 545: No se reconoce el verbo de comando.
+,<textoAuxiliar40_15, varchar(40),>
+Error en la línea 546: No se reconoce el verbo de comando.
+,<textoAuxiliar40_16, varchar(40),>
+Error en la línea 547: No se reconoce el verbo de comando.
+,<textoAuxiliar40_17, varchar(40),>
+Error en la línea 548: No se reconoce el verbo de comando.
+,<textoAuxiliar40_18, varchar(40),>
+Error en la línea 549: No se reconoce el verbo de comando.
+,<textoAuxiliar40_19, varchar(40),>
+Error en la línea 550: No se reconoce el verbo de comando.
+,<textoAuxiliar40_2, varchar(40),>
+Error en la línea 551: No se reconoce el verbo de comando.
+,<textoAuxiliar40_20, varchar(40),>
+Error en la línea 552: No se reconoce el verbo de comando.
+,<textoAuxiliar40_3, varchar(40),>
+Error en la línea 553: No se reconoce el verbo de comando.
+,<textoAuxiliar40_4, varchar(40),>
+Error en la línea 554: No se reconoce el verbo de comando.
+,<textoAuxiliar40_5, varchar(40),>
+Error en la línea 555: No se reconoce el verbo de comando.
+,<textoAuxiliar40_6, varchar(40),>
+Error en la línea 556: No se reconoce el verbo de comando.
+,<textoAuxiliar40_7, varchar(40),>
+Error en la línea 557: No se reconoce el verbo de comando.
+,<textoAuxiliar40_8, varchar(40),>
+Error en la línea 558: No se reconoce el verbo de comando.
+,<textoAuxiliar40_9, varchar(40),>
+Error en la línea 559: No se reconoce el verbo de comando.
+,<textoAuxiliar500_1, varchar(500),>
+Error en la línea 560: No se reconoce el verbo de comando.
+,<textoAuxiliar500_2, varchar(500),>
+Error en la línea 561: No se reconoce el verbo de comando.
+,<textoAuxiliar500_3, varchar(500),>
+Error en la línea 562: No se reconoce el verbo de comando.
+,<textoAuxiliar500_4, varchar(500),>
+Error en la línea 563: No se reconoce el verbo de comando.
+,<textoAuxiliar500_5, varchar(500),>
+Error en la línea 564: No se reconoce el verbo de comando.
+,<textoLeyenda_1, varchar(200),>
+Error en la línea 565: No se reconoce el verbo de comando.
+,<textoLeyenda_10, varchar(200),>
+Error en la línea 566: No se reconoce el verbo de comando.
+,<textoLeyenda_11, varchar(200),>
+Error en la línea 567: No se reconoce el verbo de comando.
+,<textoLeyenda_12, varchar(200),>
+Error en la línea 568: No se reconoce el verbo de comando.
+,<textoLeyenda_13, varchar(200),>
+Error en la línea 569: No se reconoce el verbo de comando.
+,<textoLeyenda_14, varchar(200),>
+Error en la línea 570: No se reconoce el verbo de comando.
+,<textoLeyenda_15, varchar(200),>
+Error en la línea 571: No se reconoce el verbo de comando.
+,<textoLeyenda_16, varchar(200),>
+Error en la línea 572: No se reconoce el verbo de comando.
+,<textoLeyenda_17, varchar(200),>
+Error en la línea 573: No se reconoce el verbo de comando.
+,<textoLeyenda_18, varchar(200),>
+Error en la línea 574: No se reconoce el verbo de comando.
+,<textoLeyenda_19, varchar(200),>
+Error en la línea 575: No se reconoce el verbo de comando.
+,<textoLeyenda_2, varchar(200),>
+Error en la línea 576: No se reconoce el verbo de comando.
+,<textoLeyenda_20, varchar(200),>
+Error en la línea 577: No se reconoce el verbo de comando.
+,<textoLeyenda_3, varchar(200),>
+Error en la línea 578: No se reconoce el verbo de comando.
+,<textoLeyenda_4, varchar(200),>
+Error en la línea 579: No se reconoce el verbo de comando.
+,<textoLeyenda_5, varchar(200),>
+Error en la línea 580: No se reconoce el verbo de comando.
+,<textoLeyenda_6, varchar(200),>
+Error en la línea 581: No se reconoce el verbo de comando.
+,<textoLeyenda_7, varchar(200),>
+Error en la línea 582: No se reconoce el verbo de comando.
+,<textoLeyenda_8, varchar(200),>
+Error en la línea 583: No se reconoce el verbo de comando.
+,<textoLeyenda_9, varchar(200),>
+Error en la línea 584: No se reconoce el verbo de comando.
+,<tipoDocumentoAdquiriente, varchar(1),>
+Error en la línea 585: No se reconoce el verbo de comando.
+,<tipoDocumentoReferenciaCorregi, varchar(2),>
+Error en la línea 586: No se reconoce el verbo de comando.
+,<tipoDocumentoReferenciaPrincip, varchar(2),>
+Error en la línea 587: No se reconoce el verbo de comando.
+,<tipoMoneda, varchar(3),>
+Error en la línea 588: No se reconoce el verbo de comando.
+,<tipoOperacionFactura, varchar(2),>
+Error en la línea 589: No se reconoce el verbo de comando.
+,<tipoReferenciaAdicional_1, varchar(2),>
+Error en la línea 590: No se reconoce el verbo de comando.
+,<tipoReferenciaAdicional_2, varchar(2),>
+Error en la línea 591: No se reconoce el verbo de comando.
+,<tipoReferenciaAdicional_3, varchar(2),>
+Error en la línea 592: No se reconoce el verbo de comando.
+,<tipoReferenciaAdicional_4, varchar(2),>
+Error en la línea 593: No se reconoce el verbo de comando.
+,<tipoReferenciaAdicional_5, varchar(2),>
+Error en la línea 594: No se reconoce el verbo de comando.
+,<tipoReferencia_1, varchar(2),>
+Error en la línea 595: No se reconoce el verbo de comando.
+,<tipoReferencia_2, varchar(2),>
+Error en la línea 596: No se reconoce el verbo de comando.
+,<tipoReferencia_3, varchar(2),>
+Error en la línea 597: No se reconoce el verbo de comando.
+,<tipoReferencia_4, varchar(2),>
+Error en la línea 598: No se reconoce el verbo de comando.
+,<tipoReferencia_5, varchar(2),>
+Error en la línea 599: No se reconoce el verbo de comando.
+,<totalBonificacion, varchar(15),>
+Error en la línea 600: No se reconoce el verbo de comando.
+,<totalDescuentos, varchar(15),>
+Error en la línea 601: No se reconoce el verbo de comando.
+,<totalDetraccion, varchar(15),>
+Error en la línea 602: No se reconoce el verbo de comando.
+,<totalDocumentoAnticipo, varchar(18),>
+Error en la línea 603: No se reconoce el verbo de comando.
+,<totalIgv, varchar(15),>
+Error en la línea 604: No se reconoce el verbo de comando.
+,<totalIsc, varchar(15),>
+Error en la línea 605: No se reconoce el verbo de comando.
+,<totalOtrosCargos, varchar(15),>
+Error en la línea 606: No se reconoce el verbo de comando.
+,<totalOtrosTributos, varchar(15),>
+Error en la línea 607: No se reconoce el verbo de comando.
+,<totalPercepcion, varchar(15),>
+Error en la línea 608: No se reconoce el verbo de comando.
+,<totalRetencion, varchar(15),>
+Error en la línea 609: No se reconoce el verbo de comando.
+,<totalValorVentaNetoOpExonerada, varchar(15),>
+Error en la línea 610: No se reconoce el verbo de comando.
+,<totalValorVentaNetoOpGratuitas, varchar(18),>
+Error en la línea 611: No se reconoce el verbo de comando.
+,<totalValorVentaNetoOpGravadas, varchar(15),>
+Error en la línea 612: No se reconoce el verbo de comando.
+,<totalValorVentaNetoOpNoGravada, varchar(15),>
+Error en la línea 613: No se reconoce el verbo de comando.
+,<totalVenta, varchar(15),>
+Error en la línea 614: No se reconoce el verbo de comando.
+,<totalVentaConPercepcion, varchar(15),>
+Error en la línea 615: No se reconoce el verbo de comando.
+,<ubigeoEmisor, varchar(6),>
+Error en la línea 616: No se reconoce el verbo de comando.
+,<urbanizacion, varchar(25),>
+Error en la línea 617: No se reconoce el verbo de comando.
+,<valorReferencialDetraccion, varchar(15),>
+Error en la línea 618: No se reconoce el verbo de comando.
+,<bl_reintentoJob, int,>
+Error en la línea 619: No se reconoce el verbo de comando.
+,<BL_SOURCEFILE, varchar(40),>
+Error en la línea 620: No se reconoce el verbo de comando.
+,<visualizado, int,>)
+Error en la línea 621: No se reconoce el verbo de comando.
+GO
+Error en la línea 622: Falta una cláusula necesaria en el comando.
+,[serieNumero]
+Error en la línea 625: No se reconoce el verbo de comando.
+,[tipoDocumento]
+Error en la línea 626: No se reconoce el verbo de comando.
+,[tipoDocumentoEmisor]
+Error en la línea 627: No se reconoce el verbo de comando.
+,[bl_estadoRegistro]
+Error en la línea 628: No se reconoce el verbo de comando.
+,[bl_reintento]
+Error en la línea 629: No se reconoce el verbo de comando.
+,[bl_origen]
+Error en la línea 630: No se reconoce el verbo de comando.
+,[bl_hasFileResponse]
+Error en la línea 631: No se reconoce el verbo de comando.
+,[baseImponiblePercepcion]
+Error en la línea 632: No se reconoce el verbo de comando.
+,[codigoAuxiliar100_1]
+Error en la línea 633: No se reconoce el verbo de comando.
+,[codigoAuxiliar100_10]
+Error en la línea 634: No se reconoce el verbo de comando.
+,[codigoAuxiliar100_2]
+Error en la línea 635: No se reconoce el verbo de comando.
+,[codigoAuxiliar100_3]
+Error en la línea 636: No se reconoce el verbo de comando.
+,[codigoAuxiliar100_4]
+Error en la línea 637: No se reconoce el verbo de comando.
+,[codigoAuxiliar100_5]
+Error en la línea 638: No se reconoce el verbo de comando.
+,[codigoAuxiliar100_6]
+Error en la línea 639: No se reconoce el verbo de comando.
+,[codigoAuxiliar100_7]
+Error en la línea 640: No se reconoce el verbo de comando.
+,[codigoAuxiliar100_8]
+Error en la línea 641: No se reconoce el verbo de comando.
+,[codigoAuxiliar100_9]
+Error en la línea 642: No se reconoce el verbo de comando.
+,[codigoAuxiliar250_1]
+Error en la línea 643: No se reconoce el verbo de comando.
+,[codigoAuxiliar250_10]
+Error en la línea 644: No se reconoce el verbo de comando.
+,[codigoAuxiliar250_11]
+Error en la línea 645: No se reconoce el verbo de comando.
+,[codigoAuxiliar250_12]
+Error en la línea 646: No se reconoce el verbo de comando.
+,[codigoAuxiliar250_13]
+Error en la línea 647: No se reconoce el verbo de comando.
+,[codigoAuxiliar250_14]
+Error en la línea 648: No se reconoce el verbo de comando.
+,[codigoAuxiliar250_15]
+Error en la línea 649: No se reconoce el verbo de comando.
+,[codigoAuxiliar250_16]
+Error en la línea 650: No se reconoce el verbo de comando.
+,[codigoAuxiliar250_17]
+Error en la línea 651: No se reconoce el verbo de comando.
+,[codigoAuxiliar250_18]
+Error en la línea 652: No se reconoce el verbo de comando.
+,[codigoAuxiliar250_19]
+Error en la línea 653: No se reconoce el verbo de comando.
+,[codigoAuxiliar250_2]
+Error en la línea 654: No se reconoce el verbo de comando.
+,[codigoAuxiliar250_20]
+Error en la línea 655: No se reconoce el verbo de comando.
+,[codigoAuxiliar250_21]
+Error en la línea 656: No se reconoce el verbo de comando.
+,[codigoAuxiliar250_22]
+Error en la línea 657: No se reconoce el verbo de comando.
+,[codigoAuxiliar250_23]
+Error en la línea 658: No se reconoce el verbo de comando.
+,[codigoAuxiliar250_24]
+Error en la línea 659: No se reconoce el verbo de comando.
+,[codigoAuxiliar250_25]
+Error en la línea 660: No se reconoce el verbo de comando.
+,[codigoAuxiliar250_3]
+Error en la línea 661: No se reconoce el verbo de comando.
+,[codigoAuxiliar250_4]
+Error en la línea 662: No se reconoce el verbo de comando.
+,[codigoAuxiliar250_5]
+Error en la línea 663: No se reconoce el verbo de comando.
+,[codigoAuxiliar250_6]
+Error en la línea 664: No se reconoce el verbo de comando.
+,[codigoAuxiliar250_7]
+Error en la línea 665: No se reconoce el verbo de comando.
+,[codigoAuxiliar250_8]
+Error en la línea 666: No se reconoce el verbo de comando.
+,[codigoAuxiliar250_9]
+Error en la línea 667: No se reconoce el verbo de comando.
+,[codigoAuxiliar40_1]
+Error en la línea 668: No se reconoce el verbo de comando.
+,[codigoAuxiliar40_10]
+Error en la línea 669: No se reconoce el verbo de comando.
+,[codigoAuxiliar40_11]
+Error en la línea 670: No se reconoce el verbo de comando.
+,[codigoAuxiliar40_12]
+Error en la línea 671: No se reconoce el verbo de comando.
+,[codigoAuxiliar40_13]
+Error en la línea 672: No se reconoce el verbo de comando.
+,[codigoAuxiliar40_14]
+Error en la línea 673: No se reconoce el verbo de comando.
+,[codigoAuxiliar40_15]
+Error en la línea 674: No se reconoce el verbo de comando.
+,[codigoAuxiliar40_16]
+Error en la línea 675: No se reconoce el verbo de comando.
+,[codigoAuxiliar40_17]
+Error en la línea 676: No se reconoce el verbo de comando.
+,[codigoAuxiliar40_18]
+Error en la línea 677: No se reconoce el verbo de comando.
+,[codigoAuxiliar40_19]
+Error en la línea 678: No se reconoce el verbo de comando.
+,[codigoAuxiliar40_2]
+Error en la línea 679: No se reconoce el verbo de comando.
+,[codigoAuxiliar40_20]
+Error en la línea 680: No se reconoce el verbo de comando.
+,[codigoAuxiliar40_3]
+Error en la línea 681: No se reconoce el verbo de comando.
+,[codigoAuxiliar40_4]
+Error en la línea 682: No se reconoce el verbo de comando.
+,[codigoAuxiliar40_5]
+Error en la línea 683: No se reconoce el verbo de comando.
+,[codigoAuxiliar40_6]
+Error en la línea 684: No se reconoce el verbo de comando.
+,[codigoAuxiliar40_7]
+Error en la línea 685: No se reconoce el verbo de comando.
+,[codigoAuxiliar40_8]
+Error en la línea 686: No se reconoce el verbo de comando.
+,[codigoAuxiliar40_9]
+Error en la línea 687: No se reconoce el verbo de comando.
+,[codigoAuxiliar500_1]
+Error en la línea 688: No se reconoce el verbo de comando.
+,[codigoAuxiliar500_2]
+Error en la línea 689: No se reconoce el verbo de comando.
+,[codigoAuxiliar500_3]
+Error en la línea 690: No se reconoce el verbo de comando.
+,[codigoAuxiliar500_4]
+Error en la línea 691: No se reconoce el verbo de comando.
+,[codigoAuxiliar500_5]
+Error en la línea 692: No se reconoce el verbo de comando.
+,[codigoLeyenda_1]
+Error en la línea 693: No se reconoce el verbo de comando.
+,[codigoLeyenda_10]
+Error en la línea 694: No se reconoce el verbo de comando.
+,[codigoLeyenda_11]
+Error en la línea 695: No se reconoce el verbo de comando.
+,[codigoLeyenda_12]
+Error en la línea 696: No se reconoce el verbo de comando.
+,[codigoLeyenda_13]
+Error en la línea 697: No se reconoce el verbo de comando.
+,[codigoLeyenda_14]
+Error en la línea 698: No se reconoce el verbo de comando.
+,[codigoLeyenda_15]
+Error en la línea 699: No se reconoce el verbo de comando.
+,[codigoLeyenda_16]
+Error en la línea 700: No se reconoce el verbo de comando.
+,[codigoLeyenda_17]
+Error en la línea 701: No se reconoce el verbo de comando.
+,[codigoLeyenda_18]
+Error en la línea 702: No se reconoce el verbo de comando.
+,[codigoLeyenda_19]
+Error en la línea 703: No se reconoce el verbo de comando.
+,[codigoLeyenda_2]
+Error en la línea 704: No se reconoce el verbo de comando.
+,[codigoLeyenda_20]
+Error en la línea 705: No se reconoce el verbo de comando.
+,[codigoLeyenda_3]
+Error en la línea 706: No se reconoce el verbo de comando.
+,[codigoLeyenda_4]
+Error en la línea 707: No se reconoce el verbo de comando.
+,[codigoLeyenda_5]
+Error en la línea 708: No se reconoce el verbo de comando.
+,[codigoLeyenda_6]
+Error en la línea 709: No se reconoce el verbo de comando.
+,[codigoLeyenda_7]
+Error en la línea 710: No se reconoce el verbo de comando.
+,[codigoLeyenda_8]
+Error en la línea 711: No se reconoce el verbo de comando.
+,[codigoLeyenda_9]
+Error en la línea 712: No se reconoce el verbo de comando.
+,[codigoSerieNumeroAfectado]
+Error en la línea 713: No se reconoce el verbo de comando.
+,[correoAdquiriente]
+Error en la línea 714: No se reconoce el verbo de comando.
+,[correoEmisor]
+Error en la línea 715: No se reconoce el verbo de comando.
+,[departamentoEmisor]
+Error en la línea 716: No se reconoce el verbo de comando.
+,[descripcionDetraccion]
+Error en la línea 717: No se reconoce el verbo de comando.
+,[descuentosGlobales]
+Error en la línea 718: No se reconoce el verbo de comando.
+,[direccionEmisor]
+Error en la línea 719: No se reconoce el verbo de comando.
+,[distritoEmisor]
+Error en la línea 720: No se reconoce el verbo de comando.
+,[fechaEmision]
+Error en la línea 721: No se reconoce el verbo de comando.
+,[inHabilitado]
+Error en la línea 722: No se reconoce el verbo de comando.
+,[lugarDestino]
+Error en la línea 723: No se reconoce el verbo de comando.
+,[motivoDocumento]
+Error en la línea 724: No se reconoce el verbo de comando.
+,[nombreComercialEmisor]
+Error en la línea 725: No se reconoce el verbo de comando.
+,[numeroDocumentoAdquiriente]
+Error en la línea 726: No se reconoce el verbo de comando.
+,[numeroDocumentoRefeAdicional_1]
+Error en la línea 727: No se reconoce el verbo de comando.
+,[numeroDocumentoRefeAdicional_2]
+Error en la línea 728: No se reconoce el verbo de comando.
+,[numeroDocumentoRefeAdicional_3]
+Error en la línea 729: No se reconoce el verbo de comando.
+,[numeroDocumentoRefeAdicional_4]
+Error en la línea 730: No se reconoce el verbo de comando.
+,[numeroDocumentoRefeAdicional_5]
+Error en la línea 731: No se reconoce el verbo de comando.
+,[numeroDocumentoReferenciaCorre]
+Error en la línea 732: No se reconoce el verbo de comando.
+,[numeroDocumentoReferenciaPrinc]
+Error en la línea 733: No se reconoce el verbo de comando.
+,[numeroDocumentoReferencia_1]
+Error en la línea 734: No se reconoce el verbo de comando.
+,[numeroDocumentoReferencia_2]
+Error en la línea 735: No se reconoce el verbo de comando.
+,[numeroDocumentoReferencia_3]
+Error en la línea 736: No se reconoce el verbo de comando.
+,[numeroDocumentoReferencia_4]
+Error en la línea 737: No se reconoce el verbo de comando.
+,[numeroDocumentoReferencia_5]
+Error en la línea 738: No se reconoce el verbo de comando.
+,[paisEmisor]
+Error en la línea 739: No se reconoce el verbo de comando.
+,[porcentajeDetraccion]
+Error en la línea 740: No se reconoce el verbo de comando.
+,[porcentajePercepcion]
+Error en la línea 741: No se reconoce el verbo de comando.
+,[porcentajeRetencion]
+Error en la línea 742: No se reconoce el verbo de comando.
+,[provinciaEmisor]
+Error en la línea 743: No se reconoce el verbo de comando.
+,[razonSocialAdquiriente]
+Error en la línea 744: No se reconoce el verbo de comando.
+,[razonSocialEmisor]
+Error en la línea 745: No se reconoce el verbo de comando.
+,[serieNumeroAfectado]
+Error en la línea 746: No se reconoce el verbo de comando.
+,[subTotal]
+Error en la línea 747: No se reconoce el verbo de comando.
+,[textoAdicionalLeyenda_1]
+Error en la línea 748: No se reconoce el verbo de comando.
+,[textoAdicionalLeyenda_10]
+Error en la línea 749: No se reconoce el verbo de comando.
+,[textoAdicionalLeyenda_11]
+Error en la línea 750: No se reconoce el verbo de comando.
+,[textoAdicionalLeyenda_12]
+Error en la línea 751: No se reconoce el verbo de comando.
+,[textoAdicionalLeyenda_13]
+Error en la línea 752: No se reconoce el verbo de comando.
+,[textoAdicionalLeyenda_14]
+Error en la línea 753: No se reconoce el verbo de comando.
+,[textoAdicionalLeyenda_15]
+Error en la línea 754: No se reconoce el verbo de comando.
+,[textoAdicionalLeyenda_16]
+Error en la línea 755: No se reconoce el verbo de comando.
+,[textoAdicionalLeyenda_17]
+Error en la línea 756: No se reconoce el verbo de comando.
+,[textoAdicionalLeyenda_18]
+Error en la línea 757: No se reconoce el verbo de comando.
+,[textoAdicionalLeyenda_19]
+Error en la línea 758: No se reconoce el verbo de comando.
+,[textoAdicionalLeyenda_2]
+Error en la línea 759: No se reconoce el verbo de comando.
+,[textoAdicionalLeyenda_20]
+Error en la línea 760: No se reconoce el verbo de comando.
+,[textoAdicionalLeyenda_3]
+Error en la línea 761: No se reconoce el verbo de comando.
+,[textoAdicionalLeyenda_4]
+Error en la línea 762: No se reconoce el verbo de comando.
+,[textoAdicionalLeyenda_5]
+Error en la línea 763: No se reconoce el verbo de comando.
+,[textoAdicionalLeyenda_6]
+Error en la línea 764: No se reconoce el verbo de comando.
+,[textoAdicionalLeyenda_7]
+Error en la línea 765: No se reconoce el verbo de comando.
+,[textoAdicionalLeyenda_8]
+Error en la línea 766: No se reconoce el verbo de comando.
+,[textoAdicionalLeyenda_9]
+Error en la línea 767: No se reconoce el verbo de comando.
+,[textoAuxiliar100_1]
+Error en la línea 768: No se reconoce el verbo de comando.
+,[textoAuxiliar100_10]
+Error en la línea 769: No se reconoce el verbo de comando.
+,[textoAuxiliar100_2]
+Error en la línea 770: No se reconoce el verbo de comando.
+,[textoAuxiliar100_3]
+Error en la línea 771: No se reconoce el verbo de comando.
+,[textoAuxiliar100_4]
+Error en la línea 772: No se reconoce el verbo de comando.
+,[textoAuxiliar100_5]
+Error en la línea 773: No se reconoce el verbo de comando.
+,[textoAuxiliar100_6]
+Error en la línea 774: No se reconoce el verbo de comando.
+,[textoAuxiliar100_7]
+Error en la línea 775: No se reconoce el verbo de comando.
+,[textoAuxiliar100_8]
+Error en la línea 776: No se reconoce el verbo de comando.
+,[textoAuxiliar100_9]
+Error en la línea 777: No se reconoce el verbo de comando.
+,[textoAuxiliar250_1]
+Error en la línea 778: No se reconoce el verbo de comando.
+,[textoAuxiliar250_10]
+Error en la línea 779: No se reconoce el verbo de comando.
+,[textoAuxiliar250_11]
+Error en la línea 780: No se reconoce el verbo de comando.
+,[textoAuxiliar250_12]
+Error en la línea 781: No se reconoce el verbo de comando.
+,[textoAuxiliar250_13]
+Error en la línea 782: No se reconoce el verbo de comando.
+,[textoAuxiliar250_14]
+Error en la línea 783: No se reconoce el verbo de comando.
+,[textoAuxiliar250_15]
+Error en la línea 784: No se reconoce el verbo de comando.
+,[textoAuxiliar250_16]
+Error en la línea 785: No se reconoce el verbo de comando.
+,[textoAuxiliar250_17]
+Error en la línea 786: No se reconoce el verbo de comando.
+,[textoAuxiliar250_18]
+Error en la línea 787: No se reconoce el verbo de comando.
+,[textoAuxiliar250_19]
+Error en la línea 788: No se reconoce el verbo de comando.
+,[textoAuxiliar250_2]
+Error en la línea 789: No se reconoce el verbo de comando.
+,[textoAuxiliar250_20]
+Error en la línea 790: No se reconoce el verbo de comando.
+,[textoAuxiliar250_21]
+Error en la línea 791: No se reconoce el verbo de comando.
+,[textoAuxiliar250_22]
+Error en la línea 792: No se reconoce el verbo de comando.
+,[textoAuxiliar250_23]
+Error en la línea 793: No se reconoce el verbo de comando.
+,[textoAuxiliar250_24]
+Error en la línea 794: No se reconoce el verbo de comando.
+,[textoAuxiliar250_25]
+Error en la línea 795: No se reconoce el verbo de comando.
+,[textoAuxiliar250_3]
+Error en la línea 796: No se reconoce el verbo de comando.
+,[textoAuxiliar250_4]
+Error en la línea 797: No se reconoce el verbo de comando.
+,[textoAuxiliar250_5]
+Error en la línea 798: No se reconoce el verbo de comando.
+,[textoAuxiliar250_6]
+Error en la línea 799: No se reconoce el verbo de comando.
+,[textoAuxiliar250_7]
+Error en la línea 800: No se reconoce el verbo de comando.
+,[textoAuxiliar250_8]
+Error en la línea 801: No se reconoce el verbo de comando.
+,[textoAuxiliar250_9]
+Error en la línea 802: No se reconoce el verbo de comando.
+,[textoAuxiliar40_1]
+Error en la línea 803: No se reconoce el verbo de comando.
+,[textoAuxiliar40_10]
+Error en la línea 804: No se reconoce el verbo de comando.
+,[textoAuxiliar40_11]
+Error en la línea 805: No se reconoce el verbo de comando.
+,[textoAuxiliar40_12]
+Error en la línea 806: No se reconoce el verbo de comando.
+,[textoAuxiliar40_13]
+Error en la línea 807: No se reconoce el verbo de comando.
+,[textoAuxiliar40_14]
+Error en la línea 808: No se reconoce el verbo de comando.
+,[textoAuxiliar40_15]
+Error en la línea 809: No se reconoce el verbo de comando.
+,[textoAuxiliar40_16]
+Error en la línea 810: No se reconoce el verbo de comando.
+,[textoAuxiliar40_17]
+Error en la línea 811: No se reconoce el verbo de comando.
+,[textoAuxiliar40_18]
+Error en la línea 812: No se reconoce el verbo de comando.
+,[textoAuxiliar40_19]
+Error en la línea 813: No se reconoce el verbo de comando.
+,[textoAuxiliar40_2]
+Error en la línea 814: No se reconoce el verbo de comando.
+,[textoAuxiliar40_20]
+Error en la línea 815: No se reconoce el verbo de comando.
+,[textoAuxiliar40_3]
+Error en la línea 816: No se reconoce el verbo de comando.
+,[textoAuxiliar40_4]
+Error en la línea 817: No se reconoce el verbo de comando.
+,[textoAuxiliar40_5]
+Error en la línea 818: No se reconoce el verbo de comando.
+,[textoAuxiliar40_6]
+Error en la línea 819: No se reconoce el verbo de comando.
+,[textoAuxiliar40_7]
+Error en la línea 820: No se reconoce el verbo de comando.
+,[textoAuxiliar40_8]
+Error en la línea 821: No se reconoce el verbo de comando.
+,[textoAuxiliar40_9]
+Error en la línea 822: No se reconoce el verbo de comando.
+,[textoAuxiliar500_1]
+Error en la línea 823: No se reconoce el verbo de comando.
+,[textoAuxiliar500_2]
+Error en la línea 824: No se reconoce el verbo de comando.
+,[textoAuxiliar500_3]
+Error en la línea 825: No se reconoce el verbo de comando.
+,[textoAuxiliar500_4]
+Error en la línea 826: No se reconoce el verbo de comando.
+,[textoAuxiliar500_5]
+Error en la línea 827: No se reconoce el verbo de comando.
+,[textoLeyenda_1]
+Error en la línea 828: No se reconoce el verbo de comando.
+,[textoLeyenda_10]
+Error en la línea 829: No se reconoce el verbo de comando.
+,[textoLeyenda_11]
+Error en la línea 830: No se reconoce el verbo de comando.
+,[textoLeyenda_12]
+Error en la línea 831: No se reconoce el verbo de comando.
+,[textoLeyenda_13]
+Error en la línea 832: No se reconoce el verbo de comando.
+,[textoLeyenda_14]
+Error en la línea 833: No se reconoce el verbo de comando.
+,[textoLeyenda_15]
+Error en la línea 834: No se reconoce el verbo de comando.
+,[textoLeyenda_16]
+Error en la línea 835: No se reconoce el verbo de comando.
+,[textoLeyenda_17]
+Error en la línea 836: No se reconoce el verbo de comando.
+,[textoLeyenda_18]
+Error en la línea 837: No se reconoce el verbo de comando.
+,[textoLeyenda_19]
+Error en la línea 838: No se reconoce el verbo de comando.
+,[textoLeyenda_2]
+Error en la línea 839: No se reconoce el verbo de comando.
+,[textoLeyenda_20]
+Error en la línea 840: No se reconoce el verbo de comando.
+,[textoLeyenda_3]
+Error en la línea 841: No se reconoce el verbo de comando.
+,[textoLeyenda_4]
+Error en la línea 842: No se reconoce el verbo de comando.
+,[textoLeyenda_5]
+Error en la línea 843: No se reconoce el verbo de comando.
+,[textoLeyenda_6]
+Error en la línea 844: No se reconoce el verbo de comando.
+,[textoLeyenda_7]
+Error en la línea 845: No se reconoce el verbo de comando.
+,[textoLeyenda_8]
+Error en la línea 846: No se reconoce el verbo de comando.
+,[textoLeyenda_9]
+Error en la línea 847: No se reconoce el verbo de comando.
+,[tipoDocumentoAdquiriente]
+Error en la línea 848: No se reconoce el verbo de comando.
+,[tipoDocumentoReferenciaCorregi]
+Error en la línea 849: No se reconoce el verbo de comando.
+,[tipoDocumentoReferenciaPrincip]
+Error en la línea 850: No se reconoce el verbo de comando.
+,[tipoMoneda]
+Error en la línea 851: No se reconoce el verbo de comando.
+,[tipoOperacionFactura]
+Error en la línea 852: No se reconoce el verbo de comando.
+,[tipoReferenciaAdicional_1]
+Error en la línea 853: No se reconoce el verbo de comando.
+,[tipoReferenciaAdicional_2]
+Error en la línea 854: No se reconoce el verbo de comando.
+,[tipoReferenciaAdicional_3]
+Error en la línea 855: No se reconoce el verbo de comando.
+,[tipoReferenciaAdicional_4]
+Error en la línea 856: No se reconoce el verbo de comando.
+,[tipoReferenciaAdicional_5]
+Error en la línea 857: No se reconoce el verbo de comando.
+,[tipoReferencia_1]
+Error en la línea 858: No se reconoce el verbo de comando.
+,[tipoReferencia_2]
+Error en la línea 859: No se reconoce el verbo de comando.
+,[tipoReferencia_3]
+Error en la línea 860: No se reconoce el verbo de comando.
+,[tipoReferencia_4]
+Error en la línea 861: No se reconoce el verbo de comando.
+,[tipoReferencia_5]
+Error en la línea 862: No se reconoce el verbo de comando.
+,[totalBonificacion]
+Error en la línea 863: No se reconoce el verbo de comando.
+,[totalDescuentos]
+Error en la línea 864: No se reconoce el verbo de comando.
+,[totalDetraccion]
+Error en la línea 865: No se reconoce el verbo de comando.
+,[totalDocumentoAnticipo]
+Error en la línea 866: No se reconoce el verbo de comando.
+,[totalIgv]
+Error en la línea 867: No se reconoce el verbo de comando.
+,[totalIsc]
+Error en la línea 868: No se reconoce el verbo de comando.
+,[totalOtrosCargos]
+Error en la línea 869: No se reconoce el verbo de comando.
+,[totalOtrosTributos]
+Error en la línea 870: No se reconoce el verbo de comando.
+,[totalPercepcion]
+Error en la línea 871: No se reconoce el verbo de comando.
+,[totalRetencion]
+Error en la línea 872: No se reconoce el verbo de comando.
+,[totalValorVentaNetoOpExonerada]
+Error en la línea 873: No se reconoce el verbo de comando.
+,[totalValorVentaNetoOpGratuitas]
+Error en la línea 874: No se reconoce el verbo de comando.
+,[totalValorVentaNetoOpGravadas]
+Error en la línea 875: No se reconoce el verbo de comando.
+,[totalValorVentaNetoOpNoGravada]
+Error en la línea 876: No se reconoce el verbo de comando.
+,[totalVenta]
+Error en la línea 877: No se reconoce el verbo de comando.
+,[totalVentaConPercepcion]
+Error en la línea 878: No se reconoce el verbo de comando.
+,[ubigeoEmisor]
+Error en la línea 879: No se reconoce el verbo de comando.
+,[urbanizacion]
+Error en la línea 880: No se reconoce el verbo de comando.
+,[valorReferencialDetraccion]
+Error en la línea 881: No se reconoce el verbo de comando.
+,[bl_reintentoJob]
+Error en la línea 882: No se reconoce el verbo de comando.
+,[BL_SOURCEFILE]
+Error en la línea 883: No se reconoce el verbo de comando.
+,[visualizado]
+Error en la línea 884: No se reconoce el verbo de comando.
+GO
+Error en la línea 886: Falta una cláusula necesaria en el comando.

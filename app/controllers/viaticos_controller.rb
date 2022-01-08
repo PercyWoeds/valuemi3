@@ -366,9 +366,8 @@ before_filter :authenticate_user!
         nombre_empleado =   contado.get_nombre_empleado(contado.cod_emp)
 
         detalle_texto = "DIA: " <<   @fecha.strftime("%d-%m-%Y")  << " "  << nombre_empleado  
-        detalle_texto3 = "DIA: " <<   @fecha.strftime("%d-%m-%Y")  <<  " " << nombre_empleado
         detalle_texto2 =  "VENTA TURNO "  << bucle.to_s 
-        detalle_texto4 =  "DIFER.TURNO "  << bucle.to_s 
+        detalle_texto4 =  nombre_empleado 
 
         if bucle == 1
             @gasto_id = 24   
@@ -397,10 +396,15 @@ before_filter :authenticate_user!
           
          if diferencia1 < 0
           tipo_mov = 2
-          diferencia1 = diferencia1 * -1 
+          diferencia1 = diferencia1 * -1
+          detalle_texto3 = "FALTANTE"
+         
          else
-          tipo_mov = 1 
+          tipo_mov = 1
+          detalle_texto3 = "SOBRANTE"
+         
          end
+
          a = ViaticoDetail.new(viatico_id: @viatico.id, fecha:@fecha , descrip:detalle_texto4 , document_id: 4, 
           numero: "0", importe: diferencia1, detalle: detalle_texto3, tm: 2 , tranportorder_id: 1, 
           supplier_id: 4, gasto_id: 1, employee_id: 10, destino_id: 1, compro: "0", tipomov_id: tipo_mov )
@@ -415,9 +419,8 @@ before_filter :authenticate_user!
         nombre_empleado =   contado.get_nombre_empleado(contado.cod_emp)
 
         detalle_texto = "DIA: " <<   @fecha.strftime("%d-%m-%Y")  << " "  << nombre_empleado  
-        detalle_texto3 = "DIA: " <<   @fecha.strftime("%d-%m-%Y")  <<  " " << nombre_empleado
         detalle_texto2 =  "VENTA TURNO "  << bucle.to_s 
-        detalle_texto4 =  "DIFER.TURNO "  << bucle.to_s 
+        detalle_texto4 =  nombre_empleado
 
         if bucle == 1
             @gasto_id = 24   
@@ -447,8 +450,10 @@ before_filter :authenticate_user!
          if diferencia1 < 0
           tipo_mov = 2
           diferencia1 = diferencia1 * -1 
+          detalle_texto3 = "FALTANTE"
          else
           tipo_mov = 1 
+          detalle_texto3 = "SOBRANTE"
          end
          a = ViaticoDetail.new(viatico_id: @viatico.id, fecha:@fecha , descrip:detalle_texto4 , document_id: 4, 
           numero: "0", importe: diferencia1, detalle: detalle_texto3, tm: 2 , tranportorder_id: 1, 
@@ -465,9 +470,8 @@ before_filter :authenticate_user!
         nombre_empleado =   contado.get_nombre_empleado(contado.cod_emp)
 
         detalle_texto = "DIA: " <<   @fecha.strftime("%d-%m-%Y")  << " "  << nombre_empleado  
-        detalle_texto3 = "DIA: " <<   @fecha.strftime("%d-%m-%Y")  <<  " " << nombre_empleado
         detalle_texto2 =  "VENTA TURNO "  << bucle.to_s 
-        detalle_texto4 =  "DIFER.TURNO "  << bucle.to_s 
+        detalle_texto4 =  nombre_empleado 
 
         if bucle == 1
             @gasto_id = 24   
@@ -496,9 +500,11 @@ before_filter :authenticate_user!
           
          if diferencia1 < 0
           tipo_mov = 2
-          diferencia1 = diferencia1 * -1 
+          diferencia1 = diferencia1 * -1
+          detalle_texto3 = "FALTANTE" 
          else
           tipo_mov = 1 
+          detalle_texto3 = "SOBRANTE"
          end
          a = ViaticoDetail.new(viatico_id: @viatico.id, fecha:@fecha , descrip:detalle_texto4 , document_id: 4, 
           numero: "0", importe: diferencia1, detalle: detalle_texto3, tm: 2 , tranportorder_id: 1, 

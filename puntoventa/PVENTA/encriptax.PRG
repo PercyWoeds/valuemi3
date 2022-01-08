@@ -1,0 +1,8 @@
+publ cadena
+pwd='779020'
+cadena=""
+for i=1 to len(pwd)
+	cadena=cadena+chr(asc(substr(pwd,i,1))+len(pwd))
+endf
+RETURN cadena 
+?cadena

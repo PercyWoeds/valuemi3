@@ -1,0 +1,1 @@
+set defa to c:\ptienda

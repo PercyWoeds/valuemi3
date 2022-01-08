@@ -1,0 +1,26 @@
+CLEAR
+SET DATE BRITISH
+SET CENTURY ON
+SET EXCLUSIVE OFF
+SET PROCEDURE TO LIBRERIA
+
+*
+USE r:\h210113 
+SET FILTER TO TIPDOC == "01" AND MONTH(fecha)==11 AND YEAR(fecha)==2012 AND !"ANUL" $ NOMBRE
+GO TOP 
+DO WHILE !EOF()
+	*IF TIPDOC <> "01" OR MONTH(fecha)<>11 OR YEAR(fecha)<>2012 OR "ANUL" $ NOMBRE
+	*	SKIP 
+	*	LOOP
+	*ENDIF 
+	cRuc = ALLTRIM(RUC)
+	IF ValidaRuc(cRuc) == .F.
+		?fecha, tipdoc+ " "+serie + "-" + numero, ruc
+	ENDIF 		
+
+	SKIP 
+
+ENDDO 
+
+CLOSE DATABASES all
+RETURN 

@@ -1,0 +1,474 @@
+
+CLOSE DATABASES all
+SET DATE BRITISH 
+SET PROCEDURE TO  LIBRERIA
+SET ENGINEBEHAVIOR 70
+
+lcMovimientos="mo01SPE"
+lcClientes="ma05"
+lcProductos="ma03"
+
+SELECT FECHA,TD,SERIE,NUMERO,cantidad,MO01SPE.precio,MO01SPE.cod_prod,MA03.NOM_PROD,SUM(IMPORTE) AS IMPORTE,igv,RUC,placa,MA05.NOM_CLI,MA05.DIR_CLI,MA05.DIS_CLI;
+FROM mo01SPE;
+left JOIN ma05;
+ON mo01SPE.cod_cli=ma05.cod_cli;
+left JOIN ma03;
+ON mo01SPE.cod_prod=ma03.cod_prod WHERE TD<>'N' ORDER BY FECHA,SERIE,NUMERO GROUP BY FECHA,TD,SERIE,NUMERO INTO CURSOR SPE_1
+
+SELECT SPE_1
+GO TOP
+
+DO WHILE !EOF ()
+
+	lctipoDocumentoEmisor="6"
+	lcnumeroDocumentoEmisor="20372525496"	
+	lctipoDocumento="12"
+	lcserieNumero="B"+SERIE+"-"+NUMERO	
+	lccorreoEmisor=""
+	lccorreoAdquiriente="-"
+	
+	* call udf
+	lcNewDate = MYDATE(DTOC(DATE()))
+	
+	lcrazonSocialEmisor="PETROCORP S.A."
+	lcnombreComercialEmisor="PETROCORP S.A."	
+	lcfechaEmision=lcNewDate
+	lcubigeoEmisor="070101"
+	lcdireccionEmisor="AV. ELMER FAUCETT NRO. 6000(ESQUINA AV GAMBETA Y AV FAUCETT)"
+	lcurbanizacion=""
+	lcprovinciaEmisor="CALLAO"
+	lcdepartamentoEmisor="CALLAO"
+	lcdistritoEmisor="CALLAO"
+	lcpaisEmisor="PE"
+	lcPlaca = SPE_1.Placa
+	
+	IF td="B"	
+		IF empty(SPE_1.DNI_CLI)	
+		
+			lcnumeroDocumentoAdquiriente=""
+			lctipoDocumentoAdquiriente=""	
+			lcrazonSocialAdquiriente=""	
+			lcdireccionAdquiriente1=""
+			lcdireccionAdquiriente2=""	&&UBIGEO ADQUIRIENTE  NO SE ESTA PONIENDO 
+			lcdireccionAdquiriente3=""  &&URBANIZACION 
+			lcdireccionAdquiriente4="" &&PROVINCIA
+			lcdireccionAdquiriente5=""  &&DEPARTAMENTO  
+			lcdireccionAdquiriente6=""
+			lcdireccionAdquiriente7="PE"  &&SE ASUME QUE SOLO 
+		ELSE 
+			lcnumeroDocumentoAdquiriente=SPE_1.DNI_CLI
+			lctipoDocumentoAdquiriente="1"	&&& CHEQUEAR SI SOLO SE ACEPTA DNI-----------------------
+			lcrazonSocialAdquiriente=SPE_1.Nom_cli		
+		*	header_add	
+			lcdireccionAdquiriente1=SPE_1.DIR_CLI 
+			lcdireccionAdquiriente2=""	&&UBIGEO ADQUIRIENTE  NO SE ESTA PONIENDO 
+			lcdireccionAdquiriente3=""  &&URBANIZACION 
+			lcdireccionAdquiriente4="LIMA" &&PROVINCIA
+			lcdireccionAdquiriente5="LIMA"  &&DEPARTAMENTO  
+			lcdireccionAdquiriente6=SPE_1.DIS_CLI
+			lcdireccionAdquiriente7="PE"  &&SE ASUME QUE SOLO SE VENDE A CLIENTES DE PERU 
+		ENDIF 	
+	ELSE 
+	
+		lcnumeroDocumentoAdquiriente=SPE_1.Ruc
+		lctipoDocumentoAdquiriente="6"	
+		lcrazonSocialAdquiriente=SPE_1.Nom_cli	
+		
+	*	header_add	
+		lcdireccionAdquiriente1=SPE_1.DIR_CLI &&DIRECCION CLIENTE 
+		lcdireccionAdquiriente2=""	&&UBIGEO ADQUIRIENTE  NO SE ESTA PONIENDO 
+		lcdireccionAdquiriente3=""  &&URBANIZACION 
+		lcdireccionAdquiriente4="LIMA" &&PROVINCIA
+		lcdireccionAdquiriente5="LIMA"  &&DEPARTAMENTO  
+		lcdireccionAdquiriente6=SPE_1.DIS_CLI &&DISTRITO CLIENTE 
+		lcdireccionAdquiriente7="PE"  &&SE ASUME QUE SOLO SE VENDE A CLIENTES DE PERU 		
+		
+	ENDIF 
+	lcVventa=IMPORTE/(spe_1.IGV/100+1) 
+	lcIGV1  =(IMPORTE-(IMPORTE/(spe_1.IGV+100+1))) 
+	
+	lctipoMoneda="PEN"
+	lctotalValorVentaNetoOpGravadas=STR(lcVVENTA,12,2)
+	lctotalValorVentaNetoOpNoGravada="0.00"
+	lctotalValorVentaNetoOpExonerada="0.00"
+	lctotalValorVentaNetoOpGratuitas="0.00"
+	lctotalIgv=STR(lcIGV1,12,2)
+	lctotalDescuentos="0.00"
+	lctotalVenta=STR(SPE_1.IMPORTE,12,2)
+	lccodigoAuxiliar100_1="9306"
+	lctextoAuxiliar100_1="Banco de Crédito: 1088015101001"
+	lccodigoAuxiliar100_2="9616"
+	lctextoAuxiliar100_2="facturas@petrocorp.com"
+	lccodigoAuxiliar500_1="9619"
+	lctextoAuxiliar500_1=""
+	lctotalDetraccion="0.00"
+	lcporcentajeDetraccion="0.00"
+	lcdescripcionDetraccion=""
+	lcvalorReferencialDetraccion=""
+	lccodigoLeyenda_1="1000"
+	
+	DO NUMEROS WITH SPE_1.IMPORTE,lcLetras
+	
+		
+	lctextoLeyenda_1=lcLetras
+	lccodigoLeyenda_2=""
+	lctextoLeyenda_2=""
+	lccodigoLeyenda_3=""
+	lctextoLeyenda_3=""
+	lccodigoAuxiliar500_2=""
+	lctextoAuxiliar500_2=""
+	lccodigoAuxiliar500_3=""
+	lctextoAuxiliar500_3=""
+
+	****
+	cTabla = "SPE_EINVOICEHEADER"
+	*****
+	
+	
+TEXT TO lcSQL Textmerge NoShow
+	INSERT INTO SPE_EINVOICEHEADER
+	 (correoEmisor,
+	correoAdquiriente,
+	numeroDocumentoEmisor,
+	tipoDocumentoEmisor,
+	tipoDocumento,
+	razonSocialEmisor,
+	nombreComercialEmisor,
+	serieNumero,
+	fechaEmision,
+	ubigeoEmisor,
+	direccionEmisor,
+	urbanizacion,
+	provinciaEmisor,
+	departamentoEmisor,
+	distritoEmisor,
+	paisEmisor,
+	numeroDocumentoAdquiriente,
+	tipoDocumentoAdquiriente,
+	razonSocialAdquiriente,
+	tipoMoneda,
+	totalValorVentaNetoOpGravadas,
+	totalValorVentaNetoOpNoGravada,
+	totalValorVentaNetoOpExonerada,
+	totalValorVentaNetoOpGratuitas,
+	totalIgv,
+	totalDescuentos,
+	totalVenta,
+	codigoAuxiliar100_1,
+	textoAuxiliar100_1,
+	codigoAuxiliar100_2,
+	textoAuxiliar100_2,
+	codigoAuxiliar500_1,
+	textoAuxiliar500_1,
+	totalDetraccion,
+	porcentajeDetraccion,
+	descripcionDetraccion,
+	valorReferencialDetraccion,
+	codigoLeyenda_1,
+	textoLeyenda_1,
+	codigoLeyenda_2,
+	textoLeyenda_2,
+	codigoLeyenda_3,
+	textoLeyenda_3,
+	codigoAuxiliar500_2,
+	textoAuxiliar500_2,
+	codigoAuxiliar500_3,
+	textoAuxiliar500_3 ) 
+	VALUES (?lccorreoEmisor,
+	?lccorreoAdquiriente,
+	?lcnumeroDocumentoEmisor,
+	?lctipoDocumentoEmisor,
+	?lctipoDocumento,
+	?lcrazonSocialEmisor,
+	?lcnombreComercialEmisor,
+	?lcserieNumero,
+	?lcfechaEmision,
+	?lcubigeoEmisor,
+	?lcdireccionEmisor,
+	?lcurbanizacion,
+	?lcprovinciaEmisor,
+	?lcdepartamentoEmisor,
+	?lcdistritoEmisor,
+	?lcpaisEmisor,
+	?lcnumeroDocumentoAdquiriente,
+	?lctipoDocumentoAdquiriente,
+	?lcrazonSocialAdquiriente,
+	?lctipoMoneda,
+	?lctotalValorVentaNetoOpGravadas,
+	?lctotalValorVentaNetoOpNoGravada,
+	?lctotalValorVentaNetoOpExonerada,
+	?lctotalValorVentaNetoOpGratuitas,
+	?lctotalIgv,
+	?lctotalDescuentos,
+	?lctotalVenta,
+	?lccodigoAuxiliar100_1,
+	?lctextoAuxiliar100_1,
+	?lccodigoAuxiliar100_2,
+	?lctextoAuxiliar100_2,
+	?lccodigoAuxiliar500_1,
+	?lctextoAuxiliar500_1,
+	?lctotalDetraccion,
+	?lcporcentajeDetraccion,
+	?lcdescripcionDetraccion,
+	?lcvalorReferencialDetraccion,
+	?lccodigoLeyenda_1,
+	?lctextoLeyenda_1,
+	?lccodigoLeyenda_2,
+	?lctextoLeyenda_2,
+	?lccodigoLeyenda_3,
+	?lctextoLeyenda_3,
+	?lccodigoAuxiliar500_2,
+	?lctextoAuxiliar500_2,
+	?lccodigoAuxiliar500_3,
+	?lctextoAuxiliar500_3 )
+	 
+	 ENDTEXT
+
+	DO GrabaSQL
+	
+	***------E_INVOICEHEADER_ADD----------------------------------------------------------------------------------------------------------
+	
+	lcKey="direccionAdquiriente"	    
+
+	TEXT TO lcSQL Textmerge NoShow
+	INSERT INTO SPE_EINVOICEHEADER_ADD
+           (clave
+           ,numeroDocumentoEmisor
+           ,serieNumero
+           ,tipoDocumento
+           ,tipoDocumentoEmisor
+           ,valor)
+     VALUES
+           (?lcKey,
+      	    ?lcnumeroDocumentoEmisor,
+		    ?lcserieNumero,
+  	    	?lcTipoDocumento,           
+            ?lcTipoDocumentoEmisor,
+   			?lcdireccionAdquiriente1)
+
+	ENDTEXT 
+	DO GRABASQL 
+
+
+	
+
+	lcKey="ubigeoAdquiriente"
+TEXT TO lcSQL Textmerge NoShow
+	INSERT INTO SPE_EINVOICEHEADER_ADD
+           (clave
+           ,numeroDocumentoEmisor
+           ,serieNumero
+           ,tipoDocumento
+           ,tipoDocumentoEmisor
+           ,valor)
+     VALUES
+           (?lcKey,
+      	    ?lcnumeroDocumentoEmisor,
+		    ?lcserieNumero,
+  	    	?lcTipoDocumento,           
+            ?lcTipoDocumentoEmisor,
+   			?lcdireccionAdquiriente2)
+
+	ENDTEXT 
+	DO GRABASQL 
+		
+	
+
+	lcKey="urbanizacionAdquiriente"
+	TEXT TO lcSQL Textmerge NoShow
+	INSERT INTO SPE_EINVOICEHEADER_ADD
+           (clave
+           ,numeroDocumentoEmisor
+           ,serieNumero
+           ,tipoDocumento
+           ,tipoDocumentoEmisor
+           ,valor)
+     VALUES
+           (?lcKey,
+      	    ?lcnumeroDocumentoEmisor,
+		    ?lcserieNumero,
+  	    	?lcTipoDocumento,           
+            ?lcTipoDocumentoEmisor,
+   			?lcdireccionAdquiriente3)
+
+	ENDTEXT 
+	DO GRABASQL 
+
+	
+	
+	lcKey="provinciaAdquiriente"
+	TEXT TO lcSQL Textmerge NoShow
+	INSERT INTO SPE_EINVOICEHEADER_ADD
+           (clave
+           ,numeroDocumentoEmisor
+           ,serieNumero
+           ,tipoDocumento
+           ,tipoDocumentoEmisor
+           ,valor)
+     VALUES
+           (?lcKey,
+      	    ?lcnumeroDocumentoEmisor,
+		    ?lcserieNumero,
+  	    	?lcTipoDocumento,           
+            ?lcTipoDocumentoEmisor,
+   			?lcdireccionAdquiriente4)
+
+	ENDTEXT 
+	DO GRABASQL 
+
+	lcKey="departamentoAdquiriente"
+	
+	TEXT TO lcSQL Textmerge NoShow
+	INSERT INTO SPE_EINVOICEHEADER_ADD
+           (clave
+           ,numeroDocumentoEmisor
+           ,serieNumero
+           ,tipoDocumento
+           ,tipoDocumentoEmisor
+           ,valor)
+     VALUES
+           (?lcKey,
+      	    ?lcnumeroDocumentoEmisor,
+		    ?lcserieNumero,
+  	    	?lcTipoDocumento,           
+            ?lcTipoDocumentoEmisor,
+   			?lcdireccionAdquiriente5)
+
+	ENDTEXT 
+	DO GRABASQL 
+
+	lcKey="distritoAdquiriente"
+	
+	TEXT TO lcSQL Textmerge NoShow
+	INSERT INTO SPE_EINVOICEHEADER_ADD
+           (clave
+           ,numeroDocumentoEmisor
+           ,serieNumero
+           ,tipoDocumento
+           ,tipoDocumentoEmisor
+           ,valor)
+     VALUES
+           (?lcKey,
+      	    ?lcnumeroDocumentoEmisor,
+		    ?lcserieNumero,
+  	    	?lcTipoDocumento,           
+            ?lcTipoDocumentoEmisor,
+   			?lcdireccionAdquiriente6)
+
+	ENDTEXT 
+	DO GRABASQL 
+
+	lcKey="paisAdquiriente"
+	
+    TEXT TO lcSQL Textmerge NoShow
+	INSERT INTO SPE_EINVOICEHEADER_ADD
+           (clave
+           ,numeroDocumentoEmisor
+           ,serieNumero
+           ,tipoDocumento
+           ,tipoDocumentoEmisor
+           ,valor)
+     VALUES
+           (?lcKey,
+      	    ?lcnumeroDocumentoEmisor,
+		    ?lcserieNumero,
+  	    	?lcTipoDocumento,           
+            ?lcTipoDocumentoEmisor,
+   			?lcdireccionAdquiriente7)
+
+	ENDTEXT 
+	DO GRABASQL 
+
+	
+	**-------------------------------------------------------
+	** SPE_DETAIL 
+	**-------------------------------------------------------
+	SELECT FECHA,TD,SERIE,NUMERO,cantidad,MO01SPE.precio,MO01SPE.cod_prod,MA03.NOM_PROD,SUM(IMPORTE) AS IMPORTE,igv,RUC,placa,MA05.NOM_CLI,MA05.DIR_CLI,;
+	MA05.DIS_CLI;
+	FROM mo01SPE;
+	left JOIN ma05;
+	ON mo01SPE.cod_cli=ma05.cod_cli;
+	left JOIN ma03;
+	ON mo01SPE.cod_prod=ma03.cod_prod WHERE TD<>'N' ORDER BY FECHA,TD,SERIE,NUMERO GROUP BY fecha,TD,SERIE,NUMERO;
+    INTO TABLE  SPE_2
+	
+	DO WHILE !EOF()
+				
+		lccodigoProducto=SPE_2.COD_PROD
+		lcdescripcion	=SPE_2.NOM_PROD
+		lccantidad		=STR(SPE_2.CANTIDAD,12,10)
+		lcunidadMedida	="GLL"
+		lcimporteUnitarioConImpuesto=STR(SPE_1.PRECIO,12,3)
+		lcPSIGV=SPE_1.PRECIO/(1+SPE_2.IGV/100) 
+		lcimporteUnitarioSinImpuesto=STR(lcPSIgv,12,2)
+		lcimporteDescuento=0
+		lcimporteCargo=0
+		lcimporteTotalSinImpuesto   =STR(SPE_2.VVENTA,12,2)
+		lccodigoImporteUnitarioConImpuesto="01"
+		lcimporteIgv=STR(SPE_1.IGV1,12,2)
+		lccodigoRazonExoneracion="10"
+		lcnumeroOrdenItem=1			
+				  	
+		TEXT TO lcSQL Textmerge NoShow
+		
+	  	 	INSERT INTO SPE_EINVOICEDETAIL 
+	  	 	(tipoDocumentoEmisor,
+	  	 	numeroDocumentoEmisor,
+	  	 	tipoDocumento,
+	  	 	serieNumero,
+	  	 	numeroOrdenItem,
+	  	 	codigoProducto,
+	  	 	descripcion,
+	  	 	cantidad,
+	  	 	unidadMedida,
+	  	 	importeTotalSinImpuesto,
+	  	 	importeUnitarioSinImpuesto,
+	  	 	importeUnitarioConImpuesto,
+	  	 	codigoImporteUnitarioConImpues,
+	  	 	importeIgv,
+	  	 	codigoRazonExoneracion)
+		    VALUES (?lctipoDocumentoEmisor,
+		     ?lcnumeroDocumentoEmisor,
+		     ?lctipoDocumento,
+		     ?lcserieNumero,
+		     ?lcnumeroOrdenItem,
+		     ?lccodigoProducto,
+		     ?lcdescripcion,
+		     ?lccantidad,
+		     ?lcunidadMedida,
+		     ?lcimporteTotalSinImpuesto,
+		     ?lcimporteUnitarioSinImpuesto,
+		     ?lcimporteUnitarioConImpuesto,
+		     ?lccodigoImporteUnitarioConImpuesto,
+	         ?lcimporteIgv,
+	         ?lccodigoRazonExoneracion )         
+	  	ENDTEXT      		
+  	
+	    DO grabaSQL
+	    
+	    IF !EOF()
+	    	SKIP 
+	   	ELSE
+	   		EXIT 
+	   	ENDIF 
+    
+    ENDDO 
+	
+
+ENDDO 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
