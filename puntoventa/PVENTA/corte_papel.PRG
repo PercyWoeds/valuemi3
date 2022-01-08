@@ -1,1 +1,0 @@
-@LIN,0 say chr(27)+"i"	&& corte de papel
