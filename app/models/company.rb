@@ -3709,7 +3709,7 @@
 
 
        
-       def  get_parte_10(fecha1,fecha2)
+       def  get_parte_10(fecha1)
           @varilla = Varillaje.select("tanque_id").where(["fecha >= ? and fecha <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59"  ]).group("tanque_id")
           return @varilla 
        end 
