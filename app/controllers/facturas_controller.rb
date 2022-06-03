@@ -1647,8 +1647,8 @@ def reportes31
   def do_process
     @invoice = Factura.find(params[:id])
     @invoice[:processed] = "1"
-    @invoice.process
-   # @invoice.process2
+   # @invoice.process
+    @invoice.process2
     flash[:notice] = "The invoice order has been processed."
     redirect_to @invoice
   end
@@ -1657,7 +1657,7 @@ def reportes31
   def do_process2
     @invoice = Factura.find(params[:id])
     @invoice[:processed] = "1"
-   # @invoice.process2
+    @invoice.process2
     
     flash[:notice] = "The invoice order has been processed."
     redirect_to @invoice
