@@ -62,6 +62,51 @@
      </div>
 
     <br />
+     <label for="ac_supplier" class="bold">Proveedor/Empleado*</label><br />
+          
+    <table> 
+    
+  <tr>
+    <td>        
+    <input type="radio" name="tipoproveedor" value="1" checked> Provedor<br>
+    </td>
+    
+    <td><input type="text" name="ac_supplier" id="ac_supplier" value="<% if @ac_supplier %><%= @ac_supplier %><% end %>" />
+        
+     <div class="small">
+        <a href="#" onclick="createSupplierRuc(); return false;">+ Crear nuevo proveedor</a>
+      </div>
+
+
+
+    </td> 
+    
+  </tr>
+
+  <tr>
+    <td><input type="radio" name="tipoproveedor" value="2"> Empleado<br></td>
+    <td>
+      <%= f.collection_select :employee_id, @employees , :id, :full_name , :prompt => true %>
+    </td> 
+
+  </tr>
+  
+      </table>      
+      
+      <div class="small">
+        Ingrese una termino de busqueda 
+      </div>
+    </td>
+    
+      <br />
+
+
+      <div class="small">
+        <strong>Seleccionar proveedor:</strong>
+
+        <span id="selected supplier"><% if @ac_supplier %><%= @ac_supplier %><% else %><!-- i --><% end %></span>
+
+      </div>
       
     
       <div class="field">

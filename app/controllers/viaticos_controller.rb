@@ -29,7 +29,7 @@ before_filter :authenticate_user!
       @lcFecha1= DateTime.now.strftime("%d/%m/%Y  %H:%M").to_s
       
       pdf.text "Fecha Actual : " << @lcFecha1  , :size => 7
-      pdf.image "#{Dir.pwd}/public/images/logo.png", :width => 270        
+      pdf.image "#{Dir.pwd}/public/images/valuemi_logo.jpg", :width => 270        
       pdf.move_down 6        
       pdf.move_down 4
       pdf.move_down 4
