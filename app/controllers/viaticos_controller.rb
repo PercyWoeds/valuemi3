@@ -60,6 +60,7 @@ before_filter :authenticate_user!
       headers = []
       table_content = []
 
+
       Viatico::TABLE_HEADERS.each do |header|
         cell = pdf.make_cell(:content => header)
         cell.background_color = "FFFFCC"
@@ -93,14 +94,12 @@ before_filter :authenticate_user!
             row << nroitem.to_s        
             row << product.fecha.strftime("%d/%m/%Y") 
             
-              lccompro =  product.document.descripshort << "-" << product.numero  
+              lccompro =  product.document.descripshort  
             row << lccompro 
 
-            if product.tipomov_id == 1
-                row << " I "
-            else
-                row << " E "
-            end 
+           
+                row << product.compro 
+            
             row << product.descrip 
             
             
@@ -119,7 +118,6 @@ before_filter :authenticate_user!
             
               
               
-              row << sprintf("%.2f",@saldo) 
             
             table_content << row
             nroitem=nroitem + 1      
@@ -146,6 +144,7 @@ before_filter :authenticate_user!
                                           columns([6]).align=:right  
                                           columns([7]).align=:right 
                                           columns([8]).align=:right 
+columns([5]).width= 200 
                                           
                                         end
 
@@ -158,7 +157,10 @@ before_filter :authenticate_user!
     def build_pdf_footer(pdf)
       
       pdf.move_down 5
-      data =[ ["TOTALES : ",@lcIngreso ,@lcEgreso ,@lcSaldo ] ]
+      data =[ ["REEMBOLSO : ", @lcEgreso  ]
+       ]
+
+
            
         pdf.text " "
         pdf.table(data,:cell_style=> {:border_width=>1,:font_style => :bold ,:align=>:right} , :width => pdf.bounds.width/3.3,  :position => :right)

@@ -139,6 +139,8 @@ class DepositosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def deposito_params
-      params.require(:deposito).permit(:company_id, :location_id, :division_id, :bank_account_id, :document_id, :documento, :customer_id, :tm, :total, :fecha1, :fecha2, :nrooperacion, :descrip, :comments, :user_id, :processed, :date_processed, :code, :bank_acount_id, :concept_id, :compen)
+      params.require(:deposito).permit(:company_id, :location_id, :division_id, :bank_account_id, :document_id, 
+        :documento, :customer_id, :tm, :total, :fecha1, :fecha2, :nrooperacion, :descrip, :comments,
+         :user_id, :processed, :date_processed, :code, :bank_acount_id, :concept_id, :compen,:fecha_parte)
     end
 end

@@ -23,14 +23,13 @@ self.per_page = 20
   
    TABLE_HEADERS = ["ITEM",
                       "FECHA ",
-                      "COMPRO",
-                      "TIPO OPE",
+                      "TD",
+                      "DOCUMENTO",
                       "DESCRIP",
                       "DETALLE",
                       "INGRESO ",
-                      "EGRESO  ",
-                      "SALDO   "
-                     ]
+                      "EGRESO  "
+                                           ]
 
   TABLE_HEADERS2 = ["TD",
                       "Documento",
