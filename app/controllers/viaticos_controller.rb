@@ -79,7 +79,6 @@ before_filter :authenticate_user!
             row << ""
             row << ""
             row << ""
-            row << ""
             row << "SALDO INICIAL :" 
             row << ""
             row << ""
