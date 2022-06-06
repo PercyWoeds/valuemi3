@@ -1137,7 +1137,7 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
  def get_deposito(fecha)
      
       
-     depositos = Deposito.where(["fecha1 >= ? and fecha1 <= ?  " , "#{fecha} 00:00:00","#{fecha} 23:59:59"])
+     depositos = Deposito.where(["fecha_parte >= ? and fecha_parte <= ?  " , "#{fecha} 00:00:00","#{fecha} 23:59:59"])
       
      return depositos
      
