@@ -67,13 +67,14 @@
                     
                     <% saldo =  product0.inicial + compras - ventas_qty - venta_directa_qty + afericion %>
                     <%else%>
-                    <% saldo =  product0.inicial* 3.78541 + compras - ventas_qty - venta_directa_qty + afericion %>
+                    <% saldo =  product0.inicial + compras - ventas_qty - venta_directa_qty + afericion %>
                     
                     <% end %>
                     
                     <td width = "10%" align ="right"><%= sprintf("%.2f",saldo.to_s)   %></td>
                     
                     
+
                     
                     <% if product0.tanque.product.id != 6 %>
                       <td width = "10%" align ="right"><%= sprintf("%.3f",product0.varilla.to_s)   %></td>

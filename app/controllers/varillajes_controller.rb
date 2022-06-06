@@ -33,7 +33,7 @@ class VarillajesController < ApplicationController
     @tanques = Tanque.all
     @varillaje = Varillaje.new(varillaje_params)
     
-    @varillaje[:inicial] = 0 
+    @varillaje[:inicial] = @varillaje.tanque.varilla 
     @varillaje[:compras] = 0
     @varillaje[:directo] = 0
     @varillaje[:consumo] = 0
@@ -43,6 +43,8 @@ class VarillajesController < ApplicationController
     
     respond_to do |format|
       if @varillaje.save
+        
+        
         
         @tanque_up = Tanque.find(@varillaje.tanque_id)
         @tanque_up.varilla = @varillaje[:varilla] 
