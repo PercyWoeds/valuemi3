@@ -101,7 +101,7 @@ class Viaticos::ViaticoDetailsController < ApplicationController
    
     @viatico_detail[:tranportorder_id] = 1 
     @viatico_detail[:supplier_id] = 4 
-    @viatico_detail[:employee_id] = 10 
+    @viatico_detail[:employee_id] = 51
     @viatico_detail[:destino_id] = 1
     
     

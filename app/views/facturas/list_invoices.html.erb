@@ -48,9 +48,25 @@
 
 <%= will_paginate @invoices %>  
 
+
+<h2>Importar Archivo "*.csv"</h2>
+
+<%= form_tag import_facturas_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Importar " %>
+<% end %>
+
+
+ Download:
+  <%= link_to "CSV", facturas_path(format: "csv"), multipart: true  %> 
+  
+  
+
+  
 </div>
 
 <%= render 'layouts/autocomplete' %>
+
 
 
 
