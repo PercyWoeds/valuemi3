@@ -3224,7 +3224,7 @@ def newfactura2
 
        for  product in @facturas_rpt
        
-         if product.balance.round(2) > 0.00
+         
            
           if lcCliente == product.customer_id
 
@@ -3449,7 +3449,7 @@ def newfactura2
             
             table_content << row
 
-          end 
+          
           
         end 
           
@@ -3642,6 +3642,7 @@ def newfactura2
     end 
     
   end
+
 
 
   ###pendientes de pago 
