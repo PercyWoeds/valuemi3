@@ -608,11 +608,12 @@ class Factura < ActiveRecord::Base
           @serie  =  ff[0]
           @numero =  ff[1]
 
-         if @factura.moneda_id == 1 
+          if @factura.moneda_id == 1 
            @moneda_nube = 2
           else
                 @moneda_nube = 1
           end
+
 
 
           if @factura.servicio == "true"
@@ -712,7 +713,7 @@ class Factura < ActiveRecord::Base
                   "fecha_de_emision"                  => @fecha_emision,
                   "fecha_de_vencimiento"              => @fecha_vmto ,
                   "moneda"                            => @moneda_nube,
-                  "tipo_de_cambio"                    => "",
+                  "tipo_de_cambio"                    => "3.712",
                   "porcentaje_de_igv"                 => "18.00",
                   "descuento_global"                  => "",
                   "total_descuento"                   => "",
