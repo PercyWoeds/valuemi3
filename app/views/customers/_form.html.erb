@@ -112,7 +112,11 @@
       <%= f.label :d06, "G.L.P. ", :class => "bold" %><br />
       <%= f.number_field :d06 ,:step => 0.01 %>
   </div>
-  
+    
+  <div class="field">
+      <%= f.label :d06, "Producto. ", :class => "bold" %><br />
+      <%= f.number_field :d99 ,:step => 0.01 %>
+  </div>
  
   <div class="actions">
     <%= f.hidden_field :company_id %>
