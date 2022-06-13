@@ -78,6 +78,8 @@ class CustomersController < ApplicationController
     @customer.d04 = 0
     @customer.d05 = 0
     @customer.d06 = 0
+
+    @customer.d99 = 0
     
     
     if(params[:ajax])
