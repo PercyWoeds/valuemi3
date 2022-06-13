@@ -2599,6 +2599,7 @@ def newfactura2
         end 
         # Check if we gotta process the invoice
         @invoice.process()
+        
 
 
         

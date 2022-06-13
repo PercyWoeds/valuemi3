@@ -175,7 +175,7 @@ def self.import2(file2)
             elsif  producto =='08'
                 return  a.d06
             else 
-                return b 
+                return a.d99 
             end 
       end       
     
