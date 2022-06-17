@@ -189,7 +189,7 @@ class Viaticos::ViaticoDetailsController < ApplicationController
         detalle: params[:viatico_detail][:detalle],
         document_id: params[:viatico_detail][:tm],
         descrip: params[:viatico_detail][:descrip],
-        supplier_id: params[:viatico_detail][:supplier_id])
+        supplier_id: params[:ac_supplier_id])
    begin
       @viatico[:inicial] = @viatico.get_total_inicial
     rescue
