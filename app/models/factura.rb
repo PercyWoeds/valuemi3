@@ -619,7 +619,8 @@ class Factura < ActiveRecord::Base
           if @factura.servicio == "true"
                @texto_obs = @factura.texto2  +  " LOCAL : "  + @factura.texto1
           else
-               @texto_obs = " "
+                @texto_obs = @factura.guia + " " + @factura.description 
+
           end
 
           if @factura.detraccion_importe  > 0.0
