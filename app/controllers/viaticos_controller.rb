@@ -98,12 +98,22 @@ before_filter :authenticate_user!
 
            
                 row << product.compro 
+
+                if product.supplier.nil?
+
+                row << "-"
+
+                else 
+
+                row << product.supplier.name 
+
+                end 
             
             row << product.descrip 
             
             
             
-            row << product.detalle
+        
             
             if product.tipomov_id == 1
                 row << sprintf("%.2f",product.importe)
