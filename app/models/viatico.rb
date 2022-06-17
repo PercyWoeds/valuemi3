@@ -25,7 +25,7 @@ self.per_page = 20
                       "FECHA ",
                       "TD",
                       "DOCUMENTO",
-                      "PROVEEDOR"
+                      "PROVEEDOR",
                       "DESCRIP",
                       "INGRESO ",
                       "EGRESO  "
