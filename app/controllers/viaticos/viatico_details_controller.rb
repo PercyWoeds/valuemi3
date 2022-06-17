@@ -40,7 +40,7 @@ class Viaticos::ViaticoDetailsController < ApplicationController
 
     @viatico_detail[:tranportorder_id] = 1 
     @viatico_detail[:supplier_id] = 4 
-    @viatico_detail[:employee_id] = 33 
+    @viatico_detail[:employee_id] = 51 
     @viatico_detail[:destino_id] = 1
     
     
@@ -179,7 +179,7 @@ class Viaticos::ViaticoDetailsController < ApplicationController
     
         
     respond_to do |format|
-      if @viatico_detail.update_attributes(employee_id: 10 ,
+      if @viatico_detail.update_attributes(employee_id: 51 ,
         fecha: params[:viatico_detail][:fecha],
         importe: params[:viatico_detail][:importe],
         gasto_id: params[:viatico_detail][:gasto_id],
@@ -188,7 +188,8 @@ class Viaticos::ViaticoDetailsController < ApplicationController
         numero: params[:viatico_detail][:numero],
         detalle: params[:viatico_detail][:detalle],
         document_id: params[:viatico_detail][:tm],
-        descrip: params[:viatico_detail][:descrip])
+        descrip: params[:viatico_detail][:descrip],
+        supplier_id: params[:viatico_detail][:supplier_id])
    begin
       @viatico[:inicial] = @viatico.get_total_inicial
     rescue
