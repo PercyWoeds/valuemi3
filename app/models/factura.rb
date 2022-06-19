@@ -675,7 +675,7 @@ class Factura < ActiveRecord::Base
                 "codigo_unico"                      => "",
                 "condiciones_de_pago"               => @forma_pago,
                 "medio_de_pago"                     => @medio_pago,
-                "placa_vehiculo"                    => @factura.description  ,
+                "placa_vehiculo"                    => "",
                 "orden_compra_servicio"             => "",
                 "tabla_personalizada_codigo"        => "",
                 "formato_de_pdf"                    => "",
