@@ -82,7 +82,7 @@
                       <% dife =  product0.varilla - saldo %>
                     <% else %>
                     
-                      <% varilla_gas = product0.varilla * 3.78541   %>
+                      <% varilla_gas = product0.varilla    %>
                       <% dife =  varilla_gas - saldo %>
                       <td width = "10%" align ="right"><%= sprintf("%.3f",varilla_gas.to_s)   %></td>
                     <% end %>
@@ -130,7 +130,7 @@
                     <td width = "10%" align ="right"><%= sprintf("%.2f",total_6)   %></td>
                     <td width = "8%" align ="right"><%= sprintf("%.2f",total_7)   %></td>
                     <td width = "8%" align ="right"><%= sprintf("%.2f",total_8)   %></td>
-                    <td width = "8%" align ="right"><%= sprintf("%.2f",total_9)  %></td>
+                    <td width = "8%" align ="right">  </td>
                     <td width = "10%" align ="right"><%= sprintf("%.2f",total_10)   %></td>
                     </tr>
                         
