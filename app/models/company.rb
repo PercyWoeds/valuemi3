@@ -3744,7 +3744,7 @@
            @contado = Sellvale.find_by_sql(['Select sellvales.* 
            from sellvales
            INNER JOIN customers ON sellvales.cod_cli = customers.account 
-           WHERE sellvales.fecha >= ? and sellvales.fecha <= ?  and sellvales.td = ? and sellvales.tipo = ?  and customers.tipo <> ? order by fecha ',"#{fecha1} 00:00:00","#{fecha2} 23:59:59","N","1","2" ])
+           WHERE sellvales.fecha >= ? and sellvales.fecha <= ?  and sellvales.td = ? and  td = ?  and  cod_tar = ? order by fecha ',"#{fecha1} 00:00:00","#{fecha2} 23:59:59","N","06" ])
            
            return @contado
        end 
@@ -3766,8 +3766,9 @@
            @contado = Sellvale.find_by_sql(['Select sellvales.* 
            from sellvales
            INNER JOIN customers ON sellvales.cod_cli = customers.account 
-           WHERE sellvales.fecha >= ? and sellvales.fecha <= ?  and sellvales.td = ? and sellvales.tipo = ? 
-            and customers.tipo <> ?  and customers.account = ? order by fecha ',"#{fecha1} 00:00:00","#{fecha2} 23:59:59","N","1","2",cliente ])
+           WHERE sellvales.fecha >= ? and sellvales.fecha <= ?  and sellvales.td = ? 
+            and cod_tar = ? 
+            and customers.account = ? order by fecha ',"#{fecha1} 00:00:00","#{fecha2} 23:59:59","N","06",cliente ])
            
            
            

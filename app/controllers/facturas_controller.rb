@@ -91,6 +91,7 @@ def reportes4
     
     
     
+    
     case params[:print]
       when "To PDF" then 
         begin 
