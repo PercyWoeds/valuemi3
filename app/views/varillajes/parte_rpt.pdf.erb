@@ -145,6 +145,7 @@
      <% a= @parte_rpt.first %>
      <% venta_1 =  a.get_ventas_contometros(@fecha)  %>
      
+     <% venta_2  =  a.get_ventas_contometros_efectivo0(@fecha) %>
      
 
      <% venta_custodia  =  a.get_ventas_contometros_efectivo0(@fecha) %>
@@ -195,7 +196,6 @@
      
      <% venta_19 =  a.get_ventas_contometros_tarjeta_productos(@fecha) %>
      <% venta_20 =  0 %>
-     
      
      <% venta_17 =  0 %>
      
