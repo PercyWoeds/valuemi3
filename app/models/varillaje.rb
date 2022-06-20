@@ -996,33 +996,34 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
  
  def get_ventas_market(fecha)
      
-     facturas = Factura.where(["fecha >= ? and fecha <= ?  " , "#{fecha} 00:00:00","#{fecha} 23:59:59" ])
-       ret=0  
-       
+     facturas = Sellvale.find_by_sql(['Select sellvales.* from sellvales    
+     INNER JOIN products ON sellvales.cod_prod = products.code 
+     WHERE products.products_category_id <> 1 
+     and sellvales.fecha >= ? 
+     and sellvales.fecha <= ? 
+     and td = ? and cod_tar = ? 
+     ORDER BY sellvales.fecha', "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","06" ])
+     
+     
+  #facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ?  and tipo = ?" , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","1" ])
+     
+     
      if facturas
          
-       for factura in facturas
-          
-          detalles = FacturaDetail.where(factura_id: factura.id)     
-             
-          for   detalle    in detalles
-            
-             if (detalle.product.products_category.id != 1  )
-                 if (detalle.product.products_category.id != 3  )
-                     if (detalle.product.products_category.id != 13  )
-                    ret += detalle.total 
-                end 
-                end 
-                
-             end 
-             
-          end 
-          
+        ret=0  
+        for detalle in facturas
+            ret += detalle.importe.to_f 
+
+        puts "tx"    
+        puts detalle.serie 
+        puts detalle.numero 
+
+
        end 
-       
-     end 
-     
-     return ret 
+    end 
+
+    return ret
+
  end
  
  def get_ventas_market_tarjeta(fecha)
