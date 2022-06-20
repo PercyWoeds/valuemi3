@@ -159,13 +159,13 @@
      
      <% venta_7 =  a.get_ventas_contometros_descuento(@fecha) %>
      
-      <% venta_descuentos_facturas = a.get_ventas_contometros_tarjeta_factura(@fecha) %>
+      <% venta_descuentos_facturas = 0 %>
       <% venta_descuentos_facturas_efe = a.get_ventas_contometros_descuento_factura_efe(@fecha) %>
       
       
      
      <% venta_9 =  0 %>
-     <% venta_10 = 0 %>
+     <% venta_10 = a.get_ventas_contometros_efectivo_market(@fecha) %>
      
      <% venta_12 =  a.get_afericion_total_dia(@fecha) %>
      <% venta_13 =  a.get_faltante_total_dia(@fecha,"1") %>
@@ -285,7 +285,7 @@
             <td width= "25%" align ="left">** PRODUCTOS            : </td>
             <td width= "25%" >                                </td>
             
-            <td width = "25%" align ="left">  &#9475; VENTAS DIRECTAS      </td>
+            <td width = "25%" align ="left">  &#9475; EFECTIVO MARKET     </td>
             <td width = "25%" align ="right"><%= sprintf("%.2f",venta_10)   %> </td>
             
             
