@@ -156,6 +156,11 @@
      
      <% venta_efectivo = a.get_ventas_contometros_efectivo(@fecha) %>
 
+     <% puts "ventas "%>
+
+     <% puts venta_custodia %>
+      <% puts venta_efectivo %>
+
      <% if (venta_custodia - venta_efectivo) < 0  %>
 
      <% venta_faltante = venta_custodia - venta_efectivo %>
