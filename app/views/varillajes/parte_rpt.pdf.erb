@@ -145,7 +145,24 @@
      <% a= @parte_rpt.first %>
      <% venta_1 =  a.get_ventas_contometros(@fecha)  %>
      
-     <% venta_2 =  a.get_ventas_contometros_efectivo0(@fecha) %>
+     
+
+     <% venta_custodia  =  a.get_ventas_contometros_efectivo0(@fecha) %>
+
+     <% venta_efectivo = 0 %>
+     <% venta_faltante = 0 %>
+     <% venta_sobrante = 0 %>
+     
+     <% venta_efectivo = a.get_ventas_contometros_efectivo(@fecha) %>
+
+     <% if (venta_custodia - venta_efectivo) < 0  %>
+
+     <% venta_faltante = venta_custodia - venta_efectivo %>
+
+     <% else %>
+      <% venta_sobrante = venta_custodia - venta_efectivo %>
+
+     <% end %>
      
      <% venta_3 =  a.get_ventas_contometros_tarjeta0(@fecha)  %> 
      
@@ -307,7 +324,7 @@
             <td width= "25%" >  <%=   sprintf("%.2f",venta_15)  %>                              </td>
             
             <td width = "25%" align ="left">  &#9475;   FALTANTES    :  </td>
-            <td width = "25%" align ="right"> <%=    sprintf("%.2f",venta_13)  %> </td>
+            <td width = "25%" align ="right"> <%=    sprintf("%.2f",venta_faltante)  %> </td>
       
             
             </tr>
@@ -319,7 +336,7 @@
 
             
             <td width = "25%" align ="left">  &#9475;   SOBRANTES  :  </td>
-            <td width = "25%" align ="right"><%=   sprintf("%.2f",venta_14)  %>  </td>
+            <td width = "25%" align ="right"><%=   sprintf("%.2f",venta_sobrante )  %>  </td>
         
             </tr>
       
