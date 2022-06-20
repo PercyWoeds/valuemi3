@@ -497,18 +497,19 @@ def  get_inicial(fecha1,producto,producto2)
  end 
  def  get_ventas_contometros_tarjeta0(fecha) 
 
-     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and cod_tar = ?  " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "01"])
-     
-     if facturas
-         
-        ret=0  
-        for detalle in facturas
-            ret += detalle.importe.to_f
-       end 
-    end 
-    
-    facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and cod_tar = ?  " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "05"])
 
+    facturas = Sellvale.find_by_sql(['Select sellvales.* from sellvales    
+     INNER JOIN products ON sellvales.cod_prod = products.code 
+     WHERE products.products_category_id = 1 
+     and sellvales.fecha >= ? 
+     and sellvales.fecha <= ? 
+     and cod_tar = ? 
+     ORDER BY sellvales.fecha', "#{fecha} 00:00:00","#{fecha} 23:59:59","05" ])
+     
+     
+
+    
+  
      if facturas
          
 
