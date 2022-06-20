@@ -453,7 +453,7 @@ def  get_inicial(fecha1,producto,producto2)
  
  def  get_ventas_contometros_efectivo_sustento(fecha) 
 
-     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and cod_tar  = ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "01" ]).order(:serie,:numero)
+     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and cod_tar  = ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "98" ]).order(:serie,:numero)
      
      
     return facturas
@@ -610,7 +610,7 @@ def  get_inicial(fecha1,producto,producto2)
      and sellvales.fecha >= ? 
      and sellvales.fecha <= ? 
      and cod_tar = ? 
-     ORDER BY sellvales.fecha', "#{fecha} 00:00:00","#{fecha} 23:59:59","01" ])
+     ORDER BY sellvales.fecha', "#{fecha} 00:00:00","#{fecha} 23:59:59","98" ])
      
      
   #facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ?  and tipo = ?" , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","1" ])

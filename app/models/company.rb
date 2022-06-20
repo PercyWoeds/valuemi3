@@ -3930,7 +3930,7 @@
        
        def  get_ventas_contometros_efectivo_sustento2(fecha1,fecha2) 
     
-           facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and fpago = ? and td <> ? and tipo <> ?" , "#{fecha1} 00:00:00","#{fecha2} 23:59:59", "1" ,"N","2"]).order(:fecha,:serie,:numero)
+           facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and cod_tar = ? " , "#{fecha1} 00:00:00","#{fecha2} 23:59:59", "01" ]).order(:fecha,:serie,:numero)
            
            
           return facturas
