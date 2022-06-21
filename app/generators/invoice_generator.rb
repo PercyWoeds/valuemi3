@@ -238,7 +238,7 @@ class InvoiceGenerator < DocumentGenerator
         $lcDep          = @invoice.customer.state
         $lcPlaca        = @invoice.description  
         $lcGuiaRemision = @invoice.guia 
-        $lcruc = "20501683109" 
+        $lcruc = "20555691263" 
         
         if $lcTd == 'FT'
             $lctidodocumento = '01'

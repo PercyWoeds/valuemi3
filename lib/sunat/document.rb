@@ -119,7 +119,7 @@ module SUNAT
           Vencimiento "
          row << "Tipo de
           Moneda "
-         row << "Monto de Cuota"
+         row << "Monto Neto a pagar"
 
          row <<{:content =>" ",:rowspan => 2,:border_width => 0}
 
@@ -195,9 +195,8 @@ module SUNAT
 
            image_path = open("https://chart.googleapis.com/chart?chs=90x90&cht=qr&chl=#{$lcCodigoBarra}&choe=UTF-8")
 
-          pdf.table([[ "   ",{:image => image_path,:position => :center}  , " El pago del documento sera necesariamente efectuado mediante deposito en cualquiera de las siguientes cuentas bancarias:
-          BBVA Continental Cuenta Corriente en Moneda Nacional Numero: BBVA SOLES 0011-0168-27010009824.
-          Consultar  en  https://www.sunat.gob.pe/ol-ti-itconsultaunificadalibre/consultaUnificadaLibre/consulta."]],:cell_style => { :border_width => 0 } )
+          pdf.table([[ "   ",{:image => image_path,:position => :center}  , " Representación impresa de la FACTURA ELECTRÓNICA, visita www.nubefact.com/20522012336
+Autorizado mediante Resolución de Intendencia No.034-005-0005315"]],:cell_style => { :border_width => 0 } )
 
 
       end
@@ -212,9 +211,8 @@ module SUNAT
           pdf.table([[ "   ",{:image => image_path,:position => :center}  , "
 
 
-           El pago del documento sera necesariamente efectuado mediante deposito en cualquiera de las siguientes cuentas bancarias:
-          BBVA Continental Cuenta Corriente en Moneda Nacional Numero: BBVA SOLES 0011-0168-27010009824.
-          Consultar  en  https://www.sunat.gob.pe/ol-ti-itconsultaunificadalibre/consultaUnificadaLibre/consulta."]],:cell_style => { :border_width => 0 } )
+         Representación impresa de la FACTURA ELECTRÓNICA, visita www.nubefact.com/20522012336
+Autorizado mediante Resolución de Intendencia No.034-005-0005315"]],:cell_style => { :border_width => 0 } )
 
        end 
 
