@@ -252,7 +252,7 @@ require 'active_support/number_helper'
       client_headers << ["Dirección :",$lcDirCli]
       client_headers << [customer.type_as_text, customer.account_id]
       client_headers << ["Guia  :",$lcGuiaRemision]
-      client_headers << ["Placa :", $lcPlaca]
+      client_headers << ["Observa.:", $lcPlaca]
       
       if $lcServicio =="true"
 
