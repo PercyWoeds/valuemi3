@@ -496,7 +496,7 @@ def  get_inicial(fecha1,producto,producto2)
  
  end 
  def  get_ventas_contometros_tarjeta0(fecha) 
-
+    ret = 0 
 
     facturas = Sellvale.find_by_sql(['Select sellvales.* from sellvales    
      INNER JOIN products ON sellvales.cod_prod = products.code 
@@ -662,7 +662,7 @@ def  get_inicial(fecha1,producto,producto2)
  def  get_ventas_contometros_tarjeta_productos(fecha) 
      
       ret=0  
-      
+
    facturas = Sellvale.find_by_sql(['Select sellvales.* from sellvales    
      INNER JOIN products ON sellvales.cod_prod = products.code 
      WHERE products.products_category_id <> 1 
