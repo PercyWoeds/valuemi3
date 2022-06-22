@@ -436,7 +436,7 @@ def  get_inicial(fecha1,producto,producto2)
      and sellvales.fecha >= ? 
      and sellvales.fecha <= ?  
      and cod_tar = ?
-     ORDER BY sellvales.fecha', "#{fecha} 00:00:00","#{fecha} 23:59:59","01"])
+     ORDER BY sellvales.fecha', "#{fecha} 00:00:00","#{fecha} 23:59:59","98"])
 
 
      if facturas
@@ -445,6 +445,7 @@ def  get_inicial(fecha1,producto,producto2)
         for detalle in facturas
             ret += detalle.importe.to_f
        end 
+
     end 
 
     return ret
