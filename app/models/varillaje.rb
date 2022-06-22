@@ -592,7 +592,7 @@ def  get_inicial(fecha1,producto,producto2)
         puts "tx"    
         puts detalle.serie 
         puts detalle.numero 
-        puts importe 
+        puts detalle.importe 
 
 
        end 
