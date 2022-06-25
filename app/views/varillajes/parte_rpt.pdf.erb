@@ -180,10 +180,10 @@
      <% bancos  =  a.get_customer_payments_1(@fecha) %>
      <% bancos2  =  a.get_customer_payments_2(@fecha) %>
      
-     <% venta_7 =  a.get_ventas_contometros_descuento(@fecha) %>
+     <% venta_7 = 0  %>
      
       <% venta_descuentos_facturas = 0 %>
-      <% venta_descuentos_facturas_efe = a.get_ventas_contometros_descuento_factura_efe(@fecha) %>
+      <% venta_descuentos_facturas_efe = a.get_ventas_contometros_descuento_factura_efe(@fecha) * -1 %>
       
       
      

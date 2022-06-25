@@ -1,5 +1,6 @@
 class Varillaje < ActiveRecord::Base
     
+    
     belongs_to :tanque
 
     TABLE_HEADERS  = ["FECHA CORTE ",
@@ -750,7 +751,7 @@ def  get_inicial(fecha1,producto,producto2)
  
  def  get_ventas_contometros_descuento(fecha) 
 
-     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ? and tipo <> ?  " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","3" ])
+     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","3" ])
      
      if facturas
          
