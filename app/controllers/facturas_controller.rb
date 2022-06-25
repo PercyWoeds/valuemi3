@@ -2552,11 +2552,9 @@ def newfactura2
     rescue
       @invoice[:tax] = 0
     end
-    if @invoice[:tipoventa_id] ==  "2"
-        @invoice[:balance] = 0
-    else
+    
         @invoice[:balance] = @invoice[:total]
-    end 
+  
     
     @invoice[:pago]    = 0
     @invoice[:charge]  = 0
