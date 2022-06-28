@@ -71,11 +71,11 @@
     <input type="radio" name="tipoproveedor" value="1" checked> Provedor<br>
     </td>
     
-    <td><input type="text" name="ac_supplier" id="ac_supplier" value="<% if @ac_supplier %><%= @ac_supplier %><% end %>" />
-        
-     <div class="small">
-        <a href="#" onclick="createSupplierRuc(); return false;">+ Crear nuevo proveedor</a>
-      </div>
+    
+
+         <td>
+          <%= f.collection_select :supplier_id, @suppliers , :id, :name  , :prompt => true %>
+        </td>
 
 
 
@@ -104,10 +104,6 @@
       <div class="small">
         <strong>Seleccionar proveedor:</strong>
 
-
-         <td>
-      <%= f.collection_select :supplier_id, @suppliers , :id, :name  , :prompt => true %>
-    </td>
 
        
 
