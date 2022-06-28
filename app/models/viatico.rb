@@ -208,7 +208,7 @@ self.per_page = 20
     
     for item in  @viatico_details 
     
-        if item.tipomov_id == 2 and item.tm != "5"
+        if item.tipomov_id == 2 
           total = item.importe
         else
           total = 0
