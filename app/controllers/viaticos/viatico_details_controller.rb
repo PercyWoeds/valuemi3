@@ -36,6 +36,8 @@ class Viaticos::ViaticoDetailsController < ApplicationController
     @viatico_detail[:fecha] = Date.today 
     @destinos = Destino.all
     @employees = @company.get_employees 
+    @suppliers = @company.get_suppliers 
+    
     @tipomov = Tipomov.all 
 
     @viatico_detail[:tranportorder_id] = 1 

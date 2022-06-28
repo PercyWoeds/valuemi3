@@ -104,7 +104,12 @@
       <div class="small">
         <strong>Seleccionar proveedor:</strong>
 
-        <span id="selected supplier"><% if @ac_supplier %><%= @ac_supplier %><% else %><!-- i --><% end %></span>
+
+         <td>
+      <%= f.collection_select :supplier_id, @suppliers , :id, :name  , :prompt => true %>
+    </td>
+
+       
 
       </div>
       
