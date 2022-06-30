@@ -56,6 +56,7 @@ class Viaticos::ViaticoDetailsController < ApplicationController
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
     @documents = @company.get_documents()
+    @suppliers = @company.get_suppliers 
     @cajas = Caja.all      
     @destinos = Destino.all
     @employees = @company.get_employees 
@@ -90,6 +91,7 @@ class Viaticos::ViaticoDetailsController < ApplicationController
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
     @documents = @company.get_documents()
+    @suppliers = @company.get_suppliers 
     @cajas = Caja.all      
     @destinos = Destino.all
     @employees = @company.get_employees 
@@ -169,6 +171,7 @@ class Viaticos::ViaticoDetailsController < ApplicationController
     @divisions = @company.get_divisions()
     @documents = @company.get_documents()
     @employees = @company.get_employees()
+    @suppliers = @company.get_suppliers 
     @tipomov = Tipomov.all 
     @cajas = Caja.all      
     @destinos = Destino.all

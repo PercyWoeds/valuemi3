@@ -71,4 +71,19 @@
     <% end %>
   </tbody>
 </table>
+
+
+<div class="button">
 <%= will_paginate @ventaislas %>
+
+
+
+</div>
+
+
+<h2>Importar Archivo  "*.csv"</h2>
+
+<%= form_tag import3_ventaislas_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Importar " %>
+<% end %>

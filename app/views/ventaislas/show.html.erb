@@ -67,7 +67,7 @@
         ENTRADA 
       </td>
     <% for productItem in @pumps %>
-        <% rating_id = "ENTRADA_"<<productItem.fuel %>
+        <% rating_id = "ENTRADA_" << productItem.fuel %>
 
       <% valor =  VentaislaDetail.find_by(ventaisla_id: @ventaisla.id, pump: productItem.id)  %>
 
@@ -95,7 +95,7 @@
     <% for productItem in @pumps %>
 
 
-        <% rating_id = "SALIDA_"<<productItem.fuel %>
+        <% rating_id = "SALIDA_" << productItem.fuel %>
 
 
         
@@ -128,7 +128,7 @@
         GLNS
       </td>
     <% for productItem in @pumps %>
-        <% rating_id = "GLNS_"<<productItem.fuel %>
+        <% rating_id = "GLNS_"<< productItem.fuel %>
         <% le_an_gln = 0.00 %>
         <% puts rating_id %>
         <td>
@@ -144,7 +144,7 @@
         PRECIO
       </td>
     <% for productItem in @pumps %>
-        <% rating_id = "PRECIO_"<<productItem.fuel   %>
+        <% rating_id = "PRECIO_"<< productItem.fuel   %>
 
 
         <% valor =  VentaislaDetail.find_by(ventaisla_id: @ventaisla.id, pump: productItem.id)  %>
@@ -174,7 +174,7 @@
         SUB TOTAL
       </td>
     <% for productItem in @pumps %>
-        <% rating_id = "SUBTOTAL_"<<productItem.fuel %>
+        <% rating_id = "SUBTOTAL_"<< productItem.fuel %>
         <% le_an_gln = 0.00 %>
         <% puts rating_id %>
         <td>
@@ -211,6 +211,7 @@
 
 
 <%= br() %>
+
 
 
 
