@@ -137,6 +137,9 @@ class SellvalesController < ApplicationController
      @sellvale[:importe] = lcImporte.to_s
 
 
+
+     puts "creditooo +++++++++++++++++"
+     puts  @sellvale[:tarjetum_id]
    
      if @sellvale[:tarjetum_id] == 1
       @sellvale[:cod_tar] = '98'
@@ -156,7 +159,7 @@ class SellvalesController < ApplicationController
     end
     
     respond_to do |format|
-      if @sellvale.update(sellvale_params)
+      if @sellvale.update_attributes(sellvale_params)
         
         
         format.html { redirect_to @sellvale, notice: 'Registro actualizado correctamente.' }
@@ -196,6 +199,9 @@ class SellvalesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def sellvale_params
-      params.require(:sellvale).permit(:td, :fecha, :turno, :cod_emp, :caja, :serie, :numero, :cod_cli, :ruc, :placa, :odometro, :cod_prod, :cantidad, :precio, :importe, :igv, :fpago, :dolat, :implista, :cod_tar, :km, :chofer, :tk_devol, :cod_sucu, :isla, :dni_cli, :clear,:tipo,:td)
-    end
+      params.require(:sellvale).permit(:td, :fecha, :turno, :cod_emp, :caja, :serie, :numero, 
+        :cod_cli, :ruc, :placa, :odometro, :cod_prod, :cantidad, :precio, :importe, :igv, 
+        :fpago, :dolat, :implista, :cod_tar, :km, :chofer, :tk_devol, :cod_sucu, :isla,
+         :dni_cli, :clear,:tipo,:td, :credito_id,:tarjetum_id)
+     end
 end

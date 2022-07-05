@@ -93,12 +93,12 @@
     
     <div class="field">
       <%= f.label :tipo,"Tipo Vale "%><br>
-      <%= f.collection_select :tipo, @creditos, :id, :nombre, :prompt => true %>
+      <%= f.collection_select :credito_id, @creditos, :id, :nombre, :prompt => true %>
     </div>
     
     <div class="field">
       <%= f.label :fpago,"Forma de pago  "%><br>
-      <%= f.collection_select :fpago, @tarjetas, :id, :nombre, :prompt => true %>
+      <%= f.collection_select :tarjetum_id, @tarjetas, :id, :nombre, :prompt => true %>
     </div>
     
   </div>
