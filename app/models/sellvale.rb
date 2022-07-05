@@ -5,6 +5,10 @@ class Sellvale < ActiveRecord::Base
  
  
  belongs_to :factura_detail
+
+ belongs_to :tarjetum
+ belongs_to :credito 
+ 
  
 
  
