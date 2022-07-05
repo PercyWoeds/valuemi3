@@ -94,10 +94,10 @@ class SellvalesController < ApplicationController
       @sellvale[:cod_tar] = '98'
     end
     if @sellvale[:tarjetum_id] == 2
-      @sellvale[:cod_tar] = '01'
+      @sellvale[:cod_tar] = '05'
     end
     if @sellvale[:tarjetum_id] == 3
-      @sellvale[:cod_tar] = '05'
+      @sellvale[:cod_tar] = '07'
     end
     if @sellvale[:tarjetum_id] == 4
       @sellvale[:cod_tar] = '98'
@@ -131,21 +131,21 @@ class SellvalesController < ApplicationController
     
     @sellvale[:processed] = 0
 
-     lcImporte = @sellvale[:cantidad] *@sellvale[:precio].to_f 
+     lcImporte = @sellvale[:cantidad] * @sellvale[:precio].to_f 
 
 
      @sellvale[:importe] = lcImporte.to_s
 
 
-    
-    if @sellvale[:tarjetum_id] == 1
+   
+     if @sellvale[:tarjetum_id] == 1
       @sellvale[:cod_tar] = '98'
     end
     if @sellvale[:tarjetum_id] == 2
-      @sellvale[:cod_tar] = '01'
+      @sellvale[:cod_tar] = '05'
     end
     if @sellvale[:tarjetum_id] == 3
-      @sellvale[:cod_tar] = '05'
+      @sellvale[:cod_tar] = '07'
     end
     if @sellvale[:tarjetum_id] == 4
       @sellvale[:cod_tar] = '98'
