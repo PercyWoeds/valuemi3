@@ -90,7 +90,10 @@ class SellvalesController < ApplicationController
     @sellvale[:importe] = lcImporte.to_s
 
 
-     if @sellvale[:tarjetum_id] == 1
+   puts "creditooo +++++++++++++++++"
+     puts  @sellvale[:tarjetum_id]
+   
+    if @sellvale[:tarjetum_id] == 1
       @sellvale[:cod_tar] = '98'
     end
     if @sellvale[:tarjetum_id] == 2
@@ -106,7 +109,14 @@ class SellvalesController < ApplicationController
     if @sellvale[:tarjetum_id] == 5
       @sellvale[:cod_tar] = '06'
     end
-    
+    if @sellvale[:tarjetum_id] == 6
+      @sellvale[:cod_tar] = '98'
+    end
+   if @sellvale[:tarjetum_id] == 7
+      @sellvale[:cod_tar] = '98'
+    end
+
+
     respond_to do |format|
       if @sellvale.save
         format.html { redirect_to @sellvale, notice: 'Sellvale was successfully created.' }
@@ -157,7 +167,13 @@ class SellvalesController < ApplicationController
     if @sellvale[:tarjetum_id] == 5
       @sellvale[:cod_tar] = '06'
     end
-    
+    if @sellvale[:tarjetum_id] == 6
+      @sellvale[:cod_tar] = '98'
+    end
+   if @sellvale[:tarjetum_id] == 7
+      @sellvale[:cod_tar] = '98'
+    end
+
     respond_to do |format|
       if @sellvale.update_attributes(sellvale_params)
         
