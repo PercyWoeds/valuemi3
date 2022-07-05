@@ -85,8 +85,27 @@ class SellvalesController < ApplicationController
     @sellvale[:processed] = 0
     
     lcImporte = @sellvale[:cantidad] *@sellvale[:precio].to_f 
+
+
     @sellvale[:importe] = lcImporte.to_s
+
+
+     if @sellvale[:tarjetum_id] == 1
+      @sellvale[:cod_tar] = '98'
+    end
+    if @sellvale[:tarjetum_id] == 2
+      @sellvale[:cod_tar] = '01'
+    end
+    if @sellvale[:tarjetum_id] == 3
+      @sellvale[:cod_tar] = '05'
+    end
+    if @sellvale[:tarjetum_id] == 4
+      @sellvale[:cod_tar] = '98'
+    end
     
+    if @sellvale[:tarjetum_id] == 5
+      @sellvale[:cod_tar] = '06'
+    end
     
     respond_to do |format|
       if @sellvale.save
@@ -111,21 +130,28 @@ class SellvalesController < ApplicationController
     
     
     @sellvale[:processed] = 0
+
+     lcImporte = @sellvale[:cantidad] *@sellvale[:precio].to_f 
+
+
+     @sellvale[:importe] = lcImporte.to_s
+
+
     
-    if @sellvale[:fpago] == 1
+    if @sellvale[:tarjetum_id] == 1
       @sellvale[:cod_tar] = '98'
     end
-    if @sellvale[:fpago] == 2
+    if @sellvale[:tarjetum_id] == 2
       @sellvale[:cod_tar] = '01'
     end
-    if @sellvale[:fpago] == 3
+    if @sellvale[:tarjetum_id] == 3
       @sellvale[:cod_tar] = '05'
     end
-    if @sellvale[:fpago] == 4
+    if @sellvale[:tarjetum_id] == 4
       @sellvale[:cod_tar] = '98'
     end
     
-    if @sellvale[:fpago] == 5
+    if @sellvale[:tarjetum_id] == 5
       @sellvale[:cod_tar] = '06'
     end
     

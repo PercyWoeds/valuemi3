@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20220613034420) do
+ActiveRecord::Schema.define(version: 20220705194018) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1967,8 +1967,8 @@ ActiveRecord::Schema.define(version: 20220613034420) do
     t.string   "isla"
     t.string   "dni_cli"
     t.string   "clear"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
     t.float    "dolar"
     t.string   "processed"
     t.string   "tipo"
@@ -1976,6 +1976,8 @@ ActiveRecord::Schema.define(version: 20220613034420) do
     t.float    "mpuntos"
     t.float    "puntos"
     t.integer  "dia"
+    t.integer  "credito_id"
+    t.integer  "tarjetum_id"
   end
 
   create_table "servicebuys", force: :cascade do |t|
