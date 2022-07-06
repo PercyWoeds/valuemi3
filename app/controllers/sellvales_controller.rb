@@ -55,7 +55,6 @@ class SellvalesController < ApplicationController
     @sellvale[:fecha]  = Date.today
     
     
-    
   end
 
   # GET /sellvales/1/edit

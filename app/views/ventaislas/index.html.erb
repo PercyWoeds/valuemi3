@@ -81,7 +81,19 @@
 </div>
 
 
-<h2>Importar Archivo  "*.csv"</h2>
+<h2>Importar Archivo cab  "*.csv"</h2>
+
+
+
+
+<%= form_tag import2_ventaislas_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Importar " %>
+<% end %>
+
+
+
+<h2>Importar Archivo det  "*.csv"</h2>
 
 <%= form_tag import3_ventaislas_path, multipart: true do %>
   <%= file_field_tag :file %>

@@ -69,6 +69,8 @@ class Ventaisla < ActiveRecord::Base
           
         end
     end         
+
+    
     
     def get_importe_1(value="total")
         
