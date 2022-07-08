@@ -3238,6 +3238,18 @@ def newfactura2
       
     end
     
+   begin
+       if @tipodocumento == 2
+        @purchase[:participacion] = @purchase[:participacion] * -1
+       else
+        @purchase[:participacion] = @purchase[:participacion]
+       end 
+    rescue
+      @purchase[:participacion] = 0
+      
+    end
+    
+
     @purchase[:total_amount] = @purchase[:payable_amount] + @purchase[:tax_amount]
     @purchase[:charge]  = 0
     @purchase[:pago] = 0
@@ -3251,7 +3263,7 @@ def newfactura2
      @purchase[:tax_amount]   = @purchase[:total_amount] - @purchase[:payable_amount]
     @purchase[:charge]  = 0
     @purchase[:pago] = 0
-    @purchase[:balance] =   @purchase[:total_amount] - @purchase[:participacion]
+    @purchase[:balance] =   @purchase[:total_amount] - @purchase[:participacion] 
     
     else
       
