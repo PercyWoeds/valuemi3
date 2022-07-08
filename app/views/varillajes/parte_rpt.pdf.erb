@@ -145,7 +145,7 @@
      <% a= @parte_rpt.first %>
      <% venta_1 =  a.get_ventas_contometros(@fecha)  %>
      
-     <% venta_2  =  a.get_ventas_contometros_efectivo0(@fecha) %>
+     <% venta_2  =  a.get_ventas_contometros_efectivo_comb(@fecha) %>
      
 
      <% venta_custodia  =  a.get_ventas_contometros_efectivo0(@fecha) %>
@@ -155,18 +155,20 @@
      <% venta_sobrante = 0 %>
      
      <% venta_efectivo = a.get_ventas_contometros_efectivo(@fecha) %>
-
+     <% venta_9 =  0 %>
+     <% venta_10 = a.get_ventas_contometros_efectivo_market(@fecha) %>
+     
      <% puts "ventas "%>
 
      <% puts venta_custodia %>
       <% puts venta_efectivo %>
 
-     <% if (venta_custodia - venta_efectivo) < 0  %>
+     <% if (venta_custodia - venta_2 - venta_10  ) < 0  %>
 
-     <% venta_faltante = venta_custodia - venta_efectivo %>
+     <% venta_faltante = venta_custodia - venta_2 - venta_10  %>
 
      <% else %>
-      <% venta_sobrante = venta_custodia - venta_efectivo %>
+      <% venta_sobrante = venta_custodia - venta_2 - venta_10  %>
 
      <% end %>
      
@@ -188,9 +190,7 @@
       
    
      
-     <% venta_9 =  0 %>
-     <% venta_10 = a.get_ventas_contometros_efectivo_market(@fecha) %>
-     
+    
      <% venta_12 =  a.get_afericion_total_dia(@fecha) %>
      <% venta_13 =  a.get_faltante_total_dia(@fecha,"1") %>
      <% venta_14 =  a.get_faltante_total_dia(@fecha,"2") %>

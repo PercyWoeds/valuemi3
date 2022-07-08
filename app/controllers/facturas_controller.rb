@@ -4669,6 +4669,7 @@ def factura3
 
 def cuadre01 
   
+  
     @company=Company.find(1)          
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]    
