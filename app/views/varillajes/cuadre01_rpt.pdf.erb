@@ -142,6 +142,10 @@
 
               <%      a4 = contado.get_ventas_forma_pago_grifero_turno(@fecha1,contado.cod_emp, contado.turno,"07")  %>
               <%      a5 = 0   %>
+              <%      a6 = a.get_ventas_contometros_descuento_factura_efe2(@fecha,contado.cod_emp) * -1  %>
+
+              
+
               
               <%      @tot_depo = contado.get_ventas_tirada_grifero_turno(@fecha1,contado.get_code_empleado(contado.cod_emp), contado.turno)   %>   
               <%      tot_lub = contado.get_ventas_lubricantes_creditos_grifero_turno(@fecha1,contado.cod_emp, contado.turno)   %>   
@@ -223,6 +227,18 @@
                    
                       <td width = "15%" align ="right"> <%= sprintf("%.2f",a4)   %></td>
                    </tr>
+
+                   <tr>
+                      <td width = "23%" align ="right"> </td>
+                      <td width = "5%" align ="right"></td>
+                      <td width = "8%" align ="right"></td>
+                      <td width = "8%" align ="right"></td>
+                      <td width = "5%" align ="right"></td>
+                      <td width = "36%" align ="left"> Descuento : </td>
+                   
+                      <td width = "15%" align ="right"> <%= sprintf("%.2f",a6)   %></td>
+                   </tr>
+
                      <tr>
                       <td width = "23%" align ="right"> </td>
                       <td width = "5%" align ="right"></td>
