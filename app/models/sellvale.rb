@@ -195,7 +195,23 @@ def self.import2(file2)
           
       end 
       
+  end      
+
+
+   def get_product_name2(codigo) 
+      
+      a=Product.find_by(code: codigo)
+      
+      if a
+          
+          return a.name2 
+      else 
+          return "Nombre no existe..."
+          
+      end 
+      
   end       
+   
   
   def get_vale_facturado
       puts self.id

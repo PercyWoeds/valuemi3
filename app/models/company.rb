@@ -3754,6 +3754,39 @@
            
            return @contado
        end 
+
+      def  get_parte_4_vale(fecha1,fecha2) 
+         
+           @contado = Sellvale.find_by_sql(['Select sellvales.* 
+           from sellvales
+           INNER JOIN customers ON sellvales.cod_cli = customers.account  
+           WHERE sellvales.fecha >= ? 
+           and sellvales.fecha <= ? 
+           and sellvales.td = ?
+           and  cod_tar = ? 
+           and  sellvales.cod_cli = ?
+           order by fecha,serie,numero ',"#{fecha1} 00:00:00","#{fecha2} 23:59:59","N","06","00000000090" ])
+           
+           return @contado
+       end 
+
+       def  get_parte_4_credito(fecha1,fecha2) 
+         
+           @contado = Sellvale.find_by_sql(['Select sellvales.* 
+           from sellvales
+           INNER JOIN customers ON sellvales.cod_cli = customers.account 
+           WHERE sellvales.fecha >= ? 
+           and sellvales.fecha <= ? 
+           and sellvales.td = ?
+           and  cod_tar = ? 
+           and  sellvales.cod_cli <> ?
+           order by fecha,serie,numero ',"#{fecha1} 00:00:00","#{fecha2} 23:59:59","N","06","00000000090" ])
+           
+           return @contado
+       end 
+
+
+
        def  get_parte_6_1(fecha1,fecha2,customer) 
          
            @contado = Sellvale.find_by_sql(['Select sellvales.* 

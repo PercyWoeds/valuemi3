@@ -87,7 +87,9 @@ def reportes4
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]    
     
-    @contado_rpt = @company.get_parte_4(@fecha1,@fecha2)
+    @contado_rpt2 = @company.get_parte_4_vale(@fecha1,@fecha2)
+    
+    @contado_rpt1 = @company.get_parte_4_credito(@fecha1,@fecha2)
     
     
     
@@ -95,8 +97,7 @@ def reportes4
     case params[:print]
       when "To PDF" then 
         begin 
-         render  pdf: "Parte4 ",template: "varillajes/parte4_rpt.pdf.erb",locals: {:varillajes => @contado_rpt},
-         :orientation      => 'Landscape'
+         render  pdf: "Parte4 ",template: "varillajes/parte4_rpt.pdf.erb",locals: {:varillajes => @contado_rpt}
         end   
       when "To Excel" then render xlsx: 'parte4_rpt_xls'
       else render action: "index"
@@ -4673,7 +4674,7 @@ def cuadre01
     @company=Company.find(1)          
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]    
-
+    
 
     @contado_rpt = @company.get_ventas_combustibles_fecha_producto0(@fecha1,@fecha2)
     @detalle_ventas_grifero = @company.get_ventas_combustibles_fecha_grifero0(@fecha1,@fecha2)

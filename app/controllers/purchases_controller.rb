@@ -3249,6 +3249,9 @@ def newfactura2
       @purchase[:payable_amount] = @purchase.get_subtotal(items) * -1
       @purchase[:total_amount] = (@purchase[:payable_amount]  +@purchase[:isc]) * 1.18  * -1
      @purchase[:tax_amount]   = @purchase[:total_amount] - @purchase[:payable_amount]
+    @purchase[:charge]  = 0
+    @purchase[:pago] = 0
+    @purchase[:balance] =   @purchase[:total_amount] - @purchase[:participacion]
     
     else
       
@@ -3261,13 +3264,14 @@ def newfactura2
       @purchase[:total_amount] = (@total_amount  * 1.18)
       
       @purchase[:tax_amount]   = @purchase[:total_amount] - @purchase[:payable_amount] -  @purchase[:isc] 
+    @purchase[:charge]  = 0
+    @purchase[:pago] = 0
+    @purchase[:balance] =   @purchase[:total_amount] + @purchase[:participacion]
     
     end    
     
    
-    @purchase[:charge]  = 0
-    @purchase[:pago] = 0
-    @purchase[:balance] =   @purchase[:total_amount]+@purchase[:participacion]
+    
     
   end
     

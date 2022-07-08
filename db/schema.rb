@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20220705194018) do
+ActiveRecord::Schema.define(version: 20220708163636) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -723,8 +723,8 @@ ActiveRecord::Schema.define(version: 20220705194018) do
     t.string   "return"
     t.datetime "date_processed"
     t.integer  "user_id"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
     t.datetime "fecha"
     t.string   "serie"
     t.string   "numero"
@@ -748,11 +748,26 @@ ActiveRecord::Schema.define(version: 20220705194018) do
     t.integer  "tarjeta_id"
     t.string   "guia"
     t.integer  "reference_fact"
+    t.integer  "note_concept_id"
     t.string   "texto1"
     t.string   "texto2"
     t.string   "texto3"
     t.string   "servicio"
+    t.string   "denis"
+    t.float    "detraccion_importe"
+    t.float    "detraccion_percent"
+    t.string   "detraccion_cuenta"
+    t.string   "detraccion_descrip"
     t.float    "retencion_importe"
+    t.integer  "cuota1"
+    t.float    "importe_cuota1"
+    t.datetime "fecha_cuota1"
+    t.integer  "cuota2"
+    t.float    "importe_cuota2"
+    t.datetime "fecha_cuota2"
+    t.integer  "cuota3"
+    t.float    "importe_cuota3"
+    t.datetime "fecha_cuota3"
     t.string   "msgerror"
   end
 
@@ -1368,8 +1383,9 @@ ActiveRecord::Schema.define(version: 20220705194018) do
     t.string   "code"
     t.string   "descrip"
     t.string   "td"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "document_id"
   end
 
   create_table "numeras", force: :cascade do |t|
@@ -1620,6 +1636,8 @@ ActiveRecord::Schema.define(version: 20220705194018) do
     t.string   "code1"
     t.string   "code2"
     t.integer  "unidad_id"
+    t.string   "cuentadet"
+    t.string   "name2"
   end
 
   create_table "products_categories", force: :cascade do |t|
@@ -2421,6 +2439,7 @@ ActiveRecord::Schema.define(version: 20220705194018) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
+    t.string   "most_recent_report"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
