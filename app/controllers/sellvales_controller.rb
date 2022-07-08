@@ -94,6 +94,7 @@ class SellvalesController < ApplicationController
    
     if @sellvale[:tarjetum_id] == 1
       @sellvale[:cod_tar] = '98'
+
     end
     if @sellvale[:tarjetum_id] == 2
       @sellvale[:cod_tar] = '05'
@@ -114,7 +115,8 @@ class SellvalesController < ApplicationController
    if @sellvale[:tarjetum_id] == 7
       @sellvale[:cod_tar] = '98'
     end
-
+    @sellvale[:tipo] = @sellvale[:credito_id]
+    @sellvale[:fpago] = @sellvale[:tarjetum_id]
 
     respond_to do |format|
       if @sellvale.save
