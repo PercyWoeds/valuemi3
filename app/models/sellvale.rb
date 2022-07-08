@@ -317,9 +317,9 @@ end
          
   end
   
- def  get_ventas_contometros_descuento_factura_efe2(fecha,empleado) 
+ def  get_ventas_contometros_descuento_factura_efe2(fecha0,empleado) 
 
-     facturas = Sellvale.where(["fecha >= ? and fecha <= ?   and tipo = ? and implista > 0 and cod_emp = ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59", "1" ,empleado ])
+     facturas = Sellvale.where(["fecha >= ? and fecha <= ?   and tipo = ? and implista > 0 and cod_emp = ? " , "#{fecha0} 00:00:00","#{fecha0} 23:59:59", "1" ,empleado ])
      ret=0  
      
      if facturas
