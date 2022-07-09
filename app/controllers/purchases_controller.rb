@@ -194,7 +194,7 @@ class PurchasesController < ApplicationController
               tot_grifo += 0
             end 
 
-            if orden.mayorista.nil?
+            if !orden.mayorista.nil?
                 tot_mayorista += orden.mayorista
             else 
                 tot_mayorista = 0 
