@@ -188,9 +188,17 @@ class PurchasesController < ApplicationController
             row << $lcBalance
             table_content << row
             tot_quantity += orden.quantity
-            tot_grifo += orden.grifo
-            tot_mayorista += orden.mayorista
-            
+            if !orden.grifo.nil?
+              tot_grifo += orden.grifo
+            else 
+              tot_grifo += 0
+            end 
+
+            if orden.mayorista.nil?
+                tot_mayorista += orden.mayorista
+            else 
+                tot_mayorista = 0 
+            end   
             nroitem=nroitem + 1
         #end
         
