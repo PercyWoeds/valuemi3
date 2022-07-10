@@ -19,7 +19,7 @@ wb.styles do |s|
     
     wb.add_worksheet(name: "Basic work sheet") do |sheet|
     
-    sheet.add_row ["Fecha", "Serie", "Numero", "Nro.Vale","Cod.Cli.","Cliente","Cod.Prod.","Producto", "Cantidad ","Precio","Importe","Imp.Lista","Facturado","Cod.Emp","Nombre Empleado"], :style => title 
+    sheet.add_row ["Fecha", "Serie", "Numero", "Nro.Vale","Cod.Cli.","Cliente","Cod.Prod.","Producto", "Cantidad ","Precio","Importe","Imp.Lista","Forma Pago","Facturado","Cod.Emp","Nombre Empleado"], :style => title 
     
    @contado_rpt.each do |payment|
    
@@ -31,7 +31,7 @@ wb.styles do |s|
     nro_vale = payment.odometro
    end 
      
-    sheet.add_row [payment.fecha,payment.serie,payment.numero,nro_vale,payment.cod_cli,payment.get_cliente(payment.cod_cli), payment.cod_prod,payment.get_product_name(payment.cod_prod),payment.cantidad,payment.precio,payment.importe,payment.implista,payment.get_vale_facturado,payment.cod_emp,payment.get_nombre_empleado(@grifero)], :style => [date,cadena,cadena,cadena,cadena,cadena,cadena,cadena,currency,currency,currency,currency,cadena,cadena,cadena]
+    sheet.add_row [payment.fecha,payment.serie,payment.numero,nro_vale,payment.cod_cli,payment.get_cliente(payment.cod_cli), payment.cod_prod,payment.get_product_name(payment.cod_prod),payment.cantidad,payment.precio,payment.importe,payment.implista,payment.get_tarjeta_name(payment.tarjetum_id),payment.get_vale_facturado,payment.cod_emp,payment.get_nombre_empleado(@grifero)], :style => [date,cadena,cadena,cadena,cadena,cadena,cadena,cadena,currency,currency,currency,currency,cadena,cadena,cadena]
     
    end
    
