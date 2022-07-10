@@ -3849,7 +3849,7 @@
         tipo_tarjeta = '98'
     end
          
-           @contado = Sellvale.where(["fecha >= ? and fecha <= ? and td <> ?  and cod_tar = ?", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ,"N",tipo_tarjeta ]).order(:fecha,:cod_tar)
+           @contado = Sellvale.where(["fecha >= ? and fecha <= ? and td <> ?  and cod_tar = ?", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ,"N","05" ]).order(:fecha,:cod_tar)
          
           return @contado
        end 
