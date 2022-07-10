@@ -2769,7 +2769,7 @@ def newfactura2
       lcmonedasoles   = 2
       lcmonedadolares = 1
   
-     
+     @total_cliente_qty = 0 
       @total_original_soles =0
       @total_original_dolares =0
       @total_cliente_soles = 0
@@ -2812,7 +2812,12 @@ def newfactura2
             end 
             row << sprintf("%.2f",(precio_ultimo.round(2)).to_s)            
             row << product.get_cantidad
+            if product.get_cantidad > 0
+            
             @total_cliente_qty    +=product.get_cantidad
+            else
+                 @total_cliente_qty += 0 
+            end 
             
             row << product.moneda.symbol  
 
