@@ -258,19 +258,27 @@ def self.import2(file2)
 
   end 
   
-  def get_tarjeta_name(codigo) 
+  def get_tarjeta_name2(codigo) 
       
       a= Tarjetum.find(codigo)
       
-      if a
-          
-          return a.nombre
-      else 
-          return "Tarjeta no existe"
-          
+      if codigo == '98'
+        a = "EFECTIVO"
       end 
-      
+        if codigo == '05'
+        a = "VISA"
+      end 
+        if codigo == '06'
+        a = "CREDITO"
+      end 
+        if codigo == '07'
+        a = "MASTERCARD"
+      end 
+
+
   end       
+
+
  
 def get_cliente(cliente)
      a= Customer.find_by(account: cliente)
