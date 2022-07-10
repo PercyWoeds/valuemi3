@@ -3818,14 +3818,38 @@
        
        def  get_parte_5(fecha1,fecha2) 
          
-           @contado = Sellvale.where(["fecha >= ? and fecha <= ? and td <> ?  and fpago <> ?", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ,"N","1" ]).order(:fecha,:fpago)
+           @contado = Sellvale.where(["fecha >= ? and fecha <= ? and td <> ?  and cod_tar <> ?", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ,"N","98" ]).order(:fecha,:cod_tar)
          
           return @contado
        end 
        
        def  get_parte_5_b(fecha1,fecha2,tarjeta) 
+
+        if tarjeta  == 1
+      tipo_tarjeta = '98'
+
+    end
+    if tarjeta  == 2
+      tipo_tarjeta  = '05'
+    end
+    if tarjeta  == 3
+      tipo_tarjeta = '07'
+    end
+    if tarjeta == 4
+      tipo_tarjeta = '98'
+    end
+    
+    if tarjeta  == 5
+      tipo_tarjeta = '06'
+    end
+    if tarjeta == 6
+      tipo_tarjeta = '98'
+    end
+   if tarjeta  == 7
+        tipo_tarjeta = '98'
+    end
          
-           @contado = Sellvale.where(["fecha >= ? and fecha <= ? and td <> ?  and fpago <> ?", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ,"N",tarjeta ]).order(:fecha,:fpago)
+           @contado = Sellvale.where(["fecha >= ? and fecha <= ? and td <> ?  and cod_tar = ?", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ,"N",tipo_tarjeta ]).order(:fecha,:cod_tar)
          
           return @contado
        end 

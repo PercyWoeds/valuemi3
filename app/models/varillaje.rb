@@ -348,13 +348,14 @@ def  get_inicial(fecha1,producto,producto2)
     return ret
  
  end 
+ 
  def  get_ventas_contometros_efectivo0(fecha1) 
-    
+     ret=0  
            facturas = Tirad.where(["fecha >= ? and fecha <= ? " , "#{fecha1} 00:00:00","#{fecha1} 23:59:59"])
            
            if facturas
                
-              ret=0  
+             
               for detalle in facturas
                   ret += detalle.importe
              end 
