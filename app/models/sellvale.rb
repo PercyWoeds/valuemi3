@@ -259,9 +259,8 @@ def self.import2(file2)
   end 
   
   def get_tarjeta_name2(codigo) 
-      
-      a= Tarjetum.find(codigo)
-      
+      a = ""
+    
       if codigo == '98'
         a = "EFECTIVO"
       end 
@@ -275,7 +274,7 @@ def self.import2(file2)
         a = "MASTERCARD"
       end 
 
-
+      return a 
   end       
 
 
