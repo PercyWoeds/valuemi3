@@ -5,6 +5,12 @@ class TiradsController < ApplicationController
   # GET /tirads.json
   def index
     @tirads = Tirad.all.order(:fecha,:turno,:employee_id).paginate(:page => params[:page], :per_page => 20)
+     respond_to do |format|
+      format.html
+      format.csv { send_data @tirads.to_csv }
+    
+    end
+
   end
 
 
