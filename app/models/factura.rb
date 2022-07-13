@@ -642,7 +642,7 @@ class Factura < ActiveRecord::Base
                 "cliente_denominacion"              => @factura.customer.name ,
                 "cliente_direccion"                 => @factura.customer.direccion_all ,
                 "cliente_email"                     => @factura.customer.email ,
-                "cliente_email_1"                   => "percywoeds@gmail.com",
+                "cliente_email_1"                   => "envio.facturas@valuemi.com.pe",
                 "cliente_email_2"                   => "",
                 "fecha_de_emision"                  => @fecha_emision,
                 "fecha_de_vencimiento"              => @fecha_vmto ,
