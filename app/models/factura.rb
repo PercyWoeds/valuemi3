@@ -582,8 +582,6 @@ class Factura < ActiveRecord::Base
   
   # Process the invoice
   def process2
-
-
        
 
           Factura.where(id: self.id).update_all("fecha_cuota1 = fecha2, importe_cuota1 =  total - detraccion_importe ")
@@ -644,7 +642,7 @@ class Factura < ActiveRecord::Base
                 "cliente_denominacion"              => @factura.customer.name ,
                 "cliente_direccion"                 => @factura.customer.direccion_all ,
                 "cliente_email"                     => @factura.customer.email ,
-                "cliente_email_1"                   => "",
+                "cliente_email_1"                   => "percywoeds@gmail.com",
                 "cliente_email_2"                   => "",
                 "fecha_de_emision"                  => @fecha_emision,
                 "fecha_de_vencimiento"              => @fecha_vmto ,
@@ -710,8 +708,8 @@ class Factura < ActiveRecord::Base
                   "cliente_numero_de_documento"       => @factura.customer.ruc ,
                   "cliente_denominacion"              => @factura.customer.name ,
                   "cliente_direccion"                 => @factura.customer.direccion_all ,
-                  "cliente_email"                     => "",
-                  "cliente_email_1"                   => "",
+                  "cliente_email"                     => @factura.customer.email ,
+                  "cliente_email_1"                   => "percywoeds@gmail.com",
                   "cliente_email_2"                   => "",
                   "fecha_de_emision"                  => @fecha_emision,
                   "fecha_de_vencimiento"              => @fecha_vmto ,
@@ -740,7 +738,7 @@ class Factura < ActiveRecord::Base
                   "tipo_de_nota_de_credito"           => "",
                   "tipo_de_nota_de_debito"            => "",
                   "enviar_automaticamente_a_la_sunat" => "true",
-                  "enviar_automaticamente_al_cliente" => "false",
+                  "enviar_automaticamente_al_cliente" => "true",
                   "codigo_unico"                      => "",
                   "condiciones_de_pago"               => @forma_pago,
                   "medio_de_pago"                     => @medio_pago,
