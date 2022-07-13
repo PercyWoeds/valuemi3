@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  code: MyString
+  fecha: 2022-07-13 14:38:57
+  cantidad: 1.5
+
+two:
+  code: MyString
+  fecha: 2022-07-13 14:38:57
+  cantidad: 1.5

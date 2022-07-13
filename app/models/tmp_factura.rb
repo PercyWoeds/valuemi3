@@ -3,6 +3,7 @@ class TmpFactura < ActiveRecord::Base
    self.primary_key = 'id'
    
     belongs_to :document 
+
     
     
     def get_importe_soles1
@@ -52,4 +53,16 @@ class TmpFactura < ActiveRecord::Base
     end
     return valor     
   end 
+
+
+def get_tipo_sunat(id)
+
+      a = Document.find(id)
+
+      return a.tiposunat 
+
+
+  
+end
+
 end

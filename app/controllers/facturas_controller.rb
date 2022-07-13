@@ -1247,6 +1247,7 @@ def rpt_factura_all
     end
   end
   
+  
 def rpt_factura_all3
     $lcFacturasall = '1'
 

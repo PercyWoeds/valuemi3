@@ -1,0 +1,33 @@
+<%= simple_form_for(@ticket) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+   
+<div class="field">
+          <%= f.label :code, "Code*", :class => "bold" %><br />
+          <%= f.text_field :code  %>
+        </div>      
+
+
+  
+
+ <div class="field">
+      <%= f.label :fecha, "Fecha Ingreso*", :class => "bold" %><br />
+      <%= f.date_field :fecha %>
+    </div>
+    
+  
+     <div class="field">
+      <%= f.label :cantidad, "Cantidad: ", :class => "bold" %><br />
+      <%= f.number_field :cantidad,:step => 0.01 %>
+    </div>
+
+
+  </div>
+
+
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

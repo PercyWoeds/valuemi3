@@ -53,7 +53,7 @@ wb.styles do |s|
     
    @facturas_rpt.each do |detalle|
      
-    sheet.add_row [nroitem,detalle.fecha,detalle.document.tiposunat,detalle.tipo2,detalle.serie,detalle.numero,detalle.numero2 ,detalle.tipo2,detalle.ruc ,detalle.name, subtotal,detalle.subtotal,subtotal,subtotal,subtotal,detalle.tax,subtotal,detalle.total  ], 
+    sheet.add_row [nroitem,detalle.fecha,detalle.fecha2,detalle.get_tipo_sunat(detalle.document_id),detalle.tipo2,detalle.serie,detalle.numero,detalle.numero2 ,detalle.tipo2,detalle.ruc ,detalle.name, subtotal,detalle.subtotal,subtotal,subtotal,subtotal,detalle.tax,subtotal,detalle.total  ], 
     :style => [cadena,date,date,cadena,cadena,cadena,cadena,cadena,cadena,cadena,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency]
     
    end
