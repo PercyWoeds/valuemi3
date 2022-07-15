@@ -17,15 +17,15 @@ totals = []
   <%= image_tag("reports_48.png", :class => "vmiddle") %>
  Reporte de Facturas emitidas 
 </h3	>
+<%= form_tag(rpt_purchase2_facturas_path, :method => "get") do %>
 
-<form method="get" action="/purchases/rpt_purchase2_all/<%= @company.id %>">
 
   <div class="field">
-      <input type="date" name="fecha1" value="2018-03-01" style = "width: 150px" >
+      <input type="date" name="fecha1" value= <%= Date.today %> style = "width: 150px" >
 
     </div>
 	<div class="field">
-		<input type="date" name="fecha2" value="2018-03-31" style = "width: 150px" >
+		<input type="date" name="fecha2" value= <%= Date.today %> style = "width: 150px" >
   </div>
 
 
@@ -48,9 +48,11 @@ totals = []
  <div class="field">
     <%= select_tag(:supplier_id,options_from_collection_for_select(@suppliers,'id','name') ) %>
  </div>
- <input type="submit" value="Generar"  />
+<br> 
+ <%= submit_tag "To PDF", :name => "print" %>
+ <%= submit_tag "To Excel", :name => "print" %>
   
-</form>
+<% end %>
 
 <br />
 

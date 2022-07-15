@@ -100,11 +100,11 @@ class Viaticos::ViaticoDetailsController < ApplicationController
     @viatico_detail.viatico_id  = @viatico.id 
     
     @viatico_detail.tranportorder_id = params[:ac_item_id]
-    @viatico_detail.supplier_id = params[:ac_supplier_id]
+    @viatico_detail.supplier_id = params[:viatico_detail][:supplier_id]
     @viatico_detail.document_id = params[:viatico_detail][:tm]
    
     @viatico_detail[:tranportorder_id] = 1 
-    @viatico_detail[:supplier_id] = 4 
+    
     @viatico_detail[:employee_id] = 51
     @viatico_detail[:destino_id] = 1
     
@@ -194,7 +194,7 @@ class Viaticos::ViaticoDetailsController < ApplicationController
         detalle: params[:viatico_detail][:detalle],
         document_id: params[:viatico_detail][:tm],
         descrip: params[:viatico_detail][:descrip],
-        supplier_id: params[:ac_supplier_id])
+        supplier_id:  params[:viatico_detail][:supplier_id])
    begin
       @viatico[:inicial] = @viatico.get_total_inicial
     rescue

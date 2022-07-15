@@ -156,6 +156,8 @@ require 'sidekiq/web'
     collection { get :cuadre01   }    
     collection { get :cuadre02   }
     collection { get :rit_01    }
+
+    collection { get :rpt_purchase2 }
         
   end 
     
@@ -353,6 +355,11 @@ end
   resources :purchases do
      collection { post :datos  }
      collection { post :import }
+
+
+
+
+
   end 
   
   resources :payrolls, only: [:index, :show] do

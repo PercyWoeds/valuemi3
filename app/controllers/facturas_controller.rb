@@ -12,6 +12,39 @@ class FacturasController < ApplicationController
     
     require "open-uri"
 
+
+
+
+   def rpt_purchase2
+  
+    @company=Company.find(1)          
+    @fecha = params[:fecha1]    
+    
+    @parte_rpt = @company.get_parte_1(@fecha)
+    
+    
+
+    case params[:print]
+      when "To PDF" then 
+        begin 
+         render  pdf: "Ordenes ",template: "varillajes/parte_rpt.pdf.erb",locals: {:varillajes => @parte_rpt},
+         :header => {
+           :spacing => 5,
+                           :html => {
+                     :template => 'layouts/pdf-header.html',
+                           right: '[page] of [topage]'
+                  }
+               }
+               
+               
+        
+             
+        end   
+      when "To Excel" then render xlsx: 'rpt_compras_xls'
+      else render action: "index"
+    end
+  end
+  
   def reportes
   
     @company=Company.find(1)          
