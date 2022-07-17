@@ -163,12 +163,12 @@
      <% puts venta_custodia %>
       <% puts venta_efectivo %>
 
-     <% if (venta_custodia - venta_2 - venta_10  ) < 0  %>
+     <% if (venta_custodia - venta_2 - venta_10 + venta_descuentos_facturas_efe  ) < 0  %>
 
-     <% venta_faltante = venta_custodia - venta_2 - venta_10  %>
+     <% venta_faltante = venta_custodia - venta_2 - venta_10 + venta_descuentos_facturas_efe   %>
 
      <% else %>
-      <% venta_sobrante = venta_custodia - venta_2 - venta_10  %>
+      <% venta_sobrante = venta_custodia - venta_2 - venta_10  + venta_descuentos_facturas_efe  %>
 
      <% end %>
      
