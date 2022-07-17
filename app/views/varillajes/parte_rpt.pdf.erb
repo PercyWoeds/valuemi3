@@ -137,8 +137,7 @@
          
                
         <hr>  
-        
-        
+                
         
      </table>
      
@@ -194,7 +193,7 @@
    
      
     
-     <% venta_12 =  a.get_afericion_total_dia(@fecha) %>
+     <% venta_12 =  a.get_ventas_contometros_calibracion(@fecha)  %>
      <% venta_13 =  a.get_faltante_total_dia(@fecha,"1") %>
      <% venta_14 =  a.get_faltante_total_dia(@fecha,"2") %>
      
@@ -263,7 +262,7 @@
           </tr>
           
             <tr>
-            <td width= "25%" align ="left">   AFERICION            : </td>
+            <td width= "25%" align ="left">   CALIBRACION        : </td>
             <td width= "25%" > <%= sprintf("%.2f",venta_12) %> (-) </td>
             
             <td width = "25%" align ="left">  &#9475;   CREDITO PRODUCTOS        :  </td>
