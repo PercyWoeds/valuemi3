@@ -166,13 +166,14 @@
       <% venta_descuentos_facturas = 0 %>
       <% venta_descuentos_facturas_efe = a.get_ventas_contometros_descuento_factura_efe(@fecha) * -1 %>
       
-
+      <% venta_2  += venta_descuentos_facturas_efe %>
+      
      <% if (venta_custodia - venta_2 - venta_10 + venta_descuentos_facturas_efe  ) < 0  %>
 
-     <% venta_faltante = venta_custodia - venta_2 - venta_10 + venta_descuentos_facturas_efe   %>
+     <% venta_faltante = 0   %>
 
      <% else %>
-      <% venta_sobrante = venta_custodia - venta_2 - venta_10  + venta_descuentos_facturas_efe  %>
+      <% venta_sobrante = 0  %>
 
      <% end %>
      
