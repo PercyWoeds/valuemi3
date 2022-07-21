@@ -64,6 +64,27 @@ class Varillaje < ActiveRecord::Base
     return ret
  
  end 
+def  get_ticket_glp(fecha) 
+
+     facturas = Ticket.where(["fecha >= ? and fecha <= ?   " , "#{fecha} 00:00:00","#{fecha} 23:59:59" ])
+     
+     if facturas
+    ret=0  
+        for detalle  in facturas
+                
+                    
+                     ret += detalle.cantidad.round(2)
+                  
+    
+        end
+    end 
+
+    return ret
+ 
+ end 
+
+ 
+
  
  def  get_compras2(fecha1,fecha2,producto) 
 
@@ -84,7 +105,7 @@ class Varillaje < ActiveRecord::Base
                     end 
 
 
-                    
+
                 end     
         end
     end 
