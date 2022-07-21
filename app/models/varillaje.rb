@@ -48,7 +48,15 @@ class Varillaje < ActiveRecord::Base
         for factura in facturas
                 factura_detalle = PurchaseDetail.where(["purchase_id = ? and product_id = ?" , factura.id,producto ])
                 for detalle in factura_detalle
-                    ret += detalle.grifo.round(2)
+
+                    if !detalle.grifo.nil?
+
+                     ret += detalle.grifo.round(2)
+
+                    else
+                        ret += 0 
+                    end 
+
                 end     
         end
     end 
@@ -66,7 +74,17 @@ class Varillaje < ActiveRecord::Base
         for factura in facturas
                 factura_detalle = PurchaseDetail.where(["purchase_id = ? and product_id = ?" , factura.id,producto ])
                 for detalle in factura_detalle
-                    ret += detalle.grifo.round(2)
+
+                      if !detalle.grifo.nil?
+
+                     ret += detalle.grifo.round(2)
+
+                    else
+                        ret += 0 
+                    end 
+
+
+                    
                 end     
         end
     end 
