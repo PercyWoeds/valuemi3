@@ -48,8 +48,13 @@
 
                    <% ventas_qty = product0.get_ventas(@fecha,producto_codigo) %>
 
+
+                  <% if  product0.tanque.product.id == 6  %>   
+
                    <% compras += product0.get_ticket_glp(@fecha)  %>
-                   
+                  <% end %>
+
+
                    <% venta_directa_qty = 0 %>
                    <% afericion = product0.get_afericion_total_dia_producto_qty(@fecha,product0.tanque.id) %>
                    <% venta_neta = ventas_qty - afericion %>
