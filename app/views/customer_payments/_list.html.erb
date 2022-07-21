@@ -46,11 +46,17 @@
           <td class="bordered_right bordered_bottom">
             <%= link_to "Ver", customerpayment %>
           </td>
-          <td class="bordered_right bordered_bottom">  
-            
-          <%= link_to 'Eliminar', customerpayment, :data=> {:confirm => 'Esta seguro ?'}, :method => :delete  %>           
-                  
-          </td>
+
+         <% if @current_user.email== "percywoeds@gmail.com" %>
+
+
+              <td class="bordered_right bordered_bottom">  
+                
+              <%= link_to 'Eliminar', customerpayment, :data=> {:confirm => 'Esta seguro ?'}, :method => :delete  %>           
+                      
+              </td>
+
+         <% end %>
         </tr>
       <% end %>
     </tbody>
