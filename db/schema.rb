@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20220713193857) do
+ActiveRecord::Schema.define(version: 20220721160230) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -406,6 +406,7 @@ ActiveRecord::Schema.define(version: 20220713193857) do
     t.float    "d05"
     t.float    "d06"
     t.float    "d99"
+    t.string   "email2"
   end
 
   create_table "dato_laws", force: :cascade do |t|

@@ -2,7 +2,7 @@
 
 class PurchaseDetail < ActiveRecord::Base
   
- validates_presence_of :purchase_id, :product_id, :price_with_tax, :quantity, :total,:price_without_tax
+ validates_presence_of :purchase_id, :product_id, :price_with_tax, :quantity, :total,:price_without_tax,:grifo ,:mayorista 
   
   belongs_to :purchase	
   belongs_to :product
