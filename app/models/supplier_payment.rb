@@ -237,7 +237,15 @@ new_purchase = SupplierPaymentDetail.new(:supplier_payment_id => self.id,
     invoice_products = SupplierPaymentDetail.where(supplier_payment_id: self.id)
     
     if invoice_products.first != nil 
-      return invoice_products.first.purchase.documento 
+
+      if !invoice_products.first.purchase.nil?
+
+        return invoice_products.first.purchase.documento 
+
+      else
+        return "-no existe-"
+      end 
+
     else
       return "Pendiente"
     end 
