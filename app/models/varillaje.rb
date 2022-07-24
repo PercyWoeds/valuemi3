@@ -294,6 +294,36 @@ def  get_inicial(fecha1,producto,producto2)
  
   end 
 
+ def  get_ventas_22(fecha,producto) 
+     
+
+     ret=0  
+         
+      facturas = Ventaisla.where(["fecha >= ? and fecha <= ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59" ])
+     
+      if facturas
+      
+         for detalle in facturas
+             
+              @ventasdetail=  VentaislaDetail.select("sum(quantity) as quantity",:product_id).where(:ventaisla_id=>detalle.id,:product_id => producto).group(:product_id)
+    
+              for detail in @ventasdetail 
+             
+                 ret += detail.quantity.round(6)
+      
+              end 
+      
+         end 
+     end 
+
+     return ret 
+
+
+
+  end 
+
+
+
  def  get_salidas(fecha1,fecha2,producto) 
 
      facturas = Output.where(["fecha >= ? and fecha <= ? " , "#{fecha1} 00:00:00","#{fecha2} 23:59:59"])
@@ -937,7 +967,7 @@ def  get_inicial(fecha1,producto,producto2)
            inicial = wvar.inicial 
            varilla = wvar.varilla 
            compras = self.get_compras(fechax,producto)
-            ventas_qty = self.get_ventas(fechax,producto1)
+            ventas_qty = self.get_ventas_22(fechax,producto1)
             afericion = self.get_afericion_total_dia_producto_qty(fechax,producto2)
             saldo =  inicial + compras - ventas_qty + afericion 
             dife =  varilla - saldo 
@@ -1413,57 +1443,57 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
      
      
 
-    def  get_ventas(fecha,product ) 
+    # def  get_ventas(fecha,product ) 
 
-            ret = 0
+    #         ret = 0
 
-            facturas  = 0
+    #         facturas  = 0
 
-             facturas = Sellvale.find_by_sql(['Select SUM(cantidad) AS total 
-                         from sellvales where fecha >= ? and fecha <= ? and cod_prod=? and fpago <> ?' , "#{fecha} 00:00:00","#{fecha} 23:59:59",product,"07"])
+    #          facturas = Sellvale.find_by_sql(['Select SUM(cantidad) AS total 
+    #                      from sellvales where fecha >= ? and fecha <= ? and cod_prod=? and fpago <> ?' , "#{fecha} 00:00:00","#{fecha} 23:59:59",product,"07"])
 
-            if facturas.first.total != nil  
-                puts "aaaaa"
-                ret += facturas.first.total  
+    #         if facturas.first.total != nil  
+    #             puts "aaaaa"
+    #             ret += facturas.first.total  
                            
-            end                
+    #         end                
             
-           @facturas = Factura.find_by_sql(['Select facturas.*,customers.id,customers.name 
-                       from facturas 
-                       INNER JOIN customers ON facturas.customer_id = customers.id   
-                       WHERE facturas.fecha >= ? and facturas.fecha <= ? and customers.tipo = ? ', "#{fecha} 00:00:00",
-                       "#{fecha} 23:59:59","4" ])              
+    #        @facturas = Factura.find_by_sql(['Select facturas.*,customers.id,customers.name 
+    #                    from facturas 
+    #                    INNER JOIN customers ON facturas.customer_id = customers.id   
+    #                    WHERE facturas.fecha >= ? and facturas.fecha <= ? and customers.tipo = ? ', "#{fecha} 00:00:00",
+    #                    "#{fecha} 23:59:59","4" ])              
 
-           # @facturas  = Factura.select("Facturas.*,customers.id as customer_id").where(["fecha >= ? and fecha <= ? and cod_prod = ? ",
-           #  "#{fecha} 00:00:00","#{fecha} 23:59:59", product   ]).order(:fecha).joins("INNER JOIN customers ON 
-           #   facturas.customer_id = customers.id
-           #   AND customers.tipo = '4'  ")
+    #        # @facturas  = Factura.select("Facturas.*,customers.id as customer_id").where(["fecha >= ? and fecha <= ? and cod_prod = ? ",
+    #        #  "#{fecha} 00:00:00","#{fecha} 23:59:59", product   ]).order(:fecha).joins("INNER JOIN customers ON 
+    #        #   facturas.customer_id = customers.id
+    #        #   AND customers.tipo = '4'  ")
              
-           if @facturas
+    #        if @facturas
                    
-                 puts "venta mayorista " 
+    #              puts "venta mayorista " 
 
-                  for detalle in @facturas
-                    puts "detalle----"    
-                    puts detalle.id 
+    #               for detalle in @facturas
+    #                 puts "detalle----"    
+    #                 puts detalle.id 
                   
-                       @factura_details = FacturaDetail.where(factura_id: detalle.id , product_id: 5 )
+    #                    @factura_details = FacturaDetail.where(factura_id: detalle.id , product_id: 5 )
                    
-                        for quote in   @factura_details 
+    #                     for quote in   @factura_details 
                  
-                             ret += quote.quantity 
-                             puts "factura detaleee..."
-                             puts ret
+    #                          ret += quote.quantity 
+    #                          puts "factura detaleee..."
+    #                          puts ret
 
-                        end 
-                 end  
+    #                     end 
+    #              end  
               
-            end 
+    #         end 
 
 
-        return ret 
+    #     return ret 
 
-    end
+    # end
 
 
 
