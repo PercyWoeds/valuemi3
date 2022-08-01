@@ -4,6 +4,7 @@ require 'sidekiq/web'
 
   Mnygo::Application.routes.draw do
 
+  resources :anexo8s
   resources :tickets
   resources :devols
   resources :tipomovs

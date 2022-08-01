@@ -12,9 +12,6 @@ class FacturasController < ApplicationController
     
     require "open-uri"
 
-
-
-
    def rpt_purchase2
   
     @company=Company.find(1)          
@@ -1683,8 +1680,30 @@ def reportes31
   def do_process
     @invoice = Factura.find(params[:id])
     @invoice[:processed] = "1"
-   # @invoice.process
+   
+    case
+
+
+    when  @invoice.document_id == 1
     @invoice.process2
+    flash[:notice] = "The invoice order has been processed."
+    
+
+    when @invoice.document_id == 2
+    @invoice.process3
+    flash[:notice] = "La nota de credido ha sido procesada."
+    
+
+    when @invoice.document_id == 12
+    @invoice.process4
+    flash[:notice] = "La nota de debito ha sido procesada."
+    
+
+    when  @invoice.document_id == 13
+    @invoice.process5
+    flash[:notice] = "La boleta ha sido procesada."
+    end 
+
     flash[:notice] = "The invoice order has been processed."
     redirect_to @invoice
   end
@@ -1693,10 +1712,34 @@ def reportes31
   def do_process2
     @invoice = Factura.find(params[:id])
     @invoice[:processed] = "1"
-    @invoice.process2
+    puts "documnto id"
+    puts @invoice.document_id
     
+    case 
+    when @invoice.document_id == 1
+    @invoice.process2
+    flash[:notice] = "The invoice order has been processed."
+
+    when  @invoice.document_id == 2
+
+
+    @invoice.process3
+    flash[:notice] = "La nota de credido ha sido procesada."
+     
+
+    when @invoice.document_id == 12
+    @invoice.process4
+    flash[:notice] = "La nota de credido ha sido procesada."
+     
+
+    when @invoice.document_id == 13
+    @invoice.process5
+    flash[:notice] = "La nota de credido ha sido procesada."
+    end 
+
     flash[:notice] = "The invoice order has been processed."
     redirect_to @invoice
+
   end
   
   # Do send invoice via email
@@ -2374,7 +2417,9 @@ def reportes31
     @invoice[:cuota1] = 1
     @invoice[:cuota2] = 2
     @invoice[:cuota3] = 3
+    
 
+    @filters_display = "none"
 
 
     
@@ -2405,6 +2450,8 @@ def reportes31
     @invoice[:user_id] = getUserId()
     @invoice[:moneda_id] = 2
     @invoice[:document_id] = 3
+   @anexo8_ncs = Anexo8.order(:tipo,:code )
+    
 
     
   end
@@ -2578,25 +2625,32 @@ def newfactura2
     @tipofacturas = @company.get_tipofacturas() 
     @monedas = @company.get_monedas()
     @tarjetas = Tarjetum.all
-   
+
+    @anexo8_ncs = Anexo8.order(:tipo,:code )
+     
+      @invoice[:subtotal] = @invoice.get_total_1(items) / 1.18
+    @invoice[:total]   = @invoice.get_total_1(items) 
+    
+     
     @invoice[:subtotal] = @invoice.get_total_1(items) / 1.18
     @invoice[:total]   = @invoice.get_total_1(items) 
+    
     
     begin
       @invoice[:tax] = @invoice[:total] - @invoice[:subtotal]
     rescue
       @invoice[:tax] = 0
     end
+
     
-        @invoice[:balance] = @invoice[:total]
+      @invoice[:balance] = @invoice[:total]
+  
   
     
     @invoice[:pago]    = 0
     @invoice[:charge]  = 0
     @invoice[:descuento] = "1"
-    @invoice[:servicio] = params[:check_servicio]
-
-
+   
     
     days = @invoice.get_dias(params[:factura][:payment_id])
     @invoice[:fecha2] = @invoice[:fecha] + days.days     
@@ -2617,6 +2671,8 @@ def newfactura2
     @invoice[:cuota2] = 2
     @invoice[:cuota3] = 3
     
+
+
   
 
     respond_to do |format|
@@ -5805,7 +5861,7 @@ def cuadre02
       :cuota1,:fecha_cuota1,:importe_cuota1,
       :cuota2,:fecha_cuota2,:importe_cuota2,
       :cuota3,:fecha_cuota3,:importe_cuota3,
-      :msgerror )
+      :msgerror ,:documento2,:anexo8_id )
   end
 
 end

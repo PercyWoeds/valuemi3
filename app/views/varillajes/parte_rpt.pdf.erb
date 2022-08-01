@@ -102,13 +102,13 @@
                     <td width = "8%" align ="right"><%= sprintf("%.2f",dife.to_s)   %></td>
                     
                     
-                    <% dife_soles = product0.get_ventas_importe(@fecha,product0.tanque.product.id) - product0.get_ventas_contometros_producto_todo(@fecha,product0.tanque.product.code.to_s)-   product0.get_ventas_contometros_descuento_producto(@fecha,product0.tanque.product.code.to_s)  - product0.get_afericion_total_dia_producto(@fecha,product0.tanque.id)   %>
+                    <% dife_soles = product0.get_ventas_importe(@fecha,product0.tanque.product.id) - product0.get_ventas_23(@fecha,product0.tanque.product.id)-   product0.get_ventas_contometros_descuento_producto(@fecha,product0.tanque.product.code.to_s)  - product0.get_afericion_total_dia_producto(@fecha,product0.tanque.id)   %>
                     
                     <% dife_mes = product0.get_saldo_final_combustible(@fecha,product0.tanque.product.id,product0.tanque.product.code.to_s,product0.tanque.id) %>
                     
                     <td width = "8%" align ="right"><%=  sprintf("%.2f",dife_mes.to_s)   %></td>
                     <td width = "8%" align ="right"> </td>
-                    <% venta_soles_total = product0.get_ventas_contometros_producto_todo(@fecha,product0.tanque.product.code.to_s) + product0.get_ventas_contometros_descuento_producto(@fecha,product0.tanque.product.code.to_s) %>
+                    <% venta_soles_total = product0.get_ventas_23(@fecha,product0.tanque.product.id) + product0.get_ventas_contometros_descuento_producto(@fecha,product0.tanque.product.code.to_s) %>
                     <td width = "10%" align ="right"><%= sprintf("%.2f",venta_soles_total)   %></td>
                     </tr>
                         

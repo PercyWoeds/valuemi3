@@ -322,6 +322,33 @@ def  get_inicial(fecha1,producto,producto2)
 
   end 
 
+ def  get_ventas_23(fecha,producto) 
+     
+
+     ret=0  
+         
+      facturas = Ventaisla.where(["fecha >= ? and fecha <= ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59" ])
+     
+      if facturas
+      
+         for detalle in facturas
+             
+              @ventasdetail=  VentaislaDetail.select("sum(total) as importe",:product_id).where(:ventaisla_id=>detalle.id,:product_id => producto).group(:product_id)
+    
+              for detail in @ventasdetail 
+             
+                 ret += detail.importe.round(6)
+      
+              end 
+      
+         end 
+     end 
+
+     return ret 
+
+
+
+  end 
 
 
  def  get_salidas(fecha1,fecha2,producto) 

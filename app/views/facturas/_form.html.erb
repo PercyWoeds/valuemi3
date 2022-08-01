@@ -108,44 +108,9 @@
 
    
 
-      <div class="field">
-          <input id="check_servicio" name="check_servicio" type="checkbox" value="true" checked />
-          <div >
-          SERVICIO ? 
-          </div>
-      </div>
-
-      <div class="field" >
-        <%= f.label :texto1, "Local: ", :class => "bold" %><br />
-        <%= f.text_field  :texto1, size: 46 %>
-
-      </div>
-
-      <div class="field">
-        <%= f.label :texto2, "Servicio: ", :class => "bold" %><br />
-        <%= f.text_field :texto2 ,size:46 %>
-      </div>
-
-       <div class="field">
-        <%= f.label :texto2, "Servicio: ", :class => "bold" %><br />
-        <%= f.text_field :texto2 ,size:46 %>
-      </div>
-
-
-
- <div class="field">
       
-      <%= f.check_box :denis  %>
 
-      <%= f.label :denis , "Denis precio peaje ?", :class => "bold" %>
-      <div class="small">
-        Marks wether or not this invoice has been payed and we can deduct the product quantities and count it towards the month's total.
-      </div>
-    </div>
-
-
-
-
+ 
   <div class="field">
       <%= f.label :detracion_percent, "Detraccion %   ", :class => "bold" %><br />
       <%= f.number_field :detraccion_percent ,:step => 0.1 %>
@@ -172,7 +137,31 @@
 
     
      
-      <div class="field" id="list_items">
+     
+    
+<div>
+  <a href="#" onclick="toggle('filters'); return false;">Notas </a>
+</div>
+<div id="filters" class="filters" style="display: <%= @filters_display %>;">
+
+
+    <div class="field">
+      <%= f.label :documento2, "Nota - Documento Modificar:", :class => "bold"  %> <br/>
+      <%= f.text_field :documento2  %>
+
+    </div>
+
+     <div class="field">
+      <%= f.label :anexo8_id,"Catalogo de Nota de Credito  " %><br />
+      <%= f.select :anexo8_id,options_from_collection_for_select(@anexo8_ncs,'id','name') %>
+    </div>
+ 
+
+
+</div>
+
+
+ <div class="field" id="list_items">
         <p class="bold big">Products:</p>
       </div>
 
@@ -181,7 +170,8 @@
       </div>
 
     <%= hr() %>
-    
+
+
     
     <div class="field">
       <%= f.label :tarjeta_id ,"Forma  de pago"%><br />

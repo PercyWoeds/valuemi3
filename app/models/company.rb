@@ -637,7 +637,7 @@
          lcCode=""
          lcCode1=""
          
-         @boletas = Sellvale.select("fecha,td,serie,ruc,MIN(numero) as minimo, MAX(numero) as maximo,sum(importe2) as total").where(["fecha >= ? and fecha<= ? and td= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59","B" ]).group(:fecha,:td,:serie,:ruc)
+         @boletas = Sellvale.select("fecha,td,serie,MIN(numero) as minimo, MAX(numero) as maximo,sum(importe2) as total").where(["fecha >= ? and fecha<= ? and td= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59","B" ]).group(:fecha,:td,:serie)
         # @boletas = Sellvale.select("fecha,td,cod_prod,ruc,MIN(numero) as minimo, MAX(numero) as maximo,sum(importe2) as total").where(["fecha >= ? and fecha<= ? and td<> ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59","N" ]).group(:fecha,:td,:serie,:numero,:cod_prod,:ruc)
           TmpFactura.delete_all
           
@@ -657,10 +657,7 @@
                   lcTotal   = lcTotal0.round(2)  
                   lcFecha   = boleta.fecha
                   lcTd      = boleta.td 
-                  
-                  
-                 
-                    
+                                      
                   
                     lcRucCliente = "C_000001"
                     lcRazonCliente = "CLIENTE GENERICO "

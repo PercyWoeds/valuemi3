@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20220721160230) do
+ActiveRecord::Schema.define(version: 20220729143118) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -133,6 +133,15 @@ ActiveRecord::Schema.define(version: 20220721160230) do
     t.string   "telefono"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "anexo8s", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.string   "code_nube"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "tipo"
   end
 
   create_table "bank_acounts", force: :cascade do |t|
@@ -770,6 +779,8 @@ ActiveRecord::Schema.define(version: 20220721160230) do
     t.float    "importe_cuota3"
     t.datetime "fecha_cuota3"
     t.string   "msgerror"
+    t.string   "documento2"
+    t.integer  "anexo8_id"
   end
 
   create_table "faltantes", force: :cascade do |t|
