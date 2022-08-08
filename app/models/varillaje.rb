@@ -254,7 +254,7 @@ def  get_inicial(fecha1,producto,producto2)
  end 
 
 
- def  get_ventas(fecha,producto) 
+  def  get_ventas(fecha,producto) 
      
 
          ret=0  
@@ -294,6 +294,89 @@ def  get_inicial(fecha1,producto,producto2)
  
   end 
 
+
+
+  def  get_ventas(fecha,producto) 
+     
+
+         ret=0  
+         
+      facturas = Sellvale.where(["fecha >= ? and fecha <= ? and cod_prod = ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59","#{producto}" ])
+     
+      if facturas
+      
+         for detalle in facturas
+    
+              ret += detalle.cantidad.round(6)
+      
+         end 
+     end 
+
+
+
+
+     @ventas  = Factura.where('fecha>= ? and fecha <= ? and tipoventa_id = ?',"#{fecha1} 00:00:00","#{fecha2} 23:59:59","3")
+    
+           for sal in @ventas
+             
+              
+              @ventasdetail=  FacturaDetail.select("sum(quantity) as quantity",:product_id).where(:factura_id=>sal.id,:product_id => producto).group(:product_id)
+    
+              for detail in @ventasdetail 
+    
+             
+                 ret += detalle.cantidad.round(6)
+      
+
+              end 
+            
+           end 
+
+     return ret
+ 
+  end 
+######
+
+
+
+def  get_ventas_urea(fecha) 
+     
+
+    ret = 0 
+    
+ facturas = Sellvale.where(["fecha >= ? and fecha <= ? and cod_prod = ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59","0983" ])
+
+ if facturas
+ 
+    for detalle in facturas
+
+         ret += detalle.cantidad.round(6)
+ 
+    end 
+end 
+   
+facturas = Sellvale.where(["fecha >= ? and fecha <= ? and cod_prod = ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59","0000000000938" ])
+
+if facturas
+
+   for detalle in facturas
+
+        ret += detalle.cantidad.round(6)
+
+   end 
+end 
+
+
+
+
+
+return ret
+
+end 
+
+
+
+  ####
  def  get_ventas_22(fecha,producto) 
      
 
@@ -724,10 +807,7 @@ def  get_inicial(fecha1,producto,producto2)
         for detalle in facturas
             ret += detalle.importe.to_f 
 
-        puts "tx"    
-        puts detalle.serie 
-        puts detalle.numero 
-        puts detalle.importe 
+         
 
 
        end 
@@ -759,9 +839,7 @@ def  get_inicial(fecha1,producto,producto2)
         for detalle in facturas
             ret += detalle.importe.to_f 
 
-        puts "tx"    
-        puts detalle.serie 
-        puts detalle.numero 
+       
 
 
        end 
@@ -993,12 +1071,27 @@ def  get_inicial(fecha1,producto,producto2)
        else 
            inicial = wvar.inicial 
            varilla = wvar.varilla 
-           compras = self.get_compras(fechax,producto)
-            ventas_qty = self.get_ventas_22(fechax,producto1)
+
+            if  producto  == 6  
+           compras = self.get_ticket_glp(fechax)
+            else 
+          compras = self.get_compras(fechax,producto)
+         end 
+
+         if  producto  != 89    
+             ventas_qty = self.get_ventas_22(fechax,producto)
+         else 
+            ventas_qty = self.get_ventas_urea(fechax) 
+         end
+
+            ventas_qty = self.get_ventas_22(fechax,producto)
+
+
             afericion = self.get_afericion_total_dia_producto_qty(fechax,producto2)
             saldo =  inicial + compras - ventas_qty + afericion 
             dife =  varilla - saldo 
             puts "datos..."
+            puts producto1 
             puts inicial
             puts varilla
             puts compras

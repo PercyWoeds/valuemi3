@@ -588,7 +588,15 @@ module ApplicationHelper
 
     render :layout => false
   end
- 
+  def date_mdY(date)  
+     if date.nil? 
+      
+        ""  
+     else    
+       date.strftime("%d-%m-%Y") 
+     end
+    
+  end 
  
  
 end

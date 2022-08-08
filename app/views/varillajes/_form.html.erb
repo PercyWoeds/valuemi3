@@ -5,11 +5,10 @@
       <div class="field">
       <%= f.label :fecha , "Fecha *", :class => "bold" %><br />
 
-      <% if @current_user.level = "admin" %>
-        <%= f.text_field :fecha %>
-      <% else %>
-        <%= f.text_field :fecha %>
-      <% end %>
+      
+     
+        <%= f.date_field :fecha  %>
+
       </div>
       <div class="field">
       <%= f.label :tipo , "Tanque :", :class => "bold" %><br />
