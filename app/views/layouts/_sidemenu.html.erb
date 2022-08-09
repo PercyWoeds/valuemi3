@@ -103,7 +103,7 @@
 
                     <% end %>
 
-                    <%if @current_user.level == "almacen" || @current_user.level == "admin" || @current_user.level == "compras" || @current_user.level == "parte" %>     
+                    <%if @current_user.level == "almacen" || @current_user.level == "admin" || @current_user.level == "compras" %>     
 
                         <div class="item item-pink item-2 col-md-4 col-sm-6 col-xs-6">
                             <div class="item-inner">
@@ -118,21 +118,7 @@
                     <% end %>
 
 
-                    <%if @current_user.level == "guias" || @current_user.level == "admin"  || @current_user.level == "ventas"%> 
-
-                        <div class="item item-blue col-md-4 col-sm-6 col-xs-6">
-                            <div class="item-inner">
-                                <div class="icon-holder">
-                                    <span aria-hidden="true" class="icon icon_datareport_alt"></span>
-                                </div>
-                                <h3 class="title">Control Logistico </h3>
-                                <p class="intro"> Modulo de control logistico   </p>
-                                <%= link_to "", "/companies/charts/#{@company.id}", class: "link" %><span></span></a>
-
-
-                            </div>
-                        </div>
-                    <% end %>    
+                    
 
                     <%if @current_user.level == "ventas" || @current_user.level == "admin" ||  current_user.level == "parte"  ||  @current_user.level == "compras"  ||  @current_user.level == "ventas2" %> 
 
@@ -150,21 +136,7 @@
                     <% end %>
 
                     
-                    <%if @current_user.level == "colateral" || @current_user.level == "admin" || @current_user.level == "parte"     %>
-
-                    <div class="item item-purple col-md-4 col-sm-6 col-xs-6">
-                        <div class="item-inner">
-                            <div class="icon-holder">
-                                <span aria-hidden="true" class="icon icon_lifesaver"></span>
-                            </div><!--//icon-holder-->
-                            <h3 class="title">Redencion de puntos </h3>
-                            <p class="intro"> Canje de puntos   </p>
-                            
-                            <%= link_to "", "/companies/salepoint/#{@company.id}", class: "link" %><span></span></a>
-                        </div><!--//item-inner-->
-                    </div><!--//item-->
-                    
-                    <% end %>
+                   
                     
                  <%if @current_user.level == "mantenimiento" || @current_user.level == "admin"  %> 
                     <% end %>

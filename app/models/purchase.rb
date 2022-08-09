@@ -109,6 +109,22 @@ TABLE_HEADERS2  = ["ITEM ",
                      "CANTIDAD",
                      "PRECIO",
                      "TOTAL "]
+                     
+
+  TABLE_HEADERS32 = ["ITEM",
+                     "PROVEEDOR",
+                     "FACTURA",
+                     "FEC.EMISION",
+                     "FEC.RECEPCION",                     
+                     "CANT.",
+                     "CODIGO",
+                     "DESCRIPCION",
+                     "PRE.COSTO",
+                     "DSCTO.",
+                     "TOTAL",
+                     "PERCEPCION",
+                     "BALANCE",
+                     "FORMA PAGO"]
 
   def get_vencido
 

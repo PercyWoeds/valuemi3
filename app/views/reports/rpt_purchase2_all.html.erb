@@ -1,4 +1,3 @@
-<%= render 'layouts/charts' %>
 <%
 invoices_subtotal = 0
 invoices_tax = 0
@@ -15,43 +14,76 @@ totals = []
 
 <h3>
   <%= image_tag("reports_48.png", :class => "vmiddle") %>
- Reporte de Facturas emitidas 
-</h3	>
-<%= form_tag(rpt_purchase2_facturas_path, :method => "get") do %>
+ Reporte de Facturas detallado 
 
+</h3	>
+
+
+<%= form_tag(rpt_facturas1_all_facturas_path, :method => "get") do %>
 
   <div class="field">
-      <input type="date" name="fecha1" value= <%= Date.today %> style = "width: 150px" >
+      <input type="date" name="fecha1" value =  <%= Date.today - 30 %> <style = "width: 150px" >
 
     </div>
 	<div class="field">
-		<input type="date" name="fecha2" value= <%= Date.today %> style = "width: 150px" >
+		<input type="date" name="fecha2" value = <%= Date.today %> <style = "width: 150px" >
   </div>
 
 
 <p>
-  <label for="tiporeporte"> Tipo de Reporte:</label><br>
-  <select id="tiporeporte" name="tiporeporte" >
 
-
-    <option value="2" selected> TODOS </option>
-    <option value="1" selected> SERVICIO </option>
-    <option value="0" selected> COMPRA </option>
-    
+  <P> Seleccionar Fecha </P> 
+ <select id="fecha6" name="fecha6" >
+      <option value="" selected disabled hidden>Seleccionar Fecha </option>
+      <option value="1">Fec.Emision</option>
+      <option value="2">Fec.Recepci on</option>  
   </select>
 </p>
 
-<div class="field">
-  <%= check_box_tag("cbox1", value = "1", checked = true , options = {})  %> Todos los proveedores 
- </div>
+
+  <p>
+  <label for="tiporeporte"> Tipo de Reporte:</label><br>
+  <select id="tiporeporte" name="tiporeporte" >
+    <option value="2" selected> TODOS </option>
+    <option value="1" selected> SERVICIO </option>
+    <option value="0" selected> COMPRA </option>    
+  </select>
+</p>
+
+
  
- <div class="field">
-    <%= select_tag(:supplier_id,options_from_collection_for_select(@suppliers,'id','name') ) %>
- </div>
+
+<table>
+    <tr>
+      <td>
+        <div class="field">
+            <input id="check_proveedor" name="check_proveedor" type="checkbox"  checked />
+          <div class="small">
+            Todos los Proveedores 
+          </div>
+        </div>
+        
+      </td>
+      <td>
+      <div class="field">
+        <h5>  Proveedor </h5>
+
+          <%= select_tag(:supplier_id,options_from_collection_for_select(@suppliers,'id','name') ) %>
+
+
+      </div>
+      </td>
+      
+    </tr>
+
+  </table>
+
+
 <br> 
- <%= submit_tag "To PDF", :name => "print" %>
- <%= submit_tag "To Excel", :name => "print" %>
-  
+ <%= submit_tag "PDF", :name => "print" %>
+ <%= submit_tag "Excel", :name => "print" %>
+</br>
+
 <% end %>
 
 <br />

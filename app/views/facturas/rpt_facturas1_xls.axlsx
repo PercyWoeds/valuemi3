@@ -1,0 +1,199 @@
+$LOAD_PATH.unshift "#{File.dirname(__FILE__)}/../lib"
+
+require 'axlsx'
+
+p = Axlsx::Package.new
+wb = xlsx_package.workbook
+wb.styles do |s|
+   
+
+    date = s.add_style(:format_code => "dd/mm/yyyy", :border => Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :right},:sz => 9)
+
+    padded = s.add_style(:format_code => "00#", :border => Axlsx::STYLE_THIN_BORDER)
+    percent = s.add_style(:format_code => '#.##0.00', :border => Axlsx::STYLE_THIN_BORDER)
+    title = s.add_style(:bg_color => "FFFF0000", :fg_color=>"#FF000000",:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :center})
+    cadena =s.add_style(:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :left},:sz => 9 )
+    cadena0 =s.add_style(:alignment=>{:horizontal => :left},:sz => 9 )
+    date0  = s.add_style(:format_code => "dd/mm/yyyy", :alignment=>{:horizontal => :right},:sz => 9)
+     
+    currency = wb.styles.add_style(:format_code=>"#,##0.#0;[Red]-#,##0.#0",
+                              :sz => 9)
+    red_negative = wb.styles.add_style :num_fmt => 8
+    comma = wb.styles.add_style :num_fmt => 3
+    super_funk = wb.styles.add_style :format_code => '[Green]#'
+    merged_title_cell_style = s.add_style    :bg_color => "D8D8D8",
+                                                   :b => true,
+                                                   :sz => 9,
+                                                   :border => { :style => :thin, :color => "00" },
+                                                   :alignment => { :horizontal => :center,
+                                                                   :vertical => :center ,
+                                                                   :wrap_text => true}
+    
+   
+
+    wb.add_worksheet(name: "Citas") do |sheet|
+
+
+
+            img = File.expand_path("#{Dir.pwd}/public/images/logo-v.jpg")
+                sheet.add_image(:image_src => img, :noMove => true) do |image|
+                    image.width = 300
+                    image.height = 100
+                    image.start_at 11, 0
+                end
+
+
+   
+
+            sheet.add_row [@company.name],:style =>  [cadena0]
+            sheet.add_row [@company.address1 + " "+   @company.address2 + " "+ @company.city + " "+ @company.state],:style =>  [cadena0]
+            sheet.add_row [@company.ruc ] ,:style =>  [cadena0]
+            sheet.add_row [""]
+
+
+             lcTexto = "Reporte de Facturas de compra emitidas" 
+                    lcTexto2 = "Desde "+ @fecha1.to_s +  " Hasta : "+ @fecha2.to_s
+                    sheet.add_row ["Lima, " ,Time.now ] , :style =>[cadena0,date0 ]
+                    sheet.add_row [lcTexto] , :style =>[cadena0  ]
+                    sheet.add_row [lcTexto2] , :style =>[cadena0  ]
+                     sheet.add_row [""]
+
+
+            sheet.add_row [""]
+
+            sheet.add_row [""]
+           
+
+
+
+            @days =  []
+
+            @days = ["ITEM",
+                     "PROVEEDOR",
+                     "FACTURA",
+                     "FEC.EMISION",
+                     "FEC.RECEPCION",                     
+                     "CANT.",
+                     "CODIGO",
+                     "DESCRIPCION",
+                     "PRE.COSTO",
+                     "DSCTO.",
+                     "TOTAL",
+                     "PERCEPCION",
+                     "BALANCE",
+                     "FORMA PAGO"]
+
+
+    
+        sheet.add_row @days.map{ |col| col.upcase  } , :style =>    merged_title_cell_style
+
+
+        sheet.column_widths 5,10,30,5,10,30,5,5,5,5,5,10,10,20,10,10
+
+
+
+        nroitem = 1 
+
+
+
+         defaults =  { :style => :thick, :color => "000000" }
+          borders = Hash.new do |hash, key|
+            hash[key] = wb.styles.add_style :border => defaults.merge(  { :style => :thin ,:edges => key.to_s.split('_').map(&:to_sym) } ) 
+          end
+
+         top_row =  [
+        borders[:top_left],
+        borders[:top], borders[:top], borders[:top], borders[:top],borders[:top],borders[:top], 
+        borders[:top], borders[:top], borders[:top], borders[:top],borders[:top],borders[:top],
+        borders[:top], borders[:top], borders[:top], borders[:top],borders[:top],borders[:top],
+        borders[:top], borders[:top], borders[:top], borders[:top],borders[:top],borders[:top],
+        borders[:top], borders[:top], borders[:top], borders[:top],borders[:top],borders[:top],
+        borders[:top], borders[:top], borders[:top], borders[:top],borders[:top],borders[:top],
+        borders[:top_right]]
+
+        middle_row = [borders[:left],
+        nil, nil, nil, nil,nil, nil,nil,
+        nil, nil, nil, nil,nil, nil,nil,
+        nil, nil, nil, nil,nil, nil,nil,
+        nil, nil, nil, nil,nil, nil,nil,
+        nil, nil, nil, nil,nil, nil,nil,
+        nil,
+        borders[:right]]
+        bottom_row = [borders[:bottom_left],
+        borders[:bottom], borders[:bottom], borders[:bottom], borders[:bottom], borders[:bottom], borders[:bottom], borders[:bottom], 
+        borders[:bottom], borders[:bottom], borders[:bottom], borders[:bottom], borders[:bottom], borders[:bottom], borders[:bottom], 
+        borders[:bottom], borders[:bottom], borders[:bottom], borders[:bottom], borders[:bottom], borders[:bottom], borders[:bottom], 
+        borders[:bottom], borders[:bottom], borders[:bottom], borders[:bottom], borders[:bottom], borders[:bottom], borders[:bottom], 
+        borders[:bottom], borders[:bottom], borders[:bottom], borders[:bottom], borders[:bottom], borders[:bottom], borders[:bottom], 
+        borders[:bottom],
+        borders[:bottom_right]]
+
+        @days0 =  []
+        sum_qty = 0 
+
+
+
+
+
+    for ordencompra in @rpt_detalle_purchase
+
+           $lcNumero    = ordencompra.documento     
+           $lcFecha     = ordencompra.date1
+           $lcProveedor = ordencompra.supplier.name 
+           $lcPercepcion = ordencompra.participacion 
+           $lcBalance    = ordencompra.balance.round(2).to_s 
+
+           @orden_compra1  = @company.get_purchase_detalle(ordencompra.id)
+
+
+        for  orden in @orden_compra1
+          
+            if orden.product 
+              
+              prod_code = orden.product.code
+              prod_name = orden.product.name
+            else
+              a = orden.get_service(orden.product_id)
+              prod_code = a.code 
+              prod_name a.name 
+
+            end 
+
+            if orden.price_without_tax != nil
+              preciosigv =orden.price_without_tax.round(4).to_s
+            else 
+              preciosigv = 0
+            end  
+
+          
+            sheet.add_row [nroitem,
+            $lcProveedor,
+            $lcNumero,
+            $lcFecha,
+            ordencompra.date2,
+            orden.quantity,
+            prod_code,
+            prod_name,
+            preciosigv,
+            "",
+            orden.total,
+            $lcPercepcion,
+            $lcBalance,
+            ordencompra.payment.descrip ], 
+
+            :style => [cadena0,cadena0,cadena0,date0,date0,currency,cadena0,cadena0,currency,cadena0,currency,currency,currency,cadena0]
+
+        
+            nroitem=nroitem + 1
+        end
+        
+    end
+
+
+ end 
+
+
+  ##
+end 
+
+    

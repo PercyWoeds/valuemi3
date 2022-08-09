@@ -24,7 +24,7 @@ class FacturasController < ApplicationController
     case params[:print]
       when "To PDF" then 
         begin 
-         render  pdf: "Ordenes ",template: "varillajes/parte_rpt.pdf.erb",locals: {:varillajes => @parte_rpt},
+         render  pdf: "Ordenes ",template: "varillajes/parte2_rpt.pdf.erb",locals: {:varillajes => @parte_rpt},
          :header => {
            :spacing => 5,
                            :html => {
@@ -5848,6 +5848,233 @@ def cuadre02
       pdf      
   end
       
+
+
+def rpt_facturas1_all
+
+
+  @company= Company.find(1)   
+   @fecha1 = params[:fecha1]    
+   @fecha2 = params[:fecha2]    
+   @tiporeporte = params[:tiporeporte]
+   @check_proveedor = params[:check_proveedor]
+   
+
+   if @check_proveedor == "on"
+     @proveedor = ""
+   else
+     @proveedor = params[:supplier_id]
+   end
+  
+  
+ 
+   @fecha6 = params[:fecha6]    
+
+@rpt_detalle_purchase = @company.get_serviceorder_by_filter3(@fecha1,@fecha2,@tiporeporte ,@proveedor, @fecha6 )
+         
+
+         
+   case params[:print]
+       when "PDF" then 
+           begin
+   
+         Prawn::Document.generate "app/pdf_output/orden_1.pdf", :page_layout => :landscape  ,:page_size=>"A4"   do |pdf|
+               pdf.font "Helvetica"
+               pdf = build_pdf_header9(pdf)
+               pdf = build_pdf_body9(pdf)
+               build_pdf_footer9(pdf)
+               $lcFileName =  "app/pdf_output/orden_1.pdf"      
+               
+           end     
+
+           $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
+                       
+           send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
+         
+           end 
+       when "Excel" then render xlsx: 'rpt_facturas1_xls'
+   
+         
+       else render action: "index"
+     end
+
+
+   
+ end
+
+
+
+
+def build_pdf_header9(pdf)
+
+
+    pdf.font "Helvetica" , :size => 8
+     image_path = "#{Dir.pwd}/public/images/logo-v1.jpg"
+
+   
+     
+      table_content = ([ [{:image => image_path, :rowspan => 3 }, 
+       {:content =>"SISTEMA DE GESTION INTEGRADO",:rowspan => 2, :valign => :center },"CODIGO ","NN"], 
+         ["VERSION: ","4"], 
+         ["REPORTE DE FACTURAS - LIMA ","PAGINA : ","1 de 1 "] 
+        
+         ])
+       
+     
+
+
+
+      pdf.table(table_content  ,{
+          :position => :center,
+          :width => pdf.bounds.width
+        })do
+          columns([1,2]).font_style = :bold
+           columns([0]).width = 118.55
+           columns([1]).width = 451.34
+           columns([1]).align = :center
+           
+           columns([2]).width = 100
+         
+           columns([3]).width = 100
+     
+        end
+       
+        table_content2 = ([["FECHA : ",Date.today.strftime("%d/%m/%Y")]])
+
+        pdf.table(table_content2,{:position=>:right }) do
+
+           columns([0, 1]).font_style = :bold
+           columns([0, 1]).width = 100
+           
+        end 
+
+    
+        pdf.text "(1) del "+@fecha1+" al "+@fecha2
+        
+        pdf.move_down 2
+     
+     pdf 
+
+  
+
+ end   
+
+ def build_pdf_body9(pdf)
+   
+   pdf.text "Facturas  de compra Emitidas : Fecha "+@fecha1.to_s+ " Mes : "+@fecha2.to_s , :size => 10
+   pdf.text ""
+   pdf.font_families.update("Open Sans" => {
+         :normal => "app/assets/fonts/OpenSans-Regular.ttf",
+         :italic => "app/assets/fonts/OpenSans-Italic.ttf",
+       })
+
+       pdf.font "Open Sans",:size => 6
+ 
+
+     headers = []
+     table_content = []
+
+     Purchase::TABLE_HEADERS32.each do |header|
+       cell = pdf.make_cell(:content => header)
+       cell.background_color = "FFFFCC"
+       headers << cell
+     end
+
+     table_content << headers
+
+     nroitem=1
+
+     for ordencompra in @rpt_detalle_purchase
+
+          $lcNumero    = ordencompra.documento     
+          $lcFecha     = ordencompra.date1
+          $lcProveedor = ordencompra.supplier.name 
+          $lcPercepcion = ordencompra.participacion 
+          $lcBalance    = ordencompra.balance.round(2).to_s 
+
+       @orden_compra1  = @company.get_purchase_detalle(ordencompra.id)
+
+
+      for  orden in @orden_compra1
+           row = []
+           row << nroitem.to_s
+           row << $lcProveedor 
+           row << $lcNumero 
+           row << $lcFecha.strftime("%d/%m/%Y")  
+           row << ordencompra.date2.strftime("%d/%m/%Y")
+           row << orden.quantity.to_s
+
+           if orden.product 
+             row << orden.product.code
+             row << orden.product.name
+           else
+             a = orden.get_service(orden.product_id)
+             row << a.code 
+             row << a.name 
+           end 
+
+           if orden.price_without_tax != nil
+           row << orden.price_without_tax.round(4).to_s
+           else 
+           row << "0.00"
+           end  
+           row << " "
+           row << orden.total.round(2).to_s
+           row << $lcPercepcion
+           row << $lcBalance
+           row << ordencompra.payment.descrip
+           table_content << row
+       
+           nroitem=nroitem + 1
+       end
+       
+
+     end
+
+
+     result = pdf.table table_content, {:position => :center,
+                                       :header => true,
+                                       :width => pdf.bounds.width
+                                       } do 
+                                         columns([0]).align=:center
+                                           columns([3]).width = 10
+                                         columns([1]).align=:left
+                                         columns([2]).align=:left
+                                         columns([3]).align=:left 
+                                         columns([3]).width = 50
+
+                                         columns([4]).align=:left
+                                         columns([4]).width = 50
+
+                                         columns([5]).align=:left
+                                         columns([6]).align=:left
+                                         columns([6]).width = 40
+
+                                         columns([7]).align=:left 
+                                         columns([7]).width = 120
+
+                                         columns([8]).align=:right
+                                         columns([9]).align=:right
+                                         columns([10]).align=:right
+                                         columns([11]).align=:right
+                                       end
+
+     pdf.move_down 10      
+     pdf
+
+   end
+
+
+   def build_pdf_footer9(pdf)
+
+       pdf.text ""
+       pdf.text "" 
+       
+
+    end
+   
+
+    
   private
   def factura_params
     params.require(:factura).permit(:company_id,:location_id,:division_id,:customer_id,

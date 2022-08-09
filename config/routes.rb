@@ -159,6 +159,8 @@ require 'sidekiq/web'
     collection { get :rit_01    }
 
     collection { get :rpt_purchase2 }
+
+    collection {get :rpt_facturas1_all }
         
   end 
     

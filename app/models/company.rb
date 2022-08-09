@@ -5033,7 +5033,108 @@
 
       end 
 
+      def get_serviceorder_by_filter3(fecha1,fecha2,tiporeporte,proveedor,fecha6 )
 
+        sql_dato = ""
+       
+    if proveedor != ""
+      
+      if sql_dato != ""
+        txt_and = " and "
+      else 
+        txt_and = ""
+      end 
+      
+      sql_dato << txt_and << "  supplier_id = " << proveedor 
+    end 
+    
+  
+    
+    if tiporeporte  == "2"
+          
+      if sql_dato != ""
+        txt_and = ""
+      else 
+        txt_and = ""
+      end 
+      
+      sql_dato << txt_and 
+  
+    end 
+    
+  
+    if tiporeporte  == "1"
+          
+      if sql_dato != ""
+        txt_and = " and "
+      else 
+        txt_and = ""
+      end 
+      sql_dato << txt_and << "  tipo = '1' "
+   
+    end
+    
+  
+    if tiporeporte  == "0"
+          
+      if sql_dato != ""
+        txt_and = " and "
+      else 
+        txt_and = ""
+      end 
+      sql_dato << txt_and << "  tipo =  '0' "
+   
+    end
+    
+  
+  
+      
+  
+    if fecha6 == "1"
+            
+      if sql_dato != ""
+        txt_and = " and "
+      else 
+        txt_and = ""
+      end 
+    
+        sql_dato << txt_and << " date1   >= " << "'#{fecha1} 00:00:00'"  << "  and  date1 <= " << "'#{fecha2} 23:59:59'"
+    end 
+  
+  
+   if fecha6 == "2"
+            
+      if sql_dato != ""
+        txt_and = " and "
+      else 
+        txt_and = ""
+      end 
+    
+        sql_dato << txt_and << " date2  >= " << "'#{fecha1} 00:00:00'"  << "  and  date2 <= " << "'#{fecha2} 23:59:59'"
+    end 
+  
+      if sql_dato != ""
+        txt_and = " and "
+      else 
+        txt_and = ""
+      end 
+  
+  
+     sql_dato << txt_and << " processed = '1' "
+  
+     puts sql_dato 
+  
+  
+         @purchases = Purchase.where(["  #{sql_dato} " ]).order(:created_at, :supplier_id,:moneda_id,:documento)    
+      
+      
+      return @purchases 
+  
+  end 
+  
+  
+  
+  
  
 
 
