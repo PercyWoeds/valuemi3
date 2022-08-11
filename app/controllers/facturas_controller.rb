@@ -1421,7 +1421,7 @@ def build_pdf_header_03(pdf)
                       {content: "TOTALES",  colspan: 2, align: :center }
                     ]]
 
-tb = [ ["", "FECHA","GALONES","SOLES","GALONES ","SOLES ","GALONES ","SOLES", "GALONES","SOLES","GALONES ","SOLES ","GALONES ","SOLES"]]
+tb = [ ["", "FECHA","GALONES ","SOLES ","GALONES ","SOLES", "GALONES","SOLES","GALONES ","SOLES ","GALONES ","SOLES"]]
 
 
 
