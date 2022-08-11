@@ -15,19 +15,26 @@ totals = []
 
 <h3>
   <%= image_tag("reports_48.png", :class => "vmiddle") %>
- Listado de Ventas Colaterales
+ Listado de Ventas Combustibles
 </h3	>
 
-<%= form_tag(reportes09_facturas_path, :method => "get") do %>
+<%= form_tag(reportes07_facturas_path, :method => "get") do %>
 
   <div class="field">
-    <input type="date" name="fecha1" value="2018-03-19" style = "width: 150px" >
+    <input type="date" name="fecha1" value= <%= Date.today - 30 %> style = "width: 150px" >
   </div>
 	<div class="field">
-		<input type="date" name="fecha2" value="2018-03-31" style = "width: 150px" >
+		<input type="date" name="fecha2" value= <%= Date.today  %>  style = "width: 150px" >
   </div>
 
-  
+  <div class="field">
+    
+      <%= select_tag(:option, options_for_select([["FFF1",1],["FF01",2],["FF02",3],["FF03",4],["FF04",5],["FF05",6],["FF06",7]], params[:option] ), class:"select") %>
+     
+
+      
+    </div>
+
 
 <br> 
  <%= submit_tag "To PDF", :name => "print" %>

@@ -23,7 +23,7 @@
         has_many :ajusts 
         
         
-        def get_facturas_day_cliente(fecha1,fecha2,cliente)
+       def get_facturas_day_cliente(fecha1,fecha2,cliente)
          
           @facturas = Factura.where(["total <> 0  and  company_id = ? AND fecha >= ? and fecha<= ? and customer_id = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", cliente ]).order(:customer_id,:moneda_id,:fecha)
           return @facturas
@@ -4403,12 +4403,11 @@
           return ret
         
       end 
-
         
         
         def  get_ventas_combustibles(fecha1,fecha2) 
     
-           facturas = Ventaisla.where(["fecha >= ?  and fecha <=  ?  " , "#{fecha1} 00:00:00","#{fecha2} 23:59:59"  ] ).order(:fecha,:turno)
+           facturas = Ventaisla.select("fecha").where(["fecha >= ?  and fecha <=  ?  " , "#{fecha1} 00:00:00","#{fecha2} 23:59:59"  ] ).order(:fecha).group(:fecha)
            
              return facturas 
        
@@ -4426,7 +4425,7 @@
         
         def  get_ventas_combustibles_fecha_producto(fecha1,fecha2) 
     
-            facturas = Ventaisla.find_by_sql(['Select ventaisla_details.product_id,
+            facturas = Ventaisla.find_by_sql(['Select ventaislas.fecha,ventaisla_details.product_id,
                     SUM(ventaisla_details.quantity) AS quantity,
                     SUM(ventaisla_details.total) AS total 
                       from ventaislas 
@@ -4681,6 +4680,46 @@
              return facturas 
        
         end 
+
+        def  get_ventas_series(fecha1,fecha2,option ) 
+
+
+           case
+            when  option == "1"
+
+                series = "FFF1"
+
+            when  option == "2"
+              
+                series = "FF01"
+
+            when  option == "3"
+                        
+                          series = "FF02"
+            when  option == "4"
+                        
+                          series = "FF03"
+            when  option == "5"
+                        
+                          series = "FF04"
+            when  option == "6"
+                        
+                          series = "FF05"
+            when  option == "7"
+              
+                series = "FF06"
+
+           
+              
+            end
+             
+    
+            facturas = Factura.where(["fecha >= ?  and fecha <=  ? and substring(code,1,4) = ?" , "#{fecha1} 00:00:00","#{fecha2} 23:59:59",series] ).order(:fecha,:code)
+           
+             return facturas 
+       
+        end 
+        
         
         def  get_ventas_all(fecha1,fecha2) 
     

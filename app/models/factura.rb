@@ -514,7 +514,7 @@ class Factura < ActiveRecord::Base
     tot = 0
     
     a.each do | item |
-        tot+= item.quantity
+        tot+= item.quantity.round(2)
     end 
     
     return tot
@@ -1725,18 +1725,6 @@ result = invoice.deliver
   end 
 
 
- 
-  def get_codigo_det
-  
-    if FacturaDetail.where(factura_id: self.id ).exists?
-
-       a = FacturaDetail.where(factura_id: self.id )
-     return   a.first.product.cuentadet 
-    else
-     return 0.00 
-    end 
-  end   
-  
 
   def get_estado_nubefact
 
@@ -1749,5 +1737,28 @@ result = invoice.deliver
       
   end 
 
+  def get_producto
+  
+    if FacturaDetail.where(factura_id: self.id ).exists?
 
+       a = FacturaDetail.where(factura_id: self.id )
+     return   a.first.product.name2
+    else
+     return ""
+    end 
+  end   
+  
+  def get_precio 
+  
+    if FacturaDetail.where(factura_id: self.id ).exists?
+
+       a = FacturaDetail.where(factura_id: self.id )
+     return   a.first.price 
+    else
+     return 0.0
+    end 
+  end  
+
+
+  
 end

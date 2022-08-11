@@ -1104,6 +1104,8 @@ end
   match 'companies/planilla/:id' => 'companies#planilla', via: [:get, :post]
   match 'companies/mantenimiento/:id' => 'companies#mantenimiento', via: [:get, :post]
   match 'companies/bancos/:id' => 'companies#bancos', via: [:get, :post]
+  match 'companies/contab/:id' => 'companies#contab', via: [:get, :post]
+  
   resources :companies
 
   # Users packages

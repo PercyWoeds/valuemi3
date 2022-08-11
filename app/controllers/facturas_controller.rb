@@ -1,3 +1,4 @@
+
 include CustomersHelper
 include ServicesHelper
 require 'sunat_books'
@@ -1321,24 +1322,270 @@ def reportes03
     case params[:print]
       when "To PDF" then 
         begin 
-         render  pdf: "Facturas ",template: "facturas/rventas03_rpt.pdf.erb",
-         locals: {:facturass => @facturas_rpt},
-         :orientation      => 'Landscape',
-         
-         :header => {
-           :spacing => 5,
-                           :html => {
-                     :template => 'layouts/pdf-header.html',
-                           right: '[page] of [topage]'
-                  }
-               }
-               
+
+        Prawn::Document.generate "app/pdf_output/rpt_ventas_1.pdf", :page_layout => :landscape,:page_size=>"A4" do |pdf|        
+
+            pdf.font "Helvetica"
+            pdf = build_pdf_header_03(pdf)
+            pdf = build_pdf_body_03(pdf)
+            build_pdf_footer_03(pdf)
+            $lcFileName =  "app/pdf_output/rpt_ventas_1.pdf"              
+        end     
+        $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
+        send_file("app/pdf_output/rpt_ventas_1.pdf", :type => 'application/pdf', :disposition => 'inline')
+
+        
                
         end   
+
+
       when "To Excel" then render xlsx: 'exportxls'
       else render action: "index"
     end
   end
+
+###############################
+
+
+
+def build_pdf_header_03(pdf)
+
+
+    pdf.font "Helvetica" , :size => 8
+     image_path = "#{Dir.pwd}/public/images/logo-v1.jpg"
+
+   
+     
+      table_content = ([ [{:image => image_path, :rowspan => 3 }, 
+       {:content =>"SISTEMA DE GESTION INTEGRADO",:rowspan => 2, :valign => :center },"CODIGO ","NN"], 
+         ["VERSION: ","4"], 
+         ["REPORTE DE VENTAS  POR COMBUSTIBLE- LIMA ","PAGINA : ","1 de 1 "] 
+        
+         ])
+       
+     
+      pdf.table(table_content  ,{
+          :position => :center,
+          :width => pdf.bounds.width
+        })do
+          columns([1,2]).font_style = :bold
+           columns([0]).width = 118.55
+           columns([1]).width = 451.34
+           columns([1]).align = :center
+           
+           columns([2]).width = 100
+         
+           columns([3]).width = 100
+     
+        end
+       
+        table_content2 = ([["FECHA : ",Date.today.strftime("%d/%m/%Y")]])
+
+        pdf.table(table_content2,{:position=>:right }) do
+
+           columns([0, 1]).font_style = :bold
+           columns([0, 1]).width = 100
+           
+        end 
+
+    
+          pdf.text "(1) del "+@fecha1+" al "+@fecha2
+        
+        pdf.move_down 2
+     
+     pdf 
+
+  
+
+ end   
+
+ def build_pdf_body_03(pdf)
+   
+   
+     pdf.font "Helvetica" , :size => 5
+
+     headers = []
+     table_content = []
+
+    
+  
+     
+
+
+  header_text = [[{content: "NRO ITEM ", colspan: 1,valign: :center },
+                  {content: " ", colspan: 1,valign: :center },
+                      {content: "90 ",  colspan: 2, align: :center },
+                      {content: "95 ",  colspan: 2,align: :center },
+                      {content: "98 ",  colspan: 2,align: :center },
+                      {content: "D2 ",  colspan: 2,align: :center },
+                      {content: "GLP ",  colspan: 2, align: :center },
+                      {content: "TOTALES",  colspan: 2, align: :center }
+                    ]]
+
+tb = [ ["", "FECHA","GALONES","SOLES","GALONES ","SOLES ","GALONES ","SOLES", "GALONES","SOLES","GALONES ","SOLES ","GALONES ","SOLES"]]
+
+
+
+     
+
+     nroitem = 1
+
+      valor1 = 0
+      valor2 = 0
+      valor3 = 0
+      valor4 = 0
+      valor5 = 0
+      valor6 = 0
+      valor7 = 0
+      valor8 = 0
+      valor9 = 0
+      valor10 = 0
+
+      total_1 =  0
+      total_2 =  0
+
+      total_3 =  0
+      total_4 =  0
+
+      total_5 =  0
+      total_6 =  0
+
+      total_7 =  0
+      total_8 =  0
+
+      total_9 =  0
+      total_10 =  0
+
+      total_11 =  0
+      total_12 =  0
+
+
+      total_glns =  0
+      total_importe =  0
+
+
+     for detalle in @facturas_rpt
+
+           valor1 = detalle.get_ventas_combustibles_producto(detalle.fecha,2,"qty")
+           valor2 = detalle.get_ventas_combustibles_producto(detalle.fecha,3,"qty")
+           valor3 = detalle.get_ventas_combustibles_producto(detalle.fecha,4,"qty")
+           valor4 = detalle.get_ventas_combustibles_producto(detalle.fecha,5,"qty")
+           valor5 = detalle.get_ventas_combustibles_producto(detalle.fecha,6,"qty")
+            
+
+           valor6 = detalle.get_ventas_combustibles_producto(detalle.fecha,2,"tot")
+           valor7 = detalle.get_ventas_combustibles_producto(detalle.fecha,3,"tot")
+           valor8 = detalle.get_ventas_combustibles_producto(detalle.fecha,4,"tot")
+           valor9 = detalle.get_ventas_combustibles_producto(detalle.fecha,5,"tot")
+           valor10 = detalle.get_ventas_combustibles_producto(detalle.fecha,6,"tot")
+
+           row = []
+           row << nroitem.to_s
+           row << detalle.fecha.strftime("%d/%m/%Y")
+           row << sprintf("%.2f",valor1)
+           row << sprintf("%.2f",valor6)
+
+           row << sprintf("%.2f",valor2)
+           row << sprintf("%.2f",valor7)
+
+           row << sprintf("%.2f",valor3)
+           row << sprintf("%.2f",valor8)
+
+           row << sprintf("%.2f",valor4)
+           row << sprintf("%.2f",valor9)
+
+           row << sprintf("%.2f",valor5)
+           row << sprintf("%.2f",valor10)
+
+
+          total_glns    += valor1 + valor2 + valor3 + valor4 + valor5 
+          total_importe += valor6 + valor7 + valor8 + valor9 + valor10 
+
+          row << sprintf("%.2f",total_glns)
+          row << sprintf("%.2f",total_importe) 
+
+           table_content << row
+       
+           nroitem=nroitem + 1
+            total_1 +=  valor1.round(2) 
+            total_2 +=  valor2.round(2)  
+
+            total_3 +=  valor3.round(2)  
+            total_4 +=  valor4.round(2)  
+
+            total_5 +=  valor5.round(2)  
+            total_6 +=  valor6.round(2)  
+
+            total_7 +=  valor7.round(2)  
+            total_8 +=  valor8.round(2)  
+
+            total_9 +=  valor9.round(2)  
+            total_10 +=  valor10.round(2)  
+
+            total_11 += total_glns.round(2)  
+            total_12 += total_importe.round(2) 
+
+            total_glns = 0
+            total_importe = 0  
+       
+
+     end
+
+
+       row = []
+           row << "    "
+           row << "TOTALES "
+           row << sprintf("%.2f",total_1)
+           row << sprintf("%.2f",total_6)
+
+           row << sprintf("%.2f",total_2)
+           row << sprintf("%.2f",total_7)
+
+           row << sprintf("%.2f",total_3)
+           row << sprintf("%.2f",total_8)
+
+           row << sprintf("%.2f",total_4)
+           row << sprintf("%.2f",total_9)
+
+           row << sprintf("%.2f",total_5)
+           row << sprintf("%.2f",total_10)
+
+           row << sprintf("%.2f",total_11)
+           row << sprintf("%.2f",total_12) 
+
+
+           table_content << row
+
+     
+
+       pdf.table(header_text + tb + table_content ,{
+          :position => :center,
+          :width => pdf.bounds.width
+        })do
+            row(0).font_style = :bold
+
+            self.header = 2
+          end
+
+
+
+     pdf.move_down 10      
+     pdf
+
+   end
+
+
+   def build_pdf_footer_03(pdf)
+
+       pdf.text ""
+       pdf.text "" 
+       
+
+    end
+   
+
+###############################
+
   
 def reportes05
 
@@ -1404,28 +1651,32 @@ def reportes06
       else render action: "index"
     end
   end
+
 def reportes07
 
     @company=Company.find(1)          
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]    
-    @moneda = params[:moneda_id]    
+    @series = params[:option]    
 
-    @facturas_rpt = @company.get_ventas_directa(@fecha1,@fecha2)          
+    @facturas_rpt = @company.get_ventas_series(@fecha1,@fecha2, @series)          
     
     case params[:print]
       when "To PDF" then 
         begin 
-         render  pdf: "Facturas ",template: "facturas/rventas07_rpt.pdf.erb",
-         locals: {:facturass => @facturas_rpt},
-           :header => {
-           :spacing => 5,
-                           :html => {
-                     :template => 'layouts/pdf-header.html',
-                           right: '[page] of [topage]'
-                  }
-               }
-               
+          Prawn::Document.generate "app/pdf_output/rpt_ventas_3.pdf",
+           :page_layout => :landscape,:page_size=>"A4" do |pdf|        
+
+            pdf.font "Helvetica"
+            pdf = build_pdf_header_07(pdf)
+            pdf = build_pdf_body_07(pdf)
+            build_pdf_footer_07(pdf)
+            $lcFileName =  "app/pdf_output/rpt_ventas_3.pdf"              
+        end     
+        $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
+        send_file("app/pdf_output/rpt_ventas_3.pdf", :type => 'application/pdf', :disposition => 'inline')
+
+        
                
         end   
       when "To Excel" then render xlsx: 'reportes05'
@@ -1433,6 +1684,201 @@ def reportes07
       else render action: "index"
     end
   end
+
+
+###############################
+
+
+
+def build_pdf_header_07(pdf)
+
+
+    pdf.font "Helvetica" , :size => 8
+     image_path = "#{Dir.pwd}/public/images/logo-v1.jpg"
+
+   
+     
+      table_content = ([ [{:image => image_path, :rowspan => 3 }, 
+       {:content =>"SISTEMA DE GESTION INTEGRADO",:rowspan => 2, :valign => :center },"CODIGO ","NN"], 
+         ["VERSION: ","4"], 
+         ["REPORTE DE VENTAS  POR COMBUSTIBLE - SERIE - LIMA ","PAGINA : ","1 de 1 "] 
+        
+         ])
+       
+     
+      pdf.table(table_content  ,{
+          :position => :center,
+          :width => pdf.bounds.width
+        })do
+          columns([1,2]).font_style = :bold
+           columns([0]).width = 118.55
+           columns([1]).width = 451.34
+           columns([1]).align = :center
+           
+           columns([2]).width = 100
+         
+           columns([3]).width = 100
+     
+        end
+       
+        table_content2 = ([["FECHA : ",Date.today.strftime("%d/%m/%Y")]])
+
+        pdf.table(table_content2,{:position=>:right }) do
+
+           columns([0, 1]).font_style = :bold
+           columns([0, 1]).width = 100
+           
+        end 
+
+    
+          pdf.text "(1) del "+@fecha1+" al "+@fecha2
+        
+        pdf.move_down 2
+     
+     pdf 
+
+  
+
+ end   
+
+ def build_pdf_body_07(pdf)
+   
+   
+     pdf.font "Helvetica" , :size => 5
+
+     headers = []
+     table_content = []
+
+      Ventaisla::TABLE_HEADERS.each do |header|
+        cell = pdf.make_cell(:content => header)
+        cell.background_color = "FFFFCC"
+        headers << cell
+      end
+
+      table_content << headers
+
+     nroitem = 1
+     total_0 = 0
+     total_1 = 0
+     total_2 = 0
+     total_3 = 0 
+
+     cantidad = 0 
+
+
+
+     for detalle in @facturas_rpt
+
+           dscto1 = 0.00 
+
+           cantidad = detalle.get_galones 
+
+           row = []
+           row << nroitem.to_s
+           row << detalle.fecha.strftime("%d/%m/%Y")
+           row << detalle.document.tiposunat 
+           row << detalle.code
+           row << detalle.customer.name 
+           row << detalle.customer.ruc 
+           row << ""
+           row << detalle.get_producto
+           row << detalle.get_precio 
+           row << cantidad.round(2) 
+           row << sprintf("%.2f",detalle.subtotal.round(2) )
+           row << sprintf("%.2f",detalle.tax.round(2))
+    
+           row << sprintf("%.2f",dscto1 )
+           row << detalle.moneda.symbol
+
+           row << sprintf("%.2f",detalle.total.round(2))
+
+           table_content << row
+       
+           nroitem=nroitem + 1
+            
+            total_0 += cantidad.round(2) 
+            total_1 += detalle.subtotal.round(2)  
+            total_2 += detalle.tax.round(2) 
+            total_3 += detalle.total.round(2) 
+
+           
+
+     end
+
+
+       row = []
+           row << "    "
+           row << " "
+
+           row << ""
+           row << ""
+
+           row << ""
+           row << ""
+
+           row << ""
+           row << ""
+           
+           row << "TOTAL "
+         
+
+           row << total_0.round(2)
+           row << total_1.round(2)
+           row << total_2.round(2)
+           row << ""
+           row << ""
+           row << total_3.round(2)
+           
+            
+          
+          
+
+
+           table_content << row
+
+      
+      result = pdf.table table_content, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width
+                                        } do 
+                                          columns([0]).align=:center
+                                          columns([1]).align=:left
+                                          columns([2]).align=:left
+                                          columns([3]).align=:left
+                                          columns([4]).align=:left
+                                          columns([5]).align=:center  
+                                          columns([6]).align=:right
+                                          columns([7]).align=:right
+                                          columns([8]).align=:right
+                                          columns([9]).align=:right
+                                          columns([10]).align=:right
+                                          columns([11]).align=:right
+                                          columns([12]).align=:right
+                                          columns([13]).align=:right
+                                          columns([14]).align=:right
+                                          
+                                          
+                                        end                                          
+      
+
+     pdf.move_down 10      
+     pdf
+
+   end
+
+
+   def build_pdf_footer_07(pdf)
+
+       pdf.text ""
+       pdf.text "" 
+       
+
+    end
+   
+
+###############################
+
+
 
 def reportes08
 
@@ -1473,24 +1919,23 @@ def reportes09
     @fecha2 = params[:fecha2]    
     @moneda = params[:moneda_id]    
 
-    @facturas_rpt = @company.get_ventas_colaterales(@fecha1,@fecha2)          
+    @facturas_rpt = @company.get_ventas_combustibles(@fecha1,@fecha2)          
     
     
     case params[:print]
       when "To PDF" then 
         begin 
-         render  pdf: "Facturas ",template: "facturas/rventas09_rpt.pdf.erb",
-         locals: {:facturas => @facturas_rpt},
-         :orientation      => 'Landscape',
-         
-         :header => {
-           :spacing => 5,
-                           :html => {
-                     :template => 'layouts/pdf-header.html',
-                           right: '[page] of [topage]'
-                  }
-               }
-               
+          Prawn::Document.generate "app/pdf_output/rpt_ventas_2.pdf", :page_size=>"A4" do |pdf|        
+
+            pdf.font "Helvetica"
+            pdf = build_pdf_header_09(pdf)
+            pdf = build_pdf_body_09(pdf)
+            build_pdf_footer_09(pdf)
+            $lcFileName =  "app/pdf_output/rpt_ventas_2.pdf"              
+        end     
+        $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
+        send_file("app/pdf_output/rpt_ventas_2.pdf", :type => 'application/pdf', :disposition => 'inline')
+
                
         end   
       when "To Excel" then render xlsx: 'reporte09xls'
@@ -1498,6 +1943,222 @@ def reportes09
     end
   end
 
+
+
+###############################
+
+
+
+def build_pdf_header_09(pdf)
+
+
+    pdf.font "Helvetica" , :size => 8
+     image_path = "#{Dir.pwd}/public/images/logo-v1.jpg"
+
+   
+     
+      table_content = ([ [{:image => image_path, :rowspan => 3 }, 
+       {:content =>"SISTEMA DE GESTION INTEGRADO",:rowspan => 2, :valign => :center },"CODIGO ","NN"], 
+         ["VERSION: ","4"], 
+         ["REPORTE DE VENTAS COLATERALES - LIMA ","PAGINA : ","1 de 1 "] 
+        
+         ])
+       
+     
+      pdf.table(table_content  ,{
+          :position => :center,
+          :width => pdf.bounds.width
+        })do
+          columns([1,2]).font_style = :bold
+           columns([0]).width = 118.55
+           columns([1]).width = 244.73
+           columns([1]).align = :center
+           
+           columns([2]).width = 80
+         
+           columns([3]).width = 80
+     
+        end
+       
+        table_content2 = ([["FECHA : ",Date.today.strftime("%d/%m/%Y")]])
+
+        pdf.table(table_content2,{:position=>:right }) do
+
+           columns([0, 1]).font_style = :bold
+           columns([0, 1]).width = 100
+           
+        end 
+
+    
+          pdf.text "(1) del "+@fecha1+" al "+@fecha2
+        
+        pdf.move_down 2
+     
+     pdf 
+
+  
+
+ end   
+
+ def build_pdf_body_09(pdf)
+   
+   
+     pdf.font "Helvetica" , :size => 5
+
+     headers = []
+     table_content = []
+
+  
+
+   header_text = [[{content: "  ", colspan: 3,valign: :center },
+                      
+                      {content: "COLATERALES ",  colspan: 5,align: :center }
+                      
+                    ]]
+
+tb = [ [ "Nro.ITEM", "FECHA","COMBUSTIBLE ","REST.","LUBRICANTES","MARKET","PROMOCION","SUBTOTAL","TOTAL"]]
+
+
+
+     
+
+     nroitem = 1
+
+      valor1 = 0
+      valor2 = 0
+      valor3 = 0
+      valor4 = 0
+      valor5 = 0
+      valor6 = 0
+      valor7 = 0
+      valor8 = 0
+      valor9 = 0
+      valor10 = 0
+
+      total_1 =  0
+      total_2 =  0
+
+      total_3 =  0
+      total_4 =  0
+
+      total_5 =  0
+      total_6 =  0
+
+      total_7 =  0
+      total_8 =  0
+
+      total_9 =  0
+      total_10 =  0
+
+      total_11 =  0
+      total_12 =  0
+
+
+      total_glns =  0
+      total_importe =  0
+
+
+     for detalle in @facturas_rpt
+
+           valor1 = detalle.get_ventas_combustibles_producto2(detalle.fecha,"tot")
+
+           valor4 = detalle.get_ventas_market(detalle.fecha )
+           
+           valor6 = valor4 
+          
+
+           row = []
+           row << nroitem.to_s
+           row << detalle.fecha.strftime("%d/%m/%Y")
+           row << sprintf("%.2f",valor1)
+          
+
+           row << sprintf("%.2f",valor2)
+       
+
+           row << sprintf("%.2f",valor3)
+          
+
+           row << sprintf("%.2f",valor4)
+          
+
+           row << sprintf("%.2f",valor5)
+
+           row << sprintf("%.2f",valor6)
+
+      
+          total_importe += valor1 + valor2 + valor3 + valor4 + valor5 + valor6  
+
+        
+          row << sprintf("%.2f",total_importe) 
+
+           table_content << row
+       
+           nroitem=nroitem + 1
+            total_1 +=  valor1.round(2) 
+            total_2 +=  valor2.round(2)  
+
+            total_3 +=  valor3.round(2)  
+            total_4 +=  valor4.round(2)  
+
+            total_5 +=  valor5.round(2)  
+            total_6 +=  valor6.round(2)  
+
+            total_7 +=   total_importe.round(2)
+
+           
+            total_importe = 0  
+       
+
+     end
+
+
+           row = []
+           row << "    "
+           row << "TOTALES "
+           row << sprintf("%.2f",total_1)
+           row << sprintf("%.2f",total_2)
+
+           row << sprintf("%.2f",total_3)
+           row << sprintf("%.2f",total_4)
+
+           row << sprintf("%.2f",total_5)
+           row << sprintf("%.2f",total_6)
+
+           row << sprintf("%.2f",total_7)
+           
+
+           table_content << row
+
+     
+
+          pdf.table(header_text + tb + table_content ,{
+          :position => :center,
+          :width => pdf.bounds.width
+        })do
+            row(0).font_style = :bold
+
+            self.header = 2
+          end
+
+
+
+     pdf.move_down 10      
+     pdf
+
+   end
+
+
+   def build_pdf_footer_09(pdf)
+
+       pdf.text ""
+       pdf.text "" 
+       
+
+    end
+   
+
+###############################
 
 def reportes10
 

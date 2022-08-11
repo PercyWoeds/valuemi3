@@ -1,0 +1,111 @@
+
+
+
+
+<div class="mid_box bordered_right">
+
+
+  <h3>
+    Ventas 
+  </h3>
+
+    <p class="big">
+    <%= link_to "Registro de ventas", payrolls_path %>
+    </p>
+
+    <p class="big">
+       <%= link_to " Reporte de ventas de combustible ", "/companies/reports/rpt_facturas_3/#{@company.id}" %>
+    </p>
+
+
+    <p class="big">
+    <%= link_to "Reporte  de Ventas Colaterales ", "/companies/reports/rpt_facturas_4/#{@company.id}" %>
+    </p>
+
+ <h3>
+    Compras  
+  </h3>
+
+
+
+   <p class="big">
+    <%= link_to "Reportes de compras por productos de combustibles.  ", "/companies/reports/rpt_purchase2_all/#{@company.id}" %>
+  </p>
+
+
+    <p class="big">
+    <%= link_to "Reporte  de compras  Market", "/companies/reports/rpt_facturas_4/#{@company.id}" %>
+    </p>
+
+
+
+ <h3>
+    Arqueos 
+  </h3>
+
+
+ <p class="big">
+    <%= link_to "Parte  ", "/companies/reports/rpt_parte_1/#{@company.id}" %>
+  </p>
+  
+  <p class="big">
+    <%= link_to "Parte Diario Detalle ", "/companies/reports/rpt_parte_2/#{@company.id}" %>
+  </p>
+  
+
+     <p class="big">
+    <%= link_to "Parte mes Acumulado", "/companies/reports/rpt_parte_1/#{@company.id}" %>
+  </p>
+
+    <p class="big">
+    <%= link_to "Reporte de los vales de combustibles ", "/companies/reports/rpt_parte_4/#{@company.id}" %>
+  </p>
+
+  <p class="big">
+    <%= link_to "Reporte de cuenta corrientes personal", "/companies/reports/rpt_parte_1/#{@company.id}" %>
+  </p>
+
+
+</div>
+
+  
+<div class="mid_box">
+
+  <h3>
+    Kardex de Inventarios 
+  </h3>
+
+   <p class="big">
+    <%= link_to "Kardex de productos de combustible", "/companies/reports/rpt_parte_1/#{@company.id}" %>
+  </p>
+
+<p class="big">
+    <%= link_to "Kardex de productos de market ", "/companies/reports/rpt_parte_1/#{@company.id}" %>
+  </p>
+
+ 
+
+  
+  
+
+<p class="big">
+
+     <%= link_to "Reporte de Stock Valorizado", "/companies/reports/rpt_parte_1/#{@company.id}" %>
+  </p>
+  
+
+ <p class="big">
+  <%= link_to "Reporte de Inventario detallado Formato 13 ", "/companies/reports/rpt_calmacen8_pdf/#{@company.id}" %>
+  </p>
+
+
+<h3>
+    <%= image_tag("supplier_32.png", :class => "vmiddle") %>
+    <%= link_to "Factura Electronica - nubefact " , "www.nubefact.com"%>
+  </h3>
+  <p>
+     Agregar, editar or eliminar parametros detalle boleta 
+  </p>
+
+  
+</div>

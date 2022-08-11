@@ -140,7 +140,13 @@ class CompaniesController < ApplicationController
     @locations = Location.where(company_id: @company.id)
   end 
   
-  
+    def contab
+    @company = Company.find(params[:id])
+    set_company(@company)
+    
+    @pagetitle = @company[:name]
+    @locations = Location.where(company_id: @company.id)
+  end 
   
   # GET /companies/new
   # GET /companies/new.xml

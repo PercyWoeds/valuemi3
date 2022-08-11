@@ -16,7 +16,8 @@
     
     
     <td width="16%" align = "center"> Gas 95 </td>
-    
+
+    <td width="16%" align = "center"> Gas 98 </td>
     
     <td width="16%" align = "center"> Diesel 2 </td>
     
@@ -46,7 +47,9 @@
     
     <td width="8%"> Cantidad </td>
     <td width="8%"> Importe </td>
-    
+
+    <td width="8%"> Cantidad </td>
+    <td width="8%"> Importe </td>
   </tr>
   </table>
 
@@ -63,6 +66,17 @@
   
   <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
       <% nroitem = 1%>
+
+      <% valor1 = 0%>
+      <% valor2 = 0%>
+      <% valor3 = 0%>
+      <% valor4 = 0%>
+      <% valor5 = 0%>
+      <% valor6 = 0%>
+      <% valor7 = 0%>
+      <% valor8 = 0%>
+      <% valor9 = 0%>
+      <% valor10 = 0%>
       
       <% total_1 =  0%>
       <% total_2 =  0%>
@@ -75,49 +89,81 @@
       
       <% total_7 =  0%>
       <% total_8 =  0%>
+
+      <% total_9 =  0%>
+      <% total_10 =  0%>
+      
+      <% total_11 =  0%>
+      <% total_12 =  0%>
       
       
+      <% total_glns =  0%>
+      <% total_importe =  0%>
+
+
        <% for  detalle in @facturas_rpt   %>
                   <tr>
-                    <td width= "5%" align ="right"><%=  detalle.fecha.strftime("%d/%m/%Y") %></td>
+                    <td width= "5%" align ="right"> <%=  detalle.fecha.strftime("%d/%m/%Y") %></td>
+                   
+                    <% valor1 = detalle.get_ventas_combustibles_producto(detalle.fecha,2,"qty")%>
+                    <% valor2 = detalle.get_ventas_combustibles_producto(detalle.fecha,3,"qty")%>
+                    <% valor3 = detalle.get_ventas_combustibles_producto(detalle.fecha,4,"qty")%>
+                    <% valor4 = detalle.get_ventas_combustibles_producto(detalle.fecha,5,"qty")%>
+                    <% valor5 = detalle.get_ventas_combustibles_producto(detalle.fecha,6,"qty")%>
                     
-                    <% valor1 = detalle.get_ventas_combustibles_producto(detalle.id,1,"qty")%>
-                    <% valor2 = detalle.get_ventas_combustibles_producto(detalle.id,2,"qty")%>
-                    <% valor3 = detalle.get_ventas_combustibles_producto(detalle.id,3,"qty")%>
-                    
-                    <% valor6 = detalle.get_ventas_combustibles_producto(detalle.id,1,"tot")%>
-                    <% valor7 = detalle.get_ventas_combustibles_producto(detalle.id,2,"tot")%>
-                    <% valor8 = detalle.get_ventas_combustibles_producto(detalle.id,3,"tot")%>
+    
+                    <% valor6 = detalle.get_ventas_combustibles_producto(detalle.fecha,2,"tot")%>
+                    <% valor7 = detalle.get_ventas_combustibles_producto(detalle.fecha,3,"tot")%>
+                    <% valor8 = detalle.get_ventas_combustibles_producto(detalle.fecha,4,"tot")%>
+                    <% valor9 = detalle.get_ventas_combustibles_producto(detalle.fecha,5,"tot")%>
+                    <% valor10 = detalle.get_ventas_combustibles_producto(detalle.fecha,6,"tot")%>
                     
 
-                    <td width="8%" align ="right">  <%= sprintf("%.2f",valor2) %></td>
-                    <td width="8%" align ="right">  <%= sprintf("%.2f",valor7) %></td>
-                    
-                    <td width="8%" align ="right">  <%= sprintf("%.2f",valor3)  %></td>
-                    <td width="8%" align ="right">  <%= sprintf("%.2f",valor8) %></td>
-                    
                     <td width="8%" align ="right">  <%= sprintf("%.2f",valor1) %></td>
                     <td width="8%" align ="right">  <%= sprintf("%.2f",valor6) %></td>
                     
-                    <td width="8%" align ="right"> </td>
-                    <td width="8%" align ="right">  </td>
-    
+                    <td width="8%" align ="right">  <%= sprintf("%.2f",valor2)  %></td>
+                    <td width="8%" align ="right">  <%= sprintf("%.2f",valor7) %></td>
                     
-                    <td width = "8%" align ="right"><%= sprintf("%.3f",detalle.galones*-1)   %></td>
-                    <td width = "8%" align ="right"><%= sprintf("%.2f",detalle.importe*-1)   %></td>
+                    <td width="8%" align ="right">  <%= sprintf("%.2f",valor3) %></td>
+                    <td width="8%" align ="right">  <%= sprintf("%.2f",valor8) %></td>
+
+                    <td width="8%" align ="right">  <%= sprintf("%.2f",valor4) %></td>
+                    <td width="8%" align ="right">  <%= sprintf("%.2f",valor9) %></td>
+
+                    <td width="8%" align ="right">  <%= sprintf("%.2f",valor5) %></td>
+                    <td width="8%" align ="right">  <%= sprintf("%.2f",valor10) %></td>
+
+                    <% total_glns    += valor1 + valor2 + valor3 + valor4 + valor5 %>
+                    <% total_importe += valor6 + valor7 + valor8 + valor9 + valor10 %>
+                    
+                
+                    <td width = "8%" align ="right"><%= sprintf("%.3f",total_glns )   %></td>
+                    <td width = "8%" align ="right"><%= sprintf("%.2f",total_importe )   %></td>
                     </tr>
                     
-                    <% total_1 +=  valor2 %>
-                    <% total_2 +=  valor7 %>
+                    <% total_1 +=  valor1 %>
+                    <% total_2 +=  valor2 %>
                     
                     <% total_3 +=  valor3 %>
-                    <% total_4 +=  valor8 %>
+                    <% total_4 +=  valor4 %>
                     
-                    <% total_5 +=  valor1 %>
+                    <% total_5 +=  valor5 %>
                     <% total_6 +=  valor6 %>
+
+                    <% total_7 +=  valor7 %>
+                    <% total_8 +=  valor8 %>
+
+                    <% total_9 +=  valor9 %>
+                    <% total_10 +=  valor10 %>
                     
-                    <% total_7 +=  detalle.galones %>
-                    <% total_8 +=  detalle.importe %>
+                    <% total_11 += total_glns %>
+                    <% total_12 += total_importe %>
+
+                  <%  total_glns = 0 %>
+                  <%  total_importe = 0  %>
+
+
                     
                     
          <%end %>
@@ -135,15 +181,21 @@
           
           <td width = "8%" align ="right"><%= sprintf("%.3f",total_1)   %></td>
           <td width = "8%" align ="right"><%= sprintf("%.2f",total_2)   %></td>
+
           <td width = "8%" align ="right"><%= sprintf("%.3f",total_3)   %></td>
           <td width = "8%" align ="right"><%= sprintf("%.2f",total_4)   %></td>
+
           <td width = "8%" align ="right"><%= sprintf("%.3f",total_5)   %></td>
           <td width = "8%" align ="right"><%= sprintf("%.2f",total_6)   %></td>
-          <td width="8%"> </td>
-          <td width="8%">  </td>
-    
-          <td width = "8%" align ="right"><%= sprintf("%.2f",total_7*-1)   %></td>
-          <td width = "8%" align ="right"><%= sprintf("%.2f",total_8*-1)   %></td>
+
+          <td width = "8%" align ="right"><%= sprintf("%.3f",total_7)   %></td>
+          <td width = "8%" align ="right"><%= sprintf("%.2f",total_8)   %></td>
+          
+          <td width = "8%" align ="right"><%= sprintf("%.2f",total_9)   %></td>
+          <td width = "8%" align ="right"><%= sprintf("%.2f",total_10 )   %></td>
+
+          <td width = "8%" align ="right"><%= sprintf("%.2f",total_11)   %></td>
+          <td width = "8%" align ="right"><%= sprintf("%.2f",total_12)   %></td>
           
     </tr>
     

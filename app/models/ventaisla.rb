@@ -13,6 +13,35 @@ class Ventaisla < ActiveRecord::Base
 
     
     belongs_to :payroll 
+
+
+     TABLE_HEADERS3 = ["Item","Fecha",
+                      "Galones",
+                     "Soles",
+                     "Galones",
+                     "Soles",
+                     "Galones",
+                     "Soles",                                         
+                     "Galones",
+                     "Soles ",
+                     "Galones",
+                     "Soles ",
+                     "Galones",
+                     "Soles "
+                      ]
+
+
+     TABLE_HEADERS = ["Nro.Item","Fecha", "Tip", "Comprobante", "Cliente", "Documento",   "Placa",   
+     "Producto",    "Precio",  "Cant/Gls",    "Base Imp",    "Igv", "Dscto" ,  "Moneda",  "Importe"
+
+                      ]                 
+
+  TURNO1  = ["06:00:00", "13:59:59"]
+    TURNO2  = ["14:00:00", "21:59:59"]
+    TURNO30 = ["22:00:00", "23:59:59"]
+    
+    TURNO31 = ["00:00:00", "05:59:59"]
+    
     
     def self.import2(file)
           CSV.foreach(file.path, headers: true, encoding:'iso-8859-1:utf-8') do |row|
@@ -90,22 +119,32 @@ class Ventaisla < ActiveRecord::Base
         return ret
         
     end 
-def  get_ventas_combustibles_producto(isla,producto,value) 
+
+def  get_ventas_combustibles_producto(fecha,producto,value) 
     
     ret=0  
+     fecha1 = fecha.to_date 
+    ventaislas  = Ventaisla.where(["fecha >= ?  and fecha <=  ? " , "#{fecha1} 00:00:00","#{fecha1} 23:59:59"])
     
+  
     
-     facturas = VentaislaDetail.where(["ventaisla_id = ? and product_id = ?",isla,producto])
-    
-    if facturas
+    if ventaislas 
     ret=0  
-    for factura in facturas
-      if value == "qty"
-        ret+= factura.quantity * -1
-      else
-        ret += factura.total * -1 
-    
-      end
+   
+
+    for detalle in ventaislas
+      
+      venta_detalles = VentaislaDetail.where(["ventaisla_id = ? and product_id = ?",detalle.id , producto])
+
+
+      for detalle2 in venta_detalles 
+        if value == "qty"
+          ret += detalle2.quantity.round(2)
+        else
+          ret += detalle2.total.round(2)
+      
+        end
+      end 
     end
     
     end 
@@ -117,13 +156,70 @@ def  get_ventas_combustibles_producto(isla,producto,value)
     
  end 
  
+
+ def  get_ventas_combustibles_producto2(fecha,value) 
+    
+    ret=0  
+     fecha1 = fecha.to_date 
+    ventaislas  = Ventaisla.where(["fecha >= ?  and fecha <=  ? " , "#{fecha1} 00:00:00","#{fecha1} 23:59:59"])
+    
+  
+    
+    if ventaislas 
+   
+
+    for detalle in ventaislas
+      
+      venta_detalles = VentaislaDetail.where(["ventaisla_id = ? ",detalle.id ])
+
+
+      for detalle2 in venta_detalles 
+        if value == "qty"
+          ret += detalle2.quantity.round(2)
+        else
+          ret += detalle2.total.round(2)
+      
+        end
+      end 
+    end
+    
+    end 
+
+    return ret
+  
+    
+    return facturas
+    
+ end 
+
+
+
+
+  def  get_ventas_market(fecha) 
+
+
+    fecha1 = fecha.to_date
+    
+         facturas = Sellvale.find_by_sql(['Select sellvales.* from sellvales    
+     INNER JOIN products ON sellvales.cod_prod = products.code 
+     WHERE  sellvales.fecha >= ? 
+     and sellvales.fecha <= ? 
+      and substring(sellvales.serie,3,2) = ? 
+     ORDER BY sellvales.fecha', "#{fecha1} 00:00:00","#{fecha1} 23:59:59", "03" ])
+
+           if facturas
+               
+              ret=0  
+              for detalle in facturas
+                  ret += detalle.importe.to_f 
+             end 
+          end 
+    
+          return ret
+       
+  end 
  
-    TURNO1  = ["06:00:00", "13:59:59"]
-    TURNO2  = ["14:00:00", "21:59:59"]
-    TURNO30 = ["22:00:00", "23:59:59"]
-    
-    TURNO31 = ["00:00:00", "05:59:59"]
-    
+  
        
     
     def self.turno2( date )
