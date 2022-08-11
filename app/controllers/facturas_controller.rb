@@ -1416,7 +1416,6 @@ def build_pdf_header_03(pdf)
                   {content: " ", colspan: 1,valign: :center },
                       {content: "90 ",  colspan: 2, align: :center },
                       {content: "95 ",  colspan: 2,align: :center },
-                      {content: "98 ",  colspan: 2,align: :center },
                       {content: "D2 ",  colspan: 2,align: :center },
                       {content: "GLP ",  colspan: 2, align: :center },
                       {content: "TOTALES",  colspan: 2, align: :center }
@@ -1488,8 +1487,7 @@ tb = [ ["", "FECHA","GALONES","SOLES","GALONES ","SOLES ","GALONES ","SOLES", "G
            row << sprintf("%.2f",valor2)
            row << sprintf("%.2f",valor7)
 
-           row << sprintf("%.2f",valor3)
-           row << sprintf("%.2f",valor8)
+         
 
            row << sprintf("%.2f",valor4)
            row << sprintf("%.2f",valor9)
@@ -1540,9 +1538,6 @@ tb = [ ["", "FECHA","GALONES","SOLES","GALONES ","SOLES ","GALONES ","SOLES", "G
 
            row << sprintf("%.2f",total_2)
            row << sprintf("%.2f",total_7)
-
-           row << sprintf("%.2f",total_3)
-           row << sprintf("%.2f",total_8)
 
            row << sprintf("%.2f",total_4)
            row << sprintf("%.2f",total_9)
