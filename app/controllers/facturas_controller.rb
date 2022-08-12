@@ -6669,6 +6669,8 @@ def build_pdf_header9(pdf)
              row << a.name 
            end 
 
+           
+
            if orden.price_without_tax != nil
            row << orden.price_without_tax.round(4).to_s
            else 
@@ -6730,7 +6732,25 @@ def build_pdf_header9(pdf)
     end
    
 
-    
+    def editmultiple
+
+    if params[:products_ids] != nil 
+
+        @guiasselect = PurchaseDetail.find(params[:products_ids])      
+    end     
+  end
+  
+
+  def updatemultiple
+ 
+       PurchaseDetail.where(id: params[:products_ids]).update_all(params[:purchase_detail])
+        
+      flash[:notice] = "Cantidad actualizadas"
+      redirect_to  "/companies/purchases/1" 
+      
+  end
+
+
   private
   def factura_params
     params.require(:factura).permit(:company_id,:location_id,:division_id,:customer_id,

@@ -1,0 +1,30 @@
+
+
+
+
+<% if params[:field].blank? || params[:field] == "" %>
+<p>
+
+    <%= f.label :fecha1, "Fecha 1 *", :class => "bold" %>
+    <%= f.date_field :fecha1 %>
+
+    <%= f.label :qty1, "Cantidad 1 *", :class => "bold" %>
+    <%= f.number_field :qty1 ,:step => 0.01 %><br />
+  
+    <%= f.label :fecha2, "Fecha 2 *", :class => "bold" %>
+    <%= f.date_field :fecha2 %>
+
+    <%= f.label :qty2, "Cantidad 2 *", :class => "bold" %>
+    <%= f.number_field :qty2 ,:step => 0.01 %><br />
+  
+
+    <%= f.label :fecha3, "Fecha 3 *", :class => "bold" %>
+    <%= f.date_field :fecha3  %>
+
+    <%= f.label :qty3, "Cantidad 3 *", :class => "bold" %>
+    <%= f.number_field :qty3  ,:step => 0.01%>
+
+    
+</p>
+<% end %>
+

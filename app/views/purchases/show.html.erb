@@ -1,4 +1,4 @@
-<div class="breadcrumbs">
+  <div class="breadcrumbs">
   <%= link_to "My companies", "/companies" %> &raquo;
   <%= link_to @purchase.company.name, @purchase.company %> &raquo;
   <%= link_to "Compras", "/companies/purchases/#{@purchase.company.id}" %>
@@ -75,12 +75,32 @@
       <th>
         Asignar 
       </th>
+
+<th>
+        Fecha1
+      </th>
+<th>
+        Cant1 
+      </th>
+<th>
+        Fecha2 
+      </th>
+<th>
+        Cant2 
+      </th>
+<th>
+        Fecha3 
+      </th>
+<th>
+        Cant3 
+      </th>
+
       
     </tr>
   </thead>
   <tbody>
   
-  <%=  form_tag discontinue_facturas_path,method: :post  %>
+  <%=  form_tag editmultiple_facturas_path,method: :post  %>
   
     <% for productItem in @purchase.get_products() %>
       <tr>
@@ -104,10 +124,43 @@
         <td class="bordered_bottom bordered_right">
           <%= money(productItem.total) %>
         </td>
-
+        
         <td class="bordered_right bordered_bottom right">
             <%= check_box_tag "products_ids[]", productItem.id     %>
-        </td>          
+        </td> 
+                 
+
+          <% if productItem.fecha1 %>
+                  <td class="bordered_bottom bordered_right">
+                    <%= productItem.fecha1.strftime("%d/%m/%Y") %>
+                  </td>
+                  <td class="bordered_bottom bordered_right">
+                    <%= money(productItem.qty1) %>
+                  </td>
+          <% end %>
+           <% if productItem.fecha2 %>
+                  <td class="bordered_bottom bordered_right">
+                    <%= productItem.fecha2.strftime("%d/%m/%Y") %>
+                  </td>
+                  <td class="bordered_bottom bordered_right">
+                    <%= money(productItem.qty2) %>
+                  </td>
+          <% end %>
+
+         <% if productItem.fecha3 %>
+
+          <td class="bordered_bottom bordered_right">
+                  <%= productItem.fecha3.strftime("%d/%m/%Y") %>
+                </td>
+                <td class="bordered_bottom bordered_right">
+                  <%= money(productItem.qty3) %>
+          </td>
+
+               
+        <% end %>
+
+
+
       </tr>
     <% end %>
     
@@ -218,7 +271,9 @@
     
     <%end %>
     <% if @purchase.processed == "1"  %>
-    <%= link_to 'Asignar Cantidad', "/purchases/do_process2/#{@purchase.id}" %>
+     <%= select_tag :field, options_for_select([["Glns",""]]),:style => "width:70px" %>
+     <%= submit_tag "Asignar Cant." %>
+
     <%end %>
     
   

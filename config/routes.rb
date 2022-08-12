@@ -161,8 +161,13 @@ require 'sidekiq/web'
     collection { get :rpt_purchase2 }
 
     collection {get :rpt_facturas1_all }
+
+   collection do 
+      put :editmultiple      
+      put :updatemultiple      
+    end 
         
-  end 
+  end   
     
   
   resources :ventaislas  do
@@ -182,6 +187,10 @@ require 'sidekiq/web'
    resources :facturas do
     resources :factura_details, except: [:index,:show], controller: "facturas/facturas_details"
     collection { post :discontinue }
+    collection { post :editmultiple }
+    collection { post :updatemultiple }
+    
+
     collection do 
       put :discontinue 
     end 

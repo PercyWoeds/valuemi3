@@ -64,7 +64,7 @@
                   <% else %>
                   
 
-                    <% compras = product0.get_compras(@fecha,producto_value) %>
+                    <% compras = product0.get_compras20(@fecha,producto_value) %>
 
                     
 
@@ -488,7 +488,7 @@
        
       <tr>
         <td width= "50%" align ="left">
-        
+         <%=  productItem.bank_acount.bank.name   %>
         </td>
         
         <td width= "20%" align ="left">
@@ -531,10 +531,14 @@
        <% for productItem in bancos1 %>
        
       <tr>
-        <td width= "50%" align ="left">
-        
+        <td width= "40%" align ="left">
+         <%=  productItem.bank_acount.bank.name   %>
         </td>
-        
+
+
+         <td width= "10%" align ="left">
+         <%=  productItem.fecha1.strftime("%d/%m/%Y") %>
+        </td>
         <td width= "20%" align ="left">
           <%=  productItem.document.description    %>
         </td>

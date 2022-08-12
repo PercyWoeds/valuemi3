@@ -64,6 +64,62 @@ class Varillaje < ActiveRecord::Base
     return ret
  
  end 
+   
+ def  get_compras20(fecha,producto) 
+
+    
+   ret = 0
+    factura_detalle = PurchaseDetail.where(["fecha1 >= ? and fecha1 <= ?  and
+     product_id = ?","#{fecha} 00:00:00","#{fecha} 23:59:59",producto ])
+    for detalle in factura_detalle
+
+        if !detalle.qty1.nil?
+
+         ret += detalle.qty1.round(2)
+
+        else
+            ret += 0 
+        end 
+
+    end     
+
+
+    factura_detalle = PurchaseDetail.where(["fecha2 >= ? and fecha2 <= ?  and
+     product_id = ?","#{fecha} 00:00:00","#{fecha} 23:59:59",producto ])
+    for detalle in factura_detalle
+
+        if !detalle.qty2.nil?
+
+         ret += detalle.qty2.round(2)
+
+        else
+            ret += 0 
+        end 
+
+    end     
+
+    factura_detalle = PurchaseDetail.where(["fecha3 >= ? and fecha3 <= ?  and
+     product_id = ?","#{fecha} 00:00:00","#{fecha} 23:59:59",producto ])
+    for detalle in factura_detalle
+
+        if !detalle.qty3.nil?
+
+         ret += detalle.qty3.round(2)
+
+        else
+            ret += 0 
+        end 
+
+    end     
+
+
+
+    return ret
+ 
+ end 
+
+
+
 def  get_ticket_glp(fecha) 
 
      facturas = Ticket.where(["fecha >= ? and fecha <= ?   " , "#{fecha} 00:00:00","#{fecha} 23:59:59" ])
@@ -1075,7 +1131,7 @@ end
             if  producto  == 6  
            compras = self.get_ticket_glp(fechax)
             else 
-          compras = self.get_compras(fechax,producto)
+          compras = self.get_compras20(fechax,producto)
          end 
 
          if  producto  != 89    
