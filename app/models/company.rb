@@ -194,13 +194,14 @@
           end 
         end 
     
-        def actualizar_compras  
+        def actualizar_compras    
+
           @purchase = Purchase.all 
 
 
           for factura in @purchase
-            
-              f = PurchaseDetail.where(purchase_id: @purchase.id)
+
+              f = PurchaseDetail.where(purchase_id: factura.id)
             if f
 
               f.fecha1 = f.date1
