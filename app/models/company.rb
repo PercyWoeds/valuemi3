@@ -201,7 +201,7 @@
 
           for factura in @purchase
 
-              f = PurchaseDetail.where(purchase_id: factura.id)
+              f = PurchaseDetail.where(purchase_id: factura.id).first 
             if f
 
               f.fecha1 = factura.date1
