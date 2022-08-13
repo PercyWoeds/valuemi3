@@ -1131,7 +1131,7 @@ end
             if  producto  == 6  
            compras = self.get_ticket_glp(fechax)
             else 
-          compras = self.get_compras20(fechax,producto)
+           compras = self.get_compras20(fechax,producto)
          end 
 
          if  producto  != 89    
@@ -1146,15 +1146,7 @@ end
             afericion = self.get_afericion_total_dia_producto_qty(fechax,producto2)
             saldo =  inicial + compras - ventas_qty + afericion 
             dife =  varilla - saldo 
-            puts "datos..."
-            puts producto1 
-            puts inicial
-            puts varilla
-            puts compras
-            puts ventas_qty
-            puts afericion
-            puts saldo
-            puts dife 
+            
                 
           end 
         

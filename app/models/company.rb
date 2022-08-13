@@ -70,6 +70,8 @@
           return @facturas
           
        end
+
+
     
       def get_facturas_day_value(fecha1,fecha2,value = "total",moneda)
           
@@ -191,6 +193,26 @@
             end 
           end 
         end 
+    
+        def actualizar_compras  
+          @purchase = Purchase.all 
+
+
+          for factura in @purchase
+            
+              f = PurchaseDetail.where(purchase_id: @purchase.id)
+            if f
+
+              f.fecha1 = f.date1
+              f.qty1 = f.qty1 
+              f.save
+            
+            end 
+
+          end 
+
+        end 
+    
     
     
         def own(user)
