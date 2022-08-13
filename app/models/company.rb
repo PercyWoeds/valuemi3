@@ -205,7 +205,7 @@
             if f
 
               f.fecha1 = factura.date1
-              f.qty1 = factura.qty1 
+              f.qty1   = factura.quantity 
               f.save
             
             end 
