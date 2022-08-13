@@ -204,8 +204,8 @@
               f = PurchaseDetail.where(purchase_id: factura.id)
             if f
 
-              f.fecha1 = f.date1
-              f.qty1 = f.qty1 
+              f.fecha1 = factura.date1
+              f.qty1 = factura.qty1 
               f.save
             
             end 
