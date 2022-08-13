@@ -177,7 +177,7 @@
      <% venta_sobrante = 0 %>
      
      <% venta_efectivo = a.get_ventas_contometros_efectivo(@fecha) %>
-     <% venta_9 =  0 %>
+     <% venta_9 =   %>
      <% venta_10 = a.get_ventas_contometros_efectivo_market(@fecha) %>
      
      <% puts "ventas "%>
@@ -198,10 +198,12 @@
       <% venta_sobrante = 0  %>
 
      <% end %>
-     
+       
+     <% venta_9 = @company.get_parte_4_vale_total(@fecha,@fecha)%>
+    
      <% venta_3 =  a.get_ventas_contometros_tarjeta0(@fecha)  %> 
      
-     <% venta_4 =  a.get_ventas_contometros_creditos(@fecha) %>
+     <% venta_4 =  a.get_ventas_contometros_creditos(@fecha) - venta_9  %> 
      <% venta_4_1 =  a.get_ventas_contometros_creditos_productos(@fecha) %>
      
      <% venta_18 =  a.get_ventas_contometros_adelantado(@fecha) %>
@@ -230,14 +232,7 @@
      
      <% venta_17 =  0 %>
 
-     <%= puts venta_2 %>
-     <%= puts venta_3 %>
-     <%= puts venta_4 %>
-     <%= puts venta_9 %>
-     <%= puts venta_17 %>
-     <%= puts venta_18 %>
-     <%= puts venta_descuentos_facturas %>
-     <%= puts venta_descuentos_facturas_efe  %>
+  
      
      
      
@@ -259,8 +254,7 @@
      <% venta_11 = venta_1 - venta_12 - venta_7 %>
      
      <% total_gastos = a.get_gastos_varios(@fecha) %>
-     
-     
+    
      <hr>
      
      <%= venta_20  %>
@@ -296,7 +290,7 @@
             <td width= "25%" align ="left">   CONSUMO INTERNO            : </td>
             <td width= "25%" >                                 (-)</td>
             
-            <td width = "25%" align ="left">  &#9475;         :  </td>
+            <td width = "25%" align ="left">  &#9475;        CONSUMO INTERNO    :    </td>
             <td width = "25%" align ="right"> <%= sprintf("%.2f",venta_9)  %></td>
             
             </tr>
