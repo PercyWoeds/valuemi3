@@ -124,7 +124,6 @@ def reportes4
     
     
     
-    
     case params[:print]
       when "To PDF" then 
         begin 
@@ -6743,7 +6742,7 @@ def build_pdf_header9(pdf)
 
   def updatemultiple
  
-       PurchaseDetail.where(id: params[:products_ids]).update_all(params[:purchase_detail])
+     #  PurchaseDetail.where(id: params[:products_ids]).update_all(params[:purchase_detail])
         
       flash[:notice] = "Cantidad actualizadas"
       redirect_to  "/companies/purchases/1" 
