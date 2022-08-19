@@ -70,7 +70,7 @@ class PurchaseDetail < ActiveRecord::Base
   end
 
 
-def get_service(id) 
+  def get_service(id) 
     
     
       @itemproducts =  Servicebuy.find(id)
@@ -78,5 +78,8 @@ def get_service(id)
 
     return @itemproducts
   end
+
+  
+
 
 end

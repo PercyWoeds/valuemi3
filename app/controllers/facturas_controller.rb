@@ -1673,7 +1673,7 @@ def reportes07
         
                
         end   
-      when "To Excel" then render xlsx: 'reportes05'
+      when "To Excel" then render xlsx: 'rpt_facturas4_xls'
         
       else render action: "index"
     end
@@ -6547,7 +6547,7 @@ def rpt_facturas1_all
            send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
          
            end 
-       when "Excel" then render xlsx: 'rpt_facturas1_xls'
+       when "Excel" then render xlsx: 'rpt_facturas4_xls'
    
          
        else render action: "index"
@@ -6571,7 +6571,7 @@ def build_pdf_header9(pdf)
       table_content = ([ [{:image => image_path, :rowspan => 3 }, 
        {:content =>"SISTEMA DE GESTION INTEGRADO",:rowspan => 2, :valign => :center },"CODIGO ","NN"], 
          ["VERSION: ","4"], 
-         ["REPORTE DE FACTURAS - LIMA ","PAGINA : ","1 de 1 "] 
+         ["REPORTE DE COMPROBANTES DE COMPRAS  - LIMA ","PAGINA : ","1 de 1 "] 
         
          ])
        
@@ -6658,28 +6658,60 @@ def build_pdf_header9(pdf)
            row << $lcFecha.strftime("%d/%m/%Y")  
            row << ordencompra.date2.strftime("%d/%m/%Y")
            row << orden.quantity.to_s
+           row << ordencompra.get_qty_grifo.round(2).to_s
 
            if orden.product 
              row << orden.product.code
-             row << orden.product.name
+             row << orden.product.name2
            else
              a = orden.get_service(orden.product_id)
              row << a.code 
              row << a.name 
            end 
 
-           
+           row << ordencompra.get_moneda 
 
-           if orden.price_without_tax != nil
-           row << orden.price_without_tax.round(4).to_s
+
+
+
+           if ordencompra.moneda_id == 2
+             
+              ln_total = orden.total.round(2)
+              ln_percepcion = ordencompra.participacion.round(2)
+              ln_balance  = ordencompra.balance.round(2)
+
+                           ln_precio_sigv = orden.price_without_tax.round(4)
+             
            else 
+
+              fecha_cambio = ordencompra.date1.strftime("%Y-%m-%d")
+            
+
+              tipo_cambio = @company.get_dolar(fecha_cambio)
+              puts "tipo cambio "
+              puts tipo_cambio
+             
+              ln_total = orden.total * tipo_cambio 
+              ln_percepcion = ordencompra.participacion  * tipo_cambio 
+              ln_balance  = ordencompra.balance  * tipo_cambio 
+
+            
+                ln_precio_sigv = orden.price_without_tax * tipo_cambio 
+             
+           end 
+             
+           row << ln_precio_sigv.round(2)
+
            row << "0.00"
-           end  
-           row << " "
-           row << orden.total.round(2).to_s
-           row << $lcPercepcion
-           row << $lcBalance
+
+           row << ln_total.round(2).to_s
+           row << ln_percepcion.round(2).to_s
+           row << ln_balance.round(2).to_s
+
+
            row << ordencompra.payment.descrip
+
+
            table_content << row
        
            nroitem=nroitem + 1
@@ -6708,12 +6740,16 @@ def build_pdf_header9(pdf)
                                          columns([6]).width = 40
 
                                          columns([7]).align=:left 
-                                         columns([7]).width = 120
+                                         columns([7]).width = 50
 
                                          columns([8]).align=:right
                                          columns([9]).align=:right
                                          columns([10]).align=:right
                                          columns([11]).align=:right
+                                         columns([12]).align=:right
+                                         columns([13]).align=:right
+                                         columns([14]).align=:right
+                                         
                                        end
 
      pdf.move_down 10      
@@ -6737,7 +6773,7 @@ def build_pdf_header9(pdf)
 
         @guiasselect = PurchaseDetail.find(params[:products_ids])      
     end     
-  end
+    end
   
 
   def updatemultiple

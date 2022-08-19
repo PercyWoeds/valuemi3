@@ -117,14 +117,27 @@ TABLE_HEADERS2  = ["ITEM ",
                      "FEC.EMISION",
                      "FEC.RECEPCION",                     
                      "CANT.",
+                     "GRIFO",
                      "CODIGO",
                      "DESCRIPCION",
+                       "MON.",
                      "PRE.COSTO",
+                   
                      "DSCTO.",
                      "TOTAL",
                      "PERCEPCION",
                      "BALANCE",
                      "FORMA PAGO"]
+
+  def get_moneda
+
+      if self.moneda_id == 1
+        return "USD"
+      else 
+        return "S/."
+      end
+
+  end 
 
   def get_vencido
 
@@ -663,6 +676,40 @@ def get_tax3(items, supplier_id)
        return 0 
      end 
   end 
+
+  def get_qty_grifo
+      ret = 0
+
+      purchase_details = PurchaseDetail.where(purchase_id: self.id)
+    
+      for ip in purchase_details
+
+            if !ip.qty1.nil? 
+
+               ret += ip.qty1
+
+            end 
+            if !ip.qty2.nil? 
+
+               ret += ip.qty2
+
+            end 
+
+             if !ip.qty3.nil? 
+
+               ret += ip.qty3
+
+            end 
+
+       
+          
+      
+      end
+
+      return ret 
+
+
+  end
   
 
 end

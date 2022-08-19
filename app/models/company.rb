@@ -3673,8 +3673,18 @@
     
     
       def get_dolar(fecha1) 
-        @dolar = Tipocambio.find_by(["dia  >= ? and dia <= ? ", "#{fecha1} 00:00:00","#{fecha1} 23:59:59" ])
-        return @dolar 
+
+
+          if    @dolar = Tipocambio.where(["dia  >= ? and dia <= ? ", "#{fecha1} 00:00:00","#{fecha1} 23:59:59" ]).exists?
+            
+                @dolar = Tipocambio.where(["dia  >= ? and dia <= ? ", "#{fecha1} 00:00:00","#{fecha1} 23:59:59" ]).last
+            
+                 return @dolar.venta  
+          else
+                 return 0 
+
+          end
+
       end 
     
       def get_lgvs3(fecha1,fecha2)

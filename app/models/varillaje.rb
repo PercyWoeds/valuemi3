@@ -423,9 +423,6 @@ if facturas
 end 
 
 
-
-
-
 return ret
 
 end 
@@ -475,19 +472,82 @@ end
               @ventasdetail=  VentaislaDetail.select("sum(total) as importe",:product_id).where(:ventaisla_id=>detalle.id,:product_id => producto).group(:product_id)
     
               for detail in @ventasdetail 
+
              
                  ret += detail.importe.round(6)
+
       
               end 
       
          end 
      end 
 
+
+   if producto == 89
+        
+        facturas = Sellvale.where(["fecha >= ? and fecha <= ? and cod_prod = ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59","0983" ])
+
+        if facturas
+         
+            for detalle in facturas
+
+                 ret += detalle.importe.to_f.round(6)
+         
+            end 
+        end 
+           
+        facturas = Sellvale.where(["fecha >= ? and fecha <= ? and cod_prod = ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59","0000000000938" ])
+
+        if facturas
+
+           for detalle in facturas
+
+                ret += detalle.importe.to_f.round(6)
+
+           end 
+        end 
+
+   end 
+
      return ret 
 
 
 
   end 
+
+
+
+def  get_ventas_urea_soles(fecha) 
+     
+
+    ret = 0 
+    
+ facturas = Sellvale.where(["fecha >= ? and fecha <= ? and cod_prod = ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59","0983" ])
+
+ if facturas
+ 
+    for detalle in facturas
+
+         ret += detalle.importe.to_f.round(6)
+ 
+    end 
+end 
+   
+facturas = Sellvale.where(["fecha >= ? and fecha <= ? and cod_prod = ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59","0000000000938" ])
+
+if facturas
+
+   for detalle in facturas
+
+        ret += detalle.importe.to_f.round(6)
+
+   end 
+end 
+
+
+return ret
+
+end 
 
 
  def  get_salidas(fecha1,fecha2,producto) 
@@ -1128,7 +1188,7 @@ end
            inicial = wvar.inicial 
            varilla = wvar.varilla 
 
-            if  producto  == 6  
+         if  producto  == 6  
            compras = self.get_ticket_glp(fechax)
             else 
            compras = self.get_compras20(fechax,producto)
@@ -1139,8 +1199,6 @@ end
          else 
             ventas_qty = self.get_ventas_urea(fechax) 
          end
-
-            ventas_qty = self.get_ventas_22(fechax,producto)
 
 
             afericion = self.get_afericion_total_dia_producto_qty(fechax,producto2)
