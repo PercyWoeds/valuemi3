@@ -33,7 +33,7 @@ wb.styles do |s|
     
    
 
-    wb.add_worksheet(name: "Compras") do |sheet|
+    wb.add_worksheet(name: "Ventas") do |sheet|
 
 
 
@@ -71,21 +71,23 @@ wb.styles do |s|
             @days =  []
 
             @days = ["ITEM",
-                     "PROVEEDOR",
-                     "FACTURA",
-                     "FEC.EMISION",
-                     "FEC.RECEPCION",                     
-                     "CANT.",
-                     "GRIFO",
+                     "FECHA",
+                     "TIPO SUNAT",
+                     "DOCUMENTO",
+                     "CLIENTE  ",                     
+                     "RUC   .",
+                     "GLNS  ",
+                     
                      "CODIGO",
-                     "DESCRIPCION",
-                       "MON.",
+                     "MON.",
                      "PRE.COSTO",
-                     "DSCTO.",
-                     "TOTAL",
-                     "PERCEPCION",
-                     "BALANCE",
-                     "FORMA PAGO"]
+             
+                     "SUBTOTAL",
+                     
+                     "IGV",
+                     
+                     "TOTAL"
+                ]
 
 
     
@@ -136,84 +138,59 @@ wb.styles do |s|
         sum_qty = 0 
 
 
+       total_0 = 0
+       total_1 = 0
+       total_2 = 0
+       total_3 = 0
 
 
-            for ordencompra in @facturas_rpt
+     for detalle in @facturas_rpt
 
-                      $lcNumero    = ordencompra.documento     
-                      $lcFecha     = ordencompra.date1
-                      $lcProveedor = ordencompra.supplier.name 
-                      $lcPercepcion = ordencompra.participacion 
-                      $lcBalance    = ordencompra.balance.round(2).to_s 
+           dscto1 = 0.00 
 
-                   @orden_compra1  = @company.get_purchase_detalle(ordencompra.id)
+           cantidad = detalle.get_galones 
 
 
-                for  orden in @orden_compra1
-                      
+           
+            total_0 += cantidad.round(2) 
+            total_1 += detalle.subtotal.round(2)  
+            total_2 += detalle.tax.round(2) 
+            total_3 += detalle.total.round(2) 
 
-                       if orden.product 
-                         @lc_codigo = orden.product.code
-                         @lc_nombre =  orden.product.name2
-                       else
-                         a = orden.get_service(orden.product_id)
-                         @lc_codigo =  a.code 
-                         @lc_nombre =  a.name 
-                       end 
+            
+            sheet.add_row [nroitem,
+            detalle.fecha,
+            detalle.document.tiposunat ,
+            detalle.code,
+            detalle.customer.name ,
+            detalle.customer.ruc ,
+            "",
+            detalle.get_producto,
+             detalle.moneda.symbol,
+           
+            detalle.get_precio,
+            cantidad,
+            detalle.subtotal ,
+            detalle.tax,
+            0,
+            detalle.total 
+             ], 
 
+            :style => [cadena0,date0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,
+            currency,currency,currency,currency,currency,cadena0,currency]
 
-                       if ordencompra.moneda_id == 2
-                         
-                          ln_total = orden.total.round(2)
-                          ln_percepcion = ordencompra.participacion.round(2)
-                          ln_balance  = ordencompra.balance.round(2)
-                          ln_precio_sigv = orden.price_without_tax.round(4)
-                         
-                       else 
-
-                          fecha_cambio = ordencompra.date1.strftime("%Y-%m-%d")
-                        
-
-                          tipo_cambio = @company.get_dolar(fecha_cambio)
-                          
-                         
-                          ln_total = orden.total * tipo_cambio 
-                          ln_percepcion = ordencompra.participacion  * tipo_cambio 
-                          ln_balance  = ordencompra.balance  * tipo_cambio             
-                          ln_precio_sigv = orden.price_without_tax * tipo_cambio 
-                         
-                       end 
-
-                      
-                        sheet.add_row [nroitem,
-                        $lcProveedor,
-                        $lcNumero,
-                        $lcFecha,
-                        ordencompra.date2,
-                        orden.quantity,
-                        ordencompra.get_qty_grifo,
-                        prod_code,
-                        prod_name,
-                        ordencompra.get_moneda ,
-                        ln_precio_sigv,
-                        "",
-                        ln_total,
-                        ln_percepcion,
-                        ln_balance,
-                        ordencompra.payment.descrip ], 
-
-                        :style => [cadena0,cadena0,cadena0,date0,date0,currency,currency,cadena0,cadena0,currency,cadena0,currency,currency,currency,cadena0]
-
-                    
-                        nroitem=nroitem + 1
-                    end
-                    
-                end
-
-            end 
+        
+            nroitem=nroitem + 1
 
 
-    end
+
+     end
+
+
+ end 
+
+
+end
 
 
 
