@@ -3310,9 +3310,11 @@ def newfactura2
     days = @invoice.get_dias(params[:factura][:payment_id])
     @invoice[:fecha2] = @invoice[:fecha] + days.days     
 
+    @invoice[:code] = @invoice.get_maximo(params[:option],params[:factura][:document_id])
 
     
      parts = (@invoice[:code]).split("-")
+
      id = parts[0]
      numero2 = parts[1]
      

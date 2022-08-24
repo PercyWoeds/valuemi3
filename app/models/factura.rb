@@ -80,6 +80,59 @@ class Factura < ActiveRecord::Base
 
  
 
+ def get_maximo(serie,documento)
+
+    
+
+
+    case 
+
+     when serie == "1"
+
+      @serie = "FFF1"
+
+     when serie == "2"
+
+      @serie = "FF01"
+ 
+     when serie == "3"
+
+      @serie = "FF02"
+
+     when serie == "4"
+
+      @serie = "FF03"
+
+     when serie == "5"
+
+      @serie = "FF04"
+     when serie == "6"
+
+      @serie = "FF05"
+
+     when serie  == "7"
+
+      @serie = "FF06"
+
+
+     end 
+
+
+   #  options_for_select([["FFF1",1],["FF01",2],["FF02",3],["FF03",4],["FF04",5],["FF05",6],["FF06",7]], params[:option] ), class:"select") %>
+     
+
+
+
+
+    a= Factura.where("SUBSTRING(code,1,4) = ? and document_id = ?", @serie,documento).maximum("cast(substring(code,6,11) as int)")
+       if a.nil?
+        return  @serie + "-000001"
+      else
+        return  @serie  + "-"+ (a + 1).to_s.rjust(6, '0') 
+
+      end 
+ end 
+
 
 
   def self.to_csv(result)

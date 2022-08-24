@@ -3832,7 +3832,6 @@
            and  sellvales.cod_cli = ?
            order by fecha,serie,numero ',"#{fecha1} 00:00:00","#{fecha2} 23:59:59","N","06","00000000090" ])
            
-          
 
               ret=0  
               for detalle in @contado 

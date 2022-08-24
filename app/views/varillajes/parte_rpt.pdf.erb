@@ -178,8 +178,8 @@
      <% venta_custodia  =  a.get_ventas_contometros_efectivo0(@fecha) %>
 
      <% venta_efectivo = 0 %>
-     <% venta_faltante = 0 %>
-     <% venta_sobrante = 0 %>
+
+
      
      <% venta_efectivo = a.get_ventas_contometros_efectivo(@fecha) %>
      <% venta_9 =   %>
@@ -197,18 +197,20 @@
 
      <% if (venta_custodia - venta_2 - venta_10 + venta_descuentos_facturas_efe  ) < 0  %>
 
-     <% venta_faltante = 0   %>
-
+    
      <% else %>
-      <% venta_sobrante = 0  %>
+     
 
      <% end %>
        
      <% venta_9 = @company.get_parte_4_vale_total(@fecha,@fecha)%>
     
-     <% venta_3 =  a.get_ventas_contometros_tarjeta0(@fecha)  %> 
+     <% venta_3 =  a.get_ventas_contometros_tarjeta0(@fecha)   + a.get_ventas_contometros_tarjeta_urea(@fecha)%> 
      
-     <% venta_4 =  a.get_ventas_contometros_creditos(@fecha) - venta_9  %> 
+     <% venta_4 =  a.get_ventas_contometros_creditos(@fecha)  + a.get_ventas_contometros_creditos_urea(@fecha) %> 
+
+     <% puts  a.get_ventas_contometros_creditos(@fecha)   %>
+     <% puts a.get_ventas_contometros_creditos_urea(@fecha)   %>
      <% venta_4_1 =  a.get_ventas_contometros_creditos_productos(@fecha) %>
      
      <% venta_18 =  a.get_ventas_contometros_adelantado(@fecha) %>
@@ -224,12 +226,12 @@
      
     
      <% venta_12 =  a.get_ventas_contometros_calibracion(@fecha)  %>
-     <% venta_13 =  a.get_faltante_total_dia(@fecha,"1") %>
-     <% venta_14 =  a.get_faltante_total_dia(@fecha,"2") %>
+     <% venta_faltante =  a.get_faltante_total_dia(@fecha,"1") %>
+     <% venta_sobrante =  a.get_faltante_total_dia(@fecha,"2") %>
      
      
      <% venta_15 =  a.get_ventas_market(@fecha) + a.get_ventas_colaterales_efe(@fecha,"2") + a.get_ventas_colaterales_tar(@fecha,"2")  %>
-     <% venta_16 =  a.get_ventas_restaurant(@fecha)  + a.get_ventas_colaterales_efe(@fecha,"3") + a.get_ventas_colaterales_tar(@fecha,"3") %>
+     <% venta_16 =  a.get_ventas_urea(@fecha)  + a.get_ventas_colaterales_efe(@fecha,"3") + a.get_ventas_colaterales_tar(@fecha,"3") %>
      
      
      <% venta_19 =  a.get_ventas_contometros_tarjeta_productos(@fecha) %>
@@ -241,7 +243,7 @@
      
      
      
-     <% venta_5 =  venta_2 + venta_3 + venta_4 + venta_9  +venta_17 + venta_18   + venta_4_1 + venta_19 + venta_20 + venta_10  %>
+     <% venta_5 =  venta_2 + venta_3 + venta_4 + venta_9  +venta_17 + venta_18   + venta_4_1 + venta_19 + venta_20 + venta_10 + venta_faltante + venta_sobrante  %>
      
      <% venta_8 =  venta_1 + venta_15 + venta_16 - venta_12 + venta_descuentos_facturas  +venta_descuentos_facturas_efe %>
      
@@ -351,7 +353,7 @@
             </tr>
             
             <tr>
-            <td width= "25%" align ="left">  RESTAURANTE            : </td>
+            <td width= "25%" align ="left">  UREA     : </td>
             <td width= "25%" >  <%=   sprintf("%.2f",venta_16)  %>                              </td>
             
             <td width = "25%" align ="left">  &#9475;  VENTA ADELANTADA :  </td>
