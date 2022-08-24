@@ -911,7 +911,7 @@ end
      and sellvales.fecha >= ? 
      and sellvales.fecha <= ? 
      and td = ? and cod_tar = ? 
-     and  sellvales.cod_cli = ?
+     and  sellvales.cod_cli <> ?
      ORDER BY sellvales.fecha', "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","06" ,"00000000090"])
      
      
