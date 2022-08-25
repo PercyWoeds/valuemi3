@@ -44,6 +44,23 @@ class CustomerPaymentsController < ApplicationController
   end 
   
 
+  def do_anular
+    @invoice = CustomerPayment.find(params[:id])
+
+   
+
+    @invoice[:processed] = "2"
+    @invoice.anular 
+
+
+    
+    flash[:notice] = "Documento a sido anulado."
+    
+    ActionCorreo.notify_followers2(@user.email, @user,@invoice.code ).deliver_now
+    
+
+  end
+  
 
   def registrar
         

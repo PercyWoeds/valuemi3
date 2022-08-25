@@ -35,5 +35,20 @@ class ActionCorreo < ApplicationMailer
 
 	  end
 
+	  def notify_followers2(mail,user,compro)
+		   @user=user		
+		   @comprobante = compro 	
+		   @url  = 'http://www.valuemi.com.pe'
+		
+        
+         
+		  email_with_name = "Cuentas por pagar <percywoeds@gmail.com>"	
+		 
+		   
+
+
+		  mail(to: [mail], cc:email_with_name, subject: 'Anulacion de Comprobante CCPP : ' )
+
+	  end
 
 end

@@ -212,7 +212,10 @@
       <td class="bordered_bottom bordered_right bold right">
         <%= money(@invoice.total) %>
       </td>
+
+
     </tr>
+    
   </tbody>
 </table>
 <br />
@@ -470,7 +473,21 @@
       <td class="bordered_bottom bordered_right bold right">
         <%= money(@invoice.total) %>
       </td>
+   </tr>
+      <tr>
+      <td colspan="5" class="bordered_bottom bordered_right bold">
+        Saldo a pagar:
+      </td>
+
+
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@invoice.balance ) %>
+      </td>
+
+      
     </tr>
+
+ 
     
 </table>
 </tbody>

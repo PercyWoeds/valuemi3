@@ -167,6 +167,39 @@ end
  end 
  
  
+def anular
+    if(self.processed == "2" )          
+      self.processed="2"
+      self.total  = 0
+     
+      
+      self.date_processed = Time.now
+      self.save
+
+
+          items = CustomerPaymentDetail.where(:customer_payment_id => self.id)
+          for f in items
+                importe = f.total
+                ajuste = f.ajuste        
+                compen =  f.compen
+                
+                factura = Factura.find(f.factura_id)            
+                #@newbalance= factura.balance + importe -ajuste +compen  cambiado x solicutd andrea 3-6-17
+                @newbalance= factura.balance + importe
+                factura.balance = @newbalance
+                factura.save
+                
+          end 
+
+
+    end
+
+
+
+    
+  end 
+
+
  def get_cliente_customer_payment(id)
 
     @itemproducts = CustomerPaymentDetail.find_by_sql(['Select customer_payment_details.total,
@@ -192,7 +225,7 @@ end
  end 
 
  def get_customer_payment_value(value)
-    invoices = CustomerPaymentDetail.where(["customer_payment_id = ?", self.id])
+    invoices = CustomerPaymentDetail.where(["customer_payment_id = ? ", self.id])
     ret = 0
     
     for invoice in invoices
@@ -422,17 +455,43 @@ def get_payments2(tipoventa)
   
   def get_processed
     if(self.processed == "1")
-      return "Procesado"
-    else
-      return "No procesado"
+      return "Aprobado "
+
+    elsif (self.processed == "2")
+      
+      return "**Anulado **"
+
+    elsif (self.processed == "3")
+
+      return "**Cancelado  **"  
+
+    elsif (self.processed == "4")
+
+      return "**Atendido  **" 
+    else   
+      return "Not yet processed"
+        
     end
   end
   
   def get_processed_short
-    if(self.processed == "1")
-      return "Si"
-    else
-      return "No"
+     if(self.processed == "1")
+      return "Aprobado "
+
+    elsif (self.processed == "2")
+      
+      return "**Anulado **"
+
+    elsif (self.processed == "3")
+
+      return "**Cancelado  **"  
+
+    elsif (self.processed == "4")
+
+      return "**Atendido  **" 
+    else   
+      return "Not yet processed"
+        
     end
   end
   

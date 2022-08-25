@@ -192,18 +192,31 @@
       <td colspan="5" class="bordered_bottom bordered_right bold">
         Total:
       </td>
+      <% if @customerpayment.processed == "1"%>
+
       <td class="bordered_bottom bordered_right bold right">
          <%= money(@customerpayment.get_customer_payment_value("total") - @customerpayment.get_customer_payment_value("factory")+@customerpayment.get_customer_payment_value("compen")+ @customerpayment.get_customer_payment_value("ajuste")) %>
       </td>
+      <% else %>
+      <%=  0.00 %>
+      <% end %>
+
     </tr>
     
     <tr>
       <td colspan="5" class="bordered_bottom bordered_right bold">
         Diferencia:
       </td>
+
+        <% if @customerpayment.processed == "1"%>
       <td class="bordered_bottom bordered_right bold right">
         <%=money(@customerpayment.total+ @customerpayment.get_customer_payment_value("factory")-@customerpayment.get_customer_payment_value("compen")-@customerpayment.get_customer_payment_value("ajuste")- @customerpayment.get_customer_payment_value("total")) %>
       </td>
+ <% else %>
+      <%=  0.00 %>
+      <% end %>
+
+
     </tr>
     
  
@@ -226,15 +239,19 @@
 <%= hr() %>
 
 <div class="button">
-  <%= link_to 'Exportar to PDF', "/customer_payments/pdf/#{@customerpayment.id}.pdf" %>  
   
  <% if @customerpayment.processed == "1" %> 
+<%= link_to 'Anular', "/customer_payments/do_anular/#{@customerpayment.id}" %>
 
+<%= link_to 'Exportar to PDF', "/customer_payments/pdf/#{@customerpayment.id}.pdf" %>  
+  
  <% %>
 
  <% else %>
-
+   
+<% if @customerpayment.processed == "0" or @customerpayment.processed.nil? %> 
   <%= link_to 'Procesar', "/customer_payments/do_process/#{@customerpayment.id}" %>
+ <% end %> 
 
  <% end %> 
   
