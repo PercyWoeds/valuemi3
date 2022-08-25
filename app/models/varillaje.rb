@@ -935,6 +935,33 @@ end
  end 
 
 
+ def  get_ventas_combustibles_creditos(fecha) 
+     
+   facturas = Sellvale.find_by_sql(['Select sellvales.* from sellvales    
+     INNER JOIN products ON sellvales.cod_prod = products.code 
+     WHERE products.products_category_id = 1 
+     and sellvales.fecha >= ? 
+     and sellvales.fecha <= ? 
+     and td = ? and cod_tar = ?
+     and cod_cli <> ? 
+     ORDER BY sellvales.fecha', "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","06","00000000090" ])
+     
+     
+  #facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ?  and tipo = ?" , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","1" ])
+     
+     
+     if facturas
+         
+        ret=0  
+        for detalle in facturas
+            ret += detalle.importe.to_f 
+
+       end 
+    end 
+
+    return ret
+ 
+ end 
 
  def  get_ventas_contometros_efectivos(fecha) 
      
@@ -971,6 +998,32 @@ end
    facturas = Sellvale.find_by_sql(['Select sellvales.* from sellvales    
      INNER JOIN products ON sellvales.cod_prod = products.code 
      WHERE products.products_category_id = 3 
+     and sellvales.fecha >= ? 
+     and sellvales.fecha <= ? 
+      and cod_tar = ?
+      and cod_cli <> ?
+     ORDER BY sellvales.fecha', "#{fecha} 00:00:00","#{fecha} 23:59:59","06","00000000090" ])
+     
+  #facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ?  and tipo = ?" , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","1" ])
+     
+     if facturas
+         
+        ret=0  
+        for detalle in facturas
+            ret += detalle.importe.to_f  
+       end 
+    end 
+
+    return ret
+ 
+ end 
+
+
+  def  get_ventas_contometros_creditos_productos0(fecha) 
+     
+   facturas = Sellvale.find_by_sql(['Select sellvales.* from sellvales    
+     INNER JOIN products ON sellvales.cod_prod = products.code 
+     WHERE products.products_category_id <> 1 
      and sellvales.fecha >= ? 
      and sellvales.fecha <= ? 
       and cod_tar = ?

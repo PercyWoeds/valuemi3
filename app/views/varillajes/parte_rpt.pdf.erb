@@ -207,11 +207,44 @@
     
      <% venta_3 =  a.get_ventas_contometros_tarjeta0(@fecha)   + a.get_ventas_contometros_tarjeta_urea(@fecha)%> 
      
+
+     <% if  @fecha >= "2022-07-31 23:59:59" %>
+
+
      <% venta_4 =  a.get_ventas_contometros_creditos(@fecha)  + a.get_ventas_contometros_creditos_urea(@fecha) %> 
+
+
 
      <% puts  a.get_ventas_contometros_creditos(@fecha)   %>
      <% puts a.get_ventas_contometros_creditos_urea(@fecha)   %>
      <% venta_4_1 =  a.get_ventas_contometros_creditos_productos(@fecha) %>
+
+          <% venta_15 =  a.get_ventas_market(@fecha) + a.get_ventas_colaterales_efe(@fecha,"2") + a.get_ventas_colaterales_tar(@fecha,"2")  %>
+
+     
+     <% venta_16 =  a.get_ventas_urea(@fecha)  + a.get_ventas_colaterales_efe(@fecha,"3") + a.get_ventas_colaterales_tar(@fecha,"3") %>
+
+
+     <% else %>
+
+
+       <% venta_4 =  a.get_ventas_combustibles_creditos(@fecha)   %> 
+
+
+
+     <% puts  a.get_ventas_combustibles_creditos(@fecha)   %>
+     <% puts a.get_ventas_contometros_creditos_urea(@fecha)   %>
+
+
+     <% venta_4_1 =  a.get_ventas_contometros_creditos_productos0(@fecha) %>
+
+      <% venta_15 =  a.get_ventas_market(@fecha) + a.get_ventas_urea(@fecha)  %>
+
+     
+     <% venta_16 =  0 %>
+
+
+     <% end %>
      
      <% venta_18 =  a.get_ventas_contometros_adelantado(@fecha) %>
      
@@ -230,8 +263,7 @@
      <% venta_sobrante =  a.get_faltante_total_dia(@fecha,"2") %>
      
      
-     <% venta_15 =  a.get_ventas_market(@fecha) + a.get_ventas_colaterales_efe(@fecha,"2") + a.get_ventas_colaterales_tar(@fecha,"2")  %>
-     <% venta_16 =  a.get_ventas_urea(@fecha)  + a.get_ventas_colaterales_efe(@fecha,"3") + a.get_ventas_colaterales_tar(@fecha,"3") %>
+
      
      
      <% venta_19 =  a.get_ventas_contometros_tarjeta_productos(@fecha) %>
@@ -354,7 +386,9 @@
             
             <tr>
             <td width= "25%" align ="left">  UREA     : </td>
-            <td width= "25%" >  <%=   sprintf("%.2f",venta_16)  %>                              </td>
+            <td width= "25%" >  <%=   sprintf("%.2f",venta_16)  %>   
+
+                                       </td>
             
             <td width = "25%" align ="left">  &#9475;  VENTA ADELANTADA :  </td>
             <td width = "25%" align ="right">   <%=   sprintf("%.2f",venta_18)  %>                              </td>
