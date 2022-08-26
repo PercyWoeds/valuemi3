@@ -667,7 +667,7 @@ class Factura < ActiveRecord::Base
           if @factura.moneda_id == 1 
            @moneda_nube = 2
           else
-                @moneda_nube = 1
+           @moneda_nube = 1
           end
          
                 @texto_obs = @factura.guia + " " + @factura.description 
@@ -676,10 +676,20 @@ class Factura < ActiveRecord::Base
 
           if @factura.detraccion_importe  > 0.0
             puts " ** detraccion********************************************"
-              @detraccion_tipo  =  "25"
-              @detraccion_total =  @factura.detraccion_importe
+              @detraccion_tipo  =  "35"
+              
+              if @factura.moneda_id == 1 
+                  @detraccion_total =  @factura.detraccion_importe * @factura.get_tipocambio(@factura.fecha) 
+                  
+
+              else 
+                  @detraccion_total =  @factura.detraccion_importe
+              end 
+
+
               @medio_de_pago_detraccion = "1" 
               @detraccion_porcentaje = @factura.detraccion_percent
+
 
             # create a new Invoice object
             invoice = NubeFact::Invoice.new({
@@ -687,7 +697,7 @@ class Factura < ActiveRecord::Base
                 "tipo_de_comprobante"               => "1",
                 "serie"                             =>  @serie,
                 "numero"                            =>  @numero ,
-                "sunat_transaction"                 => "33",
+                "sunat_transaction"                 => "30",
                 "cliente_tipo_de_documento"         => "6",
                 "cliente_numero_de_documento"       => @factura.customer.ruc ,
                 "cliente_denominacion"              => @factura.customer.name ,
@@ -698,7 +708,7 @@ class Factura < ActiveRecord::Base
                 "fecha_de_emision"                  => @fecha_emision,
                 "fecha_de_vencimiento"              => @fecha_vmto ,
                 "moneda"                            => @moneda_nube,
-                "tipo_de_cambio"                    => "",
+                "tipo_de_cambio"                    => @factura.get_tipocambio(@factura.fecha),
                 "porcentaje_de_igv"                 => "18.00",
                 "descuento_global"                  => "",
                 "total_descuento"                   => "",
@@ -734,14 +744,14 @@ class Factura < ActiveRecord::Base
                 "detraccion_total"                 => @detraccion_total,
                 "detraccion_porcentaje"            => @detraccion_porcentaje,
                 "medio_de_pago_detraccion"         => @medio_de_pago_detraccion,
-                "ubigeo_origen"                    => "150101",
-                "direccion_origen"                 => "CARR. A VENTANILLA KM 25 PROV.CONT.CALLAO - VENTANILLA",
-                "ubigeo_destino"                   => "150134",
-                "direccion_destino"                =>  @factura.texto1,
-                 "detalle_viaje"  => "Transporte de Combustible",
-                 "val_ref_serv_trans"  => "1.00",
-                 "val_ref_carga_efec"  => "1.00",
-                 "val_ref_carga_util"  => "1.00"
+                "ubigeo_origen"                    => ""
+                "direccion_origen"                 => "",
+                "ubigeo_destino"                   => "",
+                "direccion_destino"                =>  "",
+                 "detalle_viaje"  => "",
+                 "val_ref_serv_trans"  => "",
+                 "val_ref_carga_efec"  => "",
+                 "val_ref_carga_util"  => ""
                
             })
 
@@ -1812,6 +1822,23 @@ result = invoice.deliver
     end 
   end  
 
+
+  def get_tipocambio(fecha1)
+
+      
+      fecha0 = fecha1.to_date 
+
+
+
+      @tipocambio = Tipocambio.where("dia>=? and dia<=?","#{fecha0} 00:00:00","#{fecha0} 23:59:59")
+
+
+      if @tipocambio.last != nil  
+        return @tipocambio.last.venta
+      else
+        return 0.00
+      end 
+   end 
 
   
 end
