@@ -20,15 +20,12 @@
       
         <div class="field">
           <%= f.label :fecha1, "Fecha*", :class => "bold" %><br />
-          <%= f.date_field :fecha1, value: Time.now.strftime("%d/%m/%Y") ,:class => "input.tf_short" %>
+          <%= f.date_field :fecha1, value:  Date.today  %>
         </div>
 
         </td>
         <td>  
-        <div class="field">
-          <%= f.label :code, "Code*", :class => "bold" %><br />
-          <%= f.text_field :code, :onclick => "$(this).select();" %>
-        </div>
+        
     
   
     <div class="field">

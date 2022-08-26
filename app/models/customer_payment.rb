@@ -524,6 +524,48 @@ def get_payments2(tipoventa)
       return "red"
     end
   end
+ def get_maximo(serie)
+
+    
+
+
+    case 
+
+     when serie == "1"
+
+      @serie = "1"
+
+     when serie == "2"
+
+      @serie = "2"
+ 
+    
+
+     end 
+
+
+   #  options_for_select([["FFF1",1],["FF01",2],["FF02",3],["FF03",4],["FF04",5],["FF05",6],["FF06",7]], params[:option] ), class:"select") %>
+     
+    a= CustomerPayment.where("SUBSTRING(code,1,1) = ? ", @serie).maximum("cast(substring(code,3,8) as int)")
+       if a.nil?
+        return  @serie + "-000001"
+      else
+        return  @serie  + "-"+ (a + 1).to_s.rjust(6, '0') 
+
+      end 
+ end 
+
+
+
+    def self.search(search)
+      # Title is for the above case, the OP incorrectly had 'name'
+      where("code LIKE ? ","%#{search}%")
+    end
+
+
+
+
+
 end
 
 

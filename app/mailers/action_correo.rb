@@ -42,12 +42,12 @@ class ActionCorreo < ApplicationMailer
 		
         
          
-		  email_with_name = "Cuentas por pagar <percywoeds@gmail.com>"	
+		  email_with_name = "Cuentas por pagar <controinterno@valuemi.com.pe>"	
 		 
 		   
 
 
-		  mail(to: [mail], cc:email_with_name, subject: 'Anulacion de Comprobante CCPP : ' )
+		  mail(to: [mail], cc:email_with_name, subject: 'WDS- Valuemi - Anulacion de Comprobante Cancelacion cuentas por pagar : ' )
 
 	  end
 

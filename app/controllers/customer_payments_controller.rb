@@ -47,7 +47,7 @@ class CustomerPaymentsController < ApplicationController
   def do_anular
     @invoice = CustomerPayment.find(params[:id])
 
-   
+    @user = User.find(current_user.id)
 
     @invoice[:processed] = "2"
     @invoice.anular 
@@ -291,16 +291,7 @@ class CustomerPaymentsController < ApplicationController
     redirect_to @customerpayment
   end
   # Process an customerpayment
-  def do_anular
-    @customerpayment = CustomerPayment.find(params[:id])
-    @customerpayment[:processed] = "2"
-    
-    @customerpayment.anular 
-    
-    flash[:notice] = "The customerpayment order has been anulado."
-    redirect_to @customerpayment
-  end
-  
+ 
   # Do send customerpayment via email
   def do_email
     @customerpayment = CustomerPayment.find(params[:id])
@@ -422,68 +413,40 @@ class CustomerPaymentsController < ApplicationController
     @pagetitle = "#{@company.name} - customerpayments"
     @filters_display = "block"
     
-    @locations = Location.where(company_id: @company.id).order("name ASC")
-    @divisions = Division.where(company_id: @company.id).order("name ASC")
     
-    if(params[:location] and params[:location] != "")
-      @sel_location = params[:location]
-    end
-    
-    if(params[:division] and params[:division] != "")
-      @sel_division = params[:division]
-    end
-  
+   
     if(@company.can_view(current_user))
-      if(params[:ac_documentos] and params[:ac_documentos] != "")
-        @customer = customer.find(:first, :conditions => {:company_id => @company.id, :name => params[:ac_customer].strip})
+   
+
         
-        if @customer
-          @customerpayments = customerpayment.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :customer_id => @customer.id}, :order => "id DESC")
-        else
-          flash[:error] = "We couldn't find any customerpayments for that customer."
-          redirect_to "/companies/customerpayments/#{@company.id}"
-        end
-      elsif(params[:customer] and params[:customer] != "")
-        @customer = Customer.find(params[:customer])
-        
-        if @customer
-          @customerpayments = CustomerPayment.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :customer_id => @customer.id}, :order => "id DESC")
-        else
-          flash[:error] = "We couldn't find any customerpayments for that customer."
-          redirect_to "/companies/customerpayments/#{@company.id}"
-        end
-      elsif(params[:location] and params[:location] != "" and params[:division] and params[:division] != "")
-        @customerpayments = CustomerPayment.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :location_id => params[:location], :division_id => params[:division]}, :order => "code DESC")
-      elsif(params[:location] and params[:location] != "")
-        @customerpayments = CustomerrPayment.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :location_id => params[:location]}, :order => "code DESC")
-      elsif(params[:division] and params[:division] != "")
-        @customerpayments = CustomerPayment.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :division_id => params[:division]}, :order => "code DESC")
-      else
-        if(params[:q] and params[:q] != "")
-          fields = ["description", "comments", "code"]
+          @customerpayments = CustomerPayment.order("fecha1 desc,code  desc").paginate(:page => params[:page])
 
-          q = params[:q].strip
-          @q_org = q
+                  
+            search = params[:search]
+            
 
-          query = str_sql_search(q, fields)
-
-          @customerpayments = CustomerPayment.paginate(:page => params[:page], :order => 'code DESC', :conditions => ["company_id = ? AND (#{query})", @company.id])
-        else
-
-          @customerpayments = CustomerPayment.where(company_id:  @company.id).order("id DESC").paginate(:page => params[:page])
-         #@customerpayments = CustomerPayment.find_by_sql("Select * from Customer_Payments ")
-          respond_to do |format|
+            unless params[:search].blank?
+            
+              @customerpayments = CustomerPayment.find_by_sql(['Select customer_payments.* 
+                      from customer_payments
+                      where customer_payments.code ilike ?',"%#{search}%" ] ).paginate(:page => params[:page])
+            end
+            
+           respond_to do |format|
               format.html
               format.csv { send_data @customerpayments.to_csv }
               
-            end         
-          @filters_display = "none"
-        end
-      end
+            end     
+
+
+         
+
+
     else
       errPerms()
     end
-  end
+  
+end
   
   # GET /customerpayments
   # GET /customerpayments.xml
@@ -492,7 +455,8 @@ class CustomerPaymentsController < ApplicationController
     @companies = Company.where(user_id: current_user.id).order("name")
     @path = 'customerpayments'
     @pagetitle = "customerpayments"
-    
+
+         
     respond_to do |format|
      format.html
      end
@@ -522,7 +486,7 @@ class CustomerPaymentsController < ApplicationController
     @action_txt = "Create"
     
     @customerpayment = CustomerPayment.new
-    @customerpayment[:code]="#{generate_guid8()}"  
+     
     @customerpayment[:processed] = false
       
     @company = Company.find(params[:company_id])
@@ -582,6 +546,9 @@ class CustomerPaymentsController < ApplicationController
     @customerpayment.processed='1'
         
     @customerpayment.user_id=@current_user.id 
+
+    @customerpayment[:code] = @customerpayment.get_maximo("1")
+
 
     respond_to do |format|
       if @customerpayment.save

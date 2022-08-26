@@ -14,6 +14,23 @@
 
 
  
+<div class="button">
+  <%= link_to 'Nueva Cancelacion', "/customer_payments/new/#{@company.id}" %>
+  <%= link_to 'Export Concar', "/customer_payments/generar1/#{@company.id}" %>
+</div>
+
+
+  
+
+<div class="small">
+  <form method="get" action="/companies/customer_payments/<%= @company.id %>">
+    <strong>Buscar :</strong>
+    <input type="text" name="search" value="<% if @q_org %><%= @q_org %><% end %>" class="small" style="width: 250px;" onclick="$(this).select();" />
+    <input type="submit" value="Find" class="bold small_btn" />
+    <a href="/companies/customer_payments/<%= @company.id %>" > Limpiar</a>
+  </form>
+</div>
+
 
 
 <br />
@@ -21,10 +38,8 @@
 
 <br />
 
-<div class="button">
-  <%= link_to 'Nueva Cancelacion', "/customer_payments/new/#{@company.id}" %>
-  <%= link_to 'Export Concar', "/customer_payments/generar1/#{@company.id}" %>
-</div>
+
+
 
 <%= will_paginate @customerpayments %>
 
