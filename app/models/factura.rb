@@ -744,7 +744,7 @@ class Factura < ActiveRecord::Base
                 "detraccion_total"                 => @detraccion_total,
                 "detraccion_porcentaje"            => @detraccion_porcentaje,
                 "medio_de_pago_detraccion"         => @medio_de_pago_detraccion,
-                "ubigeo_origen"                    => ""
+                "ubigeo_origen"                    => "",
                 "direccion_origen"                 => "",
                 "ubigeo_destino"                   => "",
                 "direccion_destino"                =>  "",
