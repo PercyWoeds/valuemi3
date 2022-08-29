@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20220812175946) do
+ActiveRecord::Schema.define(version: 20220827212920) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -288,6 +288,24 @@ ActiveRecord::Schema.define(version: 20220812175946) do
     t.string   "code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "contometros", force: :cascade do |t|
+    t.integer  "nid_cierreturno"
+    t.integer  "nid_surtidor"
+    t.integer  "nid_mangueras"
+    t.integer  "nid_producto"
+    t.integer  "nid_tanque"
+    t.float    "dprecio_producto"
+    t.float    "dcontometroinicial_manguera"
+    t.float    "dcontometroactual_manguera"
+    t.float    "dtotgalvendido_manguera"
+    t.float    "dimporte"
+    t.float    "dnocontabilizado_manguera"
+    t.float    "dstockactual"
+    t.datetime "ffechaproceso_cierreturno"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
   end
 
   create_table "creditos", force: :cascade do |t|
@@ -2313,6 +2331,25 @@ ActiveRecord::Schema.define(version: 20220812175946) do
     t.string   "cod_emp"
   end
 
+  create_table "tmp_contometros", force: :cascade do |t|
+    t.integer  "nid_cierreturno"
+    t.integer  "nid_surtidor"
+    t.integer  "nid_mangueras"
+    t.integer  "nid_producto"
+    t.integer  "nid_tanque"
+    t.float    "dprecio_producto"
+    t.float    "dcontometroinicial_manguera"
+    t.float    "dcontometroactual_manguera"
+    t.float    "dtotgalvendido_manguera"
+    t.float    "dimporte"
+    t.float    "dnocontabilizado_manguera"
+    t.float    "dstockactual"
+    t.datetime "ffechaproceso_cierreturno"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.float    "d_tot_importe"
+  end
+
   create_table "tmp_facturas", force: :cascade do |t|
     t.datetime "fecha"
     t.string   "serie"
@@ -2581,6 +2618,7 @@ ActiveRecord::Schema.define(version: 20220812175946) do
     t.datetime "updated_at",   null: false
     t.integer  "ventaisla_id"
     t.integer  "island_id"
+    t.integer  "nro_cierre"
   end
 
   create_table "viatico_details", force: :cascade do |t|

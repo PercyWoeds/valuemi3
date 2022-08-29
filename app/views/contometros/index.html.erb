@@ -1,0 +1,76 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Contometros</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nid cierreturno</th>
+      <th>Nid surtidor</th>
+      <th>Nid mangueras</th>
+      <th>Nid producto</th>
+      <th>Nid tanque</th>
+      <th>Dprecio producto</th>
+      <th>Dcontometroinicial manguera</th>
+      <th>Dcontometroactual manguera</th>
+      <th>Dtotgalvendido manguera</th>
+      <th>Dimporte</th>
+      <th>Dnocontabilizado manguera</th>
+      <th>Dstockactual</th>
+      <th>Ffechaproceso cierreturno</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @contometros.each do |contometro| %>
+      <tr>
+        <td><%= contometro.nid_cierreturno %></td>
+        <td><%= contometro.nid_surtidor %></td>
+        <td><%= contometro.nid_mangueras %></td>
+        <td><%= contometro.nid_producto %></td>
+        <td><%= contometro.nid_tanque %></td>
+        <td><%= contometro.dprecio_producto %></td>
+        <td><%= contometro.dcontometroinicial_manguera %></td>
+        <td><%= contometro.dcontometroactual_manguera %></td>
+        <td><%= contometro.dtotgalvendido_manguera %></td>
+        <td><%= contometro.dimporte %></td>
+        <td><%= contometro.dnocontabilizado_manguera %></td>
+        <td><%= contometro.dstockactual %></td>
+        <td><%= contometro.ffechaproceso_cierreturno %></td>
+        <td><%= link_to 'Show', contometro %></td>
+        <td><%= link_to 'Edit', edit_contometro_path(contometro) %></td>
+        <td><%= link_to 'Destroy', contometro, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+
+
+<div class="button">
+   <%= will_paginate @contometros %>
+
+</div>
+
+
+
+
+<h2>Importar Archivo cab  "*.csv"</h2>
+
+
+
+
+<%= form_tag import_contometros_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Importar " %>
+<% end %>
+
+
+
+
+
+
+<%= link_to 'New Contometro', new_contometro_path %>

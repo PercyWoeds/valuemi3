@@ -258,6 +258,8 @@ def  get_ventas_combustibles_producto(fecha,producto,value)
         end
         
     end 
+
+    
  
   def self.import(file)
         cantidad_total = 0

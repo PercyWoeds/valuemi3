@@ -1,0 +1,31 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nid_cierreturno: 1
+  nid_surtidor: 1
+  nid_mangueras: 1
+  nid_producto: 1
+  nid_tanque: 1
+  dprecio_producto: 1.5
+  dcontometroinicial_manguera: 1.5
+  dcontometroactual_manguera: 1.5
+  dtotgalvendido_manguera: 1.5
+  dimporte: 1.5
+  dnocontabilizado_manguera: 1.5
+  dstockactual: 1.5
+  ffechaproceso_cierreturno: 2022-08-27 15:55:56
+
+two:
+  nid_cierreturno: 1
+  nid_surtidor: 1
+  nid_mangueras: 1
+  nid_producto: 1
+  nid_tanque: 1
+  dprecio_producto: 1.5
+  dcontometroinicial_manguera: 1.5
+  dcontometroactual_manguera: 1.5
+  dtotgalvendido_manguera: 1.5
+  dimporte: 1.5
+  dnocontabilizado_manguera: 1.5
+  dstockactual: 1.5
+  ffechaproceso_cierreturno: 2022-08-27 15:55:56

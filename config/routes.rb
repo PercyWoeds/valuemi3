@@ -4,6 +4,8 @@ require 'sidekiq/web'
 
   Mnygo::Application.routes.draw do
 
+  resources :tmp_contometros
+  resources :contometros
   resources :anexo8s
   resources :tickets
   resources :devols
@@ -181,6 +183,11 @@ require 'sidekiq/web'
   resources :stocks do 
     collection { get :rpt_stocks4 }
     collection { get :rpt_kardex1_pdf }
+    
+  end 
+  resources :contometros do 
+    collection { post :import }
+
     
   end 
   

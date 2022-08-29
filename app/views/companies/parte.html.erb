@@ -50,25 +50,39 @@
 
 
 <% end %>
-  <%= hr() %>
+  
+   <%= hr() %>
 
     <h3>
     <%= image_tag("invoice_32.png", :class => "vmiddle") %>
-    <%= link_to "Registro venta por contometros ",ventaislas_path %>
-  </h3>
-  <p>
+    <%= link_to "Venta por contometros - manual ",ventaislas_path %>
+    </h3>
+    <p>
      Agregar, editar or eliminar lecturas de ventas de combustible para tu negocio.
-  </p>
+    </p>
   
   
-
-
     <%= hr() %>  
+
+    
+
+    <h3>
+    <%= image_tag("invoice_32.png", :class => "vmiddle") %>
+    <%= link_to "Venta por contometros - Pump ",contometros_path %>
+    </h3>
+    <p>
+     Agregar, editar or eliminar contometros.
+    </p>
+  
+  
+    <%= hr() %>  
+
 
     <% if current_user.level != "playa"%>
 
     <h3>
-    <%= image_tag("invoice_32.png", :class => "vmiddle") %>
+    <%= image_tag("invoice_32.png", :class => "vmiddle") %>s
+
     <%= link_to "Afericion ",afericions_path %>
   </h3>
   <p>

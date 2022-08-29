@@ -676,6 +676,7 @@ class Factura < ActiveRecord::Base
 
           if @factura.detraccion_importe  > 0.0
             puts " ** detraccion********************************************"
+            
               @detraccion_tipo  =  "35"
               
               if @factura.moneda_id == 1 
