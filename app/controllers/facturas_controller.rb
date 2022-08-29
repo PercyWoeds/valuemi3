@@ -660,6 +660,7 @@ end
       @total_dia31_column = 0
       
       
+      
       lcCli = @facturas_rpt.first.cod_emp
       $lcCliName = ""
     

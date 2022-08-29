@@ -44,8 +44,7 @@
       
       <% for  product0 in @parte_rpt %>
 
-      
-       <% puts product0.tanque.product.id %>
+    
 
                    <%  producto_value = product0.tanque.product.id%>
                    <%  producto_codigo = product0.tanque.code.to_s %>
@@ -58,17 +57,13 @@
 
 
                   <% if  product0.tanque.product.id == 6  %>   
-
                 
 
                    <% compras = product0.get_ticket_glp(@fecha)  %>
 
                   <% else %>
                   
-
                     <% compras = product0.get_compras20(@fecha,producto_value) %>
-
-                    
 
                   <% end %>
 

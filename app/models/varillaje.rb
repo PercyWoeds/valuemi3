@@ -429,6 +429,40 @@ end
 
 
 
+def  get_ventas_urea_soles(fecha) 
+     
+
+    ret = 0 
+    
+ facturas = Sellvale.where(["fecha >= ? and fecha <= ? and cod_prod = ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59","0983" ])
+
+ if facturas
+ 
+    for detalle in facturas
+
+         ret += detalle.cantidad.round(6)
+ 
+    end 
+end 
+   
+facturas = Sellvale.where(["fecha >= ? and fecha <= ? and cod_prod = ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59","0000000000938" ])
+
+if facturas
+
+   for detalle in facturas
+
+        ret += detalle.cantidad.round(6)
+
+   end 
+end 
+
+
+return ret
+
+end 
+
+
+
   ####
  def  get_ventas_22(fecha,producto) 
      
@@ -1635,7 +1669,7 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
  end
 
 
- def get_ventas_urea(fecha)
+ def get_ventas_urea0(fecha)
      
      facturas = Sellvale.find_by_sql(['Select sellvales.* from sellvales    
      INNER JOIN products ON sellvales.cod_prod = products.code 
