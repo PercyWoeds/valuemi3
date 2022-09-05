@@ -440,7 +440,7 @@ def  get_ventas_urea_soles(fecha)
  
     for detalle in facturas
 
-         ret += detalle.cantidad.round(6)
+         ret += detalle.importe.to_f.round(6)
  
     end 
 end 

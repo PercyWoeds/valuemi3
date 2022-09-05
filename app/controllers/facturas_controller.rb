@@ -3057,7 +3057,7 @@ def reportes31
     @invoice[:descuento] = "0"
     @invoice[:tipoventa_id] = 2
 
-    @invoice[:detraccion_cuenta]  =   "00-000-5353362" 
+    @invoice[:detraccion_cuenta]  =   "00028051700" 
     @invoice[:detraccion_percent] = 4.00 
     @invoice[:detraccion_importe ] = 0.00 
     @invoice[:retencion_importe ] = 0.00 

@@ -31,31 +31,53 @@
   <tbody>
     <% @ventaislas.each do |ventaisla| %>
       <tr>
+        <td><%= ventaisla.nro_cierre %></td>
+        
         <td><%= ventaisla.fecha.strftime("%d/%m/%Y") %></td>
         <td><%= ventaisla.turno %></td>
         <td><%= ventaisla.island.code %></td>
-      
-        <td><%= ventaisla.employee.full_name %></td>
 
-        <% if ventaisla.galones.nil? %>
-              <td> Invalido</td>
+        <% if ventaisla.employee_id.nil? %>
+
         <% else %>
-        <td><%= ventaisla.galones.round(2) %></td>
+      
+        <td><%= ventaisla.employee.full_name  %></td>
+
         <% end %>
-        <% if  ventaisla.galones.nil? %>
-           <td> Invalido</td>
-        <% else %>
-        <td><%= ventaisla.importe.round(2) %></td>
+
+
+            <% if ventaisla.galones.nil? %>
+                  <td> Invalido</td>
+            <% else %>
+            <td><%= ventaisla.galones.round(2) %></td>
+            <% end %>
+
+
+          <% if  ventaisla.galones.nil? %>
+             <td> Invalido</td>
+          <% else %>
+
+            <% if !ventaisla.importe.nil? %>
+
+            <td><%= ventaisla.importe.round(2) %></td>
+
+            <% else %>
+              <td> 0.00 </td>
+
+            <%end%>
+
+
         <%end%>
 
 
         <% if  ventaisla.galones.nil? %>
            <td> Invalido</td>
+
         <% elsif ventaisla.galones < 0  %>
 
            <td > Invalido revise   </td>
         <% elsif ventaisla.galones > 0  %>   
-           <td >   </td>
+         
         <%end%>
 
 

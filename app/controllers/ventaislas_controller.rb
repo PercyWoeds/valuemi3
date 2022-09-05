@@ -25,11 +25,7 @@ class VentaislasController < ApplicationController
 
     @valor =[]
 
-    for pumps in @pumps do
-
-        @valor.push(pumps.fuel)
-
-    end 
+    
 
     
   end

@@ -633,7 +633,13 @@ class SupplierPaymentsController < ApplicationController
     
     pdf.text "Listado de Cancelaciones Proveedores:    Fecha "+@fecha1.to_s+ " Mes : "+@fecha2.to_s , :size => 11 
     pdf.text ""
-    pdf.font "Helvetica" , :size => 6
+    pdf.font_families.update("Open Sans" => {
+          :normal => "app/assets/fonts/OpenSans-Regular.ttf",
+          :italic => "app/assets/fonts/OpenSans-Italic.ttf",
+          :bold => Rails.root.join("app/assets/fonts/OpenSans-Regular.ttf"),
+          :bold_italic => Rails.root.join("app/assets/fonts/OpenSans-Regular.ttf")
+        })
+
 
       headers = []
       table_content = []
@@ -1242,6 +1248,7 @@ end
     @rpt = "rpt_#{generate_guid()}"
 
     Prawn::Document.generate("app/pdf_output/#{@rpt}.pdf") do |pdf|
+
         pdf.font "Helvetica"
         pdf = build_pdf_header_rpt(pdf)        
         pdf = build_pdf_body_rpt(pdf)

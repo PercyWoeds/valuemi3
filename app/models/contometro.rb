@@ -37,14 +37,18 @@ class Contometro < ActiveRecord::Base
   			   isla_existe = Ventaisla.find_by(nro_cierre:  contometro.nid_cierreturno )
 
   				if isla_existe 
+
+            
                      
           else
                  
 
+
+
                   @ventaisla = Ventaisla.new(
                   	 fecha: contometro.ffechaproceso_cierreturno,
                   	 turno: 1 ,
-                  	 employee_id: 1, 
+                  	 employee_id: 51, 
                   	 importe: contometro.total,
                   	 galones: contometro.glns ,
                      island_id: 1,
@@ -52,15 +56,23 @@ class Contometro < ActiveRecord::Base
 
                 if   @ventaisla.save
 
+                     puts "cabecera grabo"
+
                       @tmp_contometro2 = TmpContometro.where(nid_cierreturno: contometro.nid_cierreturno)
 
-
-
                         for xpump in @tmp_contometro2
+
+
+                          puts "venta isla detalle "
+                          puts  xpump.nid_surtidor
+                          puts  xpump.nid_mangueras
+
+                          puts "venta isla id "
+                          puts @ventaisla.id 
                               
 
-                              @pump_isla = Pump.find_by(id_surtidor: xpump.nid_surtidor,
-                                                id_posicion_manguera:  xpump.nid_surtidor) 
+                              @pump_isla = Pump.find_by(id_surtidor:   xpump.nid_surtidor,
+                                                id_posicion_manguera:  xpump.nid_mangueras) 
 
 
 
@@ -79,6 +91,12 @@ class Contometro < ActiveRecord::Base
 
                              if @pump_isla 
 
+
+                              puts "surtido encontrato "
+                              puts  xpump.nid_surtidor
+                              puts  xpump.nid_mangueras
+                              
+
                              @ventaisla_detail = VentaislaDetail.new(
                               pump_id: @pump_isla.id , 
                               le_an_gln: xpump.dcontometroinicial_manguera,
@@ -86,10 +104,12 @@ class Contometro < ActiveRecord::Base
                               price: xpump.dprecio_producto, 
                               quantity: xpump.dtotgalvendido_manguera ,
                               total: xpump.d_tot_importe ,
-                              ventaisla_id: @pump_isla.island_id , 
+                              ventaisla_id: @ventaisla.id  , 
                               product_id: @codigo_producto  )
                               
                                @ventaisla_detail.save
+
+
                               end 
                           
                         end
