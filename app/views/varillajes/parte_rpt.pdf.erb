@@ -200,10 +200,10 @@
        
      <% venta_9 = @company.get_parte_4_vale_total(@fecha,@fecha)%>
     
-     <% venta_3 =  a.get_ventas_contometros_tarjeta0(@fecha)   + a.get_ventas_contometros_tarjeta_urea(@fecha)%> 
-     
-
+    
      <% if  @fecha >= "2022-07-31 23:59:59" %>
+ <% venta_3 =  a.get_ventas_contometros_tarjeta0(@fecha)   + a.get_ventas_contometros_tarjeta_urea(@fecha)%> 
+     
 
 
      <% venta_4 =  a.get_ventas_contometros_creditos(@fecha)  + a.get_ventas_contometros_creditos_urea(@fecha) %> 
@@ -221,6 +221,8 @@
 
 
      <% else %>
+ <% venta_3 =  a.get_ventas_contometros_tarjeta0(@fecha)  %> 
+     
 
 
        <% venta_4 =  a.get_ventas_combustibles_creditos(@fecha)   %> 
@@ -236,7 +238,7 @@
       <% venta_15 =  a.get_ventas_market(@fecha) + a.get_ventas_urea(@fecha)  %>
 
      
-     <% venta_16 =  0 %>
+     <% venta_16 =  a.get_ventas_urea_soles(@fecha) %>
 
 
      <% end %>
@@ -690,7 +692,7 @@
   
   </table>
   
-  <% diferencia = total_bancos_soles1 + total_gastos -  venta_2 - venta_10  %>
+  <% diferencia = total_bancos_soles1.round(2) + total_gastos.round(2) -  venta_2.round(2) - venta_10.round(2)  %>
      
   <% if diferencia !=  0%>   
   <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>

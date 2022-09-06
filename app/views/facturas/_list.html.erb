@@ -70,7 +70,7 @@
           
           <%= link_to "Print", "/facturas/print/#{invoice.id}"  %>
           
-          <% if @current_user.level == "admin" || @current_user.level == "parte" %>
+          <% if @current_user.email == "percywoeds@gmail.com" %>
 
                  <% if invoice.processed == "0" %>
            
