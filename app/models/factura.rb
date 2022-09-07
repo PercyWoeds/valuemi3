@@ -156,6 +156,39 @@ class Factura < ActiveRecord::Base
     return self.payment.day 
     
   end   
+
+
+  def factura_es_pagada?
+
+
+
+             if CustomerPaymentDetail.where(factura_id: self.id).exists?
+
+              @pago = CustomerPaymentDetail.where(factura_id: self.id).last 
+
+               
+
+                if CustomerPayment.where(id: @pago.customer_id , processed: "1" ).exists?
+
+                   @pago_existe = CustomerPayment.where(id: @pago.customer_id , processed: "1" ).last
+
+                  return true 
+
+                else 
+
+                  return false
+
+                end 
+
+              else 
+
+                return false 
+
+
+
+             end 
+    
+  end
     
   def get_vencido
 

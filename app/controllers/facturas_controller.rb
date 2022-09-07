@@ -2418,6 +2418,7 @@ def reportes31
 
   def do_anular
     @invoice = Factura.find(params[:id])
+    
     @invoice[:processed] = "2"
     
     @invoice.anular 
