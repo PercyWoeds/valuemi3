@@ -681,13 +681,13 @@
 	  
 		 <% if current_user.level=='admin' || current_user.level=='parte'  %>
 
-     <% if @invoice.factura_es_pagada? %>
+     <% if !@invoice.factura_es_pagada?  %>
 		  <tr>
 			 <%= link_to 'Anular ', "/facturas/do_anular/#{@invoice.id}" %> 
 
       </tr>
 
-      <%else %>
+      <% else %>
 
       <p>  <strong>Factura ha sido cancelada  </strong> </p>
 
