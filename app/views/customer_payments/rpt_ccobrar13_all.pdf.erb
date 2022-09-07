@@ -46,8 +46,18 @@
                     <td width ="8%" align ="right"><%= productItem.code  %> </td>
                     <td width = "5%" align ="right"><%= productItem.fecha.strftime("%d/%m%Y")  %> </td>
                     <td width ="35%" align ="left"><%= productItem.get_customer(productItem.customer_id) %>  </td>
+
+
+                    <% if detalle.processed == "1"%>
                     
                     <td width = "8%" align ="right"><%= sprintf("%.2f",productItem.total.to_s)  %> </td>
+
+                    <% else %>
+ 
+                    <td width = "8%" align ="right"> 0.00 </td>
+
+                    <% end %>
+
                     <td width = "8%" align ="right"><%= detalle.code   %> </td>
                   
                   </tr>
