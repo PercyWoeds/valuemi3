@@ -1,0 +1,49 @@
+
+
+
+<p id="notice"><%= notice %></p>
+<h4>
+<p>
+  <strong>Fecha:</strong>
+  <%= @ventaisla.fecha.to_date %>
+</p>
+
+<p>
+  <strong>Turno:</strong>
+  <%= @ventaisla.turno %>
+</p>
+
+<p>
+</h4>
+
+
+  <h4>
+  <strong>Empleado:</strong>
+  <%= @ventaisla.employee.full_name  %>
+</h4>
+</p>
+
+<p>
+
+  <h3>
+  <strong>Isla: </strong>
+  <%= @ventaisla.island.code  %>
+</h3>
+</p>
+
+<h3>
+  Detalle
+</h3>
+
+
+<% for productItem in @ventaisla_details %>
+
+
+  <%= @productItem.island.code  %>
+    <%= @productItem.pump_id  %>
+
+ <%= @productItem.quantity %> 
+<%= @productItem.total %>
+
+
+<% end %>
