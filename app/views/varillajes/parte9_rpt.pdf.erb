@@ -39,16 +39,18 @@
        
                   <tr>
                     <td width= "5%" ><%=  contado.fecha.strftime("%d/%m/%Y")  %></td>
+
                     <td width= "23%"> <%=  contado.employee.full_name %>   </td>
+
                     <td width= "3%" >    </td>
                     <td width = "5%" align ="right"><% %></td>
                     <td width = "3%" align ="right"><% %> </td>
                     <td width = "10%" align ="left"><%   %> </td>
                     <td width = "5%" align ="right"><% %></td>
-                    <td width = "8%" align ="right"><%=  sprintf("%.2f",contado.galones * -1)%></td>
+                    <td width = "8%" align ="right"><%=  sprintf("%.2f",contado.galones )%></td>
                     <td width = "8%" align ="right"><%   %></td>
                     <td width = "8%" align ="right"><%    %></td>
-                    <td width = "8%" align ="right"><%= sprintf("%.2f",contado.importe*-1)   %></td>
+                    <td width = "8%" align ="right"><%= sprintf("%.2f",contado.importe)   %></td>
                     
                     </tr>
 
@@ -66,9 +68,9 @@
                     <td width = "8%" align ="right"><% %></td>
                     <td width = "10%" align ="left"><%= sprintf("%.4f",detalle.le_an_gln)   %> </td>
                     <td width = "10%" align ="right"><%= sprintf("%.4f",detalle.le_ac_gln)    %></td>
-                    <td width = "10%" align ="right"><%=  sprintf("%.2f",detalle.quantity * -1)%></td>
+                    <td width = "10%" align ="right"><%=  sprintf("%.2f",detalle.quantity )%></td>
                     <td width = "10%" align ="right"><%=  sprintf("%.2f",detalle.price) %></td>
-                    <td width = "10%" align ="right"><%= sprintf("%.2f",detalle.total * -1 )   %></td>
+                    <td width = "10%" align ="right"><%= sprintf("%.2f",detalle.total  )   %></td>
                     </tr>          
                   
         <% end %>
