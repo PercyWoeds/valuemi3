@@ -4464,7 +4464,7 @@
       end 
         
         
-        def  get_ventas_combustibles0(fecha1,fecha2) 
+        def  get_ventas_combustibles(fecha1,fecha2) 
     
            facturas = Ventaisla.select("fecha").where(["fecha >= ?  and fecha <=  ?  " , "#{fecha1} 00:00:00","#{fecha2} 23:59:59"  ] ).order(:fecha).group(:fecha)
            
@@ -4473,7 +4473,7 @@
         end 
         
          
-        def  get_ventas_combustibles(fecha1,fecha2) 
+        def  get_ventas_combustibles1(fecha1,fecha2) 
     
            facturas = Ventaisla.where(["fecha >= ?  and fecha <=  ?  " , "#{fecha1} 00:00:00","#{fecha2} 23:59:59"  ] ).order(:fecha,:turno)
            

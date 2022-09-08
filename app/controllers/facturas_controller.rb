@@ -330,7 +330,7 @@ def reportes9
     @cliente = params[:cod_cli]    
        
     
-    @contado_rpt = @company.get_ventas_combustibles(@fecha1,@fecha2)
+    @contado_rpt = @company.get_ventas_combustibles1(@fecha1,@fecha2)
     @producto = @company.get_productos_comb 
     
     case params[:print]
