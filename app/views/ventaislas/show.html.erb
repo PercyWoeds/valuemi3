@@ -92,32 +92,49 @@
       <td>
         SALIDA 
       </td>
+
+      
     <% for productItem in @pumps %>
 
 
         <% rating_id = "SALIDA_" << productItem.fuel %>
 
-
-        
-
         <% valor =  VentaislaDetail.find_by(ventaisla_id: @ventaisla.id, pump: productItem.id)  %>
 
        <% if valor  %>
 
-        <% le_an_gln = valor.le_ac_gln  %>
+            <% le_an_gln = valor.le_ac_gln  %>
 
        <% else %> 
 
-        <% le_an_gln = 0.00  %>
+            <% le_an_gln = 0.00  %>
 
        <% end %>   
 
 
-    
+       <%if @ventaisla.island_id == 3 %>
 
         <td>
-          <input type="text" name= "<%="#{rating_id}" %>" id= "<%= "#{rating_id}" %>" value="<%= le_an_gln %>" class="tf_shorty" onblur="myFunction()"  />
+           <input type="text" name= "<%="#{rating_id}" %>" id= "<%= "#{rating_id}" %>" value="<%= le_an_gln %>" class="tf_shorty"  onblur="myFunction2()"  align="right" />
         </td>
+
+
+
+            <% elsif @ventaisla.island_id == 1  %>
+
+              <% puts "isla ********** "  %>
+              <% puts @ventaisla.island_id  %>
+           
+               <td>
+                 <input type="text" name= "<%="#{rating_id}" %>" id= "<%= "#{rating_id}" %>" value="<%= le_an_gln %>" class="tf_shorty"  onblur="myFunction2()"  align="right" />
+              </td>
+
+
+          
+        
+       <% end %>  
+
+
     <% end %>
    </tr>
   
@@ -131,6 +148,8 @@
         <% rating_id = "GLNS_"<< productItem.fuel %>
         <% le_an_gln = 0.00 %>
         <% puts rating_id %>
+
+
         <td>
           <p id= "<%= "#{rating_id}" %>" align="right"> </p>
           
@@ -159,12 +178,18 @@
        <% end %>   
 
 
-      
-
+      <%if @ventaisla.island_id == 3 %>
         <td>
-           <input type="text" name= "<%="#{rating_id}" %>" id= "<%= "#{rating_id}" %>" value="<%= precio %>" class="tf_shorty"  onblur="myFunction()"  align="right" />
-          
+           <input type="text" name= "<%="#{rating_id}" %>" id= "<%= "#{rating_id}" %>" value="<%= precio %>" class="tf_shorty"  onblur="myFunction2()"  align="right" />
         </td>
+      <% else %>
+
+
+         <td>
+           <input type="text" name= "<%="#{rating_id}" %>" id= "<%= "#{rating_id}" %>" value="<%= precio %>" class="tf_shorty"  onblur="myFunction3()"  align="right" />
+        </td>
+      <% end %>  
+
     <% end %>
 
 
@@ -212,9 +237,6 @@
 
 <%= br() %>
 
-
-
-
 <%= link_to 'Regresar', ventaislas_path %>
 
 <%= render 'layouts/autocomplete' %>
@@ -222,19 +244,21 @@
 <script>
 
 
-function myFunction() {
-  var x = document.getElementsByTagName("input");
 
-  console.log("x: " + x);
-  console.log("Number of inputs: " + x.length);
 
-  var arrayOfInputNames = [];
-  var campo_gln ;
-  var campo_dif ;
+function myFunction2() {
+      var x = document.getElementsByTagName("input");
+
+      console.log("x: " + x);
+      console.log("Number of inputs: " + x.length);
+
+      var arrayOfInputNames = [];
+      var campo_gln ;
+      var campo_dif ;
 
 
       for (var i = 0; i < x.length; i++) {
-      //for(key in x) {
+     
         console.log("i: " + i);
         console.log("value: " + x[i].name);
 
@@ -244,47 +268,45 @@ function myFunction() {
 
       }
 
-//for (i = 0; i < arrayOfInputNames.length; i++)
-//  document.writeln((i+1) + ": " + arrayOfInputNames[i]);
-   var cadena = "" ;
-   var diferencia = 0; 
 
-  fLen = arrayOfInputNames.length;
+     var cadena = "" ;
+     var diferencia = 0; 
 
-    for (i = 0; i < fLen; i++) {
+     fLen = arrayOfInputNames.length;
 
-       cadena = arrayOfInputNames[i] ;
+      for (i = 0; i < fLen; i++) {
 
-      if (cadena.substring(0,6) == "SALIDA" ){
+         cadena = arrayOfInputNames[i] ;
 
-              campo_ent = "ENTRADA_" + cadena.substring(7,12) ;
-              campo_sal = "SALIDA_"  + cadena.substring(7,12) ;
-              campo_gln = "GLNS_"    + cadena.substring(7,12) ;
-              campo_pre = "PRECIO_"  + cadena.substring(7,12) ;
+         if (cadena.substring(0,9) == "SALIDA_03" ){
 
-              campo_sub = "SUBTOTAL_"  + cadena.substring(7,12) ;
-             
-              diferencia = ($("input[name="+campo_sal+"]").val() - $("input[name="+campo_ent+"]").val());
+                campo_ent = "ENTRADA_" + cadena.substring(7,12) ;
+                campo_sal = "SALIDA_"  + cadena.substring(7,12) ;
+                campo_gln = "GLNS_"    + cadena.substring(7,12) ;
+                campo_pre = "PRECIO_"  + cadena.substring(7,12) ;
 
-              subtotal = diferencia *   $("input[name="+campo_pre +"]").val() ;
+                campo_sub = "SUBTOTAL_"  + cadena.substring(7,12) ;
+               
+                diferencia = ($("input[name="+campo_sal+"]").val() - $("input[name="+campo_ent+"]").val());
 
-              //alert(diferencia);
-              document.getElementById(campo_gln).innerHTML = Number((diferencia).toFixed(2));;
-              document.getElementById(campo_sub).innerHTML = Number((subtotal).toFixed(2));;
+                subtotal = diferencia  /  $("input[name="+campo_pre +"]").val() ;
 
-            }
-        else {
-        
-        }
+                //alert(diferencia);
+                document.getElementById(campo_gln).innerHTML = Number((diferencia).toFixed(2));;
+                document.getElementById(campo_sub).innerHTML = Number((subtotal).toFixed(2));;
+
+              }
+          else {
+
+          
+          }
 
       }
 
 
-      console.log(arrayOfInputNames);
-
- //document.getElementById("demo").innerHTML = arrayOfInputNames ;
-
 }
+
+
   
 
 
@@ -343,7 +365,6 @@ function  addItemToContometro() {
 
             }
 
-            
         else {
         
       }
@@ -363,6 +384,68 @@ function  addItemToContometro() {
     });
 }
 
+
+function myFunction3() {
+
+
+  var x = document.getElementsByTagName("input");
+
+  console.log("x: " + x);
+  console.log("Number of inputs: " + x.length);
+
+  var arrayOfInputNames = [];
+  var campo_gln ;
+  var campo_dif ;
+
+
+      for (var i = 0; i < x.length; i++) {
+      //for(key in x) {
+        console.log("i: " + i);
+        console.log("value: " + x[i].name);
+
+        arrayOfInputNames.push(x[i].name );
+
+       // var contacto = $('input[name="contacto"]').val();
+
+      }
+
+  //document.writeln((i+1) + ": " + arrayOfInputNames[i]);
+   
+   var cadena = "" ;
+   var diferencia = 0; 
+
+  fLen = arrayOfInputNames.length;
+
+    for (i = 0; i < fLen; i++) {
+
+       cadena = arrayOfInputNames[i] ;
+
+      if (cadena.substring(0,6) == "SALIDA_" ) {
+
+              campo_ent = "ENTRADA_" + cadena.substring(7,12) ;
+              campo_sal = "SALIDA_"  + cadena.substring(7,12) ;
+              campo_gln = "GLNS_"    + cadena.substring(7,12) ;
+              campo_pre = "PRECIO_"  + cadena.substring(7,12) ;
+
+              campo_sub = "SUBTOTAL_"  + cadena.substring(7,12) ;
+             
+              diferencia = ($("input[name="+campo_sal+"]").val() - $("input[name="+campo_ent+"]").val());
+
+              subtotal = diferencia  *  $("input[name="+campo_pre +"]").val() ;
+
+              //alert(diferencia);
+              document.getElementById(campo_gln).innerHTML = Number((diferencia).toFixed(2));;
+              document.getElementById(campo_sub).innerHTML = Number((subtotal).toFixed(2));;
+
+            }
+        else {
+
+        
+        }
+
+      }
+
+}
 
 
 

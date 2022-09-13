@@ -6653,6 +6653,7 @@ def build_pdf_header9(pdf)
        @orden_compra1  = @company.get_purchase_detalle(ordencompra.id)
 
 
+
       for  orden in @orden_compra1
            row = []
            row << nroitem.to_s
