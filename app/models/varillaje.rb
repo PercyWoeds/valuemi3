@@ -1505,7 +1505,8 @@ end
            inicial = wvar.inicial 
            varilla = wvar.varilla 
 
-         if  producto  == 6   and product0.fecha <= "2022-08-27 00:00:00" 
+         if  producto  == 6   and product0.fecha.to_date <= '2022-08-27'.to_date 
+          
            compras = self.get_ticket_glp(fechax)
             else 
            compras = self.get_compras20(fechax,producto)
