@@ -261,7 +261,7 @@
      
      
 
-     
+     <% otros_ingresos = a.get_other_incomes(@fecha) %>
      
      <% venta_19 =  a.get_ventas_contometros_tarjeta_productos(@fecha) %>
      <% venta_20 =  0 %>
@@ -269,14 +269,14 @@
      <% venta_17 =  0 %>
 
   
-     
+     <% venta_dsctos = venta_descuentos_facturas + venta_descuentos_facturas_efe %>
      
      
      <% venta_5 =  venta_2 + venta_3 + venta_4 + venta_9  +venta_17 + venta_18   + venta_4_1 + venta_19 + venta_20 + venta_10 + venta_faltante + venta_sobrante  %>
      
-     <% venta_8 =  venta_1 + venta_15 + venta_16 - venta_12 + venta_descuentos_facturas  +venta_descuentos_facturas_efe %>
+     <% venta_8 =  venta_1 + venta_15 + venta_16 - venta_12 + venta_descuentos_facturas  +venta_descuentos_facturas_efe  + otros_ingresos%>
      
-     <% venta_6 =  venta_5 - venta_8  - venta_7  %>
+     <% venta_6 =  venta_5 - venta_8  - venta_7 - venta_dsctos    %>
      
      <% if venta_6 < 0 %>
      
@@ -341,9 +341,10 @@
             </tr>
             
             
+
             <tr>
             <td width= "25%" align ="left">   DESCUENTO       : </td>
-            <td width= "25%" >  0.00       </td>
+            <td width= "25%" > (-)<%= sprintf("%.2f",venta_dsctos  )%></td>
             
             <td width = "25%" align ="left">  &#9475;   TARJETA PRODUCTOS    :  </td>
             <td width = "25%" align ="right"><%= sprintf("%.2f",venta_19 + venta_20 )  %> </td>
@@ -361,8 +362,8 @@
             
             </tr>
             <tr>
-            <td width= "25%" align ="left">   DESCUENTO            : </td>
-            <td width= "25%" align ="right">(-)<%= sprintf("%.2f",venta_descuentos_facturas + venta_descuentos_facturas_efe)  %></td>
+            <td width= "25%" align ="left">  ** PRODUCTOS  </td>
+            <td width= "25%" align ="right">  </td>
             
             <td width = "25%" align ="left">  &#9475;   EFECTIVO DOLAR    :  </td>
             <td width = "25%" align ="right"> </td>
@@ -370,9 +371,9 @@
             
             </tr>
             
-            <tr>
-            <td width= "25%" align ="left">** PRODUCTOS            : </td>
-            <td width= "25%" >                                </td>
+            <tr>  
+            <td width= "25%" align ="left">   UREA     :          : </td>
+            <td width= "25%" > <%=   sprintf("%.2f",venta_16)  %>          </td>
             
             <td width = "25%" align ="left">  &#9475; EFECTIVO MARKET     </td>
             <td width = "25%" align ="right"><%= sprintf("%.2f",venta_10)   %> </td>
@@ -382,8 +383,8 @@
             </tr>
             
             <tr>
-            <td width= "25%" align ="left">  UREA     : </td>
-            <td width= "25%" >  <%=   sprintf("%.2f",venta_16)  %>   
+            <td width= "25%" align ="left">  MARKET            : </td>
+            <td width= "25%" >    <%=   sprintf("%.2f",venta_15)  %>                         
 
                                        </td>
             
@@ -394,8 +395,8 @@
             </tr>
             
             <tr>
-            <td width= "25%" align ="left">  MARKET            : </td>
-            <td width= "25%" >  <%=   sprintf("%.2f",venta_15)  %>                              </td>
+            <td width= "25%" align ="left">  VENTA PRODUCTOS    S/. : </td>
+            <td width= "25%" align = "right" >  <%=    sprintf("%.2f",venta_15 + venta_16 ) %>        </td>
             
             <td width = "25%" align ="left">  &#9475;   FALTANTES    :  </td>
             <td width = "25%" align ="right"> <%=    sprintf("%.2f",venta_faltante)  %> </td>
@@ -404,23 +405,23 @@
             </tr>
             
             <tr>
-            <td width= "25%" align ="left">  PROMOCION            : </td>
-            <td width= "25%" >                                </td>
+            <td width= "25%" align ="left"> ** OTROS INGRESOS </td>
+            <td width= "25%"align="right" >      <%= otros_ingresos %>                    </td>
             
 
             
-            <td width = "25%" align ="left">  &#9475;   SOBRANTES  :  </td>
-            <td width = "25%" align ="right"><%=   sprintf("%.2f",venta_sobrante )  %>  </td>
+            <td width = "25%" align ="left">  &#9475; </td>
+            <td width = "25%" align ="right">  </td>
         
             </tr>
       
             </tr>
             
             <tr>
-            <td width= "25%" align ="left">      VENTA PRODUCTOS    S/. : </td>
-            <td width= "25%" align="right" ><%=    sprintf("%.2f",venta_15 + venta_16 ) %>          </td>
+            <td width= "25%" align ="left">    </td>
+            <td width= "25%" align="right" >         </td>
             
-            <td width = "25%" align ="left">  &#9475;  :  </td>
+            <td width = "25%" align ="left">  &#9475;    </td>
             <td width = "25%" align ="right"> </td>
             
             </tr>

@@ -4,6 +4,7 @@ require 'sidekiq/web'
 
   Mnygo::Application.routes.draw do
 
+  resources :other_incomes
   resources :tmp_contometros
   resources :contometros
   resources :anexo8s

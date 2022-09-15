@@ -6781,6 +6781,7 @@ def build_pdf_header9(pdf)
   
 
   def updatemultiple
+    
  
        PurchaseDetail.where(id: params[:products_ids]).update_all(params[:purchase_detail])
         

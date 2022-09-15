@@ -979,7 +979,8 @@ class ReportsController < ApplicationController
     @company = Company.find(params[:company_id])    
     @pagetitle = "Liquidacion Cobranzas "    
     @customers = @company.get_customers()
-
+    @bancos = @company.get_bank_acounts()
+  
   end
   
   def rpt_ccobrar5_pdf
@@ -1053,6 +1054,9 @@ class ReportsController < ApplicationController
     @company = Company.find(params[:company_id])    
     @pagetitle = "Liquidacion de pagos"    
     @customers = @company.get_customers()
+    @bancos = @company.get_bank_acounts
+    
+    
   end
   def rpt_cpagar5_pdf
     @company = Company.find(params[:company_id])    

@@ -1077,6 +1077,21 @@ end
     return ret
  
  end 
+
+
+ def get_other_incomes(fecha)
+
+    ret = 0 
+
+  @otros =  OtherIncome.where(["fecha >= ? and fecha <= ?","#{fecha} 00:00:00","#{fecha} 23:59:59"]).sum(:importe)
+
+
+
+
+ 
+    return @otros 
+     
+ end
  
  def  get_ventas_contometros_tarjeta_productos(fecha) 
      

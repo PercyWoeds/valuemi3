@@ -81,7 +81,7 @@
     <% if current_user.level != "playa"%>
 
     <h3>
-    <%= image_tag("invoice_32.png", :class => "vmiddle") %>s
+    <%= image_tag("invoice_32.png", :class => "vmiddle") %>
 
     <%= link_to "Afericion ",afericions_path %>
   </h3>
@@ -119,7 +119,16 @@
   </p>
     <%= hr() %>  
 
+  <%= hr() %>  
 
+    <h3>
+    <%= image_tag("invoice_32.png", :class => "vmiddle") %>
+    <%= link_to "Registro de Otros Ingresos ",other_incomes_path %>
+  </h3>
+  <p>
+     Agregar, editar or eliminar registro de otros ingresos 
+  </p>
+    <%= hr() %>  
 
   <h3>
     <%= image_tag("invoice_32.png", :class => "vmiddle") %>

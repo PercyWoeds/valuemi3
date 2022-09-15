@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @other_income.code %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @other_income.name %>
+</p>
+
+<p>
+  <strong>Importe:</strong>
+  <%= @other_income.importe %>
+</p>
+
+<p>
+  <strong>Documento:</strong>
+  <%= @other_income.documento %>
+</p>
+
+<p>
+  <strong>Employee:</strong>
+  <%= @other_income.employee_id %>
+</p>
+
+<p>
+  <strong>Turno:</strong>
+  <%= @other_income.turno %>
+</p>
+
+<%= link_to 'Edit', edit_other_income_path(@other_income) %> |
+<%= link_to 'Back', other_incomes_path %>

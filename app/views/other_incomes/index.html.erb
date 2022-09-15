@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listado Otros ingresos </h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Importe</th>
+      <th>Documento</th>
+      <th>Employee</th>
+      <th>Turno</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @other_incomes.each do |other_income| %>
+      <tr>
+        <td><%= other_income.code %></td>
+        <td><%= other_income.name %></td>
+        <td><%= other_income.importe %></td>
+        <td><%= other_income.documento %></td>
+        <td><%= other_income.employee_id %></td>
+        <td><%= other_income.turno %></td>
+        <td><%= link_to 'Show', other_income %></td>
+        <td><%= link_to 'Edit', edit_other_income_path(other_income) %></td>
+        <td><%= link_to 'Destroy', other_income, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<div class = "button">
+
+<%= link_to 'Nuevo', new_other_income_path %>
+
+</div>

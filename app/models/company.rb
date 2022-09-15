@@ -244,7 +244,12 @@
            bank_acounts = BankAcount.all      
           return bank_acounts
         end
-        
+
+        def get_bank_acount(banco)
+           bank_acounts = BankAcount.find(banco)      
+          return bank_acounts.number 
+        end
+            
         def get_marcas()
            marcas = Marca.all      
           return marcas
@@ -944,7 +949,8 @@
       from customer_payment_details   
       INNER JOIN facturas ON   customer_payment_details.factura_id = facturas.id
       INNER JOIN customer_payments ON customer_payments.id = customer_payment_details.customer_payment_id  
-      WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? and facturas.customer_id = ? and customer_payments.bank_acount_id = ? order by customer_payments.code', "#{fecha1} 00:00:00",
+      WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? and facturas.customer_id = ? 
+      and customer_payments.bank_acount_id = ? order by customer_payments.code', "#{fecha1} 00:00:00",
       "#{fecha2} 23:59:59",customer,banco ])  
           
           return @facturas   
@@ -1518,6 +1524,12 @@
           @vouchers = SupplierPayment.where([" company_id = ? AND fecha1 >= ? and fecha1<= ?  ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ]).order(:id)
           return @vouchers    
       end 
+
+      def get_supplier_payments1(fecha1,fecha2,banco)
+          @vouchers = SupplierPayment.where([" company_id = ? AND fecha1 >= ? and fecha1<= ?  and bank_acount_id = ?",
+           self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", banco ]).order(:id)
+          return @vouchers    
+      end     
         
       def get_paymentsD_day_value(fecha1,fecha2,value = "total")
     

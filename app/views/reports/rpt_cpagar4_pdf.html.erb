@@ -20,6 +20,8 @@ totals = []
 
 </h4>
 
+
+
 <form method="get" action="/supplier_payments/rpt_cpagar4_pdf/<%= @company.id %>">
  	<div class="field">
       <input type="date" name="fecha1" value= <%= Date.today %> style = "width: 150px" >
@@ -29,10 +31,13 @@ totals = []
 		<input type="date" name="fecha2" value= <%= Date.today %> style = "width: 150px" >
     </div>
 
- 
+ <div class="field">
+    <%= select_tag(:bank_id,options_from_collection_for_select(@bancos,'id','number') ) %>
+  </div>
 
-  <input type="submit" value="PDF" />
-  <a href="/supplier_payments/rpt_cpagar4_pdf/<%= @company.id %>"></a>
+  <input type="submit" value="PDF"  name = "print"  />
+
+
 </form>
 
 <br />

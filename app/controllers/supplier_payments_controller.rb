@@ -633,6 +633,8 @@ class SupplierPaymentsController < ApplicationController
     
     pdf.text "Listado de Cancelaciones Proveedores:    Fecha "+@fecha1.to_s+ " Mes : "+@fecha2.to_s , :size => 11 
     pdf.text ""
+    pdf.text  @company.get_bank_acount(@banco), :size => 11 
+    
     pdf.font_families.update("Open Sans" => {
           :normal => "app/assets/fonts/OpenSans-Regular.ttf",
           :italic => "app/assets/fonts/OpenSans-Italic.ttf",
@@ -751,10 +753,16 @@ end
     @fecha2 = params[:fecha2]
     @tipomoneda = params[:moneda_id]
 
+     @banco = params[:bank_id]
+
+       
     
-    @customerpayment_rpt = @company.get_supplier_payments0(@fecha1,@fecha2)
+    @customerpayment_rpt = @company.get_supplier_payments1(@fecha1,@fecha2,@banco)
+
     @total_soles   = @company.get_paymentsD_day_value(@fecha1,@fecha2,"total")
     @total_dolares = @company.get_paymentsC_day_value(@fecha1,@fecha2,"total")
+
+
       
     Prawn::Document.generate("app/pdf_output/rpt_supplierpayment2.pdf") do |pdf|        
 
