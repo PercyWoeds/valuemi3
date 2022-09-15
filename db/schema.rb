@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20220915011250) do
+ActiveRecord::Schema.define(version: 20220915160426) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1756,6 +1756,12 @@ ActiveRecord::Schema.define(version: 20220915011250) do
     t.float    "qty6"
     t.datetime "fecha7"
     t.float    "qty7"
+    t.datetime "fecha8"
+    t.float    "qty8"
+    t.datetime "fecha9"
+    t.float    "qty9"
+    t.datetime "fecha10"
+    t.float    "qty10"
   end
 
   create_table "purchaseorder_details", force: :cascade do |t|
