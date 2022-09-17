@@ -64,7 +64,7 @@
         ENTRADA 
       </td>
     <% for productItem in @pumps %>
-        <% rating_id = "ENTRADA_" << productItem.fuel>> %> 
+        <% rating_id = "ENTRADA_"<< productItem.fuel  %> 
 
       <% valor =  VentaislaDetail.find_by(ventaisla_id: @ventaisla.id, pump: productItem.id)  %>
 
