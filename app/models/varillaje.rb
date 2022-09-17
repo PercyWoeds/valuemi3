@@ -64,6 +64,7 @@ class Varillaje < ActiveRecord::Base
     return ret
  
  end 
+
    
  def  get_compras20(fecha,producto) 
 
@@ -231,6 +232,171 @@ class Varillaje < ActiveRecord::Base
  end 
 
 
+  
+ def  get_compras21(fecha,producto) 
+
+    
+   ret = 0
+
+    factura_detalle = PurchaseDetail.where(["fecha1 >= ? and fecha1 <= ?  and
+     product_id = ?","#{fecha} 00:00:00","#{fecha} 23:59:59",producto ])
+    for detalle in factura_detalle
+
+        if !detalle.qty1.nil?
+
+         ret += detalle.qty1.round(2)
+
+        else
+            ret += 0 
+        end 
+
+    end     
+
+
+    factura_detalle = PurchaseDetail.where(["fecha2 >= ? and fecha2 <= ?  and
+     product_id = ?","#{fecha} 00:00:00","#{fecha} 23:59:59",producto ])
+    for detalle in factura_detalle
+
+        if !detalle.qty2.nil?
+
+         ret += detalle.qty2.round(2)
+
+        else
+            ret += 0 
+        end 
+
+    end     
+
+    factura_detalle = PurchaseDetail.where(["fecha3 >= ? and fecha3 <= ?  and
+     product_id = ?","#{fecha} 00:00:00","#{fecha} 23:59:59",producto ])
+    for detalle in factura_detalle
+
+        if !detalle.qty3.nil?
+
+         ret += detalle.qty3.round(2)
+
+        else
+            ret += 0 
+        end 
+
+    end     
+
+
+ factura_detalle = PurchaseDetail.where(["fecha4 >= ? and fecha4 <= ?  and
+     product_id = ?","#{fecha} 00:00:00","#{fecha} 23:59:59",producto ])
+    for detalle in factura_detalle
+
+        if !detalle.qty4.nil?
+
+         ret += detalle.qty4.round(2)
+
+        else
+            ret += 0 
+        end 
+
+    end     
+
+
+
+ factura_detalle = PurchaseDetail.where(["fecha5 >= ? and fecha5 <= ?  and
+      product_id = ?","#{fecha} 00:00:00","#{fecha} 23:59:59",producto ])
+    for detalle in factura_detalle
+
+        if !detalle.qty5.nil?
+
+         ret += detalle.qty5.round(2)
+
+        else
+            ret += 0 
+        end 
+
+    end     
+
+
+
+ factura_detalle = PurchaseDetail.where(["fecha6 >= ? and fecha6 <= ?  and
+   product_id = ?","#{fecha} 00:00:00","#{fecha} 23:59:59",producto ])
+    for detalle in factura_detalle
+
+        if !detalle.qty6.nil?
+
+         ret += detalle.qty6.round(2)
+
+        else
+            ret += 0 
+        end 
+
+    end     
+
+
+
+ factura_detalle = PurchaseDetail.where(["fecha7 >= ? and fecha7 <= ?  and
+      product_id = ?","#{fecha} 00:00:00","#{fecha} 23:59:59",producto ])
+    for detalle in factura_detalle
+
+        if !detalle.qty7.nil?
+
+         ret += detalle.qty7.round(2)
+
+        else
+            ret += 0 
+        end 
+
+    end     
+
+
+
+ factura_detalle = PurchaseDetail.where(["fecha8 >= ? and fecha8 <= ?  and
+       product_id = ?","#{fecha} 00:00:00","#{fecha} 23:59:59",producto ])
+    for detalle in factura_detalle
+
+        if !detalle.qty8.nil?
+
+         ret += detalle.qty8.round(2)
+
+        else
+            ret += 0 
+        end 
+
+    end     
+
+
+
+ factura_detalle = PurchaseDetail.where(["fecha9 >= ? and fecha9 <= ?  and
+        product_id = ?","#{fecha} 00:00:00","#{fecha} 23:59:59",producto ])
+    for detalle in factura_detalle
+
+        if !detalle.qty9.nil?
+
+         ret += detalle.qty9.round(2)
+
+        else
+            ret += 0 
+        end 
+
+    end     
+
+
+
+ factura_detalle = PurchaseDetail.where(["fecha10 >= ? and fecha10 <= ?  and
+        product_id = ?","#{fecha} 00:00:00","#{fecha} 23:59:59",producto ])
+    for detalle in factura_detalle
+
+        if !detalle.qty10.nil?
+
+         ret += detalle.qty10.round(2)
+
+        else
+            ret += 0 
+        end 
+
+    end     
+
+
+
+    return ret
+ 
+ end 
 
 def  get_ticket_glp(fecha) 
 
