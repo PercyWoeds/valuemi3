@@ -121,6 +121,7 @@ require 'sidekiq/web'
     collection { get :reportes6} #Reporte ventas
     collection { get :reportes7} #Reporte ventas
     collection { get :reportes8} #Reporte ventas
+    collection { get :reportes80} #Reporte ventas
     collection { get :reportes9} #Reporte ventas
     
     collection { get :reportes03}
@@ -544,6 +545,8 @@ end
   match 'companies/reports/rpt_parte_6/:company_id' => 'reports#rpt_parte_6', via: [:get, :post]    
   match 'companies/reports/rpt_parte_7/:company_id' => 'reports#rpt_parte_7', via: [:get, :post]    
   match 'companies/reports/rpt_parte_8/:company_id' => 'reports#rpt_parte_8', via: [:get, :post]    
+  match 'companies/reports/rpt_parte_80/:company_id' => 'reports#rpt_parte_80', via: [:get, :post]    
+  
   match 'companies/reports/rpt_parte_9/:company_id' => 'reports#rpt_parte_9', via: [:get, :post]    
   match 'companies/reports/rpt_parte_10/:company_id' => 'reports#rpt_parte_10', via: [:get, :post]    
   match 'companies/reports/rpt_parte_11/:company_id' => 'reports#rpt_parte_11', via: [:get, :post]    

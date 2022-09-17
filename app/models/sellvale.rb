@@ -62,7 +62,19 @@ class Sellvale < ActiveRecord::Base
    end 
 
  end 
- 
+ def get_cliente_name(lcCode )
+     descrip =""
+   
+
+      a = Customer.where(:account => lcCode).first 
+    if a.present?
+
+     return a.name
+    else
+      return "-"
+   end 
+
+ end 
     
  def self.import(file)
         TmpFactura.delete_all 

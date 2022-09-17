@@ -22,6 +22,16 @@
         has_many :company_users
         has_many :ajusts 
         
+
+    def  get_ventas_contometros_descuento_detalle2(fecha1,fecha2) 
+
+     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and implista <> 0 " , "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
+     
+    
+    return facturas 
+ 
+    end 
+
         
        def get_facturas_day_cliente(fecha1,fecha2,cliente)
          
