@@ -72,7 +72,7 @@ class Varillaje < ActiveRecord::Base
    ret = 0
 
     factura_detalle = PurchaseDetail.where(["fecha1 >= ? and fecha1 <= ?  and
-     product_id = ?","2022-08-27 00:00:00","#{fecha} 23:59:59",producto ])
+     product_id = ?","#{fecha} 00:00:00","#{fecha} 23:59:59",producto ])
     for detalle in factura_detalle
 
         if !detalle.qty1.nil?
@@ -87,7 +87,7 @@ class Varillaje < ActiveRecord::Base
 
 
     factura_detalle = PurchaseDetail.where(["fecha2 >= ? and fecha2 <= ?  and
-     product_id = ?","2022-08-27 00:00:00","#{fecha} 23:59:59",producto ])
+     product_id = ?","#{fecha} 00:00:00","#{fecha} 23:59:59",producto ])
     for detalle in factura_detalle
 
         if !detalle.qty2.nil?
@@ -101,7 +101,7 @@ class Varillaje < ActiveRecord::Base
     end     
 
     factura_detalle = PurchaseDetail.where(["fecha3 >= ? and fecha3 <= ?  and
-     product_id = ?","2022-08-27 00:00:00","#{fecha} 23:59:59",producto ])
+     product_id = ?","#{fecha} 00:00:00","#{fecha} 23:59:59",producto ])
     for detalle in factura_detalle
 
         if !detalle.qty3.nil?
@@ -116,7 +116,7 @@ class Varillaje < ActiveRecord::Base
 
 
  factura_detalle = PurchaseDetail.where(["fecha4 >= ? and fecha4 <= ?  and
-     product_id = ?","2022-08-27 00:00:00","#{fecha} 23:59:59",producto ])
+     product_id = ?","#{fecha} 00:00:00","#{fecha} 23:59:59",producto ])
     for detalle in factura_detalle
 
         if !detalle.qty4.nil?
@@ -132,7 +132,7 @@ class Varillaje < ActiveRecord::Base
 
 
  factura_detalle = PurchaseDetail.where(["fecha5 >= ? and fecha5 <= ?  and
-      product_id = ?","2022-08-27 00:00:00","#{fecha} 23:59:59",producto ])
+      product_id = ?","#{fecha} 00:00:00","#{fecha} 23:59:59",producto ])
     for detalle in factura_detalle
 
         if !detalle.qty5.nil?
@@ -148,7 +148,7 @@ class Varillaje < ActiveRecord::Base
 
 
  factura_detalle = PurchaseDetail.where(["fecha6 >= ? and fecha6 <= ?  and
-   product_id = ?","2022-08-27 00:00:00","#{fecha} 23:59:59",producto ])
+   product_id = ?","#{fecha} 00:00:00","#{fecha} 23:59:59",producto ])
     for detalle in factura_detalle
 
         if !detalle.qty6.nil?
@@ -164,7 +164,7 @@ class Varillaje < ActiveRecord::Base
 
 
  factura_detalle = PurchaseDetail.where(["fecha7 >= ? and fecha7 <= ?  and
-      product_id = ?","2022-08-27 00:00:00","#{fecha} 23:59:59",producto ])
+      product_id = ?","#{fecha} 00:00:00","#{fecha} 23:59:59",producto ])
     for detalle in factura_detalle
 
         if !detalle.qty7.nil?
@@ -180,7 +180,7 @@ class Varillaje < ActiveRecord::Base
 
 
  factura_detalle = PurchaseDetail.where(["fecha8 >= ? and fecha8 <= ?  and
-       product_id = ?","2022-08-27 00:00:00","#{fecha} 23:59:59",producto ])
+       product_id = ?","#{fecha} 00:00:00","#{fecha} 23:59:59",producto ])
     for detalle in factura_detalle
 
         if !detalle.qty8.nil?
@@ -196,7 +196,7 @@ class Varillaje < ActiveRecord::Base
 
 
  factura_detalle = PurchaseDetail.where(["fecha9 >= ? and fecha9 <= ?  and
-        product_id = ?","2022-08-27 00:00:00","#{fecha} 23:59:59",producto ])
+        product_id = ?","#{fecha} 00:00:00","#{fecha} 23:59:59",producto ])
     for detalle in factura_detalle
 
         if !detalle.qty9.nil?
@@ -212,7 +212,7 @@ class Varillaje < ActiveRecord::Base
 
 
  factura_detalle = PurchaseDetail.where(["fecha10 >= ? and fecha10 <= ?  and
-        product_id = ?","2022-08-27 00:00:00","#{fecha} 23:59:59",producto ])
+        product_id = ?","#{fecha} 00:00:00","#{fecha} 23:59:59",producto ])
     for detalle in factura_detalle
 
         if !detalle.qty10.nil?
