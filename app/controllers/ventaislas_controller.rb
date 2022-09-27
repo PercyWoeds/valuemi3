@@ -1,11 +1,11 @@
 class VentaislasController < ApplicationController
   
-  before_action :set_ventaisla, only: [:show, :edit, :update, :destroy]
+  before_action :set_ventaisla, only: [:show, :edit, :update, :destroy] 
 
   # GET /ventaislas
   # GET /ventaislas.json
   def index
-    
+       @company= Company.find(1)
     @ventaislas = Ventaisla.order('fecha DESC,turno').paginate(:page => params[:page], :per_page => 20)
     
 
@@ -14,6 +14,8 @@ class VentaislasController < ApplicationController
   # GET /ventaislas/1
   # GET /ventaislas/1.json
   def show
+
+
     @ventaisla_details= @ventaisla.ventaisla_details
 
     @employees = Employee.all
@@ -41,6 +43,25 @@ class VentaislasController < ApplicationController
     @ventaisla[:importe] = 0 
   end
 
+
+def new2
+    @pagetitle = "Nuevo Viatico"
+    @action_txt = "Create"
+    
+    @ventaisla = Ventaisla.new
+    @cajas = Caja.all 
+    @company = Company.find(params[:company_id])
+    @locations = @company.get_locations()
+    @divisions = @company.get_divisions()
+   @employees = @company.get_employees
+    @islas = Island.all
+    @ventaisla[:fecha]= Date.today
+    @ventaisla[:galones] = 0 
+    @ventaisla[:importe] = 0 
+
+
+  end
+
   # GET /ventaislas/1/edit
   def edit
     @employees = Employee.all
@@ -55,6 +76,9 @@ class VentaislasController < ApplicationController
       @islas = Island.all
     
    @employees = Employee.all 
+
+
+   
     respond_to do |format|
       if @ventaisla.save
         format.html { redirect_to @ventaisla, notice: 'Ventaisla was successfully created.' }
@@ -203,6 +227,7 @@ class VentaislasController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def ventaisla_params
-      params.require(:ventaisla).permit(:fecha, :turno, :employee_id, :pump_id, :importe, :le_an_gln, :le_ac_gln, :galones, :precio_ven,:island_id)
+      params.require(:ventaisla).permit(:fecha, :turno, :employee_id, :pump_id, :importe, :le_an_gln,
+       :le_ac_gln, :galones, :precio_ven,:island_id,:tipo)
     end
 end

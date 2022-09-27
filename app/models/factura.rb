@@ -82,9 +82,6 @@ class Factura < ActiveRecord::Base
 
  def get_maximo(serie,documento)
 
-    
-
-
     case 
 
      when serie == "1"
@@ -133,9 +130,7 @@ class Factura < ActiveRecord::Base
       end 
  end 
 
-
-
-  def self.to_csv(result)
+ def   self.to_csv(result)
     unless result.nil?
       CSV.generate do |csv|
         csv << result[0].attributes_names
@@ -151,6 +146,8 @@ class Factura < ActiveRecord::Base
           Factura.create! row.to_hash 
         end
   end      
+
+
   def get_dias_formapago
     
     return self.payment.day 
@@ -164,7 +161,7 @@ class Factura < ActiveRecord::Base
 
              if CustomerPaymentDetail.where(factura_id: self.id).exists?
 
-              @pago = CustomerPaymentDetail.where(factura_id: self.id).last 
+                @pago = CustomerPaymentDetail.where(factura_id: self.id).last 
 
                
 

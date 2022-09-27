@@ -1,0 +1,70 @@
+
+ <% if @ventaisla.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@ventaisla.errors.count, "error") %> prohibited this invoice from being saved:</h2>
+
+    <ul>
+    <% @ventaisla.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %> 
+
+
+<%= simple_form_for(@ventaisla) do |f| %>
+  <%= f.error_notification %>
+
+
+
+  <div class="form-inputs">
+    <div class="field">
+      <%= f.label :fecha, "Fecha ", :class => "bold" %><br />
+      <%= f.date_field :fecha %>
+    </div>
+
+    
+    <div class="field">
+      <%= f.label :turno,"Turno "%><br>
+      <%= f.select :turno, options_for_select([["TURNO 1",1],["TURNO 2",2],["TURNO 3",3],["TURNO 4",4]]) %>
+
+    </div>
+    
+        
+    <div class="field">
+    <%= f.label :employee_id,"Empleado *"%><br>
+    <%= f.collection_select :employee_id, @employees, :id, :full_name, :prompt => true %>
+    </div>
+    <div class="field">
+    <%= f.label :island_id,"Isla:* "%><br>
+    <%= select_tag(:island_id,options_from_collection_for_select(@islas,'id','code'),:id => "isla_select"  ) %>
+    </div>
+
+      <div class="field">
+      <%= f.label :tipo,"TIPO DE INGRESO "%><br>
+      <%= f.select :tipo, options_for_select([["SOLES",1],["GALONES",2]]) %>
+    </div>
+    
+  
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>
+
+<script>
+
+$(document).ready(function() {
+  
+ $('#isla_select').change(function() {
+      $.ajax({
+        url: "/ordens/update_surtidores",
+        data: {
+          marca_id : $('#marca_select').val()
+        },
+        dataType: "script"
+      });
+    });
+    
+ });
+    
+    </script>

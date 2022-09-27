@@ -1,0 +1,245 @@
+<html>
+<body>
+  <h6 ><center>  CIERRE AL : <%= @fecha1 %> Hasta: <%= @fecha2 %> </center>   </h6>
+  <h6 ><center>  TURNO  : XX  </center>   </h6>
+  <h6 ><center>  CAJERO  :   </center>   </h6>
+  
+  <h1></h1>
+
+
+  
+
+  
+  <table style='font-family:"Courier New", Courier, monospace; font-size:50% ;width:100%'>
+     
+      <% nroitem = 1%>
+     
+      <% total_0 = 0 %>
+     
+      
+      <% if @contado_rpt.size > 0 %>
+
+
+                <% for  credito in @contado_rpt3 %>
+
+                <% if  credito.cod_tar == '98' %>
+
+                  <% name_credito = "EFECTIVO SOLES "%>
+                <% elsif  credito.cod_tar == "05"%>
+                  <% name_credito = "TARJETA VISA "%>
+                
+                <% elsif credito.cod_tar ==  "06"%>
+                  <% name_credito = "VALE DE CREDITO "%>
+                
+                <% elsif credito.cod_tar ==  "07"%>
+                  <% name_credito = "SERAFIN" %>
+                <% else %>
+                  <% name_credito = "error..."%>
+
+
+                <% end %>
+
+                          <tr>
+                          <td width = "5%" align ="right">  <%= name_credito %></td>
+
+                        
+                          <td width = "10%" align ="right"><%= sprintf("%.2f",credito.importe)   %></td>
+                         
+                              </tr>
+                          <% nroitem += 1 %>
+
+                          <% total_0 += credito.importe.to_f %>
+                        
+
+
+               <%end %>
+
+         <%end %>
+ 
+               
+        <hr>  
+        
+     </table>
+     
+       <table style='font-family:"Courier New", Courier, monospace; font-size:50% ;width:100%'>     
+         <tr>
+                    <td width = "70%" align ="center">TOTAL  =====> : </td>
+                     <td width = "30%" align ="right"><%= sprintf("%.3f",total_0)   %></td>
+
+                  
+                   
+                    </tr>
+       </table>
+       
+    
+
+  <table style='font-family:"Courier New", Courier, monospace; font-size:50% ;width:100%'>
+     
+      <% nroitem = 1%>
+     
+      <% total_0 = 0 %>
+     
+      
+      <% if @contado_rpt.size > 0 %>
+
+
+                <% for  credito in @contado_rpt2 %>
+
+                          <tr>
+                          <td width = "5%" align ="right"><%=  credito.serie %> - </td>
+
+                          <td width = "5%" align ="right"><%=  credito.minimo %></td>
+                        
+                          <td width = "10%" align ="left"><%=  credito.maximo %></td>
+                        
+                          <td width = "10%" align ="right"><%= sprintf("%.2f",credito.importe)   %></td>
+                         
+                              </tr>
+                          <% nroitem += 1 %>
+
+                          <% total_0 += credito.importe.to_f %>
+                        
+
+
+               <%end %>
+
+         <%end %>
+ 
+               
+        <hr>  
+        
+     </table>
+     
+       <table style='font-family:"Courier New", Courier, monospace; font-size:50% ;width:100%'>     
+         <tr>
+                    <td width = "70%" align ="center">TOTAL  =====> : </td>
+                     <td width = "30%" align ="right"><%= sprintf("%.3f",total_0)   %></td>
+
+                  
+                   
+                    </tr>
+       </table>
+       
+    
+
+
+  <table style='font-family:"Courier New", Courier, monospace; font-size:50% ;width:100%'>
+  <font size="2" face="Courier New" >  
+  <tr bgcolor="#B4D7F7">
+    <td width="100%" align ="center">   *TOTAL POR DEPARTAMENTO * </td>
+  </tr>
+  </table>
+ 
+
+
+  
+  <table style='font-family:"Courier New", Courier, monospace; font-size:50% ;width:100%'>
+     
+      <% nroitem = 1%>
+      <% total_1 = 0 %>
+      <% total_2 = 0 %>
+      <% total_3 = 0 %>
+      
+      
+      <% if @contado_rpt.size > 0 %>
+
+
+                <% for  credito in @contado_rpt  %>
+
+
+
+                          <tr>
+                          
+                          <td width = "5%" align ="right"><%=  sprintf("%.2f",credito.cantidad.to_s)%></td>
+                        
+                          <td width = "10%" align ="left"><%=  credito.name_dep %></td>
+                        
+                          <td width = "10%" align ="right"><%= sprintf("%.2f",credito.importe)   %></td>
+                         
+                              </tr>
+                          <% nroitem += 1 %>
+
+                          <% total_1 += credito.importe.to_f %>
+                        
+
+
+               <%end %>
+
+         <%end %>
+ 
+               
+        <hr>  
+        
+     </table>
+     
+       <table style='font-family:"Courier New", Courier, monospace; font-size:50% ;width:100%'>     
+         <tr>
+                    <td width = "70%" align ="left">TOTAL POR DEPARTAMENTO: </td>
+                     <td width = "30%" align ="right"><%= sprintf("%.3f",total_1)   %></td>
+
+                  
+                   
+                    </tr>
+       </table>
+
+
+ 
+  <table style='font-family:"Courier New", Courier, monospace; font-size:50% ;width:100%'>
+
+  <font size="2" face="Courier New" >  
+  <tr bgcolor="#B4D7F7">
+    <td width="100%" align ="center">   *TOTAL POR PRODUCTO * </td>
+  </tr>
+  </table>
+
+
+  
+  <table style='font-family:"Courier New", Courier, monospace; font-size:50% ;width:100%'>
+     
+      <% nroitem = 1%>
+     
+      <% total_2 = 0 %>
+     
+      
+      <% if @contado_rpt.size > 0 %>
+
+
+                <% for  credito in @contado_rpt1  %>
+
+                          <tr>
+                          <td width = "5%" align ="right"><%=  sprintf("%.2f",credito.cantidad.to_s)%></td>
+                        
+                          <td width = "10%" align ="left"><%=  credito.name %></td>
+                        
+                          <td width = "10%" align ="right"><%= sprintf("%.2f",credito.importe)   %></td>
+                         
+                              </tr>
+                          <% nroitem += 1 %>
+
+                          <% total_2 += credito.importe.to_f %>
+                        
+
+
+               <%end %>
+
+         <%end %>
+ 
+               
+        <hr>  
+        
+     </table>
+     
+       <table style='font-family:"Courier New", Courier, monospace; font-size:50% ;width:100%'>     
+         <tr>
+                    <td width = "70%" align ="left">TOTAL POR PRODUCTO : </td>
+                     <td width = "30%" align ="right"><%= sprintf("%.3f",total_2)   %></td>
+
+                  
+                   
+                    </tr>
+       </table>
+       
+    
+    </body>
+      
+      </html>

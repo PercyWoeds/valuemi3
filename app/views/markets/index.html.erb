@@ -24,6 +24,7 @@
       
       <th>Cod prod</th>
       
+      <th>Nombre </th>
       <th>Cantidad</th>
       <th>Precio</th>
       <th>Importe</th>
@@ -43,17 +44,20 @@
          <td class="small bordered_bottom bordered_right"><%= market.serie %></td>
          <td class="small bordered_bottom bordered_right"><%= market.numero %></td>
          <td class="small bordered_bottom bordered_right"><%= market.cod_cli %></td>
+
          <td class="small bordered_bottom bordered_right"><%= market.ruc %></td>
         
          <td class="small bordered_bottom bordered_right"><%= market.cod_prod %></td>
+         <td class="small bordered_bottom bordered_right"><%= market.name  %></td>
         
          <td class="small bordered_bottom bordered_right"><%= market.cantidad %></td>
          <td class="small bordered_bottom bordered_right"><%= market.precio %></td>
          <td class="small bordered_bottom bordered_right"><%= market.importe %></td>
       
         <td><%= link_to 'Ver', market %></td>
-        <td><%= link_to 'Editar', edit_market_path(market) %></td>
+       
         <% if @current_user.email == "percywoeds@gmail.com" %>
+         <td><%= link_to 'Editar', edit_market_path(market) %></td>
         <td><%= link_to 'Eliminar', market, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         <%end %>
       </tr>
@@ -75,9 +79,10 @@
   <%= submit_tag "Importar " %>
 <% end %>
 
+<%= form_tag do_process_markets_path, multipart: true do %>
 
-
-
+  <%= submit_tag "Procesar " %>
+<% end %>
 
 
 

@@ -45,14 +45,29 @@
       <% for  product0 in @parte_rpt %>
 
     
-
                    <%  producto_value = product0.tanque.product.id%>
                    <%  producto_codigo = product0.tanque.code.to_s %>
                    
                    <% if  product0.tanque.product.id != 89  %>   
-                    <% ventas_qty = product0.get_ventas_22(@fecha,producto_value) %>
+                    <% puts "ventas**********************************************"%>
+
+                     <% puts product0.tanque.product.id %>   
+
+
+
+                      <% ventas_qty = product0.get_ventas_22(@fecha,producto_value) %>
+
+                     <% puts ventas_qty %> 
+
+
                     <% else %>
+
+                    
+
+
                     <% ventas_qty = product0.get_ventas_urea(@fecha) %>
+
+                    
                     <% end %>
   
 
@@ -69,7 +84,9 @@
 
                   <% else %>
 
-                   <% if (product0.tanque.product.id == 6 )%>
+                   <% if (product0.tanque.product.id == 6 ) %>
+
+                  
                   
                       <% compras = product0.get_compras20(@fecha,producto_value) %>
 
@@ -133,7 +150,8 @@
                     
                     <% dife_soles = product0.get_ventas_importe(@fecha,product0.tanque.product.id) - product0.get_ventas_23(@fecha,product0.tanque.product.id)-   product0.get_ventas_contometros_descuento_producto(@fecha,product0.tanque.product.code.to_s)  - product0.get_afericion_total_dia_producto(@fecha,product0.tanque.id)   %>
                     
-                    <% dife_mes = product0.get_saldo_final_combustible(@fecha,product0.tanque.product.id,product0.tanque.product.code.to_s,product0.tanque.id) %>
+                  
+                    <% dife_mes = product0.get_saldo_final_combustible(@fecha,product0.tanque.product.id,product0.tanque.product.code.to_s,product0.tanque.id) %> %>
                     
                     <td width = "10%" align ="right"><%=  sprintf("%.2f",dife_mes.to_s)   %></td>
                   
@@ -366,7 +384,7 @@
             <td width= "25%" align= "right">          <%=    sprintf("%.2f",venta_11)  %>                   </td>
             
             <td width = "25%" align ="left">  &#9475;   EFECTIVO SOLES    :  </td>
-            <td width = "25%" align ="right"><%= sprintf("%.2f",venta_2  ) %> </td>
+            <td width = "25%" align ="right"><%= sprintf("%.2f",venta_2 - venta_faltante  ) %> </td>
             
             
             

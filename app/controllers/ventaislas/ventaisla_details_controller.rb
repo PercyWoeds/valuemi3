@@ -39,7 +39,8 @@ class Ventaislas::VentaislaDetailsController < ApplicationController
     @ventaisla_detail = VentaislaDetail.new(ventaisla_detail_params)
     
     @ventaisla_detail.ventaisla_id  = @ventaisla.id
-    
+
+
     @ventaisla_detail.le_an_gln  = params[:ac_le_an_gln]
     @ventaisla_detail.price  = params[:ac_product_price]
     
@@ -49,10 +50,18 @@ class Ventaislas::VentaislaDetailsController < ApplicationController
           
           @cantidad =  @ventaisla_detail.le_an_gln -  @ventaisla_detail.le_ac_gln
           
-           @ventaisla_detail[:quantity] = @cantidad.round(3)
+
+          if @ventaisla.tipo == "1"
+           @ventaisla_detail[:quantity] = @cantidad.round(2)
            @total =   @ventaisla_detail[:quantity] *  @ventaisla_detail[:price] 
            @ventaisla_detail[:total]   = @total.round(2)
           
+          else
+            @ventaisla_detail[:quantity] = @cantidad.round(2) / @ventaisla_detail[:price]
+           @total =    @cantidad.round(3)
+           @ventaisla_detail[:total]   = @cantidad.round(2)
+
+          end   
     
     @employee = Employee.all 
     @valor = Valor.all
@@ -62,19 +71,27 @@ class Ventaislas::VentaislaDetailsController < ApplicationController
      $lc_lectura = @ventaisla_detail.le_ac_gln
      
     respond_to do |format|
+
       if @ventaisla_detail.save
-        
+         if @ventaisla.tipo == 1
+         $lcGalones = @ventaisla.get_importe_1("galones") * -1
+         $lcImporte = @ventaisla.get_importe_1("total")  * -1 
+
+         else 
          
-         $lcGalones = @ventaisla.get_importe_1("galones")
+         $lcGalones = @ventaisla.get_importe_1("galones") 
          $lcImporte = @ventaisla.get_importe_1("total")
+        end
          
          @ventaisla.update_attributes(galones:  $lcGalones ,importe: $lcImporte )
          
          @pump = Pump.find($lcpump_id)
-         if @pump != nil
-          @pump.update_attributes(le_an_gln: $lc_lectura)
+         if @ventaisla.tipo == 1
+           if @pump != nil
+               @pump.update_attributes(le_an_gln: $lc_lectura)
+             end 
          end 
-         
+
               format.html { redirect_to @ventaisla, notice: 'Ventaisla detail was successfully created.' }
         format.json { render :show, status: :created, location: @ventaisla }
       else

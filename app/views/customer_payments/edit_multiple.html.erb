@@ -1,0 +1,75 @@
+
+<% if @guiasselect != nil %>
+
+<h1> Editar  </h1>		 
+
+<%= form_tag updatemultiple_facturas_path, method: :put do %>
+
+
+ 	<table>
+		<thead>
+		  <tr>
+		      <th>
+		       Numero
+		      </th>
+		      <th>
+		        Fecha
+		      </th>
+		      <th>
+		        Cantidad 
+		      </th>
+		   
+		   </tr>		 
+		</thead>
+
+
+ 	<% for delivery in @guiasselect %>
+
+ 		<%= hidden_field_tag "products_ids[]",delivery.id %>
+
+	    <tbody>		
+			<tr>
+	        <td class="bordered_bottom bordered_right">
+	        	<%= delivery.product.name  %>
+	        </td>
+	        <td class="bordered_bottom bordered_right">
+	        	<%= delivery.quantity  %>
+	        </td>
+
+	        
+	         <%= f.label :qty6, "Cantidad 6 *", :class => "bold" %>
+    <%= f.number_field :qty6  ,:step => 0.01%><br />
+
+			
+
+             
+	      </tr>
+
+ 
+	 <%end %>
+
+	 
+	 	</tbody>
+
+	</table>
+
+
+
+	     <%= fields_for  delivery  do |f|	 %>		
+ 				
+ 		 	<%= render "fields",:f=> f %>
+	      	    
+   		 <%end %>
+
+		<div class="actions" >
+		<%= submit_tag "Actualizar  "%>
+		</div>
+
+
+
+<%end %>	
+<%end %>	
+
+
+
+

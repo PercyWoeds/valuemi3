@@ -138,6 +138,9 @@ require 'sidekiq/web'
     collection { get :reportes14}
     collection { get :reportes14b}
     collection { get :reportes15}
+
+    collection { get :reportes_18}
+    
     
     collection { get :reportes30}
     collection { get :reportes31}
@@ -175,11 +178,16 @@ require 'sidekiq/web'
     
   
   resources :ventaislas  do
+    
+
+
     resources :ventaisla_details, except: [:index,:show], controller: "ventaislas/ventaisla_details"
      collection { post :import  }
      collection { post :import2  }
      collection { post :import3  }
      collection { post :import4  }
+
+     
   end 
   
   resources :stocks do 
@@ -227,6 +235,8 @@ require 'sidekiq/web'
   
   resources :markets  do
     collection { post :import }
+ collection { post :do_process }
+    
     
   end 
   resources :tirads  do
@@ -556,6 +566,8 @@ end
   match 'companies/reports/rpt_parte_15/:company_id' => 'reports#rpt_parte_15', via: [:get, :post]
   match 'companies/reports/rpt_parte_16/:company_id' => 'reports#rpt_parte_16', via: [:get, :post]
   match 'companies/reports/rpt_parte_17/:company_id' => 'reports#rpt_parte_17', via: [:get, :post]
+  match 'companies/reports/rpt_parte_18/:company_id' => 'reports#rpt_parte_18', via: [:get, :post]
+  
   
   match 'companies/reports/cuadre_01/:company_id' => 'reports#cuadre_01', via: [:get, :post]    
   
@@ -601,6 +613,8 @@ end
   match 'invoices/pdf/:id' => 'invoices#pdf', via: [:get, :post]
   match 'companies/invoices/:company_id' => 'invoices#list_invoices', via: [:get, :post]
   resources :invoices
+
+ 
 
 # Invoices
   match 'output/add_kit/:company_id' => 'outputs#add_kit', via: [:get, :post]
@@ -697,7 +711,8 @@ end
   match 'companies/invoices/:company_id' => 'invoices#list_invoices', via: [:get, :post]
   resources :invoices
 
-  
+
+
   # Facturas Ventas
   
   match 'facturas/list_items/:company_id' => 'facturas#list_items', via: [:get, :post]
@@ -1207,6 +1222,9 @@ end
   match 'ventaisla/ac_mangueras' => 'ventaislas#ac_mangueras', via: [:get, :post]
 
   match 'ventaislas/do_grabar/:ventaisla_id/:isla_id' => 'ventaislas#do_grabar', via: [:get, :post]
+
+  match 'ventaislas/do_glp' => 'ventaislas#do_glp', via: [:get, :post]
+  match 'ventaislas/new2/:company_id' => 'ventaislas#new2', via: [:get, :post]
 
 
   resources :ventaislas

@@ -25,12 +25,95 @@
 
     def  get_ventas_contometros_descuento_detalle2(fecha1,fecha2) 
 
-     facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and implista <> 0 " , "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
+      facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and implista <> 0 " , "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
      
     
-    return facturas 
+      return facturas 
  
     end 
+
+    def  get_market_01(fecha1,fecha2) 
+
+      facturas = Sellvale.find_by_sql(['Select cod_dep,name_dep,sum(markets.cantidad) as cantidad ,
+           sum(markets.importe) as importe 
+          from markets  
+          INNER JOIN sellvales ON markets.serie  = sellvales.serie and
+                                markets.numero   = sellvales.numero 
+          WHERE sellvales.fecha >= ? and sellvales.fecha <= ? 
+          GROUP BY markets.cod_dep,markets.name_dep 
+          order by markets.cod_dep,markets.name_dep', "#{fecha1} 00:00:00","#{fecha2} 23:59:59"])
+    
+    
+
+      return facturas 
+
+          
+
+    end 
+
+
+   def  get_market_02(fecha1,fecha2) 
+
+      facturas = Sellvale.find_by_sql(['Select markets.cod_prod,name,sum(markets.cantidad) as cantidad ,
+           sum(markets.importe) as importe 
+          from markets  
+          INNER JOIN sellvales ON markets.serie  = sellvales.serie and
+                                markets.numero   = sellvales.numero 
+          WHERE sellvales.fecha >= ? and sellvales.fecha <= ? 
+          GROUP BY markets.cod_prod,markets.name 
+          order by markets.cod_prod,markets.name', "#{fecha1} 00:00:00","#{fecha2} 23:59:59"])
+    
+    
+
+      return facturas 
+
+          
+
+    end
+
+
+    def  get_market_03(fecha1,fecha2) 
+
+
+       # @
+     facturas = Sellvale.find_by_sql(['Select markets.serie,MIN(markets.numero) as minimo, MAX(markets.numero) as maximo,
+           sum(markets.importe) as importe 
+          from markets  
+          INNER JOIN sellvales ON markets.serie  = sellvales.serie and
+                                markets.numero   = sellvales.numero 
+          WHERE sellvales.fecha >= ? and sellvales.fecha <= ? 
+          GROUP BY markets.serie 
+          order by markets.serie', "#{fecha1} 00:00:00","#{fecha2} 23:59:59"])
+    
+    
+
+      return facturas 
+
+
+
+      end 
+  
+    def  get_market_04(fecha1,fecha2) 
+
+
+       # @
+     facturas = Sellvale.find_by_sql(['Select sellvales.cod_tar,
+           sum(markets.importe) as importe 
+          from markets  
+          INNER JOIN sellvales ON markets.serie  = sellvales.serie and
+                                markets.numero   = sellvales.numero 
+          WHERE sellvales.fecha >= ? and sellvales.fecha <= ? 
+          GROUP BY sellvales.cod_tar 
+          order by sellvales.cod_tar', "#{fecha1} 00:00:00","#{fecha2} 23:59:59"])
+    
+    
+
+      return facturas 
+
+
+
+      end 
+
 
         
        def get_facturas_day_cliente(fecha1,fecha2,cliente)
@@ -884,11 +967,13 @@
       def get_facturas_day3(fecha1,fecha2,moneda)        
         
         @facturas = Factura.find_by_sql(['Select facturas.*,factura_details.quantity,
-          factura_details.price,factura_details.total,products.name as nameproducto,products.code as codigo,products.unidad
+          factura_details.price,factura_details.total,products.name as nameproducto,
+          products.code as codigo,products.unidad
           from factura_details   
           INNER JOIN facturas ON factura_details.factura_id = facturas.id
           INNER JOIN products ON factura_details.product_id = products.id
-          WHERE facturas.fecha >= ? and facturas.fecha <= ?  and moneda_id = ? and substring(facturas.code,1,4)<> ? and products.products_category_id != ?
+          WHERE facturas.fecha >= ? and facturas.fecha <= ?  and moneda_id = ? 
+          and substring(facturas.code,1,4)<> ? and products.products_category_id != ?
           order by facturas.fecha', "#{fecha1} 00:00:00","#{fecha2} 23:59:59",moneda,"BB02","1" ])
         
           return @facturas 

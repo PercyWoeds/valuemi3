@@ -71,6 +71,14 @@ class MarketsController < ApplicationController
        redirect_to root_url, notice: "Ventas importadas."
   end 
   
+ def do_process
+      
+       @market = Market.last 
+       @market.process2
+       redirect_to root_url, notice: "Ventas importadas."
+
+ end 
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

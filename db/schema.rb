@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20220915160426) do
+ActiveRecord::Schema.define(version: 20220925204207) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1272,11 +1272,16 @@ ActiveRecord::Schema.define(version: 20220915160426) do
     t.string   "dolares"
     t.float    "precio1"
     t.float    "margen"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
     t.string   "descrip"
     t.string   "processed"
     t.string   "category"
+    t.string   "name"
+    t.datetime "dia"
+    t.string   "name_dep"
+    t.text     "msgerror"
+    t.datetime "date_processed"
   end
 
   create_table "modelos", force: :cascade do |t|
@@ -2643,6 +2648,7 @@ ActiveRecord::Schema.define(version: 20220915160426) do
     t.integer  "ventaisla_id"
     t.integer  "island_id"
     t.integer  "nro_cierre"
+    t.integer  "tipo"
   end
 
   create_table "viatico_details", force: :cascade do |t|

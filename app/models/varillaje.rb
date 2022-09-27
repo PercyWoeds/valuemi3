@@ -482,7 +482,6 @@ def  get_ticket_glp(fecha)
      
      if facturas
      
-    
      
         for factura in facturas
                 factura_detalle = PurchaseDetail.where(["purchase_id = ? and product_id = ? " , factura.id,producto ])
@@ -743,6 +742,11 @@ end
 
   ####
  def  get_ventas_22(fecha,producto) 
+
+    
+    puts "get_ventas_22 ******************************************************-------------- "
+    puts producto
+
      
 
      ret=0  

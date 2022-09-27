@@ -31,7 +31,8 @@
 <h3>
   Detalle
 </h3>
-  
+  <% if @ventaisla.tipo == 2 %>
+
  <form method="get" action="/ventaislas" onsubmit="addItemToContometro();" name="contometros">
     
 <table>
@@ -48,7 +49,7 @@
 
 
         <% rating_id = productItem.product.name  %>
-        <% puts rating_id %>
+    
         <tH>
           <%="#{rating_id}" %>
         </tH>
@@ -195,7 +196,6 @@
 
 </tbody>
 </table>
-<br />
 
 
 <div class="button">
@@ -205,6 +205,86 @@
 </div> 
 
 </form>
+
+
+<% else %>
+
+
+
+<div class="button">
+<%= link_to 'Agregar Item', new_ventaisla_ventaisla_detail_path(@ventaisla) %>
+</div> 
+
+<% total_1 = 0 %>
+
+<% total_2 = 0 %>
+
+  <table>
+
+ <th>   pump </th>
+
+ <th>   CODIGO DE ENTRADA
+ </th>
+ <th>   CODIGO DE SALIDA
+ </th>
+
+ <th>   TOTAL GLNS </th>
+
+<th>   PRECIO </th>
+ 
+ <th>   VENTA SOLES </th>
+          
+
+                  </tH>
+      <% for productItem in @ventaisla_details %>
+
+
+      <tr>
+       
+      <td>  <%= productItem.pump.fuel %></td>
+        
+
+     <td> <%= productItem.le_an_gln %></td>
+     <td> <%= productItem.le_ac_gln %></td>
+
+       <td> <%= productItem.quantity.round(2)*-1 %> </td>
+
+      <td> <%= productItem.price.round(2) %> </td>
+      
+         <td align="right"> <%= productItem.total.round(2)*-1 %></td>
+      </tr>
+
+       
+
+      <% total_1 += productItem.quantity.round(2)*-1 %>
+      <% total_2 += productItem.total.round(2)*-1 %>
+
+      <% end %>
+
+       <tr>
+       
+      <td> </td>
+        
+
+     <td> </td>
+
+     <td> TOTAL </td>
+
+     
+       <td> <%= total_1 %> </td>
+       <td> </td>
+
+         <td align="right">  <%=  total_2.round(2) %></td>
+      </tr>
+
+</table>
+
+
+
+
+<% end %>
+<br />
+
 
 
 <%= br() %>

@@ -204,6 +204,7 @@ def reportes6
   end
 
 #tarjeta credito por clientes todos 
+
 def reportes7
   
     @company=Company.find(1)          
@@ -317,6 +318,41 @@ def reportes8
                
         end   
       when "To Excel" then render xlsx: 'parte8_rpt_xls'
+      else render action: "index"
+    end
+  end
+def reportes_18
+  
+    @company=Company.find(1)          
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]    
+   
+
+     @contado_rpt = @company.get_market_01(@fecha1,@fecha2)
+    
+     @contado_rpt1 = @company.get_market_02(@fecha1,@fecha2)
+     @contado_rpt2 = @company.get_market_03(@fecha1,@fecha2)
+     @contado_rpt3 = @company.get_market_04(@fecha1,@fecha2)
+    
+    case params[:print]
+      when "To PDF" then 
+
+
+        begin 
+         render  pdf: "Market",template: "varillajes/parte18_rpt.pdf.erb",locals: {:varillajes => @contado_rpt} ,
+         :page_size  => "A4",
+         :header => {
+           :spacing => 5,
+                           :html => {
+                     :template => 'layouts/pdf-header.html',
+                           right: '[page] of [topage]'
+                  }
+               }
+               
+               
+        
+        end   
+      when "To Excel" then render xlsx: 'parte7_rpt_xls'
       else render action: "index"
     end
   end
