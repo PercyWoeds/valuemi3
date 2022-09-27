@@ -224,7 +224,7 @@
       <% venta_descuentos_facturas = 0 %>
       <% venta_descuentos_facturas_efe = a.get_ventas_contometros_descuento_factura_efe(@fecha) * -1 %>
       
-      <% venta_2  += venta_descuentos_facturas_efe %>
+      <% venta_2  += venta_descuentos_facturas_efe  %>
 
      <% if (venta_custodia - venta_2 - venta_10 + venta_descuentos_facturas_efe  ) < 0  %>
 
@@ -285,10 +285,12 @@
       
      <% venta_12 =  a.get_ventas_contometros_calibracion(@fecha)  %>
      <% venta_faltante =  a.get_faltante_total_dia(@fecha,"1") %>
+
      <% venta_sobrante =  a.get_faltante_total_dia(@fecha,"2") %>
      
      
-
+     <% venta_2  += venta_faltante  %>
+     
      <% otros_ingresos = a.get_other_incomes(@fecha) %>
      
      <% venta_19 =  a.get_ventas_contometros_tarjeta_productos(@fecha) %>
@@ -384,7 +386,7 @@
             <td width= "25%" align= "right">          <%=    sprintf("%.2f",venta_11)  %>                   </td>
             
             <td width = "25%" align ="left">  &#9475;   EFECTIVO SOLES    :  </td>
-            <td width = "25%" align ="right"><%= sprintf("%.2f",venta_2 - venta_faltante  ) %> </td>
+            <td width = "25%" align ="right"><%= sprintf("%.2f",venta_2  ) %> </td>
             
             
             
