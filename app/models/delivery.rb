@@ -22,7 +22,7 @@ self.per_page = 20
 
   has_many :deliverymines
   has_many :mines, through: :deliverymines
-
+  validate :is_saldo_ok?
   
 
   TABLE_HEADERS = ["ITEM",
@@ -402,5 +402,18 @@ where delivery_services.delivery_id = ?', self.id ])
       return "red"
     end
   end
+
+   def is_saldo_ok?
+
+    if balance > total 
+    
+        errors.add(:balance, " Error en operacion ud. esta alterando el sistema.")
+    
+     end 
+
+
+  end
+
+
 end
 

@@ -4502,6 +4502,7 @@ def newfactura2
   ###pendientes de pago 
   def rpt_ccobrar3_pdf
 
+
     $lcxCliente ="1"
     @company=Company.find(1)      
     @company.actualizar_fecha2

@@ -4,7 +4,7 @@ class Factura < ActiveRecord::Base
 
   validates_presence_of :company_id, :customer_id, :code, :user_id,:fecha
 
-  validates :code , uniqueness:{ scope:[:customer_id, :document_id,:moneda_id]}
+  validates :code , uniqueness:{ scope:[:document_id ]}
 
   validates_presence_of :documento2,  if: -> { self.document_id == '2' }
 

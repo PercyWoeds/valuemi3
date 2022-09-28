@@ -629,12 +629,14 @@ end
           importe = f.total
           ajuste = f.ajuste        
           compen =  f.compen
+
           factura = Factura.find(f.factura_id)            
           #@newbalance= factura.balance + importe -ajuste +compen  cambiado x solicutd andrea 3-6-17
-          @newbalance= factura.balance + importe
-          factura.balance = @newbalance
-          factura.save
-          
+          @newbalance= factura.balance + factura.importe
+
+            factura.balance = @newbalance
+            factura.save
+           
     end 
 
 
