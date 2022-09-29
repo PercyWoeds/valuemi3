@@ -140,6 +140,8 @@ require 'sidekiq/web'
     collection { get :reportes15}
 
     collection { get :reportes_18}
+
+     collection { get :rpt_ccobrar31_pdf}
     
     
     collection { get :reportes30}

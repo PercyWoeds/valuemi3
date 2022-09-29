@@ -1647,12 +1647,7 @@ end
      
      
    parts = fecha2.split("-")
-   puts "anio"
-   puts parts[0]
-   puts "mes"
-   puts parts[1] 
-   puts "dia "
-   puts parts[2] 
+   
    
    anio = parts[0] 
    mes = parts[1]
@@ -1660,7 +1655,7 @@ end
    
    fecha1 = parts[0]  << "-" << parts[1]  << "-01" 
    puts "fecha 1"
-   puts fecha1 
+  
    
    #Ventas 
    saldo_final = 0 
@@ -1689,8 +1684,26 @@ end
          if  (producto  == 6   and fecha.to_date <= '2022-08-27'.to_date ) 
 
            compras = self.get_ticket_glp(fechax)
+           
             else 
-           compras = self.get_compras20(fechax,producto)
+
+
+        
+                 if (producto == 6 )
+
+                  compras = self.get_compras20(fechax,producto)
+
+                 else
+                      
+
+                   compras = self.get_compras21(fechax,producto)
+                      
+
+
+                end 
+
+
+
          end 
 
          if  producto  != 89    
@@ -1707,8 +1720,8 @@ end
                 
           end 
         
-    
-     puts dife         
+     puts "saldo final  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+     puts saldo_final     
     saldo_final += dife 
     fechax = fechax.to_date + 1.day 
     $i +=1;

@@ -3515,8 +3515,14 @@ def newfactura2
     case params[:print]
       when "To PDF" then 
           redirect_to :action => "rpt_ccobrar3_pdf", :format => "pdf", :fecha1 => params[:fecha1], :fecha2 => params[:fecha2], :customer_id => params[:customer_id] 
+      
+      when "To Resumen" then 
+          redirect_to :action => "rpt_ccobrar31_pdf", :format => "pdf", :fecha1 => params[:fecha1], :fecha2 => params[:fecha2], :customer_id => params[:customer_id] 
+      
+
       when "To Excel" then render xlsx: 'rpt_ccobrar3_xls'
-        
+      
+
       else render action: "index"
     end
   end
@@ -4411,6 +4417,193 @@ def newfactura2
   end
 
 
+  def build_pdf_header_rpt21(pdf)
+       pdf.font "Helvetica" , :size => 8
+     $lcCli  =  @company.name 
+     $lcdir1 = @company.address1+@company.address2+@company.city+@company.state
+
+     $lcFecha1= Date.today.strftime("%d/%m/%Y").to_s
+     $lcHora  = Time.now.to_s
+
+    max_rows = [client_data_headers_rpt.length, invoice_headers_rpt.length, 0].max
+      rows = []
+      (1..max_rows).each do |row|
+        rows_index = row - 1
+        rows[rows_index] = []
+        rows[rows_index] += (client_data_headers_rpt.length >= row ? client_data_headers_rpt[rows_index] : ['',''])
+        rows[rows_index] += (invoice_headers_rpt.length >= row ? invoice_headers_rpt[rows_index] : ['',''])
+      end
+
+      if rows.present?
+
+        pdf.table(rows, {
+          :position => :center,
+          :cell_style => {:border_width => 0},
+          :width => pdf.bounds.width
+        }) do
+          columns([0, 2]).font_style = :bold
+
+        end
+
+        pdf.move_down 10
+
+      end
+
+
+      
+      pdf 
+
+  end   
+
+  def build_pdf_body_rpt21(pdf)
+    
+    pdf.text "Cuentas por cobrar  : desde "+@fecha1.to_s+ " Hasta: "+@fecha2.to_s , :size => 8 
+    pdf.text ""
+    pdf.font "Helvetica" , :size => 7
+
+      headers = []
+      table_content = []
+
+      Factura::TABLE_HEADERS2.each do |header|
+        cell = pdf.make_cell(:content => header)
+        cell.background_color = "FFFFCC"
+        headers << cell
+      end
+
+     table_content << headers
+
+      nroitem = 1
+      lcmonedasoles   = 2
+      lcmonedadolares = 1
+  
+      lcDoc='FT'    
+      
+      lcCliente = @facturas_rpt.first
+      
+      @total_original_soles =0
+      @total_original_dolares =0
+      @total_cliente_soles = 0
+      @total_cliente_dolar = 0
+      
+      @totalvencido_soles = 0
+      @totalvencido_dolar = 0
+      total_soles = 0
+      total_dolares = 0 
+      precio_ultimo = 0
+
+      puts "cliete"
+      puts @cliente_total_soles
+      puts @cliente_total_dolares 
+       
+
+       row = []   
+
+
+       row << lcCliente.customer.ruc 
+       row << lcCliente.customer.name.truncate(35, omission: ' ')
+       row << @cliente_total_soles.round(2)
+       row << @cliente_total_dolares.round(2)
+       
+       table_content << row
+           
+
+       for  product in @facturas_rpt
+       
+         
+        
+
+            fechas2 = product.fecha2 
+
+               row = []   
+            row << product.code
+            row << product.fecha.strftime("%d/%m/%Y")
+            row << "Cuota: 001: Fecha: " 
+            row << product.fecha2.strftime("%d/%m/%Y")
+           
+                       
+            row << " "
+
+      
+                
+                if product.document_id   == 2
+                   
+                  row << "0.00 "
+                  row << sprintf("%.2f",(product.balance*-1).to_s)
+                  
+                  
+                    if(product.fecha2 < Date.today)   
+                      @totalvencido_dolar += product.balance*-1
+                    end  
+                    
+                else  
+                  
+                  row << "0.00 "
+                  row << sprintf("%.2f",product.balance.to_s)
+                  
+                  if(product.fecha2 < Date.today)   
+                      @totalvencido_dolar += product.balance
+                  end  
+                end  
+          
+            row << product.get_vencido 
+            
+            
+            table_content << row
+
+          
+          
+        end 
+
+          result = pdf.table table_content, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width,
+                                        :cell_style => { size: 6 },
+                                        
+                                        } do 
+                                          columns([0]).align=:center
+                                          columns([1]).align=:left
+                                          columns([2]).align=:left
+                                          columns([3]).align=:left
+                                          columns([4]).align=:left
+                                          columns([5]).align=:left 
+                                          columns([5]).width =30
+                                          columns([6]).align=:left
+                                          columns([7]).align=:left
+                                          columns([8]).align=:right
+                                          columns([8]).width =40
+                                          columns([9]).align=:right
+                                          columns([9]).width =40
+                                          columns([10]).align=:right
+                                          columns([10]).width =40
+                                          columns([11]).align=:right
+                                          columns([11]).width =40
+                                          columns([12]).align=:right
+                                          columns([13]).align=:right
+                                        end                                          
+                                        
+      pdf.move_down 10    
+      
+      precio_ultimo = 0
+      
+     
+      #totales 
+      
+      pdf 
+
+    end
+
+    def build_pdf_footer_rpt21(pdf)      
+                  
+      pdf.text "" 
+      pdf.bounding_box([0, 20], :width => 535, :height => 40) do
+      pdf.draw_text "Company: #{@company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
+
+    end
+
+    pdf
+      
+  end
+
   # Export serviceorder to PDF
   def rpt_facturas_all_pdf
 
@@ -4533,7 +4726,44 @@ def newfactura2
     end 
 
   end
-  
+
+
+   def rpt_ccobrar31_pdf
+
+
+    $lcxCliente ="1"
+    @company=Company.find(1)      
+    @company.actualizar_fecha2
+    @company.actualizar_detraccion 
+    
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]
+    @cliente = params[:customer_id]      
+   
+    @facturas_rpt = @company.get_pendientes_cliente(@fecha1,@fecha2,@cliente)  
+
+    @cliente_total_soles =  @company.get_pendientes_cliente_total(@fecha1,@fecha2,@cliente,"2")
+    @cliente_total_dolares =  @company.get_pendientes_cliente_total(@fecha1,@fecha2,@cliente,"1")
+
+    if @facturas_rpt.size > 0 
+
+        
+        Prawn::Document.generate "app/pdf_output/rpt_pendientes.pdf", :page_layout => :landscape do |pdf|        
+        pdf.font "Helvetica"
+        pdf = build_pdf_header_rpt21(pdf)
+        pdf = build_pdf_body_rpt21(pdf)
+        build_pdf_footer_rpt21(pdf)
+
+        $lcFileName =  "app/pdf_output/rpt_pendientes.pdf"              
+    end     
+
+    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
+    send_file("app/pdf_output/rpt_pendientes.pdf", :type => 'application/pdf', :disposition => 'inline')
+
+    end 
+
+  end
+
   ###pendientes de pago detalle
 
   def rpt_ccobrar4_pdf

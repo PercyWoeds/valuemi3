@@ -159,11 +159,30 @@
        
        def get_pendientes_cliente(fecha1,fecha2,cliente)
     
-          @facturas = Factura.where([" balance > 0  and  company_id = ? AND fecha >= ? and fecha<= ? and customer_id = ? ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", cliente ]).order(:customer_id,:moneda_id,:fecha)
+          @facturas = Factura.where([" balance > 0  and  company_id = ? AND fecha >= ? and fecha<= ? and customer_id = ?  ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", cliente ]).order(:customer_id,:moneda_id,:fecha)
           return @facturas
           
        end
 
+       def get_pendientes_cliente_total(fecha1,fecha2,cliente,moneda)
+    
+          saldo = 0
+          documento = 2 
+
+
+          @facturas = Factura.select("facturas.customer_id,SUM(facturas.balance) as balance").where([" balance > 0  and  company_id = ? AND fecha >= ? and fecha<= ? and customer_id = ?   and moneda_id =? and document_id <> 2  ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", cliente,moneda  ]).group(:customer_id).order(:customer_id)
+          @facturas_notas = Factura.select("facturas.customer_id,sum(facturas.balance) as balance").where([" balance > 0  and  company_id = ? AND fecha >= ? and fecha<= ? and customer_id = ?   and moneda_id =? and document_id =  2 ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", cliente,moneda]).group(:customer_id).order(:customer_id)
+          
+          for factura in @facturas
+              saldo += factura.balance
+          end 
+          for factura in @facturas_notas
+              saldo -= factura.balance
+          end
+          return  saldo 
+          
+       end
+       
 
     
       def get_facturas_day_value(fecha1,fecha2,value = "total",moneda)

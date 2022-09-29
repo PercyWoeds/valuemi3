@@ -41,6 +41,8 @@ class VentaislasController < ApplicationController
     @ventaisla[:fecha]= Date.today
     @ventaisla[:galones] = 0 
     @ventaisla[:importe] = 0 
+    @ventaisla[:tipo] = 2 
+
   end
 
 
@@ -59,7 +61,8 @@ def new2
     @ventaisla[:galones] = 0 
     @ventaisla[:importe] = 0 
 
-
+    @ventaisla[:tipo] = 1
+  
   end
 
   # GET /ventaislas/1/edit
@@ -72,8 +75,16 @@ def new2
   # POST /ventaislas.json
   def create
     @ventaisla = Ventaisla.new(ventaisla_params)
+
     @ventaisla[:island_id] = params[:island_id]
       @islas = Island.all
+
+    if   params[:island_id] == "3"
+        @ventaisla[:tipo] =  1
+    else 
+        @ventaisla[:tipo] =  2
+
+    end 
     
    @employees = Employee.all 
 
