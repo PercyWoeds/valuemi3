@@ -4418,60 +4418,54 @@ def newfactura2
 
 
   def build_pdf_header_rpt21(pdf)
-       pdf.font "Helvetica" , :size => 8
-     $lcCli  =  @company.name 
-     $lcdir1 = @company.address1+@company.address2+@company.city+@company.state
-
-     $lcFecha1= Date.today.strftime("%d/%m/%Y").to_s
-     $lcHora  = Time.now.to_s
-
-    max_rows = [client_data_headers_rpt.length, invoice_headers_rpt.length, 0].max
-      rows = []
-      (1..max_rows).each do |row|
-        rows_index = row - 1
-        rows[rows_index] = []
-        rows[rows_index] += (client_data_headers_rpt.length >= row ? client_data_headers_rpt[rows_index] : ['',''])
-        rows[rows_index] += (invoice_headers_rpt.length >= row ? invoice_headers_rpt[rows_index] : ['',''])
-      end
-
-      if rows.present?
-
-        pdf.table(rows, {
-          :position => :center,
-          :cell_style => {:border_width => 0},
-          :width => pdf.bounds.width
-        }) do
-          columns([0, 2]).font_style = :bold
-
-        end
-
-        pdf.move_down 10
-
-      end
 
 
+        pdf.font "Helvetica"  , :size => 6
+        image_path = "#{Dir.pwd}/public/images/logo-v1.jpg"
+
+
+     
+       table_content = ([ [{:image => image_path, :rowspan => 3 , position: :center, vposition: :center }, {:content =>"SISTEMA DE GESTION INTEGRADO  ",:rowspan => 2  ,valign: :center  },"CODIGO ","TP-FZ-F-014"], 
+          ["VERSION: ","4"], 
+          ["CUENTAS POR COBRAR - DESDE: " + @fecha1  + " HASTA " + @fecha2  ,"Pagina: ","1 de 1 "] 
+         
+          ])
+        
+
+       pdf.table(table_content  ,{
+           :position => :center,
+           :width => pdf.bounds.width
+         })do
+            columns([1,2]).font_style = :bold
+            columns([0]).width = 118.55
+            columns([1]).width = 481.45
+            columns([1]).align = :center
+            columns([2]).align = :center
+            columns([3]).align = :center
+
+            columns([2]).width = 60
+
+            columns([3]).width = 60
+
+         end
+        
       
+        
+         pdf.move_down 2
       pdf 
 
   end   
 
   def build_pdf_body_rpt21(pdf)
-    
-    pdf.text "Cuentas por cobrar  : desde "+@fecha1.to_s+ " Hasta: "+@fecha2.to_s , :size => 8 
+     pdf.move_down 10
+    pdf.text ""
     pdf.text ""
     pdf.font "Helvetica" , :size => 7
 
       headers = []
       table_content = []
 
-      Factura::TABLE_HEADERS2.each do |header|
-        cell = pdf.make_cell(:content => header)
-        cell.background_color = "FFFFCC"
-        headers << cell
-      end
-
-     table_content << headers
-
+      
       nroitem = 1
       lcmonedasoles   = 2
       lcmonedadolares = 1
@@ -4491,61 +4485,90 @@ def newfactura2
       total_dolares = 0 
       precio_ultimo = 0
 
-      puts "cliete"
-      puts @cliente_total_soles
-      puts @cliente_total_dolares 
        
 
        row = []   
 
 
-       row << lcCliente.customer.ruc 
-       row << lcCliente.customer.name.truncate(35, omission: ' ')
-       row << @cliente_total_soles.round(2)
-       row << @cliente_total_dolares.round(2)
+       row << {:content => lcCliente.customer.ruc ,:size=> 10 ,:font_style=> :bold  }
+       row << {:content => lcCliente.customer.name.truncate(35, omission: ' ') ,:size=> 10,:font_style=> :bold ,colspan: 3 }
+       
+    
+       row << {:content => "S/.  " + @cliente_total_soles.round(2).to_s   ,:size=> 10 ,:font_style=> :bold  } 
+       row << {:content =>  "USD  " + @cliente_total_dolares.round(2).to_s ,:size=> 10 ,:font_style=> :bold  }
        
        table_content << row
+
+
+       row = []   
+       row << {:content => "Comprobante" ,:size=> 6 ,align: :center ,:background_color => "FFF992"}
+       row << {:content => "Fecha Hora" ,:size=> 6 ,align: :center ,:background_color => "FFF992"}
+       row << {:content => "Cuotas" ,:size=> 6 ,align: :center ,:background_color => "FFF992" }
+       row << {:content => "Conductor" ,:size=> 6 ,align: :center ,:background_color => "FFF992"}
+       row << {:content => "Importe S/." ,:size=> 6 ,align: :center ,:background_color => "FFF992"}
+       row << {:content => "Importe USD." ,:size=> 6 ,align: :center ,:background_color => "FFF992"}
+       
+       table_content << row
+
            
 
        for  product in @facturas_rpt
        
          
-        
+            @balance = 0 
 
             fechas2 = product.fecha2 
 
                row = []   
             row << product.code
             row << product.fecha.strftime("%d/%m/%Y")
-            row << "Cuota: 001: Fecha: " 
-            row << product.fecha2.strftime("%d/%m/%Y")
+            row << "Cuota: 001: Fecha: " + product.fecha2.strftime("%d/%m/%Y")
+            row << ""
            
                        
-            row << " "
-
+     
       
                 
                 if product.document_id   == 2
                    
-                  row << "0.00 "
-                  row << sprintf("%.2f",(product.balance*-1).to_s)
                   
-                  
-                    if(product.fecha2 < Date.today)   
-                      @totalvencido_dolar += product.balance*-1
+                      @balance =   (product.balance*-1).round(2).to_s
+
+                    if(product.fecha2 < Date.today) 
+
+                      @color = "FF0000" 
+
+                      @totalvencido_dolar += @balance
+                    else 
+                       @color = "000000" 
+
                     end  
-                    
+                  
                 else  
+                   @balance =  product.balance.round(2).to_s
+
                   
-                  row << "0.00 "
-                  row << sprintf("%.2f",product.balance.to_s)
-                  
+                
                   if(product.fecha2 < Date.today)   
-                      @totalvencido_dolar += product.balance
+                     @color = "FF0000" 
+                      @totalvencido_dolar += @balance.to_f
+                  else 
+
+                      @color = "000000" 
                   end  
                 end  
-          
-            row << product.get_vencido 
+
+                if product.moneda_id  == 1 
+                   row << "0.00 "
+                   row <<  {:content => @balance,:size=> 6 ,:text_color=> @color   } 
+               else 
+
+                   row << {:content => @balance,:size=> 6 ,:text_color=> @color   }
+                   row << "0.00 " 
+               end 
+   
+               
+        
             
             
             table_content << row
@@ -4556,29 +4579,17 @@ def newfactura2
 
           result = pdf.table table_content, {:position => :center,
                                         :header => true,
-                                        :width => pdf.bounds.width,
+                                        :width => pdf.bounds.width / 2, 
                                         :cell_style => { size: 6 },
                                         
                                         } do 
-                                          columns([0]).align=:center
+                                          columns([0]).align=:left
                                           columns([1]).align=:left
                                           columns([2]).align=:left
                                           columns([3]).align=:left
-                                          columns([4]).align=:left
-                                          columns([5]).align=:left 
-                                          columns([5]).width =30
-                                          columns([6]).align=:left
-                                          columns([7]).align=:left
-                                          columns([8]).align=:right
-                                          columns([8]).width =40
-                                          columns([9]).align=:right
-                                          columns([9]).width =40
-                                          columns([10]).align=:right
-                                          columns([10]).width =40
-                                          columns([11]).align=:right
-                                          columns([11]).width =40
-                                          columns([12]).align=:right
-                                          columns([13]).align=:right
+                                          columns([4]).align=:right
+                                          columns([5]).align=:right
+                                          
                                         end                                          
                                         
       pdf.move_down 10    

@@ -166,7 +166,7 @@
 
        def get_pendientes_cliente_total(fecha1,fecha2,cliente,moneda)
     
-          saldo = 0
+          saldo = 0.00
           documento = 2 
 
 
