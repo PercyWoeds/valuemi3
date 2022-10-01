@@ -4538,7 +4538,7 @@ def newfactura2
 
                       @color = "FF0000" 
 
-                      @totalvencido_dolar += @balance
+                     
                     else 
                        @color = "000000" 
 
@@ -4551,7 +4551,7 @@ def newfactura2
                 
                   if(product.fecha2 < Date.today)   
                      @color = "FF0000" 
-                      @totalvencido_dolar += @balance.to_f
+                    
                   else 
 
                       @color = "000000" 
