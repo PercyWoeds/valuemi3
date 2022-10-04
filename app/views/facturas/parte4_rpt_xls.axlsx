@@ -19,38 +19,21 @@ wb.styles do |s|
     
     wb.add_worksheet(name: "Basic work sheet") do |sheet|
     
-    sheet.add_row ["Fecha", "Serie", "Numero", "Nro.Vale","Placa","Cod.Cli.","Cliente","Cod.Prod.","Producto","Km.","Cantidad ","Precio","Importe","Imp.Lista","Facturado" ], :style => title 
+    sheet.add_row ["Fecha","Cod.Cli.","Cliente","Serie", "Numero", "Nro.Vale","Placa","Km.","Cod.Prod.","Producto", "Cantidad ","Precio","Importe","Imp.Lista","Facturado" ], :style => title 
     
-   @contado_rpt1.each do |payment|
+   @contado_rpt.each do |payment|
    
       
-           if  payment.odometro == nil
-                nro_vale =""
-           else
-            
-            nro_vale = payment.odometro
-           end 
-             
-            sheet.add_row [payment.fecha,payment.serie,payment.numero,nro_vale,payment.placa,payment.cod_cli,payment.get_cliente(payment.cod_cli), payment.cod_prod,payment.get_product_name(payment.cod_prod),payment.km,payment.cantidad,payment.precio,payment.importe,payment.implista,payment.get_vale_facturado], :style => [date,cadena,cadena,cadena,cadena,cadena,cadena,cadena,currency,currency,currency,currency,currency,currency,currency]
-            
-   end
-
-sheet.add_row ["Fecha", "Serie", "Numero", "Nro.Vale","Placa","Cod.Cli.","Cliente","Cod.Prod.","Producto","Km.","Cantidad ","Precio","Importe","Imp.Lista","Facturado" ], :style => title 
+   if  payment.odometro == nil
+        nro_vale =""
+   else
     
-   @contado_rpt2.each do |payment|
-   
-      
-           if  payment.odometro == nil
-                nro_vale =""
-           else
-            
-            nro_vale = payment.odometro
-           end 
-             
-            sheet.add_row [payment.fecha,payment.serie,payment.numero,nro_vale,payment.placa,payment.cod_cli,payment.get_cliente(payment.cod_cli), payment.cod_prod,payment.get_product_name(payment.cod_prod),payment.km,payment.cantidad,payment.precio,payment.importe,payment.implista,payment.get_vale_facturado], :style => [date,cadena,cadena,cadena,cadena,cadena,cadena,cadena,currency,currency,currency,currency,currency,currency,currency]
-            
+    nro_vale = payment.odometro
+   end 
+     
+    sheet.add_row [payment.fecha,payment.cod_cli,payment.get_cliente(payment.cod_cli),payment.serie,payment.numero,nro_vale,payment.placa,payment.km, payment.cod_prod,payment.get_product_name(payment.cod_prod),payment.cantidad,payment.precio,payment.importe,payment.implista,payment.get_vale_facturado], :style => [date,cadena,cadena,cadena,cadena,cadena,cadena,cadena,currency,currency,currency,currency,cadena]
+    
    end
-
    
    
    

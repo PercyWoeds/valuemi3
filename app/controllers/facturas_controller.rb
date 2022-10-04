@@ -6,6 +6,7 @@ require "./lib/nubefact/nube_fact"
 
 require "active_support/number_helper"
 
+
 class FacturasController < ApplicationController
 
     $: << Dir.pwd  + '/lib'
@@ -45,7 +46,7 @@ class FacturasController < ApplicationController
   
   def reportes
   
-  
+
     @company=Company.find(1)          
     @fecha = params[:fecha1]    
     
@@ -7095,7 +7096,8 @@ def build_pdf_header9(pdf)
   
 
   def updatemultiple
-    
+
+        
  
        PurchaseDetail.where(id: params[:products_ids]).update_all(params[:purchase_detail])
         
