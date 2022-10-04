@@ -161,7 +161,7 @@ def reportes5
                }
 
         end   
-        when "To Excel" then render xlsx: 'parte4_rpt_xls'
+        when "To Excel" then render xlsx: 'parte5_rpt_xls'
       else render action: "index"
     end
   end

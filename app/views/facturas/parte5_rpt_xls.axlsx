@@ -1,0 +1,43 @@
+$LOAD_PATH.unshift "#{File.dirname(__FILE__)}/../lib"
+
+require 'axlsx'
+
+p = Axlsx::Package.new
+wb = xlsx_package.workbook
+wb.styles do |s|
+    date = s.add_style(:format_code => "yyyy-mm-dd", :border => Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :right})
+    padded = s.add_style(:format_code => "00#", :border => Axlsx::STYLE_THIN_BORDER)
+    percent = s.add_style(:format_code => '#.##0.00', :border => Axlsx::STYLE_THIN_BORDER)
+    title = s.add_style(:bg_color => "FFFF0000", :fg_color=>"#FF000000",:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :center})
+    cadena =s.add_style(:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :right})
+
+    currency = wb.styles.add_style(:format_code=>"#,##0.#0;[Red]-#,##0.#0",
+                              :border=>Axlsx::STYLE_THIN_BORDER)
+    red_negative = wb.styles.add_style :num_fmt => 8
+    comma = wb.styles.add_style :num_fmt => 3
+    super_funk = wb.styles.add_style :format_code => '[Green]#'
+    
+    wb.add_worksheet(name: "Basic work sheet") do |sheet|
+    
+    sheet.add_row ["Fecha", "Serie", "Numero", "Nro.Vale","Placa","Cod.Cli.","Cliente","Cod.Prod.","Producto","Km.","Cantidad ","Precio","Importe","Imp.Lista","Facturado" ], :style => title 
+    
+   @contado_rpt.each do |payment|
+   
+      
+           if  payment.odometro == nil
+                nro_vale =""
+           else
+            
+            nro_vale = payment.odometro
+           end 
+             
+            sheet.add_row [payment.fecha,payment.serie,payment.numero,nro_vale,payment.placa,payment.cod_cli,payment.get_cliente(payment.cod_cli), payment.cod_prod,payment.get_product_name(payment.cod_prod),payment.km,payment.cantidad,payment.precio,payment.importe,payment.implista,payment.get_vale_facturado], :style => [date,cadena,cadena,cadena,cadena,cadena,cadena,cadena,currency,currency,currency,currency,currency,currency,currency]
+            
+   end
+
+   
+   
+end
+end 
+
+    
