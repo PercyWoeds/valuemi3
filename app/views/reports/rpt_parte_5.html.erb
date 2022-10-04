@@ -16,14 +16,13 @@
 <%= form_tag(reportes5_facturas_path, :method => "get") do %>
 
     <div class="field">
-        <input type="date" name="fecha1" value="2018-03-19" style = "width: 150px" >
-        <input type="date" name="fecha2" value="2018-04-21" style = "width: 150px" >
+        <input type="date" name="fecha1" value= <%= Date.today - 30.days  %> style = "width: 150px" >
+        <input type="date" name="fecha2" value= <%= Date.today %> style = "width: 150px" >
     </div>
 	
   <div class="field">
     <%= select_tag(:cod_cli,options_from_collection_for_select(@customers,'account','name') ) %>
   </div>
-
 <br> 
  <%= submit_tag "To PDF", :name => "print" %>
  <%= submit_tag "To Excel", :name => "print" %>
