@@ -45,6 +45,7 @@ class FacturasController < ApplicationController
   
   def reportes
   
+  
     @company=Company.find(1)          
     @fecha = params[:fecha1]    
     
