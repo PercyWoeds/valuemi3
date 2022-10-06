@@ -5,4 +5,6 @@ class Loan < ActiveRecord::Base
     
     has_many :loan_details, :dependent => :destroy
     belongs_to :payroll 
+
+    
 end

@@ -12,6 +12,7 @@ before_action :set_loan, only: [:show, :edit, :update, :destroy]
   # GET /loans/1.json
   def show
     @loan_details= @loan.loan_details
+    
   end
 
   # GET /loans/new

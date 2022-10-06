@@ -110,6 +110,12 @@ require 'sidekiq/web'
     resources :viatico_details, except: [:index,:show], controller: "viaticos/viatico_details"
     
   end
+
+ resources :purchases do
+    resources :purchase_details, except: [:index,:show], controller: "purchases/purchase_details"
+    
+  end
+
   
   resources :facturas do 
     collection { get :newfactura2}

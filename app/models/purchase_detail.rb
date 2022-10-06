@@ -7,7 +7,7 @@ class PurchaseDetail < ActiveRecord::Base
   
   belongs_to :purchase	
   belongs_to :product
-  
+
 
   def get_subtotal(items)
   	subtotal = 0
@@ -78,7 +78,43 @@ class PurchaseDetail < ActiveRecord::Base
     return @itemproducts
   end
 
-  
+  def calcular_saldo
+
+    self.grifo = 0
+
+    if !self.qty1.nil?
+       self.grifo += self.qty1 
+    end 
+ if !self.qty2.nil?
+       self.grifo += self.qty2 
+    end 
+ if !self.qty3.nil?
+       self.grifo += self.qty3 
+    end 
+ if !self.qty4.nil?
+       self.grifo += self.qty4 
+    end 
+ if !self.qty5.nil?
+       self.grifo += self.qty5 
+    end 
+ if !self.qty6.nil?
+       self.grifo += self.qty6 
+    end 
+ if !self.qty7.nil?
+       self.grifo += self.qty7 
+    end 
+ if !self.qty8.nil?
+       self.grifo += self.qty8 
+    end 
+ if !self.qty9.nil?
+       self.grifo += self.qty9 
+    end 
+ if !self.qty10.nil?
+       self.grifo += self.qty10 
+    end 
+
+
+  end 
 
 
 end

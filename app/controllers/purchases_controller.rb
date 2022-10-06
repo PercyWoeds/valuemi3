@@ -3108,13 +3108,18 @@ def newfactura2
   def show
     @purchase = Purchase.find(params[:id])
     @supplier = @purchase.supplier
+
+    @purchase_details = @purchase.purchase_details
+    
+
      @cierre = Cierre.last 
     parts0 = @cierre.fecha.strftime("%Y-%m-%d") 
     parts = parts0.split("-")
-    
+  
     $yy = parts[0].to_i
     $mm = parts[1].to_i
     $dd = parts[2].to_i 
+    
   end
 
   # GET /purchases/new

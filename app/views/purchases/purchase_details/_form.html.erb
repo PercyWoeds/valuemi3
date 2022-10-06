@@ -1,0 +1,118 @@
+
+<%= simple_form_for [@purchase, @purchase_detail] do |f| %>
+
+
+  <%= f.error_notification %>
+
+
+<h4>  
+
+
+<table class="table table-hover table-striped">
+     <tr><td>Total Cantidad</td><td><%= @purchase_detail.quantity  %></td> </tr>
+     <tr><td>Total Asignado Division : E/S </td> <td><%= @purchase_detail.grifo  %></td></tr>
+     <tr><td>Total Asignado Division : V.Mayor. </td><td><%= @purchase_detail.quantity - @purchase_detail.grifo %></td></tr>
+     
+</table>
+
+    </h4>
+
+
+   <div class="field">
+    <%= f.label :fecha1, "Fecha 1 *", :class => "bold" %>
+    <%= f.date_field :fecha1   %>
+  </div>
+
+
+  <div class="field">
+    <%= f.label :qty1, "Cantidad 1 *", :class => "bold" %>
+    <%= f.number_field :qty1 ,:step => 0.01 %><br />
+    </div>
+
+
+  <div class="field">
+    <%= f.label :fecha2, "Fecha 2 *", :class => "bold" %>
+    <%= f.date_field :fecha2 %>
+
+  </div>
+
+  <div class="field">
+    <%= f.label :qty2, "Cantidad 2 *", :class => "bold" %>
+    <%= f.number_field :qty2 ,:step => 0.01 %><br />
+    </div>
+
+  <div class="field">
+    <%= f.label :fecha3, "Fecha 3 *", :class => "bold" %>
+    <%= f.date_field :fecha3  %>
+  </div>
+  <div class="field">
+    <%= f.label :qty3, "Cantidad 3 *", :class => "bold" %>
+    <%= f.number_field :qty3  ,:step => 0.01%><br />
+  </div>
+
+  <div class="field">
+    <%= f.label :fecha4, "Fecha 4*  ", :class => "bold" %>
+   <%=  f.date_field  :fecha4   %> 
+  </div>
+  <div class="field">
+    <%= f.label :qty4, "Cantidad 4 *", :class => "bold" %>
+    <%= f.number_field :qty4 ,:step => 0.01 %><br />
+    </div>
+  <div class="field">
+    <%= f.label :fecha5, "Fecha 5 *", :class => "bold" %>
+    <%= f.date_field :fecha5 %>
+  </div>
+  <div class="field">
+    <%= f.label :qty5, "Cantidad 5 *", :class => "bold" %>
+    <%= f.number_field :qty5 ,:step => 0.01 %><br />
+    </div>
+
+  <div class="field">
+    <%= f.label :fecha6, "Fecha 6 *", :class => "bold" %>
+    <%= f.date_field :fecha6  %> 
+  </div>
+  <div class="field">
+    <%= f.label :qty6, "Cantidad 6 *", :class => "bold" %>
+    <%= f.number_field :qty6  ,:step => 0.01%><br />
+  </div>
+    
+  <div class="field">
+    <%= f.label :fecha7, "Fecha 7 *", :class => "bold" %>
+    <%= f.date_field :fecha7  %> 
+  </div>
+  <div class="field">
+    <%= f.label :qty7, "Cantidad 7 *", :class => "bold" %>
+    <%= f.number_field :qty7  ,:step => 0.01%><br />
+  </div>
+  <div class="field">
+    <%= f.label :fecha8, "Fecha 8 *", :class => "bold" %>
+    <%= f.date_field :fecha8  %> 
+  </div>
+  <div class="field">
+    <%= f.label :qty8, "Cantidad 8 *", :class => "bold" %>
+    <%= f.number_field :qty8  ,:step => 0.01%><br />
+ 
+  </div>
+  <div class="field">
+    <%= f.label :fecha9, "Fecha 9*", :class => "bold" %>
+    <%= f.date_field :fecha9  %> 
+  </div>
+  <div class="field">
+    <%= f.label :qty9, "Cantidad 9*", :class => "bold" %>
+    <%= f.number_field :qty9  ,:step => 0.01%><br />
+     </div>     
+
+  <div class="field">
+    <%= f.label :fecha10, "Fecha 10*", :class => "bold" %>
+    <%= f.date_field :fecha10  %> 
+  </div>
+  <div class="field">
+    <%= f.label :qty10, "Cantidad 10*", :class => "bold" %>
+    <%= f.number_field :qty10  ,:step => 0.01%><br />
+
+      </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

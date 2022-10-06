@@ -1,0 +1,20 @@
+<h1>Nuevo </h1>
+
+<p>
+Planilla: <%= @loan.payroll.code %>
+</p>
+<p>
+Fecha Inicial : <%= @loan.payroll.fecha_inicial %>
+</p>
+<p>
+Fecha final : <%= @loan.payroll.fecha_final%>
+</p>
+
+<p>
+Descrip:  <%= @loan.descrip%>
+
+</p>
+
+<%= render 'form' %>
+
+<%= link_to 'Regresar', loan_details_path %>

@@ -15,7 +15,9 @@ class Purchase < ActiveRecord::Base
   belongs_to :product 
   belongs_to :purchaseorder
 
-  has_many :purchase_details
+  has_many :purchase_details, :dependent => :destroy
+  
+
 
 TABLE_HEADERS  = ["ITEM ",
                       "PROVEEDOR",

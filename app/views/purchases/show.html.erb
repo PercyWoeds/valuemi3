@@ -72,9 +72,7 @@
       <th>
         Total
       </th>
-      <th>
-        Asignar 
-      </th>
+      
 
 <th>
         Fecha1
@@ -125,11 +123,7 @@
           <%= money(productItem.total) %>
         </td>
         
-        <td class="bordered_right bordered_bottom right">
-            <%= check_box_tag "products_ids[]", productItem.id     %>
-        </td> 
-                 
-
+      
           <% if productItem.fecha1 %>
                   <td class="bordered_bottom bordered_right">
                     <%= productItem.fecha1.strftime("%d/%m/%Y") %>
@@ -160,6 +154,12 @@
         <% end %>
 
 
+    <% if @purchase.processed == "1"  %>
+    
+
+         <td><%= link_to 'Editar', edit_purchase_purchase_detail_path(purchase_id: @purchase.id,id: productItem.id ) %></td>  
+
+<% end %>
 
       </tr>
     <% end %>
@@ -269,13 +269,7 @@
     <%= link_to 'Procesar factura', "/purchases/do_process/#{@purchase.id}" %>
     
     
-    <%end %>
-    <% if @purchase.processed == "1"  %>
-     <%= select_tag :field, options_for_select([["Glns",""]]),:style => "width:70px" %>
-     <%= submit_tag "Asignar Cant." %>
-
-    <%end %>
-    
+    <% end %>
   
   <%end %>
   
