@@ -53,11 +53,18 @@
         <strong>Comprobante Interno :</strong><br />
           <%= f.text_field :numero ,:style=> 'width: 200px'%>
       </div>
+
+
+
+     <h3><p>Datos Documento a registrar </p></h3> 
+
+
       
     <strong>Documento:</strong><br />
     <br />
+    
      <div class="field">
-      <%= f.collection_select :tm, @documents , :id, :fullname , :prompt => true %>
+      <%= f.collection_select :document_id, @documents , :id, :fullname , :prompt => true %>
     
      </div>
 
@@ -103,12 +110,7 @@
 
       <div class="small">
         <strong>Seleccionar proveedor:</strong>
-
-
-       
-
       </div>
-      
     
       <div class="field">
          <strong> Nro.Documento :</strong><br />
@@ -116,21 +118,28 @@
       </div>
     
     
-    <div class="small">
-      Ingrese un termino de busqueda para encontrar un documento 
-    </div>
-    
-    
+      <div class="small">
+        Ingrese un termino de busqueda para encontrar un documento 
+      </div>
       
+    
+    
     <td>
       <div class="field">
-      <strong> Fecha :</strong><br />
+      <strong> Fecha Emision :</strong><br />
           <%= f.date_field :fecha ,:style=> 'width: 180px'%>
       </div>
       
     </td>
     
-    
+       
+    <td>
+      <div class="field">
+      <strong> Fecha Vmto:</strong><br />
+          <%= f.date_field :fecha2 ,:style=> 'width: 180px'%>
+      </div>
+      
+    </td>
     
     <br />  
 

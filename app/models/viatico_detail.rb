@@ -1,6 +1,6 @@
 class ViaticoDetail < ActiveRecord::Base
     
-    validates_presence_of :viatico_id, :tranportorder_id,  :importe , :gasto_id,:employee_id,:document_id,:supplier_id
+    validates_presence_of :viatico_id,  :importe , :gasto_id,:employee_id,:document_id,:supplier_id
   
     belongs_to :viatico  
     belongs_to :tranportorder
@@ -17,4 +17,8 @@ class ViaticoDetail < ActiveRecord::Base
         end 
         return ret 
     end 
+
+   
+
+
 end

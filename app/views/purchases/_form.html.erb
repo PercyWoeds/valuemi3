@@ -25,6 +25,8 @@
         <span id="selected supplier"><% if @ac_supplier %><%= @ac_supplier %><% else %><!-- i --><% end %></span>
 
       </div>
+
+
     </div>
     
      <div class="field">
@@ -97,7 +99,7 @@
     
     <%= hr() %>
   
- <div class="field">
+     <div class="field">
       <%= f.label :comments %><br />
       <%= f.text_area :comments %>
     </div>  
@@ -107,6 +109,9 @@
     <div class="field">
       <%= f.check_box :processed %>
       <%= f.label :processed, "Procesar Factura", :class => "bold" %>
+
+    
+
       <div class="small">
         Marcas de tiempo o no esta factura se ha pagado y que pueden deducir las cantidades de productos y contar hacia el total del mes.
       </div>
@@ -166,6 +171,7 @@
     
     <strong>Producto:</strong><br />
     <input type="text" name="ac_item" id="ac_item" value="" />
+    
     <div class="small">
       Ingrese un termino de busqueda para encontrar un producto.
     </div>
@@ -173,6 +179,7 @@
     
     <strong>Precio:</strong><br />
     <input type="text" name="ac_item_price" id="ac_item_price" value="" class="tf_short" />
+    
     <div class="small">
       Precio del  producto para agregar una factura.
     </div>
@@ -186,12 +193,15 @@
     
     <strong>Cantidad:</strong><br />
     <input type="text" name="ac_item_quantity" id="ac_item_quantity" value="1" class="tf_short" />
+    
     <div class="small">
      Cantidad del producto para agregar una factura.
     </div>
+    
     <br />
     <strong>Grifo:</strong><br />
     <input type="text" name="ac_item_grifo" id="ac_item_grifo" value="0" class="tf_short" />
+    
     <div class="small">
      Cant. Grifo del producto
     </div>
@@ -206,6 +216,7 @@
     
     <strong>Discount %:</strong><br />
     <input type="text" name="ac_item_discount" id="ac_item_discount" value="0" class="tf_short" />
+   
     <div class="small">
       Descuento % del producto para agregar una factura.
     </div>
@@ -220,12 +231,14 @@
     
     <br />
     <input type="submit" value="Agregar item a Factura" />
+
+
   </form>
   
   <%= hr() %>
     
 </div>
-  </form>
+
   
   <%= hr() %>
   

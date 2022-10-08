@@ -377,7 +377,7 @@
         end
     
         def get_documents()
-           documents = Document.where(company_id: self.id).order(:descripshort)
+           documents = Document.where(company_id: self.id).order(:fullname)
              
           return documents
         end
@@ -1023,8 +1023,9 @@
           from customer_payment_details   
           INNER JOIN facturas ON   customer_payment_details.factura_id = facturas.id
           INNER JOIN customer_payments ON customer_payments.id = customer_payment_details.customer_payment_id  
-          WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by customer_payments.code', "#{fecha1} 00:00:00",
-          "#{fecha2} 23:59:59" ])  
+          WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? and customer_payments.processed <> ? 
+           order by customer_payments.code', "#{fecha1} 00:00:00",
+          "#{fecha2} 23:59:59","2" ])  
           
           return @facturas   
           
@@ -1041,9 +1042,9 @@
         INNER JOIN customer_payments ON customer_payments.id = customer_payment_details.customer_payment_id  
         WHERE facturas.tipoventa_id <> ? and customer_payments.fecha1 >= ? 
         and customer_payments.fecha1 <= ? and customer_payments.document_id <> 14
-        and substring(facturas.serie,1,4) <> ? 
+        and substring(facturas.serie,1,4) <> ? and customer_payments.processed <> ? 
         order by customer_payments.code',"2", "#{fecha1} 00:00:00",
-        "#{fecha2} 23:59:59","FF03" ])  
+        "#{fecha2} 23:59:59","FF03","2" ])  
             
           return @facturas   
           
@@ -1057,8 +1058,11 @@
         from customer_payment_details   
         INNER JOIN facturas ON   customer_payment_details.factura_id = facturas.id
         INNER JOIN customer_payments ON customer_payments.id = customer_payment_details.customer_payment_id  
-        WHERE facturas.tipoventa_id = ? and customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? and customer_payments.document_id <> 14 order by customer_payments.code',"2", "#{fecha1} 00:00:00",
-        "#{fecha2} 23:59:59" ])  
+        WHERE facturas.tipoventa_id = ? and customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ?
+         and customer_payments.document_id <> 14
+         and customer_payments.processed <> ?
+          order by customer_payments.code',"2", "#{fecha1} 00:00:00",
+        "#{fecha2} 23:59:59","2"])  
             
           return @facturas   
           
@@ -1073,9 +1077,12 @@
       from customer_payment_details   
       INNER JOIN facturas ON   customer_payment_details.factura_id = facturas.id
       INNER JOIN customer_payments ON customer_payments.id = customer_payment_details.customer_payment_id  
-      WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? and facturas.customer_id = ? 
-      and customer_payments.bank_acount_id = ? order by customer_payments.code', "#{fecha1} 00:00:00",
-      "#{fecha2} 23:59:59",customer,banco ])  
+      WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? 
+      and facturas.customer_id = ? 
+      and customer_payments.bank_acount_id = ? 
+      and customer_payments.processed <> ?
+      order by customer_payments.code', "#{fecha1} 00:00:00",
+      "#{fecha2} 23:59:59",customer,banco,"2" ])  
           
           return @facturas   
           
@@ -1088,7 +1095,9 @@
     
        def get_customer_payments_value(fecha1,fecha2,id)
     
-          facturas = CustomerPayment.where([" company_id = ? AND fecha1 >= ? and fecha1 <= ? and bank_acount_id = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59" , id]).order(:id)
+          facturas = CustomerPayment.where([" company_id = ? AND fecha1 >= ? and fecha1 <= ?
+           and bank_acount_id = ? and processed <> ?", self.id, "#{fecha1} 00:00:00",
+           "#{fecha2} 23:59:59" , id,"2"]).order(:id)
           ret = 0 
           if facturas 
           ret=0  
@@ -1107,8 +1116,8 @@
       INNER JOIN facturas ON   customer_payment_details.factura_id = facturas.id
       INNER JOIN customer_payments ON customer_payments.id = customer_payment_details.customer_payment_id    
       WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ?  and 
-      customer_payments.bank_acount_id = ?',
-       "#{fecha1} 00:00:00","#{fecha2} 23:59:59",id ])
+      customer_payments.bank_acount_id = ? and customer_payments.processed <> ?' ,
+       "#{fecha1} 00:00:00","#{fecha2} 23:59:59",id,"2" ])
           ret = 0     
     
           return facturas 

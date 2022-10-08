@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20220925204207) do
+ActiveRecord::Schema.define(version: 20221008164006) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2672,6 +2672,7 @@ ActiveRecord::Schema.define(version: 20220925204207) do
     t.integer  "destino_id"
     t.string   "compro"
     t.integer  "tipomov_id"
+    t.datetime "fecha2"
   end
 
   create_table "viaticos", force: :cascade do |t|

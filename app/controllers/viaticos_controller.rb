@@ -1180,9 +1180,13 @@ columns([5]).width= 200
           a.numero = @viatico.correlativo2(@viatico[:code])
           a.save
         end 
-        
+
         @viatico.process()
+                
+      
         @viatico.correlativo
+
+
         
         format.html { redirect_to(@viatico, :notice => 'viatico was successfully created.') }
         format.xml  { render :xml => @viatico, :status => :created, :location => @viatico }
@@ -1292,7 +1296,7 @@ columns([5]).width= 200
   
   private
   def viatico_params
-    params.require(:viatico).permit(:code, :fecha1, :inicial, :total_ing, :total_egreso, :saldo, :comments, :user_id, :company_id, :processed,:caja_id)
+    params.require(:viatico).permit(:code, :fecha1, :fecha2, :inicial, :total_ing, :total_egreso, :saldo, :comments, :user_id, :company_id, :processed,:caja_id)
     
   end
 

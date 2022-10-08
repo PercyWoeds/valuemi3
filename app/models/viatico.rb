@@ -184,7 +184,7 @@ self.per_page = 20
     
     for item in  @viatico_details 
     
-        if item.tipomov_id == 1 and item.tm != "5"
+        if item.tipomov_id == 1 
           total = item.importe
         else
           total = 0
@@ -338,12 +338,6 @@ self.per_page = 20
 
 
   
-  def get_invoices_details
-
-  
-    
-  end 
-
   def get_products2(id)    
     @itemproducts = InvoiceService.find_by_sql(['Select invoice_services.price,
       invoice_services.quantity,invoice_services.discount,invoice_services.total,services.name 
@@ -492,6 +486,9 @@ self.per_page = 20
       self.save
     end
   end
+
+ 
+
   def cerrar
     if(self.processed == "3" )         
       
