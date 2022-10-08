@@ -166,7 +166,7 @@
                     
                     <td width = "3%" align ="right"> </td>
                     <td width = "4%" align ="right"> </td>
-                    <td width = "8%" align ="right"><%= sprintf("%.2f",a6 )   %></td>
+                    <td width = "8%" align ="right"><%= sprintf("%.2f",a6 * -1 )   %></td>
 
                       <td width = "5%" align ="right"></td>
                       <td width = "8%" align ="left"> Efectivo : </td>
@@ -178,7 +178,7 @@
                     
                     <td width = "3%" align ="right"> </td>
                     <td width = "4%" align ="right"> </td>
-                    <td width = "8%" align ="right"><%= sprintf("%.2f",a6 + contado.total  )   %></td>
+                    <td width = "8%" align ="right"><%= sprintf("%.2f",a6 + contado.total + a6 * -1 )   %></td>
 
                      
                       <td width = "5%" align ="right"></td>
