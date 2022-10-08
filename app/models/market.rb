@@ -59,7 +59,7 @@ def get_cliente(cliente)
      def process2
        
 
-         @factura =   Market.select(:fecha, :serie,:numero,"SUM(cantidad) as quantity","SUM(importe) as total").where("fecha>=? and fecha<=? and td = ?","2022-09-28 00:00:00","2022-10-04 23:59:59","B").group(:fecha,:serie,:numero )
+         @factura =   Market.select(:fecha, :serie,:numero,"SUM(cantidad) as quantity","SUM(importe) as total").where("fecha>=? and fecha<=? and td = ?","2022-10-04 00:00:00","2022-10-04 23:59:59","B").group(:fecha,:serie,:numero )
     
      
 
