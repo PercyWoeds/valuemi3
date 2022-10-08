@@ -107,8 +107,9 @@ gem 'aws-sdk-s3'
 
 gem 'redis', '~> 4.2', '>= 4.2.1'
 
+gem 'simple_calendar', '~> 2.4', '>= 2.4.3'
 
-
+gem 'rails-i18n'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

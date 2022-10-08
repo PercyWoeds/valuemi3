@@ -208,6 +208,12 @@ require 'sidekiq/web'
 
     
   end 
+
+   resources :tipocambios do 
+    collection { post :import }
+
+    
+  end 
   
    resources :facturas do
     resources :factura_details, except: [:index,:show], controller: "facturas/facturas_details"

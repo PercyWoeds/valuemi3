@@ -608,53 +608,64 @@ class PurchasesController < ApplicationController
 
 ## Reporte de productos pendientes de ingreso
 
-##### reporte de factura emitidas
-
-  def build_pdf_header_rpt8(pdf)
+  def build_pdf_header_rpt8b(pdf)
       pdf.font "Helvetica" , :size => 8
-     $lcCli  =  @company.name 
-     $lcdir1 = @company.address1+@company.address2+@company.city+@company.state
+      image_path = "#{Dir.pwd}/public/images/logo-v1.jpg"
 
-     $lcFecha1= Date.today.strftime("%d/%m/%Y").to_s
-     $lcHora  = Time.now.to_s
-
-    max_rows = [client_data_headers_rpt.length, invoice_headers_rpt.length, 0].max
-      rows = []
-      (1..max_rows).each do |row|
-        rows_index = row - 1
-        rows[rows_index] = []
-        rows[rows_index] += (client_data_headers_rpt.length >= row ? client_data_headers_rpt[rows_index] : ['',''])
-        rows[rows_index] += (invoice_headers_rpt.length >= row ? invoice_headers_rpt[rows_index] : ['',''])
-      end
-
-      if rows.present?
-
-        pdf.table(rows, {
-          :position => :center,
-          :cell_style => {:border_width => 0},
-          :width => pdf.bounds.width
-        }) do
-          columns([0, 2]).font_style = :bold
-        end
-        pdf.move_down 10
-
-      end
+    
+      
+       table_content = ([ [{:image => image_path, :rowspan => 3 }, {:content =>"SISTEMA DE GESTION INTEGRADO",:rowspan => 2},"CODIGO ","TP-CM-F-015 "], 
+          ["VERSION: ","3"], 
+          ["REPORTE DE FACTURAS - LIMA ","Pagina: ","1 de 1 "] 
+         
+          ])
+      
 
 
+
+       pdf.table(table_content  ,{
+           :position => :center,
+           :width => pdf.bounds.width
+         })do
+           columns([1,2]).font_style = :bold
+            columns([0]).width = 118.55
+            columns([1]).width = 451.34
+            columns([1]).align = :center
+            
+            columns([2]).width = 100
+          
+            columns([3]).width = 100
+      
+         end
+        
+         table_content2 = ([["Fecha : ",Date.today.strftime("%d/%m/%Y")]])
+
+         pdf.table(table_content2,{:position=>:right }) do
+
+            columns([0, 1]).font_style = :bold
+            columns([0, 1]).width = 100
+            
+         end 
+
+     
+         pdf.text "(1) del "+@fecha1+" al "+@fecha2
+         
+         pdf.move_down 2
       
       pdf 
   end   
 
-  def build_pdf_body_rpt8(pdf)
+  def build_pdf_body_rpt8b(pdf)
+
+    puts "tipo "
+    puts @tipo 
     
-    pdf.text "Facturas de compra : desde "+@fecha1.to_s+ " Hasta: "+@fecha2.to_s , :size => 8 
-    pdf.text ""
     pdf.font "Helvetica" , :size => 6
 
       headers = []
       table_content = []
 
-      Purchase::TABLE_HEADERS3b.each do |header|
+      Purchase::TABLE_HEADERS31.each do |header|
         cell = pdf.make_cell(:content => header)
         cell.background_color = "FFFFCC"
         headers << cell
@@ -667,154 +678,97 @@ class PurchasesController < ApplicationController
       lcmonedadolares = 1
       @total1=0
       @total2=0
+      total_soles = 0
+      total_dolares =  0
 
       lcDoc='FT'      
 
+      if @facturas_rpt.count > 0 
+
        lcCliente = @facturas_rpt.first.supplier_id
+       row = []
 
        for  product in @facturas_rpt
+
         
-          if lcCliente == product.supplier_id
+            if  product.supplier_id != 1731             
+                fechas2 = product.date2 
+                 
+                row = []          
+                row << nroitem.to_s 
+                row << product.supplier.ruc
+                
+                row << product.supplier.name 
+                row << product.document.descripshort 
+                
+                row << product.documento 
+                row << product.get_descrip0[0..50]
+                row << product.date1.strftime("%d/%m/%Y")
+                row << product.date2.strftime("%d/%m/%Y")
+                row << product.date3.strftime("%d/%m/%Y")
 
-             #if product.payment_id == nil 
-              fechas2 = product.date2 
-             #else 
-             # days = product.payment.day 
-             # fechas2 = product.fechas2 + days.days              
-             #end 
+                if product.moneda_id == 1 
+                    row << "0.00 "
+                    row << sprintf("%.2f",product.total_amount.to_s)
+                    total_dolares  += product.total_amount 
+               
+                else
+                    row << sprintf("%.2f",product.total_amount.to_s)
+                    row << "0.00 "
+                    total_soles += product.total_amount  
+                end 
+                row << "LIMA"
+                row << product.user.username 
+                row << "-"
+                row << product.payment.descrip 
+                row << "   "
+                
+                table_content << row
 
-            row = []          
-            row << lcDoc
-            row << product.documento 
-            row << product.date1.strftime("%d/%m/%Y")
-            row << product.date2.strftime("%d/%m/%Y")
-            row << product.supplier.name
-            row << product.moneda.symbol  
-            row << sprintf("%.2f",product.participacion.to_s)
+                nroitem = nroitem + 1
 
-            if product.moneda_id == 1 
-                row << "0.00 "
-                row << sprintf("%.2f",product.balance.to_s)
-            else
-                row << sprintf("%.2f",product.balance.to_s)
-                row << "0.00 "
             end 
-            row << " "
-            
-            table_content << row
+           
 
-            nroitem = nroitem + 1
-
-          else
-            totals = []            
-            total_cliente_soles = 0
-            total_cliente_soles = @company.get_purchases_by_day_value_supplier(@fecha1,@fecha2,lcmonedadolares,"balance",lcCliente)
-            total_cliente_dolares = 0
-            total_cliente_dolares = @company.get_purchases_by_day_value_supplier(@fecha1,@fecha2, lcmonedasoles,"balance",lcCliente)
-            
-            row =[]
-            row << ""
-            row << ""
-            row << ""
-            row << ""          
-            row << "TOTALES POR PROVEEDOR=> "            
-            row << ""
-            row << ""
-            row << sprintf("%.2f",total_cliente_dolares.to_s)
-            row << sprintf("%.2f",total_cliente_soles.to_s)
-            row << " "
-            
-            table_content << row
-            @total1 +=total_cliente_dolares
-            @total2 +=total_cliente_soles
-            lcCliente = product.supplier_id
-
-            row = []          
-            row << lcDoc
-            row << product.documento 
-            row << product.date1.strftime("%d/%m/%Y")
-            row << product.date2.strftime("%d/%m/%Y")
-            if product.supplier != nil 
-            row << product.supplier.name
-            else
-            row << " "
-            end 
-            row << product.moneda.symbol  
-            row << sprintf("%.2f",product.participacion.to_s)
-
-            if product.moneda_id == 1 
-                row << "0.00 "
-                row << sprintf("%.2f",product.balance.to_s)
-            else
-                row << sprintf("%.2f",product.balance.to_s)
-                row << "0.00 "
-            end 
-            row << " "          
-            table_content << row
-          end                   
-        end
+      end 
+    end 
 
         lcProveedor = @facturas_rpt.last.supplier_id 
 
-            totals = []            
-            total_cliente = 0
-  
-            total_cliente_soles = 0
-            total_cliente_soles = @company.get_purchase_day_value2(@fecha1,@fecha2, lcProveedor, lcmonedadolares,"balance")
-            total_cliente_dolares = 0
-            total_cliente_dolares = @company.get_purchase_day_value2(@fecha1,@fecha2, lcProveedor, lcmonedasoles,"balance")
-    
             
-            row =[]
-            row << ""
-            row << ""
-            row << ""
-            row << ""          
-            row << "TOTALES POR PROVEEDOR => "            
-            row << ""
-            row << ""
-            row << sprintf("%.2f",total_cliente_dolares.to_s)
-            row << sprintf("%.2f",total_cliente_soles.to_s)                      
-            row << " "
             
-            @total1 +=total_cliente_dolares
-            @total2 +=total_cliente_soles
-            
-            table_content << row
+         
+        
               
-          total_soles   = @company.get_purchases_by_day_value(@fecha1,@fecha2, lcmonedasoles,"balance")
-          total_dolares = @company.get_purchases_by_day_value(@fecha1,@fecha2, lcmonedadolares,"balance")
-      
-           if $lcxCliente == "0" 
-
+          
           row =[]
           row << ""
           row << ""
           row << ""
           row << ""
+          row << ""
+          
           row << "TOTALES => "
           row << ""
+          
+          row << ""
+          
           row << ""
           row << sprintf("%.2f",total_soles.to_s)
           row << sprintf("%.2f",total_dolares.to_s)                    
           row << " "
-          table_content << row
-          else
-            row =[]
-          row << ""
-          row << ""
-          row << ""
-          row << ""
-          row << "TOTALES => "
-          row << ""
-          row << ""
-          row << sprintf("%.2f",@total1.to_s)
-          row << sprintf("%.2f",@total2.to_s)                    
           row << " "
+          row << " "
+          row << " "
+          row << " "
+
+
+
+
+
+          
           table_content << row
           
-          
-          end 
 
           result = pdf.table table_content, {:position => :center,
                                         :header => true,
@@ -823,35 +777,76 @@ class PurchasesController < ApplicationController
                                           columns([0]).align=:center
                                           columns([1]).align=:left
                                           columns([2]).align=:left
-                                          columns([3]).align=:left
+
          
+                                          columns([3]).align=:left
+                                          
                                           columns([4]).align=:left
-                                          columns([5]).align=:right  
-                                          columns([6]).align=:right
+                                          columns([5]).width = 40                                                                           
+         
+                                          columns([6]).width = 40                                                                           
+         
                                           columns([7]).align=:right
-                                          columns([8]).align=:right
-                                          columns([9]).align=:right
+                                          columns([7]).width = 40
+                                          
+                                          columns([8]).align=:right 
+                                          columns([8]).width =40
+                                          
+                                          columns([9]).align=:right 
+                                          columns([9]).width =40
+                                          
+                                          columns([10]).align=:left
+                                          columns([10]).width =80
+                                          columns([12]).width =80
+                                          
+                                          
                                         end                                          
                                         
-      pdf.move_down 10      
+      pdf.move_down 50
 
-      #totales 
 
+
+
+
+     
       pdf 
 
     end
 
-    def build_pdf_footer_rpt8(pdf)      
-                  
-      pdf.text "" 
-      pdf.bounding_box([0, 20], :width => 535, :height => 40) do
-      pdf.draw_text "Company: #{@company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
-    end
-    pdf      
+    def build_pdf_footer_rpt8b(pdf)      
+
+      table_content3 =[]
+      row = []
+      row << "--------------------------------------------"
+      row << "--------------------------------------------"
+      row << "--------------------------------------------"
+      
+      table_content3 << row 
+      row = []
+      row << "V.B.COMPRAS "
+      row << "V.B.GERENCIA"
+      row << "V.B.CONTABILIDAD"
+      
+      table_content3 << row 
+
+      
+          result = pdf.table table_content3, {:position => :center,
+                                        :header => true,  :cell_style => {:border_width => 0},
+                                        :width => pdf.bounds.width
+                                        } do 
+                                          columns([0]).align=:center
+                                          columns([1]).align=:center
+                                          columns([2]).align=:center 
+                                          
+                                        end                             
+
+      pdf      
   end
+
 
   # Export serviceorder to PDF
   def rpt_purchase_all
+
 
     @company=Company.find(params[:id])          
     @fecha1 = params[:fecha1]    
@@ -875,12 +870,13 @@ class PurchasesController < ApplicationController
               #render  pdf: "Facturas ",template: "facturas/rventas_rpt.pdf.erb",locals: {:facturas => @facturas_rpt},
               #   :orientation      => 'Landscape', :page_size => "A3"
            
-    
-            Prawn::Document.generate("app/pdf_output/rpt_factura.pdf") do |pdf|
+        Prawn::Document.generate "app/pdf_output/rpt_factura.pdf" , :page_layout => :landscape ,:page_size=>"A4"  do |pdf|
+       
+           
             pdf.font "Helvetica"
-            pdf = build_pdf_header_rpt8(pdf)
-            pdf = build_pdf_body_rpt8(pdf)
-            build_pdf_footer_rpt8(pdf)
+            pdf = build_pdf_header_rpt8b(pdf)
+            pdf = build_pdf_body_rpt8b(pdf)
+            build_pdf_footer_rpt8b(pdf)
             $lcFileName =  "app/pdf_output/rpt_factura_all.pdf"              
           end     
           $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              

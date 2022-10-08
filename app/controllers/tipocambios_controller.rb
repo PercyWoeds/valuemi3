@@ -4,7 +4,10 @@ class TipocambiosController < ApplicationController
   # GET /tipocambios
   # GET /tipocambios.json
   def index
-    @tipocambios = Tipocambio.all
+   
+    start_date = params.fetch(:start_date, Date.today).to_date
+  @tipocambios = Tipocambio.where(dia: start_date.beginning_of_month.beginning_of_week..start_date.end_of_month.end_of_week)
+
   end
 
   # GET /tipocambios/1
@@ -60,7 +63,13 @@ class TipocambiosController < ApplicationController
       format.json { head :no_content }
     end
   end
-
+  def import
+      Tipocambio.import(params[:file])
+       redirect_to root_url, notice: "Tipo cambio importadas."
+  end 
+  
+  
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_tipocambio

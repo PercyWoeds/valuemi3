@@ -29,7 +29,7 @@ wb.styles do |s|
    
     
     wb.add_worksheet(name: "Registro de Ventas") do |sheet|
-    sheet.add_row ["E/S CANTA CALLAO"]
+    sheet.add_row ["E/S REPSOL LAS LOMAS"]
     sheet.add_row [""]
     sheet.add_row ["REGISTRO DE COMPRAS DEL PERIODO "]
     sheet.add_row [""]
@@ -57,12 +57,33 @@ wb.styles do |s|
        parts = detalle.documento.split("-") 
             serie = parts[0]  
             numero  = parts[1]    
-     importe_total_comp= detalle.total_amount + detalle.participacion
      
      
-     
+     tipo_cambio = @company.get_tipocambio(detalle.date1.to_date)
+     valor_cambio = detalle.moneda_id == 1 ? tipo_cambio : "" 
+
+     if detalle.moneda_id == 1
+
+        ln_payable_amount = detalle.payable_amount * tipo_cambio
+        ln_participacion  = detalle.participacion * tipo_cambio
+        ln_tax_amount     = detalle.tax_amount * tipo_cambio
+        ln_importe_total_comp = detalle.total_amount  * tipo_cambio + ln_participacion 
+        ln_total_amount       = detalle.total_amount  * tipo_cambio 
+
+     else
+
+        ln_payable_amount = detalle.payable_amount
+        ln_participacion  = detalle.participacion
+        ln_tax_amount     = detalle.tax_amount
+        ln_importe_total_comp = detalle.total_amount + ln_participacion 
+        ln_total_amount       = detalle.total_amount 
+        
+
+     end
       
-    sheet.add_row [nroitem,detalle.date1,detalle.date3,detalle.document.tiposunat,serie,numero,"" ,"06",detalle.supplier.ruc ,detalle.supplier.name,"0.00",detalle.payable_amount,"0.00",detalle.participacion,"0.00",detalle.tax_amount,"0.00","0.00","0.00",importe_total_comp,importe_total_comp,detalle.total_amount ], 
+    sheet.add_row [nroitem,detalle.date1,detalle.date3,detalle.document.tiposunat,serie,numero,"" ,"06",detalle.supplier.ruc ,detalle.supplier.name,"0.00",ln_payable_amount,"0.00",
+    ln_participacion,"0.00",ln_tax_amount,"0.00","0.00","0.00",ln_importe_total_comp,
+    ln_importe_total_comp,ln_total_amount, valor_cambio ,"","","","","","" ], 
     :style => [cadena,date,date,cadena,cadena,cadena,cadena,cadena,cadena,cadena,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency]
     
    end

@@ -53,6 +53,25 @@ TABLE_HEADERS2  = ["ITEM ",
                      "SOLES",
                      "DOLARES ",
                      "OBSERV"]
+
+
+TABLE_HEADERS31= ["ITEM","RUC","PROVEEDOR","TD",
+                      "Nro.Docmto.",
+                     "DESCRIPCION",
+                     "FECHA
+                     EMISION",
+                     "FECHA 
+                     RECEP",
+                     "FECHA 
+                     VMTO.",
+                     "S/.",  
+                     "US$",  
+                     "DESTINO",
+                     "COMPRADOR ",
+                     "OBSERVACION",
+                     "METODO DE PAGO",
+                     "V.B. ENTREGA"]
+
                      
  TABLE_HEADERS3b = ["TD",
                       "Documento",
@@ -151,6 +170,30 @@ TABLE_HEADERS2  = ["ITEM ",
       end 
 
   end 
+
+   def get_descrip0
+
+    a = PurchaseDetail.find_by(purchase_id: self.id)
+    if a.nil?
+
+         return  ""
+    else 
+        if a.product.nil? 
+            b =Servicebuy.find_by(id:a.product_id)
+            if b.nil?
+              return ""
+            else  
+              return b.name 
+            end
+          return 
+        else 
+          return  a.product.name  
+        end 
+    end
+
+  end 
+
+
 
     def self.import(file)
           CSV.foreach(file.path, headers: true, encoding:'iso-8859-1:utf-8') do |row|
