@@ -19,8 +19,7 @@
     <td width="10%"> Dife_dia </td>
     <td width="10%"> Dife_mes </td>
   
-    <td width="10%"> Ventas S/.</td>
-    
+    <td width="10%"> Ventas S/.</td>   
   </tr>
   </table>
   
@@ -36,8 +35,8 @@
   <% total_9 = 0 %>
   <% total_10 = 0 %>
   <% venta_soles_total  = 0 %>
-  
-  
+
+
 
   <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
       <% nroitem = 1 %>
@@ -45,19 +44,16 @@
       <% for  product0 in @parte_rpt %>
 
     
-                   <%  producto_value = product0.tanque.product.id%>
+                   <%  producto_value = product0.tanque.product.id %>
                    <%  producto_codigo = product0.tanque.code.to_s %>
                    
                    <% if  product0.tanque.product.id != 89  %>   
-                    <% puts "ventas**********************************************"%>
-
-                     <% puts product0.tanque.product.id %>   
-
+                  
 
 
                       <% ventas_qty = product0.get_ventas_22(@fecha,producto_value) %>
 
-                     <% puts ventas_qty %> 
+                     
 
 
                     <% else %>
@@ -68,17 +64,12 @@
                     <% end %>
   
 
-              <% if  (product0.tanque.product.id == 6   and product0.fecha.to_date <= '2022-08-27'.to_date) %> 
+          <% if  (product0.tanque.product.id == 6   and product0.fecha.to_date <= '2022-08-27'.to_date) %> 
 
-                  <% puts "galonessssssssssssssssssss"%>    
-                  <% puts product0.fecha.to_date %>
-                  <% puts   '2022-08-27'.to_date %>
-                  <% puts product0.tanque.product.id  %>
+                 
 
                    <% compras = product0.get_ticket_glp(@fecha)  %>
-                   <% puts "compras" %> 
-                   <% puts compras %>
-
+                  
                   <% else %>
 
                    <% if (product0.tanque.product.id == 6 ) %>
@@ -98,7 +89,7 @@
 
 
                    <% venta_directa_qty = 0 %>
-                   <% afericion = product0.get_afericion_total_dia_producto_qty(@fecha,product0.tanque.id) %>
+               <% afericion = product0.get_afericion_total_dia_producto_qty(@fecha,product0.tanque.id) %>
                    <% venta_neta = ventas_qty - afericion %>
 
 
