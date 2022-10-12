@@ -993,15 +993,75 @@ end
                   ret += detalle.importe.to_f 
              end 
           end 
+         facturas = Sellvale.find_by_sql(['Select sellvales.* from sellvales    
+     INNER JOIN products ON sellvales.cod_prod = products.code 
+     WHERE products.products_category_id = 5 
+     and sellvales.fecha >= ? 
+     and sellvales.fecha <= ? 
+      and cod_tar = ? 
+     ORDER BY sellvales.fecha', "#{fecha} 00:00:00","#{fecha} 23:59:59", "98" ])
+
+           if facturas
+               
+              ret=0  
+              for detalle in facturas
+                  ret -= detalle.importe.to_f 
+             end 
+          end 
     
           return ret
+    
+
+
+
+         facturas = Sellvale.find_by_sql(['Select sellvales.* from sellvales    
+     INNER JOIN products ON sellvales.cod_prod = products.code 
+     WHERE products.products_category_id <> 1 
+     and sellvales.fecha >= ? 
+     and sellvales.fecha <= ? 
+      and cod_tar = ? 
+     ORDER BY sellvales.fecha', "#{fecha} 00:00:00","#{fecha} 23:59:59", "98" ])
+
+           if facturas
+               
+              ret=0  
+              for detalle in facturas
+                  ret += detalle.importe.to_f 
+             end 
+          end 
+    
+          return ret
+          return ret
+
+
        
-       end 
+       end
+
+
         def  get_ventas_contometros_efectivo_comb(fecha) 
     
          facturas = Sellvale.find_by_sql(['Select sellvales.* from sellvales    
      INNER JOIN products ON sellvales.cod_prod = products.code 
      WHERE products.products_category_id = 1 
+     and sellvales.fecha >= ? 
+     and sellvales.fecha <= ? 
+      and cod_tar = ? 
+     ORDER BY sellvales.fecha', "#{fecha} 00:00:00","#{fecha} 23:59:59", "98" ])
+
+           if facturas
+               
+              ret=0  
+              for detalle in facturas
+                  ret += detalle.importe.to_f 
+             end 
+          end 
+    
+          return ret
+
+
+         facturas = Sellvale.find_by_sql(['Select sellvales.* from sellvales    
+     INNER JOIN products ON sellvales.cod_prod = products.code 
+     WHERE products.products_category_id = 5 
      and sellvales.fecha >= ? 
      and sellvales.fecha <= ? 
       and cod_tar = ? 
