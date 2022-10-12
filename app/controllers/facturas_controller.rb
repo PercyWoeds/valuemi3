@@ -1727,7 +1727,11 @@ def reportes07
     @fecha2 = params[:fecha2]    
     @series = params[:option]    
 
-    @facturas_rpt = @company.get_ventas_series(@fecha1,@fecha2, @series)          
+    @facturas_rpt = @company.get_ventas_series(@fecha1,@fecha2, @series)  
+
+    puts @fecha1 
+    puts @fecha2 
+
     
     case params[:print]
       when "To PDF" then 

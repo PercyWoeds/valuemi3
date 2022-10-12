@@ -665,6 +665,7 @@ class Factura < ActiveRecord::Base
 
   end
 
+
   
   # Process the invoice
   def process2
