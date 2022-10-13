@@ -5300,41 +5300,41 @@
     
   
     
-    if tiporeporte  == "2"
+    # if tiporeporte  == "2"
           
-      if sql_dato != ""
-        txt_and = ""
-      else 
-        txt_and = ""
-      end 
+    #   if sql_dato != ""
+    #     txt_and = ""
+    #   else 
+    #     txt_and = ""
+    #   end 
       
-      sql_dato << txt_and 
+    #   sql_dato << txt_and 
   
-    end 
+    # end 
     
   
-    if tiporeporte  == "1"
+    # if tiporeporte  == "1"
           
-      if sql_dato != ""
-        txt_and = " and "
-      else 
-        txt_and = ""
-      end 
-      sql_dato << txt_and << "  tipo = '1' "
+    #   if sql_dato != ""
+    #     txt_and = " and "
+    #   else 
+    #     txt_and = ""
+    #   end 
+    #   sql_dato << txt_and << "  tipo = '1' "
    
-    end
+    # end
     
   
-    if tiporeporte  == "0"
+    # if tiporeporte  == "0"
           
-      if sql_dato != ""
-        txt_and = " and "
-      else 
-        txt_and = ""
-      end 
-      sql_dato << txt_and << "  tipo =  '0' "
+    #   if sql_dato != ""
+    #     txt_and = " and "
+    #   else 
+    #     txt_and = ""
+    #   end 
+    #   sql_dato << txt_and << "  tipo =  '0' "
    
-    end
+    # end
     
   
   
@@ -5372,12 +5372,11 @@
   
      sql_dato << txt_and << " processed = '1' "
   
-     puts sql_dato 
+
   
-  
-         @purchases = Purchase.where(["  #{sql_dato} " ]).order(:created_at, :supplier_id,:moneda_id,:documento)    
-      
-      
+         @purchases = Purchase.where(["  #{sql_dato} " ]).order(:supplier_id,:moneda_id,:documento)    
+      puts "*****"
+      puts sql_dato 
       return @purchases 
   
   end 

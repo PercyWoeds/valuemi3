@@ -6843,11 +6843,10 @@ def rpt_facturas1_all
      @proveedor = params[:supplier_id]
    end
   
-  
- 
+   
    @fecha6 = params[:fecha6]    
 
-@rpt_detalle_purchase = @company.get_serviceorder_by_filter3(@fecha1,@fecha2,@tiporeporte ,@proveedor, @fecha6 )
+   @rpt_detalle_purchase = @company.get_serviceorder_by_filter3(@fecha1,@fecha2,@tiporeporte ,@proveedor, @fecha6 )
          
 
          
@@ -6855,12 +6854,12 @@ def rpt_facturas1_all
        when "PDF" then 
            begin
    
-         Prawn::Document.generate "app/pdf_output/orden_1.pdf", :page_layout => :landscape  ,:page_size=>"A4"   do |pdf|
+         Prawn::Document.generate "app/pdf_output/compras_detalle_1.pdf", :page_layout => :landscape  ,:page_size=>"A4"   do |pdf|
                pdf.font "Helvetica"
                pdf = build_pdf_header9(pdf)
                pdf = build_pdf_body9(pdf)
                build_pdf_footer9(pdf)
-               $lcFileName =  "app/pdf_output/orden_1.pdf"      
+               $lcFileName =  "app/pdf_output/compras_detalle_1.pdf"      
                
            end     
 
@@ -6976,6 +6975,7 @@ def build_pdf_header9(pdf)
       for  orden in @orden_compra1
            row = []
            row << nroitem.to_s
+     
            row << $lcProveedor 
            row << $lcNumero 
            row << $lcFecha.strftime("%d/%m/%Y")  

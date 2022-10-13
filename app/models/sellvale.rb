@@ -4,6 +4,7 @@ class Sellvale < ActiveRecord::Base
  validates_uniqueness_of :numero, scope: :serie
  
  
+ 
  belongs_to :factura_detail
 
  belongs_to :tarjetum

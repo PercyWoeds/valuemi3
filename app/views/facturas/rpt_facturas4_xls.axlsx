@@ -70,6 +70,7 @@ wb.styles do |s|
 
             @days =  []
 
+
             @days = ["ITEM",
                      "FECHA",
                      "TIPO SUNAT",
