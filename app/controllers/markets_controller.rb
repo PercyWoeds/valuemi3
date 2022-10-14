@@ -5,9 +5,9 @@ class MarketsController < ApplicationController
   # GET /markets.json
   def index
     if params[:search]
-        @markets = Market.search(params[:search]).order('fecha DESC').paginate(:page => params[:page], :per_page => 20)
+        @markets = Market.search(params[:search]).order('fecha DESC,serie,numero').paginate(:page => params[:page], :per_page => 20)
       else
-        @markets = Market.order('fecha DESC').paginate(:page => params[:page], :per_page => 20)
+        @markets = Market.order('fecha DESC,serie,numero').paginate(:page => params[:page], :per_page => 20)
       end
       
   end
@@ -74,7 +74,20 @@ class MarketsController < ApplicationController
  def do_process
       
        @market = Market.last 
+
+        
        @market.process2
+
+       redirect_to root_url, notice: "Ventas importadas."
+
+ end 
+def do_process2
+      
+       @market = Market.last 
+
+        
+       @market.process3
+
        redirect_to root_url, notice: "Ventas importadas."
 
  end 

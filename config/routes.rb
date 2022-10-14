@@ -249,7 +249,8 @@ require 'sidekiq/web'
   
   resources :markets  do
     collection { post :import }
- collection { post :do_process }
+    collection { post :do_process }
+    collection { post :do_process2 }
     
     
   end 

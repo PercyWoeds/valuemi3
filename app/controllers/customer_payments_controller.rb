@@ -52,7 +52,6 @@ class CustomerPaymentsController < ApplicationController
     @invoice[:processed] = "2"
     @invoice.anular 
 
-
     
     flash[:notice] = "Documento a sido anulado."
     
