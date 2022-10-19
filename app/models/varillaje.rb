@@ -739,6 +739,11 @@ return ret
 end 
 
 
+    def self.import(file)
+          CSV.foreach(file.path, headers: true, encoding:'iso-8859-1:utf-8') do |row|
+          Varillaje.create! row.to_hash 
+        end
+      end    
 
   ####
  def  get_ventas_22(fecha,producto) 
@@ -2343,7 +2348,14 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
             end                
             
   end
-
+ def self.to_csv(options = {})
+      CSV.generate(options) do |csv|
+      csv << column_names
+      all.each do |customer|
+        csv << customer.attributes.values_at(*column_names)
+      end
+    end   
+    end 
  
 
 

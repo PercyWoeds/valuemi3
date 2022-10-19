@@ -20,11 +20,11 @@ totals = []
 
 <form method="get" action="/stocks/rpt_stocks2/<%= @company.id %>" >   
   <div class="field">
-      <input type="date" name="fecha1" value="2017-01-01" style = "width: 150px" >
+      <input type="date" name="fecha1" value= <% Date.today - 30.days %> style = "width: 150px" >
     </div>
 
 	<div class="field">
-		<input type="date" name="fecha2" value="2017-01-31" style = "width: 150px" >
+		<input type="date" name="fecha2" value= <% Date.today %> style = "width: 150px" >
   </div>
 
   <div class="field">

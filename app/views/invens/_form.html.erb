@@ -1,0 +1,30 @@
+<%= simple_form_for(@inven) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :order_id_a %>
+    <%= f.input :fecha_a %>
+    <%= f.input :importe %>
+    <%= f.input :estado_a %>
+    <%= f.input :cod_emp_a %>
+    <%= f.input :dia_a %>
+    <%= f.input :order_id_b %>
+    <%= f.input :fecha_b %>
+    <%= f.input :cod_prod %>
+    <%= f.input :cod_dep %>
+    <%= f.input :stk_act %>
+    <%= f.input :stk_fisico %>
+    <%= f.input :costo %>
+    <%= f.input :cod_emp_b %>
+    <%= f.input :turno %>
+    <%= f.input :dia_b %>
+    <%= f.input :tm %>
+    <%= f.input :estado_b %>
+    <%= f.input :precio %>
+    <%= f.input :name2 %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

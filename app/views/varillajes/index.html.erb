@@ -46,4 +46,19 @@
 
 <br>
 
+<div>
+
 <%= link_to 'New Varillaje', new_varillaje_path %>
+
+
+</div>
+
+
+<%= form_tag import_varillajes_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Importar " %>
+<% end %>
+Download:
+  <%= link_to "CSV", varillajes_path(format: "csv"), multipart: true  %> 
+  
+  

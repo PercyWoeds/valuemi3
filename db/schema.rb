@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20221013174122) do
+ActiveRecord::Schema.define(version: 20221015175638) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -262,6 +262,43 @@ ActiveRecord::Schema.define(version: 20221013174122) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "compra_markets", force: :cascade do |t|
+    t.string   "order_id"
+    t.string   "cod_prod"
+    t.float    "precio_uni"
+    t.float    "cantidad"
+    t.string   "tipdoc"
+    t.string   "numdoc"
+    t.string   "moneda"
+    t.datetime "fecha"
+    t.float    "mes"
+    t.string   "cod_prov"
+    t.float    "descuento"
+    t.float    "preciosigv"
+    t.float    "preciopps"
+    t.float    "preciocigv"
+    t.float    "margen"
+    t.float    "preciopp"
+    t.float    "importe"
+    t.float    "importe_conv"
+    t.float    "igv"
+    t.float    "igv_conv"
+    t.float    "total"
+    t.float    "total_conv"
+    t.float    "impuesto"
+    t.string   "cod_emp"
+    t.string   "estado"
+    t.string   "precioimpr"
+    t.float    "cambio"
+    t.string   "cod_dep"
+    t.string   "name"
+    t.string   "name2"
+    t.string   "archivo"
+    t.string   "observaciones"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   create_table "compros", force: :cascade do |t|
@@ -884,6 +921,33 @@ ActiveRecord::Schema.define(version: 20221013174122) do
     t.datetime "updated_at",   null: false
   end
 
+  create_table "invens", force: :cascade do |t|
+    t.string   "order_id_a"
+    t.datetime "fecha_a"
+    t.string   "concepto"
+    t.float    "importe"
+    t.string   "estado_a"
+    t.string   "cod_emp_a"
+    t.datetime "dia_a"
+    t.string   "order_id_b"
+    t.datetime "fecha_b"
+    t.string   "cod_prod"
+    t.string   "cod_dep"
+    t.float    "stk_act"
+    t.float    "stk_fisico"
+    t.float    "costo"
+    t.string   "observa"
+    t.string   "cod_emp_b"
+    t.string   "turno"
+    t.datetime "dia_b"
+    t.string   "tm"
+    t.string   "estado_b"
+    t.float    "precio"
+    t.string   "name2"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "inventario_detalles", force: :cascade do |t|
     t.integer  "inventario_id"
     t.integer  "item_id"
@@ -1327,6 +1391,7 @@ ActiveRecord::Schema.define(version: 20221013174122) do
     t.float    "costo_saldo"
     t.float    "amount"
     t.string   "to"
+    t.string   "cod_prod"
   end
 
   add_index "movement_details", ["account_id"], name: "index_movement_details_on_account_id", using: :btree

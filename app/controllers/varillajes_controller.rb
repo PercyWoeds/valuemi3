@@ -8,6 +8,14 @@ class VarillajesController < ApplicationController
   # GET /varillajes.json
   def index
     @varillajes = Varillaje.all.order(:fecha)
+
+
+ 
+    respond_to do |format|
+      format.html
+      format.csv { send_data @varillajes.to_csv }
+    
+    end
   end
 
   # GET /varillajes/1
@@ -27,6 +35,11 @@ class VarillajesController < ApplicationController
       @tanques = Tanque.joins(:product).select("tanques.id, products.name ")
   end
 
+
+  def import
+       Varillaje.import(params[:file])
+       redirect_to root_url, notice: "Varillas  importadas."
+  end 
   # POST /varillajes
   # POST /varillajes.json
   def create

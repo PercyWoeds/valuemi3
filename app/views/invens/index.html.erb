@@ -1,0 +1,55 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Invens</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Order id a</th>
+      <th>Fecha a</th>
+     
+      <th>Stk act</th>
+      <th>Stk fisico</th>
+      <th>Costo</th>
+     
+      <th>Name2</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @invens.each do |inven| %>
+      <tr>
+        <td><%= inven.order_id_a %></td>
+        <td><%= inven.fecha_a.strftime("%d/%m/%Y") %></td>
+      
+       
+        <td><%= inven.stk_act %></td>
+        <td><%= inven.stk_fisico %></td>
+        <td><%= inven.costo %></td>
+     
+        <td><%= inven.name2 %></td>
+        <td><%= link_to 'Show', inven %></td>
+        <td><%= link_to 'Edit', edit_inven_path(inven) %></td>
+        <%if current_user.level == "admin" %>
+        <td><%= link_to 'Destroy', inven, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<div>
+<%= link_to 'New Inven', new_inven_path %>
+</div>
+
+
+<h2>Importar Archivo inventarios "*.csv"</h2>
+
+<%= form_tag import_invens_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Importar " %>
+<% end %>
+

@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  cod_provdescuento: 1.5
+  preciosigv: 
+  IMPORTE_CONV: 
+
+two:
+  cod_provdescuento: 1.5
+  preciosigv: 
+  IMPORTE_CONV: 

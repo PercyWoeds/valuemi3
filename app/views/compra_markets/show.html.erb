@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Cod provdescuento:</strong>
+  <%= @compra_market.cod_provdescuento %>
+</p>
+
+<p>
+  <strong>Preciosigv:</strong>
+  <%= @compra_market.preciosigv %>
+</p>
+
+<p>
+  <strong>Importe conv:</strong>
+  <%= @compra_market.IMPORTE_CONV %>
+</p>
+
+<%= link_to 'Edit', edit_compra_market_path(@compra_market) %> |
+<%= link_to 'Back', compra_markets_path %>

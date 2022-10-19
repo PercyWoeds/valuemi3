@@ -1,0 +1,21 @@
+<%= simple_form_for(@compra_market) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+
+
+
+     <div class="field">
+      <%= f.label :cod_prod, "Documento ", :class => "bold" %><br />
+      <%= f.text_field :cod_prod %>
+    </div>
+
+
+
+
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

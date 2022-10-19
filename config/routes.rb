@@ -4,6 +4,8 @@ require 'sidekiq/web'
 
   Mnygo::Application.routes.draw do
 
+  resources :invens
+  resources :compra_markets
   resources :other_incomes
   resources :tmp_contometros
   resources :contometros
@@ -209,11 +211,28 @@ require 'sidekiq/web'
     
   end 
 
+   resources :varillajes do 
+    collection { post :import }
+
+    
+  end 
+
    resources :tipocambios do 
     collection { post :import }
 
     
   end 
+ resources :invens do 
+    collection { post :import }
+
+    
+  end 
+   resources :compra_markets do 
+    collection { post :import }
+
+    
+  end 
+  
   
    resources :facturas do
     resources :factura_details, except: [:index,:show], controller: "facturas/facturas_details"

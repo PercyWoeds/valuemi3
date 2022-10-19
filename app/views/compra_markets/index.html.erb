@@ -1,0 +1,50 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Compra Markets</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Cod provdescuento</th>
+      <th>Preciosigv</th>
+      <th>Importe conv</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @compra_markets.each do |compra_market| %>
+      <tr>
+        <td><%= compra_market.fecha %></td>
+        <td><%= compra_market.tipdoc %></td>
+        <td><%= compra_market.numdoc %></td>
+        <td><%= compra_market.name2 %></td>
+        
+        <td><%= compra_market.cod_prov %></td>
+        <td><%= compra_market.preciosigv %></td>
+        <td><%= compra_market.importe_conv %></td>
+        <td><%= link_to 'Show', compra_market %></td>
+        <td><%= link_to 'Edit', edit_compra_market_path(compra_market) %></td>
+        <td><%= link_to 'Destroy', compra_market, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+
+<div>
+<%= link_to 'New Compra market', new_compra_market_path %>
+
+</div>
+
+
+<h2>Importar Archivo cab  "*.csv"</h2>
+
+
+<%= form_tag import_compra_markets_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Importar " %>
+<% end %>
+
