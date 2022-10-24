@@ -82,7 +82,6 @@ class FacturasController < ApplicationController
     
     @parte_rpt = @company.get_parte_1(@fecha)
     
-    
     case params[:print]
       when "To PDF" then 
         begin 

@@ -38,6 +38,307 @@
 <% sobrantes  =  a.get_faltante_detalle_dia(@fecha,"2") %>
 
 
+
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+ <tr bgcolor="#B4D7F7">
+    <td width="100%"> COMPRAS - DETALLE   </td>
+  </tr>
+                 
+
+
+<% product0 =  Varillaje.last  %>
+
+<% compras0 = product0.get_ticket_glp_det(@fecha)  %>
+
+
+      <% compras1 = product0.get_compras20_det(@fecha,"01") %>
+      <% compras2 = product0.get_compras20_det(@fecha,"02") %>
+      <% compras3 = product0.get_compras20_det(@fecha,"03") %>
+      <% compras4 = product0.get_compras20_det(@fecha,"04") %>
+      <% compras5 = product0.get_compras20_det(@fecha,"05") %>
+
+  
+<table style='font-family:"Courier New", Courier, monospace; font-size:70% ;width:100%'>
+     <% for  credito in compras0 %>
+                  <tr>
+                    <td width = "5%" ><%=  credito.code    %></td>
+                    <td width = "5%" ><%=  credito.fecha %></td>
+                    <td width = "5%" ><%=  credito.cantidad   %></td>
+
+                    </tr>
+                   
+                   <tr> 
+                  
+         <%end %>
+
+
+</table>
+
+
+<%  tanques = Tanque.all  %>
+
+<% for tanque1 in tanques %>
+
+
+<%  producto = tanque1.product.id  %> 
+<%  producto_name  = tanque1.product.name   %> 
+
+
+<%  factura_detalle1 = PurchaseDetail.where(["fecha1 >= ? and fecha1 <= ?  and
+     product_id = ?","#{@fecha} 00:00:00","#{@fecha} 23:59:59",producto ]) %>
+
+<% if factura_detalle1.size  > 0 %>
+
+  <table style='font-family:"Courier New", Courier, monospace; font-size:70% ;width:100%'>
+      <% nroitem = 1%>
+      <% total_1 =  0%>
+      <% total_2 =  0%>
+      
+       <% for  credito in factura_detalle1 %>
+                  <tr>
+                    <td width = "5%" ><%=  producto_name  %></td>
+                    
+                    <td width = "5%" ><%=  credito.fecha1 %></td>
+                    <td width = "5%" ><%=  credito.qty1   %></td>
+                    <td width = "5%" ><%=  credito.get_purchase(credito.purchase_id)   %></td>
+                     
+                   
+                   </tr>
+         <%end %>
+               
+        <hr>  
+     </table>
+
+   <% end %>  
+                       
+<%   factura_detalle2 = PurchaseDetail.where(["fecha2 >= ? and fecha2 <= ?  and
+     product_id = ?","#{@fecha} 00:00:00","#{@fecha} 23:59:59",producto ]) %>
+<% if factura_detalle2.size  > 0 %>
+
+    
+  <table style='font-family:"Courier New", Courier, monospace; font-size:70% ;width:100%'>
+      <% nroitem = 1%>
+      <% total_1 =  0%>
+      <% total_2 =  0%>
+      
+       <% for  credito in factura_detalle2 %>
+                  <tr>
+                    <td width = "5%" ><%=  producto_name  %></td>
+
+                    <td width = "5%" ><%=  credito.fecha2 %></td>
+                    <td width = "5%" ><%=  credito.qty2   %></td>
+                    <td width = "5%" ><%=  credito.get_purchase(credito.purchase_id)   %></td>
+                   </tr>
+         <%end %>
+               
+        <hr>  
+     </table>
+       
+<%end %>
+
+  <%  factura_detalle3 = PurchaseDetail.where(["fecha3 >= ? and fecha3 <= ?  and
+     product_id = ?","#{@fecha} 00:00:00","#{@fecha} 23:59:59",producto ]) %>
+
+<% if factura_detalle3.size  > 0 %>
+
+  <table style='font-family:"Courier New", Courier, monospace; font-size:70% ;width:100%'>
+      <% nroitem = 1%>
+      <% total_1 =  0%>
+      <% total_2 =  0%>
+      
+       <% for  credito in factura_detalle3 %>
+                  <tr>
+                    <td width = "5%" ><%=  producto_name  %></td>
+
+                    <td width = "5%" ><%=  credito.fecha3 %></td>
+                    <td width = "5%" ><%=  credito.qty3   %></td>
+                    <td width = "5%" ><%=  credito.get_purchase(credito.purchase_id)   %></td>
+                   </tr>
+         <%end %>
+               
+        <hr>  
+     </table>
+   <% end %>
+ 
+
+
+ <% factura_detalle4 = PurchaseDetail.where(["fecha4 >= ? and fecha4 <= ?  and
+     product_id = ?","#{@fecha} 00:00:00","#{@fecha} 23:59:59",producto ]) %>
+     <% if factura_detalle4.size  > 0 %>
+
+
+  <table style='font-family:"Courier New", Courier, monospace; font-size:70% ;width:100%'>
+      <% nroitem = 1%>
+      <% total_1 =  0%>
+      <% total_2 =  0%>
+      
+       <% for  credito in factura_detalle4 %>
+                  <tr>
+                     <td width = "5%" ><%=  producto_name  %></td>
+
+                    <td width = "5%" ><%=  credito.fecha4 %></td>
+                    <td width = "5%" ><%=  credito.qty4   %></td>
+                    <td width = "5%" ><%=  credito.get_purchase(credito.purchase_id)   %></td>
+                   
+                   </tr>
+         <%end %>
+               
+        <hr>  
+     </table>
+
+<% end %>
+
+
+ <% factura_detalle5 = PurchaseDetail.where(["fecha5 >= ? and fecha5 <= ?  and
+      product_id = ?","#{@fecha} 00:00:00","#{@fecha} 23:59:59",producto ]) %>
+<% if factura_detalle5.size  > 0 %>
+
+     <table style='font-family:"Courier New", Courier, monospace; font-size:70% ;width:100%'>
+      <% nroitem = 1%>
+      <% total_1 =  0%>
+      <% total_2 =  0%>
+      
+       <% for  credito in factura_detalle5 %>
+                  <tr>
+                    <td width = "5%" ><%=  producto_name  %></td>
+
+                    <td width = "5%" ><%=  credito.fecha5 %></td>
+                    <td width = "5%" ><%=  credito.qty5   %></td>
+<td width = "5%" ><%=  credito.get_purchase(credito.purchase_id)   %></td>
+                                      </tr>
+         <%end %>
+               
+        <hr>  
+     </table>
+    
+<% end %>
+ <% factura_detalle6 = PurchaseDetail.where(["fecha6 >= ? and fecha6 <= ?  and
+   product_id = ?","#{@fecha} 00:00:00","#{@fecha} 23:59:59",producto ]) %>
+
+<% if factura_detalle6.size  > 0 %>
+
+     <table style='font-family:"Courier New", Courier, monospace; font-size:70% ;width:100%'>
+      <% nroitem = 1%>
+      <% total_1 =  0%>
+      <% total_2 =  0%>
+      
+       <% for  credito in factura_detalle6 %>
+                  <tr>
+                    <td width = "5%" ><%=  producto_name  %></td>
+
+                    <td width = "5%" ><%=  credito.fecha6 %></td>
+                    <td width = "5%" ><%=  credito.qty6   %></td>
+                   <td width = "5%" ><%=  credito.get_purchase(credito.purchase_id)   %></td>
+                   
+                   </tr>
+         <%end %>
+               
+        <hr>  
+     </table>
+  
+  
+<% end %>
+<% factura_detalle7  = PurchaseDetail.where(["fecha7 >= ? and fecha7 <= ?  and
+      product_id = ?","#{@fecha} 00:00:00","#{@fecha} 23:59:59",producto ]) %>
+<% if factura_detalle7.size  > 0 %>
+
+     <table style='font-family:"Courier New", Courier, monospace; font-size:70% ;width:100%'>
+      <% nroitem = 1%>
+      <% total_1 =  0%>
+      <% total_2 =  0%>
+      
+       <% for  credito in factura_detalle7 %>
+                  <tr>
+                    <td width = "5%" ><%=  producto_name  %></td>
+
+                    <td width = "5%" ><%=  credito.fecha7 %></td>
+                    <td width = "5%" ><%=  credito.qty7   %></td>
+                   <td width = "5%" ><%=  credito.get_purchase(credito.purchase_id)   %></td>
+                   
+                   </tr>
+         <%end %>
+               
+        <hr>  
+     </table>
+<% end %>
+
+ <% factura_detalle8 = PurchaseDetail.where(["fecha8 >= ? and fecha8 <= ?  and
+       product_id = ?","#{@fecha} 00:00:00","#{@fecha} 23:59:59",producto ]) %>
+ 
+<% if factura_detalle8.size  > 0 %>
+
+     <table style='font-family:"Courier New", Courier, monospace; font-size:70% ;width:100%'>
+      <% nroitem = 1%>
+      <% total_1 =  0%>
+      <% total_2 =  0%>
+      
+       <% for  credito in factura_detalle8 %>
+                  <tr>
+                    <td width = "5%" ><%=  producto_name  %></td>
+
+                    <td width = "5%" ><%=  credito.fecha8 %></td>
+                    <td width = "5%" ><%=  credito.qty8   %></td>
+                   <td width = "5%" ><%=  credito.get_purchase(credito.purchase_id)   %></td>
+                   
+                   </tr>
+         <%end %>
+               
+        <hr>  
+     </table>
+<% end %>
+<% factura_detalle9 = PurchaseDetail.where(["fecha9 >= ? and fecha9 <= ?  and
+        product_id = ?","#{@fecha} 00:00:00","#{@fecha} 23:59:59",producto ]) %>
+<% if factura_detalle9.size  > 0 %>
+
+
+     <table style='font-family:"Courier New", Courier, monospace; font-size:70% ;width:100%'>
+      <% nroitem = 1%>
+      <% total_1 =  0%>
+      <% total_2 =  0%>
+      
+       <% for  credito in factura_detalle9 %>
+                  <tr>
+                    <td width = "5%" ><%=  producto_name  %></td>
+ 
+                    <td width = "5%" ><%=  credito.fecha9 %></td>
+                    <td width = "5%" ><%=  credito.qty9   %></td>
+                   <td width = "5%" ><%=  credito.get_purchase(credito.purchase_id)   %></td>
+                   
+                   </tr>
+         <%end %>
+               
+        <hr>  
+     </table>
+   
+     <% end %>
+<% factura_detalle10  = PurchaseDetail.where(["fecha10 >= ? and fecha10 <= ?  and
+        product_id = ?","#{@fecha} 00:00:00","#{@fecha} 23:59:59",producto ]) %>
+<% if factura_detalle10.size  > 0 %>
+
+     <table style='font-family:"Courier New", Courier, monospace; font-size:70% ;width:100%'>
+      <% nroitem = 1%>
+      <% total_1 =  0%>
+      <% total_2 =  0%>
+      
+       <% for  credito in factura_detalle10 %>
+                  <tr>
+                  <td width = "5%" ><%=   producto_name  %></td>
+
+                    <td width = "5%" ><%=  credito.fecha10 %></td>
+                    <td width = "5%" ><%=  credito.qty10   %></td>
+                   <td width = "5%" ><%=  credito.get_purchase(credito.purchase_id)   %></td>
+                   
+                   </tr>
+         <%end %>
+               
+        <hr>  
+     </table>
+<% end %>
+<% end %>
+
+</table>
+
+
   <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
   
   <tr bgcolor="#B4D7F7">

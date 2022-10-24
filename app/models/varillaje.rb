@@ -419,6 +419,81 @@ def  get_ticket_glp(fecha)
 
  
 
+def  get_ticket_glp_det(fecha) 
+
+     facturas = Ticket.where(["fecha >= ? and fecha <= ?  " , "#{fecha} 00:00:00","#{fecha} 23:59:59" ])
+    
+
+    return facturas 
+ 
+ end 
+
+
+
+ def  get_compras20_det(fecha,producto) 
+
+    
+   ret = 0
+
+    factura_detalle1 = PurchaseDetail.where(["fecha1 >= ? and fecha1 <= ?  and
+     product_id = ?","#{fecha} 00:00:00","#{fecha} 23:59:59",producto ])
+    
+  
+    
+
+    factura_detalle2 = PurchaseDetail.where(["fecha2 >= ? and fecha2 <= ?  and
+     product_id = ?","#{fecha} 00:00:00","#{fecha} 23:59:59",producto ])
+    
+       
+
+
+    factura_detalle3 = PurchaseDetail.where(["fecha3 >= ? and fecha3 <= ?  and
+     product_id = ?","#{fecha} 00:00:00","#{fecha} 23:59:59",producto ])
+   
+ 
+
+
+ factura_detalle4 = PurchaseDetail.where(["fecha4 >= ? and fecha4 <= ?  and
+     product_id = ?","#{fecha} 00:00:00","#{fecha} 23:59:59",producto ])
+    
+
+
+
+ factura_detalle5 = PurchaseDetail.where(["fecha5 >= ? and fecha5 <= ?  and
+      product_id = ?","#{fecha} 00:00:00","#{fecha} 23:59:59",producto ])
+    
+
+ factura_detalle6 = PurchaseDetail.where(["fecha6 >= ? and fecha6 <= ?  and
+   product_id = ?","#{fecha} 00:00:00","#{fecha} 23:59:59",producto ])
+  
+  
+
+ factura_detalle7  = PurchaseDetail.where(["fecha7 >= ? and fecha7 <= ?  and
+      product_id = ?","#{fecha} 00:00:00","#{fecha} 23:59:59",producto ])
+ 
+
+
+ factura_detalle8 = PurchaseDetail.where(["fecha8 >= ? and fecha8 <= ?  and
+       product_id = ?","#{fecha} 00:00:00","#{fecha} 23:59:59",producto ])
+   
+
+ factura_detalle9 = PurchaseDetail.where(["fecha9 >= ? and fecha9 <= ?  and
+        product_id = ?","#{fecha} 00:00:00","#{fecha} 23:59:59",producto ])
+   
+     
+ factura_detalle10  = PurchaseDetail.where(["fecha10 >= ? and fecha10 <= ?  and
+        product_id = ?","#{fecha} 00:00:00","#{fecha} 23:59:59",producto ])
+  
+    factura_detalle  = factura_detalle1 + factura_detalle2    
+
+
+
+    return ret
+ 
+ end 
+
+ 
+
  
  def  get_compras2(fecha1,fecha2,producto) 
 

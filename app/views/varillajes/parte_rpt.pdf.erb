@@ -64,10 +64,9 @@
                     <% end %>
   
 
-          <% if  (product0.tanque.product.id == 6   and product0.fecha.to_date <= '2022-08-27'.to_date) %> 
+                   <% if  (product0.tanque.product.id == 6   and product0.fecha.to_date <= '2022-08-27'.to_date) %> 
 
                  
-
                    <% compras = product0.get_ticket_glp(@fecha)  %>
                   
                   <% else %>

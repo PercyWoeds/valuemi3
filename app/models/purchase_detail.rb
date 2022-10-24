@@ -8,6 +8,17 @@ class PurchaseDetail < ActiveRecord::Base
   belongs_to :purchase	
   belongs_to :product
 
+  def get_purchase(id)
+
+      if Purchase.where(id: id).exists?
+
+        a = Purchase.where(id: id).last
+
+         return a.documento 
+      end 
+
+
+  end 
 
   def get_subtotal(items)
   	subtotal = 0
