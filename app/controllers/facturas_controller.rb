@@ -6870,6 +6870,7 @@ def rpt_facturas1_all
            end 
        when "Excel" then render xlsx: 'rpt_facturas2_xls'
    
+       when "Excel-2" then render xlsx: 'rpt_facturas21_xls'
          
        else render action: "index"
      end
@@ -6993,9 +6994,6 @@ def build_pdf_header9(pdf)
            end 
 
            row << ordencompra.get_moneda 
-
-
-
 
            if ordencompra.moneda_id == 2
              

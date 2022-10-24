@@ -42,7 +42,7 @@ wb.styles do |s|
                 sheet.add_image(:image_src => img, :noMove => true) do |image|
                     image.width = 300
                     image.height = 100
-                    image.start_at 11, 0
+                    image.start_at 33, 0
                 end
 
 
@@ -83,6 +83,27 @@ wb.styles do |s|
                      
                      "DESCRIP",
                      "MON.",
+                     "FECHA 1",
+                     "QTY 1",
+                    "FECHA 2",
+                    "QTY 2",
+                    "FECHA 3",
+                    "QTY 3",
+                    "FECHA 4",
+                    "QTY 4",
+                    "FECHA 5",
+                    "QTY 5",
+                    "FECHA 6",
+                    "QTY 6",
+                    "FECHA 7",
+                    "QTY 7",
+                    "FECHA 8",
+                    "QTY 8",
+                    "FECHA 9",
+                    "QTY 9",
+                    "FECHA 10",
+                    "QTY 10",
+ 
                      "PRE.COSTO",
              
                      "TOTAL",
@@ -197,13 +218,56 @@ wb.styles do |s|
             orden.product.code,
             orden.product.name2,
             ordencompra.get_moneda, 
+            orden.fecha1,
+            orden.qty1,
+            orden.fecha2,
+            orden.qty2,
+            orden.fecha3,
+            orden.qty3,
+            orden.fecha4,
+            orden.qty4,
+            orden.fecha5,
+            orden.qty5,
+            orden.fecha6,
+            orden.qty6,
+            orden.fecha7,
+            orden.qty7,
+            orden.fecha8,
+            orden.qty8,
+            orden.fecha9,
+            orden.qty9,
+            orden.fecha10,
+            orden.qty10,
             ln_precio_sigv.round(2),
             ln_total.round(2),
             ln_percepcion.round(2),
             ln_balance.round(2),
             ordencompra.payment.descrip ], 
 
-            :style => [cadena0,cadena0,cadena0,cadena0,date0,date0,currency,cadena0,cadena0,currency,cadena0,currency,currency,currency,cadena0,cadena0]
+            :style => [cadena0,cadena0,cadena0,cadena0,date0,date0,currency,cadena0,cadena0,cadena0,
+            date0,
+            currency,
+date0,
+            currency,
+date0,
+            currency,
+date0,
+            currency,
+date0,
+            currency,
+date0,
+            currency,
+date0,
+            currency,
+date0,
+            currency,
+date0,
+            currency,
+date0,
+            currency,
+
+
+            currency,currency,currency,currency,currency,cadena0,cadena0]
 
         
        
