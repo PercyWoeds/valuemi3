@@ -289,7 +289,7 @@
      <% venta_dsctos = venta_descuentos_facturas + venta_descuentos_facturas_efe %>
       <% venta_2  += venta_dsctos  %>
      
-     <% venta_5 =  venta_2 + venta_3 + venta_4 + venta_9  +venta_17 + venta_18   + venta_4_1 + venta_19 + venta_20 + venta_10 + venta_faltante + venta_sobrante  %>
+     <% venta_5 =  venta_2 + venta_3 + venta_4 + venta_9  +venta_17 + venta_18   + venta_4_1 + venta_19 + venta_20 + venta_10 + venta_faltante + venTU ALta_sobrante  %>
      
      <% venta_8 =  venta_1 + venta_15 + venta_16 - venta_12 + venta_descuentos_facturas  +venta_descuentos_facturas_efe  + otros_ingresos%>
      
@@ -427,8 +427,8 @@
             
 
             
-            <td width = "25%" align ="left">  &#9475; </td>
-            <td width = "25%" align ="right">  </td>
+            <td width = "25%" align ="left">  &#9475; SOBRANTES </td>
+            <td width = "25%" align ="right">  <%=    sprintf("%.2f",venta_sobrante )  %> </td>
         
             </tr>
       
