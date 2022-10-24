@@ -461,7 +461,7 @@
             <td width= "25%" >                                </td>
             
             <td width = "25%" align ="left">  &#9475;  :  </td>
-            <td width = "25%" align ="left">  <%=    sprintf("%.2f",venta_8 - venta_5 -venta_sobrante ) %>                   </td>
+            <td width = "25%" align ="left">  <%=    sprintf("%.2f",venta_8 - venta_5) %>                   </td>
             
             </tr>
     </table>
@@ -710,7 +710,7 @@
   
   </table>
   
-  <% diferencia = total_bancos_soles1.round(2) + total_gastos.round(2) -  venta_2.round(2) - venta_10.round(2)  %>
+  <% diferencia = total_bancos_soles1.round(2) + total_gastos.round(2) -  venta_2.round(2) - venta_10.round(2) - venta_sobrante  %>
      
   <% if diferencia !=  0%>   
   <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
