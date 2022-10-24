@@ -6868,7 +6868,7 @@ def rpt_facturas1_all
            send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
          
            end 
-       when "Excel" then render xlsx: 'rpt_facturas4_xls'
+       when "Excel" then render xlsx: 'rpt_facturas2_xls'
    
          
        else render action: "index"
@@ -7002,8 +7002,7 @@ def build_pdf_header9(pdf)
               ln_total = orden.total.round(2)
               ln_percepcion = ordencompra.participacion.round(2)
               ln_balance  = ordencompra.balance.round(2)
-
-                           ln_precio_sigv = orden.price_without_tax.round(4)
+              ln_precio_sigv = orden.price_without_tax.round(4)
              
            else 
 
@@ -7011,8 +7010,6 @@ def build_pdf_header9(pdf)
             
 
               tipo_cambio = @company.get_dolar(fecha_cambio)
-              puts "tipo cambio "
-              puts tipo_cambio
              
               ln_total = orden.total * tipo_cambio 
               ln_percepcion = ordencompra.participacion  * tipo_cambio 
