@@ -544,10 +544,12 @@ end
 
     @customerpayment.processed='1'
         
-    @customerpayment.user_id=@current_user.id 
+    @customerpayment.user_id = @current_user.id 
 
     @customerpayment[:code] = @customerpayment.get_maximo("1")
 
+    @customerpayment[:importe_cambio] = @customerpayment[:total]  
+    @customerpayment[:total] = @customerpayment[:tipo_cambio] *  @customerpayment[:importe_cambio]  
 
     respond_to do |format|
       if @customerpayment.save

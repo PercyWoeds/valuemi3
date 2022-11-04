@@ -50,6 +50,17 @@
       <%= f.text_field :total %>
     </div>
   
+     <div class="field">
+      <%= f.label :tipo_cambio, "Tipo Cambio: ", :class => "bold" %><br />
+      <%= f.number_field :tipo_cambio ,:step => :any  %> 
+    </div>
+    <div>
+      <strong>Total a Cancelar :</strong><br />
+      <span id="ac_item_total">0.00</span>
+    </div>
+
+  
+
     <%= hr() %>
     
     <div class="field" id="list_items">
@@ -160,10 +171,6 @@
 <br />
 
 
-  
-
-
-
 
 <%= render 'layouts/autocomplete' %>
 
@@ -206,7 +213,17 @@
       $("#selected_seller").html(data[0]);
     });    
     
+
+     $("#customer_payment_total").bind("keyup", function() {
+      updateItemTotalCP1();
+    });
     
+    $("#customer_payment_tipo_cambio").bind("keyup", function() {
+      updateItemTotalCP1();
+    });
+    
+  
+  
     $("#ac_item_total").bind("keyup", function() {
       updateItemTotalCP();
     });
@@ -224,4 +241,30 @@
       listItemsCustomerPayment();
     <% end %>
   });
+
+
+
+
+
+   // Update price total for invoice
+    function updateItemTotalCP1() {
+      var saldooriginal = $("#customer_payment_total").val();
+      var price     = $("#customer_payment_tipo_cambio").val();
+     
+      if( isNumeric(price) && isNumeric(saldooriginal) )  {
+        
+        var total1 = price * saldooriginal  ;
+
+         $("#ac_item_total").html(total1);
+
+      
+      } else {
+
+      $("#ac_item_total").html(saldooriginal);
+              
+      }
+    }
+
+
+
 </script>

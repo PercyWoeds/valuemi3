@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20221015175638) do
+ActiveRecord::Schema.define(version: 20221103163117) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -441,6 +441,8 @@ ActiveRecord::Schema.define(version: 20221015175638) do
     t.integer  "bank_acount_id"
     t.integer  "concept_id"
     t.float    "compen"
+    t.float    "tipo_cambio"
+    t.float    "importe_cambio"
   end
 
   create_table "customers", force: :cascade do |t|

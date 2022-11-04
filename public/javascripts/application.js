@@ -1161,6 +1161,8 @@
     var item = $("#ac_item").val();
     
     if(item != "") {
+
+
       var company_id = $("#customer_payment_company_id").val();
 
       var importe_cheque = $("#customer_payment_total").val();
@@ -1171,6 +1173,8 @@
       var ajuste = $("#ac_item_ajuste").val(); 
 
       var price = $("#ac_item_total").val();   
+
+      alert(price);
       var items_arr = $("#items").val().split(",");
 
       if(factory == "" || !isNumeric(factory)) {
@@ -1269,7 +1273,7 @@
 
   // Update price total for invoice
   function updateItemTotalCP() {
-    var saldooriginal = $("#ac_item_total").val();
+    var saldooriginal = $("#ac_item_total2").val();
 
     var price     = $("#ac_item_total").val();
 
@@ -1281,7 +1285,7 @@
 
     $("#ac_item_total2").html(saldooriginal);
 
-    if( isNumeric(price) && isNumeric(factory) && isNumeric(ajuste) && isNumeric(saldooriginal) && isNumeric(compen))  {
+    if( isNumeric(price) && isNumeric(factory) && isNumeric(ajuste) && isNumeric(price) && isNumeric(compen))  {
       
       var total = price + factory + ajuste ;
 
