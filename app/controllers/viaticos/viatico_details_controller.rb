@@ -225,7 +225,7 @@ puts "viatico detail ***********"
         tm:params[:viatico_detail][:tm],
         numero: params[:viatico_detail][:numero],
         detalle: params[:viatico_detail][:detalle],
-        document_id: params[:viatico_detail][:tm],
+        document_id: params[:viatico_detail][:document_id],
         descrip: params[:viatico_detail][:descrip],
         supplier_id:  params[:viatico_detail][:supplier_id])
    begin
