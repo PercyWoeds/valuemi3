@@ -3101,164 +3101,275 @@
     
        end
     
-       ###INVENTARIO  STOCKS 
+       ###INVENTARIO  STOCKS MARKET
+
+
+
+## INVENTARIO POR LOCAL 
+ def  get_stocks_inventarios_market(fecha1,fecha2,product1,estado,local)
+
+
+    MovementDetail.delete_all
+
+    @productExiste = Product.where(:products_category_id=> product1) 
+
+     for existe in @productExiste
+
+        product =  MovementDetail.find_by(:product_id => existe.id)
+
+        if product 
+        else   
+          detail  = MovementDetail.new(:fecha=>fecha1 ,:stock_inicial=>0,:ingreso=>0,:salida =>0,
+         :price=> 0 ,:product_id=> existe.id,:tm=>"4",:stock_final =>0 )
+          detail.save       
+        end         
+     end    
+
+
+     ######################################################################3
+     ##saldo inicial
+     ######################################################################3 
+
+    ##cambie solo a julio 
+    fecha_inventario = "2022-05-30"
+
+     @inv = Inven.where('fecha_a >=?  and fecha_a < ?',"#{fecha_inventario} 00:00:00","#{fecha1} 00:00:00" )  
+
     
-       def get_stocks_inventarios_market(fecha1,fecha2,product1,estado)
     
-    
-          MovementDetail.delete_all
-    
-         
-    
-    
-           ######################################################################3
-           ##saldo inicial
-           ######################################################################3 
-    
-           @inv = Inven.where('fecha_a < ? and fecha_a >= ?',"#{fecha1} 00:00:00","2022-05-31 23:59:59")  
-    
+        for invdetail in @inv
+
+
+              producto_code = Product.find_by(:code => invdetail.cod_prod )
+
+      puts invdetail.cod_prod 
+
+          if producto_code == "0000000000089"
+
+            producto_code= "0983"
+          end  
+
+           movdetail  = MovementDetail.find_by(:product_id=>producto_code)  
+
+
+
+          if movdetail
+
+            @cantidad =  invdetail.stk_fisico - invdetail.stk_act 
+
+            if @cantidad == nil
+            movdetail.stock_inicial += 0   
+            else
+            movdetail.stock_inicial += @cantidad 
+            end
+
+            if invdetail.costo == nil
+              movdetail.price = 0  
+           else 
+                movdetail.price = invdetail.costo 
+
+                
+            end
+
+            movdetail.save           
+          else     
           
-           for inv in @inv       
-    
-                            
-                 movdetail  = MovementDetail.find_by(:cod_prod => invdetail.cod_prod)          
-    
-                if movdetail
-    
-                  if invdetail.cantidad == nil
-                  movdetail.stock_inicial += 0   
-                  else
-                  movdetail.stock_inicial += invdetail.cantidad
-                  end
-    
-                  if invdetail.precio_unitario == nil
-                    movdetail.price = 0  
-                 else 
-                    movdetail.price = invdetail.precio_unitario
-                  end
-    
-                  movdetail.save           
-                else     
 
-
-                
-                  detail  = MovementDetail.new(:fecha=> inv.fecha_a  ,:ingreso=>0,:salida =>detail.quantity,
-                  :price=>detail.price,:product_id=> detail.product_id,:tm=>"3")
-                  detail.save 
-
-                end
-              
-            
-            end 
-    
-            #ingresos
-           @ingdetail  = CompraMarket.where('fecha <  ? and fecha >= ?',"#{fecha1} 00:00:00","2022-05-31 23:59:59")
-    
-          
-    
-              for detail in @ingdetail 
-
-                $lcPreciosinigv = detail.preciosigv 
-                $lcmoneda = detail.moneda == "MN" ? 2 : 1 
-
-
-                movdetail  = MovementDetail.find_by(:cod_prod =>detail.cod_prod )
-    
-                if movdetail
-                  if detail.quantity == nil
-                    movdetail.stock_inicial += 0   
-                  else 
-                    movdetail.stock_inicial +=  detail.cantidad 
-                  end 
-    
-                  if detail.price_without_tax == nil
-                   movdetail.price = 0 
-                  else
-                    if $lcmoneda != nil                 
-                      if $lcmoneda == 2
-                        movdetail.price = detail.price_without_tax
-                      else
-                        @dolar = Tipocambio.find_by(["dia  >= ? and dia <= ? ", "#{$lcFecha} 00:00:00","#{$lcFecha} 23:59:59" ])
-                        if @dolar 
-                          movdetail.price = $lcPreciosinigv * @dolar.compra
-                        else
-                          movdetail.price = 0                  
-                        end 
-                      end    
-                    end 
-                  end 
-    
-                  
-                  movdetail.save           
-    
-                else     
-                
-                  detail  = MovementDetail.new(:fecha=>detail.fecha  ,:ingreso=>0,:salida =>detail.cantidad,
-                  :price=>detail.price,:product_id=> detail.cod_prod ,:tm=>"3")
-                  detail.save 
-    
-                end
-              
-           
-           end 
-    
-            
-           
-    
-         #actualiza ajustes de inventarios
-         
-         
-           @ajuste  = Market.where('fecha1 < ? and fecha1 >= ?',"#{fecha1} 00:00:00","2018-08-31 00:00:00")  
-    
-           
-              for detail in @ajustedetail 
-              
-                movdetail  = MovementDetail.find_by(:cod_prod => detail.cod_prod )          
-    
-                if movdetail
-    
-                  if detail.quantity == nil
-                  
-                    movdetail.stock_inicial += 0   
-                    
-                  else
-                    if detail.quantity > 0
-                      movdetail.stock_inicial += detail.cantidad
-                    else
-                      movdetail.stock_inicial -= detail.cantidad * -1
-                    end 
-                    movdetail.price = detail.cost 
-                    
-                  end
-              
-       
-                  movdetail.save           
-    
-                else     
-                
-                  detail  = MovementDetail.new(:fecha=> detail.fecha  ,:ingreso=>0,:salida =>detail.cantidad,
-                  :price=>detail.precio ,:cod_prod => detail.cod_prod ,:tm=>"3")
-                  detail.save 
-    
-                end
-              
-            end 
-      
+            #detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>0,:salida =>detail.quantity,
+            #:price=>detail.price,:product_id=> detail.product_id,:tm=>"3")
+            #detail.save 
+          end
         
-         
-        #actualiza  el costo de la salida
-           @inv = Inven.where('fecha >= ? and  fecha <= ?',"#{fecha1} 00:00:00","#{fecha2} 23:59:59")  
+        end 
+      
+
+      #ingresos
+     @ingdetail = CompraMarket.where('fecha > ? and fecha  <  ? ',"#{fecha_inventario} 23:59:59","#{fecha1} 00:00:00" )
+
+        for detail in @ingdetail 
+
+           $lcFecha = detail.fecha.to_date
+
+           if detail.moneda == "MN"
+              $lcmoneda  = 2
+          else
+              $lcmoneda  = 1
+
+          end 
+
+
+
+          $lcPreciosinigv = detail.preciosigv
+
+
+           producto_code = Product.find_by(:code => invdetail.cod_prod )
+
+
+           if producto_code == "0000000000089"
+
+            producto_code = "0983"
+          end  
+
+           movdetail  = MovementDetail.find_by(:product_id=>producto_code)  
+       
+
+
+
+          if movdetail
+            if detail.cantidad == nil
+              movdetail.stock_inicial += 0   
+            else 
+              movdetail.stock_inicial +=  detail.cantidad 
+            end 
+
+            if detail.preciosigv == nil
+             movdetail.price = 0 
+            else
+              if $lcmoneda != nil                 
+                if $lcmoneda == 2
+                  movdetail.price = detail.preciosigv
+
+
+                
+                else
+                  @dolar = Tipocambio.find_by(["dia  >= ? and dia <= ? ", "#{$lcFecha} 00:00:00","#{$lcFecha} 23:59:59" ])
+                  if @dolar 
+                    movdetail.price = $lcPreciosinigv * @dolar.compra
+
+                  else
+                    movdetail.price = 0                  
+                  end 
+                end    
+              end 
+            end 
+
+            
+            movdetail.save           
+
+          else     
           
+            #detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>0,:salida =>detail.quantity,
+            #:price=>detail.price,:product_id=> detail.product_id,:tm=>"3")
+            #detail.save 
 
-           for inv in @inv 
-
-              $lcFecha =inv.fecha 
+          end
+        
+                
+        end 
     
 
-                 movdetail  = MovementDetail.find_by(:product_id=>invdetail.product_id)          
+     #salidas 
+    @saldetail  = Market.where('fecha>? and fecha <  ?',"#{fecha_inventario} 23:59:59","#{fecha1} 00:00:00" )
+
+
+
+   
+        for detail in @saldetail 
+        
+         producto_code = Product.find_by(:code => invdetail.cod_prod )
+
+
+           if producto_code == "0000000000089"
+
+            producto_code1 = "0983"
+          end  
+
+           movdetail  = MovementDetail.find_by(:product_id=>producto_code)  
+          
+
+          if movdetail
+
+            if detail.cantidad  == nil
+              movdetail.stock_inicial += 0   
+            else
+              movdetail.stock_inicial -= detail.cantidad 
+            end
+            movdetail.save           
+
+          else     
+          
+            #detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>0,:salida =>detail.quantity,
+            #:price=>detail.price,:product_id=> detail.product_id,:tm=>"3")
+            #detail.save 
+
+          end
+        
+        end 
+     
+
+   #actualiza ajustes de inventarios
+   
+   
+     @ajuste  = Ajust.where('fecha1>? and fecha1 <  ? ',"#{fecha_inventario} 23:59:59","#{fecha1} 00:00:00" )
+
+     for ajuste  in @ajuste
+        @ajustedetail= AjustDetail.where(:ajust_id=>ajuste.id)
+
+        for detail in @ajustedetail 
+        
+          movdetail  = MovementDetail.find_by(:product_id=> detail.product_id)          
+
+          if movdetail
+
+            if detail.quantity == nil
+               
+              movdetail.stock_inicial += 0   
+            else
+              if detail.quantity > 0
+                if detail.product_id == 6685   
+               movdetail.price = 9.04 
+              end 
+
+                movdetail.stock_inicial += detail.quantity
+              else
+                movdetail.stock_inicial -= detail.quantity*-1
+              end     
+              
+            end
+        
+ 
+            movdetail.save           
+
+          else     
+          
+            #detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>0,:salida =>detail.quantity,
+            #:price=>detail.price,:product_id=> detail.product_id,:tm=>"3")
+            #detail.save 
+
+          end
+        
+        end 
+     end 
+
+
+ ## Aca calcula saldos con el detalle de las ventas y compras    
+  #actualiza  el costo de la salida
+     @invdetail  = Inven.where('fecha_a >= ? and  fecha_a <= ? ',"#{fecha1} 00:00:00","#{fecha2} 23:59:59")  
+
+
+     
+        #$lcFecha = @inv.fecha 
+
+      
+
+        for invdetail in @invdetail 
+         
+            producto_code = Product.find_by(:code => invdetail.cod_prod )
+
+           @cantidad =  invdetail.stk_fisico - invdetail.stk_act 
+
+           if producto_code == "0000000000089"
+
+            producto_code1 = "0983"
+          end  
+
+           movdetail  = MovementDetail.find_by(:product_id=>producto_code)  
+         
+
+   
               if movdetail   
-                  movdetail.ingreso += invdetail.cantidad
-                  movdetail.price = invdetail.precio_unitario
+                  movdetail.ingreso += @cantidad 
+                  movdetail.price = invdetail.costo 
                   movdetail.save 
               else
               #  detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>invdetail.cantidad,
@@ -3266,231 +3377,196 @@
               #  :price=>invdetail.precio_unitario,:product_id=> invdetail.product_id,:tm=>"1")
               #  detail.save 
               end   
-    
-            
-            end 
-            #ingresos0 
-           @ing = CompraMarket.where('date1>= ? and date1 <= ?  ',"#{fecha1} 00:00:00","#{fecha2} 23:59:59")
-    
-           for ing in @ing
-    
-              $lcFecha  = ing.date1.strftime("%F") 
-              $lcmoneda = ing.moneda_id
-    
 
+        end 
+    
+      #ingresos0 
+     @ingdetail = CompraMarket.where('fecha >= ? and fecha  <= ? ',"#{fecha1} 00:00:00","#{fecha2} 23:59:59")
 
-                $lcPreciosinigv = detail.price_without_tax
-    
-                movdetail  = MovementDetail.find_by(:cod_prod =>detail.cod_prod )          
-                if movdetail
-                  if detail.quantity == nil 
-                    movdetail.ingreso = 0
-                  else 
-                    movdetail.ingreso += detail.cantidad 
-                  end 
-    
-                  if detail.price_without_tax == nil
-                   movdetail.price = 0 
-                  else
-                    if $lcmoneda != nil                 
-                      if $lcmoneda == 2
-                        movdetail.price = detail.preciosigv 
-                      else
-                        @dolar = Tipocambio.find_by(["dia  >= ? and dia <= ? ", "#{$lcFecha} 00:00:00","#{$lcFecha} 23:59:59" ])
-                        if @dolar 
-                          movdetail.price = $lcPreciosinigv * @dolar.compra
-                        else
-                          movdetail.price = 0                  
-                        end 
-                      end    
-                    end 
-                  end 
-                  movdetail.save           
-                else     
-               # detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>detail.quantity,:salida => 0,
-               #   :price=>detail.price_without_tax,:product_id=> detail.product_id,:tm =>"2")
-               # detail.save 
-                end
-    
-            
-           end 
-    
-           #ventas
-          @ventas  = Market.where('fecha>= ? and fecha <= ?',"#{fecha1} 00:00:00","#{fecha2} 23:59:59")
-    
-           for sal in @ventas  
-           
-            if sal == nil 
-            else 
-               
-                
-                movdetail  = MovementDetail.find_by(:cod_prod => @product_id.cod_prod )
-    
-                if movdetail
-    
-                  if sal.cantidad == nil
-                    movdetail.salida = 0   
-                  else
-                    movdetail.salida += sal.cantidad 
-                  end
-                    movdetail.save           
-                else     
-                
-                  #detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>0,:salida =>detail.quantity,
-                  #:price=>detail.price,:product_id=> detail.product_id,:tm=>"3")
-                  #detail.save 
-    
-                end   
-          
+        
+        for detail in @ingdetail 
+
+            $lcFecha = detail.fecha.to_date
+
+           if detail.moneda == "MN"
+              $lcmoneda  = 2
+          else
+              $lcmoneda  = 1
+
           end 
-           end 
-           
-           
-                #salidas
-          @sal  = Output.where('fecha>= ? and fecha <= ?',"#{fecha1} 00:00:00","#{fecha2} 23:59:59")
-    
-           for sal in @sal 
-              $lcFecha = sal.fecha 
-    
-              @saldetail=  OutputDetail.where(:output_id=>sal.id)
-    
-              for detail in @saldetail 
-    
-                movdetail  = MovementDetail.find_by(:product_id=>detail.product_id)
-    
-                if movdetail
-    
-                  if detail.quantity == nil
-                    movdetail.salida = 0   
+
+
+
+        
+          $lcPreciosinigv = detail.preciosigv
+
+
+           producto_code = Product.find_by(:code => detail.cod_prod )
+
+
+            if producto_code == "0000000000089"
+
+            producto_code1 = "0983"
+          end  
+
+           movdetail  = MovementDetail.find_by(:product_id=>producto_code)  
+      
+
+
+          if movdetail
+            if detail.cantidad  == nil 
+              movdetail.ingreso = 0
+            else 
+              movdetail.ingreso += detail.cantidad 
+            end 
+
+            if detail.preciosigv == nil
+             movdetail.price = 0 
+            else
+              if $lcmoneda != nil                 
+                if $lcmoneda == 2
+                  movdetail.price = detail.preciosigv
+                else
+                  @dolar = Tipocambio.find_by(["dia  >= ? and dia <= ? ", "#{$lcFecha} 00:00:00","#{$lcFecha} 23:59:59" ])
+                  if @dolar 
+                    movdetail.price = $lcPreciosinigv * @dolar.compra
                   else
-                    movdetail.salida += detail.quantity
-                  end
-                    movdetail.save           
-                else     
-                
-                  #detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>0,:salida =>detail.quantity,
-                  #:price=>detail.price,:product_id=> detail.product_id,:tm=>"3")
-                  #detail.save 
-    
-                end   
-              end 
-           end 
-    
-       
-       @varilla = Varillaje.where(["fecha >= ? and fecha <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59"  ])
-       
-       
-       for detalle  in @varilla
-              
-               producto_value = detalle.tanque.product.id
-               @fecha = detalle.fecha.to_date 
-               
-               qty  =  detalle.inicial + detalle.get_compras(@fecha,producto_value)  - detalle.get_ventas(@fecha,detalle.tanque.product.id)- detalle.get_ventas_vale_directo_producto(@fecha,detalle.tanque.product.code.to_s,"qty")
-               dife =  detalle.varilla - qty
-               
-                movdetail  = MovementDetail.find_by(:product_id=>producto_value)          
-    
-                if movdetail
-    
-                  if qty == nil
-                  
-                      movdetail.salida += 0  
-                      movdetail.ingreso += 0  
-                  else
-                     if dife > 0  
-                       movdetail.ingreso += dife
-                     else
-                       movdetail.salida  += dife 
-                     end 
-                  end
-              
-       
-                  movdetail.save           
-    
-                else     
-                
-                  #detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>0,:salida =>detail.quantity,
-                  #:price=>detail.price,:product_id=> detail.product_id,:tm=>"3")
-                  #detail.save 
-    
-                end
-              
-              
-       
-       
-       end 
-    
-           
-      # ajustes de inventarios
-    
-    
-          @ajuste = Ajust.where('fecha1>= ? and fecha1 <= ?',"#{fecha1} 00:00:00","#{fecha2} 23:59:59")
-    
-           for sal in @ajuste
-              $lcFecha = sal.fecha1 
-    
-              @ajustedetail=  AjustDetail.where(:ajust_id=>sal.id)
-    
-              for detail in @ajustedetail 
-    
-                movdetail  = MovementDetail.find_by(:product_id=>detail.product_id)
-    
-                if movdetail
-    
-                  if detail.quantity == nil
-                    movdetail.salida += 0  
-                    movdetail.ingreso += 0  
-                  else
-                    if detail.quantity > 0
-                      movdetail.ingreso += detail.quantity
-                    else
-                      movdetail.salida  += detail.quantity*-1
-                    end     
-                      movdetail.price = detail.cost 
-                      
-                  end
-                    movdetail.save           
-                else     
-                
-                  #detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>0,:salida =>detail.quantity,
-                  #:price=>detail.price,:product_id=> detail.product_id,:tm=>"3")
-                  #detail.save 
-    
-                end   
-              end 
-           end 
-          
-           if estado=="1"
-              @inv1 = MovementDetail.all.order(:product_id,:fecha)
-              
-              for stock1 in @inv1
-                  a0= stock1.product_id 
-                  a1= stock1.stock_inicial
-                  a2= stock1.ingreso
-                  a3= stock1.salida
-                  a4= a1+a2-a3
-                  
-                  a5=Stock.find_by(:product_id=> a0)
-                  if a5
-                    a5.quantity = a4
-                    a5.save
-                  else
-                    
-                    a6= Stock.new(:store_id =>"1",:state=>"Lima",:product_id=>a0,:quantity=>a4)
-                    a6.save 
-                    
+                    movdetail.price = 0                  
                   end 
-                  
+                end    
               end 
-           end 
+            end 
+            movdetail.save           
+          else     
+         # detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>detail.quantity,:salida => 0,
+         #   :price=>detail.price_without_tax,:product_id=> detail.product_id,:tm =>"2")
+         # detail.save 
+          end
+
+        end 
     
-           # AGREGA LOS QUE NO TIENEN MOVIMIENTO 
+
+     #salidas 
+    @saldetail  = Market.where('fecha>= ? and fecha <= ? ',"#{fecha1} 00:00:00","#{fecha2} 23:59:59")
+
+      
+     
+        for detail in @saldetail 
+
+             $lcFecha = detail.fecha 
+
+
+         producto_code = Product.find_by(:code => detail.cod_prod )
+
+
+           if producto_code == "0000000000089"
+
+            producto_code1 = "0983"
+          end  
+
+           movdetail  = MovementDetail.find_by(:product_id=>producto_code)  
+        
+
+          if movdetail
+
+            if detail.cantidad  == nil
+              movdetail.salida = 0   
+            else
+              movdetail.salida += detail.cantidad 
+            end
+              movdetail.save           
+          else     
           
-            @inv = MovementDetail.all.order(:product_id,:fecha)
-          return @inv 
+            #detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>0,:salida =>detail.quantity,
+            #:price=>detail.price,:product_id=> detail.product_id,:tm=>"3")
+            #detail.save 
+
+          end   
+        end 
     
-       end
+# ajustes de inventarios
+
+
+    @ajuste = Ajust.where('fecha1>= ? and fecha1 <= ? ',"#{fecha1} 00:00:00","#{fecha2} 23:59:59")
+
+     for sal in @ajuste
+        $lcFecha = sal.fecha1 
+
+        @ajustedetail=  AjustDetail.where(:ajust_id=>sal.id)
+
+        for detail in @ajustedetail 
+
+          movdetail  = MovementDetail.find_by(:product_id=>detail.product_id)
+
+          if movdetail
+
+            if detail.quantity == nil
+              movdetail.salida += 0  
+              movdetail.ingreso += 0  
+            else
+              if detail.quantity > 0
+                if detail.product_id == 6685   
+               movdetail.price = 9.04 
+              end 
+                movdetail.ingreso += detail.quantity
+              else
+                movdetail.salida  += detail.quantity*-1
+              end     
+                
+            end
+              movdetail.save           
+          else     
+          
+            #detail  = MovementDetail.new(:fecha=>$lcFecha ,:ingreso=>0,:salida =>detail.quantity,
+            #:price=>detail.price,:product_id=> detail.product_id,:tm=>"3")
+            #detail.save 
+
+          end   
+        end 
+     end 
     
+     if estado=="1"
+        @inv1 = MovementDetail.all.order(:product_id,:fecha)
+        
+        for stock1 in @inv1
+            a0= stock1.product_id 
+            a1= stock1.stock_inicial
+            a2= stock1.ingreso
+            a3= stock1.salida
+            a4= a1+a2-a3
+            
+            a5=Stock.find_by(:product_id=> a0)
+            if a5
+              a5.quantity = a4
+              a5.save
+            else
+              
+              a6= Stock.new(:store_id =>"1",:state=>"Lima",:product_id=>a0,:quantity=>a4)
+              a6.save 
+              
+            end 
+            
+        end 
+     end 
+
+     # AGREGA LOS QUE NO TIENEN MOVIMIENTO 
+    
+      @inv = MovementDetail.joins(:product).order("products.code,fecha")
+    #@inv = MovementDetail.joins(:product).order("movement_details.id")
+
+    return @inv 
+
+
+
+ end
+
+
+
+       ########
+
+
+    
+      
     
        ###INVENTARIO  STOCKS  DETALLADO
     

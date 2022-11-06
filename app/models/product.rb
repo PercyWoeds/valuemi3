@@ -66,11 +66,16 @@ def self.import(file)
           
           a = Product.find_by(code: row['cod_prod'] )
           
+
             
             if  a == nil 
-              
-                a = Product.new(:name =>  row['nom_prod'], :company_id=>1,:products_category_id =>  row['category'], :price => row['precio'],:punto => 0 ,:tax1=> 0.00, :tax2 => 0.00, :tax3 => 0.00,:code => row['cod_prod'].rjust(13, '0') )
+                puts row['cod_prod'] 
+                a = Product.new(:name =>  row['nom_prod'], :company_id=>1,:products_category_id =>  row['category'], :price => row['precio'],:punto => 0 ,:tax1=> 0.00, :tax2 => 0.00, :tax3 => 0.00,:code => row['cod_prod'].rjust(13, '0'),:code1 => row['code1'],:code2=>row['code2']  )
+                
+
                 a.save      
+                 puts a.errors.messages 
+
                 
            else 
             

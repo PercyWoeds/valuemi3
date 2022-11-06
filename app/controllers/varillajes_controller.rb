@@ -7,7 +7,7 @@ class VarillajesController < ApplicationController
   # GET /varillajes
   # GET /varillajes.json
   def index
-    @varillajes = Varillaje.all.order(:fecha)
+    @varillajes = Varillaje.where("fecha>=? and fecha<=?","2022-10-15 00:00:00","2022-12-31 23:59:59").order(:fecha)
 
 
  

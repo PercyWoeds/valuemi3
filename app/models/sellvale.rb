@@ -329,8 +329,9 @@ def self.search(search_serie, search_numero)
   #where("numero  iLIKE ? or cod_cli iLIKE ? or odometro ilike ? ", "%#{search}%","%#{search}%","%#{search}%")
   
   return scoped unless search_serie.present? || search_numero.present?
-  where(['serie iLIKE ? AND numero iLIKE ?', "%#{search_serie}%", "%#{search_numero}%"])
-  
+  where(['serie iLIKE ? AND numero iLIKE ? and fecha>=? and fecha<=?', "%#{search_serie}%", "%#{search_numero}%","2022-10-15 00:00:00","2022-12-31 23:59:59"])
+
+
 end
 
    

@@ -59,11 +59,13 @@
         
         <td><%= link_to 'Ver', sellvale %></td>
         
-        <% if sellvale.processed != "1"%>
+       
+        <% if sellvale.processed != "1" and %>
         <td><%= link_to 'Editar', edit_sellvale_path(sellvale) %></td>
-        
+         <% if current_user.level == "admin"%>
         <td><%= link_to 'Eliminar', sellvale, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         <%end %>
+        <% end %>
         
       </tr>
     <% end %>
@@ -73,8 +75,11 @@
 
 <br>
 
+<% if current_user.level == "admin"%>
 
 <%= link_to 'New Sellvale', new_sellvale_path %>
+<% end %>
+
 
 <h2>Importar Archivo  "*.csv"</h2>
 

@@ -236,21 +236,25 @@ class StocksController < ApplicationController
               row = []
               row << nroitem.to_s
               row << stock.product.code
-              row << stock.product.name
-              row << stock.product.unidad
-              row << stock.product.ubicacion 
+              row << stock.product.name.to_s 
+              row << stock.product.unidad.descrip
+              row << stock.product.ubicacion.to_s
+
               row << sprintf("%.3f",stock.price.round(3).to_s)
               row << sprintf("%.2f",stock.stock_inicial.round(2).to_s)         
               row << sprintf("%.2f",stock.ingreso.round(2).to_s)
               row << sprintf("%.2f",stock.salida.round(2).to_s)
-              saldo = stock.stock_inicial  + stock.ingreso - stock.salida       
+              saldo = stock.stock_inicial  + stock.ingreso - stock.salida     
+
               row << sprintf("%.2f",saldo.round(2).to_s)
               if stock.price 
-              @total = saldo * stock.price                         
+                @total = saldo * stock.price                         
               else
-              @total = 0  
+                @total = 0  
               end
               row << sprintf("%.2f",@total.round(2).to_s)
+
+
               @cantidad1 += stock.stock_inicial 
               @cantidad2 += stock.ingreso 
               @cantidad3 += stock.salida  
@@ -260,7 +264,22 @@ class StocksController < ApplicationController
 
               table_content << row
               nroitem=nroitem + 1
-              end 
+              puts "ssss--------------------"
+              puts  stock.id 
+              puts  stock.product.code
+              puts  stock.product.name
+            
+              puts  stock.product.ubicacion 
+              puts  stock.price.round(3)
+              puts  stock.stock_inicial.round(2)
+              puts  stock.ingreso.round(2)
+              puts  stock.salida.round(2)
+              puts  saldo.round(2)
+              puts @total.round(2)
+                
+
+
+       end 
 
 
 
@@ -340,11 +359,13 @@ class StocksController < ApplicationController
     @estado = params[:estado]
     
     @namecategoria= @company.get_categoria_name(@categoria)   
+    puts "categoria..."
+    puts @categoria 
 
-    if @categoria != 4         
+    if @categoria != "3"         
         @movements = @company.get_stocks_inventarios2(@fecha1,@fecha2,@categoria,@estado)   
     else
-        @movements = @company.get_stocks_inventarios_market(@fecha1,@fecha2,@categoria,@estado)   
+        @movements = @company.get_stocks_inventarios_market(@fecha1,@fecha2,@categoria,@estado,"1")   
     
      end 
 
