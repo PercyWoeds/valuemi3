@@ -21,7 +21,6 @@ belongs_to :product
   TABLE_HEADERS2 = ["ITEM",
                      "CODE ",
                      "NOMBRE",
-                     "UND",
                      "COSTO S/.",
                      "INICIAL UND",                     
                      "INGRESO UND ",

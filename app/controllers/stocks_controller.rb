@@ -237,7 +237,6 @@ class StocksController < ApplicationController
               row << nroitem.to_s
               row << stock.product.code
               row << stock.product.name.to_s 
-              row << stock.product.unidad.descrip
               row << sprintf("%.3f",stock.price.round(3).to_s)
               row << sprintf("%.2f",stock.stock_inicial.round(2).to_s)         
               row << sprintf("%.2f",stock.ingreso.round(2).to_s)
