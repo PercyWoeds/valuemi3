@@ -1,0 +1,267 @@
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %> &raquo;
+  <%= link_to "purchaseorders", "/companies/facturas/#{@company.id}" %>
+</div>
+
+<h3>
+  <%= image_tag("invoice_48.png", :class => "vmiddle") %>
+  Nuevo Cancelacion
+</h3>
+
+<p>
+  Para crear una nueva orden de compra, por favor llenar el siguiente formulario. Los campos marcados con <strong>*</strong> son obligatorios
+  
+</p>
+
+
+<% if @customer_payment.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@customer_payment.errors.count, "error") %> prohibited this customer payment from being saved:</h2>
+
+    <ul>
+    <% @customer_payment.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+  <%= hr() %>
+
+<div >
+  
+    <h4>
+       Informacion de cancelacion 
+    </h4>
+
+    <div class="field">
+      <label for="ac_supplier" class="bold"> Codigo Cuenta Cliente *</label><br />
+      
+      <%= @customer_name %>
+      <%= @customer_code %>
+
+
+      
+          </div>
+    <div>
+      <p><h3>  
+   <strong>     Importe a  cancelar :</strong> </h3>
+      </p>
+     <h3> <%= @customer_payment.total.round(2) %></h3>
+    </div>
+   
+
+
+   <%= hr() %>
+
+    <p class="bold big">
+      Detalle de facturas pendientes 
+    </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th class="small bordered_bottom bordered_right">
+          Tip.Doc.
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          Fec.Emision
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          Fec.Vmto
+        </th>        
+        <th class="small bordered_bottom bordered_right">
+          Numero
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          Moneda
+        </th>        
+        <th class="small bordered_bottom bordered_right">
+          Importe
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          Retencion
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          Detraccion
+        </th>
+        
+       
+        <th class="small bordered_bottom bordered_right">
+          Saldo Pendiente
+        </th>
+       
+        <th class="small bordered_bottom bordered_right">
+          Importe    Abonar 
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          Seleccionar
+        </th>
+        
+      </tr>
+    </thead>
+    <tbody>
+      
+       
+ 
+
+
+
+ <%= form_tag  edit_multiple_customer_payments_path(id: @customer_payment.id), method: :post  do %>
+
+
+      <% for item in @detalleitems %>
+
+      <table> 
+        <tbody>
+
+       <tr>
+          <td class="small bordered_bottom bordered_right" style="width: 50px;">
+            <%= item.document.description  %>
+          </td>
+      
+          <td class="small bordered_bottom bordered_right" style="width: 50px;">
+            <%= item.fecha.strftime("%d/%m/%Y") %>
+          </td>
+       
+
+          <td class="small bordered_bottom bordered_right" style="width: 50px;">
+            <%= item.fecha2.strftime("%d/%m/%Y") %>
+          </td>
+          <td class="small bordered_bottom bordered_right" style="width: 50px;">
+            <%= item.code  %>
+          </td>
+          <td class="small bordered_bottom bordered_right" style="width: 50px;">
+            <%= item.get_moneda %>
+          </td>
+
+
+          <% if item.document_id == 2 %>
+         
+                <td class="small bordered_bottom bordered_right" style="width: 50px;">
+                  <%= item.total.round(2) * -1 %>
+                </td>
+                <td class="small bordered_bottom bordered_right" style="width: 50px;">
+                  <%= item.detraccion_importe.round(2)  * -1%>
+                </td>
+                <td class="small bordered_bottom bordered_right" style="width: 50px;">
+                  <%= item.retencion_importe.round(2)  * -1%>
+                </td>
+                <td class="small bordered_bottom bordered_right" style="width: 50px;">
+
+                  <%= item.balance.round(2)  * -1 %>
+                </td>
+               <td>
+                <% rating_id = item.id  %>
+
+                 <% course = [] %>
+
+               <% field_value = course[item.balance.round(2)] %>
+                 <% importe_nc = item.balance.round(2)*-1 %>
+                 <%= text_field_tag("course[#{item.id}]", field_value, value:  importe_nc.to_s) %>
+
+              </td>
+          
+         <% else %>
+
+                <td class="small bordered_bottom bordered_right" style="width: 50px;">
+                  <%= item.total.round(2)  %>
+                </td>
+                <td class="small bordered_bottom bordered_right" style="width: 50px;">
+                  <%= item.detraccion_importe.round(2) %>
+                </td>
+                <td class="small bordered_bottom bordered_right" style="width: 50px;">
+                  <%= item.retencion_importe.round(2) %>
+                </td>
+                <td class="small bordered_bottom bordered_right" style="width: 50px;">
+
+                  <%= item.balance.round(2)  %>
+                 </td>
+          
+               <td>
+                <% rating_id = item.id  %>
+                <% course = [] %>
+
+               <% field_value = course[item.balance.round(2)] %>
+                 <%= text_field_tag("course[#{item.id}]", field_value, value: item.balance.round(2).to_s) %>
+
+
+         <% end %>
+          
+               <td class="bordered_right bordered_bottom right">
+            <%= check_box_tag "products_ids[]", item.id  ,checked = false   %> 
+
+          </td>          
+
+        </tr>
+
+
+    </tbody>
+  </table>
+
+
+        <%end%>
+
+
+   <%=  submit_tag "Grabar detalle "%>
+
+  
+
+
+        
+    <% end %>
+
+
+
+
+    <%= hr() %>
+    <div class="field">
+     <strong>Observaciones:</strong><br />
+     <input type="text_area" name="comments" value="" style = "width: 80px" >         
+    </div> 
+    <%= hr() %>
+  
+   
+</div>
+
+
+<%= br() %>
+<br />
+
+<%= render 'layouts/autocomplete' %>
+
+
+<%= hr() %>
+
+<div class="button">
+  <%= link_to 'Regresar', "/companies/facturas/#{@company.id}" %>
+</div>
+
+<script type="text/javascript"> 
+
+$('#check_all').change(function() {
+  var is_checked = this.checked;
+  $('.selectable-checkbox').each(function() {
+    this.checked = is_checked;
+  });
+});
+
+
+function totalIt {
+
+  
+  var input = document.getElementsByName("product");
+  var total = 0;
+  for (var i = 0; i < input.length; i++) {
+    if (input[i].checked) {
+      total += parseFloat(input[i].value);
+    }
+  }
+  document.getElementsByName("total")[0].value = "$" + total.toFixed(2);
+}
+
+
+
+
+</script>

@@ -1,0 +1,25 @@
+
+
+
+
+<% if params[:field].blank? || params[:field] == "" %>
+<p>
+
+    <%= f.label :code, "Nro.Factura *", :class => "bold" %>
+    <%= f.date_field :code %>
+
+  
+    <%= f.label :balance, "Importe a Cancelar *", :class => "bold" %>
+    <%= f.number_field :balance ,:step => 0.01 %><br />
+  
+   
+
+   
+
+    
+    
+</p>
+
+
+<% end %>
+

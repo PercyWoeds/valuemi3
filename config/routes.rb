@@ -178,11 +178,12 @@ require 'sidekiq/web'
     collection { get :rpt_purchase2 }
 
     collection {get :rpt_facturas1_all }
+    collection {get :newpayment  }
 
-   collection do 
-      put :editmultiple      
-      put :updatemultiple      
-    end 
+    collection { post :discontinue2  }
+
+
+  
         
   end   
     
@@ -445,9 +446,29 @@ end
   resources :loans do
       resources :loan_details, except: [:index,:show], controller: "loans/loan_details"
   end 
- 
   resources :customer_payments do 
+
+
     collection { get :rpt_ccobrar12}
+
+    collection do 
+                  get :newpayment 
+                end
+
+    collection { post :discontinue }
+     
+    collection { post :edit_multiple }
+    collection { post :discontinue3  }
+
+        collection do
+          get :edit_multiple
+          put :update_multiple
+
+        end
+
+
+   
+    
   end 
  
   resources :payrolls do   

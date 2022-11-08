@@ -31,8 +31,17 @@
             <%= link_to customerpayment.code, customerpayment, :title => "Ir a factura" %>
           </td>
           <td class="bordered_right bordered_bottom ">
-            <%=  customerpayment.get_cliente_customer_payment(customerpayment.id) %>            
+            <%if customerpayment.customer_id.nil? %>
+            <%=  customerpayment.get_cliente_customer_payment(customerpayment.id) %>   
+
+            <% else %>
+              <%=  customerpayment.customer.name  %>   
+
+
+            <% end %> 
+
           </td>
+
 
           <td class="bordered_right bordered_bottom right">
             <%= money(customerpayment.total) %>
@@ -46,17 +55,12 @@
           <td class="bordered_right bordered_bottom">
             <%= link_to "Ver", customerpayment %>
           </td>
-
-         <% if @current_user.email== "percywoeds@gmail.com" %>
-
-
-              <td class="bordered_right bordered_bottom">  
-                
-              <%= link_to 'Eliminar', customerpayment, :data=> {:confirm => 'Esta seguro ?'}, :method => :delete  %>           
-                      
-              </td>
-
-         <% end %>
+          <td class="bordered_right bordered_bottom">  
+              <%if @current_user.email == 'percywoeds@gmail.com' %>
+            
+          <%= link_to 'Eliminar', customerpayment, :data=> {:confirm => 'Esta seguro ?'}, :method => :delete  %>           
+              <% end %>    
+          </td>
         </tr>
       <% end %>
     </tbody>

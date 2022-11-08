@@ -130,6 +130,17 @@ class Factura < ActiveRecord::Base
       end 
  end 
 
+  def get_moneda
+
+     if self.moneda_id == 1
+      return "USD"
+     else
+      return "S/."
+     end 
+     
+   end        
+   
+
  def   self.to_csv(result)
     unless result.nil?
       CSV.generate do |csv|

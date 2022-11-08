@@ -13,14 +13,6 @@
 </h1>
 
 
- 
-<div class="button">
-  <%= link_to 'Nueva Cancelacion', "/customer_payments/new/#{@company.id}" %>
-  <%= link_to 'Export Concar', "/customer_payments/generar1/#{@company.id}" %>
-</div>
-
-
-  
 
 <div class="small">
   <form method="get" action="/companies/customer_payments/<%= @company.id %>">
@@ -31,14 +23,16 @@
   </form>
 </div>
 
-
+  
+<div class="button">
+  <%= link_to 'Nueva Cancelacion', "/customer_payments/new/#{@company.id}" %>
+  <%= link_to 'Export Concar', "/customer_payments/generar1/#{@company.id}" %>
+</div>
 
 <br />
 <%= render "customer_payments/list" %>
 
 <br />
-
-
 
 
 <%= will_paginate @customerpayments %>

@@ -20,12 +20,12 @@
       
         <div class="field">
           <%= f.label :fecha1, "Fecha*", :class => "bold" %><br />
-          <%= f.date_field :fecha1, value:  Date.today  %>
+          <%= f.date_field :fecha1  ,:class => "input.tf_short" %>
         </div>
 
         </td>
         <td>  
-        
+      
     
   
     <div class="field">
@@ -47,10 +47,9 @@
 
     <div class="field">
       <%= f.label :total, "Importe Liquidacion ", :class => "bold" %><br />
-      <%= f.text_field :total %>
+      <%= f.number_field :total ,:step => :any %> 
     </div>
-  
-     <div class="field">
+    <div class="field">
       <%= f.label :tipo_cambio, "Tipo Cambio: ", :class => "bold" %><br />
       <%= f.number_field :tipo_cambio ,:step => :any  %> 
     </div>
@@ -60,8 +59,28 @@
     </div>
 
   
+    <%= hr() %>
+
+
+      <label for="ac_customer" class="bold">Cliente*</label><br />
+
+      <input type="text" name="ac_customer" id="ac_customer" value="<% if @ac_customer %><%= @ac_customer %><% end %>" />
+      
+
+      <div class="small">
+        Ingrese una termino de busqueda para encontrar un cliente.
+      </div>
+      <br />
+
+      <div class="small">
+        <strong>Seleccionar cliente:</strong>
+        <span id="selected_customer"><% if @ac_customer %><%= @ac_customer %><% else %><!-- i --><% end %></span>
+      </div>
+     
+
 
     <%= hr() %>
+
     
     <div class="field" id="list_items">
       <p class="bold big">Documentos a cancelar :</p>
@@ -71,7 +90,7 @@
       
     <div class="field">
       <%= f.label :descrip %><br />
-      <%= f.text_area :descrip %>
+      <%= f.text_field :descrip %>
     </div>  
 
 
@@ -93,11 +112,14 @@
     </div>
   
     <%= hr() %>
+
+
   
   
     <div class="actions">
       <input type="hidden" name="items" id="items" value="<% if @customers_lines %><%= @customers_lines %><% end %>" />
-  
+      <%= f.hidden_field :customer_id, :id => "ac_customer_id" %>
+
       <%= f.hidden_field :company_id %>
 
       <%= f.submit %>
@@ -111,70 +133,11 @@
 </div>
 
 
-<div class="mid_box">
-  <h5>
-    Agregar informacion Cliente
-  </h5>
-  
-
-  <form method="get" action="/purchases" onsubmit="addItemToCustomerPayment(); return false;">     <input type="hidden" name="ac_item_id" id="ac_item_id" value="" />  
-
-    <strong>Documento :</strong><br />
-    <input type="text" name="ac_item" id="ac_item" value="" />
-    <div class="small">
-      Ingrese un termino de busqueda para encontrar un documento 
-    </div>
-    <br />  
-    <div>
-      <strong>Saldo Original:</strong><br />
-      <span id="ac_item_total2">0.00</span>
-    </div>
-
-    <div >
-      <strong>Total:</strong><br />    
-    <input type="text" name="ac_item_total" id="ac_item_total" value="0.00" class="tf_short" />
-    </div>
-
-    <div >
-     <strong>Factory :</strong><br />
-    <input type="text" name="ac_item_factory" id="ac_item_factory" value="0.00" class="tf_short"/>
-    </div>
-    <div >
-     <strong>Compensación :</strong><br />
-    <input type="text" name="ac_item_compen" id="ac_item_compen" value="0.00" class="tf_short"/>
-    </div>
-    
-    <div >    
-     <strong>Ajuste :</strong><br />
-    <input type="text" name="ac_item_ajuste" id="ac_item_ajuste" value="0.00" class="tf_short"/>
-    </div>
-
-
-    <div class="small">
-     Cantidad del producto para agregar una guia.
-    </div>
-    <br />
-
-    
-    <br />
-    <input type="submit" value="Agregar item a Factura" />
-      
-
-  </form>
-      <%= hr() %>
-
-
-  
-</div>
-
-<%= br() %>
-<br />
-
-
 
 <%= render 'layouts/autocomplete' %>
 
 <script type="text/javascript">
+
   $(document).ready(function() {
 
     $("#ac_item").autocomplete("/customer_payments/ac_documentos/<%= @company.id %>", {
@@ -213,8 +176,8 @@
       $("#selected_seller").html(data[0]);
     });    
     
-
-     $("#customer_payment_total").bind("keyup", function() {
+    
+    $("#customer_payment_total").bind("keyup", function() {
       updateItemTotalCP1();
     });
     
@@ -223,26 +186,14 @@
     });
     
   
-  
-    $("#ac_item_total").bind("keyup", function() {
-      updateItemTotalCP();
-    });
-    
-    $("#ac_item_factory").bind("keyup", function() {
-      updateItemTotalCP();
-    });
-    
-    $("#ac_item_ajuste").bind("keyup", function() {
-      updateItemTotalCP();
-    });
     
     <% if @customers_lines %>
     alert 'holas customers_lines';
       listItemsCustomerPayment();
     <% end %>
+
+
   });
-
-
 
 
 
@@ -264,6 +215,7 @@
               
       }
     }
+
 
 
 

@@ -7105,6 +7105,37 @@ def build_pdf_header9(pdf)
   end
 
 
+
+def newpayment
+    
+    @company = Company.find(1)
+
+    @customer_payment  = CustomerPayment.find(params[:customerpayment_id]) 
+  
+    @customer = Customer.find(@customer_payment.customer_id) 
+    
+    @customer_name = @customer.name
+  
+    @customer_code = @customer.account 
+    
+    zero = 0.00
+
+    @detalleitems =  Factura.where("processed=? and customer_id =? and ROUND( cast(balance as NUMERIC) , 2 ) > ? ","1",@customer.id,zero).order(:fecha)
+
+    @customer_payment_detail = CustomerPaymentDetail.new
+
+  
+  end 
+
+
+def discontinue2
+  @products = Factura.find(params[:product_ids])
+end
+
+
+
+
+
   private
   def factura_params
     params.require(:factura).permit(:company_id,:location_id,:division_id,:customer_id,

@@ -548,8 +548,19 @@ end
 
     @customerpayment[:code] = @customerpayment.get_maximo("1")
 
-    @customerpayment[:importe_cambio] = @customerpayment[:total]  
-    @customerpayment[:total] = @customerpayment[:tipo_cambio] *  @customerpayment[:importe_cambio]  
+
+
+     @customerpayment[:importe_cambio] = params[:customer_payment][:total]  
+    @customerpayment[:total] = params[:customer_payment][:tipo_cambio].to_f  *  @customerpayment[:importe_cambio]
+     @customerpayment[:tipo_cambio] = params[:customer_payment][:tipo_cambio] 
+   
+
+    puts "ssss"
+    puts params[:customer_payment][:tipo_cambio]
+    puts @customerpayment[:importe_cambio]
+
+
+
 
     respond_to do |format|
       if @customerpayment.save
@@ -2999,6 +3010,69 @@ end
 
 
 
+
+def edit_multiple
+
+
+  @customerpayment_id  = params[:id]
+  
+  @facturas  = Factura.find(params[:products_ids])
+
+  @seleccion = params[:course]
+
+  detalle  =  params[:course]
+
+
+  puts "customer payment "
+  
+  puts @customerpayment_id 
+
+ for factura in @facturas 
+
+
+    puts "factura id "
+    puts factura.id 
+
+    puts "==>> "
+
+    puts "detalle factura importe......"
+
+    a = detalle["#{factura.id}"]
+
+    puts a  
+
+     @customer_payment_detail  = CustomerPaymentDetail.new(total: a , descrip: "Actualizacion.", factura_id: factura.id , 
+      customer_payment_id:  @customerpayment_id , factory: 0.0, ajuste: 0.0, compen: 0.0)
+
+    
+           if  @customer_payment_detail.save
+
+              if a.to_f > 0 
+
+                 factura_1 = Factura.find(factura.id)
+                 factura_1.balance = factura_1.balance  - a.to_f   
+                 factura_1.update_attributes(balance: factura_1.balance ) 
+                 
+              else
+                 factura_1 = Factura.find(factura.id)
+                 factura_1.balance = factura_1.balance  + a.to_f   
+                 factura_1.update_attributes(balance: factura_1.balance ) 
+                 
+              end 
+
+            puts factura.id
+            puts "==>> "
+            puts a 
+            puts factura_1.balance 
+
+          end 
+
+
+  end 
+
+
+
+end
 
 
   
