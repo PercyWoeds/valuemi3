@@ -22,13 +22,12 @@ belongs_to :product
                      "CODE ",
                      "NOMBRE",
                      "UND",
-                     "UBICA",
-                     "COSTO",
-                     "INICIAL",                     
-                     "INGRESO",
-                     "SALIDA",
-                     "STOCK  ",
-                     "TOTAL  "  ]
+                     "COSTO S/.",
+                     "INICIAL UND",                     
+                     "INGRESO UND ",
+                     "SALIDA UND ",
+                     "STOCK  UND  ",
+                     "TOTAL S/. "  ]
 
   TABLE_HEADERS41 = ["",
                      "", 

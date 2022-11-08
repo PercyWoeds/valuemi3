@@ -238,8 +238,6 @@ class StocksController < ApplicationController
               row << stock.product.code
               row << stock.product.name.to_s 
               row << stock.product.unidad.descrip
-              row << stock.product.ubicacion.to_s
-
               row << sprintf("%.3f",stock.price.round(3).to_s)
               row << sprintf("%.2f",stock.stock_inicial.round(2).to_s)         
               row << sprintf("%.2f",stock.ingreso.round(2).to_s)
@@ -288,8 +286,7 @@ class StocksController < ApplicationController
             row <<""          
             row << "TOTALES GENERAL"
             row << ""            
-            row << ""            
-            row <<""          
+            row << ""                   
             row << sprintf("%.2f",@cantidad1.round(2).to_s)
             row << sprintf("%.2f",@cantidad2.round(2).to_s)                                  
             row << sprintf("%.2f",@cantidad3.round(2).to_s)

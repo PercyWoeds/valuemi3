@@ -552,7 +552,7 @@ def reportes14
           begin 
           redirect_to :action => "rpt_ccobrar2_pdf", :format => "pdf", :fecha1 => params[:fecha1], :fecha2 => params[:fecha2], :customer_id => params[:customer_id] 
           end 
-      when "To Excel" then render xlsx: 'rpt_ccobrar2_xls'
+      when "To Excel" then render xlsx: 'rpt_ccobrar2b_xls'
       else render action: "index"
     end
   

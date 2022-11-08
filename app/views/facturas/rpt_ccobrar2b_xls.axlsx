@@ -1,0 +1,455 @@
+$LOAD_PATH.unshift "#{File.dirname(__FILE__)}/../lib"
+
+require 'axlsx'
+
+p = Axlsx::Package.new
+wb = xlsx_package.workbook
+wb.styles do |s|
+    date = s.add_style(:format_code => "yyyy-mm-dd", :border => Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :right},:sz => 8)
+    date0 = s.add_style(:format_code => "yyyy-mm-dd",:alignment=>{:horizontal => :right},:sz => 8)
+    
+    padded = s.add_style(:format_code => "00#", :border => Axlsx::STYLE_THIN_BORDER)
+    percent = s.add_style(:format_code => '#.##0.00', :border => Axlsx::STYLE_THIN_BORDER)
+    
+    title = s.add_style(:bg_color => "ddecfd", :fg_color=>"#FF000000",:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :center},:sz => 8)
+    title1 = s.add_style(:bg_color => "95c4f9", :fg_color=>"#FF000000",:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :center})
+    
+    cadena =s.add_style(:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :left},:sz => 8 )
+    cadena0 =s.add_style(:alignment=>{:horizontal => :left},:sz => 8 )  
+    currency = wb.styles.add_style(:format_code=>"#,##0.#0;[Red]-#,##0.#0",
+                              :border=>Axlsx::STYLE_THIN_BORDER,:sz => 8)
+    red_negative = wb.styles.add_style :num_fmt => 8
+    comma = wb.styles.add_style :num_fmt => 3
+    super_funk = wb.styles.add_style :format_code => '[Green]#'
+        
+ logo = "valuemi_logo2.jpg"
+
+    
+    wb.add_worksheet(name: "Pendientes Pago") do |sheet|
+
+
+
+     img = File.expand_path("#{Dir.pwd}/public/images/#{logo}")
+        sheet.add_image(:image_src => img, :noMove => true) do |image|
+            image.width = 300
+            image.height = 100
+            image.start_at 35, 0 
+        end
+
+            sheet.add_row [@company.name],:style =>  [cadena0]
+            sheet.add_row [@company.address1 + " "+   @company.address2 + " "+ @company.city + " "+ @company.state],:style =>  [cadena0]
+            sheet.add_row [@company.ruc ] ,:style =>  [cadena0]
+            sheet.add_row [""]
+
+            lcTexto = "Reporte de Pendientes de pago ." 
+            lcTexto2 = "Desde "+ @fecha1.to_s +  " Hasta : "+ @fecha2.to_s
+
+            sheet.add_row ["Lima, " ,Time.now ] , :style =>[cadena0,date0 ]
+            sheet.add_row [lcTexto] , :style =>[cadena0  ]
+            sheet.add_row [lcTexto2] , :style =>[cadena0  ]
+             sheet.add_row [""]
+
+            sheet.merge_cells('A8:C8')
+    
+
+    
+            sheet.merge_cells('A8:C8')
+    
+            sheet.column_widths 10   
+    
+    
+    
+    sheet.add_row ["TD",
+                      "Documento",
+                     "Fec.Emision",
+                     "Fec.Vmto",
+                     "Dias",
+                     "Dias Vencido",
+                     "C L I E N T E ",
+                     "Pre.Venta.",
+                     "Cantidad.",
+                     "Moneda ",
+                     "Imp. Soles",
+                     "Imp. Dolares",
+                     "Soles",
+                     "Dolares    ",
+                     "Detraccion ",
+                     "Vencido."], :style => title 
+    
+
+    valor=0
+    @total1 = 0
+    @total2 = 0
+    @total3 = 0
+    
+
+     nroitem = 1
+      lcmonedasoles   = 2
+      lcmonedadolares = 1
+  
+      lcDoc='FT'    
+      
+      lcCliente = @facturas_rpt.first.customer_id 
+      
+      @total_original_soles =0
+      @total_original_dolares =0
+      @total_cliente_soles = 0
+      @total_cliente_dolar = 0
+      
+      @totalvencido_soles = 0
+      @totalvencido_dolar = 0
+      total_soles = 0
+      total_dolares = 0 
+      precio_ultimo = 0
+
+
+   @facturas_rpt.each do |product|
+
+
+    if product.balance.round(2) > 0.00
+           
+          if lcCliente == product.customer_id
+
+            fechas2 = product.fecha2 
+            dias = (product.fecha2.to_date - product.fecha.to_date).to_i           
+            dias_vencido = (product.fecha2.to_date - Date.today).to_i 
+            
+            if product.get_cantidad > 0
+                precio_ultimo = product.total / product.get_cantidad
+            else
+                precio_ultimo = 0 
+            end 
+
+            if product.moneda_id == 1 
+                
+                if product.document_id   == 2
+                  lcTotalDolar = 0.00
+                  lcTotalSoles = product.total*-1
+
+                  lcBalanceDolar = 0.00
+                  lcBalanceSoles = product.balance*-1 
+
+                    if(product.fecha2 < Date.today)   
+                      @totalvencido_dolar += product.balance*-1
+                    end  
+                    
+                else  
+
+                  lcTotalDolar = 0.00
+                  lcTotalSoles = product.total 
+
+                  lcBalanceDolar = 0.00
+                  lcBalanceSoles = product.balance
+                  
+                  if(product.fecha2 < Date.today)   
+                      @totalvencido_dolar += product.balance
+                  end  
+                end  
+
+                @total_cliente_dolar +=product.balance
+
+            else
+                if product.document_id == 2
+
+                  lcTotalDolar = product.total*-1
+                  lcTotalSoles = 0 
+
+                  lcBalanceDolar = product.balance*-1
+                  lcBalanceSoles = 0 
+
+                  if(product.fecha2 < Date.today)   
+                      @totalvencido_soles += product.balance*-1
+                  end  
+                  
+                else          
+
+                  lcTotalDolar = product.total
+                  lcTotalSoles = 0 
+
+                  lcBalanceDolar = product.balance
+                  lcBalanceSoles = 0 
+                  if(product.fecha2 < Date.today)   
+                      @totalvencido_soles += product.balance
+                  end  
+                    
+                end 
+                
+                if product.document_id == 2
+                    @total_cliente_soles  +=product.balance*-1
+                else
+                    @total_cliente_soles  +=product.balance
+                end 
+                
+            end
+            
+            
+            if product.detraccion == nil
+            
+              lcDetraccion0 = 0.00
+            else  
+              lcDetraccion0 = product.detraccion 
+         
+            end
+            
+
+            sheet.add_row [
+            product.document.descripshort,
+            product.code,
+            product.fecha,
+            product.fecha2,
+            dias,
+            dias_vencido,
+            product.customer.name.truncate(35, omission: ' '),
+            precio_ultimo,
+            product.get_cantidad,
+            product.moneda.symbol ,
+            lcTotalDolar ,
+            lcTotalSoles,
+            lcBalanceDolar ,
+            lcBalanceSoles,
+            lcDetraccion0,
+            product.get_vencido ], 
+            :style => [cadena,cadena,date,date,cadena,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,cadena]
+
+
+            nroitem = nroitem + 1
+
+          else
+
+
+            totals = []            
+            total_cliente_soles   = 0
+            total_cliente_soles   = @company.get_pendientes_day_customer(@fecha1,@fecha2, lcCliente, lcmonedadolares)
+            total_cliente_dolares = 0
+            total_cliente_dolares = @company.get_pendientes_day_customer(@fecha1,@fecha2, lcCliente, lcmonedasoles)
+            
+            
+          
+            sheet.add_row [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "TOTALES POR CLIENTE=>",
+            "",
+            "",
+            "",
+            "",
+            "",
+            @total_cliente_soles ,
+            @total_cliente_dolar,"",""], 
+           :style => [cadena,cadena,date,date,cadena,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,cadena]
+
+             sheet.add_row [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            " ",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "" ,
+            "",""], 
+           :style => [cadena,cadena,date,date,cadena,cadena,currency,currency,currency,currency,currency,currency,currency,currency,currency,cadena]
+
+            
+            total_soles += @total_cliente_soles
+            total_dolares += @total_cliente_dolar 
+            
+            @total_cliente_soles = 0
+            @total_cliente_dolar = 0    
+
+            lcCliente = product.customer_id
+
+            
+            if product.get_cantidad > 0
+                precio_ultimo = product.total / product.get_cantidad
+            else
+                precio_ultimo = 0 
+            end 
+           
+
+            if product.moneda_id == 1 
+                
+                if product.document_id   == 2
+                
+                  lcTotalDolar = 0.00
+                  lcTotalSoles = product.total*-1
+
+                  lcBalanceDolar = 0.00
+                  lcBalanceSoles = product.balance*-1 
+
+                  if(product.fecha2 < Date.today)   
+                      @totalvencido_dolar += product.balance*-1
+                  end  
+                    
+                else  
+
+                  lcTotalDolar = 0.00
+                  lcTotalSoles = product.total 
+
+                  lcBalanceDolar = 0.00
+                  lcBalanceSoles = product.balance
+                  
+                  if(product.fecha2 < Date.today)   
+                      @totalvencido_dolar += product.balance
+                  end  
+                end  
+
+                @total_cliente_dolar +=product.balance
+
+
+            else
+
+                if product.document_id == 2
+
+                  lcTotalDolar = product.total*-1
+                  lcTotalSoles = 0 
+
+                  lcBalanceDolar = product.balance*-1
+                  lcBalanceSoles = 0 
+
+                  if(product.fecha2 < Date.today)   
+                      @totalvencido_soles += product.balance*-1
+                  end  
+                  
+                else          
+
+
+                  lcTotalDolar = product.total
+                  lcTotalSoles = 0 
+
+                  lcBalanceDolar = product.balance
+                  lcBalanceSoles = 0 
+
+                  if(product.fecha2 < Date.today)   
+                      @totalvencido_soles += product.balance
+                  end  
+                    
+                end 
+                
+                if product.document_id == 2
+                    @total_cliente_soles  +=product.balance*-1
+                else
+                    @total_cliente_soles  +=product.balance
+                end 
+                
+            end
+            
+            
+            if product.detraccion == nil
+
+              lcDetraccion0 = 0.00
+            else  
+              lcDetraccion0 = product.detraccion
+        
+            end
+                
+
+            sheet.add_row [
+            product.document.descripshort,
+            product.code,
+            product.fecha,
+            product.fecha2,
+            dias,
+            dias_vencido,
+            product.customer.name.truncate(35, omission: ' '),
+            precio_ultimo,
+            product.get_cantidad,
+            product.moneda.symbol ,
+            lcTotalDolar ,
+            lcTotalSoles,
+            lcBalanceDolar ,
+            lcBalanceSoles , 
+            lcDetraccion0,
+            product.get_vencido ], 
+           :style => [cadena,cadena,date,date,cadena,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,cadena]
+
+
+
+
+          end 
+          
+        end 
+          
+        end
+
+            lcCliente = @facturas_rpt.last.customer_id 
+            totals = []            
+            total_cliente = 0
+
+            total_cliente_soles   = 0
+            total_cliente_soles   = @company.get_pendientes_day_customer(@fecha1,@fecha2, lcCliente, lcmonedadolares)
+            total_cliente_dolares = 0
+            total_cliente_dolares = @company.get_pendientes_day_customer(@fecha1,@fecha2, lcCliente, lcmonedasoles)
+            
+            
+            sheet.add_row [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "TOTALES POR CLIENTE=>",
+            "",
+            "",
+            "",
+            "",
+            "",
+            @total_cliente_soles ,
+            @total_cliente_dolar,"",""], 
+           :style => [cadena,cadena,date,date,cadena,cadena,currency,currency,currency,currency,currency,currency,currency,currency,currency,cadena]
+
+            
+         total_soles   += @total_cliente_soles
+         total_dolares += @total_cliente_dolar
+         
+         @total_cliente_soles = 0
+         @total_cliente_dolar = 0    
+          
+         
+         
+         @totalvencido_soles = 0
+         @totalvencido_dolar = 0    
+        
+         if $lcxCliente == "0" 
+
+            sheet.add_row [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "TOTALES  =>",
+            "",
+            "",
+            "",
+            "",
+            "",
+            total_soles ,
+            total_dolares,"",""], 
+            :style => [cadena,cadena,date,date,cadena,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,cadena]
+
+
+        
+          end 
+
+
+
+    end 
+
+
+   
+end
+
+
+    

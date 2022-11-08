@@ -139,7 +139,7 @@ class Factura < ActiveRecord::Base
      end 
      
    end        
-   
+    
 
  def   self.to_csv(result)
     unless result.nil?

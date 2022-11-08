@@ -372,7 +372,7 @@ class CustomerPaymentsController < ApplicationController
   
   # Autocomplete for products
   def ac_customers
-    @customer = customer.where(["company_id = ? AND (ruc LIKE ? OR name LIKE ?)", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])   
+    @customer = customer.where(["company_id = ? AND (ruc iLIKE ? OR name iLIKE ?)", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])   
     render :layout => false
   end
   
