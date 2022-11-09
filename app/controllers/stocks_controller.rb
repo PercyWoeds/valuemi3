@@ -284,8 +284,7 @@ class StocksController < ApplicationController
             row << ""
             row <<""          
             row << "TOTALES GENERAL"
-            row << ""            
-            row << ""                   
+            row << ""                             
             row << sprintf("%.2f",@cantidad1.round(2).to_s)
             row << sprintf("%.2f",@cantidad2.round(2).to_s)                                  
             row << sprintf("%.2f",@cantidad3.round(2).to_s)
