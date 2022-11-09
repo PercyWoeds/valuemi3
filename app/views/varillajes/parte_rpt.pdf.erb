@@ -288,11 +288,11 @@
      <% venta_dsctos = venta_descuentos_facturas + venta_descuentos_facturas_efe %>
       <% venta_2  += 0   %>
      
-     <% venta_5 =  venta_2 + venta_3 + venta_4 + venta_9  +venta_17 + venta_18   + venta_4_1 + venta_19 + venta_20 + venta_10 + venta_faltante + venta_sobrante   %>
+     <% venta_5 =  venta_2 + venta_3 + venta_4 + venta_9  +venta_17 + venta_18   + venta_4_1 + venta_19 + venta_20 + venta_10  %>
      
      <% venta_8 =  venta_1 + venta_15 + venta_16 - venta_12 + venta_descuentos_facturas  +venta_descuentos_facturas_efe  + otros_ingresos%>
      
-     <% venta_6 =  venta_5 - venta_8  - venta_7 - venta_dsctos - venta_faltante    %>
+     <% venta_6 =  venta_5 - venta_8  - venta_7 - venta_dsctos    %>
      
      <% if venta_6 < 0 %>
      
@@ -415,7 +415,7 @@
             <td width= "25%" align = "right" >  <%=    sprintf("%.2f",venta_15 + venta_16 ) %>        </td>
             
             <td width = "25%" align ="left">  &#9475;   FALTANTES    :  </td>
-            <td width = "25%" align ="right"> <%=    sprintf("%.2f",venta_faltante)  %> </td>
+            <td width = "25%" align ="right">  </td>
       
             
             </tr>
@@ -427,7 +427,7 @@
 
             
             <td width = "25%" align ="left">  &#9475; SOBRANTES </td>
-            <td width = "25%" align ="right">  <%=    sprintf("%.2f",venta_sobrante )  %> </td>
+            <td width = "25%" align ="right">  </td>
         
             </tr>
       
@@ -468,11 +468,17 @@
   <tr bgcolor="#B4D7F7">
     <td width="100%"> FALTANTE/SOBRANTE  </td>
   </tr>
+
+
   </table>
-  
+    
     <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
-    
-    
+     <td width = "25%" align ="left">  &#9475;   FALTANTES    :  </td>
+            <td width = "25%" align ="right"> <%=    sprintf("%.2f",venta_faltante)  %> </td>
+      
+     <td width = "25%" align ="left">  &#9475; SOBRANTES </td>
+            <td width = "25%" align ="right">  <%=    sprintf("%.2f",venta_sobrante )  %> </td>
+        
     
     </table>    
   <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
@@ -709,7 +715,7 @@
   
   </table>
   
-  <% diferencia = total_bancos_soles1.round(2) + total_gastos.round(2) -  venta_2.round(2) - venta_10.round(2) - venta_sobrante  %>
+  <% diferencia = total_bancos_soles1.round(2) + total_gastos.round(2) -  venta_2.round(2) - venta_10.round(2) - venta_sobrante - venta_faltante  %>
      
   <% if diferencia !=  0%>   
   <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
