@@ -2112,7 +2112,7 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
      and cod_prod <>  ? 
      and sellvales.fecha >= ? 
      and sellvales.fecha <= ?  
-     ORDER BY sellvales.fecha', "#{fecha} 00:00:00","#{fecha} 23:59:59","0983"])
+     ORDER BY sellvales.fecha', "0983","#{fecha} 00:00:00","#{fecha} 23:59:59"])
      
      
   #facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ?  and tipo = ?" , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","1" ])
@@ -2134,6 +2134,58 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by c
 
  end
 
+
+def get_ventas_market2(fecha)
+     
+     facturas = Sellvale.find_by_sql(['Select sellvales.* from sellvales    
+     INNER JOIN products ON sellvales.cod_prod = products.code 
+     WHERE  sellvales.fecha >= ? 
+     and sellvales.fecha <= ? and products_category_id  =  ? 
+     ORDER BY sellvales.fecha', "#{fecha} 00:00:00","#{fecha} 23:59:59","3"])
+     
+     
+  #facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ?  and tipo = ?" , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","1" ])
+        ret=0  
+     
+     if facturas
+         
+     
+        for detalle in facturas
+            ret += detalle.importe.to_f 
+
+
+       end 
+    end 
+
+
+   facturas = Sellvale.find_by_sql(['Select sellvales.* from sellvales    
+     INNER JOIN products ON sellvales.cod_prod = products.code 
+     WHERE  sellvales.fecha >= ? 
+     and sellvales.fecha <= ? and products_category_id  = ? 
+     ORDER BY sellvales.fecha', "#{fecha} 00:00:00","#{fecha} 23:59:59","5"])
+     
+     
+  #facturas = Sellvale.where(["fecha >= ? and fecha <= ?  and td = ?  and tipo = ?" , "#{fecha} 00:00:00","#{fecha} 23:59:59", "N","1" ])
+      
+     
+     if facturas
+         
+     
+        for detalle in facturas
+            ret += detalle.importe.to_f 
+
+
+       end 
+    end 
+
+
+
+    return ret
+
+
+
+
+ end
 
  def get_ventas_urea0(fecha)
      
