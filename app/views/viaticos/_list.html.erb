@@ -5,6 +5,11 @@
         <th class="bordered_right bordered_bottom" style="width: 100px;">
          Orden
         </th>
+<th class="bordered_right bordered_bottom" style="width: 100px;">
+          Nombre 
+        </th>
+
+
         <th class="bordered_right bordered_bottom">
           Saldo Inicial 
         </th>
@@ -38,7 +43,9 @@
           <td class="bordered_right bordered_bottom">
             <%= link_to viatico.code, viatico, :title => "Ir a factura" %>
           </td>
-          
+           <td class="small bordered_bottom bordered_right">
+            <%= viatico.caja.descrip %>
+          </td>
           <td class="small bordered_bottom bordered_right">
             <%= money(viatico.inicial) %>
           </td>
