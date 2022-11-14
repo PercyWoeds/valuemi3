@@ -715,16 +715,21 @@ columns([5]).width= 200
                 end
         
         else 
-              @viaticos = Viatico.where.(caja_id: ['1', '3']).order('fecha1 DESC').paginate(:page => params[:page])
+
+            if current_user == "market"
+
+                         @viaticos = Viatico.where(caja_id: [ '3']).order('fecha1 DESC').paginate(:page => params[:page])
+
+            else   
+              @viaticos = Viatico.where(caja_id: ['1', '3']).order('fecha1 DESC').paginate(:page => params[:page])
+
                 if params[:search]
                   @viaticos = Viatico.search(params[:search]).order('fecha1 DESC').paginate(:page => params[:page])
                 else
-                  @viaticos = Viatico.where.(caja_id: ['1', '3']).order('fecha1 DESC').paginate(:page => params[:page]) 
+                  @viaticos = Viatico.where(caja_id: ['1', '3']).order('fecha1 DESC').paginate(:page => params[:page]) 
                 end
-        
+            end 
         end 
-
-
     
     else
       errPerms()

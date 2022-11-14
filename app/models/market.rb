@@ -53,7 +53,7 @@ def get_cliente(cliente)
           return "Nombre no existe..."
           
       end 
-      
+    
   end    
     
      def process2
@@ -218,7 +218,7 @@ end
 def process3
        
 
-         @factura =   Market.select(:fecha, :serie,:numero,:ruc,:razon_social, :address,"SUM(cantidad) as quantity","SUM(importe) as total").where("fecha>=? and fecha<=? and td = ?","2022-11-01 00:00:00","2022-11-30 23:59:59","F").group(:fecha,:serie,:numero,:ruc,:razon_social, :address )
+         @factura =   Market.select(:fecha, :serie,:numero,:ruc,:razon_social, :address,"SUM(cantidad) as quantity","SUM(importe) as total").where("fecha>=? and fecha<=? and td = ?","2022-11-08 00:00:00","2022-11-30 23:59:59","F").group(:fecha,:serie,:numero,:ruc,:razon_social, :address )
     
      
 
