@@ -18,7 +18,7 @@
   <tbody>
     <% @other_incomes.each do |other_income| %>
       <tr>
-        <td><%= other_income.code %></td>
+        <td><%= other_income.fecha.strftime("%d/%m/%Y") %></td>
         <td><%= other_income.name %></td>
         <td><%= other_income.importe %></td>
         <td><%= other_income.documento %></td>
