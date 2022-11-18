@@ -639,7 +639,7 @@ end
 
           factura = Factura.find(f.factura_id)            
           #@newbalance= factura.balance + importe -ajuste +compen  cambiado x solicutd andrea 3-6-17
-          @newbalance= factura.balance + factura.importe
+          @newbalance= factura.balance + factura.total 
 
             factura.balance = @newbalance
             factura.save
