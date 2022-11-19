@@ -22,11 +22,11 @@ totals = []
 
 <form method="get" action="/customer_payments/rpt_ccobrar4_pdf/<%= @company.id %>">
  	<div class="field">
-      <input type="date" name="fecha1" value="2018-03-01" style = "width: 150px" >
+      <input type="date" name="fecha1" value= <%= Date.today - 30,days %> style = "width: 150px" >
 
     </div>
 	<div class="field">
-		<input type="date" name="fecha2" value="2018-08-10" style = "width: 150px" >
+		<input type="date" name="fecha2" value = <%= Date.today %> style = "width: 150px" >
     </div>
 
     

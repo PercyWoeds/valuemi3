@@ -4,7 +4,7 @@ class OtherIncomesController < ApplicationController
   # GET /other_incomes
   # GET /other_incomes.json
   def index
-    @other_incomes = OtherIncome.order(:fecha).paginate(:page => params[:page], :per_page => 20)
+    @other_incomes = OtherIncome.where("fecha>=?","2022-10-31 23:59:59")order(:fecha).paginate(:page => params[:page], :per_page => 20)
   end
 
   # GET /other_incomes/1
