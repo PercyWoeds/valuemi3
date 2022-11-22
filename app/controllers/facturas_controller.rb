@@ -2434,7 +2434,7 @@ def reportes31
     when  @invoice.document_id == 13
     @invoice.process5
     flash[:notice] = "La boleta ha sido procesada."
-    end 
+
 
     when  @invoice.document_id == 3
     @invoice.process5
