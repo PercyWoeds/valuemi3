@@ -110,6 +110,10 @@ class Factura < ActiveRecord::Base
      when serie  == "7"
 
       @serie = "FF06"
+    
+    when serie  == "8"
+
+      @serie = "TE01"
 
 
      end 
@@ -960,6 +964,15 @@ result = invoice.deliver
         self.save
 
  end
+
+ def process6
+
+     self.processed="1"
+   
+        self.date_processed = Time.now
+        self.save
+        self.msgerror = "Documento interno "
+ end 
 
 #####################################################################################################
 

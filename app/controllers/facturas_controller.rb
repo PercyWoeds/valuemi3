@@ -2436,6 +2436,12 @@ def reportes31
     flash[:notice] = "La boleta ha sido procesada."
     end 
 
+     when  @invoice.document_id == 3
+    @invoice.process6
+    flash[:notice] = "The invoice order has been processed."
+    
+
+
     flash[:notice] = "The invoice order has been processed."
     redirect_to @invoice
   end
@@ -3382,6 +3388,7 @@ def newfactura2
     @invoice[:pago]    = 0
     @invoice[:charge]  = 0
     @invoice[:descuento] = "1"
+
    
     
     days = @invoice.get_dias(params[:factura][:payment_id])
