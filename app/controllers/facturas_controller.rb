@@ -2437,7 +2437,7 @@ def reportes31
 
 
     when  @invoice.document_id == 3
-    @invoice.process5
+    @invoice.process6
     flash[:notice] = "Documento procesado "
     end 
 
