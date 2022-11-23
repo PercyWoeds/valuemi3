@@ -7,7 +7,7 @@ class VarillajesController < ApplicationController
   # GET /varillajes
   # GET /varillajes.json
   def index
-    @varillajes = Varillaje.where("fecha>=? and fecha<=?","2022-10-15 00:00:00","2022-12-31 23:59:59").order(:fecha)
+    @varillajes = Varillaje.where("fecha>=? and fecha<=?","2022-10-31 00:00:00","2022-12-31 23:59:59").order(:fecha)
 
 
  
@@ -47,6 +47,8 @@ class VarillajesController < ApplicationController
   def create
     @tanques = Tanque.all
     @varillaje = Varillaje.new(varillaje_params)
+
+
     
     @varillaje[:inicial] = @varillaje.tanque.varilla 
     @varillaje[:compras] = 0

@@ -4,7 +4,7 @@ class DepositosController < ApplicationController
   # GET /depositos
   # GET /depositos.json
   def index
-    @depositos = Deposito.where("fecha1>=? and fecha1<=?","2022-10-15 00:00:00","2022-12-31 23:59:59").paginate(:page => params[:page], :per_page => 20)
+    @depositos = Deposito.where("fecha1>=? and fecha1<=?","2022-11-01 00:00:00","2022-12-31 23:59:59").paginate(:page => params[:page], :per_page => 20)
     
     
   end
