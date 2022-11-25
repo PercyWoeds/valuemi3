@@ -271,7 +271,7 @@ require 'sidekiq/web'
     collection { post :import }
     collection { post :do_process }
     collection { post :do_process2 }
-    
+    collection { post :do_process4 }
     
   end 
   resources :tirads  do

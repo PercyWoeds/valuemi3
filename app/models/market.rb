@@ -59,7 +59,7 @@ def get_cliente(cliente)
      def process2
        
 
-         @factura =   Market.select(:fecha, :serie,:numero,"SUM(cantidad) as quantity","SUM(importe) as total").where("fecha>=? and fecha<=? and td = ?","2022-11-01 00:00:00","2022-11-30 23:59:59","B").group(:fecha,:serie,:numero )
+         @factura =   Market.select(:fecha, :serie,:numero,"SUM(cantidad) as quantity","SUM(importe) as total").where("fecha>=? and fecha<=? and td = ?","2022-11-16 00:00:00","2022-11-30 23:59:59","B").group(:fecha,:serie,:numero )
     
     #   @factura =   Market.select(:fecha, :serie,:numero,"SUM(cantidad) as quantity","SUM(importe) as total").where("numero >=? and numero<=? and td = ?","007180","007593","B").group(:fecha,:serie,:numero )
      
@@ -218,7 +218,7 @@ end
 def process3
        
 
-         @factura =   Market.select(:fecha, :serie,:numero,:ruc,:razon_social, :address,"SUM(cantidad) as quantity","SUM(importe) as total").where("fecha>=? and fecha<=? and td = ?","2022-11-08 00:00:00","2022-11-30 23:59:59","F").group(:fecha,:serie,:numero,:ruc,:razon_social, :address )
+    @factura =   Market.select(:fecha, :serie,:numero,:ruc,:razon_social, :address,"SUM(cantidad) as quantity","SUM(importe) as total").where("fecha>=? and fecha<=? and td = ?","2022-11-08 00:00:00","2022-11-30 23:59:59","F").group(:fecha,:serie,:numero,:ruc,:razon_social, :address )
     
      
 
@@ -368,9 +368,181 @@ result = invoice.deliver
     
 end 
 
+
+
+
+
     
 end
 
 ######################################################33#
+
+
+
+
+ 
+     def process4
+       
+
+         @factura =   Market.select(:fecha, :serie,:numero,"SUM(cantidad) as quantity","SUM(importe) as total").where("fecha>=? and fecha<=? and td = ? and cod_tar=?","2022-11-16 00:00:00","2022-11-16 23:59:59","B","11").group(:fecha,:serie,:numero )
+
+    #   @factura =   Market.select(:fecha, :serie,:numero,"SUM(cantidad) as quantity","SUM(importe) as total").where("numero >=? and numero<=? and td = ?","007180","007593","B").group(:fecha,:serie,:numero )
+     
+
+    for item_factura in @factura
+
+
+
+          @fecha_emision = item_factura.fecha.strftime("%Y-%m-%d")
+          @fecha_vmto    = item_factura.fecha.strftime("%Y-%m-%d")
+         
+
+         @lcsubtotal  = item_factura.total  / 1.18 
+         @lctax       = item_factura.total - @lcsubtotal 
+
+
+
+
+            @forma_pago = "RETIRO POR PREMIO" 
+            @medio_pago = "TRANSFERENCIA GRATUITA"
+        
+        
+          @serie  =  item_factura.serie
+          @numero =  item_factura.numero 
+
+       
+           @moneda_nube = 1
+        
+         
+                @texto_obs =  " "
+            puts "*"
+              # create a new Invoice object
+              invoice = NubeFact::Invoice.new({
+                  "operacion"                   => "generar_comprobante",
+                  "tipo_de_comprobante"               => "2",
+                  "serie"                             =>  @serie,
+                  "numero"                            =>  @numero ,
+                  "sunat_transaction"                 => "1",
+                "cliente_tipo_de_documento"            => "-",
+                "cliente_numero_de_documento"       => "0",
+                "cliente_denominacion"              => "CLIENTE GENERICO",
+                "cliente_direccion"                 => "" ,
+                  "cliente_email"                     => "" ,
+                  "cliente_email_1"                   => "",
+                  "cliente_email_2"                   => "",
+                  "fecha_de_emision"                  => @fecha_emision,
+                  "fecha_de_vencimiento"              => "" ,
+                  "moneda"                            => @moneda_nube,
+                  "tipo_de_cambio"                    => "3.839",
+                  "porcentaje_de_igv"                 => "18.00",
+                  "descuento_global"                  => "",
+                  "total_descuento"                   => "",
+                  "total_anticipo"                    => "",
+                  "total_gravada"                     => "",
+                  "total_inafecta"                    => "",
+                  "total_exonerada"                   => "",
+                  "total_igv"                         => "",
+                  "total_gratuita"                    => @lcsubtotal.round(2),
+                  "total_otros_cargos"                => "",
+                  "total"                             => "0",
+                  "percepcion_tipo"                   => "",
+                  "percepcion_base_imponible"         => "",
+                  "total_percepcion"                  => "",
+                  "total_incluido_percepcion"         => "",
+                  "detraccion"                        => "false",
+                  "observaciones"                     => @texto_obs, 
+                  "documento_que_se_modifica_tipo"    => "",
+                  "documento_que_se_modifica_serie"   => "",
+                  "documento_que_se_modifica_numero"  => "",
+                  "tipo_de_nota_de_credito"           => "",
+                  "tipo_de_nota_de_debito"            => "",
+                  "enviar_automaticamente_a_la_sunat" => "true",
+                  "enviar_automaticamente_al_cliente" => "true",
+                  "codigo_unico"                      => "",
+                  "condiciones_de_pago"               => @forma_pago,
+                  "medio_de_pago"                     => @medio_pago,
+                  "placa_vehiculo"                    => ""  ,
+                  "orden_compra_servicio"             => "",
+                  "tabla_personalizada_codigo"        => "",
+                  "formato_de_pdf"                    => "",
+                   "detraccion_tipo"                  => "",
+                   "detraccion_total"                 => "",
+                   "medio_de_pago_detraccion"         => ""
+                 
+              })
+
+
+
+
+
+
+# Add items
+# You don't need to add the fields that are calculated like total or igv
+# those got calculated automatically.
+
+
+cantidad = 0
+
+
+@factura_detail = Market.where(serie:  @serie ,numero: @numero )
+      
+     
+
+for detail_boleta in @factura_detail 
+    
+
+puts "*+++++++++++++++++++++"
+puts detail_boleta.cantidad 
+#puts item_factura.preciosigv 
+        
+          @valor_unitario = (detail_boleta.importe / detail_boleta.cantidad ) / 1.18 
+          invoice.add_item2({
+            codigo: detail_boleta.cod_prod ,
+           unidad_de_medida: "NIU", 
+          descripcion: detail_boleta.name  ,
+          cantidad: detail_boleta.cantidad,
+          valor_unitario:  @valor_unitario  ,
+          precio_unitario: @valor_unitario,
+          descuento: "",
+          subtotal: @valor_unitario,
+          tipo_de_igv: 6,
+          igv: "0",
+          total: @valor_unitario
+
+
+          })
+
+    
+
+end 
+
+
+
+
+
+puts JSON.pretty_generate(invoice )
+
+result = invoice.deliver
+
+    if result['errors'] 
+        puts  "#{result['codigo']}: #{result['errors']}  aviso"
+        self.msgerror = "#{result['codigo']}: #{result['errors']}  aviso"
+      else 
+        self.msgerror = "Factura en nubefact."
+
+    end
+
+        self.processed="1"
+   
+        self.date_processed = Time.now
+        self.save
+
+    
+end 
+
+    
+end
+
+#########################################################
 
 end 

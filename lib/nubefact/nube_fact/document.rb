@@ -154,6 +154,17 @@ class NubeFact::Document
     
   end
 
+  def add_item2(item2)
+    if item2.is_a? Hash
+      item2 = Item2.new self, item2
+    end
+    @items << item2
+    
+  end
+
+  
+
+
   
 
   def add_cuota(cuota)
