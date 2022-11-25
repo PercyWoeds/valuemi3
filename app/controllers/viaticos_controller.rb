@@ -705,6 +705,8 @@ columns([5]).width= 200
   
     if(@company.can_view(current_user))
 
+        puts "nielll"
+        puts current_user.level
 
         if current_user.level == "admin"
              @viaticos = Viatico.where.not(caja_id: ['1', '3']).order('fecha1 DESC').paginate(:page => params[:page])
@@ -716,11 +718,17 @@ columns([5]).width= 200
         
         else 
 
-            if current_user == "market"
+            if       current_user == "market"
 
-                         @viaticos = Viatico.where(caja_id: [ '3']).order('fecha1 DESC').paginate(:page => params[:page])
+                      @viaticos = Viatico.where(caja_id: [ '3']).order('fecha1 DESC').paginate(:page => params[:page])
 
-            else   
+            elsif    current_user == "parte"
+
+                     @viaticos = Viatico.where(caja_id: [ '1']).order('fecha1 DESC').paginate(:page => params[:page])
+
+            else 
+
+
               @viaticos = Viatico.where(caja_id: ['1', '3']).order('fecha1 DESC').paginate(:page => params[:page])
 
                 if params[:search]
