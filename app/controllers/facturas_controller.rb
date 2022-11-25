@@ -136,6 +136,7 @@ def reportes4
   end
   
   
+  
 #Vale credito por clientes todos 
 def reportes5
   

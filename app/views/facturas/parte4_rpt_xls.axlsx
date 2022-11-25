@@ -49,7 +49,7 @@ wb.styles do |s|
     nro_vale = payment.odometro
    end 
      
-    sheet.add_row [payment.fecha,payment.cod_cli,payment.get_cliente(payment.cod_cli),payment.serie,payment.numero,nro_vale,payment.placa,payment.km, payment.cod_prod,payment.get_product_name(payment.cod_prod),payment.cantidad,payment.precio,payment.importe,payment.implista,payment.get_vale_facturado], :style => [date,cadena,cadena,cadena,cadena,cadena,cadena,cadena,currency,currency,currency,currency,cadena]
+    sheet.add_row [payment.fecha,payment.cod_cli,payment.get_cliente(payment.cod_cli),payment.serie,payment.numero,nro_vale,payment.placa,payment.km, payment.cod_prod,payment.get_product_name(payment.cod_prod),payment.cantidad,payment.precio,payment.importe,payment.implista,payment.get_vale_facturado,payment.chofer], :style => [date,cadena,cadena,cadena,cadena,cadena,cadena,cadena,currency,currency,currency,currency,cadena]
     
    end
 
