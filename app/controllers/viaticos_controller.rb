@@ -708,36 +708,31 @@ columns([5]).width= 200
         puts "nielll"
         puts current_user.level
 
-        if current_user.level == "admin"
-             @viaticos = Viatico.where.not(caja_id: ['1', '3']).order('fecha1 DESC').paginate(:page => params[:page])
-                if params[:search]
-                  @viaticos = Viatico.search(params[:search]).order('fecha1 DESC').paginate(:page => params[:page])
-                else
-                  @viaticos = Viatico.where.not(caja_id: ['1', '3']).order('fecha1 DESC').paginate(:page => params[:page]) 
-                end
-        
-        else 
 
-            if       current_user == "market"
+    if current_user.email != "percywoeds@gmail.com"
 
-                      @viaticos = Viatico.where(caja_id: [ '3']).order('fecha1 DESC').paginate(:page => params[:page])
+        case current_user.level
 
-            elsif    current_user == "parte"
+        when "admin" 
 
-                     @viaticos = Viatico.where(caja_id: [ '1']).order('fecha1 DESC').paginate(:page => params[:page])
+             @viaticos = Viatico.where(caja_id: ['1', '3']).order('fecha1 DESC').paginate(:page => params[:page])
+        when "parte"
 
-            else 
+             @viaticos = Viatico.where(caja_id: ['1']).order('fecha1 DESC').paginate(:page => params[:page])
 
+        when "market"
+               @viaticos = Viatico.where(caja_id: [ '3']).order('fecha1 DESC').paginate(:page => params[:page])
 
-              @viaticos = Viatico.where(caja_id: ['1', '3']).order('fecha1 DESC').paginate(:page => params[:page])
+       
 
-                if params[:search]
-                  @viaticos = Viatico.search(params[:search]).order('fecha1 DESC').paginate(:page => params[:page])
-                else
-                  @viaticos = Viatico.where(caja_id: ['1', '3']).order('fecha1 DESC').paginate(:page => params[:page]) 
-                end
-            end 
         end 
+
+    else 
+
+         @viaticos = Viatico.order('fecha1 DESC').paginate(:page => params[:page])
+    end 
+
+      
     
     else
       errPerms()
