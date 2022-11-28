@@ -17,6 +17,9 @@ require "./lib/nubefact/nube_fact/exceptions"
 require "./lib/nubefact/nube_fact/document"
 require './lib/nubefact/nube_fact/document/guia'
 require './lib/nubefact/nube_fact/document/item'
+require './lib/nubefact/nube_fact/document/item2'
+
+
 require './lib/nubefact/nube_fact/document/cuota'
 
 require "./lib/nubefact/nube_fact/invoice"
