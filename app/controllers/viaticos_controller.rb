@@ -723,6 +723,8 @@ columns([5]).width= 200
         when "market"
                @viaticos = Viatico.where(caja_id: [ '3']).order('fecha1 DESC').paginate(:page => params[:page])
 
+        when "finanzas"
+               @viaticos = Viatico.where.not(caja_id: [ '1','3']).order('fecha1 DESC').paginate(:page => params[:page])
        
 
         end 
