@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Employee:</strong>
+  <%= @planner.employee_id %>
+</p>
+
+<p>
+  <strong>Tipomov:</strong>
+  <%= @planner.tipomov_id %>
+</p>
+
+<p>
+  <strong>Importe:</strong>
+  <%= @planner.importe %>
+</p>
+
+<p>
+  <strong>Documento:</strong>
+  <%= @planner.documento %>
+</p>
+
+<p>
+  <strong>Observa:</strong>
+  <%= @planner.observa %>
+</p>
+
+<%= link_to 'Edit', edit_planner_path(@planner) %> |
+<%= link_to 'Back', planners_path %>

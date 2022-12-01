@@ -4,6 +4,7 @@ require 'sidekiq/web'
 
   Mnygo::Application.routes.draw do
 
+  resources :planners
   resources :invens
   resources :compra_markets
   resources :other_incomes
@@ -622,6 +623,8 @@ end
   match 'companies/reports/rpt_parte_16/:company_id' => 'reports#rpt_parte_16', via: [:get, :post]
   match 'companies/reports/rpt_parte_17/:company_id' => 'reports#rpt_parte_17', via: [:get, :post]
   match 'companies/reports/rpt_parte_18/:company_id' => 'reports#rpt_parte_18', via: [:get, :post]
+  match 'companies/reports/rpt_cuenta_personal/:company_id' => 'reports#rpt_cuenta_personal', via: [:get, :post]
+  
   
   
   match 'companies/reports/cuadre_01/:company_id' => 'reports#cuadre_01', via: [:get, :post]    

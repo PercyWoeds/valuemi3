@@ -1,0 +1,33 @@
+<%= simple_form_for(@planner) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+  <div class="field">
+  <strong> Empleados :</strong><br />
+     <%= f.collection_select :employee_id, @employees , :id, :full_name , :prompt => true %>
+     </div>
+
+  <div class="field">
+      <strong> Tipo Movmto. :</strong><br />
+     <%= f.collection_select :tipomov_id, @tipomov , :id, :descrip , :prompt => true %>
+     </div>
+
+     <div class="field">
+        <strong> Importe :</strong><br />
+     <%= f.number_field :importe ,:style=> 'width: 120px' %>
+</div>
+  <div class="field">
+      <strong> Nro.Documento :</strong><br />
+     <%= f.text_field :documento ,:style=> 'width: 200px'%>
+</div>
+  <div class="field">
+      <strong> Observacion :</strong><br />
+     <%= f.text_field :observa  , :size=>"100", placeholder: "Ingrese Proveedor / Empleado - otros", :maxlength=>"254"%>
+
+
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

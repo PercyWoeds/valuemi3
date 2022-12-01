@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  employee_id: 1
+  tipomov_id: 1
+  importe: 1.5
+  documento: MyString
+  observa: MyText
+
+two:
+  employee_id: 1
+  tipomov_id: 1
+  importe: 1.5
+  documento: MyString
+  observa: MyText

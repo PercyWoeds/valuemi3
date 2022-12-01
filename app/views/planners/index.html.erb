@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Cuentas Personal </h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Employee</th>
+      <th>Tipomov</th>
+      <th>Importe</th>
+      <th>Documento</th>
+      <th>Observa</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @planners.each do |planner| %>
+      <tr>
+        <td><%= planner.employee.full_name %></td>
+        <td><%= planner.tipomov_id %></td>
+        <td><%= planner.importe %></td>
+        <td><%= planner.documento %></td>
+        <td><%= planner.observa %></td>
+        <td><%= link_to 'Show', planner %></td>
+        <td><%= link_to 'Edit', edit_planner_path(planner) %></td>
+        <td><%= link_to 'Destroy', planner, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Planner', new_planner_path %>

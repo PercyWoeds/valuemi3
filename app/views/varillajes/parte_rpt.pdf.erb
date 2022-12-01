@@ -5,7 +5,7 @@
   <h4 ><center> Parte Diario:  <%= @fecha %>   </center>   </h4>
   <font size="2" face="Courier New" >  
   
-  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+  <table style='font-family:"Courier New", Courier, monospace; font-size:100% ;width:100%'>
   <tr bgcolor="#B4D7F7">
     <td width="10%"> Tanque  </td>
 
@@ -38,7 +38,7 @@
 
 
 
-  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+  <table style='font-family:"Courier New", Courier, monospace; font-size:100% ;width:100%'>
       <% nroitem = 1 %>
       
       <% for  product0 in @parte_rpt %>
@@ -312,7 +312,7 @@
      <%= venta_20  %>
      <%= a.get_ventas_colaterales_tar(@fecha,"3")  %>
      
-<table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+<table style='font-family:"Courier New", Courier, monospace; font-size:100% ;width:100%'>
   <tr bgcolor="#B4D7F7">
     
     <td width="100%"> VENTAS DEL DIA  </td>
@@ -320,7 +320,7 @@
   </tr>
   </table>
   
-    <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+    <table style='font-family:"Courier New", Courier, monospace; font-size:100% ;width:100%'>
       <tr>
             <td width= "25%" align ="left">** CONTOMETROS            : </td>
             <td width= "25%" > <%=  sprintf("%.2f",venta_1) %></td>
@@ -445,7 +445,7 @@
     
     
     <hr>
-    <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+    <table style='font-family:"Courier New", Courier, monospace; font-size:100% ;width:100%'>
             
             <tr>
             <td width= "25%" align ="left">  TOTAL VENTAS            : </td>
@@ -464,7 +464,7 @@
             
             </tr>
     </table>
-  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+  <table style='font-family:"Courier New", Courier, monospace; font-size:100% ;width:100%'>
   <tr bgcolor="#B4D7F7">
     <td width="100%"> FALTANTE/SOBRANTE  </td>
   </tr>
@@ -472,7 +472,7 @@
 
   </table>
     
-    <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+    <table style='font-family:"Courier New", Courier, monospace; font-size:100% ;width:100%'>
      <td width = "25%" align ="left">  &#9475;   FALTANTES    :  </td>
             <td width = "25%" align ="right"> <%=    sprintf("%.2f",venta_faltante)  %> </td>
       
@@ -481,13 +481,13 @@
         
     
     </table>    
-  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+  <table style='font-family:"Courier New", Courier, monospace; font-size:100% ;width:100%'>
   <tr bgcolor="#B4D7F7">
     <td width="100%"> PAGO ADELANTADO </td>
   </tr>
   </table>
   
-    <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+    <table style='font-family:"Courier New", Courier, monospace; font-size:100% ;width:100%'>
     <% total_pago_adelantado = 0 %>
     <%venta_adelantada_parte = a.get_ventas_adelantada(@fecha) %>
     
@@ -510,7 +510,7 @@
       
       
     </table>    
-    <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+    <table style='font-family:"Courier New", Courier, monospace; font-size:100% ;width:100%'>
     <tr>
             <td width = "50%" align ="left">
             <td width = "25%" align ="left">  &#9475;   TOTALES :  </td>
@@ -519,7 +519,7 @@
     </tr>
     </table>      
      
-  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+  <table style='font-family:"Courier New", Courier, monospace; font-size:100% ;width:100%'>
   
   <tr bgcolor="#B4D7F7">
     <td width="100%"> COBRANZAS  </td>
@@ -527,7 +527,7 @@
   
   </table>
      
-    <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+    <table style='font-family:"Courier New", Courier, monospace; font-size:100% ;width:100%'>
       
       <tr>
             <td width= "100%" align ="left">  INGRESOS DEL DIA           : </td>
@@ -535,7 +535,7 @@
         
     </table>
     
-    <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>        
+    <table style='font-family:"Courier New", Courier, monospace; font-size:100% ;width:100%'>        
       <% total_bancos_soles1 = 0 %>
       <% total_bancos_dolar = 0 %>
       
@@ -581,7 +581,7 @@
     
     <%  bancos1= a.get_deposito(@fecha) %>
     
-    <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>        
+    <table style='font-family:"Courier New", Courier, monospace; font-size:100% ;width:100%'>        
       
        <% for productItem in bancos1 %>
        
@@ -628,7 +628,7 @@
     </table>
     
     
-    <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+    <table style='font-family:"Courier New", Courier, monospace; font-size:100% ;width:100%'>
       
       <tr>
             <td width= "100%" align ="left">  INGRESOS ANTERIOR           : </td>
@@ -643,7 +643,7 @@
       
        <% for productItem in  @customerpayment %>
        
-    <table style='font-family:"Courier New", Courier, monospace; font-size:70% ;width:100%'>           
+    <table style='font-family:"Courier New", Courier, monospace; font-size:100% ;width:100%'>           
       <tr>
         <td width= "10%" align ="left">
           <%=  productItem.code_liq %>
@@ -694,7 +694,7 @@
         
     </table>
     
-    <table style='font-family:"Courier New", Courier, monospace; font-size:70% ;width:100%'>
+    <table style='font-family:"Courier New", Courier, monospace; font-size:100% ;width:100%'>
       
       <tr>
             <td width="80%" align ="left">  GASTOS VARIOS           : </td>
@@ -718,7 +718,7 @@
   <% diferencia = total_bancos_soles1.round(2) + total_gastos.round(2) -  venta_2.round(2) - venta_10.round(2) - venta_sobrante + venta_faltante  %>
      
   <% if diferencia !=  0%>   
-  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+  <table style='font-family:"Courier New", Courier, monospace; font-size:100% ;width:100%'>
   
   <tr bgcolor="#B4D7F7">
     <td width="80%"> DIFERENCIA :   </td>

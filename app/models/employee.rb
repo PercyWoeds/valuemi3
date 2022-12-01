@@ -19,6 +19,8 @@ class Employee < ActiveRecord::Base
 	has_many :quintos
 	has_many :tirads  
 	has_many :viaticos   
+    has_many :planners    
+    
 	
     validates_uniqueness_of :idnumber,:cod_emp
     validates_presence_of :company_id, :idnumber, :firstname,:lastname,:fecha_ingreso,:fecha_nacimiento,:sueldo,:categoria_id,:division_id,:ccosto_id,:ocupacion_id,:comision_flujo,:asignacion,:location_id
