@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Vacations</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Empleado</th>
+      <th>Fecha1</th>
+      <th>Fecha2</th>
+  
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @vacations.each do |vacation| %>
+      <tr>
+        <td><%= vacation.employee.full_name %></td>
+        <td><%= vacation.fecha1.strftime("%d/%m/%Y") %></td>
+        <td><%= vacation.fecha2.strftime("%d/%m/%Y") %></td>
+      
+        <td><%= link_to 'Ver', vacation %></td>
+        <td><%= link_to 'Editar', edit_vacation_path(vacation) %></td>
+        <td><%= link_to 'Eliminar', vacation, method: :delete, data: { confirm: 'Esta seguro de eliminar?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'Nuevo ', new_vacation_path %>

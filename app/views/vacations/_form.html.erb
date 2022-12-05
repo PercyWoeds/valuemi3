@@ -1,0 +1,36 @@
+<%= simple_form_for(@vacation) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+
+
+     <div class="field">
+      <%= f.label :employee_id, "Empleado" %><br />
+      <%= f.collection_select :employee_id, @employees, :id, :full_name, :prompt => true %>
+    </div>
+  
+
+
+  <div class="field">
+    <%= f.label :fecha1, "Fecha inicial:" %><br>
+    <%= f.date_field :fecha1  %>
+  </div>
+  <div class="field">
+    <%= f.label :fecha2,"Fecha final:" %><br>
+    <%= f.date_field :fecha2  %>
+  </div>
+
+ 
+ 
+  <div class="field">
+    <%= f.label :observa , "Observacion *", :class => "bold" %><br />
+    <%= f.text_field :observa %>
+  </div>
+
+  </div>
+
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

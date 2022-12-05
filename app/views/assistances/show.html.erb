@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Departamento:</strong>
+  <%= @assistance.departamento %>
+</p>
+
+<p>
+  <strong>Nombre:</strong>
+  <%= @assistance.nombre %>
+</p>
+
+<p>
+  <strong>Nro:</strong>
+  <%= @assistance.nro %>
+</p>
+
+<p>
+  <strong>Fecha:</strong>
+  <%= @assistance.fecha %>
+</p>
+
+<p>
+  <strong>Equipo:</strong>
+  <%= @assistance.equipo %>
+</p>
+
+<p>
+  <strong>Cod verificacion:</strong>
+  <%= @assistance.cod_verificacion %>
+</p>
+
+<p>
+  <strong>Num tarjeta:</strong>
+  <%= @assistance.num_tarjeta %>
+</p>
+
+<%= link_to 'Edit', edit_assistance_path(@assistance) %> |
+<%= link_to 'Back', assistances_path %>

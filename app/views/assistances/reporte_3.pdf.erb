@@ -1,0 +1,253 @@
+<html>
+<body>
+    
+     <font size="2" face="Courier New" >  
+
+    <table style='font-family:"Courier New", Courier, monospace; font-size:70% ;width:100%'>
+ 
+ <tr>
+  <td>
+   Para : Gerencia  
+ </td>
+ </tr>
+ <td> 
+   Asunto : Inasistencia,permisos a cuenta de vacaciones y domingos trabajados  
+ </td>
+  </tr>
+  <tr>
+  <td>
+   Fecha: <%= @fecha1 %>  Hasta: <%= @fecha2 %> 
+ </td>
+</tr>
+<td>
+   Por medio del presente se remite el siguiente reporte del mes 
+ </td>
+  </tr>
+
+</table>  
+  
+ 
+   <br>
+        <table style='font-family:"Courier New", Courier, monospace; font-size:90% ;width:100% ,border-collapse:collapse;' , width = "100%", border="1",cellpadding="0" cellspacing="0">
+
+
+                <tr> 
+                <th width = "5%" ></th>
+                <th width = "35%" align ="center" style="color: blue ;" ><%=  @fecha1 %></th>
+                <th width = "30%" align ="center"> al </th>
+                <th width = "30%" align ="center" style="color: blue ;" ><%= @fecha2%> </th>
+                     
+                </tr>
+       </table>
+    
+  
+      <% nroitem = 1%>
+      <% total_1 =  0%>
+      <% total_2 =  0%>
+      
+     
+      <% subtotal =  0%>
+
+      <% total =  0%>
+      
+       <% for  concepto in @conceptos  %>
+
+        <br>
+        <table style='font-family:"Courier New", Courier, monospace; font-size:70% ;width:100% ,border-collapse:collapse;' , width = "100%", border="1",cellpadding="0" cellspacing="0">
+
+
+
+           <tr bgcolor="#B4D7F7">
+        
+          <th align="center" ><%=  concepto.name %>   </th>
+          </tr>
+       </table>
+       <br>
+
+            <%if @check_empleado == "true" %>
+            <% @detalle = Assistance.where("inasist_id=? and fecha>=? and fecha<=?", concepto.id ,"#{@fecha1} 00:00:00","#{@fecha2} 23:59:59") %>
+
+            <% else %>
+              <% @detalle = Assistance.where("inasist_id=? and fecha>=? and fecha<=? and employee_id= ?", concepto.id ,"#{@fecha1} 00:00:00","#{@fecha2} 23:59:59",
+              @empleado).order(:fecha) %>
+
+            <% end %>
+
+
+          
+            <table style='font-family:"Courier New", Courier, monospace; font-size:90% ;width:100% ,border-collapse:collapse;' , width = "100%", border="1",cellpadding="0" cellspacing="0">
+
+
+             <tr> 
+              <th width="5%"> Nro. </th>
+              <th width="10%"> Fecha </th>
+              <th width="30%"> Colaborador </th>
+              <th width="25%"> Cargo </th>
+              <th width="30%"> Observaciones </th>                      
+             </tr> 
+             <% nro_item = 1 %> 
+
+            <% for detalle in @detalle %>
+
+               <tr> 
+                <td width = "5%" ><%=  nro_item   %></td>
+                <td width = "10%" ><%=  detalle.fecha.strftime("%d/%m/%Y") %></td>
+                <td width = "30%" ><%=  detalle.employee.full_name2  %></td>
+                <td width = "25%" align ="left"><%= detalle.employee.ocupacion.name  %></td>
+                <td width = "30%" align ="left">  <%= detalle.observacion   %> </td>
+                     
+                </tr>
+
+               <% nro_item += 1 %>  
+
+            <% end %> 
+            </table>
+       <% end %>
+               
+      
+      <hr>  
+
+<table style='font-family:"Courier New", Courier, monospace; font-size:90% ;width:80% , border-collapse:collapse; font-weight:bold; display:block; clear:both; page-break-before: always;' , align="center", width = "80%", border="1",cellpadding="0" cellspacing="0" >
+
+
+<tr bgcolor="#B4D7F7">
+
+  <th width="40%"></th>
+
+  <th width="20%">Dia</th>
+  <th width="20%"> </th>
+  
+ </tr>
+ <tr bgcolor="#B4D7F7">
+
+  <th width="40%"></th>
+
+  <th width="20%">Semana</th>
+  <th width="20%"></th>
+  
+ </tr>
+
+<tr bgcolor="#B4D7F7">
+
+  <th width="40%"></th>
+
+  <th width="20%">Mes</th>
+  <th width="20%"></th>
+  
+ </tr>
+
+ <tr bgcolor="#B4D7F7">
+  <th>Concepto</th>
+
+  <th>Dia</th>
+  <th>Horas Mins.</th>
+        
+ </tr>
+      
+
+
+ <% for  concepto in @conceptos  %>
+
+        <br>
+        <% @detalle = 0%>
+        <% @total_horas = 0%>
+        
+        
+        
+
+         
+        
+          <% @detalle = concepto.contar_dias(@fecha1,@fecha2,concepto.id) %>
+
+          <% @total_horas = concepto.get_horas_minutos(concepto.id,@fecha1,@fecha2) %>
+
+
+           <% if  concepto.id == 4  || concepto.id == 2 || concepto.id == 6   %>
+            <%= puts concepto.id   %>
+            <% if concepto.id == 2%>  
+            <%= puts "tota horas xxxx"  %>
+            <%= puts @total_horas %>
+
+            <% end %> 
+
+          
+   
+          <% end %>
+
+           <tr >
+        
+          <td align="center" width="40%" ><%=  concepto.name %>   </td>
+
+          <% if  concepto.id == 4  %>
+              <td align="center" width="20%">   </td>
+          
+           <% else %> 
+
+                <td align="center" width="20%"><%=  @detalle %>   </td>
+
+          <% end %>
+
+              <% resultado = "" %>
+              <% separar =  @total_horas.to_s.split('.') %>
+
+              <% hora = separar[0] %>
+              <% minuto = separar[1]  %>
+
+
+              <% if minuto  == nil  %>
+                <% minuto0 = 0   %>
+              <%else%> 
+                <% minuto0 = minuto[0..1].to_f  %>
+              <% end %>  
+              <% minuto1 = minuto0  * 0.6  %>  
+              
+              <% minutos = minuto1.round(0).to_s %>
+              <% resultado = hora + " : " + minutos[0..1]  %>
+
+          
+
+            <td align="center" width="20%"> <%= resultado  %>    </td>
+          
+         
+
+          </tr>
+            
+
+       
+<% end %>
+
+
+     </table>
+
+
+
+<br>
+<br>
+<br>
+
+
+<br>
+<br>
+       <br>
+     <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+    <td>
+          <td width = "35%" align ="center">ELADORADO POR </td>
+          <td width = "35%" align ="center">REVISADO POR  </td>
+          <td width = "30%" align ="center">APROBADO POR    </td>
+    
+    </tr>
+<td>
+          <td width = "35%" align ="center"> AREA DE RRHH  </td>
+          <td width = "35%" align ="center"> ADMINISTRACION  </td>
+          <td width = "30%" align ="center"> GERENCIA ADMINISTRATIVA    </td>
+    
+    </tr>
+
+
+   </table>
+
+    
+    </body>
+      
+      </html>
+      

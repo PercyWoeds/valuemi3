@@ -1,0 +1,58 @@
+<%= simple_form_for(@assistance) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+
+  <div class="field">
+    <%= f.label :departamento, "Departamento:", :class => "bold" %><br />
+    <%= f.text_field :departamento %>
+  </div>
+  
+
+
+  <div class="field">
+      <%= f.label :employee_id, "Empleado" %><br />
+      <%= f.collection_select :employee_id, @employees, :id, :full_name, :prompt => true %>
+    </div>
+  
+  <div class="field">
+    <%= f.label :fecha , "Fecha *", :class => "bold" %><br />
+    <%= f.date_field :fecha%>
+  </div>
+
+  <div class="field">
+    <%= f.label :hora1, "Hora ingreso*", :class => "bold" %><br />
+    <%= f.time_field :hora1  %>
+  </div> 
+
+  <div class="field">
+    <%= f.label :hora2, "Hora Salida*", :class => "bold" %><br />
+    <%= f.time_field :hora2 %>
+  </div>
+
+  <div class="field">
+    <%= f.label :hora_efectivo, "Hora Ingreso .Efe.*", :class => "bold" %><br />
+    <%= f.time_field :hora_efectivo %>
+  </div>
+  <div class="field">
+    <%= f.label :hora_efectivo2, "Hora Salida Efe.*", :class => "bold" %><br />
+    <%= f.time_field :hora_efectivo2 %>
+  </div>
+
+  <div class="field">
+      <%= f.label :inasist_id , "Concepto Asistencia "%><br />
+      <%= f.collection_select :inasist_id, @inasists, :id, :name, :prompt => true %>
+  </div>
+
+  <div class="field">
+    <%= f.label :observacion , "Observacion *", :class => "bold" %><br />
+    <%= f.text_field :observacion %>
+  </div>
+    
+
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

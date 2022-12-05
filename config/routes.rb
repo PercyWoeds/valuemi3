@@ -119,6 +119,10 @@ require 'sidekiq/web'
     
   end
 
+  resources :assistances do 
+       collection { get :search }
+  end 
+
   
   resources :facturas do 
     collection { get :newfactura2}

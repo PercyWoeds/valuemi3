@@ -1,0 +1,59 @@
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %> &raquo;
+  <%= link_to "Asistencias", "/companies/assitances/#{@company.id}" %>
+</div>
+
+<h3>
+  <%= image_tag("invoice_48.png", :class => "vmiddle") %>
+  Generar asistencia diaria 
+</h3>
+
+<p>
+  Para generar la asistencia del dia , por favor llenar el siguiente formulario. Los campos marcados con <strong>*</strong> son obligatorios 
+</p>
+
+<%= hr() %>
+
+    <form method="get" action="/assistances/do_process/<%= @company.id %>">
+        <strong>Fecha :</strong>
+
+        <input type="date" name="fecha1" value="2020-01-01" style = width: 250px;"  />
+       
+        <input type="submit" value="Generar" class="bold small_btn" />
+
+  
+    </form>	
+
+<%= hr() %>
+
+<div class="button">
+  <%= link_to 'Regresar', assistances_path %>
+</div>
+
+
+<script type="text/javascript">
+
+function setInputDate(_id){
+    var _dat = document.querySelector(_id);
+    var hoy = new Date(),
+        d = hoy.getDate(),
+        m = hoy.getMonth()+1, 
+        y = hoy.getFullYear(),
+        data;
+
+    if(d < 10){
+        d = "0"+d;
+    };
+    if(m < 10){
+        m = "0"+m;
+    };
+
+    data = y+"-"+m+"-"+d;
+    console.log(data);
+    _dat.value = data;
+};
+
+setInputDate("#dateDefault");
+
+</script>

@@ -1,0 +1,174 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listado asistencia </h1>
+
+
+<%= form_tag assistances_path, :method => 'get'  do %>
+
+
+
+<table>
+    <tr>
+      <td>
+       
+
+       <td>
+        <div class="field">
+            <input id="check_empleado" name="check_empleado" type="checkbox" value="true" checked />
+          <div class="small">
+            Todos los empleados 
+          </div>
+        </div>
+      </td>
+
+      </td>
+     
+     <td>
+    
+      <div class="field">
+
+        <h5>  Empleado</h5>
+
+        <%= select_tag(:employee_id,options_from_collection_for_select(@employees,'id','full_name2'),
+        :id => "empleado_select"  ) %>
+      
+      
+      </div>
+
+    </td>
+
+    <td>
+
+
+         <%= date_field_tag :fecha1 , params[:fecha1] %>
+         <%= date_field_tag :fecha2 , params[:fecha2] %>
+
+      
+      
+   <%= submit_tag "Buscar", :name => nil  %>
+   
+    <a href = "/assistances/index/1" class="small_btn">Clear</a>
+  </td>
+
+  </tr>
+ <% end %>
+
+ <table>
+
+
+    <tr>
+    
+      <th scope="col">Empleado</th>
+      <th scope="col">Nro</th>
+      <th scope="col">Fecha</th>
+      <th scope="col">Hora Ingreso</th>
+      <th scope="col">Hora Salida </th>
+      <th scope="col"> Opciones </th>
+      
+      
+      
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+
+  <tbody>
+
+
+    <% if @assistances.size > 0 %>
+    <% @assistances.each do |assistance| %>
+      <tr scope="row">
+  
+      <% if assistance.employee.nil?%>
+      <%else %>
+        <td><%= assistance.employee.idnumber %></td>
+        <td><%= assistance.employee.full_name2 %></td>
+      <%end %>  
+        <%if assistance.fecha.nil? %>
+        <td></td>
+        
+        <% else %> 
+        <td><%= assistance.fecha.strftime("%F") %></td>
+         <% end%>
+        <% if assistance.hora1.nil? %>
+        <td></td>
+        
+         <% else %>   
+        <td ><%= assistance.hora1.strftime("%I:%M%p") %> </td> 
+        <% end %>
+        <% if assistance.hora2.nil? %>
+        <td></td>
+        
+        <% else %>
+        <td><%= assistance.hora2.strftime("%I:%M%p") %> </td> 
+        <% end %> 
+
+        <td><%= link_to "Editar", edit_assistance_path(assistance) %> &#183; </td>
+
+
+        <td><%= link_to 'Eliminar', assistance, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+
+      </tr>
+    <% end %>
+   
+    <%else %>
+ <td>  No existen registros para la busqueda realizada </td> 
+
+    <%end %>
+      </tbody>
+</table>
+
+<br>
+<%= will_paginate @assistances %>
+
+
+<div class="button">
+<%= link_to 'Nueva asistencia', new_assistance_path %>
+<%= link_to 'Generar asistencia', "/assistances/generar/1" %>
+<%= link_to 'Reporte asistencia', "/assistances/generar1/1" %> 
+
+<%= link_to 'Resumen x Empleado', "/assistances/generar2/1" %> 
+<%= link_to 'Resumen  general', "/assistances/generar3/1" %> 
+
+<div> 
+
+
+
+
+<h2>Importar Archivo asistencia "*.csv"</h2>
+
+<%= form_tag import_assistances_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Importar " %>
+<% end %>
+
+<script>
+
+$(document).ready(function() {
+
+ if ($('#check_empleado').is(":checked")) {
+      $('#empleado_select').attr('disabled', true); //disable input
+   }
+   else {
+      $('#empleado_select').removeAttr('disabled'); //enable input
+   }
+   
+   
+   $('#check_empleado').click(function () {
+        //check if checkbox is checked
+        if ($(this).is(':checked')) {
+
+           $('#empleado_select').attr('disabled', true); //disable input
+
+        } else {
+             $('#empleado_select').removeAttr('disabled'); //enable input
+            
+        }
+    });
+
+
+  });
+
+  
+  </script>
+  
