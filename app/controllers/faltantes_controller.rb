@@ -4,7 +4,7 @@ class FaltantesController < ApplicationController
   # GET /faltantes
   # GET /faltantes.json
   def index
-    @faltantes = Faltante.where("fecha > ?","2022-11-01 23:59:59").order(:fecha,:tipofaltante_id).paginate(:page => params[:page], :per_page => 20)
+    @faltantes = Faltante.where("fecha > ?","2022-12-01 23:59:59").order(:fecha,:tipofaltante_id).paginate(:page => params[:page], :per_page => 20)
   end
 
   # GET /faltantes/1
