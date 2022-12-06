@@ -4,7 +4,7 @@ class TiradsController < ApplicationController
   # GET /tirads
   # GET /tirads.json
   def index
-    @tirads = Tirad.where("fecha>=? and fecha<=?","2022-10-31 00:00:00","2022-12-31 23:59:59").order(:fecha,:turno,:employee_id).paginate(:page => params[:page], :per_page => 20)
+    @tirads = Tirad.where("fecha>=? and fecha<=?","2022-12-01 00:00:00","2022-12-31 23:59:59").order(:fecha,:turno,:employee_id).paginate(:page => params[:page], :per_page => 20)
      respond_to do |format|
       format.html
       format.csv { send_data @tirads.to_csv }

@@ -5,14 +5,14 @@ class SellvalesController < ApplicationController
   # GET /sellvales.json
   def index
     
-    if current_user.email == "percywoeds@gmail.com"  || @current_user.level == "admin"  
+    if current_user.email == "percywoeds@gmail.com"  
       
-      @sellvales2 = Sellvale.all.where("fecha>=? and fecha<=?","2022-10-31 00:00:00","2022-10-31 23:59:59").order(:fecha,:serie,:numero)
+      @sellvales2 = Sellvale.all.where("fecha>=? and fecha<=?","2022-06-01 00:00:00","2022-12-31 23:59:59").order(:fecha,:serie,:numero)
       
         if params[:search_serie]  || params[:search_numero]
-          @sellvales = Sellvale.search(params[:search_serie],params[:search_numero]).order(:fecha,:serie,:numero).paginate(:page => params[:page], :per_page => 20)
+          @sellvales = Sellvale.search2(params[:search_serie],params[:search_numero]).order(:fecha,:serie,:numero).paginate(:page => params[:page], :per_page => 20)
         else
-          @sellvales = Sellvale.where("fecha>=? and fecha<=?","2022-10-31 00:00:00","2022-12-31 23:59:59").order(:fecha,:serie,:numero).paginate(:page => params[:page], :per_page => 20)
+          @sellvales = Sellvale.where("fecha>=? and fecha<=?","2022-06-01 00:00:00","2022-12-31 23:59:59").order(:fecha,:serie,:numero).paginate(:page => params[:page], :per_page => 20)
         end
       
     else
@@ -22,7 +22,7 @@ class SellvalesController < ApplicationController
         
         @sellvales = Sellvale.search(params[:search_serie],params[:search_numero]).order('fecha DESC').paginate(:page => params[:page], :per_page => 20)
       else
-        @sellvales = Sellvale.where("fecha>=? and fecha<=?","2022-10-31 00:00:00","2022-12-31 23:59:59").order('fecha DESC').paginate(:page => params[:page], :per_page => 20)
+        @sellvales = Sellvale.where("fecha>=? and fecha<=?","2022-12-01 00:00:00","2022-12-31 23:59:59").order('fecha DESC').paginate(:page => params[:page], :per_page => 20)
       end
       
       
