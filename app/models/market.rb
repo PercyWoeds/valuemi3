@@ -384,7 +384,7 @@ end
      def process4
        
 
-         @factura =   Market.select(:fecha, :serie,:numero,"SUM(cantidad) as quantity","SUM(importe) as total").where("fecha>=? and fecha<=? and td = ? and cod_tar=?","2022-11-20 00:00:00","2022-11-26 23:59:59","B","11").group(:fecha,:serie,:numero )
+         @factura =   Market.select(:fecha, :serie,:numero,"SUM(cantidad) as quantity","SUM(importe) as total").where("fecha>=? and fecha<=? and td = ? and cod_tar=?","2022-11-30 00:00:00","2022-12-31 23:59:59","B","11").group(:fecha,:serie,:numero )
 
     #   @factura =   Market.select(:fecha, :serie,:numero,"SUM(cantidad) as quantity","SUM(importe) as total").where("numero >=? and numero<=? and td = ?","007180","007593","B").group(:fecha,:serie,:numero )
      

@@ -939,13 +939,13 @@ end
 
   # Autocomplete for documents
   def ac_documentos
-    @docs = Purchase.where(["company_id = ? AND (documento LIKE ? )", params[:company_id], "%" + params[:q] + "%"])   
+    @docs = Purchase.where(["company_id = ? AND (documento iLIKE ? )", params[:company_id], "%" + params[:q] + "%"])   
     render :layout => false
   end
   
   # Autocomplete for products
   def ac_suppliers
-    @supplier = Supplier.where(["company_id = ? AND (ruc LIKE ? OR name LIKE ?)", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])   
+    @supplier = Supplier.where(["company_id = ? AND (ruc iLIKE ? OR name iLIKE ?)", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])   
     render :layout => false
   end
   
@@ -974,7 +974,7 @@ end
   
   # Autocomplete for suppliers
   def ac_suppliers
-    @suppliers = Supplier.where(["company_id = ? AND  (ruc LIKE ? ) ", params[:company_id],  "%" + params[:q] + "%"])
+    @suppliers = Supplier.where(["company_id = ? AND  (ruc iLIKE ? ) ", params[:company_id],  "%" + params[:q] + "%"])
 
     render :layout => false
   end
