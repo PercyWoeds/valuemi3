@@ -318,6 +318,7 @@ def reportes8
                  line: true
                }
                
+               
         end   
       when "To Excel" then render xlsx: 'parte8_rpt_xls'
       else render action: "index"
@@ -2441,6 +2442,7 @@ def reportes31
     @invoice.process6
     flash[:notice] = "Documento procesado "
     end 
+    
 
 
 
@@ -3416,8 +3418,6 @@ def newfactura2
     @invoice[:cuota3] = 3
     
 
-
-  
 
     respond_to do |format|
       if @invoice.save
