@@ -24,7 +24,7 @@ wb.styles do |s|
     
    @contado_rpt1.each do |payment|
      
-    sheet.add_row [payment.fecha,payment.serie,payment.numero,payment.cod_cli,payment.get_cliente(payment.cod_cli), payment.cod_prod,payment.get_product_name(payment.cod_prod),payment.cantidad,payment.precio,payment.importe,payment.implista,payment.cod_emp,payment.get_nombre_empleado(payment.cod_emp),payment.turno payment.get_vale_facturado,payment.cod_tar,payment.isla], :style => [date,cadena,cadena,cadena,cadena,cadena,cadena,currency,currency,currency,currency,cadena,cadena,cadena,cadena,cadena,cadena]
+    sheet.add_row [payment.fecha,payment.serie,payment.numero,payment.cod_cli,payment.get_cliente(payment.cod_cli), payment.cod_prod,payment.get_product_name(payment.cod_prod),payment.cantidad,payment.precio,payment.importe,payment.implista,payment.cod_emp,payment.get_nombre_empleado(payment.cod_emp),payment.turno, payment.get_vale_facturado,payment.cod_tar,payment.isla], :style => [date,cadena,cadena,cadena,cadena,cadena,cadena,currency,currency,currency,currency,cadena,cadena,cadena,cadena,cadena,cadena]
     
    end
    
